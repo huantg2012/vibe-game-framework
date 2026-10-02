@@ -98,6 +98,7 @@ export function validatePlayerRuntimeState(value: unknown): value is PlayerRunti
 export class Player {
   private scene!: Phaser.Scene;
   private image!: Phaser.Physics.Arcade.Image;
+  private readonly bodyImages: Phaser.GameObjects.Image[] = [];
 
   private keys: Phaser.Input.Keyboard.Key[] = [];
   private keyUp: Phaser.Input.Keyboard.Key[] = [];
@@ -158,6 +159,8 @@ export class Player {
       config.bodyTexture ?? idleKey
     );
     this.image.setDepth(depth);
+    this.bodyImages.length = 0;
+    this.bodyImages.push(this.image);
     // Direction is indicated by texture swap, not rotation
 
     const body = this.image.body as Phaser.Physics.Arcade.Body;
@@ -332,6 +335,11 @@ export class Player {
     return this.image;
   }
 
+  /** Current body pieces, excluding weapon, lamp aura and turning afterimage. */
+  getHitFlashImages(): readonly Phaser.GameObjects.Image[] {
+    return this.weaponRig?.getBodyImages() ?? this.bodyImages;
+  }
+
   private readonly boundsLamp = { x: 0, y: 0 };
   private readonly lampBounds = new Phaser.Geom.Rectangle();
 
@@ -401,6 +409,7 @@ export class Player {
     this.lag?.destroy();
     this.weaponRig = null; this.aura = null; this.lag = null;
     this.image?.destroy();
+    this.bodyImages.length = 0;
   }
 
   // ------------------------------------------------------------------ internals

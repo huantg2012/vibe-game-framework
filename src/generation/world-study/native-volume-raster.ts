@@ -1,3 +1,4 @@
+import { sampleMasterMaterial, type MasterMaterialSample, type MasterMaterialEvent } from './master-ground-field';
 import { type NativeVolumeMesh, type NativeVolumeMaterialSlot, NATIVE_VOLUME_MATERIALS } from './native-volume-geometry';
 
 export interface NativeVolumeRasterConfig {
@@ -177,28 +178,13 @@ export function nativeVolumeLightVisibility(raster: NativeVolumeRaster, x: numbe
 
 /** Coherent material structure follows surface UV. Patterns have restrained
  * amplitude and do not encode illumination: disabling them preserves volume. */
-function materialStructure(family: number, slot: number, region: number, u: number, v: number): number {
-  if (family === 1) {
-    const flow = v + Math.sin(u * .026) * 7;
-    if (slot === 1) {
-      // Connected layers stop at the pressure outlet. Their cleaved chunks are
-      // 4–16 px across; small changes follow the bedding, never screen noise.
-      const layer = Math.floor(flow / 3.5);
-      const split = Math.sin(u * .24 + layer * 1.7) > .32;
-      return split ? .55 : -.35;
-    }
-    const front = Math.sin(u * .061 + Math.sin(flow * .046) * 1.6);
-    if (region === 1) return front > .3 ? -.70 : -.30; // compressed, polished beds
-    if (region === 2) return front > -.30 ? .85 : .28; // exposed peel, old layer below
-    if (region === 3) return Math.sin(u * .17 + flow * .10) > .1 ? .65 : -.5;
-    // Quiet intact faces have only two broad material populations. Volume and
-    // wear remain legible when this entire contribution is disabled.
-    return front > .62 ? .26 : front < -.55 ? -.25 : .04;
-  }
-  if (family === 2) return Math.sin(v * .61 + Math.sin(u * .027) * .38) * .46
-    + Math.sin(v * .19 - u * .011) * .22;
-  if (slot === 1) return Math.sin(v * .74 + Math.sin(u * .031) * .3) * .58;
-  return Math.sin(v * .12 + Math.sin(u * .016) * 1.5) * .36 + Math.sin(v * .29 + u * .006) * .10;
+const materialSample:MasterMaterialSample={tone:0,roughness:0,relief:0};
+/** Construction history selects an actual paint treatment. A low fracture foot
+ * carries fines; peeled and strained surfaces expose a compact core. Ordinary
+ * dark surfaces never become a visibility or pollution classification here. */
+function materialEvent(slot:number,region:number,height:number):MasterMaterialEvent {
+  if(slot===1)return height<3.5?'loose':'cleaved';
+  return region===2||region===3||region===4?'cleaved':'compact';
 }
 
 /** Static albedo preparation + allocation-free lighting. The destination is an
@@ -207,14 +193,16 @@ export class NativeVolumeLighting {
   readonly albedo: Uint8ClampedArray;
   readonly roughness: Float32Array;
   readonly emission: Float32Array;
+  readonly shadingNormals: Float32Array;
   readonly materialSets: ReadonlyMap<number, NativeVolumeMaterialSet>;
   private readonly surfaceSlots: Int32Array;
   private readonly shadows = new WeakMap<Readonly<NativeVolumeLight>, SurfaceShadowCache>();
-  constructor(readonly raster: NativeVolumeRaster, materials: NativeVolumeMaterialSet | ReadonlyMap<number, NativeVolumeMaterialSet>) {
+  constructor(readonly raster: NativeVolumeRaster, materials: NativeVolumeMaterialSet | ReadonlyMap<number, NativeVolumeMaterialSet>, context?: {seed:number;axis:number}) {
     this.materialSets = materials instanceof Map ? materials : new Map([[0, materials as NativeVolumeMaterialSet]]);
     const size = raster.width * raster.height;
     this.surfaceSlots = new Int32Array(size).fill(-1);
     for (let slot = 0; slot < raster.occupiedPixels.length; slot++) this.surfaceSlots[raster.occupiedPixels[slot]!] = slot;
+    this.shadingNormals = new Float32Array(raster.normals);
     this.albedo = new Uint8ClampedArray(size * 3); this.roughness = new Float32Array(size); this.emission = new Float32Array(size * 3);
     for (const index of raster.occupiedPixels) {
       const set = this.materialSets.get(raster.objectId[index]!) ?? this.materialSets.get(0);
@@ -229,16 +217,33 @@ export class NativeVolumeLighting {
         }
       }
       const region = raster.region[index]!;
-      const structure = materialStructure(raster.family[index]!, slot, region, raster.uv[index * 2]!, raster.uv[index * 2 + 1]!) * m.structure;
-      const tone = structure < 0 ? m.dark : m.light, amount = Math.min(1, Math.abs(structure));
+      const wx=raster.config.x+index%raster.width,wy=raster.config.y+Math.floor(index/raster.width),axis=context?.axis??0;
+      const u=context&&slot!==1?wx*Math.cos(axis)+wy*Math.sin(axis):raster.uv[index*2]!;
+      const v=context&&slot!==1?-wx*Math.sin(axis)+wy*Math.cos(axis):raster.uv[index*2+1]!;
+      const family=raster.family[index]!,materialSeed=context?.seed??3917+family*151;
+      const material=family===1?'strata':family===2?'crystal':'glaze';
+      const event=materialEvent(slot,region,raster.heightField[index]!);
+      sampleMasterMaterial(material,u-1,v,materialSeed,materialSample,event);const hl=materialSample.relief;
+      sampleMasterMaterial(material,u+1,v,materialSeed,materialSample,event);const hr=materialSample.relief;
+      sampleMasterMaterial(material,u,v-1,materialSeed,materialSample,event);const ht=materialSample.relief;
+      sampleMasterMaterial(material,u,v+1,materialSeed,materialSample,event);const hb=materialSample.relief;
+      const du=(hl-hr)*.28*m.structure,dv=(ht-hb)*.28*m.structure;
+      // The shared substrate coordinates are rotated world XY. Cut-face UVs
+      // are not a tangent frame, so they add colour/roughness only.
+      const bumpX=context&&slot!==1?du*Math.cos(axis)-dv*Math.sin(axis):0;
+      const bumpY=context&&slot!==1?du*Math.sin(axis)+dv*Math.cos(axis):0;
+      const nx=raster.normals[index*3]!+bumpX,ny=raster.normals[index*3+1]!+bumpY,nz=raster.normals[index*3+2]!;
+      const inv=1/(Math.hypot(nx,ny,nz)||1);
+      this.shadingNormals[index*3]=nx*inv;this.shadingNormals[index*3+1]=ny*inv;this.shadingNormals[index*3+2]=nz*inv;
+      sampleMasterMaterial(material,u,v,materialSeed,materialSample,event);
+      const tone=materialSample.tone;
       for (let c = 0; c < 3; c++) {
-        const base = m.base[c]!, target = tone[c]!;
+        const base = m.base[c]!, target = m.dark[c]!+(m.light[c]!-m.dark[c]!)*tone;
         if (!Number.isFinite(base) || !Number.isFinite(target) || base < 0 || base > 255 || target < 0 || target > 255) throw new Error('Invalid native volume material colour');
-        this.albedo[index * 3 + c] = base + (target - base) * amount;
+        this.albedo[index * 3 + c] = base + (target - base) * m.structure;
         this.emission[index * 3 + c] = (m.emission?.[c] ?? 0) * (m.emissionStrength ?? 0);
       }
-      this.roughness[index] = region === 1 ? m.roughness * .64 : region === 2 ? Math.min(1, m.roughness * 1.12)
-        : region === 3 ? Math.max(.91, m.roughness) : m.roughness;
+      this.roughness[index] = Math.max(0,Math.min(1,m.roughness*(1-m.structure)+materialSample.roughness*m.structure));
     }
   }
 
@@ -255,8 +260,8 @@ export class NativeVolumeLighting {
   }
 
   /** The immutable geometry owns this result. Source intensity/colour may vary
-   * without recasting the same ray; movement in ANY axis invalidates it. Shared
-   * by finite surface visibility and illumination to avoid duplicate rays. */
+   * without recasting the same ray; movement in ANY axis invalidates it.
+   * This is illumination only: never multiply it into tactical visibility. */
   lightVisibilityAt(index: number, light: Readonly<NativeVolumeLight>): number {
     const slot = this.surfaceSlots[index];
     if (slot === undefined || slot < 0) return 0;
@@ -291,7 +296,7 @@ export class NativeVolumeLighting {
       if (visibility <= 0) continue;
       const y = r.config.y + (Math.floor(index / width) + .5) * pixelSize;
       if (view && (x < view.x || y < view.y || x >= view.x + view.width || y >= view.y + view.height)) continue;
-      const q = index * 3, z = r.heightField[index]!, nx = r.normals[q]!, ny = r.normals[q + 1]!, nz = r.normals[q + 2]!;
+      const q = index * 3, z = r.heightField[index]!, nx = this.shadingNormals[q]!, ny = this.shadingNormals[q + 1]!, nz = this.shadingNormals[q + 2]!;
       const ao = r.ambientOcclusion[index]!, ambient = options.ambient * ao;
       let lr = ambient, lg = ambient, lb = ambient, sr = 0, sg = 0, sb = 0;
       for (let j = 0; j < lights.length; j++) {

@@ -64,6 +64,8 @@ export interface RiftDevFixture {
   onCreateError?(reason: unknown): void;
   /** Optical terrain only; physics and navigation always retain the source TileGrid. */
   createSightGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid): OccluderGrid;
+  /** Optional DEV physical melee obstruction; default preserves the existing sight grid. */
+  createCombatGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid, sightGrid: OccluderGrid): OccluderGrid;
   onReturn(): void;
   returnLabel?: '返回净化点' | '返回配置';
   onPause?(): void;
@@ -82,6 +84,9 @@ export interface RiftDevFixture {
   worldSurface?: 'runtime';
   /** DEV presentation only: unknown floor and absent support remain equally black. */
   suppressVoidNoise?: boolean;
+  /** DEV material renderer receives the lamp directly. Avoid a second additive
+   * colour wash; finite FOV, LOS, chaos and target visibility are unchanged. */
+  materialLighting?: boolean;
   createRuntime?(context: RiftDevRuntimeContext): RiftDevRuntime;
 }
 export interface RiftEntryView {
@@ -361,6 +366,7 @@ export class RiftScene extends Phaser.Scene {
     const tileMap = generated.tileMap;
     const grid = new TileGrid(tileMap);
     const sightGrid = this.devFixture?.createSightGrid?.(generated, grid) ?? grid;
+    const combatGrid = this.devFixture?.createCombatGrid?.(generated, grid, sightGrid) ?? sightGrid;
     this.formFloorGrid = grid;
     this.hostFloorGrid = productionWorld ? new TileGrid(productionWorld.hostTileMap) : grid;
     const layout = generated;
@@ -405,8 +411,11 @@ export class RiftScene extends Phaser.Scene {
     camera.startFollow(this.player.getSprite(), true);
 
     const visionConfig = createRiftVisionConfig(DEPTH.visionMask);
-    this.visibility.create(this, suppressVoidNoise
-      ? { ...visionConfig, voidNoiseEnabled: false, voidColor: 0x000000 } : visionConfig, sightGrid);
+    this.visibility.create(this, {
+      ...visionConfig,
+      ...(suppressVoidNoise ? {voidNoiseEnabled:false,voidColor:0x000000} : {}),
+      ...(this.devFixture?.materialLighting ? {playerLampEnabled:false,flashlightEnabled:false} : {}),
+    }, sightGrid);
     this.visibility.clipLightsToIsland(tileMap);
     this.visibility.setExtractionPosition(layout.extractionPoint.position);
 
@@ -429,7 +438,7 @@ export class RiftScene extends Phaser.Scene {
     // Combat gets a read-only view of the AI (`getEnemies` / `getEnemyById`) plus one
     // callback. Noise is the only cross-system output that does not go through the bus: a
     // whiffed swing is audible yet emits nothing, so there is no event to carry it.
-    this.combat.create(this, sightGrid, this.player, this.ai, {
+    this.combat.create(this, combatGrid, this.player, this.ai, {
       onNoise: this.reportNoise,
       onCue: this.onCombatCue,
       captureEnemyVisual: (id) => this.formVisuals.get(id)?.getFlashSource?.(),

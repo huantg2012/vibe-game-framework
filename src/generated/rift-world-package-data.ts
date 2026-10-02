@@ -76,7 +76,7 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
     "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "1fc3bb25752ae4f5194a7401fdad3215e66f76640a26f3ad518f92689b4723eb"
+    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
   },
   {
     "schemaVersion": 1,
@@ -157,7 +157,7 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
     "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "1fc3bb25752ae4f5194a7401fdad3215e66f76640a26f3ad518f92689b4723eb"
+    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
   },
   {
     "schemaVersion": 1,
@@ -238,7 +238,7 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
     "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "1fc3bb25752ae4f5194a7401fdad3215e66f76640a26f3ad518f92689b4723eb"
+    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
   },
   {
     "schemaVersion": 1,
@@ -319,7 +319,7 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
     "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "1fc3bb25752ae4f5194a7401fdad3215e66f76640a26f3ad518f92689b4723eb"
+    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
   },
   {
     "schemaVersion": 1,
@@ -400,6 +400,6 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
     "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "1fc3bb25752ae4f5194a7401fdad3215e66f76640a26f3ad518f92689b4723eb"
+    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
   }
 ];

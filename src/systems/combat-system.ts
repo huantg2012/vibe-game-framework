@@ -89,6 +89,8 @@ export interface AISystemReadView {
 export interface PlayerCombatTarget {
   getPosition(): Readonly<Vector2>;
   getFacingAngle(): number;
+  /** Current body pieces; tinting them preserves alpha, crops, poses and world masks. */
+  getHitFlashImages?(): readonly Phaser.GameObjects.Image[];
   setSpeedModifier(source: string, multiplier: number): void;
   clearSpeedModifier(source: string): void;
   setWeaponVisual?(quality: CrowbarQuality | null, variant?: CrowbarVariant): void;
@@ -371,6 +373,10 @@ export class CombatSystem implements CombatSystemAPI {
   private cooldownRemainingMs = 0;
   private invulnRemainingMs = 0;
   private flashRemainingMs = 0;
+  private readonly playerFlashTints = new Map<Phaser.GameObjects.Image, {
+    topLeft: number; topRight: number; bottomLeft: number; bottomRight: number;
+    fill: boolean;
+  }>();
   /** Preallocated: the hit test origin follows the player every frame. */
   private readonly attackOrigin: Vector2 = { x: 0, y: 0 };
   /** Preallocated scratch for positions that outlive the entity they came from. */
@@ -420,6 +426,9 @@ export class CombatSystem implements CombatSystemAPI {
     maxHealth: number = GAME_CONSTANTS.PLAYER.MAX_HEALTH,
   ): void {
     if (!Number.isFinite(maxHealth) || maxHealth <= 0) throw new Error('Invalid player maximum health');
+    this.clearPlayerHitFlash();
+    this.scene?.events?.off('pause', this.clearPlayerHitFlash, this);
+    this.scene?.events?.off('sleep', this.clearPlayerHitFlash, this);
     this.maxHealth = maxHealth;
     this.runtimeRecovery = null;
     this.runtimeEnemyIds = [];
@@ -430,6 +439,9 @@ export class CombatSystem implements CombatSystemAPI {
     this.player = player;
     this.ai = ai;
     this.hooks = hooks;
+    // A paused/sleeping scene may stop updating before the flash timer can expire.
+    scene.events?.on('pause', this.clearPlayerHitFlash, this);
+    scene.events?.on('sleep', this.clearPlayerHitFlash, this);
 
     // Reset all combat state (critical for scene re-entry via scene.start)
     this.enabled = true;
@@ -470,6 +482,9 @@ export class CombatSystem implements CombatSystemAPI {
   }
 
   destroy(): void {
+    this.clearPlayerHitFlash();
+    this.scene?.events?.off('pause', this.clearPlayerHitFlash, this);
+    this.scene?.events?.off('sleep', this.clearPlayerHitFlash, this);
     this.clearAttackBuffer();
     this.cancelSwing();
     this.clearAllWindups();
@@ -501,6 +516,7 @@ export class CombatSystem implements CombatSystemAPI {
   setEnabled(enabled: boolean): void {
     this.enabled = enabled;
     if (enabled) return;
+    this.clearPlayerHitFlash();
     this.clearAttackBuffer();
     this.cancelSwing();
     this.clearAllWindups();
@@ -508,6 +524,7 @@ export class CombatSystem implements CombatSystemAPI {
 
   /** A fresh run: full health, clean timers, enemy health rebuilt from the live roster. */
   reset(): void {
+    this.clearPlayerHitFlash();
     this.enabled = true;
     this.health = this.maxHealth;
     this.dead = false;
@@ -588,6 +605,7 @@ export class CombatSystem implements CombatSystemAPI {
     if (!this.validateRuntimeState(value) || this.ai.getEnemies().length !== value.enemies.length) {
       throw new Error('Invalid or incompatible combat runtime state; restore AI roster first');
     }
+    this.clearPlayerHitFlash();
     this.enabled = value.enabled; this.health = value.health; this.dead = value.dead;
     this.phase = value.phase; this.swingElapsedMs = value.swingElapsedMs; this.attackAngle = value.attackAngle;
     this.cooldownRemainingMs = value.cooldownRemainingMs; this.invulnRemainingMs = value.invulnRemainingMs;
@@ -1232,18 +1250,9 @@ export class CombatSystem implements CombatSystemAPI {
   /** World feedback stays under darkness. The held weapon supplies the swing silhouette;
    * only enemy telegraphs and brief contact marks belong in this shared effects layer. */
   private drawVisuals(): void {
-    const combat = GAME_CONSTANTS.COMBAT;
     const graphics = this.graphics;
     graphics.clear();
-
-    if (this.flashRemainingMs > 0) {
-      // White rect over the body. Kept as a growing square (not a sprite tint) so the
-      // flash still reads when the dense player is dark grey. Provisional.
-      const position = this.player.getPosition();
-      const size = GAME_CONSTANTS.PLAYER.BODY_SIZE + combat.PLAYER_FLASH_PAD;
-      graphics.fillStyle(combat.FX_COLOR, 1);
-      graphics.fillRect(position.x - size / 2, position.y - size / 2, size, size);
-    }
+    this.syncPlayerHitFlash();
 
     for (const state of this.enemies.values()) {
       if (state.strikeFxFrames > 0) {
@@ -1255,6 +1264,34 @@ export class CombatSystem implements CombatSystemAPI {
       const progress = clamp(state.attackTimerMs / bodyProfileFor(state).windupMs, 0, 1);
       this.drawTelegraph(state, lerp(0.2, 0.8, progress));
     }
+  }
+
+  private syncPlayerHitFlash(): void {
+    const images = this.enabled && this.flashRemainingMs > 0 ? this.player.getHitFlashImages?.() : undefined;
+    if (!images || [...this.playerFlashTints.keys()].some(image => !images.includes(image))) {
+      this.clearPlayerHitFlash();
+    }
+    for (const image of images ?? []) {
+      if (!image.scene) continue;
+      if (!this.playerFlashTints.has(image)) {
+        this.playerFlashTints.set(image, {
+          topLeft: image.tintTopLeft, topRight: image.tintTopRight,
+          bottomLeft: image.tintBottomLeft, bottomRight: image.tintBottomRight, fill: image.tintFill,
+        });
+      }
+      // Fill tint replaces RGB only. Each live frame crop and its original geometry/
+      // FOV mask still clip every pixel, including transparent corners and leg gaps.
+      image.setTintFill(GAME_CONSTANTS.COMBAT.FX_COLOR);
+    }
+  }
+
+  private clearPlayerHitFlash(): void {
+    for (const [image, tint] of this.playerFlashTints) {
+      if (!image.scene) continue;
+      image.setTint(tint.topLeft, tint.topRight, tint.bottomLeft, tint.bottomRight);
+      image.tintFill = tint.fill;
+    }
+    this.playerFlashTints.clear();
   }
 
   /** Short ground scratches show the committed reach and both actual angular limits. */

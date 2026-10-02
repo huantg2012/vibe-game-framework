@@ -36,7 +36,8 @@ for (let f = 0; f < families.length; f++) {
   const secondSeed = buildNativeVolume({ ...s, seed: s.seed + 97 });
   check(!Buffer.from(mesh.positions.buffer).equals(Buffer.from(secondSeed.positions.buffer)), `${family}: seed changes actual contact geometry`);
   check(mesh.positions.every(Number.isFinite) && mesh.normals.every(Number.isFinite), `${family}: finite geometry`);
-  check(mesh.triangleCount > 200 && mesh.vertexCount > 200, `${family}: actual surfaces rather than a flat mask`);
+  check(mesh.indices.length === mesh.triangleCount * 3 && mesh.positions.length === mesh.vertexCount * 3
+    && mesh.indices.every(index => index < mesh.vertexCount), `${family}: complete indexed surfaces`);
   const slots = new Set(mesh.materials);
   check(slots.has(0) && slots.has(1) && slots.has(2), `${family}: separate outer, cut and inner surfaces`);
   const heights = mesh.positions.filter((_n, i) => i % 3 === 2);
@@ -44,6 +45,32 @@ for (let f = 0; f < families.length; f++) {
   check(Math.abs(Math.max(...heights) - s.height) < .001, `${family}: height is absolute maximum, not added again to thickness`);
   for (let i = 0; i < mesh.normals.length; i += 3) assert.ok(Math.abs(Math.hypot(mesh.normals[i]!, mesh.normals[i + 1]!, mesh.normals[i + 2]!) - 1) < .001);
   checks++;
+  // Compare the exported, rotated and height-scaled mesh against its actual
+  // planes. In particular, a bent quad's second triangle cannot reuse the first.
+  let normalTriangles = 0, distinctPlanes = 0, previousNormal: number[] | null = null;
+  let upwardArea = 0, lateralArea = 0, projectedCutArea = 0;
+  for (let triangle = 0; triangle < mesh.triangleCount; triangle++) {
+    const vertices = [0,1,2].map(corner => mesh.indices[triangle * 3 + corner]! * 3);
+    const [a,b,c] = vertices as [number,number,number], p = mesh.positions;
+    const ux=p[b]!-p[a]!,uy=p[b+1]!-p[a+1]!,uz=p[b+2]!-p[a+2]!;
+    const vx=p[c]!-p[a]!,vy=p[c+1]!-p[a+1]!,vz=p[c+2]!-p[a+2]!;
+    const cross=[uy*vz-uz*vy,uz*vx-ux*vz,ux*vy-uy*vx], length=Math.hypot(...cross);
+    // Collapsed zero-height joins are not meaningful planes after Float32 export.
+    if(length<1e-5)continue;
+    const normal=cross.map(value=>value/length);
+    if(Math.abs(normal[2]!)>.85)upwardArea+=length*.5;
+    if(Math.abs(normal[2]!)<.75)lateralArea+=length*.5;
+    if(mesh.materials[triangle]===1)projectedCutArea+=Math.abs(cross[2]!)*.5;
+    for(const vertex of vertices){
+      const dot=normal[0]!*mesh.normals[vertex]!+normal[1]!*mesh.normals[vertex+1]!+normal[2]!*mesh.normals[vertex+2]!;
+      assert(Math.abs(dot)>1-2e-4,`${family}: triangle ${triangle} normal must match its own exported plane`);
+    }
+    if(previousNormal && Math.abs(normal.reduce((sum,value,axis)=>sum+value*previousNormal![axis]!,0))<.999)distinctPlanes++;
+    previousNormal=normal;normalTriangles++;
+  }
+  check(normalTriangles>0 && distinctPlanes>=4 && upwardArea>100 && lateralArea>100,
+    `${family}: actual top and side planes define volume, independent of tessellation density`);
+  if(family==='folded-slab')check(projectedCutArea>20,'Slab cut surfaces have real projected area');
   const raster = compileNativeVolumeRaster([mesh], { x: 0, y: 0, width: 320, height: 320, opticalHeight: 22 });
   check(raster.occupiedPixels.length > 1000 && raster.occupiedPixels.length < 60000, `${family}: bounded local matter`);
   check(raster.occupancy.filter(Boolean).length > raster.optical.filter(Boolean).length, `${family}: physical and optical masks differ by real height`);
@@ -91,7 +118,7 @@ for (let f = 0; f < families.length; f++) {
   check(shadowed > 3 && clear > 10, `${family}: shared height field casts bounded shadows`);
   tiles.push(a, other);
   metrics.push({ family, triangles: mesh.triangleCount, matterPixels: raster.occupiedPixels.length,
-    physicalCells: raster.occupancy.filter(Boolean).length, opticalCells: raster.optical.filter(Boolean).length, lampChangedPixels: changed, shadowedSamples: shadowed, elapsedMs });
+    physicalCells: raster.occupancy.filter(Boolean).length, opticalCells: raster.optical.filter(Boolean).length, lampChangedPixels: changed, shadowedSamples: shadowed, normalTriangles, distinctPlanes, upwardArea, lateralArea, projectedCutArea, elapsedMs });
 }
 
 const shell = buildNativeVolume({ ...spec('broken-shell'), rotation: 0, distortion: .4 });

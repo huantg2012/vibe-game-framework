@@ -1,5 +1,5 @@
 // GENERATED from data/rift-master-scenes.csv; edit the CSV, not this file.
-export const MASTER_SCENES_SOURCE_HASH = 'bc3afcfbdbbdc52a790047f736db05c07c79d01c7bef2ee68ab0f7497cdcda15';
+export const MASTER_SCENES_SOURCE_HASH = '6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57';
 export const MASTER_SCENES = [
   {
     "id": "folded-slab-low",
@@ -29,13 +29,14 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "relief",
         "x": 448,
         "y": 276,
         "rotation": -0.22,
         "length": 286,
         "width": 120,
-        "height": 36,
-        "thickness": 12,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.46,
         "branches": 3,
         "opening": 0.22,
@@ -43,6 +44,7 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "solid",
         "x": 618,
         "y": 281,
         "rotation": 0.31,
@@ -55,6 +57,30 @@ export const MASTER_SCENES = [
         "opening": 0.25,
         "distortion": 0.12
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 620,
+          "y": 352
+        },
+        {
+          "x": 656,
+          "y": 344
+        },
+        {
+          "x": 704,
+          "y": 368
+        },
+        {
+          "x": 696,
+          "y": 392
+        },
+        {
+          "x": 644,
+          "y": 382
+        }
+      ]
     ]
   },
   {
@@ -85,6 +111,7 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "solid",
         "x": 448,
         "y": 276,
         "rotation": -0.22,
@@ -99,13 +126,14 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "relief",
         "x": 633,
         "y": 294,
         "rotation": 0.67,
         "length": 238,
         "width": 100,
-        "height": 84,
-        "thickness": 12,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.55,
         "branches": 3,
         "opening": 0.18,
@@ -113,18 +141,73 @@ export const MASTER_SCENES = [
       },
       {
         "id": 3,
+        "role": "relief",
         "x": 442,
         "y": 156,
         "rotation": 2.79,
         "length": 252,
         "width": 94,
-        "height": 64,
-        "thickness": 11,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.47,
         "branches": 3,
         "opening": 0.18,
         "distortion": 0.22
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 584,
+          "y": 352
+        },
+        {
+          "x": 648,
+          "y": 328
+        },
+        {
+          "x": 728,
+          "y": 352
+        },
+        {
+          "x": 756,
+          "y": 392
+        },
+        {
+          "x": 716,
+          "y": 416
+        },
+        {
+          "x": 652,
+          "y": 388
+        },
+        {
+          "x": 608,
+          "y": 392
+        }
+      ],
+      [
+        {
+          "x": 168,
+          "y": 128
+        },
+        {
+          "x": 240,
+          "y": 104
+        },
+        {
+          "x": 284,
+          "y": 128
+        },
+        {
+          "x": 268,
+          "y": 160
+        },
+        {
+          "x": 200,
+          "y": 168
+        }
+      ]
     ]
   },
   {
@@ -155,6 +238,7 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "solid",
         "x": 448,
         "y": 243,
         "rotation": -0.22,
@@ -169,6 +253,7 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "solid",
         "x": 674,
         "y": 304,
         "rotation": 0.81,
@@ -183,18 +268,111 @@ export const MASTER_SCENES = [
       },
       {
         "id": 3,
+        "role": "relief",
         "x": 418,
         "y": 130,
         "rotation": 2.95,
         "length": 338,
         "width": 124,
-        "height": 108,
-        "thickness": 17,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.74,
         "branches": 4,
         "opening": 0.12,
         "distortion": 0.33
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 584,
+          "y": 352
+        },
+        {
+          "x": 664,
+          "y": 320
+        },
+        {
+          "x": 776,
+          "y": 352
+        },
+        {
+          "x": 816,
+          "y": 408
+        },
+        {
+          "x": 752,
+          "y": 448
+        },
+        {
+          "x": 664,
+          "y": 408
+        },
+        {
+          "x": 616,
+          "y": 432
+        },
+        {
+          "x": 568,
+          "y": 400
+        }
+      ],
+      [
+        {
+          "x": 128,
+          "y": 104
+        },
+        {
+          "x": 208,
+          "y": 80
+        },
+        {
+          "x": 296,
+          "y": 112
+        },
+        {
+          "x": 304,
+          "y": 152
+        },
+        {
+          "x": 240,
+          "y": 176
+        },
+        {
+          "x": 176,
+          "y": 160
+        },
+        {
+          "x": 112,
+          "y": 144
+        }
+      ],
+      [
+        {
+          "x": 336,
+          "y": 488
+        },
+        {
+          "x": 408,
+          "y": 472
+        },
+        {
+          "x": 480,
+          "y": 504
+        },
+        {
+          "x": 472,
+          "y": 540
+        },
+        {
+          "x": 400,
+          "y": 548
+        },
+        {
+          "x": 344,
+          "y": 520
+        }
+      ]
     ]
   },
   {
@@ -225,13 +403,14 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "relief",
         "x": 471,
         "y": 270,
         "rotation": -0.28,
         "length": 310,
         "width": 100,
-        "height": 83,
-        "thickness": 8,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.38,
         "branches": 3,
         "opening": 0.3,
@@ -239,6 +418,7 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "solid",
         "x": 641,
         "y": 310,
         "rotation": 0.52,
@@ -251,6 +431,30 @@ export const MASTER_SCENES = [
         "opening": 0.36,
         "distortion": 0.16
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 620,
+          "y": 352
+        },
+        {
+          "x": 656,
+          "y": 344
+        },
+        {
+          "x": 704,
+          "y": 368
+        },
+        {
+          "x": 696,
+          "y": 392
+        },
+        {
+          "x": 644,
+          "y": 382
+        }
+      ]
     ]
   },
   {
@@ -281,6 +485,7 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "solid",
         "x": 471,
         "y": 270,
         "rotation": -0.28,
@@ -295,13 +500,14 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "relief",
         "x": 636,
         "y": 287,
         "rotation": 0.77,
         "length": 263,
         "width": 92,
-        "height": 78,
-        "thickness": 8,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.52,
         "branches": 3,
         "opening": 0.24,
@@ -309,18 +515,73 @@ export const MASTER_SCENES = [
       },
       {
         "id": 3,
+        "role": "relief",
         "x": 430,
         "y": 155,
         "rotation": 2.88,
         "length": 228,
         "width": 78,
-        "height": 72,
-        "thickness": 8,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.46,
         "branches": 3,
         "opening": 0.25,
         "distortion": 0.24
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 584,
+          "y": 352
+        },
+        {
+          "x": 648,
+          "y": 328
+        },
+        {
+          "x": 728,
+          "y": 352
+        },
+        {
+          "x": 756,
+          "y": 392
+        },
+        {
+          "x": 716,
+          "y": 416
+        },
+        {
+          "x": 652,
+          "y": 388
+        },
+        {
+          "x": 608,
+          "y": 392
+        }
+      ],
+      [
+        {
+          "x": 168,
+          "y": 128
+        },
+        {
+          "x": 240,
+          "y": 104
+        },
+        {
+          "x": 284,
+          "y": 128
+        },
+        {
+          "x": 268,
+          "y": 160
+        },
+        {
+          "x": 200,
+          "y": 168
+        }
+      ]
     ]
   },
   {
@@ -351,6 +612,7 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "solid",
         "x": 471,
         "y": 251,
         "rotation": -0.28,
@@ -365,6 +627,7 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "solid",
         "x": 677,
         "y": 298,
         "rotation": 0.89,
@@ -379,18 +642,111 @@ export const MASTER_SCENES = [
       },
       {
         "id": 3,
+        "role": "relief",
         "x": 417,
         "y": 136,
         "rotation": 2.98,
         "length": 329,
         "width": 112,
-        "height": 91,
-        "thickness": 10,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.7,
         "branches": 4,
         "opening": 0.17,
         "distortion": 0.36
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 584,
+          "y": 352
+        },
+        {
+          "x": 664,
+          "y": 320
+        },
+        {
+          "x": 776,
+          "y": 352
+        },
+        {
+          "x": 816,
+          "y": 408
+        },
+        {
+          "x": 752,
+          "y": 448
+        },
+        {
+          "x": 664,
+          "y": 408
+        },
+        {
+          "x": 616,
+          "y": 432
+        },
+        {
+          "x": 568,
+          "y": 400
+        }
+      ],
+      [
+        {
+          "x": 128,
+          "y": 104
+        },
+        {
+          "x": 208,
+          "y": 80
+        },
+        {
+          "x": 296,
+          "y": 112
+        },
+        {
+          "x": 304,
+          "y": 152
+        },
+        {
+          "x": 240,
+          "y": 176
+        },
+        {
+          "x": 176,
+          "y": 160
+        },
+        {
+          "x": 112,
+          "y": 144
+        }
+      ],
+      [
+        {
+          "x": 336,
+          "y": 488
+        },
+        {
+          "x": 408,
+          "y": 472
+        },
+        {
+          "x": 480,
+          "y": 504
+        },
+        {
+          "x": 472,
+          "y": 540
+        },
+        {
+          "x": 400,
+          "y": 548
+        },
+        {
+          "x": 344,
+          "y": 520
+        }
+      ]
     ]
   },
   {
@@ -421,13 +777,14 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "relief",
         "x": 471,
         "y": 266,
         "rotation": 1.25,
         "length": 224,
         "width": 172,
-        "height": 94,
-        "thickness": 23,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.32,
         "branches": 3,
         "opening": 0.34,
@@ -435,6 +792,7 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "solid",
         "x": 656,
         "y": 277,
         "rotation": 0.38,
@@ -447,6 +805,30 @@ export const MASTER_SCENES = [
         "opening": 0.46,
         "distortion": 0.14
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 620,
+          "y": 352
+        },
+        {
+          "x": 656,
+          "y": 344
+        },
+        {
+          "x": 704,
+          "y": 368
+        },
+        {
+          "x": 696,
+          "y": 392
+        },
+        {
+          "x": 644,
+          "y": 382
+        }
+      ]
     ]
   },
   {
@@ -477,6 +859,7 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "solid",
         "x": 471,
         "y": 266,
         "rotation": 1.25,
@@ -491,13 +874,14 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "relief",
         "x": 637,
         "y": 260,
         "rotation": 0.41,
         "length": 192,
         "width": 153,
-        "height": 83,
-        "thickness": 22,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.45,
         "branches": 3,
         "opening": 0.38,
@@ -505,18 +889,73 @@ export const MASTER_SCENES = [
       },
       {
         "id": 3,
+        "role": "relief",
         "x": 459,
         "y": 125,
         "rotation": 2.62,
         "length": 161,
         "width": 116,
-        "height": 65,
-        "thickness": 20,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.4,
         "branches": 3,
         "opening": 0.4,
         "distortion": 0.24
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 584,
+          "y": 352
+        },
+        {
+          "x": 648,
+          "y": 328
+        },
+        {
+          "x": 728,
+          "y": 352
+        },
+        {
+          "x": 756,
+          "y": 392
+        },
+        {
+          "x": 716,
+          "y": 416
+        },
+        {
+          "x": 652,
+          "y": 388
+        },
+        {
+          "x": 608,
+          "y": 392
+        }
+      ],
+      [
+        {
+          "x": 168,
+          "y": 128
+        },
+        {
+          "x": 240,
+          "y": 104
+        },
+        {
+          "x": 284,
+          "y": 128
+        },
+        {
+          "x": 268,
+          "y": 160
+        },
+        {
+          "x": 200,
+          "y": 168
+        }
+      ]
     ]
   },
   {
@@ -547,6 +986,7 @@ export const MASTER_SCENES = [
     "instances": [
       {
         "id": 1,
+        "role": "solid",
         "x": 471,
         "y": 224,
         "rotation": 1.25,
@@ -561,6 +1001,7 @@ export const MASTER_SCENES = [
       },
       {
         "id": 2,
+        "role": "solid",
         "x": 691,
         "y": 276,
         "rotation": 0.34,
@@ -575,18 +1016,111 @@ export const MASTER_SCENES = [
       },
       {
         "id": 3,
+        "role": "relief",
         "x": 428,
         "y": 89,
         "rotation": 2.79,
         "length": 244,
         "width": 168,
-        "height": 110,
-        "thickness": 29,
+        "height": 6,
+        "thickness": 2,
         "fold": 0.69,
         "branches": 4,
         "opening": 0.3,
         "distortion": 0.33
       }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 584,
+          "y": 352
+        },
+        {
+          "x": 664,
+          "y": 320
+        },
+        {
+          "x": 776,
+          "y": 352
+        },
+        {
+          "x": 816,
+          "y": 408
+        },
+        {
+          "x": 752,
+          "y": 448
+        },
+        {
+          "x": 664,
+          "y": 408
+        },
+        {
+          "x": 616,
+          "y": 432
+        },
+        {
+          "x": 568,
+          "y": 400
+        }
+      ],
+      [
+        {
+          "x": 128,
+          "y": 104
+        },
+        {
+          "x": 208,
+          "y": 80
+        },
+        {
+          "x": 296,
+          "y": 112
+        },
+        {
+          "x": 304,
+          "y": 152
+        },
+        {
+          "x": 240,
+          "y": 176
+        },
+        {
+          "x": 176,
+          "y": 160
+        },
+        {
+          "x": 112,
+          "y": 144
+        }
+      ],
+      [
+        {
+          "x": 336,
+          "y": 488
+        },
+        {
+          "x": 408,
+          "y": 472
+        },
+        {
+          "x": 480,
+          "y": 504
+        },
+        {
+          "x": 472,
+          "y": 540
+        },
+        {
+          "x": 400,
+          "y": 548
+        },
+        {
+          "x": 344,
+          "y": 520
+        }
+      ]
     ]
   }
 ] as const;

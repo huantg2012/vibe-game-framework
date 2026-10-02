@@ -89,18 +89,19 @@ class MeshBuilder {
     return index;
   }
   quad(a: Point, b: Point, c: Point, d: Point, material: number, uvs: readonly [UV, UV, UV, UV], wanted?: Point, region = 0): void {
-    const ux = b[0] - a[0], uy = b[1] - a[1], uz = b[2] - a[2];
-    const vx = c[0] - a[0], vy = c[1] - a[1], vz = c[2] - a[2];
-    let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
-    const size = Math.hypot(nx, ny, nz);
-    if (size < 1e-6) return;
-    nx /= size; ny /= size; nz /= size;
-    if (wanted && nx * wanted[0] + ny * wanted[1] + nz * wanted[2] < 0) { nx = -nx; ny = -ny; nz = -nz; }
-    const normal: Point = [nx, ny, nz];
-    const ia = this.vertex(a, uvs[0], normal), ib = this.vertex(b, uvs[1], normal);
-    const ic = this.vertex(c, uvs[2], normal), id = this.vertex(d, uvs[3], normal);
-    this.triangles.push(ia, ib, ic, ia, ic, id); this.slots.push(material, material); this.regions.push(region, region);
+    const triangle=(p:Point,q:Point,r:Point,up:UV,uq:UV,ur:UV):void=>{
+      const ux=q[0]-p[0],uy=q[1]-p[1],uz=q[2]-p[2],vx=r[0]-p[0],vy=r[1]-p[1],vz=r[2]-p[2];
+      let nx=uy*vz-uz*vy,ny=uz*vx-ux*vz,nz=ux*vy-uy*vx;const size=Math.hypot(nx,ny,nz);if(size<1e-6)return;
+      nx/=size;ny/=size;nz/=size;if(wanted&&nx*wanted[0]+ny*wanted[1]+nz*wanted[2]<0){nx=-nx;ny=-ny;nz=-nz;}
+      const normal:Point=[nx,ny,nz];
+      this.triangles.push(this.vertex(p,up,normal),this.vertex(q,uq,normal),this.vertex(r,ur,normal));
+      this.slots.push(material);this.regions.push(region);
+    };
+    // Bent quads are two actual planes. Copying the first triangle's normal to
+    // the second makes height and lighting disagree on every warped shoulder.
+    triangle(a,b,c,uvs[0],uvs[1],uvs[2]);triangle(a,c,d,uvs[0],uvs[2],uvs[3]);
   }
+
   joint(p: Point): void {
     this.joints.push({ index: this.joints.length,
       x: this.spec.x + p[0] * this.cosine - p[1] * this.sine,
@@ -124,108 +125,117 @@ class MeshBuilder {
   }
 }
 
-/** The primary form is a ground-connected pressure mass, not an extruded ribbon.
- * Its near cross-section has real XY width: foot -> broken face -> shoulder.
- * Higher variants raise the far back only, preserving a lit near section below
- * shoulder-lamp height. One local reverse fault cuts across the original beds. */
+/** Three unequal pieces of one buckled bed meet at a branching shear fault.
+ * There is no longitudinal array of repeated profiles. Each bed has an actual
+ * buried end, a broad sloping shoulder and a few broken, offset cut planes. */
 function foldedSlab(b: MeshBuilder): void {
-  const s = b.spec, l = s.length, w = s.width, h = s.height;
-  const seedShift = (phase(s.seed, 101) - .5) * .075;
-  const faultX = l * (.035 + seedShift);
-  const faultLean = .24 + phase(s.seed, 103) * .18;
-  const faceWidth = clamp(s.thickness * 1.6, Math.min(12, w * .20), Math.min(24, w * .24));
-  const footY = w * .5;
-  const shoulderY = footY - faceWidth - Math.min(clamp(s.thickness * .5, 5, 9), w * .07);
-  const frontHeight = Math.min(23, h * .65);
-  const crestY = -w * (.18 + seedShift);
-  const stations = [-w * .53, -w * .46, -w * .34, crestY, -w * .04,
-    shoulderY - faceWidth * .34, shoulderY, shoulderY + faceWidth * .40,
-    shoulderY + faceWidth * .79, footY - Math.min(4, w * .033), footY];
-  const steps = Math.max(28, Math.ceil(l / 5));
-  const rows: Point[][] = [], depressions: number[][] = [];
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps, x = (t - .5) * l;
-    const endRamp = Math.min(1, t / .08, (1 - t) / .10);
-    // One broad bulge toward the compression outlet, not uniformly nibbled edges.
-    const pressure = Math.exp(-Math.pow((x - faultX) / (l * .20), 2));
-    const sideBend = Math.sin(t * Math.PI) * w * seedShift;
-    const backHeight = h * (.89 + .11 * Math.sin(t * Math.PI));
-    const profileHeight = [0, Math.min(5, h * .1), backHeight * .73, backHeight,
-      Math.max(frontHeight + 2, backHeight * .85), Math.min(h * .86, frontHeight + 5),
-      frontHeight, frontHeight * .67, frontHeight * .32, 2.2, 0];
-    const row: Point[] = [], depression: number[] = [];
-    for (let j = 0; j < stations.length; j++) {
-      let y = stations[j]! + sideBend;
-      // Adjacent beds terminate against an offset fault. The two sides cannot
-      // be read as a single smooth slope or an evenly stepped manufactured box.
-      const faultDistance = x - faultX - y * faultLean;
-      const mouthWidth = faceWidth * (.68 + Math.max(0, y / w) * .60);
-      const inFault = y > -w * .21 && y < shoulderY + faceWidth * .87;
-      const groove = inFault ? Math.max(0, 1 - Math.abs(faultDistance) / mouthWidth) : 0;
-      const faultFloor = Math.min(4.5, frontHeight * .2);
-      let z = profileHeight[j]!;
-      const dent = Math.max(0, z - faultFloor) * groove;
-      z -= dent;
-      // Quiet bed tops are broad. Local compression puts actual broken facets
-      // into the face; their pixels, shading and shadows share these vertices.
-      if (j >= 6 && j <= 8 && groove < .25) {
-        const fracture = (Math.sin(t * 18 + phase(s.seed, 107) * 2) + Math.sin(t * 7 + .3)) * .75;
-        z += fracture * pressure * s.distortion;
-        y += Math.sin(t * 11 + j * .8) * pressure * 1.7 * s.distortion;
-      }
-      row.push([x, y, Math.max(0, z * endRamp)]); depression.push(dent);
-    }
-    rows.push(row); depressions.push(depression);
-  }
-  for (let i = 0; i < steps; i++) for (let j = 0; j < stations.length - 1; j++) {
-    const a = rows[i]!, c = rows[i + 1]!;
-    const depth = (depressions[i]![j]! + depressions[i + 1]![j]! + depressions[i]![j + 1]! + depressions[i + 1]![j + 1]!) * .25;
-    const isSection = j >= 6 || j === 1, fault = depth > 2;
-    const cellX = ((i + .5) / steps - .5) * l;
-    const pressure = Math.abs(cellX - faultX) < l * .14;
-    let material = isSection ? 1 : 0;
-    let region: number = isSection ? NATIVE_VOLUME_REGIONS.fractured : pressure ? NATIVE_VOLUME_REGIONS.compressed : NATIVE_VOLUME_REGIONS.intact;
-    if (fault) { material = 2; region = NATIVE_VOLUME_REGIONS.peeled; }
-    if (fault && j === 6 && Math.abs(cellX - faultX - stations[j]! * faultLean) < faceWidth * .45) material = 3;
-    // On cuts V is true elevation: bedding ends follow height and terminate at
-    // the fault instead of drawing parallel outlines around every broad face.
-    const tex = isSection || fault ? [[i * l / steps, a[j]![2]], [(i + 1) * l / steps, c[j]![2]],
-      [(i + 1) * l / steps, c[j + 1]![2]], [i * l / steps, a[j + 1]![2]]] as const
-      : [[i * l / steps, stations[j]! + w * .53], [(i + 1) * l / steps, stations[j]! + w * .53],
-        [(i + 1) * l / steps, stations[j + 1]! + w * .53], [i * l / steps, stations[j + 1]! + w * .53]] as const;
-    b.quad(a[j]!, c[j]!, c[j + 1]!, a[j + 1]!, material, tex, [0, 0, 1], region);
-    // Closed underside at the ground. It is never used as a coloured black hole.
-    b.quad([a[j]![0], a[j]![1], 0], [a[j + 1]![0], a[j + 1]![1], 0],
-      [c[j + 1]![0], c[j + 1]![1], 0], [c[j]![0], c[j]![1], 0], 2, tex, [0, 0, -1]);
-  }
-  const reverseReach = w * (.27 + s.fold * .13);
-  const wedgeY = shoulderY + faceWidth * .47;
-  pressureWedge(b, [[faultX - faceWidth * .70, wedgeY, frontHeight * .70],
-    [faultX + faceWidth * .05, wedgeY - 5, frontHeight * .90],
-    [faultX - faceWidth * .38, wedgeY + reverseReach, 3.5],
-    [faultX - faceWidth * 1.20, wedgeY + reverseReach * .73, 5.8]], faceWidth * .48);
-  pressureWedge(b, [[faultX + faceWidth * .17, wedgeY, frontHeight * .75],
-    [faultX + faceWidth * .95, wedgeY + 1, frontHeight * .58],
-    [faultX + faceWidth * 1.50, wedgeY + reverseReach * .66, 3.5],
-    [faultX + faceWidth * .45, wedgeY + reverseReach * .83, 5.8]], faceWidth * .42);
-  b.joint([faultX + stations[6]! * faultLean, stations[6]!, 5.5]);
+  const s=b.spec,l=s.length,w=s.width,h=s.height;
+  const shift=(phase(s.seed,101)-.5)*.05;
+  const thrust=(s.fold-.5)*.075;
+  const px=(x:number):number=>(x+shift)*l;
+  const py=(y:number):number=>y*w;
+  const near=(ratio:number):number=>Math.min(h*ratio,19+s.thickness*.22);
+  const a:Point[]=[
+    [-l*.51,py(-.14),0],[-l*.37,py(-.37),h*.33],
+    [px(-.15),py(-.43),h*.6424],[px(.025),py(-.20),h*.486],
+    [px(-.014),py(.058+thrust),near(.31056-thrust*.68)],[px(-.19),py(.235),near(.1902)],
+    [-l*.42,py(.135),h*.025],
+  ];
+  const c:Point[]=[
+    [px(.035),py(-.30),h*.7028],[px(.22),py(-.49),h*.9836],
+    [l*.49,py(-.27),h*.16],[l*.46,py(-.005),h*.025],
+    [px(.24),py(.095),near(.1662)],[px(.085),py(-.025),near(.3218)],
+  ];
+  const outlet:Point[]=[
+    [px(-.26),py(.30),near(.11)],[px(-.075),py(.135+thrust),near(.21)],
+    [px(.09),py(.13+thrust),near(.19)],[px(.265),py(.35),near(.08)],
+    [px(.095),py(.535),0],[px(-.15),py(.49),h*.018],
+  ];
+  // A broad bedding surface is one inclined mother plane. Its triangulation
+  // must not create a spurious star-shaped ridge at the triangulation centre.
+  // Different layers, and the actual section planes below, carry the folds.
+  const plane=(outline:Point[],peak:number,dx:number,dy:number):Point=>{
+    const depth=outline.map(p=>p[0]*dx+p[1]*dy),min=Math.min(...depth),span=Math.max(...depth)-min;
+    for(let i=0;i<outline.length;i++)outline[i]=[outline[i]![0],outline[i]![1],(depth[i]!-min)/span*peak];
+    const x=outline.reduce((n,p)=>n+p[0],0)/outline.length,y=outline.reduce((n,p)=>n+p[1],0)/outline.length;
+    return [x,y,(x*dx+y*dy-min)/span*peak];
+  };
+  const aCentre=plane(a,h*.73,.16,-1);
+  const cCentre=plane(c,h,-.35,-1);
+  const outletCentre=plane(outlet,near(.25),.13,-1);
+  // Adjacent cut faces share the fault; large tops are neither concentric rings
+  // nor three independently placed stones. Low relief uses these same planes.
+  bedMass(b,a,aCentre,0,[3,4],Math.min(24,Math.max(9,w*.12)));
+  bedMass(b,c,cCentre,1,[4,5],Math.min(21,Math.max(8,w*.105)));
+  bedMass(b,outlet,outletCentre,2,[0,1],Math.min(17,Math.max(7,w*.085)));
 }
 
-/** Ejected fragments remain rooted in the common pressure outlet. Full-section
- * inclined cuts surround the top; no lamination strips are used for thickness. */
-function pressureWedge(b: MeshBuilder, top: readonly [Point, Point, Point, Point], bevel: number): void {
-  const cx = top.reduce((sum, p) => sum + p[0], 0) / 4, cy = top.reduce((sum, p) => sum + p[1], 0) / 4;
-  const foot: Point[] = top.map(p => {
-    const dx = p[0] - cx, dy = p[1] - cy, length = Math.hypot(dx, dy) || 1;
-    return [p[0] + dx / length * bevel, p[1] + dy / length * bevel, 0] as Point;
-  });
-  b.quad(top[0], top[1], top[2], top[3], 0, [[0, 0], [18, 0], [18, 26], [0, 26]], [0, 0, 1], NATIVE_VOLUME_REGIONS.compressed);
-  for (let i = 0; i < 4; i++) {
-    const next = (i + 1) % 4;
-    b.quad(top[i]!, foot[i]!, foot[next]!, top[next]!, 1,
-      [[i * 12, top[i]![2]], [i * 12, 0], [(i + 1) * 12, 0], [(i + 1) * 12, top[next]![2]]], [0, 0, 1], NATIVE_VOLUME_REGIONS.fractured);
+/** A fault opens into one broad mouth and returns into its parent bed at both
+ * ends. The peeled shoulder is real coplanar geometry with its own material
+ * region, not a bright perimeter painted around a complete stone. */
+function bedMass(b:MeshBuilder,top:readonly Point[],centre:Point,salt:number,faultEdges:readonly number[],cutWidth:number):void {
+  const n=top.length,s=b.spec;
+  const lerp=(a:Point,c:Point,t:number):Point=>[a[0]+(c[0]-a[0])*t,a[1]+(c[1]-a[1])*t,a[2]+(c[2]-a[2])*t];
+  type EdgePoint={top:Point;foot:Point;shoulder:Point;mouth:number;distance:number;fault:boolean};
+  const rim:EdgePoint[]=[];
+  let distance=0;
+  const mouthPeak=.43+phase(s.seed,700+salt)*.16;
+  for(let i=0;i<n;i++){
+    const p=top[i]!,q=top[(i+1)%n]!,rank=faultEdges.indexOf(i),fault=rank>=0;
+    const subdivisions=fault?5:1;
+    const edgeLength=Math.hypot(q[0]-p[0],q[1]-p[1]);
+    for(let j=0;j<subdivisions;j++){
+      const t=j/subdivisions,at=lerp(p,q,t),along=(rank+t)/faultEdges.length;
+      const lobe=fault?clamp(along<mouthPeak?along/mouthPeak:(1-along)/(1-mouthPeak),0,1):0;
+      const mouth=lobe*lobe*(3-2*lobe);
+      // Inset the upper lip while spreading its lower termination. This single
+      // opening has a real width gradient, rather than another uniform bevel.
+      const radius=Math.hypot(at[0]-centre[0],at[1]-centre[1])||1;
+      const nx=(at[0]-centre[0])/radius,ny=(at[1]-centre[1])/radius;
+      const inset=cutWidth*mouth*(salt===2?.52:.78);
+      const lip=lerp(at,centre,Math.min(.26,inset/radius));
+      const burial=clamp(at[2]/Math.max(3,s.height*.16),0,1);
+      const spread=cutWidth*burial*(fault?.13+mouth*1.8:.26);
+      const foot:Point=[at[0]+nx*spread,at[1]+ny*spread,0];
+      const shoulder=lerp(lip,centre,Math.min(.34,(5+cutWidth*.7)*mouth/radius));
+      rim.push({top:lip,foot,shoulder,mouth,distance:distance+edgeLength*t,fault});
+    }
+    distance+=edgeLength;
   }
-  b.quad(foot[0]!, foot[3]!, foot[2]!, foot[1]!, 2, [[0, 0], [0, 26], [18, 26], [18, 0]], [0, 0, -1]);
+  let contactPlaced=false;
+  for(let i=0;i<rim.length;i++){
+    const next=(i+1)%rim.length,a=rim[i]!,c=rim[next]!;
+    const region=salt===2?NATIVE_VOLUME_REGIONS.compressed:NATIVE_VOLUME_REGIONS.intact;
+    const topUv=(p:Point):UV=>[p[0],p[1]];
+    b.quad(centre,a.shoulder,c.shoulder,centre,0,
+      [topUv(centre),topUv(a.shoulder),topUv(c.shoulder),topUv(centre)],[0,0,1],region);
+    // The exposure is assigned to an actual shoulder adjacent to the mouth;
+    // arbitrary triangles elsewhere on the broad top cannot acquire it.
+    b.quad(a.shoulder,a.top,c.top,c.shoulder,0,
+      [topUv(a.shoulder),topUv(a.top),topUv(c.top),topUv(c.shoulder)],[0,0,1],NATIVE_VOLUME_REGIONS.peeled);
+    const endDistance=next===0?distance:c.distance;
+    const sideUv=(p:Point,d:number):UV=>[d,p[2]];
+    const open=a.fault&&Math.max(a.mouth,c.mouth)>.08;
+    b.quad(a.top,a.foot,c.foot,c.top,open?1:0,
+      [sideUv(a.top,a.distance),sideUv(a.foot,a.distance),sideUv(c.foot,endDistance),sideUv(c.top,endDistance)],
+      [0,0,1],open?NATIVE_VOLUME_REGIONS.fractured:region);
+    b.quad([centre[0],centre[1],0],c.foot,a.foot,[centre[0],centre[1],0],2,
+      [topUv(centre),topUv(c.foot),topUv(a.foot),topUv(centre)],[0,0,-1],NATIVE_VOLUME_REGIONS.intact);
+    if(salt===0&&!contactPlaced&&a.fault&&a.mouth>.5&&c.mouth>a.mouth){
+      // Recessed contact lies on this very cut plane. It does not float above
+      // a removed intermediate bevel or light up the complete rim.
+      // Use barycentric coordinates of the actual first section triangle.
+      // Bilinear interpolation of a warped quad can sit under its rasterized
+      // plane, concealing the emitter even when its boundary looks correct.
+      const point=(t:number,v:number):Point=>[a.top[0]+t*(c.foot[0]-a.top[0])+v*(a.foot[0]-a.top[0]),
+        a.top[1]+t*(c.foot[1]-a.top[1])+v*(a.foot[1]-a.top[1]),
+        a.top[2]+t*(c.foot[2]-a.top[2])+v*(a.foot[2]-a.top[2])+.055];
+      const p0=point(.08,.08),p1=point(.46,.08),p2=point(.46,.42),p3=point(.08,.42);
+      b.quad(p0,p3,p2,p1,3,[[0,0],[0,6],[12,6],[12,0]],[0,0,1],NATIVE_VOLUME_REGIONS.compressed);
+      b.joint([(p0[0]+p1[0]+p2[0]+p3[0])*.25,(p0[1]+p1[1]+p2[1]+p3[1])*.25,(p0[2]+p1[2]+p2[2]+p3[2])*.25]);
+      contactPlaced=true;
+    }
+  }
 }
 
 /** Swept elliptical strands share a pulled centre. Long axes, taper and the
@@ -254,19 +264,26 @@ function sweptBundle(b: MeshBuilder, spine: readonly Point[], radius: number, sa
     const whole = i / steps * (spine.length - 1), segment = Math.min(spine.length - 2, Math.floor(whole));
     const t = i === steps ? 1 : whole - segment;
     const a = spine[segment]!, c = spine[segment + 1]!;
-    const smooth = t * t * (3 - 2 * t), dx = c[0] - a[0], dy = c[1] - a[1], len = Math.hypot(dx, dy);
+    const before = spine[Math.max(0, segment - 1)]!, after = spine[Math.min(spine.length - 1, segment + 2)]!;
+    const curve = (channel:number, q:number):number => .5*((2*a[channel]!) + (-before[channel]!+c[channel]!)*q
+      +(2*before[channel]!-5*a[channel]!+4*c[channel]!-after[channel]!)*q*q
+      +(-before[channel]!+3*a[channel]!-3*c[channel]!+after[channel]!)*q*q*q);
+    const tangent = (channel:number):number => .5*((-before[channel]!+c[channel]!)
+      +2*(2*before[channel]!-5*a[channel]!+4*c[channel]!-after[channel]!)*t
+      +3*(-before[channel]!+3*a[channel]!-3*c[channel]!+after[channel]!)*t*t);
+    const dx=tangent(0),dy=tangent(1),len=Math.hypot(dx,dy)||1;
     const vx = -dy / len, vy = dx / len, along = i / steps;
     const clampWidth = 1 - Math.exp(-Math.pow((along - .50) / .16, 2)) * (salt === 0 ? .30 : .12);
-    const rootTaper = .68 + Math.sin(along * Math.PI) * .34;
+    const rootTaper = .28 + Math.pow(Math.sin(along * Math.PI),.7) * .75;
     const r = radius * rootTaper * clampWidth;
-    const cx = a[0] + dx * smooth, cy = a[1] + dy * smooth, cz = Math.max(r * .62, a[2] + (c[2] - a[2]) * smooth);
+    const cx=curve(0,t),cy=curve(1,t),cz=Math.max(r*.62,curve(2,t));
     const ring: Point[] = [];
     for (let j = 0; j < cross; j++) {
       const angle = j / cross * TAU;
       // Broad facets flatten under tension. A few joined ridges survive at the
       // ends; the intact trunk does not become a comb of equal-width noodles.
       const root = Math.pow(Math.abs(along - .5) * 2, 5);
-      const flute = 1 + Math.cos(angle * 5 + salt) * .09 * root;
+      const flute = 1 + Math.cos(angle * 5 + salt + along * 3) * (.045 + .07 * root);
       ring.push([cx + vx * Math.cos(angle) * r * flute, cy + vy * Math.cos(angle) * r * flute,
         cz + Math.sin(angle) * r * (.57 + .19 * Math.sin(along * Math.PI))]);
     }
@@ -309,7 +326,7 @@ function shellPetal(b: MeshBuilder, ox: number, oy: number, rx: number, ry: numb
   for (let i = 0; i <= around; i++) {
     const angle = begin + i / around * sweep, ca = Math.cos(angle), sa = Math.sin(angle);
     const jointCompression = Math.exp(-Math.pow((i / around - .78) / .20, 2));
-    const lip = 1 + .09 * s.distortion * Math.sin(angle * 2 + seedPhase) - jointCompression * .10;
+    const lip = 1 + .12 * s.distortion * Math.sin(angle * 2 + seedPhase) - jointCompression * .10 + .045 * Math.sin(angle * 9 + salt);
     const rimZ = s.height * heightScale * (.60 + .26 * Math.sin(angle - .5) + .12 * Math.cos(angle * 2 + seedPhase));
     const thickness = clamp(s.thickness / Math.min(rx, ry), .10, .42);
     const rimInner = .69 - thickness * .43;
@@ -325,7 +342,7 @@ function shellPetal(b: MeshBuilder, ox: number, oy: number, rx: number, ry: numb
       // The biased cavity floor turns one side into a broad near wall and the
       // opposite side into a compressed back wall. Their normals cannot agree.
       ring.push([ox + ca * rx * r + inner * rx * (.24 + s.distortion * .17) + flare * rx * .10 * r,
-        oy + sa * ry * r - inner * ry * (.13 + s.distortion * .08), z * (1 - flare * .34)]);
+        oy + sa * ry * r - inner * ry * (.13 + s.distortion * .08), z * (1 - flare * .34) * (1 + .07 * Math.sin(angle * 7 + seedPhase) * r)]);
     }
     rings.push(ring);
   }

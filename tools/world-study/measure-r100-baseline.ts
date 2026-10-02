@@ -10,7 +10,10 @@ import type { RiftCheckpoint } from '../../src/types/rift-checkpoint';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const SELF = fileURLToPath(import.meta.url);
-const DEFAULT_OUTPUT = 'docs/qa/artifacts/rift-r100-i01/generation-baseline.json';
+const OUTPUT_DIRECTORY = 'docs/qa/artifacts/rift-r100-i01';
+// Frozen in docs/tasks/rift-r100-i01.md. A measurement completing is not a pass.
+const BUDGET = Object.freeze({ minimumNaturalSamples: 32, naturalP95Ms: 5000,
+  coldRestoreP95Ms: 5000, workerHardTimeoutMs: 60000 });
 type Identity = RiftCheckpoint['identity'];
 type Channel = 'natural-selection-v2' | 'directed-regression-v2' | 'historical-fixture-v1';
 interface SampleCase { id: string; channel: Channel; seed: number; identity?: Identity; expected?: Record<string, string> }
@@ -21,6 +24,9 @@ interface WorkerResult {
   error?: string; stderr?: string; [key: string]: unknown;
 }
 interface RecordEntry { entry: SampleCase; generation?: WorkerResult; restoration?: WorkerResult }
+type GateStatus = 'pass' | 'fail' | 'not-measured';
+interface TimingGate { status: GateStatus; planned: number; measured: number; failed: number;
+  sampleP95Ms: number | null; limitMs: number; reason: string }
 const hash = (value: string | Buffer): string => createHash('sha256').update(value).digest('hex');
 const json = (value: unknown): string => JSON.stringify(value);
 
@@ -163,6 +169,41 @@ function summary(records: RecordEntry[], planned: SampleCase[]): unknown[] {
   });
 }
 
+function timingGate(records: RecordEntry[], planned: SampleCase[], mode: 'generation' | 'restoration', limitMs: number): TimingGate {
+  const cohort = planned.filter(row => row.channel === 'natural-selection-v2');
+  // Match the predeclared cohort; unrelated successful cases cannot replace failures.
+  const results = cohort.map(entry => records.find(row => row.entry.id === entry.id
+    && row.entry.channel === entry.channel && row.entry.seed === entry.seed)?.[mode]);
+  const measured = results.filter((row): row is WorkerResult & { elapsedMs: number } => row?.status === 'ok'
+    && typeof row.elapsedMs === 'number' && Number.isFinite(row.elapsedMs) && row.elapsedMs >= 0);
+  const failed = results.filter(row => row && (row.status !== 'ok' || !measured.includes(row as typeof measured[number]))).length;
+  const p95 = stats(measured.map(row => row.elapsedMs)).sampleP95!;
+  const complete = cohort.length >= BUDGET.minimumNaturalSamples && measured.length === cohort.length
+    && new Set(cohort.map(row => row.id)).size === cohort.length && new Set(cohort.map(row => row.seed)).size === cohort.length;
+  return { status: failed || (complete && p95 !== null && p95 > limitMs) ? 'fail' : complete ? 'pass' : 'not-measured',
+    planned: cohort.length, measured: measured.length, failed, sampleP95Ms: p95, limitMs,
+    reason: failed ? 'Predeclared natural cases failed, timed out, or returned invalid timing; no replacement.'
+      : !complete ? `Need all predeclared natural cases and at least ${BUDGET.minimumNaturalSamples} distinct seeds; successful subset is not a pass.`
+        : p95! > limitMs ? 'Complete natural sample p95 exceeds the frozen limit.' : 'Complete natural sample meets the frozen p95 limit.' };
+}
+
+function budgetVerdict(records: RecordEntry[], planned: SampleCase[], workerBudgetMs: number, sourcesUnchanged: unknown) {
+  const naturalGeneration = timingGate(records, planned, 'generation', BUDGET.naturalP95Ms);
+  const naturalColdRestore = timingGate(records, planned, 'restoration', BUDGET.coldRestoreP95Ms);
+  const sourceIntegrity: GateStatus = sourcesUnchanged === true ? 'pass' : sourcesUnchanged === false ? 'fail' : 'not-measured';
+  const workerTimeout: GateStatus = Number.isFinite(workerBudgetMs) && workerBudgetMs > 0
+    && workerBudgetMs <= BUDGET.workerHardTimeoutMs ? 'pass' : 'fail';
+  const statuses = [naturalGeneration.status, naturalColdRestore.status, sourceIntegrity, workerTimeout];
+  return { scope: 'Frozen legacy v1/v2 Node sample timing only; not R100 world-package or browser qualification.',
+    sampleTimingStatus: statuses.includes('fail') ? 'fail' : statuses.every(status => status === 'pass') ? 'pass' : 'not-measured',
+    limits: BUDGET, naturalGeneration, naturalColdRestore, sourceIntegrity,
+    workerTimeout: { status: workerTimeout, configuredMs: workerBudgetMs, limitMs: BUDGET.workerHardTimeoutMs },
+    interactiveMainThread: { status: 'not-measured', reason: 'Node subprocess isolation does not prove browser generation/admission/prebake tasks stay within 50 ms.' },
+    nativeRuntime: { status: 'not-measured', reason: 'Requires separate native route >=60 s; no frame/CPU/GPU conclusion from generation time.' },
+    resourceLifecycle: { status: 'not-measured', reason: 'Requires browser resource counts and retained memory after repeated entry/exit; Node RSS is not this evidence.' },
+    i01PerformanceQualification: 'not-established' };
+}
+
 function numberArg(name: string, fallback: number, min: number, max: number): number {
   const index = process.argv.indexOf(name), value = index < 0 ? fallback : Number(process.argv[index + 1]);
   if (!Number.isSafeInteger(value) || value < min || value > max) throw new Error(`${name} must be ${min}–${max}`);
@@ -171,15 +212,17 @@ function numberArg(name: string, fallback: number, min: number, max: number): nu
 
 async function main(): Promise<void> {
   const naturalCount = numberArg('--natural-count', 32, 1, 256);
-  const workerBudgetMs = numberArg('--worker-budget-ms', 30000, 1000, 120000);
+  const workerBudgetMs = numberArg('--worker-budget-ms', BUDGET.workerHardTimeoutMs, 1000, BUDGET.workerHardTimeoutMs);
   const totalBudgetMs = numberArg('--budget-ms', 300000, 1000, 1800000);
   const outputIndex = process.argv.indexOf('--output');
   if (outputIndex >= 0 && !process.argv[outputIndex + 1]) throw new Error('--output requires a path');
-  const output = resolve(ROOT, outputIndex < 0 ? DEFAULT_OUTPUT : process.argv[outputIndex + 1]!);
+  const runStamp = new Date().toISOString().replace(/[:.]/g, '-');
+  const output = resolve(ROOT, outputIndex < 0 ? `${OUTPUT_DIRECTORY}/generation-${runStamp}-${process.pid}.json` : process.argv[outputIndex + 1]!);
+  if (existsSync(output)) throw new Error(`Refusing to overwrite existing evidence: ${output}; choose a new --output path.`);
   const planned = cases(naturalCount), records: RecordEntry[] = [], sources = sourceManifest();
   const started = performance.now();
   const report: Record<string, unknown> = {
-    schemaVersion: 1, createdAt: new Date().toISOString(), status: 'running',
+    schemaVersion: 2, createdAt: new Date().toISOString(), status: 'running',
     revision: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).trim(),
     sourceHash: hash(json(sources)), sources,
     host: { platform: platform(), release: release(), arch: process.arch, node: process.version,
@@ -198,6 +241,7 @@ async function main(): Promise<void> {
   };
   const persist = (): void => {
     report.elapsedMs = performance.now() - started; report.summary = summary(records, planned);
+    report.budgetVerdict = budgetVerdict(records, planned, workerBudgetMs, report.sourcesUnchanged);
     report.remainingCaseIds = planned.slice(records.length).map(row => row.id);
     mkdirSync(dirname(output), { recursive: true });
     const temporary = `${output}.tmp-${process.pid}`;
@@ -229,11 +273,23 @@ async function main(): Promise<void> {
   report.status = !report.sourcesUnchanged ? 'source-changed-during-run'
     : incomplete ? 'partial-budget-limited' : failed ? 'complete-with-errors' : 'finite-sample-complete';
   persist();
-  console.log(json({ output: relative(ROOT, output), status: report.status, elapsedMs: report.elapsedMs, summary: report.summary }));
-  if (!report.sourcesUnchanged || incomplete || failed) process.exitCode = 1;
+  console.log(json({ output: relative(ROOT, output), status: report.status, elapsedMs: report.elapsedMs,
+    summary: report.summary, budgetVerdict: report.budgetVerdict }));
+  if (!report.sourcesUnchanged || incomplete || failed || budgetVerdict(records, planned, workerBudgetMs, report.sourcesUnchanged).sampleTimingStatus !== 'pass') process.exitCode = 1;
 }
 
 if (process.argv.includes('--worker')) console.log(json(await worker(JSON.parse(readFileSync(0, 'utf8')) as WorkerInput)));
+else if (process.argv.includes('--review-report')) {
+  const input = process.argv[process.argv.indexOf('--review-report') + 1];
+  if (!input) throw new Error('--review-report requires an existing report path');
+  const original = JSON.parse(readFileSync(resolve(ROOT, input), 'utf8'));
+  if (!Array.isArray(original.records) || !Array.isArray(original.planned)) throw new Error('Report must retain records and predeclared cases');
+  const verdict = budgetVerdict(original.records, original.planned, original.workerBudgetMs, original.sourcesUnchanged);
+  console.log(json({ reviewedReport: input, historicalCreatedAt: original.createdAt, historicalRevision: original.revision,
+    historicalSourceHash: original.sourceHash, originalStatus: original.status,
+    note: 'Read-only budget assessment of recorded timings, not a new measurement or current-source validation.', budgetVerdict: verdict }));
+  if (verdict.sampleTimingStatus !== 'pass') process.exitCode = 1;
+}
 else if (process.argv.includes('--self-test')) {
   assert.deepEqual(stats([]), { count: 0, min: null, sampleP50: null, sampleP95: null, max: null, mean: null });
   assert.deepEqual(stats([4, 1, 3, 2]), { count: 4, min: 1, sampleP50: 2, sampleP95: 4, max: 4, mean: 2.5 });
@@ -242,5 +298,27 @@ else if (process.argv.includes('--self-test')) {
   assert.equal(cohort.filter(row => row.channel === 'historical-fixture-v1').length, 4);
   assert(natural.every(row => Number.isSafeInteger(row.seed) && row.seed >= 0 && row.seed <= 0xffffffff));
   assert.equal((summary([], cohort)[0] as { planned: number }).planned, 32);
-  console.log('PASS R100 measurement statistics, fixed distinct natural cohort, independent channel denominators and historical fixtures');
+  const successes: RecordEntry[] = natural.map(entry => ({ entry,
+    generation: { status: 'ok', mode: 'generate', elapsedMs: 5000 }, restoration: { status: 'ok', mode: 'restore', elapsedMs: 5000 } }));
+  assert.equal(budgetVerdict(successes, cohort, 60000, true).sampleTimingStatus, 'pass');
+  assert.equal(budgetVerdict(successes, cohort, 60000, true).interactiveMainThread.status, 'not-measured');
+  assert.equal(budgetVerdict(successes.slice(1), cohort, 60000, true).sampleTimingStatus, 'not-measured');
+  assert.equal(budgetVerdict(successes, cohort, 60001, true).sampleTimingStatus, 'fail');
+  assert.equal(budgetVerdict(successes, cohort, 60000, false).sampleTimingStatus, 'fail');
+  const failedCohort = structuredClone(successes);
+  failedCohort[0]!.generation = { status: 'timeout', mode: 'generate' };
+  // A fast directed result cannot fill the missing natural seed.
+  failedCohort.push({ entry: cohort.find(row => row.channel === 'directed-regression-v2')!,
+    generation: { status: 'ok', mode: 'generate', elapsedMs: 1 } });
+  const failedVerdict = budgetVerdict(failedCohort, cohort, 60000, true);
+  assert.equal(failedVerdict.naturalGeneration.measured, 31);
+  assert.equal(failedVerdict.naturalGeneration.failed, 1);
+  assert.equal(failedVerdict.sampleTimingStatus, 'fail');
+  const slow = structuredClone(successes);
+  slow[0]!.generation!.elapsedMs = 8000; slow[1]!.generation!.elapsedMs = 8000;
+  assert.equal(budgetVerdict(slow, cohort, 60000, true).naturalGeneration.status, 'fail');
+  const malformed = structuredClone(successes);
+  malformed[0]!.restoration!.elapsedMs = NaN;
+  assert.equal(budgetVerdict(malformed, cohort, 60000, true).naturalColdRestore.status, 'fail');
+  console.log('PASS R100 measurement statistics, fixed cohorts, separate denominators, 60 s ceiling, budget failures, incomplete/invalid evidence and unmeasured browser gates');
 } else await main();

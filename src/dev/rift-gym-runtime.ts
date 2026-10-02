@@ -19,6 +19,8 @@ import { BuildLabMemoryStorage, prepareBuildLabRun } from './build-lab-session';
 
 export interface RiftGymRuntimeState {
   readonly performance: ReturnType<RiftGymPerformance['snapshot']>;
+  /** Registry/DOM counts sampled on demand, not a GPU or garbage-collection measurement. */
+  readonly resources: RiftGymResourceSnapshot | null;
   readonly ready: boolean;
   readonly running: boolean;
   readonly starting: boolean;
@@ -26,7 +28,29 @@ export interface RiftGymRuntimeState {
   readonly probe: ReturnType<RiftScene['probeBuildLabState']>;
 }
 
+export interface RiftGymResourceSnapshot {
+  readonly method: string;
+  readonly textureKeys: number;
+  readonly registeredTextureCanvases: number;
+  readonly domCanvases: number;
+  readonly sharedCanvasPoolUsed: number;
+  readonly sharedCanvasPoolFree: number;
+  readonly displayListEntries: number;
+  readonly scenes: readonly {
+    readonly key: string;
+    readonly active: boolean;
+    readonly paused: boolean;
+    readonly displayListEntries: number;
+  }[];
+  readonly soundsRegistered: number;
+  readonly soundsPlaying: number;
+  readonly soundsPaused: number;
+  readonly soundsPendingRemoval: number;
+  readonly limitations: string;
+}
+
 export interface RiftGymRuntimeOptions {
+  readonly performance?: { readonly sampleMs?: number };
   readonly onReady: () => void;
   readonly onState: (state: RiftGymRuntimeState) => void;
   /** A native result/return action; explicit stop() does not recursively call this. */
@@ -44,6 +68,7 @@ export interface RiftGymRuntime {
   pause(): void;
   destroy(): void;
   getState(): RiftGymRuntimeState;
+  restartPerformanceSample(): void;
 }
 
 export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRuntime {
@@ -51,7 +76,7 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
   // Must precede Phaser boot and every inventory/session initialization.
   saveManager.setStorage(new BuildLabMemoryStorage());
   let ready = false, running = false, starting = false, created = false, disposed = false;
-  const frameProbe = new RiftGymPerformance();
+  const frameProbe = new RiftGymPerformance(options.performance);
   let epoch = 0;
   let detachCreate: (() => void) | null = null;
 
@@ -76,9 +101,49 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
   game.events.on(Phaser.Core.Events.PRE_STEP, () => frameProbe.before(running && created && !game.scene.isPaused('RiftScene')));
   game.events.on(Phaser.Core.Events.POST_RENDER, () => frameProbe.after());
   const scene = (): RiftScene => game.scene.getScene('RiftScene') as RiftScene;
+  function snapshotResources(): RiftGymResourceSnapshot | null {
+    if (disposed || !game.isBooted) return null;
+    const keys = game.textures.getTextureKeys();
+    const textureCanvases = new Set<HTMLCanvasElement>();
+    for (const key of keys) {
+      const texture = game.textures.get(key);
+      for (const source of texture.source) {
+        if (source.image instanceof HTMLCanvasElement) textureCanvases.add(source.image);
+      }
+      for (const source of texture.dataSource) {
+        if (source.image instanceof HTMLCanvasElement) textureCanvases.add(source.image);
+      }
+    }
+    const scenes = game.scene.getScenes(false).map(value => ({
+      key: value.sys.settings.key,
+      active: value.sys.isActive(),
+      paused: value.sys.isPaused(),
+      displayListEntries: value.sys.displayList?.length ?? 0,
+    }));
+    const sounds = game.sound.getAll('');
+    let soundsPlaying = 0, soundsPaused = 0, soundsPendingRemoval = 0;
+    for (const sound of sounds) {
+      if (sound.isPlaying) soundsPlaying++;
+      if (sound.isPaused) soundsPaused++;
+      if (sound.pendingRemove) soundsPendingRemoval++;
+    }
+    return {
+      method: 'Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState',
+      textureKeys: keys.length,
+      registeredTextureCanvases: textureCanvases.size,
+      domCanvases: document.querySelectorAll('canvas').length,
+      sharedCanvasPoolUsed: Phaser.Display.Canvas.CanvasPool.total(),
+      sharedCanvasPoolFree: Phaser.Display.Canvas.CanvasPool.free(),
+      displayListEntries: scenes.reduce((sum, value) => sum + value.displayListEntries, 0),
+      scenes,
+      soundsRegistered: sounds.length, soundsPlaying, soundsPaused, soundsPendingRemoval,
+      limitations: 'Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates.',
+    };
+  }
   function getState(): RiftGymRuntimeState {
     return {
       ready, running, starting, performance: frameProbe.snapshot(),
+      resources: snapshotResources(),
       paused: running && created && game.scene.isPaused('RiftScene'),
       probe: running && created ? scene().probeBuildLabState() : null,
     };
@@ -211,5 +276,5 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
   window.addEventListener('error', onError);
   window.addEventListener('unhandledrejection', onRejection);
   window.addEventListener('pagehide', destroy, { once: true });
-  return { start, stop, pause, togglePause, destroy, getState };
+  return { start, stop, pause, togglePause, destroy, getState, restartPerformanceSample: () => frameProbe.reset() };
 }

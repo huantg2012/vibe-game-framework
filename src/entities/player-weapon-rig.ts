@@ -65,6 +65,7 @@ export class PlayerWeaponRig {
   private readonly weapon: Phaser.GameObjects.Image;
   private readonly upper: Phaser.GameObjects.Image;
   private readonly arm: Phaser.GameObjects.Graphics;
+  private readonly bodyImages: readonly Phaser.GameObjects.Image[];
   private equipped = false;
   private heldContactMs = 0;
   private lastContactRemainingMs = 0;
@@ -76,6 +77,7 @@ export class PlayerWeaponRig {
 
   constructor(private readonly scene: Phaser.Scene, private readonly body: Phaser.GameObjects.Image) {
     this.upper = scene.add.image(body.x, body.y, body.texture.key).setOrigin(.5, 22 / 32).setCrop(0, 0, 32, 22).setVisible(false);
+    this.bodyImages = [body, this.upper];
     // A 32px asset is an authoring canvas, not the held object's physical length.
     // Keep the shared grip fixed; the iron itself occupies about 18 world pixels.
     this.weapon = scene.add.image(0, 0, body.texture.key)
@@ -150,6 +152,9 @@ export class PlayerWeaponRig {
   }
 
   private readonly boundsScratch = new Phaser.Geom.Rectangle();
+
+  /** Equipped actors split the live body frame into feet and a separately posed torso. */
+  getBodyImages(): readonly Phaser.GameObjects.Image[] { return this.bodyImages; }
 
   /** Include actual rotated tool and torso bounds; only reads the current pose. */
   includeVisualBounds(out: Phaser.Geom.Rectangle): void {
