@@ -37,6 +37,8 @@ Codex IAB，固定 1600×1040，DPR 1；逻辑 960×640，相机 1.5。通过页
 
 ## 最终工程复核
 
+实现保存于 `e0a460d`，未推送。
+
 `npm run build`、`npm run check:r100-masters`、`npm run check:rift-recovery`（21个恢复检查脚本）通过。真实浏览器中，巡查启动后按 W，记录转为“真实键盘接管”；重新启动巡查再暂停，记录转为“暂停停止巡查”，运行错误/警告为0。检查证明所列工程边界，不提升上述美术与性能结论。
 
 本批[源码指纹](artifacts/rift-r100-i02/source-hashes.json)、[专项日志](artifacts/rift-r100-i02/checks.txt)、[恢复日志](artifacts/rift-r100-i02/recovery.txt)、[构建日志](artifacts/rift-r100-i02/build.txt)、[台账与包合同检查](artifacts/rift-r100-i02/r100-ledger.txt)以及[浏览器接管/暂停记录](artifacts/rift-r100-i02/patrol-controls.json)已持久保存。全貌结构检查无错误；历史来源指纹漂移与旧证据适用性警告保留，未以整库重新基线消除。
