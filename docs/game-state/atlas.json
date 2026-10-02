@@ -76,7 +76,7 @@
       "id": "development",
       "title": "开发入口与退役方向",
       "coverage": "mapped",
-      "note": "已标注共享 DEV、地图研究、构筑实验与被终止的 3D 路线，开发数据不算正式玩家可用内容。"
+      "note": "共享DEV、地图研究、构筑实验与退役3D分开登记；新增完整v2地图gym，30兼容组合/任意种子/同图原生内存试玩，有限浏览器验证通过，不作为正式供给或玩家体验人审。"
     }
   ],
   "featureFiles": [
@@ -358,6 +358,17 @@
         "tools/recovery/check-world-generation-version.ts",
         "tools/recovery/fixtures/world-generation-v1.json",
         "tools/qa/check-rift-conditions-browser.mjs"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "rift-gym",
+      "title": "当前正式v2地图巡览开发入口",
+      "include": [
+        "rift-gym.html",
+        "src/dev/rift-gym*",
+        "tools/world-study/check-rift-gym.ts",
+        "tools/qa/check-rift-gym-browser.mjs"
       ],
       "exclude": []
     }

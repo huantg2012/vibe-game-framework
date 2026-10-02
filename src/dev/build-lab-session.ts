@@ -28,7 +28,10 @@ function requireSuccess<T>(result: InventoryResult<T>): T {
 }
 
 /** Scene must be stopped first, so old listeners cannot consume the next run's items. */
-export function prepareBuildLabRun(loadoutId: BuildLabLoadoutId): string {
+export function prepareBuildLabRun(
+  loadoutId: BuildLabLoadoutId,
+  versions?: Parameters<typeof inventoryStore.beginRun>[1],
+): string {
   const definition = BUILD_LAB_LOADOUTS.find(row => row.id === loadoutId);
   if (!definition) throw new Error(`Unknown build-lab loadout: ${loadoutId}`);
   // Caller installs the memory backend before boot. Never restore browser storage here.
@@ -51,6 +54,6 @@ export function prepareBuildLabRun(loadoutId: BuildLabLoadoutId): string {
   contaminantSystem.syncInventoryDerivedState();
   saveManager.save();
   const runId = `build-lab-${crypto.randomUUID()}`;
-  requireSuccess(inventoryStore.beginRun(runId));
+  requireSuccess(inventoryStore.beginRun(runId, versions));
   return runId;
 }

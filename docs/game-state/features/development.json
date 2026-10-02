@@ -9,7 +9,8 @@
     "entryPoints": [
       "gym.html",
       "enemy-inspector.html",
-      "combat-lab.html"
+      "combat-lab.html",
+      "gym.html → Rift全地图巡览（rift-gym.html，F049）"
     ],
     "sources": [
       {
@@ -45,7 +46,8 @@
       "COH-F016"
     ],
     "evidence": [
-      "COH-E-SRC-development"
+      "COH-E-SRC-development",
+      "COH-E121"
     ],
     "unknowns": [
       "DEV #rift/#purif 深链与正式存档路径不是同等证据；旧 #rift=0 持久首帧限制仍见漆面专项报告。"
@@ -55,13 +57,15 @@
     "id": "COH-F049",
     "title": "世界方向查看与隔离搜撤体验",
     "domain": "development",
-    "summary": "地图查看器和隔离搜撤页用于选择世界/空间/种子，复用共享地表与正式 RiftScene；与首页生产存档入口分开。",
+    "summary": "新增Rift v2地图巡览gym：从正式启用池与兼容过程枚举当前30组合，任意uint32种子、同种子巡检、完整投放/路线注解，并将同一productionWorld传入原生RiftScene试玩；Boot前内存存储隔离。旧材料查看器及缩减试玩继续保留。",
     "delivery": "dev",
     "work": "settled",
     "entryPoints": [
       "rift-worlds.html",
       "rift-world-play.html",
-      "world-study.html"
+      "world-study.html",
+      "rift-gym.html",
+      "gym.html?lesson=rift-world → rift-gym.html"
     ],
     "sources": [
       {
@@ -83,18 +87,81 @@
       {
         "path": "data/rift-world-spaces.csv",
         "role": "data"
+      },
+      {
+        "path": "rift-gym.html",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-gym.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-gym.css",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-gym-model.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-gym-worker.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-gym-runtime.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/build-lab-session.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/gym/main.ts",
+        "role": "code"
+      },
+      {
+        "path": "gym.html",
+        "role": "code"
+      },
+      {
+        "path": "vite.config.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-rift-gym.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-rift-gym-browser.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/dev/gym.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-gym-2026-10-02.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
       "COH-F011",
       "COH-F012",
-      "COH-F013"
+      "COH-F013",
+      "COH-F052"
     ],
     "evidence": [
-      "COH-E-SRC-development"
+      "COH-E-SRC-development",
+      "COH-E121"
     ],
     "unknowns": [
-      "研究页的特定光照或内存存档不能替代正式构建验证。"
+      "当前目录30组合及固定种子巡检不是穷举uint32种子或连续条件；预览仅原生地表与只读部署注解，模型/实时光照在试玩查看。",
+      "训练库存、内存存档与开发检查不代表正式自然资源供给、长期体验或用户美术认可；旧研究页/缩减试玩的边界保持。"
     ]
   },
   {

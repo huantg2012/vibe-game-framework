@@ -20,7 +20,11 @@ import { bindDomUiRootToGame } from '@/ui/dom/panel-styles';
 if (import.meta.env.DEV) assertBalanceInvariants();
 
 // The old configuration yard is replaced by the focused inspector.
-if (new URLSearchParams(location.search).get('lesson') === 'lexicon') {
+if (new URLSearchParams(location.search).get('lesson') === 'rift-world') {
+  const params = new URLSearchParams(location.search);
+  params.delete('lesson');
+  location.replace(`/rift-gym.html?${params}`);
+} else if (new URLSearchParams(location.search).get('lesson') === 'lexicon') {
   location.replace('/enemy-inspector.html');
 } else {
 const game = new Phaser.Game(

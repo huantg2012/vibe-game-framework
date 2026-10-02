@@ -1,0 +1,45 @@
+{
+  "evidenceNote": "Recorded from the already executed check-rift-gym.ts output; not a new test run.",
+  "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-rift-gym.ts",
+  "exitCode": 0,
+  "passed": true,
+  "combinations": 30,
+  "checks": [
+    "CSV coverage",
+    "query validation and roundtrip",
+    "production equivalence",
+    "complete deployment",
+    "fine support and Host grids",
+    "structured-clone hydration",
+    "pixel transfer"
+  ],
+  "records": [
+    {
+      "world": "ash-strata",
+      "space": "open-scars",
+      "program": "layered-deposition",
+      "seed": 0,
+      "effectiveSeed": 4240457136,
+      "signature": "824c8a2c",
+      "fallbackUsed": false
+    },
+    {
+      "world": "crystal-fibre",
+      "space": "fracture-fields",
+      "program": "directional-fracture",
+      "seed": 20261002,
+      "effectiveSeed": 411634575,
+      "signature": "dc478d53",
+      "fallbackUsed": false
+    },
+    {
+      "world": "carmine-lacquer",
+      "space": "open-scars",
+      "program": "coalescent-growth",
+      "seed": 4294967295,
+      "effectiveSeed": 43725777,
+      "signature": "35dc82a0",
+      "fallbackUsed": false
+    }
+  ]
+}

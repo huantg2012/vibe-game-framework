@@ -5,6 +5,19 @@ purpose: 开发练习场（gym）的 Agent 入口。人要看敌人怎么走、a
 
 # 开发练习场
 
+## Rift 全地图巡览（2026-10-02，当前 v2）
+
+入口 `/rift-gym.html`，或 `gym.html?lesson=rift-world`。当前开发服务器为 `http://127.0.0.1:3027/rift-gym.html`；端口随实际服务器。此课主登记 `COH-F049`，与练习场 `F048` 互链。旧地图课保留作历史生成器检查，旧 `rift-world-play.html` 保留缩减遭遇训练，均不替代本入口。
+
+- 目录来自正式启用世界池 × 启用且能力兼容的过程，当前5世界×2空间×3过程＝30组。按组合前后翻、直接选目录，保持同一种子；种子支持完整uint32、前后步进与随机。连续条件按正式编译器从种子采样，不能把30组称为穷举全部地图。
+- 「以当前种子巡检全部组合」顺序生成、显示、记录准入结果，可取消。每次只持有当前地图与地表，后台Worker生成并烘焙，切换时终止旧Worker，迟到响应不覆盖新图。目录状态按组合+请求种子区分，失败显示原因，不冒充通过或静默换组合。
+- 全图：共享原生地表烘焙；拖动、滚轮、适配、1:1；可切换投放、正式8px支撑、短路线/低暴露路线/敌人巡逻。投放标记是开发注解，占漆框仅是锚格，占空框仅是部署区域；实际形体、光照与危险时序进入试玩看。
+- 「进入这张地图」将同一份已准入 `WorldProductionMap` 传给正式 `RiftScene`，保留8薪柴/3污染物、敌人、32px Host网格、8px身体网格、地标、原生视野/光照、实际翻找与撤离。没有二次生成、简化敌人或全图视野作弊。训练装备取既有负载，run采用正式目录v1与战斗规则v2；它不验证自然资源供给。
+- WASD/方向键、Space、E、Q/F沿用原生操作；Esc或侧栏暂停。聚焦输入/选择器及页面失焦自动暂停；返回后释放Phaser全局键捕获。重开同图重新准备训练库存；返回全图不重新生成地图。
+- Boot之前安装 `BuildLabMemoryStorage`，不读取/修改正式纪录。当前URL可复制，导出记录含条件快照、实际种子、准入拒绝、布局及本页巡检结果。刷新清空训练局与检查历史，URL重建当前选择。
+
+实现：`src/dev/rift-gym{,-model,-worker,-runtime}.ts` / `.css`。DEV界面为开发工具，不重绘游戏HUD；生产构建保留拒绝入口。验证见 [Rift gym QA](../qa/rift-gym-2026-10-02.md)。
+
 ## I28 污染物新目录验证入口
 
 48件目录通过正式 `/` → 主菜单 → 净化点 → 裂隙获得、供奉揭晓、备行装配。完整机制测试：`npm run check:contaminant-catalog`；整帧/旧档：`npm run check:rift-recovery`。`tools/qa/i28-browser.mjs`和`check-i28-reveal-persistence.mjs`使用独立浏览器存档，后者是明确标注的拒写准备态，不是自然获取统计。图标导出：`node --import tsx tools/inventory/export-contaminant-catalog-icons.ts`；固定背景诊断：`node --import tsx tools/inventory/check-catalog-context.ts --strict`。原战斗试验场继续提供旧13族对照，没有暗中将旧type映射成新物件。

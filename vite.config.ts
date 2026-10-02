@@ -23,6 +23,7 @@ export default defineConfig({
         combatLab: path.resolve(__dirname, 'combat-lab.html'),
         worldStudy: path.resolve(__dirname, 'rift-worlds.html'),
         worldPlay: path.resolve(__dirname, 'rift-world-play.html'),
+        riftGym: path.resolve(__dirname, 'rift-gym.html'),
       },
     },
   },

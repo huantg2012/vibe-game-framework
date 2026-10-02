@@ -1,0 +1,619 @@
+{
+  "status": "failed",
+  "method": "Real gym controls and keyboard; read-only state probes; isolated browser save sentinel.",
+  "errors": [],
+  "checks": [
+    {
+      "label": "gym redirect / native worker / full map",
+      "detail": {
+        "selection": {
+          "world": "ash-strata",
+          "space": "open-scars",
+          "program": "layered-deposition",
+          "seed": 20261002
+        },
+        "seed": 411634575,
+        "signature": "6cc08e0e"
+      }
+    },
+    {
+      "label": "same-map native play / Esc / focus pause / restart",
+      "detail": {
+        "catalogVersion": "contaminant-v1",
+        "combatRulesVersion": 2
+      }
+    },
+    {
+      "label": "invalid seed rejected / rapid requests cancel",
+      "detail": {
+        "world": "ash-strata",
+        "space": "open-scars",
+        "program": "coalescent-growth",
+        "seed": 20261002
+      }
+    }
+  ],
+  "failure": "TimeoutError: page.waitForFunction: Timeout 300000ms exceeded.",
+  "lastState": {
+    "selection": {
+      "world": "ash-strata",
+      "space": "open-scars",
+      "program": "layered-deposition",
+      "seed": 20261002
+    },
+    "mapSelection": {
+      "world": "ash-strata",
+      "space": "open-scars",
+      "program": "layered-deposition",
+      "seed": 20261002
+    },
+    "busy": false,
+    "playing": false,
+    "tour": false,
+    "combinationCount": 30,
+    "results": {
+      "ash-strata:open-scars:layered-deposition:20261002": {
+        "status": "passed",
+        "effectiveSeed": 411634575
+      }
+    },
+    "metadata": {
+      "world": "ash-strata",
+      "space": "open-scars",
+      "contentFragmentTypeId": "frag-library",
+      "requestedSeed": 20261002,
+      "effectiveSeed": 411634575,
+      "attempt": 0,
+      "rejected": [],
+      "signature": "6cc08e0e",
+      "bodySize": 20,
+      "supportTileSize": 8,
+      "hostTileSize": 32,
+      "reachableBodySeats": 16714,
+      "extractionRoutePx": 1600,
+      "conditions": {
+        "version": 1,
+        "programId": "layered-deposition",
+        "programVersion": 1,
+        "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+        "seed": 20261002,
+        "rule": "deposition",
+        "requiredCapabilities": [
+          "surface:strata",
+          "field:direction",
+          "support:single-plane"
+        ],
+        "excludedCapabilities": [
+          "collision:dynamic",
+          "space:multilevel"
+        ],
+        "parameters": {
+          "strength": 0.4085289716836996,
+          "coherence": 0.5890779670514166,
+          "scale": 1.1513814241974614
+        },
+        "streams": {
+          "world": 906012583,
+          "layout": 411634575,
+          "material": 3795542598,
+          "placement": 3937165817,
+          "encounters": 1549608978,
+          "motion": 3086548759
+        },
+        "semantic": {
+          "minimumDeepDetourPx": 377.24471002817154,
+          "safeMaxThreat": 0.08,
+          "routeThreatPenalty": 6,
+          "bodySizePx": 20,
+          "supportStepPx": 8,
+          "voidBlocksSight": true,
+          "sceneryBlocksMovement": false
+        },
+        "scenery": {
+          "kind": "strata-fold",
+          "scale": 1.1513814241974614,
+          "radiusPx": 84.76921381930354,
+          "density": 0.45150848619829054,
+          "motion": {
+            "kind": "settle",
+            "amplitude": 0.5683557683136314,
+            "periodSeconds": 12.422242543660104
+          }
+        },
+        "fallbackSeeds": [
+          70421,
+          175150,
+          1000
+        ]
+      },
+      "semantic": {
+        "version": 1,
+        "encounterAdjustments": [
+          {
+            "id": "ENM_INF_04",
+            "from": {
+              "x": 976,
+              "y": 816
+            },
+            "to": {
+              "x": 1584,
+              "y": 592
+            }
+          }
+        ],
+        "shortRoute": {
+          "points": [
+            {
+              "x": 208,
+              "y": 848
+            },
+            {
+              "x": 240,
+              "y": 848
+            },
+            {
+              "x": 272,
+              "y": 848
+            },
+            {
+              "x": 304,
+              "y": 848
+            },
+            {
+              "x": 336,
+              "y": 848
+            },
+            {
+              "x": 368,
+              "y": 848
+            },
+            {
+              "x": 400,
+              "y": 848
+            },
+            {
+              "x": 432,
+              "y": 848
+            },
+            {
+              "x": 464,
+              "y": 848
+            },
+            {
+              "x": 496,
+              "y": 816
+            },
+            {
+              "x": 528,
+              "y": 784
+            },
+            {
+              "x": 560,
+              "y": 752
+            },
+            {
+              "x": 592,
+              "y": 720
+            },
+            {
+              "x": 624,
+              "y": 688
+            },
+            {
+              "x": 656,
+              "y": 656
+            },
+            {
+              "x": 688,
+              "y": 624
+            },
+            {
+              "x": 720,
+              "y": 592
+            },
+            {
+              "x": 752,
+              "y": 592
+            },
+            {
+              "x": 784,
+              "y": 592
+            },
+            {
+              "x": 816,
+              "y": 592
+            },
+            {
+              "x": 848,
+              "y": 592
+            },
+            {
+              "x": 880,
+              "y": 592
+            },
+            {
+              "x": 912,
+              "y": 560
+            },
+            {
+              "x": 944,
+              "y": 528
+            },
+            {
+              "x": 976,
+              "y": 496
+            },
+            {
+              "x": 1008,
+              "y": 464
+            },
+            {
+              "x": 1040,
+              "y": 464
+            },
+            {
+              "x": 1072,
+              "y": 464
+            },
+            {
+              "x": 1104,
+              "y": 432
+            },
+            {
+              "x": 1104,
+              "y": 400
+            },
+            {
+              "x": 1136,
+              "y": 368
+            },
+            {
+              "x": 1168,
+              "y": 336
+            },
+            {
+              "x": 1200,
+              "y": 336
+            },
+            {
+              "x": 1232,
+              "y": 336
+            },
+            {
+              "x": 1264,
+              "y": 336
+            },
+            {
+              "x": 1296,
+              "y": 368
+            }
+          ],
+          "lengthPx": 1332.0773439350246,
+          "exposurePx": 239.0813917639967
+        },
+        "lowExposureRoute": {
+          "points": [
+            {
+              "x": 208,
+              "y": 848
+            },
+            {
+              "x": 208,
+              "y": 816
+            },
+            {
+              "x": 208,
+              "y": 784
+            },
+            {
+              "x": 208,
+              "y": 752
+            },
+            {
+              "x": 208,
+              "y": 720
+            },
+            {
+              "x": 208,
+              "y": 688
+            },
+            {
+              "x": 208,
+              "y": 656
+            },
+            {
+              "x": 240,
+              "y": 624
+            },
+            {
+              "x": 272,
+              "y": 592
+            },
+            {
+              "x": 304,
+              "y": 560
+            },
+            {
+              "x": 336,
+              "y": 528
+            },
+            {
+              "x": 368,
+              "y": 496
+            },
+            {
+              "x": 400,
+              "y": 464
+            },
+            {
+              "x": 432,
+              "y": 432
+            },
+            {
+              "x": 464,
+              "y": 432
+            },
+            {
+              "x": 496,
+              "y": 432
+            },
+            {
+              "x": 528,
+              "y": 432
+            },
+            {
+              "x": 560,
+              "y": 432
+            },
+            {
+              "x": 592,
+              "y": 432
+            },
+            {
+              "x": 624,
+              "y": 432
+            },
+            {
+              "x": 656,
+              "y": 432
+            },
+            {
+              "x": 688,
+              "y": 432
+            },
+            {
+              "x": 720,
+              "y": 432
+            },
+            {
+              "x": 752,
+              "y": 432
+            },
+            {
+              "x": 784,
+              "y": 432
+            },
+            {
+              "x": 816,
+              "y": 432
+            },
+            {
+              "x": 848,
+              "y": 432
+            },
+            {
+              "x": 880,
+              "y": 432
+            },
+            {
+              "x": 912,
+              "y": 432
+            },
+            {
+              "x": 944,
+              "y": 432
+            },
+            {
+              "x": 976,
+              "y": 432
+            },
+            {
+              "x": 1008,
+              "y": 432
+            },
+            {
+              "x": 1040,
+              "y": 432
+            },
+            {
+              "x": 1072,
+              "y": 432
+            },
+            {
+              "x": 1104,
+              "y": 432
+            },
+            {
+              "x": 1104,
+              "y": 400
+            },
+            {
+              "x": 1136,
+              "y": 368
+            },
+            {
+              "x": 1168,
+              "y": 336
+            },
+            {
+              "x": 1200,
+              "y": 336
+            },
+            {
+              "x": 1232,
+              "y": 336
+            },
+            {
+              "x": 1264,
+              "y": 336
+            },
+            {
+              "x": 1296,
+              "y": 368
+            }
+          ],
+          "lengthPx": 1444.5483399593902,
+          "exposurePx": 0
+        },
+        "exposureReduction": 1,
+        "extraRoutePx": 112.4709960243656,
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 2.2737367544323206e-13,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_02",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 165.4903320081214,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_03",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 112.47099602436583,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_04",
+            "tier": "contested",
+            "threat": 0.45025259256362915,
+            "approachThreat": 0.45025259256362915,
+            "extraTravelPx": 56.23549801218314,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_05",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 296.7064940365483,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_06",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 18.745166004061275,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_07",
+            "tier": "deep",
+            "threat": 0.32394760847091675,
+            "approachThreat": 0.5819650888442993,
+            "extraTravelPx": 704.8040405071067,
+            "costBasis": "interaction-area",
+            "interactionSeats": 102
+          },
+          {
+            "id": "KDL_08",
+            "tier": "deep",
+            "threat": 0.4202898442745209,
+            "approachThreat": 0.33270350098609924,
+            "extraTravelPx": 586.0790770385779,
+            "costBasis": "interaction-area",
+            "interactionSeats": 90
+          },
+          {
+            "id": "CTM_NODE_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 18.745166004061275,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_02",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 120.23549801218314,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_03",
+            "tier": "deep",
+            "threat": 0.6333591341972351,
+            "approachThreat": 0.7909825444221497,
+            "extraTravelPx": 716.3532470182736,
+            "costBasis": "interaction-area",
+            "interactionSeats": 57
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "LMK_1",
+            "purpose": "turn"
+          },
+          {
+            "id": "LMK_2",
+            "purpose": "deep-approach"
+          },
+          {
+            "id": "LMK_3",
+            "purpose": "exit-approach"
+          }
+        ],
+        "threatSources": [
+          {
+            "id": "ENM_INF_01",
+            "motion": "motion_patrol",
+            "samples": 10,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_RWR_01",
+            "motion": "motion_patrol",
+            "samples": 12,
+            "sightRange": 180,
+            "hearingRange": 150
+          },
+          {
+            "id": "ENM_INF_03",
+            "motion": "motion_anchor",
+            "samples": 1,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_INF_04",
+            "motion": "motion_patrol",
+            "samples": 18,
+            "sightRange": 206.99999999999997,
+            "hearingRange": 100
+          }
+        ]
+      },
+      "fallbackUsed": false
+    },
+    "runtime": {
+      "ready": true,
+      "running": false,
+      "starting": false,
+      "paused": false,
+      "probe": null
+    },
+    "error": null
+  }
+}

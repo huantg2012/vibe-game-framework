@@ -1,0 +1,38 @@
+
+> coh@0.1.0 build
+> tsc && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 344 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/enemy-inspector.html                      0.80 kB │ gzip:     0.42 kB
+dist/combat-lab.html                           0.80 kB │ gzip:     0.43 kB
+dist/index.html                                1.23 kB │ gzip:     0.65 kB
+dist/rift-world-play.html                      2.77 kB │ gzip:     1.61 kB
+dist/rift-gym.html                             4.13 kB │ gzip:     2.28 kB
+dist/rift-worlds.html                          6.06 kB │ gzip:     2.57 kB
+dist/gym.html                                 20.66 kB │ gzip:     7.04 kB
+dist/assets/rift-gym-worker-BGge7Vxa.js      159.77 kB
+dist/assets/game-config-Cfdr3a8t.css           2.40 kB │ gzip:     0.98 kB
+dist/assets/inspector-Ci-UdHwW.css             3.09 kB │ gzip:     1.26 kB
+dist/assets/combatLab-5ZnVYjlV.css             3.84 kB │ gzip:     1.46 kB
+dist/assets/riftGym-DX4n1pa-.css               4.60 kB │ gzip:     1.71 kB
+dist/assets/worldPlay-xAr5qNjL.js              0.12 kB │ gzip:     0.16 kB
+dist/assets/riftGym-BRPgEOsy.js                0.81 kB │ gzip:     0.53 kB
+dist/assets/main-CIuNTAX6.js                   0.96 kB │ gzip:     0.64 kB
+dist/assets/gym-lexicon-form-O4SJRr-9.js       2.10 kB │ gzip:     1.07 kB
+dist/assets/gym-lexicon-arena-DC6VQw0a.js      4.09 kB │ gzip:     2.14 kB
+dist/assets/worldStudy-D9tF4Oax.js            12.22 kB │ gzip:     5.22 kB
+dist/assets/inspector-DCHgWAbr.js             29.87 kB │ gzip:    11.26 kB
+dist/assets/combatLab-BLmFUZUv.js             31.85 kB │ gzip:    12.81 kB
+dist/assets/vision-textures-C4_QMi6H.js       54.19 kB │ gzip:    22.61 kB
+dist/assets/gym-BFdM467S.js                   64.24 kB │ gzip:    22.25 kB
+dist/assets/game-config-rX0loZp2.js        4,368.53 kB │ gzip: 1,203.00 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 5.39s

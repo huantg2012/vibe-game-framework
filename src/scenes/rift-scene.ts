@@ -50,11 +50,15 @@ import { Player } from '@/entities/player';
 import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
 import { generateRiftLayout } from '@/generation/rift-layout';
 import type { GeneratedRiftLayout } from '@/generation/types';
+import type { WorldProductionMap } from '@/generation/world-study/production-map';
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
   recovery?: { identity: RiftCheckpoint['identity']; externalTargetIds: readonly string[]; checkpoint?: RiftCheckpoint<RiftRecoveryState> };
   createLayout(): GeneratedRiftLayout;
+  /** The same admitted world used by the DEV preview, including its 32px Host support. */
+  productionWorld?: WorldProductionMap;
+  onCreateError?(reason: unknown): void;
   /** Optical terrain only; physics and navigation always retain the source TileGrid. */
   createSightGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid): OccluderGrid;
   onReturn(): void;
@@ -278,7 +282,12 @@ export class RiftScene extends Phaser.Scene {
     try { this.createRun(data); }
     catch (reason) {
       console.error('Rift entry failed; saved record retained', reason);
-      this.scene.start('MainMenuScene', { recoveryError: '出行暂时无法恢复，原记录已保留。' });
+      const fixture = import.meta.env.DEV ? data?.devFixture : undefined;
+      if (fixture) {
+        // DEV hosts do not register a title scene. The host owns cleanup and its error UI.
+        if (fixture.onCreateError) fixture.onCreateError(reason);
+        else { this.scene.stop(); fixture.onReturn(); }
+      } else this.scene.start('MainMenuScene', { recoveryError: '出行暂时无法恢复，原记录已保留。' });
     }
   }
 
@@ -328,9 +337,15 @@ export class RiftScene extends Phaser.Scene {
       installProceduralRiftRecovery();
       this.recovery = { identity: proceduralRiftIdentity(generated), externalTargetIds: [] };
     }
-    const productionWorld = !this.devFixture && this.recovery ? restoreProceduralWorld(this.recovery.identity) : null;
-    const worldId = this.recovery?.identity.generation?.profile.id;
-    this.narrationWorld = !this.devFixture && worldId && NARRATED_WORLDS.has(worldId) ? worldId : 'generic';
+    const productionWorld = this.devFixture?.productionWorld ?? (!this.devFixture && this.recovery ? restoreProceduralWorld(this.recovery.identity) : null);
+    if (this.devFixture?.productionWorld && generated !== productionWorld?.layout) {
+      throw new Error('A production-world fixture must use that exact admitted layout');
+    }
+    if (productionWorld && this.devFixture?.worldSurface === 'runtime') {
+      throw new Error('A production-world fixture already owns its native world surface');
+    }
+    const worldId = productionWorld?.sample.profile.id ?? this.recovery?.identity.generation?.profile.id;
+    this.narrationWorld = worldId && NARRATED_WORLDS.has(worldId) ? worldId : 'generic';
     const narrationRunId = inventoryStore.getRun()?.id ?? `legacy:${generated.seed}:${this.recoveryConditions.cycle}`;
     this.atmosphereSchedule = atmosphereSchedules.get(narrationRunId) ?? new RiftAtmosphereSchedule(!!restoring);
     if (atmosphereSchedules.size >= 16 && !atmosphereSchedules.has(narrationRunId)) atmosphereSchedules.delete(atmosphereSchedules.keys().next().value!);

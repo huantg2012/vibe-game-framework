@@ -10,6 +10,14 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+## 2026-10-02：Rift v2 地图巡览 gym
+
+`rift-gym.html` → `src/dev/rift-gym.ts` 为独立DEV元界面；`gym.html?lesson=rift-world` 转入并保留选择查询。`rift-gym-model.ts` 从正式世界池与能力兼容的过程数据枚举组合，调用同一条件编译和生产地图准入；`rift-gym-worker.ts` 后台执行并烘焙共享地表，只序列化数据，主线程重建TileGrid的方法。取消会终止Worker，request ID隔离迟到响应；不缓存无限地图。
+
+`rift-gym-runtime.ts` 在Boot前装内存SaveStorage，既有训练装备调用可选run版本参数。`RiftDevFixture.productionWorld` 与 `createLayout()` 必须指向同一已准入布局，场景复用正式productionWorld分支的8px物理/32px Host、原生地表、地标和文案，不注册第二套Rift。创建错误交由DEV宿主处理，正式恢复错误仍返回标题。进入、暂停、返回管理全局键盘捕获，结束仍保留原生结算；退出清场再重备库存。
+
+预览的可走格/路线/部署为只读注解；试玩保持960×640逻辑分辨率和原生视野，不把全图展示值注入VisibilitySystem。开发控件位于场景外，原生HUD仍挂共享overlay根。操作合同与证据见 [gym入口](dev/gym.md) / [限定QA](qa/rift-gym-2026-10-02.md)。
+
 ## 2026-10-01：已认可联合首页与净化点正式接入
 
 用户认可`48b700c`并授权推广，视觉合同归[联合规格](specs/art-opening-haven-continuity.md)。正式`MainMenuScene`默认读取`/assets/art/menu-refuge-f.png`，界面挂`#dom-ui-root`，样式为`src/ui/dom/main-menu.css`；标题、操作及记录摘要保留F左侧留白构图。继续、坏包覆盖确认、记录摘要及在途弃局恢复仍调用原session/SaveManager；新建与继续沿用`MenuEntryTransition`，坐姿首页到炉边站姿仍为短剪辑，未新增起身或转场时序。

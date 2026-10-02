@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <title>Rift · 地图巡览</title>
+  <link rel="stylesheet" href="/src/dev/rift-gym.css" />
+</head>
+<body>
+  <aside id="configuration">
+    <div class="eyebrow">DEVELOPMENT GYM / V2</div>
+    <h1>裂隙地图巡览</h1>
+    <p class="muted">正式生成器 · 全量投放 · 隔离试玩</p>
+    <section>
+      <div class="section-heading"><h2>生成组合</h2><span id="ordinal"></span></div>
+      <label>世界<select id="world"></select></label>
+      <div class="pair"><label>空间<select id="space"></select></label><label>过程<select id="program"></select></label></div>
+      <div class="pair"><button id="previous">← 上一组合</button><button id="next">下一组合 →</button></div>
+      <label>种子 <span class="muted">0–4294967295</span><input id="seed" type="text" inputmode="numeric" autocomplete="off" value="20261002" /></label>
+      <div class="seed-actions"><button id="seed-previous" aria-label="上一个种子">−1</button><button id="generate">生成此地图</button><button id="seed-next" aria-label="下一个种子">+1</button><button id="random">随机</button></div>
+      <button id="tour" class="wide">以当前种子巡检全部组合</button>
+      <p id="tour-status" class="muted">逐项生成并检查准入；可随时停止。</p>
+    </section>
+    <section>
+      <div class="section-heading"><h2>同图试玩</h2><span class="tag">内存存档</span></div>
+      <label>训练装备<select id="loadout"></select></label>
+      <button id="play" class="primary wide" disabled>进入这张地图</button>
+      <div class="pair"><button id="pause" disabled>暂停 / 继续</button><button id="return" disabled>返回全图</button></div>
+      <p class="muted">WASD 移动 · 空格攻击 · E 交互<br>Q / F 工具 · Esc 暂停<br>切换组合会结束当前试玩。装备为训练供给，正式进度不受影响。</p>
+    </section>
+    <details open>
+      <summary>组合目录 <span id="catalog-count"></span></summary>
+      <p class="muted">● 当前种子已生成　× 拒绝　· 未检查</p>
+      <div id="catalog"></div>
+    </details>
+    <section>
+      <div class="pair"><button id="copy">复制地图链接</button><button id="export" disabled>导出生成记录</button></div>
+      <p class="muted">遍历当前启用且兼容的组合；连续参数由种子采样，不代表穷举全部地图。导出记录包含条件快照、实际种子与拒绝原因。</p>
+      <nav><a href="/gym.html">练习场</a><a href="/rift-worlds.html">地表研究</a><a href="/">主游戏</a></nav>
+    </section>
+  </aside>
+  <main>
+    <header>
+      <div><div class="eyebrow" id="mode">FULL MAP / 全图检查</div><h2 id="map-title">等待生成</h2></div>
+      <div id="view-actions"><button id="zoom-out" aria-label="缩小">−</button><button id="fit">适配全图</button><button id="pixel">1:1</button><button id="zoom-in" aria-label="放大">+</button></div>
+    </header>
+    <div id="layers">
+      <label><input type="checkbox" id="objects" checked />投放节点</label>
+      <label title="灰虚线：最短撤离路；青实线：低暴露撤离路；红虚线：敌人巡逻"><input type="checkbox" id="routes" />路线 / 巡逻</label>
+      <label><input type="checkbox" id="support" />可走支撑</label>
+      <span class="muted">滚轮缩放 · 拖动平移 · 悬停查看</span>
+    </div>
+    <div id="viewport">
+      <canvas id="map" aria-label="当前正式生成地图的全图与部署标记"></canvas>
+      <div id="game-container" tabindex="0" class="concealed"></div>
+      <div id="waiting" role="status">正在准备地图…</div>
+      <div id="point-info" hidden></div>
+    </div>
+    <div id="legend"><span style="--ink:#d4d9cc">● 出生</span><span style="--ink:#81c7d1">◆ 撤离</span><span style="--ink:#cdb478">■ 薪柴</span><span style="--ink:#bd94d0">◇ 污染物</span><span style="--ink:#d48173">▲ 地面敌人</span><span style="--ink:#799e83">▧ 环境宿主区域</span><span class="muted">路线：灰虚线最短 / 青实线低暴露 / 红虚线巡逻。形体与动效见试玩。</span></div>
+    <footer><div id="status" role="status">资源加载中</div><div id="metrics"></div><pre id="error" role="alert" hidden></pre></footer>
+    <details id="diagnostic"><summary>生成诊断 / 实时状态</summary><pre id="diagnostic-text"></pre></details>
+  </main>
+  <script type="module" src="/src/dev/rift-gym.ts"></script>
+</body>
+</html>
