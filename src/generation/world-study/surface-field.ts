@@ -2,6 +2,7 @@
 import { materialFieldAt } from './material-field';
 import { materialNoise as noise } from './material-noise';
 import { compositionOf, regionFieldAt } from './region-field';
+import { sceneryQuietAt } from './world-scenery';
 import type { SurfaceRecipe, WorldSample } from './types';
 
 const STEP = 8;
@@ -47,7 +48,7 @@ export function buildSurfaceFields(sample: WorldSample): SurfaceFields {
     wear: new Float32Array(cols * rows), deposit: new Float32Array(cols * rows),
     exposure: new Float32Array(cols * rows), direction: new Float32Array(cols * rows), activity: new Float32Array(cols * rows),
     quiet: new Float32Array(cols * rows), accent: new Float32Array(cols * rows) };
-  const seed = sample.seed, scale = spec.scale;
+  const seed = (sample.materialSeed ?? sample.seed), scale = spec.scale;
   for (let row = 0; row < rows; row++) for (let col = 0; col < cols; col++) {
     const x = col * STEP, y = row * STEP, i = row * cols + col;
     const history = materialFieldAt(sample, x, y);
@@ -69,8 +70,9 @@ export function buildSurfaceFields(sample: WorldSample): SurfaceFields {
     fields.wear[i] = wear;
     fields.exposure[i] = exposure;
     fields.deposit[i] = clamp(spec.deposits * (settling * .3 + region.activity * .65 + front * .35 + exposure * .20)) * (1 - region.quiet * .82);
-    fields.activity[i] = region.activity;
-    fields.quiet[i] = region.quiet;
+    const landmarkQuiet = sceneryQuietAt(sample, x, y);
+    fields.activity[i] = region.activity * (1 - landmarkQuiet * .9);
+    fields.quiet[i] = Math.max(region.quiet, landmarkQuiet);
     fields.accent[i] = region.accent;
     fields.direction[i] = history.direction;
   }

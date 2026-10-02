@@ -1,0 +1,12 @@
+/Users/yilungao/coh/src/generation/world-study/production-map.ts:389
+  throw new Error(`Production world admission failed after ${candidates.length} bounded candidates: ${JSON.stringify(rejected)}`);
+        ^
+
+
+Error: Production world admission failed after 11 bounded candidates: [{"seed":4162163185,"reason":"mid patrol too short"},{"seed":4162267914,"reason":"Semantic deployment: insufficient separated deep seats (0)"},{"seed":4162372643,"reason":"mid patrol too short"},{"seed":4162477372,"reason":"Semantic deployment: insufficient separated deep seats (0)"},{"seed":4162582101,"reason":"mid patrol too short"},{"seed":4162686830,"reason":"mid patrol too short"},{"seed":4162791559,"reason":"Semantic deployment: no longer, materially lower-exposure route"},{"seed":4162896288,"reason":"Semantic deployment: no longer, materially lower-exposure route"},{"seed":1000,"reason":"Semantic deployment: no longer, materially lower-exposure route"},{"seed":70421,"reason":"Semantic deployment: no longer, materially lower-exposure route"},{"seed":175150,"reason":"Semantic deployment: insufficient separated deep seats (0)"}]
+    at createWorldProductionMap (/Users/yilungao/coh/src/generation/world-study/production-map.ts:389:9)
+    at rememberWorld (/Users/yilungao/coh/src/managers/rift-recovery.ts:75:17)
+    at createProceduralDeparture (/Users/yilungao/coh/src/managers/rift-recovery.ts:87:18)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-world-generation-version.ts:81:22)
+
+Node.js v22.14.0

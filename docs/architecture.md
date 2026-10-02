@@ -105,6 +105,8 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 ## 正式生产主线：俯视2D（DEC-169，2026-09-16）
 
+**2026-10-02条件生成v2：** `rift-world-conditions.csv` → 专用codegen → `world-conditions.ts`（能力匹配、独立命名随机流、冻结参数、共同组织轴）→ `production-map.ts`（8个地貌候选及有界同地貌重排、完整Host准入）→ `semantic-deployment.ts`（最终形态感知场、8向路线、风险/额外成本布点）→ `world-scenery.ts` / 共享native material painters（座位绑定、低浮雕与可视局部动效）。`production-recipe.ts` 和 `rift-recovery.ts` 以version区分旧无快照/v1/v2，只有v2读取冻结conditions；旧签名不补新默认字段。`tools/world-study/compile-world-library.ts` 记录组合边界与正式选池回归，不替代运行时准入或人审。完整合同仍在原地图spec，本次未增加第二套移动、光照、掉落或场景引擎。
+
 `index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；新出击经 `createProceduralDeparture` 选择 `rift-world-pool.csv` 的世界/空间候选，`createWorldProductionMap` 投放完整正式内容，原生 `TileGrid`、像素角色、视野/战斗/搜撤保持。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。旧在途存档没有generation快照，仍按 `generateRiftLayout` 与原地表恢复；返回后下一趟使用新世界。完整合同见 `specs/system-map-generation.md`。
 
 三维/绘制式关卡探索已由用户终止。下述迭代21–23扩展仅描述仍保留的归档DEV代码，不进入正式随机池，不再作为待推广的技术主线。2026-09-16回退时无运行接口、玩法、CSV或存档格式变更；其基线验证见 [2D记录](qa/rift-2d-baseline.md)。

@@ -1,0 +1,1178 @@
+{
+  "method": "Fresh homepage/new game. Real keyboard travel, search, extraction and return. Full map/body reads only for diagnostic BFS; no state setters or seed override.",
+  "started": "2026-10-02T06:38:31.908Z",
+  "status": "passed",
+  "errors": [],
+  "checkpoints": [
+    {
+      "label": "00-menu",
+      "state": {
+        "scene": "menu",
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false
+          },
+          {
+            "key": "MainMenuScene",
+            "active": true,
+            "paused": false
+          },
+          {
+            "key": "RiftScene",
+            "active": false,
+            "paused": false
+          },
+          {
+            "key": "PurificationScene",
+            "active": false,
+            "paused": false
+          }
+        ]
+      },
+      "text": "那天之后\n\nAFTER THAT DAY\n\n开始",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 0,
+        "physicsGridSize": null
+      }
+    },
+    {
+      "label": "01-new-base",
+      "state": {
+        "scene": "base",
+        "active": true,
+        "paused": false,
+        "player": {
+          "x": 509.1935363330473,
+          "y": 356.8080750016289
+        },
+        "route": "main",
+        "transitioning": false,
+        "pendingSave": false,
+        "worldPlayer": {
+          "x": 3.8,
+          "y": 0,
+          "z": 3.8
+        },
+        "resting": false,
+        "rest": {
+          "x": 528.7701417249435,
+          "y": 391.868164617227,
+          "depth": 5.843310565925061
+        },
+        "nearTarget": "rest",
+        "fps": 54.1875,
+        "camera": {
+          "zoom": 1,
+          "scrollX": 0,
+          "scrollY": 0
+        },
+        "devices": {
+          "core": {
+            "x": 684.1171244047266,
+            "y": 391.69284342892763
+          },
+          "storage": {
+            "x": 730.2721281671445,
+            "y": 249.0266190132017
+          },
+          "purifier": {
+            "x": 435.60091566112055,
+            "y": 294.1897074452697
+          },
+          "entrance": {
+            "x": 458.0525543975513,
+            "y": 334.63152000519256
+          },
+          "offering": {
+            "x": 465.42557207627164,
+            "y": 234.51720081356174
+          },
+          "growth": {
+            "x": 659.5419039172348,
+            "y": 227.8069946921345
+          }
+        },
+        "panels": {
+          "inventory": false,
+          "status": false,
+          "offering": false,
+          "impact": false,
+          "allocation": false,
+          "growth": false
+        }
+      },
+      "text": "薪柴\n0\n潮汐\n第 1 潮\n涨潮\n下次归来\n核心？\n轻微？\nTab\n存续报告\n[E]\n坐下",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 1581,
+        "physicsGridSize": null
+      }
+    },
+    {
+      "label": "02-prepare",
+      "state": {
+        "scene": "base",
+        "active": true,
+        "paused": false,
+        "player": {
+          "x": 489.4816035610002,
+          "y": 349.816778229582
+        },
+        "route": "main",
+        "transitioning": false,
+        "pendingSave": false,
+        "worldPlayer": {
+          "x": 2.919496801833671,
+          "y": 0,
+          "z": 3.7999637825957286
+        },
+        "resting": false,
+        "rest": {
+          "x": 528.7701417249435,
+          "y": 391.868164617227,
+          "depth": 5.843310565925061
+        },
+        "nearTarget": "rift",
+        "fps": 55.890625,
+        "camera": {
+          "zoom": 2.2,
+          "scrollX": 104,
+          "scrollY": 67
+        },
+        "devices": {
+          "core": {
+            "x": 684.1171244047266,
+            "y": 391.69284342892763
+          },
+          "storage": {
+            "x": 730.2721281671445,
+            "y": 249.0266190132017
+          },
+          "purifier": {
+            "x": 435.60091566112055,
+            "y": 294.1897074452697
+          },
+          "entrance": {
+            "x": 458.0525543975513,
+            "y": 334.63152000519256
+          },
+          "offering": {
+            "x": 465.42557207627164,
+            "y": 234.51720081356174
+          },
+          "growth": {
+            "x": 659.5419039172348,
+            "y": 227.8069946921345
+          }
+        },
+        "panels": {
+          "inventory": true,
+          "status": false,
+          "offering": false,
+          "impact": false,
+          "allocation": false,
+          "growth": false
+        }
+      },
+      "text": "备行\n沿旧路出发\nEsc 收起\n在手\n普通撬棍\n耐久 60 / 60\n工具 Q\n未装配\n工具 F\n未装配\n被动\n未装配\n装置·混乱增速\n-21%\n每堆所得示例\n1 / 2 / 5\n小 / 中 / 大份 · 已含亲和\n装置·初始混乱\n15\n全部\n武器\n污染物\n原来顺序\n按名称\n选择装配\n普通撬棍\n在手 · 已成熟 · 普通\n1–1 / 1\n普通撬棍\n普通 · 已成熟 · 在手\n耐久度\n60 / 60\n\n已完成供奉。每次有效命中消耗 1 点耐久度，同次挥击只扣一次，空挥不消耗；耐久归零后损坏。伤害在区间内浮动。\n\n品质\n普通\n构造\n标准\n伤害\n22–28\n污染抗性\n0%\n向下滚动查看 ↓\n换到在手\n只装配已成熟物件 · 空工具位不妨碍出发\n↑↓ 查看 · Tab 移步 · Esc 离开\nShift+Enter 踏入裂隙",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 1581,
+        "physicsGridSize": null
+      }
+    },
+    {
+      "label": "03-paused-entry",
+      "state": {
+        "scene": "rift",
+        "active": false,
+        "paused": true,
+        "ended": false,
+        "pos": {
+          "x": 1556,
+          "y": 884
+        },
+        "hp": 100,
+        "chaos": 15.21066535000002,
+        "carried": 0,
+        "seed": {
+          "seed": 1146799172,
+          "fragmentTypeId": "world-study:ash-strata",
+          "recipeId": "world-space:fracture-fields"
+        },
+        "elapsedMs": 533.3299999999997,
+        "exit": {
+          "id": "EXIT_01",
+          "position": {
+            "x": 180,
+            "y": 500
+          },
+          "triggerRadius": 32
+        },
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "kind": "kindling",
+            "pos": {
+              "x": 340,
+              "y": 468
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_02",
+            "kind": "kindling",
+            "pos": {
+              "x": 1620,
+              "y": 756
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_03",
+            "kind": "kindling",
+            "pos": {
+              "x": 1012,
+              "y": 564
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_04",
+            "kind": "kindling",
+            "pos": {
+              "x": 852,
+              "y": 724
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_05",
+            "kind": "kindling",
+            "pos": {
+              "x": 436,
+              "y": 564
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_06",
+            "kind": "kindling",
+            "pos": {
+              "x": 1044,
+              "y": 1044
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_07",
+            "kind": "kindling",
+            "pos": {
+              "x": 1108,
+              "y": 116
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "KDL_08",
+            "kind": "kindling",
+            "pos": {
+              "x": 788,
+              "y": 148
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_01",
+            "kind": "contaminant",
+            "pos": {
+              "x": 660,
+              "y": 532
+            },
+            "tier": "safe",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_02",
+            "kind": "contaminant",
+            "pos": {
+              "x": 564,
+              "y": 820
+            },
+            "tier": "contested",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_03",
+            "kind": "contaminant",
+            "pos": {
+              "x": 1300,
+              "y": 244
+            },
+            "tier": "deep",
+            "value": 0,
+            "collected": false
+          }
+        ]
+      },
+      "text": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\n完整度\n100/100\n混乱\n15\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n记录\n当前行动已暂停。关闭或刷新后，继续这一趟。\n合上，继续本趟\n放弃本趟\n↑↓ 选中\nEnter 合上，继续本趟\nEsc 合上\n合上后 Tab 本趟拾获 · 世界继续",
+      "diagnostics": {
+        "surface": {
+          "footprint": {
+            "x": 1546,
+            "y": 874,
+            "width": 20,
+            "height": 20
+          },
+          "reflectionPixels": 0,
+          "reflectionUpdatedMs": 533.3299999999997,
+          "textureCount": 2,
+          "phaserFps": 52.5634765625
+        },
+        "saveCharacters": 107348,
+        "physicsGridSize": 8
+      }
+    },
+    {
+      "label": "04-restored",
+      "state": {
+        "scene": "rift",
+        "active": false,
+        "paused": true,
+        "ended": false,
+        "pos": {
+          "x": 1556,
+          "y": 884
+        },
+        "hp": 100,
+        "chaos": 15.26986268333335,
+        "carried": 0,
+        "seed": {
+          "seed": 1146799172,
+          "fragmentTypeId": "world-study:ash-strata",
+          "recipeId": "world-space:fracture-fields"
+        },
+        "elapsedMs": 683.1966666666661,
+        "exit": {
+          "id": "EXIT_01",
+          "position": {
+            "x": 180,
+            "y": 500
+          },
+          "triggerRadius": 32
+        },
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "kind": "kindling",
+            "pos": {
+              "x": 340,
+              "y": 468
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_02",
+            "kind": "kindling",
+            "pos": {
+              "x": 1620,
+              "y": 756
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_03",
+            "kind": "kindling",
+            "pos": {
+              "x": 1012,
+              "y": 564
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_04",
+            "kind": "kindling",
+            "pos": {
+              "x": 852,
+              "y": 724
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_05",
+            "kind": "kindling",
+            "pos": {
+              "x": 436,
+              "y": 564
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_06",
+            "kind": "kindling",
+            "pos": {
+              "x": 1044,
+              "y": 1044
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_07",
+            "kind": "kindling",
+            "pos": {
+              "x": 1108,
+              "y": 116
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "KDL_08",
+            "kind": "kindling",
+            "pos": {
+              "x": 788,
+              "y": 148
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_01",
+            "kind": "contaminant",
+            "pos": {
+              "x": 660,
+              "y": 532
+            },
+            "tier": "safe",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_02",
+            "kind": "contaminant",
+            "pos": {
+              "x": 564,
+              "y": 820
+            },
+            "tier": "contested",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_03",
+            "kind": "contaminant",
+            "pos": {
+              "x": 1300,
+              "y": 244
+            },
+            "tier": "deep",
+            "value": 0,
+            "collected": false
+          }
+        ]
+      },
+      "text": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\n完整度\n100/100\n混乱\n15\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n记录\n当前行动已暂停。关闭或刷新后，继续这一趟。\n合上，继续本趟\n放弃本趟\n↑↓ 选中\nEnter 合上，继续本趟\nEsc 合上\n合上后 Tab 本趟拾获 · 世界继续",
+      "diagnostics": {
+        "surface": {
+          "footprint": {
+            "x": 1546,
+            "y": 874,
+            "width": 20,
+            "height": 20
+          },
+          "reflectionPixels": 0,
+          "reflectionUpdatedMs": 616.5966666666662,
+          "textureCount": 2,
+          "phaserFps": 49.25
+        },
+        "saveCharacters": 107425,
+        "physicsGridSize": 8
+      }
+    },
+    {
+      "label": "05-searched",
+      "state": {
+        "scene": "rift",
+        "active": true,
+        "paused": false,
+        "ended": false,
+        "pos": {
+          "x": 1612.1966499836738,
+          "y": 775.3208801012628
+        },
+        "hp": 100,
+        "chaos": 17.65038981666684,
+        "carried": 1,
+        "seed": {
+          "seed": 1146799172,
+          "fragmentTypeId": "world-study:ash-strata",
+          "recipeId": "world-space:fracture-fields"
+        },
+        "elapsedMs": 5064.303333333327,
+        "exit": {
+          "id": "EXIT_01",
+          "position": {
+            "x": 180,
+            "y": 500
+          },
+          "triggerRadius": 32
+        },
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "kind": "kindling",
+            "pos": {
+              "x": 340,
+              "y": 468
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_02",
+            "kind": "kindling",
+            "pos": {
+              "x": 1620,
+              "y": 756
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": true
+          },
+          {
+            "id": "KDL_03",
+            "kind": "kindling",
+            "pos": {
+              "x": 1012,
+              "y": 564
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_04",
+            "kind": "kindling",
+            "pos": {
+              "x": 852,
+              "y": 724
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_05",
+            "kind": "kindling",
+            "pos": {
+              "x": 436,
+              "y": 564
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_06",
+            "kind": "kindling",
+            "pos": {
+              "x": 1044,
+              "y": 1044
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_07",
+            "kind": "kindling",
+            "pos": {
+              "x": 1108,
+              "y": 116
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "KDL_08",
+            "kind": "kindling",
+            "pos": {
+              "x": 788,
+              "y": 148
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_01",
+            "kind": "contaminant",
+            "pos": {
+              "x": 660,
+              "y": 532
+            },
+            "tier": "safe",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_02",
+            "kind": "contaminant",
+            "pos": {
+              "x": 564,
+              "y": 820
+            },
+            "tier": "contested",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_03",
+            "kind": "contaminant",
+            "pos": {
+              "x": 1300,
+              "y": 244
+            },
+            "tier": "deep",
+            "value": 0,
+            "collected": false
+          }
+        ]
+      },
+      "text": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\nTab\n拾获\n3.0 / 16.0\n完整度\n100/100\n混乱\n17\n稳定\n薪柴\n1\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n+1",
+      "diagnostics": {
+        "surface": {
+          "footprint": {
+            "x": 1602.1966499836738,
+            "y": 765.3208801012628,
+            "width": 20,
+            "height": 20
+          },
+          "reflectionPixels": 0,
+          "reflectionUpdatedMs": 5064.303333333327,
+          "textureCount": 2,
+          "phaserFps": 56.9892578125
+        },
+        "saveCharacters": 108463,
+        "physicsGridSize": 8
+      }
+    },
+    {
+      "label": "06-extracted",
+      "state": {
+        "scene": "rift",
+        "active": true,
+        "paused": false,
+        "ended": true,
+        "pos": {
+          "x": 187.1840457165181,
+          "y": 522.5686915592026
+        },
+        "hp": 85,
+        "chaos": 42.99427586666815,
+        "carried": 1,
+        "seed": {
+          "seed": 1146799172,
+          "fragmentTypeId": "world-study:ash-strata",
+          "recipeId": "world-space:fracture-fields"
+        },
+        "elapsedMs": 29263.323333332934,
+        "exit": {
+          "id": "EXIT_01",
+          "position": {
+            "x": 180,
+            "y": 500
+          },
+          "triggerRadius": 32
+        },
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "kind": "kindling",
+            "pos": {
+              "x": 340,
+              "y": 468
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_02",
+            "kind": "kindling",
+            "pos": {
+              "x": 1620,
+              "y": 756
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": true
+          },
+          {
+            "id": "KDL_03",
+            "kind": "kindling",
+            "pos": {
+              "x": 1012,
+              "y": 564
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_04",
+            "kind": "kindling",
+            "pos": {
+              "x": 852,
+              "y": 724
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_05",
+            "kind": "kindling",
+            "pos": {
+              "x": 436,
+              "y": 564
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_06",
+            "kind": "kindling",
+            "pos": {
+              "x": 1044,
+              "y": 1044
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_07",
+            "kind": "kindling",
+            "pos": {
+              "x": 1108,
+              "y": 116
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "KDL_08",
+            "kind": "kindling",
+            "pos": {
+              "x": 788,
+              "y": 148
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_01",
+            "kind": "contaminant",
+            "pos": {
+              "x": 660,
+              "y": 532
+            },
+            "tier": "safe",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_02",
+            "kind": "contaminant",
+            "pos": {
+              "x": 564,
+              "y": 820
+            },
+            "tier": "contested",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_03",
+            "kind": "contaminant",
+            "pos": {
+              "x": 1300,
+              "y": 244
+            },
+            "tier": "deep",
+            "value": 0,
+            "collected": false
+          }
+        ]
+      },
+      "text": "操作 · 展开 / 收起\n完整度\n85/100\n混乱\n43\n稳定\n薪柴\n1\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路已记\n撤离成功\n出口到了。肩上的东西这才觉得沉。\n带回薪柴\n1\n带回残渣\n0\n击杀\n0\n峰值混乱\n43\n用时\n29s\nR\n返回净化点",
+      "diagnostics": {
+        "surface": {
+          "footprint": {
+            "x": 177.1840457165181,
+            "y": 512.5686915592026,
+            "width": 20,
+            "height": 20
+          },
+          "reflectionPixels": 5,
+          "reflectionUpdatedMs": 29230.003333332934,
+          "textureCount": 2,
+          "phaserFps": 60.52152342911552
+        },
+        "saveCharacters": 7011,
+        "physicsGridSize": 8
+      }
+    },
+    {
+      "label": "07-first-return",
+      "state": {
+        "scene": "base",
+        "active": true,
+        "paused": false,
+        "player": {
+          "x": 509.1935363330473,
+          "y": 356.8080750016289
+        },
+        "route": "main",
+        "transitioning": false,
+        "pendingSave": false,
+        "worldPlayer": {
+          "x": 3.8,
+          "y": 0,
+          "z": 3.8
+        },
+        "resting": false,
+        "rest": {
+          "x": 528.7701417249435,
+          "y": 391.868164617227,
+          "depth": 5.843310565925061
+        },
+        "nearTarget": "rest",
+        "fps": 47.85585692887748,
+        "camera": {
+          "zoom": 1,
+          "scrollX": 0,
+          "scrollY": 0
+        },
+        "devices": {
+          "core": {
+            "x": 684.1171244047266,
+            "y": 391.69284342892763
+          },
+          "storage": {
+            "x": 730.2721281671445,
+            "y": 249.0266190132017
+          },
+          "purifier": {
+            "x": 435.60091566112055,
+            "y": 294.1897074452697
+          },
+          "entrance": {
+            "x": 458.0525543975513,
+            "y": 334.63152000519256
+          },
+          "offering": {
+            "x": 465.42557207627164,
+            "y": 234.51720081356174
+          },
+          "growth": {
+            "x": 659.5419039172348,
+            "y": 227.8069946921345
+          }
+        },
+        "panels": {
+          "inventory": false,
+          "status": false,
+          "offering": false,
+          "impact": true,
+          "allocation": false,
+          "growth": false
+        }
+      },
+      "text": "归来之后\n装置 · 本次损伤\n0\n首次归来，本次免受冲击；供奉积累不增加。\n装置完整度\n核心\n70\n→\n70\n损伤\n0\n储藏\n70\n→\n70\n损伤\n0\n净化器\n70\n→\n70\n损伤\n0\nEnter\n/\nEsc\n合上",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 4080,
+        "physicsGridSize": null
+      }
+    },
+    {
+      "label": "08-closed",
+      "state": {
+        "scene": "base",
+        "active": true,
+        "paused": false,
+        "player": {
+          "x": 509.1935363330473,
+          "y": 356.8080750016289
+        },
+        "route": "main",
+        "transitioning": false,
+        "pendingSave": false,
+        "worldPlayer": {
+          "x": 3.8,
+          "y": 0,
+          "z": 3.8
+        },
+        "resting": false,
+        "rest": {
+          "x": 528.7701417249435,
+          "y": 391.868164617227,
+          "depth": 5.843310565925061
+        },
+        "nearTarget": "rest",
+        "fps": 47.85585692887748,
+        "camera": {
+          "zoom": 1,
+          "scrollX": 0,
+          "scrollY": 0
+        },
+        "devices": {
+          "core": {
+            "x": 684.1171244047266,
+            "y": 391.69284342892763
+          },
+          "storage": {
+            "x": 730.2721281671445,
+            "y": 249.0266190132017
+          },
+          "purifier": {
+            "x": 435.60091566112055,
+            "y": 294.1897074452697
+          },
+          "entrance": {
+            "x": 458.0525543975513,
+            "y": 334.63152000519256
+          },
+          "offering": {
+            "x": 465.42557207627164,
+            "y": 234.51720081356174
+          },
+          "growth": {
+            "x": 659.5419039172348,
+            "y": 227.8069946921345
+          }
+        },
+        "panels": {
+          "inventory": false,
+          "status": false,
+          "offering": false,
+          "impact": false,
+          "allocation": false,
+          "growth": false
+        }
+      },
+      "text": "薪柴\n1\n潮汐\n第 1 潮\n涨潮\n下次归来\n净化器？\n轻微？\nTab\n存续报告\n[E]\n坐下",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 4080,
+        "physicsGridSize": null
+      }
+    }
+  ],
+  "entryIdentity": {
+    "worldId": "procedural-rift",
+    "layoutId": "procedural-rift",
+    "seed": 1146799172,
+    "recipeId": "world-space:fracture-fields",
+    "signature": "b405e871",
+    "generation": {
+      "version": 2,
+      "requestedSeed": 2414525903,
+      "profile": {
+        "id": "ash-strata",
+        "label": "无彩层原",
+        "description": "沉积层片与失色断面",
+        "material": "strata",
+        "surface": {
+          "substrate": "strata",
+          "coating": "strata",
+          "organization": "bands",
+          "coverage": 0.46,
+          "wear": 0.52,
+          "deposits": 0.52,
+          "scale": 1.1,
+          "relief": 0.52,
+          "contrast": 0.75,
+          "regionScale": 1.15,
+          "quietness": 0.48,
+          "formScale": 1.3,
+          "fragmentation": 0.65,
+          "accentCoverage": 0.02
+        },
+        "palette": {
+          "void": 592137,
+          "shadow": 1381653,
+          "floorDeep": 2302755,
+          "floor": 3421236,
+          "floorLight": 4539717,
+          "materialDark": 3158064,
+          "materialMid": 5855577,
+          "materialLight": 7895160,
+          "faceLight": 10066329,
+          "accentDim": 5395026,
+          "accent": 11184810,
+          "accentLight": 13421772,
+          "peak": 15658734,
+          "actorDark": 1842204,
+          "actorMid": 12237498,
+          "actorLight": 16777215,
+          "ground": 3421236,
+          "groundLight": 4539717,
+          "groundDark": 2302755,
+          "wall": 5855577,
+          "wallLight": 10066329,
+          "wallDark": 3158064
+        }
+      },
+      "space": {
+        "id": "fracture-fields",
+        "label": "断裂荒野",
+        "voidFraction": 0.115,
+        "crackFraction": 0.7,
+        "holeScale": 1.1,
+        "directionality": 0.65,
+        "clustering": 0.65
+      },
+      "contentFragmentTypeId": "frag-library",
+      "paintGeometryVersion": 2,
+      "conditions": {
+        "version": 1,
+        "programId": "directional-fracture",
+        "programVersion": 1,
+        "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+        "seed": 2414525903,
+        "rule": "fracture",
+        "requiredCapabilities": [
+          "void:opaque",
+          "field:direction",
+          "support:single-plane"
+        ],
+        "excludedCapabilities": [
+          "collision:dynamic",
+          "space:multilevel"
+        ],
+        "parameters": {
+          "strength": 0.4284819362312555,
+          "coherence": 0.4938401760719716,
+          "scale": 1.2674292349489407
+        },
+        "streams": {
+          "world": 1762781296,
+          "layout": 1146694443,
+          "material": 2868108687,
+          "placement": 4023824600,
+          "encounters": 887621298,
+          "motion": 653318054
+        },
+        "semantic": {
+          "minimumDeepDetourPx": 409.30573493242264,
+          "safeMaxThreat": 0.08,
+          "routeThreatPenalty": 6,
+          "bodySizePx": 20,
+          "supportStepPx": 8,
+          "voidBlocksSight": true,
+          "sceneryBlocksMovement": false
+        },
+        "scenery": {
+          "kind": "strata-fold",
+          "scale": 1.2674292349489407,
+          "radiusPx": 82.59213516925462,
+          "density": 0.31308982475136404,
+          "motion": {
+            "kind": "shear",
+            "amplitude": 0.6624296883819625,
+            "periodSeconds": 11.996223420836031
+          }
+        },
+        "fallbackSeeds": [
+          175150,
+          1000,
+          70421
+        ]
+      }
+    },
+    "catalogVersion": "contaminant-v1",
+    "lootAlgorithmVersion": 1,
+    "combatRulesVersion": 2
+  },
+  "reload": {
+    "before": {
+      "x": 1556,
+      "y": 884
+    },
+    "after": {
+      "x": 1556,
+      "y": 884
+    },
+    "sameIdentity": true
+  },
+  "returnSettlement": {
+    "cycle": 1,
+    "reserve": 1,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 70,
+        "maxHp": 100
+      }
+    ],
+    "outcome": "extract",
+    "baseSettled": true
+  },
+  "finished": "2026-10-02T06:39:12.729Z"
+}

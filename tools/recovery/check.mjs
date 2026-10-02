@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-const checks = ['save-replacement', 'actors', 'effects', 'world', 'state', 'catalog-state', 'catalog-authoritative-plan', 'run', 'persistence', 'settlement-random', 'admission', 'journey-recovery', 'lifecycle', 'minimap', 'current-tools', 'procedural-identity', 'procedural-admission', 'procedural-rescue', 'paint-geometry-compatibility'];
+const checks = ['save-replacement', 'actors', 'effects', 'world', 'state', 'catalog-state', 'catalog-authoritative-plan', 'run', 'persistence', 'settlement-random', 'admission', 'journey-recovery', 'lifecycle', 'minimap', 'current-tools', 'procedural-identity', 'procedural-admission', 'procedural-rescue', 'paint-geometry-compatibility', 'world-generation-version'];
 for (const name of checks) {
   const result = spawnSync(process.execPath, ['--import', 'tsx', '--import', './tools/recovery/register-css.mjs', `tools/recovery/check-${name}.ts`], {
     stdio: 'inherit', env: { ...process.env, TSX_TSCONFIG_PATH: 'tools/contam-preview/tsconfig.json' },

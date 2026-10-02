@@ -20,6 +20,10 @@ import { worldProfileById } from './profiles';
 import { SPACE_PROFILES, validateSpaceProfile, type SpaceProfile } from './space-profile';
 import { getWorldSupportGrid } from './support';
 import type { WorldProfile, WorldSample } from './types';
+import { applyWorldConditions, validWorldConditions, worldOrganizationOf, type ResolvedWorldConditions } from './world-conditions';
+import { applySemanticDeployment } from './semantic-deployment';
+import { validWorldFallbackSeeds } from './production-recipe';
+import { attachWorldScenery } from './world-scenery';
 
 const HOST_TILE = GAME_CONSTANTS.TILE_SIZE;
 const HALF_BODY = GAME_CONSTANTS.PLAYER.BODY_SIZE / 2;
@@ -33,6 +37,11 @@ export interface WorldProductionOptions {
   readonly contentFragmentTypeId: string;
   /** New maps use full geometry; saved unversioned recipes explicitly request 1. */
   readonly paintGeometryVersion?: 1 | 2;
+  /** Omitted means the immutable world-space v1 generation contract. */
+  readonly generationVersion?: 1 | 2;
+  readonly conditions?: ResolvedWorldConditions;
+  /** Candidates for this exact recipe only; every candidate still runs admission. */
+  readonly fallbackSeeds?: readonly number[];
 }
 
 export interface WorldProductionMap {
@@ -54,6 +63,9 @@ export interface WorldProductionMap {
     readonly hostTileSize: number;
     readonly reachableBodySeats: number;
     readonly extractionRoutePx: number;
+    readonly conditions?: ResolvedWorldConditions;
+    readonly semantic?: ReturnType<typeof applySemanticDeployment>['diagnostics'];
+    readonly fallbackUsed?: boolean;
   };
 }
 
@@ -145,13 +157,27 @@ function bakeHost(layout: GeneratedRiftLayout, slot: number) {
 
 /** Place the entire organism, including its breathing envelope. Never carve
  * floor into the void or crop a shape to satisfy the requested Host quota. */
-function seatCompletePaint(layout: GeneratedRiftLayout, grid: TileGrid): GeneratedRiftLayout {
+function seatCompletePaint(layout: GeneratedRiftLayout, grid: TileGrid, excludeItems = false,
+  protectedRoute: readonly Readonly<Vector2>[] = []): GeneratedRiftLayout {
   const tileAt = (point: Readonly<Vector2>): TileCoord => ({ col: Math.floor(point.x / HOST_TILE), row: Math.floor(point.y / HOST_TILE) });
   const spawn = tileAt(layout.spawnPoint);
   const exit = tileAt(layout.extractionPoint.position);
-  const fuel = new Set(layout.kindlingNodes.map(node => {
+  const fuel = new Set([...layout.kindlingNodes, ...(excludeItems ? layout.contaminantNodes : [])].map(node => {
     const cell = tileAt(node.position); return `${cell.col},${cell.row}`;
   }));
+  const routeClearance = new Set<string>();
+  // These semantic points are on the conservative 32px grid. A full-cell margin
+  // covers the 20px swept body, diagonal legs, and the later 4px fine-grid shift.
+  const protect = (point: Readonly<Vector2>): void => {
+    const cell = tileAt(point);
+    for (let y = -1; y <= 1; y++) for (let x = -1; x <= 1; x++) routeClearance.add(`${cell.col + x},${cell.row + y}`);
+  };
+  for (let i = 0; i < protectedRoute.length; i++) {
+    const b = protectedRoute[i]!, a = protectedRoute[Math.max(0, i - 1)]!;
+    const steps = Math.max(1, Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / (HOST_TILE / 2)));
+    for (let step = 0; step <= steps; step++) protect({ x: a.x + (b.x - a.x) * step / steps,
+      y: a.y + (b.y - a.y) * step / steps });
+  }
   const candidates: TileCoord[] = [];
   for (let row = 0; row < grid.rows; row++) for (let col = 0; col < grid.cols; col++)
     if (grid.isWalkable(col, row)) candidates.push({ col, row });
@@ -166,7 +192,7 @@ function seatCompletePaint(layout: GeneratedRiftLayout, grid: TileGrid): Generat
         const col = seat.col + offset.col, row = seat.row + offset.row;
         return Math.max(Math.abs(col - spawn.col), Math.abs(row - spawn.row)) > 3
           && Math.max(Math.abs(col - exit.col), Math.abs(row - exit.row)) > 3
-          && !fuel.has(`${col},${row}`) && !occupied.has(`${col},${row}`);
+          && !fuel.has(`${col},${row}`) && !occupied.has(`${col},${row}`) && !routeClearance.has(`${col},${row}`);
       }));
     allowed.sort((a, b) => {
       const distance = (p: TileCoord) => (p.col - pin.floorCol) ** 2 + (p.row - pin.floorRow) ** 2;
@@ -248,16 +274,37 @@ function admit(sample: WorldSample, space: SpaceProfile, options: WorldProductio
   requestedSeed: number, attempt: number, rejected: readonly { seed: number; reason: string }[]): WorldProductionMap {
   const support = getWorldSupportGrid(sample), host = hostFloorOf(sample), axes = rollFragmentAxes(sample.seed);
   const hostGrid = new TileGrid(host.tileMap);
-  const deployed = deployRiftContents(sample.seed, ruinsOf(sample.seed, options.contentFragmentTypeId, host.tileMap, host.floor), {
+  const tileMap = tileMapOf(support.walkable, support.cols, support.rows, support.tileSize);
+  let semantic: ReturnType<typeof applySemanticDeployment> | undefined;
+  const placement = deployRiftContents(sample.seed, ruinsOf(sample.seed, options.contentFragmentTypeId, host.tileMap, host.floor), {
     recipeId: `world-space:${space.id}`, ...axes,
     routePolicy: 'open-world',
     // Void is an occluder in the accepted terrain. This mask changes only route
     // exposure measurements; no WALL is invented for rendering, physics or pins.
     routeObstructions: Uint8Array.from(host.floor, floor => floor ? 0 : 1),
+    ...(options.generationVersion === 2 ? { placementTag: `conditions:${options.conditions!.streams.placement}`,
+      lexiconSeed: options.conditions!.streams.encounters,
+      postprocess: (candidate: GeneratedRiftLayout): GeneratedRiftLayout | string => {
+        try {
+          const result = applySemanticDeployment(candidate, options.conditions!, {
+            tileMap, coordinateOffset: { x: support.tileSize / 2, y: support.tileSize / 2 },
+          });
+          // Paint is part of the same deployment contract as the retreat route.
+          // Retry another placement on this terrain when its full quota cannot
+          // coexist with that route, rather than discarding an otherwise usable island.
+          const painted = seatCompletePaint({ ...result.layout,
+            fragmentTypeId: `world-study:${sample.profile.id}`, paintGeometryVersion: 2 },
+          hostGrid, true, result.diagnostics.lowExposureRoute.points);
+          admitPaintHosts(painted, hostGrid);
+          semantic = { ...result, layout: { ...result.layout, contaminationPins: painted.contaminationPins } };
+          return semantic.layout;
+        }
+        catch (reason) { return reason instanceof Error ? reason.message : String(reason); }
+      } } : {}),
   });
-  if (typeof deployed === 'string') throw new Error(deployed);
+  if (typeof placement === 'string') throw new Error(placement);
+  const deployed: GeneratedRiftLayout = placement;
   const fragmentTypeId = `world-study:${sample.profile.id}`;
-  const tileMap = tileMapOf(support.walkable, support.cols, support.rows, support.tileSize);
   const scale = HOST_TILE / support.tileSize;
   const fineCell = (point: TileCoord): TileCoord => ({ col: point.col * scale + Math.floor(scale / 2), row: point.row * scale + Math.floor(scale / 2) });
   // A common 4px translation keeps all native actors/nodes on integer 8px cells.
@@ -273,7 +320,8 @@ function admit(sample: WorldSample, space: SpaceProfile, options: WorldProductio
       patrol: { ...enemy.patrol, waypoints: patrolRoute(hostGrid, enemy.patrol.waypoints).map(fineCell) } })),
     landmarks: deployed.landmarks.map(landmark => ({ ...landmark, ...fineCell(landmark) })),
   };
-  if (layout.paintGeometryVersion === 2) layout = seatCompletePaint(layout, hostGrid);
+  if (layout.paintGeometryVersion === 2 && options.generationVersion !== 2)
+    layout = seatCompletePaint(layout, hostGrid);
   const expectedPaint = rollPaintHostCount(sample.seed, axes.contaminationAge);
   if (layout.kindlingNodes.length !== 8 || layout.contaminantNodes.length !== 3
     || layout.enemySpawns.length < 3 || layout.enemySpawns.length > 4
@@ -283,19 +331,24 @@ function admit(sample: WorldSample, space: SpaceProfile, options: WorldProductio
     throw new Error('Production content quota or hearing budget was lost');
   const access = physicalAdmission(layout);
   admitPaintHosts(layout, hostGrid);
+  if (options.generationVersion === 2) sample = attachWorldScenery({ ...sample,
+    materialSeed: options.conditions!.streams.material }, options.conditions!, layout.landmarks, layout.tileMap.tileSize);
   let hash = 2166136261;
   for (const floor of support.walkable) hash = Math.imul(hash ^ floor, 16777619);
   for (const floor of host.floor) hash = Math.imul(hash ^ floor, 16777619);
   const definition = JSON.stringify({ profile: sample.profile, space, contentFragmentTypeId: options.contentFragmentTypeId,
     seed: sample.seed, ...axes, spawnPoint: layout.spawnPoint, extraction: layout.extractionPoint,
     kindling: layout.kindlingNodes, contaminants: layout.contaminantNodes, enemies: layout.enemySpawns,
-    landmarks: layout.landmarks, pins: layout.contaminationPins, draw: layout.contaminationDraw });
+    landmarks: layout.landmarks, pins: layout.contaminationPins, draw: layout.contaminationDraw,
+    ...(options.generationVersion === 2 ? { conditions: options.conditions } : {}) });
   for (let i = 0; i < definition.length; i++) hash = Math.imul(hash ^ definition.charCodeAt(i), 16777619);
   return { sample, layout, hostTileMap: host.tileMap, metadata: {
     world: sample.profile.id, space: space.id, contentFragmentTypeId: options.contentFragmentTypeId,
     requestedSeed, effectiveSeed: sample.seed, attempt, rejected: [...rejected],
     signature: (hash >>> 0).toString(16).padStart(8, '0'), bodySize: HALF_BODY * 2,
     supportTileSize: support.tileSize, hostTileSize: HOST_TILE, ...access,
+    ...(options.generationVersion === 2 ? { conditions: options.conditions!, semantic: semantic!.diagnostics,
+      fallbackUsed: attempt >= MAX_ATTEMPTS } : {}),
   } };
 }
 
@@ -306,17 +359,34 @@ export function createWorldProductionMap(world: string | WorldProfile, spaceInpu
     throw new Error('Production world seed must be an unsigned 32-bit integer');
   if (options.paintGeometryVersion !== undefined && options.paintGeometryVersion !== 1 && options.paintGeometryVersion !== 2)
     throw new Error('Unknown paint geometry contract');
-  const profile = typeof world === 'string' ? worldProfileById(world) : world;
-  const space = typeof spaceInput === 'string' ? SPACE_PROFILES.find(value => value.id === spaceInput) : spaceInput;
+  if (options.generationVersion !== undefined && options.generationVersion !== 1 && options.generationVersion !== 2)
+    throw new Error('Unknown world generation contract');
+  const conditional = options.generationVersion === 2;
+  if (conditional ? !validWorldConditions(options.conditions) || options.conditions!.seed !== requestedSeed
+    || options.paintGeometryVersion === 1
+    : options.conditions !== undefined || options.fallbackSeeds !== undefined)
+    throw new Error('World conditions do not match the generation contract');
+  if (options.fallbackSeeds !== undefined && !validWorldFallbackSeeds(options.fallbackSeeds))
+    throw new Error('Invalid frozen world fallback candidates');
+  if (conditional && options.fallbackSeeds !== undefined
+    && JSON.stringify(options.fallbackSeeds) !== JSON.stringify(options.conditions!.fallbackSeeds))
+    throw new Error('Fallback candidates must match the frozen world conditions');
+  let profile = typeof world === 'string' ? worldProfileById(world) : world;
+  let space = typeof spaceInput === 'string' ? SPACE_PROFILES.find(value => value.id === spaceInput) : spaceInput;
   if (!space) throw new Error(`Unknown space ${String(spaceInput)}`);
   validateSpaceProfile(space);
+  if (conditional) ({ profile, space } = applyWorldConditions(profile, space, options.conditions!));
   if (!CONTAMINATION_DIALECT_DATA[options.contentFragmentTypeId])
     throw new Error(`Unregistered production content dialect: ${options.contentFragmentTypeId}`);
   const rejected: { seed: number; reason: string }[] = [];
-  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-    const seed = (requestedSeed + attempt * RETRY_STRIDE) >>> 0;
-    try { return admit(generateWorldSample(profile, 'loops', seed, space), space, options, requestedSeed, attempt, rejected); }
+  const baseSeed = conditional ? options.conditions!.streams.layout : requestedSeed;
+  const candidates = Array.from({ length: MAX_ATTEMPTS }, (_, attempt) => (baseSeed + attempt * RETRY_STRIDE) >>> 0);
+  for (const seed of conditional ? options.conditions!.fallbackSeeds : []) if (!candidates.includes(seed)) candidates.push(seed);
+  for (let attempt = 0; attempt < candidates.length; attempt++) {
+    const seed = candidates[attempt]!;
+    try { return admit(generateWorldSample(profile, 'loops', seed, space,
+      conditional ? worldOrganizationOf(options.conditions!) : undefined), space, options, requestedSeed, attempt, rejected); }
     catch (reason) { rejected.push({ seed, reason: reason instanceof Error ? reason.message : String(reason) }); }
   }
-  throw new Error(`Production world admission failed after ${MAX_ATTEMPTS} bounded candidates: ${JSON.stringify(rejected)}`);
+  throw new Error(`Production world admission failed after ${candidates.length} bounded candidates: ${JSON.stringify(rejected)}`);
 }

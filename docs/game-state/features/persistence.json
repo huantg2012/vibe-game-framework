@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "正式出发先存意图，运行保存版本化世界身份和完整帧；继续同一趟不重抽、不离线推进，已结算回执阻止重复归来收益。I31出发账本可选保存整趟被动收益事实，随同一库存事务持久化；旧active记录可由仍在的已消费绑定派生，旧settled记录缺字段保持历史未知。",
+    "summary": "正式出发先存意图，运行保存版本化世界身份和完整帧；继续同一趟不重抽、不离线推进，已结算回执阻止重复归来收益。I31出发账本可选保存整趟被动收益事实，随同一库存事务持久化；旧active记录可由仍在的已消费绑定派生，旧settled记录缺字段保持历史未知。 本轮新Rift冻结v2条件/支流及后备候选，身份涵盖最终布局与Host；v1和无generation旧局原样恢复，未知版本或篡改签名拒绝。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -77,6 +77,51 @@
       {
         "path": "docs/qa/iteration-31.md",
         "role": "doc"
+      },
+      {
+        "path": "src/generation/world-study/production-recipe.ts",
+        "role": "code",
+        "note": "generation v1/v2区分与冻结条件验证"
+      },
+      {
+        "path": "src/generation/world-study/production-map.ts",
+        "role": "code",
+        "note": "按版本重建，所有后备种子按同一冻结参数重新准入"
+      },
+      {
+        "path": "tools/recovery/check-world-generation-version.ts",
+        "role": "test",
+        "note": "旧v1金样与新v2冷恢复/篡改拒绝专项"
+      },
+      {
+        "path": "tools/recovery/fixtures/world-generation-v1.json",
+        "role": "test",
+        "note": "修改前捕获的不可变旧身份与地图指纹"
+      },
+      {
+        "path": "tools/recovery/check.mjs",
+        "role": "test",
+        "note": "本轮恢复20组入口"
+      },
+      {
+        "path": "tools/qa/check-rift-conditions-browser.mjs",
+        "role": "test",
+        "note": "正式v2浏览器续局入口与完整帧验证"
+      },
+      {
+        "path": "docs/specs/system-map-generation.md",
+        "role": "spec",
+        "note": "v2冻结快照与原生成版本恢复合同"
+      },
+      {
+        "path": "docs/tasks/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "本轮兼容边界与失败证据要求"
+      },
+      {
+        "path": "docs/qa/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "本轮最终兼容回归与隔离浏览器续局范围，非全异常穷举"
       }
     ],
     "dependsOn": [],
@@ -90,10 +135,12 @@
       "COH-E-I29-R2-RUNTIME",
       "COH-E-I29-R3-AUTO",
       "COH-E101",
-      "COH-E102"
+      "COH-E102",
+      "COH-E120"
     ],
     "unknowns": [
-      "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。"
+      "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",
+      "最终交互站位版本恢复20组通过，含4份不可变v1金样、3份v2冷JSON及生产套件5次随机新出击冷恢复；隔离浏览器一趟真实新建/出击/暂停/刷新同身份同位置/搜取/撤离/首归通过。开发中v2算法变化曾使测试entry签名失配，中间失败保留，不代表已发布v1迁移；未穷尽所有在途异常与长期恢复组合。"
     ]
   },
   {

@@ -1,0 +1,60 @@
+{
+  "startedAt": "2026-10-02T06:34:54.662Z",
+  "status": "pass",
+  "commands": [
+    "npm run check:rift-recovery",
+    "npm run check:world-production"
+  ],
+  "source": {
+    "src/generated/rift-world-conditions-data.ts": "257fb47e344dc4ed8b9c67e2fe69362207aa3a3aaeecee750ae8dbca10fd9be4",
+    "src/generation/rift-layout.ts": "f251fb0e7f26f8f6f22d62b57d55acac98e24aa403de768c8e91f3f4be3abe4f",
+    "src/generation/world-study/ground-material.ts": "9ee8325004cdfb826b8fa256d3cc5a9a3a167ea6a0eda2ee7f342736854e3b06",
+    "src/generation/world-study/layout.ts": "0658f1317e4deb12aa2266ab48a87a5d2bc67290c09b0e8a11875bb9a33ee23c",
+    "src/generation/world-study/light-field.ts": "fa4ed544ea636573293d765419c1d2afb519398a7d7d3762bffd5eb2e19ac7ae",
+    "src/generation/world-study/material-field.ts": "f3971a905e6dcddc2d67a9393df604e412fd2c1c08686bf01e84fd19ef23bc10",
+    "src/generation/world-study/material-forms.ts": "b78b0f1dc147363b0d988a75592ec9520d75e2b1b7cb271f023284268c08b02f",
+    "src/generation/world-study/material-light.ts": "d9ce19155e6cd05eb71fe9a80f856df3a6084cdbeea626aa1692d4b494ff29e3",
+    "src/generation/world-study/material-noise.ts": "e401a0d6289738fb030344f6d6c00027e690d778fe1faf8f280cc8754f4292d5",
+    "src/generation/world-study/material-response.ts": "848e9a05681a1d298cd26014550c2ba56cd5bba181d7b2ec0089ed0326f26647",
+    "src/generation/world-study/movement.ts": "c629b2497ef30684dedfce7e7ba7935207e41cafbccf764207deff86013694d3",
+    "src/generation/world-study/open-space.ts": "19fa36a60c12e7303572d2c6526d2b00d9085169bb3d2c01d338cee7f2ffefe4",
+    "src/generation/world-study/play-map.ts": "8436345000b69220a9bd82772288d2ad79a5a3f0fba485e61e0717847ac63653",
+    "src/generation/world-study/production-map.ts": "981646dcbdbe6bdde81cf8ebf7596a64ee2ff950fdf12c1e6af4fe0dddcd1b22",
+    "src/generation/world-study/production-recipe.ts": "49cfea26c7c77ba48af32fa93155907bee0065ffe792bdfd4b6d3e6e2f6c5c87",
+    "src/generation/world-study/profiles.ts": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d",
+    "src/generation/world-study/raster.ts": "48f348198c1b1a0088f5b9bc6ff6fc8e21dfd2e2fb5efe9f560d0f89658c2766",
+    "src/generation/world-study/region-field.ts": "03e2256d3d0cf0d80e51d9f3af7f353884162445370e63aa27c63083f40ea4b7",
+    "src/generation/world-study/semantic-deployment.ts": "746963d09052b9c3d8e6767e2c5617c54995f8c87aa040809acaabbb53dd9389",
+    "src/generation/world-study/shape.ts": "498f846e415e8aeec8f3a08464e2120fa45702d04a3b4cdaeb73862a94f06364",
+    "src/generation/world-study/space-profile.ts": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590",
+    "src/generation/world-study/space-quality.ts": "1c69fb82a366e5f57c7f92500b959d293da1d5bcb5daf768a68c2bd477893724",
+    "src/generation/world-study/support.ts": "21c380b643339d80ae304ad5f9490d7c41bc11654404ac1f721e83f5e9f0bcc9",
+    "src/generation/world-study/surface-field.ts": "8bf31fe2fdbe9983573cea1030aa5bd7028bcf4bdda4e936b69a1ef2d19c77bb",
+    "src/generation/world-study/surface.ts": "63f6ca1e73d097f3eba75fcf330b30732efb027148632800f4947550c4947aba",
+    "src/generation/world-study/types.ts": "1e55aa5581e38c357036fa0a5af0ee96f47f3c693b830bb6c5796b0ffc40cb0a",
+    "src/generation/world-study/world-conditions.ts": "c3f83782511fafebafbf6d6da2dbb5dc4e02a3a8a1942109e591d256d50fcccd",
+    "src/generation/world-study/world-scenery.ts": "171f1b193730d9cdd87ab42ecb349d9c2fe05594201ccfc08f3d269c0a396176",
+    "src/managers/rift-recovery.ts": "35e4f5d10af166aec09b2d1c8622836802f0a822346e0e99fcb96136b4e005f4",
+    "src/types/rift-checkpoint.ts": "c4eb5d001c69f18dc090285c48686945a4f18cad45095ef0e8f127cb0a6e898e"
+  },
+  "finishedAt": "2026-10-02T06:35:21.471Z",
+  "exitCodes": {
+    "recovery": 0,
+    "worldProduction": 0
+  },
+  "changedDuringRun": [],
+  "logs": [
+    "recovery-before-interaction-seat.txt",
+    "world-production-before-interaction-seat.txt"
+  ],
+  "scope": {
+    "recoveryScripts": 20,
+    "immutableV1Fixtures": 4,
+    "newV2ColdJsonFixtures": 3,
+    "originalMapContracts": 14,
+    "productionPoolChoices": 256,
+    "randomFormalDepartures": 5,
+    "paintRetreat": "all route segments independently swept by actual 20px body; actual baked danger clear at all eleven resource seats"
+  },
+  "stage": "Passed before the later review found center-distance differs from 48px interaction-seat cost; final rerun pending that correction."
+}

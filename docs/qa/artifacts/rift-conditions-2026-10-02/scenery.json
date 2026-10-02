@@ -1,0 +1,2839 @@
+{
+  "status": "PASS",
+  "scope": "5 native v2 baked surfaces; black unsupported space, grayscale identity, visible material-scale difference and motion clock. Not full gameplay/art approval.",
+  "records": [
+    {
+      "world": "ash-strata",
+      "space": "open-scars",
+      "seed": 1002007,
+      "effectiveSeed": 3483074584,
+      "conditions": {
+        "version": 1,
+        "programId": "layered-deposition",
+        "programVersion": 1,
+        "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+        "seed": 1002007,
+        "rule": "deposition",
+        "requiredCapabilities": [
+          "surface:strata",
+          "field:direction",
+          "support:single-plane"
+        ],
+        "excludedCapabilities": [
+          "collision:dynamic",
+          "space:multilevel"
+        ],
+        "parameters": {
+          "strength": 0.5483375923940912,
+          "coherence": 0.8001250842446461,
+          "scale": 1.3496200892492198
+        },
+        "streams": {
+          "world": 1300060046,
+          "layout": 3483074584,
+          "material": 2627341710,
+          "placement": 851913529,
+          "encounters": 2336844271,
+          "motion": 2862198926
+        },
+        "semantic": {
+          "minimumDeepDetourPx": 337.4436855465174,
+          "safeMaxThreat": 0.08,
+          "routeThreatPenalty": 6,
+          "bodySizePx": 20,
+          "supportStepPx": 8,
+          "voidBlocksSight": true,
+          "sceneryBlocksMovement": false
+        },
+        "scenery": {
+          "kind": "strata-fold",
+          "scale": 1.3496200892492198,
+          "radiusPx": 96.22966301521753,
+          "density": 0.4223053013309255,
+          "motion": {
+            "kind": "settle",
+            "amplitude": 0.9313123236410321,
+            "periodSeconds": 10.57639979943633
+          }
+        },
+        "fallbackSeeds": [
+          70421,
+          175150,
+          1000
+        ]
+      },
+      "file": "ash-strata-v2.png",
+      "changed": 49623,
+      "voidPixels": 1004480,
+      "semantic": {
+        "version": 1,
+        "encounterAdjustments": [
+          {
+            "id": "ENM_RWR_01",
+            "from": {
+              "x": 464,
+              "y": 688
+            },
+            "to": {
+              "x": 1520,
+              "y": 720
+            }
+          }
+        ],
+        "shortRoute": {
+          "points": [
+            {
+              "x": 112,
+              "y": 624
+            },
+            {
+              "x": 144,
+              "y": 624
+            },
+            {
+              "x": 176,
+              "y": 624
+            },
+            {
+              "x": 208,
+              "y": 624
+            },
+            {
+              "x": 240,
+              "y": 624
+            },
+            {
+              "x": 272,
+              "y": 624
+            },
+            {
+              "x": 304,
+              "y": 624
+            },
+            {
+              "x": 336,
+              "y": 624
+            },
+            {
+              "x": 368,
+              "y": 624
+            },
+            {
+              "x": 400,
+              "y": 624
+            },
+            {
+              "x": 432,
+              "y": 624
+            },
+            {
+              "x": 464,
+              "y": 624
+            },
+            {
+              "x": 496,
+              "y": 592
+            },
+            {
+              "x": 528,
+              "y": 560
+            },
+            {
+              "x": 560,
+              "y": 528
+            },
+            {
+              "x": 592,
+              "y": 528
+            },
+            {
+              "x": 624,
+              "y": 528
+            },
+            {
+              "x": 656,
+              "y": 528
+            },
+            {
+              "x": 688,
+              "y": 528
+            },
+            {
+              "x": 720,
+              "y": 528
+            },
+            {
+              "x": 752,
+              "y": 528
+            },
+            {
+              "x": 784,
+              "y": 528
+            },
+            {
+              "x": 816,
+              "y": 528
+            },
+            {
+              "x": 848,
+              "y": 528
+            },
+            {
+              "x": 880,
+              "y": 528
+            },
+            {
+              "x": 912,
+              "y": 528
+            },
+            {
+              "x": 944,
+              "y": 528
+            },
+            {
+              "x": 976,
+              "y": 528
+            },
+            {
+              "x": 1008,
+              "y": 496
+            },
+            {
+              "x": 1040,
+              "y": 464
+            },
+            {
+              "x": 1072,
+              "y": 432
+            },
+            {
+              "x": 1104,
+              "y": 432
+            },
+            {
+              "x": 1136,
+              "y": 432
+            },
+            {
+              "x": 1168,
+              "y": 432
+            },
+            {
+              "x": 1200,
+              "y": 432
+            },
+            {
+              "x": 1232,
+              "y": 432
+            },
+            {
+              "x": 1264,
+              "y": 432
+            },
+            {
+              "x": 1296,
+              "y": 432
+            },
+            {
+              "x": 1328,
+              "y": 400
+            },
+            {
+              "x": 1360,
+              "y": 368
+            },
+            {
+              "x": 1392,
+              "y": 336
+            },
+            {
+              "x": 1424,
+              "y": 304
+            },
+            {
+              "x": 1456,
+              "y": 272
+            }
+          ],
+          "lengthPx": 1489.8031739553292,
+          "exposurePx": 347.5887619177851
+        },
+        "lowExposureRoute": {
+          "points": [
+            {
+              "x": 112,
+              "y": 624
+            },
+            {
+              "x": 144,
+              "y": 624
+            },
+            {
+              "x": 176,
+              "y": 624
+            },
+            {
+              "x": 208,
+              "y": 624
+            },
+            {
+              "x": 240,
+              "y": 592
+            },
+            {
+              "x": 272,
+              "y": 560
+            },
+            {
+              "x": 304,
+              "y": 528
+            },
+            {
+              "x": 336,
+              "y": 496
+            },
+            {
+              "x": 368,
+              "y": 464
+            },
+            {
+              "x": 400,
+              "y": 432
+            },
+            {
+              "x": 432,
+              "y": 400
+            },
+            {
+              "x": 464,
+              "y": 368
+            },
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 592,
+              "y": 336
+            },
+            {
+              "x": 624,
+              "y": 336
+            },
+            {
+              "x": 656,
+              "y": 336
+            },
+            {
+              "x": 688,
+              "y": 304
+            },
+            {
+              "x": 720,
+              "y": 272
+            },
+            {
+              "x": 752,
+              "y": 240
+            },
+            {
+              "x": 784,
+              "y": 208
+            },
+            {
+              "x": 816,
+              "y": 176
+            },
+            {
+              "x": 848,
+              "y": 176
+            },
+            {
+              "x": 880,
+              "y": 176
+            },
+            {
+              "x": 912,
+              "y": 176
+            },
+            {
+              "x": 944,
+              "y": 176
+            },
+            {
+              "x": 976,
+              "y": 176
+            },
+            {
+              "x": 1008,
+              "y": 176
+            },
+            {
+              "x": 1040,
+              "y": 176
+            },
+            {
+              "x": 1072,
+              "y": 176
+            },
+            {
+              "x": 1104,
+              "y": 176
+            },
+            {
+              "x": 1136,
+              "y": 176
+            },
+            {
+              "x": 1168,
+              "y": 176
+            },
+            {
+              "x": 1200,
+              "y": 176
+            },
+            {
+              "x": 1232,
+              "y": 176
+            },
+            {
+              "x": 1264,
+              "y": 176
+            },
+            {
+              "x": 1296,
+              "y": 176
+            },
+            {
+              "x": 1328,
+              "y": 176
+            },
+            {
+              "x": 1360,
+              "y": 176
+            },
+            {
+              "x": 1392,
+              "y": 208
+            },
+            {
+              "x": 1424,
+              "y": 240
+            },
+            {
+              "x": 1456,
+              "y": 272
+            }
+          ],
+          "lengthPx": 1569.3321779309636,
+          "exposurePx": 0
+        },
+        "exposureReduction": 1,
+        "extraRoutePx": 79.5290039756344,
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 79.52900397563485,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_02",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 0,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_03",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 124.78383797157335,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_04",
+            "tier": "contested",
+            "threat": 0.45025259256362915,
+            "approachThreat": 0.45025259256362915,
+            "extraTravelPx": 2.2737367544323206e-13,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_05",
+            "tier": "contested",
+            "threat": 0.4343145787715912,
+            "approachThreat": 0.4343145787715912,
+            "extraTravelPx": 282.50966799187836,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_06",
+            "tier": "contested",
+            "threat": 0.5219587683677673,
+            "approachThreat": 0.5219587683677673,
+            "extraTravelPx": 53.01933598375672,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_07",
+            "tier": "deep",
+            "threat": 1,
+            "approachThreat": 0.7312580943107605,
+            "extraTravelPx": 601.3725830020301,
+            "costBasis": "interaction-area",
+            "interactionSeats": 111
+          },
+          {
+            "id": "KDL_08",
+            "tier": "deep",
+            "threat": 0.03371315822005272,
+            "approachThreat": 0.2968325614929199,
+            "extraTravelPx": 530.7451660040597,
+            "costBasis": "interaction-area",
+            "interactionSeats": 75
+          },
+          {
+            "id": "CTM_NODE_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 53.01933598375649,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_02",
+            "tier": "contested",
+            "threat": 0.4202898442745209,
+            "approachThreat": 0.4202898442745209,
+            "extraTravelPx": 53.01933598375672,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_03",
+            "tier": "deep",
+            "threat": 0.06462840735912323,
+            "approachThreat": 0.31362465023994446,
+            "extraTravelPx": 586.2741699796954,
+            "costBasis": "interaction-area",
+            "interactionSeats": 86
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "LMK_1",
+            "purpose": "turn"
+          },
+          {
+            "id": "LMK_2",
+            "purpose": "deep-approach"
+          },
+          {
+            "id": "LMK_3",
+            "purpose": "exit-approach"
+          }
+        ],
+        "threatSources": [
+          {
+            "id": "ENM_INF_01",
+            "motion": "motion_patrol",
+            "samples": 10,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_RWR_01",
+            "motion": "motion_patrol",
+            "samples": 24,
+            "sightRange": 180,
+            "hearingRange": 150
+          },
+          {
+            "id": "ENM_INF_03",
+            "motion": "motion_turn",
+            "samples": 1,
+            "sightRange": 206.99999999999997,
+            "hearingRange": 100
+          }
+        ]
+      }
+    },
+    {
+      "world": "crystal-fibre",
+      "space": "fracture-fields",
+      "seed": 1002008,
+      "effectiveSeed": 3887639257,
+      "conditions": {
+        "version": 1,
+        "programId": "layered-deposition",
+        "programVersion": 1,
+        "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+        "seed": 1002008,
+        "rule": "deposition",
+        "requiredCapabilities": [
+          "surface:strata",
+          "field:direction",
+          "support:single-plane"
+        ],
+        "excludedCapabilities": [
+          "collision:dynamic",
+          "space:multilevel"
+        ],
+        "parameters": {
+          "strength": 0.47041266387095676,
+          "coherence": 0.7245531922904774,
+          "scale": 1.1782091733650304
+        },
+        "streams": {
+          "world": 932939703,
+          "layout": 3887639257,
+          "material": 4288912260,
+          "placement": 1526602926,
+          "encounters": 411320510,
+          "motion": 524069898
+        },
+        "semantic": {
+          "minimumDeepDetourPx": 336.0118240118027,
+          "safeMaxThreat": 0.08,
+          "routeThreatPenalty": 6,
+          "bodySizePx": 20,
+          "supportStepPx": 8,
+          "voidBlocksSight": true,
+          "sceneryBlocksMovement": false
+        },
+        "scenery": {
+          "kind": "crystal-fan",
+          "scale": 1.1782091733650304,
+          "radiusPx": 87.59632175318431,
+          "density": 0.4417015750728024,
+          "motion": {
+            "kind": "settle",
+            "amplitude": 0.7482298081740737,
+            "periodSeconds": 11.49714118335396
+          }
+        },
+        "fallbackSeeds": [
+          70421,
+          175150,
+          1000
+        ]
+      },
+      "file": "crystal-fibre-v2.png",
+      "changed": 46444,
+      "voidPixels": 1026112,
+      "semantic": {
+        "version": 1,
+        "encounterAdjustments": [
+          {
+            "id": "ENM_INF_04",
+            "from": {
+              "x": 912,
+              "y": 560
+            },
+            "to": {
+              "x": 464,
+              "y": 944
+            }
+          }
+        ],
+        "shortRoute": {
+          "points": [
+            {
+              "x": 1584,
+              "y": 656
+            },
+            {
+              "x": 1552,
+              "y": 656
+            },
+            {
+              "x": 1520,
+              "y": 656
+            },
+            {
+              "x": 1488,
+              "y": 656
+            },
+            {
+              "x": 1456,
+              "y": 624
+            },
+            {
+              "x": 1424,
+              "y": 592
+            },
+            {
+              "x": 1392,
+              "y": 592
+            },
+            {
+              "x": 1360,
+              "y": 592
+            },
+            {
+              "x": 1328,
+              "y": 592
+            },
+            {
+              "x": 1296,
+              "y": 560
+            },
+            {
+              "x": 1264,
+              "y": 528
+            },
+            {
+              "x": 1232,
+              "y": 496
+            },
+            {
+              "x": 1232,
+              "y": 464
+            },
+            {
+              "x": 1200,
+              "y": 432
+            },
+            {
+              "x": 1168,
+              "y": 432
+            },
+            {
+              "x": 1136,
+              "y": 432
+            },
+            {
+              "x": 1104,
+              "y": 432
+            },
+            {
+              "x": 1072,
+              "y": 432
+            },
+            {
+              "x": 1040,
+              "y": 432
+            },
+            {
+              "x": 1008,
+              "y": 400
+            },
+            {
+              "x": 976,
+              "y": 368
+            },
+            {
+              "x": 944,
+              "y": 336
+            },
+            {
+              "x": 912,
+              "y": 304
+            },
+            {
+              "x": 880,
+              "y": 272
+            },
+            {
+              "x": 848,
+              "y": 240
+            },
+            {
+              "x": 816,
+              "y": 208
+            },
+            {
+              "x": 784,
+              "y": 208
+            },
+            {
+              "x": 752,
+              "y": 208
+            },
+            {
+              "x": 720,
+              "y": 208
+            },
+            {
+              "x": 688,
+              "y": 208
+            },
+            {
+              "x": 656,
+              "y": 208
+            },
+            {
+              "x": 624,
+              "y": 208
+            },
+            {
+              "x": 592,
+              "y": 208
+            },
+            {
+              "x": 560,
+              "y": 208
+            },
+            {
+              "x": 528,
+              "y": 208
+            },
+            {
+              "x": 496,
+              "y": 176
+            }
+          ],
+          "lengthPx": 1305.5676759431467,
+          "exposurePx": 196.81675262655077
+        },
+        "lowExposureRoute": {
+          "points": [
+            {
+              "x": 1584,
+              "y": 656
+            },
+            {
+              "x": 1552,
+              "y": 656
+            },
+            {
+              "x": 1520,
+              "y": 656
+            },
+            {
+              "x": 1488,
+              "y": 656
+            },
+            {
+              "x": 1456,
+              "y": 624
+            },
+            {
+              "x": 1456,
+              "y": 592
+            },
+            {
+              "x": 1456,
+              "y": 560
+            },
+            {
+              "x": 1488,
+              "y": 528
+            },
+            {
+              "x": 1488,
+              "y": 496
+            },
+            {
+              "x": 1456,
+              "y": 464
+            },
+            {
+              "x": 1424,
+              "y": 432
+            },
+            {
+              "x": 1392,
+              "y": 400
+            },
+            {
+              "x": 1360,
+              "y": 400
+            },
+            {
+              "x": 1328,
+              "y": 400
+            },
+            {
+              "x": 1296,
+              "y": 400
+            },
+            {
+              "x": 1264,
+              "y": 400
+            },
+            {
+              "x": 1232,
+              "y": 400
+            },
+            {
+              "x": 1200,
+              "y": 400
+            },
+            {
+              "x": 1168,
+              "y": 400
+            },
+            {
+              "x": 1136,
+              "y": 400
+            },
+            {
+              "x": 1104,
+              "y": 400
+            },
+            {
+              "x": 1072,
+              "y": 400
+            },
+            {
+              "x": 1040,
+              "y": 400
+            },
+            {
+              "x": 1008,
+              "y": 400
+            },
+            {
+              "x": 976,
+              "y": 368
+            },
+            {
+              "x": 944,
+              "y": 336
+            },
+            {
+              "x": 912,
+              "y": 304
+            },
+            {
+              "x": 880,
+              "y": 272
+            },
+            {
+              "x": 848,
+              "y": 240
+            },
+            {
+              "x": 816,
+              "y": 208
+            },
+            {
+              "x": 784,
+              "y": 208
+            },
+            {
+              "x": 752,
+              "y": 208
+            },
+            {
+              "x": 720,
+              "y": 208
+            },
+            {
+              "x": 688,
+              "y": 176
+            },
+            {
+              "x": 656,
+              "y": 176
+            },
+            {
+              "x": 624,
+              "y": 176
+            },
+            {
+              "x": 592,
+              "y": 176
+            },
+            {
+              "x": 560,
+              "y": 208
+            },
+            {
+              "x": 528,
+              "y": 208
+            },
+            {
+              "x": 496,
+              "y": 176
+            }
+          ],
+          "lengthPx": 1433.5676759431462,
+          "exposurePx": 32.143285946264164
+        },
+        "exposureReduction": 0.836684197268236,
+        "extraRoutePx": 127.99999999999955,
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 0,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_02",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 0,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_03",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 2.2737367544323206e-13,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_04",
+            "tier": "contested",
+            "threat": 0.45025259256362915,
+            "approachThreat": 0.45025259256362915,
+            "extraTravelPx": 74.98066401624396,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_05",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 251.45166004060957,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_06",
+            "tier": "contested",
+            "threat": 0.32013073563575745,
+            "approachThreat": 0.32013073563575745,
+            "extraTravelPx": 199.76450198781708,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_07",
+            "tier": "deep",
+            "threat": 0.7407457232475281,
+            "approachThreat": 0.8954912424087524,
+            "extraTravelPx": 657.6080810142121,
+            "costBasis": "interaction-area",
+            "interactionSeats": 113
+          },
+          {
+            "id": "KDL_08",
+            "tier": "deep",
+            "threat": 0.4202898442745209,
+            "approachThreat": 0.2684388756752014,
+            "extraTravelPx": 631.5290039756323,
+            "costBasis": "interaction-area",
+            "interactionSeats": 85
+          },
+          {
+            "id": "CTM_NODE_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 2.2737367544323206e-13,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_02",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 71.76450198781708,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_03",
+            "tier": "deep",
+            "threat": 0.48149147629737854,
+            "approachThreat": 0.2923735976219177,
+            "extraTravelPx": 762.9806640162442,
+            "costBasis": "interaction-area",
+            "interactionSeats": 113
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "LMK_1",
+            "purpose": "turn"
+          },
+          {
+            "id": "LMK_2",
+            "purpose": "deep-approach"
+          },
+          {
+            "id": "LMK_3",
+            "purpose": "exit-approach"
+          }
+        ],
+        "threatSources": [
+          {
+            "id": "ENM_INF_01",
+            "motion": "motion_patrol",
+            "samples": 10,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_RWR_01",
+            "motion": "motion_patrol",
+            "samples": 20,
+            "sightRange": 180,
+            "hearingRange": 150
+          },
+          {
+            "id": "ENM_INF_03",
+            "motion": "motion_anchor",
+            "samples": 1,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_INF_04",
+            "motion": "motion_patrol",
+            "samples": 20,
+            "sightRange": 206.99999999999997,
+            "hearingRange": 100
+          }
+        ]
+      }
+    },
+    {
+      "world": "ivory-basin",
+      "space": "open-scars",
+      "seed": 1002009,
+      "effectiveSeed": 1227581206,
+      "conditions": {
+        "version": 1,
+        "programId": "layered-deposition",
+        "programVersion": 1,
+        "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+        "seed": 1002009,
+        "rule": "deposition",
+        "requiredCapabilities": [
+          "surface:strata",
+          "field:direction",
+          "support:single-plane"
+        ],
+        "excludedCapabilities": [
+          "collision:dynamic",
+          "space:multilevel"
+        ],
+        "parameters": {
+          "strength": 0.4975145174539648,
+          "coherence": 0.537817359608598,
+          "scale": 1.392067034356296
+        },
+        "streams": {
+          "world": 279939465,
+          "layout": 1227581206,
+          "material": 3375821133,
+          "placement": 2088564642,
+          "encounters": 169321134,
+          "motion": 2688922512
+        },
+        "semantic": {
+          "minimumDeepDetourPx": 363.52555215358734,
+          "safeMaxThreat": 0.08,
+          "routeThreatPenalty": 6,
+          "bodySizePx": 20,
+          "supportStepPx": 8,
+          "voidBlocksSight": true,
+          "sceneryBlocksMovement": false
+        },
+        "scenery": {
+          "kind": "glaze-basin",
+          "scale": 1.392067034356296,
+          "radiusPx": 98.45605358147063,
+          "density": 0.46357651528305727,
+          "motion": {
+            "kind": "settle",
+            "amplitude": 0.8161794394720346,
+            "periodSeconds": 9.900303618051112
+          }
+        },
+        "fallbackSeeds": [
+          70421,
+          175150,
+          1000
+        ]
+      },
+      "file": "ivory-basin-v2.png",
+      "changed": 57519,
+      "voidPixels": 1007104,
+      "semantic": {
+        "version": 1,
+        "encounterAdjustments": [
+          {
+            "id": "ENM_INF_04",
+            "from": {
+              "x": 912,
+              "y": 752
+            },
+            "to": {
+              "x": 1328,
+              "y": 240
+            }
+          }
+        ],
+        "shortRoute": {
+          "points": [
+            {
+              "x": 1616,
+              "y": 720
+            },
+            {
+              "x": 1584,
+              "y": 720
+            },
+            {
+              "x": 1552,
+              "y": 720
+            },
+            {
+              "x": 1520,
+              "y": 720
+            },
+            {
+              "x": 1488,
+              "y": 688
+            },
+            {
+              "x": 1456,
+              "y": 688
+            },
+            {
+              "x": 1424,
+              "y": 688
+            },
+            {
+              "x": 1392,
+              "y": 688
+            },
+            {
+              "x": 1360,
+              "y": 688
+            },
+            {
+              "x": 1328,
+              "y": 688
+            },
+            {
+              "x": 1296,
+              "y": 688
+            },
+            {
+              "x": 1264,
+              "y": 688
+            },
+            {
+              "x": 1232,
+              "y": 720
+            },
+            {
+              "x": 1200,
+              "y": 720
+            },
+            {
+              "x": 1168,
+              "y": 720
+            },
+            {
+              "x": 1136,
+              "y": 720
+            },
+            {
+              "x": 1104,
+              "y": 720
+            },
+            {
+              "x": 1072,
+              "y": 720
+            },
+            {
+              "x": 1040,
+              "y": 720
+            },
+            {
+              "x": 1008,
+              "y": 720
+            },
+            {
+              "x": 976,
+              "y": 752
+            },
+            {
+              "x": 944,
+              "y": 752
+            },
+            {
+              "x": 912,
+              "y": 752
+            },
+            {
+              "x": 880,
+              "y": 752
+            },
+            {
+              "x": 848,
+              "y": 752
+            },
+            {
+              "x": 816,
+              "y": 752
+            },
+            {
+              "x": 784,
+              "y": 752
+            },
+            {
+              "x": 752,
+              "y": 752
+            },
+            {
+              "x": 720,
+              "y": 752
+            },
+            {
+              "x": 688,
+              "y": 752
+            },
+            {
+              "x": 656,
+              "y": 752
+            },
+            {
+              "x": 624,
+              "y": 720
+            },
+            {
+              "x": 592,
+              "y": 688
+            },
+            {
+              "x": 560,
+              "y": 688
+            },
+            {
+              "x": 528,
+              "y": 688
+            },
+            {
+              "x": 496,
+              "y": 688
+            },
+            {
+              "x": 464,
+              "y": 688
+            },
+            {
+              "x": 432,
+              "y": 688
+            },
+            {
+              "x": 400,
+              "y": 688
+            },
+            {
+              "x": 368,
+              "y": 688
+            },
+            {
+              "x": 336,
+              "y": 688
+            },
+            {
+              "x": 304,
+              "y": 688
+            },
+            {
+              "x": 272,
+              "y": 688
+            },
+            {
+              "x": 240,
+              "y": 688
+            },
+            {
+              "x": 208,
+              "y": 656
+            },
+            {
+              "x": 176,
+              "y": 624
+            }
+          ],
+          "lengthPx": 1532.7838379715731,
+          "exposurePx": 652.3856965199561
+        },
+        "lowExposureRoute": {
+          "points": [
+            {
+              "x": 1616,
+              "y": 720
+            },
+            {
+              "x": 1616,
+              "y": 688
+            },
+            {
+              "x": 1584,
+              "y": 656
+            },
+            {
+              "x": 1552,
+              "y": 624
+            },
+            {
+              "x": 1520,
+              "y": 592
+            },
+            {
+              "x": 1488,
+              "y": 560
+            },
+            {
+              "x": 1456,
+              "y": 528
+            },
+            {
+              "x": 1424,
+              "y": 528
+            },
+            {
+              "x": 1392,
+              "y": 528
+            },
+            {
+              "x": 1360,
+              "y": 528
+            },
+            {
+              "x": 1328,
+              "y": 528
+            },
+            {
+              "x": 1296,
+              "y": 496
+            },
+            {
+              "x": 1264,
+              "y": 496
+            },
+            {
+              "x": 1232,
+              "y": 496
+            },
+            {
+              "x": 1200,
+              "y": 496
+            },
+            {
+              "x": 1168,
+              "y": 496
+            },
+            {
+              "x": 1136,
+              "y": 496
+            },
+            {
+              "x": 1104,
+              "y": 496
+            },
+            {
+              "x": 1072,
+              "y": 496
+            },
+            {
+              "x": 1040,
+              "y": 496
+            },
+            {
+              "x": 1008,
+              "y": 496
+            },
+            {
+              "x": 976,
+              "y": 496
+            },
+            {
+              "x": 944,
+              "y": 496
+            },
+            {
+              "x": 912,
+              "y": 496
+            },
+            {
+              "x": 880,
+              "y": 496
+            },
+            {
+              "x": 848,
+              "y": 496
+            },
+            {
+              "x": 816,
+              "y": 496
+            },
+            {
+              "x": 784,
+              "y": 496
+            },
+            {
+              "x": 752,
+              "y": 496
+            },
+            {
+              "x": 720,
+              "y": 496
+            },
+            {
+              "x": 688,
+              "y": 496
+            },
+            {
+              "x": 656,
+              "y": 496
+            },
+            {
+              "x": 624,
+              "y": 496
+            },
+            {
+              "x": 592,
+              "y": 496
+            },
+            {
+              "x": 560,
+              "y": 496
+            },
+            {
+              "x": 528,
+              "y": 496
+            },
+            {
+              "x": 496,
+              "y": 496
+            },
+            {
+              "x": 464,
+              "y": 496
+            },
+            {
+              "x": 432,
+              "y": 496
+            },
+            {
+              "x": 400,
+              "y": 496
+            },
+            {
+              "x": 368,
+              "y": 496
+            },
+            {
+              "x": 336,
+              "y": 496
+            },
+            {
+              "x": 304,
+              "y": 496
+            },
+            {
+              "x": 272,
+              "y": 528
+            },
+            {
+              "x": 240,
+              "y": 560
+            },
+            {
+              "x": 208,
+              "y": 592
+            },
+            {
+              "x": 176,
+              "y": 624
+            }
+          ],
+          "lengthPx": 1604.54833995939,
+          "exposurePx": 0
+        },
+        "exposureReduction": 1,
+        "extraRoutePx": 71.76450198781686,
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 53.019335983756264,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_02",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 71.76450198781708,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_03",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 124.78383797157358,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_04",
+            "tier": "contested",
+            "threat": 0.45025259256362915,
+            "approachThreat": 0.45025259256362915,
+            "extraTravelPx": 90.50966799187813,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_05",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 98.27416997969522,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_06",
+            "tier": "contested",
+            "threat": 0.40371519327163696,
+            "approachThreat": 0.8666666746139526,
+            "extraTravelPx": 106.03867196751298,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_07",
+            "tier": "deep",
+            "threat": 0.7407457232475281,
+            "approachThreat": 0.8954912424087524,
+            "extraTravelPx": 421.6854249492394,
+            "costBasis": "interaction-area",
+            "interactionSeats": 71
+          },
+          {
+            "id": "KDL_08",
+            "tier": "deep",
+            "threat": 0.6333591341972351,
+            "approachThreat": 0.47745633125305176,
+            "extraTravelPx": 406.1564209736048,
+            "costBasis": "interaction-area",
+            "interactionSeats": 59
+          },
+          {
+            "id": "CTM_NODE_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 53.019335983756264,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_02",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 53.019335983756264,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_03",
+            "tier": "deep",
+            "threat": 0.5819650888442993,
+            "approachThreat": 0.532622754573822,
+            "extraTravelPx": 373.21442892487175,
+            "costBasis": "interaction-area",
+            "interactionSeats": 74
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "LMK_1",
+            "purpose": "turn"
+          },
+          {
+            "id": "LMK_2",
+            "purpose": "deep-approach"
+          },
+          {
+            "id": "LMK_3",
+            "purpose": "exit-approach"
+          }
+        ],
+        "threatSources": [
+          {
+            "id": "ENM_INF_01",
+            "motion": "motion_patrol",
+            "samples": 10,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_INF_02",
+            "motion": "motion_turn",
+            "samples": 1,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_RWR_01",
+            "motion": "motion_patrol",
+            "samples": 22,
+            "sightRange": 180,
+            "hearingRange": 150
+          },
+          {
+            "id": "ENM_INF_04",
+            "motion": "motion_patrol",
+            "samples": 12,
+            "sightRange": 206.99999999999997,
+            "hearingRange": 100
+          }
+        ]
+      }
+    },
+    {
+      "world": "carmine-lacquer",
+      "space": "fracture-fields",
+      "seed": 1002010,
+      "effectiveSeed": 1051103358,
+      "conditions": {
+        "version": 1,
+        "programId": "directional-fracture",
+        "programVersion": 1,
+        "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+        "seed": 1002010,
+        "rule": "fracture",
+        "requiredCapabilities": [
+          "void:opaque",
+          "field:direction",
+          "support:single-plane"
+        ],
+        "excludedCapabilities": [
+          "collision:dynamic",
+          "space:multilevel"
+        ],
+        "parameters": {
+          "strength": 0.41502100266516206,
+          "coherence": 0.8471487445943058,
+          "scale": 1.1085974747780711
+        },
+        "streams": {
+          "world": 2519298208,
+          "layout": 1051103358,
+          "material": 3410382621,
+          "placement": 4016840620,
+          "encounters": 3644166788,
+          "motion": 3560875106
+        },
+        "semantic": {
+          "minimumDeepDetourPx": 394.74072074890137,
+          "safeMaxThreat": 0.08,
+          "routeThreatPenalty": 6,
+          "bodySizePx": 20,
+          "supportStepPx": 8,
+          "voidBlocksSight": true,
+          "sceneryBlocksMovement": false
+        },
+        "scenery": {
+          "kind": "glaze-basin",
+          "scale": 1.1085974747780711,
+          "radiusPx": 76.24157755844296,
+          "density": 0.33464702627218795,
+          "motion": {
+            "kind": "shear",
+            "amplitude": 0.5066490105818957,
+            "periodSeconds": 9.82068492937833
+          }
+        },
+        "fallbackSeeds": [
+          175150,
+          1000,
+          70421
+        ]
+      },
+      "file": "carmine-lacquer-v2.png",
+      "changed": 52947,
+      "voidPixels": 1025024,
+      "semantic": {
+        "version": 1,
+        "encounterAdjustments": [
+          {
+            "id": "ENM_RWR_01",
+            "from": {
+              "x": 1104,
+              "y": 432
+            },
+            "to": {
+              "x": 272,
+              "y": 816
+            }
+          }
+        ],
+        "shortRoute": {
+          "points": [
+            {
+              "x": 1584,
+              "y": 784
+            },
+            {
+              "x": 1552,
+              "y": 752
+            },
+            {
+              "x": 1520,
+              "y": 720
+            },
+            {
+              "x": 1488,
+              "y": 720
+            },
+            {
+              "x": 1456,
+              "y": 720
+            },
+            {
+              "x": 1424,
+              "y": 688
+            },
+            {
+              "x": 1392,
+              "y": 656
+            },
+            {
+              "x": 1360,
+              "y": 624
+            },
+            {
+              "x": 1360,
+              "y": 592
+            },
+            {
+              "x": 1328,
+              "y": 560
+            },
+            {
+              "x": 1296,
+              "y": 528
+            },
+            {
+              "x": 1264,
+              "y": 496
+            },
+            {
+              "x": 1232,
+              "y": 496
+            },
+            {
+              "x": 1200,
+              "y": 496
+            },
+            {
+              "x": 1168,
+              "y": 496
+            },
+            {
+              "x": 1136,
+              "y": 496
+            },
+            {
+              "x": 1104,
+              "y": 464
+            },
+            {
+              "x": 1072,
+              "y": 432
+            },
+            {
+              "x": 1072,
+              "y": 400
+            },
+            {
+              "x": 1072,
+              "y": 368
+            },
+            {
+              "x": 1040,
+              "y": 336
+            },
+            {
+              "x": 1008,
+              "y": 304
+            },
+            {
+              "x": 976,
+              "y": 304
+            },
+            {
+              "x": 944,
+              "y": 304
+            },
+            {
+              "x": 912,
+              "y": 304
+            },
+            {
+              "x": 880,
+              "y": 304
+            },
+            {
+              "x": 848,
+              "y": 304
+            },
+            {
+              "x": 816,
+              "y": 336
+            },
+            {
+              "x": 784,
+              "y": 336
+            },
+            {
+              "x": 752,
+              "y": 336
+            },
+            {
+              "x": 720,
+              "y": 336
+            },
+            {
+              "x": 688,
+              "y": 336
+            },
+            {
+              "x": 656,
+              "y": 336
+            },
+            {
+              "x": 624,
+              "y": 336
+            },
+            {
+              "x": 592,
+              "y": 336
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 336
+            },
+            {
+              "x": 496,
+              "y": 336
+            },
+            {
+              "x": 464,
+              "y": 336
+            },
+            {
+              "x": 432,
+              "y": 336
+            },
+            {
+              "x": 400,
+              "y": 304
+            }
+          ],
+          "lengthPx": 1465.5676759431467,
+          "exposurePx": 442.0589208378568
+        },
+        "lowExposureRoute": {
+          "points": [
+            {
+              "x": 1584,
+              "y": 784
+            },
+            {
+              "x": 1584,
+              "y": 816
+            },
+            {
+              "x": 1552,
+              "y": 848
+            },
+            {
+              "x": 1520,
+              "y": 880
+            },
+            {
+              "x": 1488,
+              "y": 880
+            },
+            {
+              "x": 1456,
+              "y": 880
+            },
+            {
+              "x": 1424,
+              "y": 880
+            },
+            {
+              "x": 1392,
+              "y": 848
+            },
+            {
+              "x": 1360,
+              "y": 816
+            },
+            {
+              "x": 1328,
+              "y": 816
+            },
+            {
+              "x": 1296,
+              "y": 816
+            },
+            {
+              "x": 1264,
+              "y": 816
+            },
+            {
+              "x": 1232,
+              "y": 848
+            },
+            {
+              "x": 1200,
+              "y": 848
+            },
+            {
+              "x": 1168,
+              "y": 848
+            },
+            {
+              "x": 1136,
+              "y": 848
+            },
+            {
+              "x": 1104,
+              "y": 848
+            },
+            {
+              "x": 1072,
+              "y": 848
+            },
+            {
+              "x": 1040,
+              "y": 816
+            },
+            {
+              "x": 1008,
+              "y": 784
+            },
+            {
+              "x": 976,
+              "y": 752
+            },
+            {
+              "x": 944,
+              "y": 720
+            },
+            {
+              "x": 912,
+              "y": 720
+            },
+            {
+              "x": 880,
+              "y": 720
+            },
+            {
+              "x": 848,
+              "y": 720
+            },
+            {
+              "x": 816,
+              "y": 720
+            },
+            {
+              "x": 784,
+              "y": 688
+            },
+            {
+              "x": 752,
+              "y": 656
+            },
+            {
+              "x": 720,
+              "y": 656
+            },
+            {
+              "x": 688,
+              "y": 656
+            },
+            {
+              "x": 656,
+              "y": 656
+            },
+            {
+              "x": 624,
+              "y": 656
+            },
+            {
+              "x": 592,
+              "y": 656
+            },
+            {
+              "x": 560,
+              "y": 656
+            },
+            {
+              "x": 528,
+              "y": 656
+            },
+            {
+              "x": 496,
+              "y": 656
+            },
+            {
+              "x": 496,
+              "y": 624
+            },
+            {
+              "x": 496,
+              "y": 592
+            },
+            {
+              "x": 496,
+              "y": 560
+            },
+            {
+              "x": 496,
+              "y": 528
+            },
+            {
+              "x": 496,
+              "y": 496
+            },
+            {
+              "x": 496,
+              "y": 464
+            },
+            {
+              "x": 464,
+              "y": 432
+            },
+            {
+              "x": 432,
+              "y": 400
+            },
+            {
+              "x": 432,
+              "y": 368
+            },
+            {
+              "x": 432,
+              "y": 336
+            },
+            {
+              "x": 400,
+              "y": 304
+            }
+          ],
+          "lengthPx": 1657.5676759431465,
+          "exposurePx": 0.10239999741315842
+        },
+        "exposureReduction": 0.9997683566769355,
+        "extraRoutePx": 191.99999999999977,
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 146.74516600406082,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_02",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 181.01933598375604,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_03",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 71.76450198781731,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_04",
+            "tier": "contested",
+            "threat": 0.45025259256362915,
+            "approachThreat": 0.45025259256362915,
+            "extraTravelPx": 0,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_05",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 330.9806640162435,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_06",
+            "tier": "contested",
+            "threat": 0.35092881321907043,
+            "approachThreat": 0.4333333373069763,
+            "extraTravelPx": 71.76450198781731,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_07",
+            "tier": "deep",
+            "threat": 0.32013073563575745,
+            "approachThreat": 0.7312580943107605,
+            "extraTravelPx": 631.098413022334,
+            "costBasis": "interaction-area",
+            "interactionSeats": 61
+          },
+          {
+            "id": "KDL_08",
+            "tier": "deep",
+            "threat": 0.026572929695248604,
+            "approachThreat": 0.387174129486084,
+            "extraTravelPx": 596.4507934888313,
+            "costBasis": "interaction-area",
+            "interactionSeats": 61
+          },
+          {
+            "id": "CTM_NODE_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 128,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_02",
+            "tier": "contested",
+            "threat": 0.3333333432674408,
+            "approachThreat": 0.3333333432674408,
+            "extraTravelPx": 71.76450198781708,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_03",
+            "tier": "deep",
+            "threat": 0.7018576264381409,
+            "approachThreat": 0.850928783416748,
+            "extraTravelPx": 594.7451660040606,
+            "costBasis": "interaction-area",
+            "interactionSeats": 96
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "LMK_1",
+            "purpose": "turn"
+          },
+          {
+            "id": "LMK_2",
+            "purpose": "deep-approach"
+          },
+          {
+            "id": "LMK_3",
+            "purpose": "exit-approach"
+          }
+        ],
+        "threatSources": [
+          {
+            "id": "ENM_INF_01",
+            "motion": "motion_patrol",
+            "samples": 10,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_INF_02",
+            "motion": "motion_turn",
+            "samples": 1,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_RWR_01",
+            "motion": "motion_patrol",
+            "samples": 18,
+            "sightRange": 180,
+            "hearingRange": 150
+          }
+        ]
+      }
+    },
+    {
+      "world": "cobalt-gold",
+      "space": "open-scars",
+      "seed": 1002011,
+      "effectiveSeed": 2690554962,
+      "conditions": {
+        "version": 1,
+        "programId": "directional-fracture",
+        "programVersion": 1,
+        "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+        "seed": 1002011,
+        "rule": "fracture",
+        "requiredCapabilities": [
+          "void:opaque",
+          "field:direction",
+          "support:single-plane"
+        ],
+        "excludedCapabilities": [
+          "collision:dynamic",
+          "space:multilevel"
+        ],
+        "parameters": {
+          "strength": 0.37820345371961595,
+          "coherence": 0.7657756168581545,
+          "scale": 1.0794683408690617
+        },
+        "streams": {
+          "world": 1830665260,
+          "layout": 2690554962,
+          "material": 435269073,
+          "placement": 1779669843,
+          "encounters": 3218297820,
+          "motion": 553698040
+        },
+        "semantic": {
+          "minimumDeepDetourPx": 400.2273038327694,
+          "safeMaxThreat": 0.08,
+          "routeThreatPenalty": 6,
+          "bodySizePx": 20,
+          "supportStepPx": 8,
+          "voidBlocksSight": true,
+          "sceneryBlocksMovement": false
+        },
+        "scenery": {
+          "kind": "crystal-fan",
+          "scale": 1.0794683408690617,
+          "radiusPx": 77.21351853482426,
+          "density": 0.3248597182794521,
+          "motion": {
+            "kind": "shear",
+            "amplitude": 0.5742976490873843,
+            "periodSeconds": 11.099433971568942
+          }
+        },
+        "fallbackSeeds": [
+          175150,
+          1000,
+          70421
+        ]
+      },
+      "file": "cobalt-gold-v2.png",
+      "changed": 35092,
+      "voidPixels": 1008768,
+      "semantic": {
+        "version": 1,
+        "encounterAdjustments": [
+          {
+            "id": "ENM_INF_04",
+            "from": {
+              "x": 624,
+              "y": 912
+            },
+            "to": {
+              "x": 1552,
+              "y": 560
+            }
+          }
+        ],
+        "shortRoute": {
+          "points": [
+            {
+              "x": 1328,
+              "y": 976
+            },
+            {
+              "x": 1328,
+              "y": 1008
+            },
+            {
+              "x": 1296,
+              "y": 1008
+            },
+            {
+              "x": 1264,
+              "y": 1008
+            },
+            {
+              "x": 1232,
+              "y": 1008
+            },
+            {
+              "x": 1200,
+              "y": 1008
+            },
+            {
+              "x": 1168,
+              "y": 1008
+            },
+            {
+              "x": 1168,
+              "y": 976
+            },
+            {
+              "x": 1168,
+              "y": 944
+            },
+            {
+              "x": 1136,
+              "y": 912
+            },
+            {
+              "x": 1104,
+              "y": 880
+            },
+            {
+              "x": 1072,
+              "y": 880
+            },
+            {
+              "x": 1040,
+              "y": 880
+            },
+            {
+              "x": 1008,
+              "y": 880
+            },
+            {
+              "x": 976,
+              "y": 880
+            },
+            {
+              "x": 944,
+              "y": 880
+            },
+            {
+              "x": 912,
+              "y": 880
+            },
+            {
+              "x": 880,
+              "y": 880
+            },
+            {
+              "x": 848,
+              "y": 880
+            },
+            {
+              "x": 816,
+              "y": 880
+            },
+            {
+              "x": 784,
+              "y": 848
+            },
+            {
+              "x": 752,
+              "y": 848
+            },
+            {
+              "x": 720,
+              "y": 848
+            },
+            {
+              "x": 688,
+              "y": 816
+            },
+            {
+              "x": 656,
+              "y": 784
+            },
+            {
+              "x": 624,
+              "y": 752
+            },
+            {
+              "x": 592,
+              "y": 720
+            },
+            {
+              "x": 560,
+              "y": 688
+            },
+            {
+              "x": 528,
+              "y": 656
+            },
+            {
+              "x": 496,
+              "y": 624
+            },
+            {
+              "x": 464,
+              "y": 592
+            },
+            {
+              "x": 432,
+              "y": 560
+            },
+            {
+              "x": 400,
+              "y": 528
+            },
+            {
+              "x": 368,
+              "y": 496
+            },
+            {
+              "x": 336,
+              "y": 464
+            },
+            {
+              "x": 304,
+              "y": 432
+            },
+            {
+              "x": 272,
+              "y": 400
+            }
+          ],
+          "lengthPx": 1377.3321779309633,
+          "exposurePx": 733.9227375351655
+        },
+        "lowExposureRoute": {
+          "points": [
+            {
+              "x": 1328,
+              "y": 976
+            },
+            {
+              "x": 1360,
+              "y": 976
+            },
+            {
+              "x": 1360,
+              "y": 944
+            },
+            {
+              "x": 1360,
+              "y": 912
+            },
+            {
+              "x": 1360,
+              "y": 880
+            },
+            {
+              "x": 1360,
+              "y": 848
+            },
+            {
+              "x": 1328,
+              "y": 816
+            },
+            {
+              "x": 1296,
+              "y": 816
+            },
+            {
+              "x": 1264,
+              "y": 784
+            },
+            {
+              "x": 1232,
+              "y": 752
+            },
+            {
+              "x": 1200,
+              "y": 720
+            },
+            {
+              "x": 1200,
+              "y": 688
+            },
+            {
+              "x": 1168,
+              "y": 656
+            },
+            {
+              "x": 1136,
+              "y": 656
+            },
+            {
+              "x": 1104,
+              "y": 656
+            },
+            {
+              "x": 1072,
+              "y": 656
+            },
+            {
+              "x": 1040,
+              "y": 656
+            },
+            {
+              "x": 1008,
+              "y": 656
+            },
+            {
+              "x": 976,
+              "y": 656
+            },
+            {
+              "x": 944,
+              "y": 656
+            },
+            {
+              "x": 912,
+              "y": 656
+            },
+            {
+              "x": 880,
+              "y": 656
+            },
+            {
+              "x": 848,
+              "y": 624
+            },
+            {
+              "x": 848,
+              "y": 592
+            },
+            {
+              "x": 848,
+              "y": 560
+            },
+            {
+              "x": 816,
+              "y": 528
+            },
+            {
+              "x": 784,
+              "y": 496
+            },
+            {
+              "x": 752,
+              "y": 464
+            },
+            {
+              "x": 720,
+              "y": 432
+            },
+            {
+              "x": 688,
+              "y": 400
+            },
+            {
+              "x": 656,
+              "y": 400
+            },
+            {
+              "x": 624,
+              "y": 400
+            },
+            {
+              "x": 592,
+              "y": 368
+            },
+            {
+              "x": 560,
+              "y": 336
+            },
+            {
+              "x": 528,
+              "y": 304
+            },
+            {
+              "x": 496,
+              "y": 304
+            },
+            {
+              "x": 464,
+              "y": 304
+            },
+            {
+              "x": 432,
+              "y": 304
+            },
+            {
+              "x": 400,
+              "y": 304
+            },
+            {
+              "x": 368,
+              "y": 304
+            },
+            {
+              "x": 336,
+              "y": 336
+            },
+            {
+              "x": 304,
+              "y": 368
+            },
+            {
+              "x": 272,
+              "y": 400
+            }
+          ],
+          "lengthPx": 1569.332177930963,
+          "exposurePx": 0
+        },
+        "exposureReduction": 1,
+        "extraRoutePx": 191.99999999999977,
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 173.2548339959394,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_02",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 128.00000000000045,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_03",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 56.2354980121836,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_04",
+            "tier": "contested",
+            "threat": 0.45025259256362915,
+            "approachThreat": 0.46666666865348816,
+            "extraTravelPx": 56.23549801218337,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_05",
+            "tier": "contested",
+            "threat": 0.45025259256362915,
+            "approachThreat": 0.45025259256362915,
+            "extraTravelPx": 7.764501987817766,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_06",
+            "tier": "contested",
+            "threat": 0.5080996155738831,
+            "approachThreat": 0.5080996155738831,
+            "extraTravelPx": 334.19682604467084,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "KDL_07",
+            "tier": "deep",
+            "threat": 0.6333591341972351,
+            "approachThreat": 0.5416988730430603,
+            "extraTravelPx": 685.7258300203061,
+            "costBasis": "interaction-area",
+            "interactionSeats": 72
+          },
+          {
+            "id": "KDL_08",
+            "tier": "deep",
+            "threat": 0.4088093340396881,
+            "approachThreat": 0.33270350098609924,
+            "extraTravelPx": 555.1186155578685,
+            "costBasis": "interaction-area",
+            "interactionSeats": 65
+          },
+          {
+            "id": "CTM_NODE_01",
+            "tier": "safe",
+            "threat": 0,
+            "approachThreat": 0,
+            "extraTravelPx": 56.23549801218337,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_02",
+            "tier": "contested",
+            "threat": 0.44701704382896423,
+            "approachThreat": 0.44701704382896423,
+            "extraTravelPx": 6.821210263296962e-13,
+            "costBasis": "conservative-node-center"
+          },
+          {
+            "id": "CTM_NODE_03",
+            "tier": "deep",
+            "threat": 0.5819650888442993,
+            "approachThreat": 0.7909825444221497,
+            "extraTravelPx": 537.5105345436555,
+            "costBasis": "interaction-area",
+            "interactionSeats": 70
+          }
+        ],
+        "landmarks": [
+          {
+            "id": "LMK_1",
+            "purpose": "turn"
+          },
+          {
+            "id": "LMK_2",
+            "purpose": "deep-approach"
+          },
+          {
+            "id": "LMK_3",
+            "purpose": "exit-approach"
+          }
+        ],
+        "threatSources": [
+          {
+            "id": "ENM_INF_01",
+            "motion": "motion_patrol",
+            "samples": 10,
+            "sightRange": 180,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_RWR_01",
+            "motion": "motion_patrol",
+            "samples": 22,
+            "sightRange": 180,
+            "hearingRange": 150
+          },
+          {
+            "id": "ENM_INF_03",
+            "motion": "motion_turn",
+            "samples": 1,
+            "sightRange": 206.99999999999997,
+            "hearingRange": 100
+          },
+          {
+            "id": "ENM_INF_04",
+            "motion": "motion_patrol",
+            "samples": 16,
+            "sightRange": 206.99999999999997,
+            "hearingRange": 100
+          }
+        ]
+      }
+    }
+  ]
+}

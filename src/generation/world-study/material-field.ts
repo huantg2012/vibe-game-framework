@@ -15,7 +15,7 @@ export interface MaterialField { amount: number; front: number; direction: numbe
 export function materialFieldAt(sample: WorldSample, x: number, y: number): MaterialField {
   const amount = interpolate(sample, sample.deposition, x, y);
   const direction = interpolate(sample, sample.flowAngle, x, y);
-  const phase = amount * 9 + Math.sin(x / 117 + y / 149 + sample.seed % 71) * .18;
+  const phase = amount * 9 + Math.sin(x / 117 + y / 149 + (sample.materialSeed ?? sample.seed) % 71) * .18;
   const front = Math.max(0, 1 - Math.abs(amount - .53) / .16);
   return { amount, front, direction, phase };
 }

@@ -70,6 +70,10 @@ export interface WorldSample {
   readonly profile: WorldProfile;
   readonly topologyId: WorldTopologyId;
   readonly seed: number;
+  /** V2 visual stream; absent retains the original v1 material pixels. */
+  readonly materialSeed?: number;
+  /** Ground-plane relief only: no invisible new blockers or free emission. */
+  readonly scenery?: readonly WorldScenery[];
   readonly cols: number;
   readonly rows: number;
   readonly tileSize: number;
@@ -82,4 +86,16 @@ export interface WorldSample {
   /** Shared spatial organization, independent from visual profile. */
   readonly flowAngle: Float32Array;
   readonly deposition: Float32Array;
+}
+
+export interface WorldScenery {
+  readonly id: string;
+  readonly x: number;
+  readonly y: number;
+  readonly angle: number;
+  readonly radius: number;
+  readonly seed: number;
+  readonly kind: 'strata-fold' | 'crystal-fan' | 'glaze-basin';
+  readonly density: number;
+  readonly motion: { readonly kind: 'settle' | 'shear' | 'pulse'; readonly amplitude: number; readonly periodSeconds: number };
 }

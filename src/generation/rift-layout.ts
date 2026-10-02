@@ -730,6 +730,10 @@ export interface RiftContentPlacementOptions {
   /** Only the dual-route exposure gate uses this mask; geometry and Host pins do not. */
   readonly routeObstructions?: Uint8Array;
   readonly routePolicy?: 'legacy' | 'open-world';
+  /** Frozen encounter stream for compiled worlds. Omit to preserve legacy draws. */
+  readonly lexiconSeed?: number;
+  /** Compiled-world admission retries content seats without changing terrain. */
+  readonly postprocess?: (layout: GeneratedRiftLayout) => GeneratedRiftLayout | string;
 }
 
 export function deployRiftContents(
@@ -792,7 +796,7 @@ export function deployRiftContents(
       lastWhy = contaminationPins;
       continue;
     }
-    const lexiconRng = new SeededRandom(mix32(inputSeed, 'lexicon'));
+    const lexiconRng = new SeededRandom(mix32(options.lexiconSeed ?? inputSeed, 'lexicon'));
     const drawn = drawSortie(lexiconRng, {
       fragmentTypeId: draft.fragmentTypeId,
       paintCount,
@@ -826,7 +830,7 @@ export function deployRiftContents(
       warnings: bound.contaminationDraw.warnings,
     };
 
-    return {
+    const layout: GeneratedRiftLayout = {
       seed: inputSeed,
       fragmentTypeId: draft.fragmentTypeId,
       recipeId: options.recipeId,
@@ -848,6 +852,12 @@ export function deployRiftContents(
       contaminationPins,
       contaminationDraw: safeDraw,
     };
+    if (options.postprocess) {
+      const processed = options.postprocess(layout);
+      if (typeof processed === 'string') { lastWhy = processed; continue; }
+      return processed;
+    }
+    return layout;
   }
   return lastWhy;
 }

@@ -2,7 +2,7 @@
 import { Raster } from './raster';
 import { worldSupportAt } from './support';
 import { paintGroundMaterial } from './ground-material';
-import { paintMaterialForms } from './material-forms';
+import { paintMaterialForms, paintMaterialLandmarks } from './material-forms';
 import { finishMaterialResponse } from './material-response';
 import type { WorldSample } from './types';
 
@@ -26,6 +26,7 @@ export function renderWorldSurface(sample: WorldSample): WorldSurface {
   try {
     paintGroundMaterial(raster, sample, floorMask);
     paintMaterialForms(raster, sample, floorMask);
+    if (sample.scenery?.length) paintMaterialLandmarks(raster, sample);
     // No material operator or ground embellishment can give absent space a surface.
     raster.setClip(null);
     for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {

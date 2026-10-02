@@ -62,7 +62,9 @@ export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpo
   if (!signature) {
     signature = checkpointChecksum({ tileMap: layout.tileMap, spawns: layout.enemySpawns, pins: layout.contaminationPins, draw: layout.contaminationDraw, spawn: layout.spawnPoint, exit: layout.extractionPoint, fuel: layout.kindlingNodes, items: layout.contaminantNodes });
     const generation = generationRecipes.get(layout);
-    if (generation) signature = checkpointChecksum({ layout: signature, generation, hostTileMap: worlds.get(layout)!.hostTileMap });
+    if (generation) signature = checkpointChecksum({ layout: signature, generation, hostTileMap: worlds.get(layout)!.hostTileMap,
+      ...(generation.version === 2 ? { landmarks: layout.landmarks,
+        contaminationAge: layout.contaminationAge, ruinSeverity: layout.ruinSeverity } : {}) });
     signatures.set(layout, signature);
   }
   return { worldId: 'procedural-rift', layoutId: 'procedural-rift', seed: layout.seed, recipeId: layout.recipeId,
@@ -71,7 +73,9 @@ export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpo
 function rememberWorld(generation: WorldProductionRecipe): GeneratedRiftLayout {
   if (!validWorldProductionRecipe(generation)) throw new Error('Invalid saved world recipe');
   const world = createWorldProductionMap(generation.profile, generation.space, generation.requestedSeed,
-    { contentFragmentTypeId: generation.contentFragmentTypeId, paintGeometryVersion: generation.paintGeometryVersion ?? 1 });
+    { contentFragmentTypeId: generation.contentFragmentTypeId, paintGeometryVersion: generation.paintGeometryVersion ?? 1,
+      ...(generation.version === 2 ? { generationVersion: 2, conditions: generation.conditions,
+        fallbackSeeds: generation.conditions.fallbackSeeds } : {}) });
   worlds.set(world.layout, world); generationRecipes.set(world.layout, generation);
   return world.layout;
 }

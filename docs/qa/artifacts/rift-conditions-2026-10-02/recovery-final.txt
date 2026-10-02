@@ -1,0 +1,100 @@
+
+> coh@0.1.0 check:rift-recovery
+> node tools/recovery/check.mjs
+
+PASS absent storage starts a new record and normal saves remain loadable
+PASS valid: no reset, entry or deletion without explicit replacement
+PASS malformed JSON: no reset, entry or deletion without explicit replacement
+PASS future version: no reset, entry or deletion without explicit replacement
+PASS empty stored string: no reset, entry or deletion without explicit replacement
+PASS JSON null: no reset, entry or deletion without explicit replacement
+PASS inaccessible storage is not treated as an empty slot, even after confirmation
+PASS confirmed replacement never deletes the old record, including a read-only deletion backend
+PASS first replacement write failure retains the exact old bytes; retry commits one complete new record
+PASS pending settlement and open inventory frames cannot be erased by new-record entry
+PASS title new-game enters confirmation for damaged/future/empty records; cancel and Escape preserve bytes
+11 save replacement checks passed. Browser layout and the in-game pause menu require runtime verification.
+check:recovery-actors PASS: both layouts; JSON continuation; momentum/facing; stable RNG/search/path aliases; final-use/contact/shared budget/noise; buffer; enemy windup/latch/cooldown; control rebind; dead roster; reject-before-mutation. APIs are actor components, not complete run recovery.
+PASS last stitch: crossing history, independent stop, fade tail, source IDs and no repeat consumption
+PASS stitch before its first crossing retains previous positions, without inventing a source on export
+PASS overlapping compress anchors retain separate sources and remaining lifetimes through the final charge
+PASS compress with no contact keeps its lazy source and stable control serial
+PASS kindle resumes its real throw/pulse clock and does not replay the first lure
+PASS last siphon charge stays active independently of the cleared slot; damage never triggers a second use
+PASS last muffle episode extends only on real signals and survives an empty slot; never-signaled infinity encodes null
+PASS fresh muffle restores the initial unpublished hearing state, then the same first real update publishes it
+PASS invalid Tool state leaves runtime untouched; current families recover while retired effects refuse
+PASS chaos restores thresholds/chase cooldowns/temp reductions/last projection and advances by simulation time alone
+PASS all seven native search nodes preserve pure fuel, ground loot, cached failed roll and unrolled/none/weapon distinctions
+PASS search channel resumes exact progress without replaying start noise or reward, and release still interrupts
+PASS restored acquisition dedup never re-notifies an item after a drop/take cycle and retains unique IDs
+PASS trail and minimap retain exploration/extraction information without advancing it during offline time
+14 effect/search/memory recovery checks passed. JSON equivalence is a unit boundary, not keyboard or performance evidence.
+PASS sea-open-channel: diversion remainder, shared invulnerable contact deadline, return and next cycle match continuous water
+PASS sea-folded-ridge: diversion remainder, shared invulnerable contact deadline, return and next cycle match continuous water
+PASS terrain: only G memory is restored; R recomputes, air remains absent; invalid bits are rejected
+PASS fixed 35° follow camera: current easing, target and preceding position continue without a snap
+PASS native owner: shell and elapsed restore silently without repeating material or contact events
+5 world recovery checks passed.
+PASS real native modules export one valid active frame; validator never writes to input or inventory
+PASS cross-domain guard rejects mismatched alive roster, committed windup, interruption latch and player slowdown
+PASS known dead targets remain valid historical seam membership, without respawning them
+PASS real revealed UUIDs and pure fuel are cross-checked with the exact inventory ledger
+PASS real death, extraction and explicit abandon produce only settled receipts matching the same loss/reward ledger
+5 whole-frame recovery checks passed. Native world geometry/signature and persisted publication remain owned by runtime/SaveManager.
+PASS catalog frame: original browser save, 36 final-use parameter definitions, 161 corruption counterexamples
+PASS catalog fixed-plan admission: saved item/district authority, missing fuel district and source mismatch reject
+PASS active scene and external clocks resume the saved elapsed basis without offline time or restore events
+PASS quota failure gates timer scheduling, result publication, and return; each retry commits identical bytes
+PASS return during the terminal frame settles death once and survives reload without a duplicate RIFT_EXITED
+PASS terminal delay resumes its remaining time and an already published result restores without replay
+PASS explicit abandon loses carried equipment, persists its distinct reason, and cannot become extraction
+5 run recovery checks passed.
+PASS durability, corresponding world effect and presentation publish only as one complete commit; failed retry does not reroll
+PASS mismatched, corrupt and unsupported complete records leave live state and raw evidence intact
+PASS explicit abandon is durable and distinct from death, gives no carried reward, and repeated load cannot revive the weapon
+3 recovery persistence transport checks passed.
+check:settlement-random PASS: seeded primary/fallback and forecast blur; legacy lookahead/no reroll; five failed-save/reload returns; deterministic grants and persisted per-item cap. Impact invocation/baseSettled dedup remains the coordinator responsibility.
+PASS both layouts and seed variants match live AI/Combat configuration; JSON admission preserves all input and emits nothing
+PASS world, shell, camera, memory and actor configuration corruptions reject before hydration
+PASS memory cannot remember a VOID cell and each temporary DataTexture is disposed even on rejection
+PASS actual actor AABBs reject chasms, edge overlap, out-of-bounds and sprite/body disagreement
+PASS known dead roster remains absent while historical tool references stay admissible
+PASS terminal receipt validates same identity/ledger without actor/world payload or DataTexture allocation
+check:recovery-admission 6 passed (real state owners, no GPU or browser)
+PASS formal departure atomically records one run/cycle and refresh resumes the entry intent without a new expedition
+PASS a complete active record routes its original world and unique inventory, independent of new sidebar selection
+PASS settled receipt enters formal base impact/maturation once; another process load does not replay either
+PASS failed base write preserves the settled record and reload produces identical impact, forecast and replacement ID
+PASS bad JSON and unknown world signatures retain raw bytes and live systems, without new-game fallback
+5 journey recovery routing checks passed. Fresh processes replace module reloads; these are not gameplay or GPU evidence.
+PASS entry abandon transfers one pause, cancels entry time and repeated end notifications remain inert
+PASS Arcade world already null at terminal shutdown still releases every system and both ownership flags
+PASS Arcade world already null during entry shutdown clears entry without attempting resume
+PASS normal active finish pauses once; a later entry on the reused scene can acquire and release a new world
+PASS pre-existing external physics pause is never resumed by entry/end ownership cleanup
+PASS legacy entry without freezeAfterEnd retains its prior end behavior and normal entry resume
+check:recovery-lifecycle 6 passed (actual scene lifecycle, no GPU)
+PASS minimap: unseen exit hidden, earned bearing, unchanged exploration, stale snapshot recovery/expiry, old schema and corrupt rejection
+PASS solidify final-charge continuation
+PASS scatter final-charge continuation
+PASS retrograde final-charge continuation
+PASS delay final-charge continuation
+PASS siphon final-charge continuation
+PASS expand final-charge continuation
+PASS muffle final-charge continuation
+PASS kindle final-charge continuation
+PASS stitch final-charge continuation
+PASS compress final-charge continuation
+PASS mirror final-charge continuation
+PASS abyss final-charge continuation
+PASS combust final-charge continuation
+PASS broken-freeze boundary, legacy five-tool snapshot, bounded immutable pose serialization
+PASS procedural identity: exact original retry/recipe selection, including seed 432889249; mismatch retained
+PASS formal admission: two actual Host compositions, authored core order + 11 corrupt owner/identity/range counterexamples
+PASS explicit rescue: invalid world preserved; no automatic loss; rejection rollback; one abandon receipt keeps stash/growth/base; invalid base refused
+PASS paint geometry recovery: two actual world-space saves + 6 old colonies retain hashes, nuclei and runtime; v2 recipe/layout/Host JSON restoration; version tampering rejects.
+v2 requested=0 admitted=4240457136 signature=23e24a0c attempt=1
+v2 requested=5 admitted=936294695 signature=e9b08be0 attempt=0
+v2 requested=70421 admitted=4162163185 signature=f23b2950 attempt=0
+PASS generation versions: 4 immutable v1 complete-paint identities, 3 cold v2 JSON reconstructions; full-body retreat and all eleven resource seats free of real paint danger; bad/missing contracts and version/stream tampering rejected.

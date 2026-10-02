@@ -3,6 +3,7 @@ import type Phaser from 'phaser';
 import { paintMaterialLight } from '@/generation/world-study/material-light';
 import { renderWorldSurface } from '@/generation/world-study/surface';
 import { worldSupportAt } from '@/generation/world-study/support';
+import { paintSceneryMotion } from '@/generation/world-study/world-scenery';
 import type { WorldSample } from '@/generation/world-study/types';
 
 export interface WorldSurfaceContext {
@@ -45,6 +46,7 @@ export function createWorldPlaySurface(context: WorldSurfaceContext, sample: Wor
     throw reason;
   }
   let destroyed = false, updatedMs = -Infinity, reflectionPixels = 0;
+  const motionPreference = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
   const point = { x: 0, y: 0 };
   return { update() {}, afterUpdate(elapsedMs) {
     if (destroyed || context.isRunEnded() || elapsedMs - updatedMs < 1000 / 15) return;
@@ -52,7 +54,8 @@ export function createWorldPlaySurface(context: WorldSurfaceContext, sample: Wor
     const player = context.player.getPosition(), left = Math.floor(player.x) - extent, top = Math.floor(player.y) - extent;
     const ctx = reflection.context;
     ctx.clearRect(0, 0, size, size); ctx.save(); ctx.translate(-left, -top);
-    paintMaterialLight(ctx, sample, player.x, player.y, elapsedMs / 1000); ctx.restore();
+    paintMaterialLight(ctx, sample, player.x, player.y, elapsedMs / 1000);
+    paintSceneryMotion(ctx, sample, motionPreference?.matches ? 0 : elapsedMs / 1000, player.x, player.y); ctx.restore();
     const pixels = ctx.getImageData(0, 0, size, size), rgba = pixels.data;
     reflectionPixels = 0;
     for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {

@@ -1,0 +1,17 @@
+{
+  "passed": 9,
+  "checks": [
+    "CSV parity, bounded compiler schema and unsupported input rejection",
+    "Frozen repeatable snapshot and no mutation of base recipes",
+    "Named random streams and cosmetic changes do not affect gameplay selections",
+    "Selection and operators are independent of world/space IDs",
+    "Required any-of capabilities, conflicts and missing modules reject explicitly",
+    "Snapshot corruption and unavailable geometry/semantic versions reject",
+    "Every base recipe × rule × lower/upper interval endpoint stays within supported operators",
+    "Continuous legal intervals generate more than static configuration choices",
+    "V2 terrain fractures and material/scenery fields share an actual axis"
+  ],
+  "boundaryCases": 60,
+  "intervalSeeds": 256,
+  "source": "CSV-backed conditional compiler; no production play claim"
+}

@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "核心搜撤—归来—维护闭环、5世界×2空间、污染物目录与22步成长已接正式流程。I30 Last Light A已正式接入，94faa33包含1035帧全身步态、西坡顶全宽承接及贴边速度修复；最近专项为限定自动检查与正式Renderer受控回放，整体美术、动态和手感仍待用户完整验收。I31修复整数收益、整趟被动回执与受损记录替换保护已接入，验证范围见迭代31 QA；I28长期采样继续挂起，四B不解锁。"
+    "summary": "核心搜撤—归来—维护闭环、5世界×2空间、污染物目录与22步成长已接正式流程。I30 Last Light A已正式接入，94faa33包含1035帧全身步态、西坡顶全宽承接及贴边速度修复；最近专项为限定自动检查与正式Renderer受控回放，整体美术、动态和手感仍待用户完整验收。I31修复整数收益、整趟被动回执与受损记录替换保护已接入，验证范围见迭代31 QA；I28长期采样继续挂起，四B不解锁。 本轮Rift新出击接入有界3过程条件v2、语义与原生材料地标，实际交互站位成本、94例资格、恢复/生成和一趟正式搜撤有限验证通过；完整24维与人审/长期体验仍未完成。"
   },
   "domains": [
     {
@@ -22,7 +22,7 @@
       "id": "world",
       "title": "地图、地表与探索",
       "coverage": "mapped",
-      "note": "已追踪正式新出击、旧局兼容、共享绘制及探索入口；完整世界空间设计单列，历史设计段的生产边界冲突已标注。"
+      "note": "正式新出击v2已接条件编译、共享组织轴、最终遭遇语义、原生材料地标及旧局版本恢复；已有5×2底座接3类有界过程。94例资格、恢复/生成与一趟正式搜撤有限通过；F052声明已接入子集，完整24维和人审/长期体验仍未完成。"
     },
     {
       "id": "encounters",
@@ -300,6 +300,22 @@
         "COH-F039",
         "COH-F042"
       ]
+    },
+    {
+      "id": "COH-C-RIFT-CONDITIONS-V2",
+      "statement": "2026-10-02用户显式授权恢复F052所需开发，生产范围限于已有材料与单层碰撞能力内的有界条件链；v1及无generation旧局冻结。完整24维、多区域、高体积/动态碰撞及逐包人审不因有限生产资格检查而视为完成。",
+      "status": "active",
+      "source": {
+        "path": "docs/tasks/rift-conditions-2026-10-02.md",
+        "note": "本轮显式授权及范围；不自动解锁不相关I28长期采样/四B。"
+      },
+      "featureIds": [
+        "COH-F011",
+        "COH-F012",
+        "COH-F013",
+        "COH-F044",
+        "COH-F052"
+      ]
     }
   ],
   "inventory": [
@@ -324,6 +340,24 @@
       "title": "根目录策划 CSV（含归档 DEV 数据，条目分流）",
       "include": [
         "data/*.csv"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "rift-conditions",
+      "title": "Rift有界条件编译、部署、景观与专项工具",
+      "include": [
+        "src/generated/rift-world-conditions*.ts",
+        "src/generation/world-study/*conditions*.ts",
+        "src/generation/world-study/*scenery*.ts",
+        "src/generation/world-study/semantic-deployment.ts",
+        "tools/world-study/*world-conditions*",
+        "tools/world-study/*world-scenery*",
+        "tools/world-study/*semantic-deployment*",
+        "tools/world-study/compile-world-library.ts",
+        "tools/recovery/check-world-generation-version.ts",
+        "tools/recovery/fixtures/world-generation-v1.json",
+        "tools/qa/check-rift-conditions-browser.mjs"
       ],
       "exclude": []
     }

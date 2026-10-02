@@ -2,6 +2,11 @@ import { SeededRandom } from '@/utils/random';
 import type { SpaceProfile } from './space-profile';
 
 export interface ErosionResult { walls: Uint8Array; targetFraction: number; actualFraction: number; pits: number; fractures: number }
+export interface WorldOrganization { readonly axis: number; readonly coherence: number }
+export function validateWorldOrganization(value: WorldOrganization): void {
+  if (!value || !Number.isFinite(value.axis) || !Number.isFinite(value.coherence) || value.coherence < 0 || value.coherence > 1)
+    throw new Error('Invalid world organization axis/coherence');
+}
 
 /** Eight-neighbour distance in cells to unsupported space. */
 export function clearanceField(mask: Uint8Array, cols: number, rows: number): Uint16Array {
@@ -22,7 +27,9 @@ export function clearanceField(mask: Uint8Array, cols: number, rows: number): Ui
 }
 
 /** Carve independent local tears; never grow parallel map-spanning barriers. */
-export function erodeOpenLand(land: Uint8Array, cols: number, rows: number, rng: SeededRandom, profile: SpaceProfile): ErosionResult {
+export function erodeOpenLand(land: Uint8Array, cols: number, rows: number, rng: SeededRandom, profile: SpaceProfile,
+  organization?: WorldOrganization): ErosionResult {
+  if (organization) validateWorldOrganization(organization);
   const walls = new Uint8Array(land.length), excluded = new Uint8Array(land.length);
   const coastDistance = clearanceField(land, cols, rows), area = land.reduce((sum, value) => sum + value, 0);
   const target = Math.round(area * profile.voidFraction);
@@ -34,7 +41,10 @@ export function erodeOpenLand(land: Uint8Array, cols: number, rows: number, rng:
     x: basin.x + rng.nextFloat(-cols * .10, cols * .10),
     y: basin.y + rng.nextFloat(-rows * .10, rows * .10),
   }));
-  const mainAngle = rng.nextFloat(0, Math.PI), shapePhase = rng.nextFloat(0, Math.PI * 2);
+  // Consume the historical draw even when v2 supplies an axis. Unversioned callers
+  // keep their complete RNG sequence and resulting geometry byte for byte.
+  const sampledMainAngle = rng.nextFloat(0, Math.PI);
+  const mainAngle = organization?.axis ?? sampledMainAngle, shapePhase = rng.nextFloat(0, Math.PI * 2);
   let carved = 0, pits = 0, fractures = 0;
   for (let attempt = 0; attempt < 1800 && carved < target; attempt++) {
     const clustered = rng.next() < profile.clustering, centre = rng.pick(centres);

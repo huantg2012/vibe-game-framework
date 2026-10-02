@@ -3,11 +3,12 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "新出击冻结世界、空间、内容方言和种子，经过共享生成与合法投放进入 Rift；旧在途局维持原地图。",
+    "summary": "已有5世界×2空间继续作为正式底座；本轮新出击默认v2，将CSV的3类有界过程编译为冻结条件，经共享组织轴、最终遭遇语义与完整地形/Host准入生成世界。v1及无generation旧在途局保留原算法和身份。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
-      "净化点 → 备行 → 新出击（非 DEV 页面）"
+      "净化点 → 备行 → 新出击 → v2条件编译与有界准入 → 正式Rift（非DEV页面）",
+      "标题继续 → 按已保存generation版本重建同一地图；无generation旧局走历史生成器"
     ],
     "sources": [
       {
@@ -50,6 +51,66 @@
         "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
         "role": "doc",
         "note": "知情专家概要审查；当前源代码与有限生成产物核查，不属于自然试玩或人审。"
+      },
+      {
+        "path": "src/generation/world-study/world-conditions.ts",
+        "role": "code",
+        "note": "CSV条件编译、能力兼容、冻结快照、共享组织轴与有界算子"
+      },
+      {
+        "path": "src/generation/world-study/layout.ts",
+        "role": "code",
+        "note": "v2可选组织轴；缺省保留v1随机消耗"
+      },
+      {
+        "path": "src/generation/world-study/open-space.ts",
+        "role": "code",
+        "note": "地貌侵蚀消费同一组织轴"
+      },
+      {
+        "path": "data/rift-world-conditions.csv",
+        "role": "data",
+        "note": "3类过程程序、能力需求/排斥、连续参数与后备候选来源"
+      },
+      {
+        "path": "src/generated/rift-world-conditions-data.ts",
+        "role": "code",
+        "note": "仅由CSV构建生成"
+      },
+      {
+        "path": "tools/world-study/codegen-world-conditions.mjs",
+        "role": "code",
+        "note": "条件CSV到生成数据的单向代码生成与一致性检查"
+      },
+      {
+        "path": "tools/world-study/check-world-conditions.ts",
+        "role": "test",
+        "note": "编译、能力/范围拒绝、随机支流隔离、共享轴检查"
+      },
+      {
+        "path": "tools/world-study/check-production-map.ts",
+        "role": "test",
+        "note": "原生产地图合同回归"
+      },
+      {
+        "path": "tools/world-study/check-production-recovery.ts",
+        "role": "test",
+        "note": "配方池可达与真实随机新出击冷恢复"
+      },
+      {
+        "path": "tools/qa/check-rift-conditions-browser.mjs",
+        "role": "test",
+        "note": "隔离浏览器正式新建/出击/暂停/刷新/搜取/撤离/首归全链检查；读取地图仅用于诊断导航"
+      },
+      {
+        "path": "docs/tasks/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "本轮显式授权与有界生产链范围"
+      },
+      {
+        "path": "docs/qa/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "本轮最终实现与限定自动/运行验证；人审和完整24维未完成"
       }
     ],
     "dependsOn": [
@@ -59,18 +120,19 @@
     "evidence": [
       "COH-E-SRC-world",
       "COH-E-HIST-PRODUCTION",
-      "COH-E119"
+      "COH-E119",
+      "COH-E120"
     ],
     "unknowns": [
-      "当前池是有限已实现配方，不是设计提案中完整条件泛空间；rift-world-space 历史段仍有“未接生产”，以本条生产入口及正式 spec 为范围依据。",
-      "2026-10-02概要审查：14个固定正式样本通过只支持生成合同；当前缺少按世界/空间划分的未筛选种子拒绝率、重试尾部与加载耗时分布，长期采样保持挂起。"
+      "支持范围为已有材料/单层碰撞能力内的有界条件链；完整24维设计、罕见世界供给和历史新奇权重尚未完成。",
+      "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。"
     ]
   },
   {
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "世界/空间 CSV 供给共享地表场、材料形体和光响应；正式与研究页共用能力，不以世界 ID 单独补绘。",
+    "summary": "共享地表、材料形体与光响应继续由CSV供给；v2地貌裂向、材料历史和原生层理/晶面/釉盆地标消费同一组织轴。地标绑定转折、深区与出口地形，局部动效受实际支撑和视野裁剪；不按世界ID补绘。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -117,6 +179,46 @@
         "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
         "role": "doc",
         "note": "知情专家概要审查；当前源代码与有限生成产物核查，不属于自然试玩或人审。"
+      },
+      {
+        "path": "src/generation/world-study/world-scenery.ts",
+        "role": "code",
+        "note": "原生材料地标与局部运动，最终布局坐标绑定"
+      },
+      {
+        "path": "src/generation/world-study/world-conditions.ts",
+        "role": "code",
+        "note": "冻结景观参数、独立material/motion支流和组织轴"
+      },
+      {
+        "path": "src/generation/world-study/layout.ts",
+        "role": "code",
+        "note": "地貌与flow场统一组织轴"
+      },
+      {
+        "path": "src/generation/world-study/surface-field.ts",
+        "role": "code",
+        "note": "materialSeed参与材料场，缺省兼容旧sample.seed"
+      },
+      {
+        "path": "src/generation/world-study/types.ts",
+        "role": "code",
+        "note": "可选v2材料种子与景观结构"
+      },
+      {
+        "path": "tools/world-study/check-world-scenery.ts",
+        "role": "test",
+        "note": "正式原生地表/运动支持与纯黑空洞检查"
+      },
+      {
+        "path": "docs/tasks/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "世界原生材料地标画法与非阻挡边界"
+      },
+      {
+        "path": "docs/qa/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "本轮最终实现与限定自动/运行验证；人审和完整24维未完成"
       }
     ],
     "dependsOn": [
@@ -125,18 +227,19 @@
     "evidence": [
       "COH-E-SRC-world",
       "COH-E-HIST-PRODUCTION",
-      "COH-E119"
+      "COH-E119",
+      "COH-E120"
     ],
     "unknowns": [
-      "旧地面路径保留给旧在途地图；不能把新地表的验证外推到未生成的新材质能力。",
-      "2026-10-02同seed1002007的十组合原始地表对照仅支持材料/空间静帧判断；地点身份、主形家族重复与贴附感仍有余量，不证明正常视野下的动态完整审美或用户认可。"
+      "v1与无generation旧局维持旧地面/地标表现；新的material随机支流与地标不改变可走碰撞。未实现多层可行走、高体积阻挡景观或动态改碰撞。",
+      "本轮五份原生地表/动效专项及一趟正式浏览器支持支撑、纯黑空洞、灰度形体、局部运动、暂停与清理检查；不能代签全部正常视野下的场所可记忆性、五世界动态审美或用户认可。"
     ]
   },
   {
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "生成器在可达地面部署搜取点、撤离、地面敌人与环境 Host，保持既有听觉目标与路线约束；世界身份与内容方言分离。",
+    "summary": "v2在最终真实敌人形态与地形上计算路线暴露、额外行程与资源分档；必要时有界迁移非出口敌人并重测。短路与低地面敌人暴露退路形成合同，完整占漆在同轮部署中避开整条身体扫掠和全部资源点；原配额、听觉目标与旧版本投放保持。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -188,6 +291,41 @@
         "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
         "role": "doc",
         "note": "知情专家概要审查；当前源代码与有限生成产物核查，不属于自然试玩或人审。"
+      },
+      {
+        "path": "src/generation/world-study/semantic-deployment.ts",
+        "role": "code",
+        "note": "真实感知/转面包络、静态身体、八向路程、资源分档与有界遭遇重组"
+      },
+      {
+        "path": "src/generation/world-study/world-conditions.ts",
+        "role": "code",
+        "note": "冻结语义合同与参数边界"
+      },
+      {
+        "path": "tools/world-study/check-semantic-deployment.ts",
+        "role": "test",
+        "note": "真实感知、遮挡、独立八向复算、命名无关与有限重组检查"
+      },
+      {
+        "path": "tools/recovery/check-world-generation-version.ts",
+        "role": "test",
+        "note": "独立重烘真实paint危险并扫掠20px退路身体；全部11资源点避漆"
+      },
+      {
+        "path": "docs/specs/system-chaos-scavenge-extract.md",
+        "role": "spec",
+        "note": "收益分档和v2真实额外成本边界"
+      },
+      {
+        "path": "docs/tasks/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "本轮生产部署授权与准入范围"
+      },
+      {
+        "path": "docs/qa/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "本轮最终实现与限定自动/运行验证；人审和完整24维未完成"
       }
     ],
     "dependsOn": [
@@ -198,12 +336,13 @@
     "evidence": [
       "COH-E-SRC-world",
       "COH-E-HIST-PRODUCTION",
-      "COH-E119"
+      "COH-E119",
+      "COH-E120"
     ],
     "unknowns": [
-      "新世界配方不自动带来新敌人技能；候选当前沿用正式旧图书馆内容方言。",
-      "2026-10-02审查RG-01：双路径准入证明替代路线存在，尚未保证时间、暴露与收益形成可读取舍；需正常视野下对照保守撤离与多搜一个深区点。",
-      "2026-10-02审查RG-02/03：深区距离条件与搜撤规格存在差距，资源风险分档先于最终敌人形态替换且未重评；现有FLOOR/VOID宿主图没有占墙落点，复用方言不等于覆盖全部形态。实际分档偏差频率仍未测得。"
+      "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
+      "E119路线/分档问题已在v2通过最终感知、八向路程与完整占漆准入改写；深区再按真实8px支撑、20px身体、全部48px可达可见翻找站位及有效撤离圈精查。94例的282个deep均满足各自冻结门槛，属于离散网格合同，不证明连续任意角度最短路、有限视野下取舍可读、自然40–60秒节奏或长期平衡；旧版本保持历史生成。",
+      "退路合同指低地面敌人潜在感知暴露且无必经占漆；其他环境Host不纳入该威胁指标，不能宣称绝对安全。"
     ]
   },
   {
@@ -255,11 +394,12 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "设计提出跨多个维度的世界配方、条件组合与反常世界；当前只将其中已实现配方/空间/材料能力接入生产，完整设计仍未全部实现。",
-    "delivery": "design",
-    "work": "paused",
+    "summary": "24维完整世界空间仍为总体提案；本轮用户授权恢复相关开发，已贯通现有能力内的有界3过程条件编译、共享组织轴、语义部署、原生材料地标、版本恢复与离线资格工具。实际生产子集由F011/012/013承载，不代表总体设计完成。",
+    "delivery": "production",
+    "work": "active",
     "entryPoints": [
-      "无完整系统独立玩家入口；已落地子集见 COH-F011/012"
+      "净化点 → 备行 → 正式新出击v2：已落地有界3过程子集（COH-F011/012/013）；完整24维能力未全实现",
+      "离线资格编译 tools/world-study/compile-world-library.ts；有限机器资格不是逐包人审入库"
     ],
     "sources": [
       {
@@ -278,6 +418,36 @@
         "path": "docs/reviews/2026-10-02-rift-generation-overview.md",
         "role": "doc",
         "note": "知情专家概要审查；当前源代码与有限生成产物核查，不属于自然试玩或人审。"
+      },
+      {
+        "path": "data/rift-world-conditions.csv",
+        "role": "data",
+        "note": "本轮有界过程来源，非24维全集"
+      },
+      {
+        "path": "src/generation/world-study/world-conditions.ts",
+        "role": "code",
+        "note": "已接入生产的条件编译子集"
+      },
+      {
+        "path": "src/generation/world-study/semantic-deployment.ts",
+        "role": "code",
+        "note": "已接入生产的路线/威胁/收益子集"
+      },
+      {
+        "path": "tools/world-study/compile-world-library.ts",
+        "role": "test",
+        "note": "离线同配方代表/上下界/固定失败资格工厂；94例最终结果归E120，不属于全种子或人审通过"
+      },
+      {
+        "path": "docs/tasks/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "显式恢复F052所需开发，保留总体未完成边界"
+      },
+      {
+        "path": "docs/qa/rift-conditions-2026-10-02.md",
+        "role": "doc",
+        "note": "本轮最终实现与限定自动/运行验证；人审和完整24维未完成"
       }
     ],
     "dependsOn": [
@@ -287,11 +457,12 @@
     ],
     "evidence": [
       "COH-E-SRC-world",
-      "COH-E119"
+      "COH-E119",
+      "COH-E120"
     ],
     "unknowns": [
-      "完整条件约束求解、改写算子、罕见世界供给及语义部署尚不能视为已实现。",
-      "2026-10-02概要审查只核对已落地子集与设计边界；建议的路线—威胁—收益取证尚未实施，不解锁完整条件空间或长期采样。"
+      "多区域过程、高体积景观、稀有例外、描述符历史新奇权重及逐包人审入库尚未实现；有界3过程不等于24维全部规则和未来材料能力完成。",
+      "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。"
     ]
   }
 ]

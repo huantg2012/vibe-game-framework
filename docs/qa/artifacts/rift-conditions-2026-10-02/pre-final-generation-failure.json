@@ -1,0 +1,21 @@
+{
+  "status": "failed",
+  "phase": "development-before-final-world-axis",
+  "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx --import ./tools/recovery/register-css.mjs tools/recovery/check-world-generation-version.ts",
+  "requestedSeed": 0,
+  "failure": "Production world admission failed after 11 bounded candidates",
+  "rejected": [
+    { "seed": 4240352407, "reason": "Semantic deployment: insufficient separated deep seats (10)" },
+    { "seed": 4240457136, "reason": "Semantic deployment: insufficient separated deep seats (0)" },
+    { "seed": 4240561865, "reason": "Semantic deployment: insufficient separated deep seats (19)" },
+    { "seed": 4240666594, "reason": "Semantic deployment: no longer, materially lower-exposure route" },
+    { "seed": 4240771323, "reason": "Semantic deployment: insufficient separated deep seats (0)" },
+    { "seed": 4240876052, "reason": "Semantic deployment: no longer, materially lower-exposure route" },
+    { "seed": 4240980781, "reason": "Semantic deployment: no longer, materially lower-exposure route" },
+    { "seed": 4241085510, "reason": "Semantic deployment: insufficient separated deep seats (3)" },
+    { "seed": 70421, "reason": "Semantic deployment: insufficient separated deep seats (0)" },
+    { "seed": 175150, "reason": "mid patrol too short" },
+    { "seed": 1000, "reason": "mid patrol too short" }
+  ],
+  "note": "Captured from the executed tool output. This intermediate failure remains evidence and is not a final result. v1 immutable golden identities had already passed before the first v2 departure failed."
+}

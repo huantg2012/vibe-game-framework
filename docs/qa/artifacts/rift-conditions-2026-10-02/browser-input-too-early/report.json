@@ -1,0 +1,520 @@
+{
+  "method": "Fresh homepage/new game. Real keyboard travel, search, extraction and return. Full map/body reads only for diagnostic BFS; no state setters or seed override.",
+  "started": "2026-10-02T06:35:54.516Z",
+  "status": "failed",
+  "errors": [],
+  "checkpoints": [
+    {
+      "label": "00-menu",
+      "state": {
+        "scene": "menu",
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false
+          },
+          {
+            "key": "MainMenuScene",
+            "active": true,
+            "paused": false
+          },
+          {
+            "key": "RiftScene",
+            "active": false,
+            "paused": false
+          },
+          {
+            "key": "PurificationScene",
+            "active": false,
+            "paused": false
+          }
+        ]
+      },
+      "text": "那天之后\n\nAFTER THAT DAY\n\n开始",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 0,
+        "physicsGridSize": null
+      }
+    },
+    {
+      "label": "01-new-base",
+      "state": {
+        "scene": "base",
+        "active": true,
+        "paused": false,
+        "player": {
+          "x": 509.1935363330473,
+          "y": 356.8080750016289
+        },
+        "route": "main",
+        "transitioning": false,
+        "pendingSave": false,
+        "worldPlayer": {
+          "x": 3.8,
+          "y": 0,
+          "z": 3.8
+        },
+        "resting": false,
+        "rest": {
+          "x": 528.7701417249435,
+          "y": 391.868164617227,
+          "depth": 5.843310565925061
+        },
+        "nearTarget": "rest",
+        "fps": 57,
+        "camera": {
+          "zoom": 1,
+          "scrollX": 0,
+          "scrollY": 0
+        },
+        "devices": {
+          "core": {
+            "x": 684.1171244047266,
+            "y": 391.69284342892763
+          },
+          "storage": {
+            "x": 730.2721281671445,
+            "y": 249.0266190132017
+          },
+          "purifier": {
+            "x": 435.60091566112055,
+            "y": 294.1897074452697
+          },
+          "entrance": {
+            "x": 458.0525543975513,
+            "y": 334.63152000519256
+          },
+          "offering": {
+            "x": 465.42557207627164,
+            "y": 234.51720081356174
+          },
+          "growth": {
+            "x": 659.5419039172348,
+            "y": 227.8069946921345
+          }
+        },
+        "panels": {
+          "inventory": false,
+          "status": false,
+          "offering": false,
+          "impact": false,
+          "allocation": false,
+          "growth": false
+        }
+      },
+      "text": "薪柴\n0\n潮汐\n第 1 潮\n涨潮\n下次归来\n储藏？\n轻微？\nTab\n存续报告\n[E]\n坐下",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 1590,
+        "physicsGridSize": null
+      }
+    },
+    {
+      "label": "02-prepare",
+      "state": {
+        "scene": "base",
+        "active": true,
+        "paused": false,
+        "player": {
+          "x": 489.88897660482735,
+          "y": 349.4285152734091
+        },
+        "route": "main",
+        "transitioning": false,
+        "pendingSave": false,
+        "worldPlayer": {
+          "x": 2.918484116154991,
+          "y": 0,
+          "z": 3.769633830725329
+        },
+        "resting": false,
+        "rest": {
+          "x": 528.7701417249435,
+          "y": 391.868164617227,
+          "depth": 5.843310565925061
+        },
+        "nearTarget": "rift",
+        "fps": 58.5625,
+        "camera": {
+          "zoom": 2.2,
+          "scrollX": 104,
+          "scrollY": 67
+        },
+        "devices": {
+          "core": {
+            "x": 684.1171244047266,
+            "y": 391.69284342892763
+          },
+          "storage": {
+            "x": 730.2721281671445,
+            "y": 249.0266190132017
+          },
+          "purifier": {
+            "x": 435.60091566112055,
+            "y": 294.1897074452697
+          },
+          "entrance": {
+            "x": 458.0525543975513,
+            "y": 334.63152000519256
+          },
+          "offering": {
+            "x": 465.42557207627164,
+            "y": 234.51720081356174
+          },
+          "growth": {
+            "x": 659.5419039172348,
+            "y": 227.8069946921345
+          }
+        },
+        "panels": {
+          "inventory": true,
+          "status": false,
+          "offering": false,
+          "impact": false,
+          "allocation": false,
+          "growth": false
+        }
+      },
+      "text": "备行\n沿旧路出发\nEsc 收起\n在手\n普通撬棍\n耐久 60 / 60\n工具 Q\n未装配\n工具 F\n未装配\n被动\n未装配\n装置·混乱增速\n-21%\n每堆所得示例\n1 / 2 / 5\n小 / 中 / 大份 · 已含亲和\n装置·初始混乱\n15\n全部\n武器\n污染物\n原来顺序\n按名称\n选择装配\n普通撬棍\n在手 · 已成熟 · 普通\n1–1 / 1\n普通撬棍\n普通 · 已成熟 · 在手\n耐久度\n60 / 60\n\n已完成供奉。每次有效命中消耗 1 点耐久度，同次挥击只扣一次，空挥不消耗；耐久归零后损坏。伤害在区间内浮动。\n\n品质\n普通\n构造\n标准\n伤害\n22–28\n污染抗性\n0%\n向下滚动查看 ↓\n换到在手\n只装配已成熟物件 · 空工具位不妨碍出发\n↑↓ 查看 · Tab 移步 · Esc 离开\nShift+Enter 踏入裂隙",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 1590,
+        "physicsGridSize": null
+      }
+    },
+    {
+      "label": "03-paused-entry",
+      "state": {
+        "scene": "rift",
+        "active": false,
+        "paused": true,
+        "ended": false,
+        "pos": {
+          "x": 308,
+          "y": 852
+        },
+        "hp": 100,
+        "chaos": 15.21064560000002,
+        "carried": 0,
+        "seed": {
+          "seed": 319288108,
+          "fragmentTypeId": "world-study:carmine-lacquer",
+          "recipeId": "world-space:open-scars"
+        },
+        "elapsedMs": 533.2799999999992,
+        "exit": {
+          "id": "EXIT_01",
+          "position": {
+            "x": 1652,
+            "y": 564
+          },
+          "triggerRadius": 32
+        },
+        "nodes": [
+          {
+            "id": "KDL_01",
+            "kind": "kindling",
+            "pos": {
+              "x": 1620,
+              "y": 724
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_02",
+            "kind": "kindling",
+            "pos": {
+              "x": 436,
+              "y": 916
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_03",
+            "kind": "kindling",
+            "pos": {
+              "x": 1076,
+              "y": 884
+            },
+            "tier": "safe",
+            "value": 1,
+            "collected": false
+          },
+          {
+            "id": "KDL_04",
+            "kind": "kindling",
+            "pos": {
+              "x": 628,
+              "y": 404
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_05",
+            "kind": "kindling",
+            "pos": {
+              "x": 1268,
+              "y": 756
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_06",
+            "kind": "kindling",
+            "pos": {
+              "x": 1428,
+              "y": 468
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          {
+            "id": "KDL_07",
+            "kind": "kindling",
+            "pos": {
+              "x": 564,
+              "y": 212
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "KDL_08",
+            "kind": "kindling",
+            "pos": {
+              "x": 340,
+              "y": 340
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_01",
+            "kind": "contaminant",
+            "pos": {
+              "x": 1428,
+              "y": 916
+            },
+            "tier": "safe",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_02",
+            "kind": "contaminant",
+            "pos": {
+              "x": 1108,
+              "y": 660
+            },
+            "tier": "contested",
+            "value": 0,
+            "collected": false
+          },
+          {
+            "id": "CTM_NODE_03",
+            "kind": "contaminant",
+            "pos": {
+              "x": 756,
+              "y": 308
+            },
+            "tier": "deep",
+            "value": 0,
+            "collected": false
+          }
+        ]
+      },
+      "text": "操作 · 展开 / 收起\nWASD / 方向键 移动与转向\nSpace 朝面向挥击 · 走位避开攻击\nE 按住翻找 · 退路处按下撤离\nTab 随身物品 · Esc 暂停\n右下刻记只记已见地形与退路方向\n完整度\n100/100\n混乱\n15\n稳定\n薪柴\n0\n武器\n普通撬棍\n60/60\nQ\n未装配\n—\nF\n未装配\n—\n被动\n未装配\n—\n退路未见\n记录\n当前行动已暂停。关闭或刷新后，继续这一趟。\n合上，继续本趟\n放弃本趟\n↑↓ 选中\nEnter 合上，继续本趟\nEsc 合上\n合上后 Tab 本趟拾获 · 世界继续",
+      "diagnostics": {
+        "surface": {
+          "footprint": {
+            "x": 298,
+            "y": 842,
+            "width": 20,
+            "height": 20
+          },
+          "reflectionPixels": 1347,
+          "reflectionUpdatedMs": 483.26999999999924,
+          "textureCount": 2,
+          "phaserFps": 54.31640625
+        },
+        "saveCharacters": 105695,
+        "physicsGridSize": 8
+      }
+    },
+    {
+      "label": "failure",
+      "state": {
+        "scene": "menu",
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false
+          },
+          {
+            "key": "MainMenuScene",
+            "active": true,
+            "paused": false
+          },
+          {
+            "key": "RiftScene",
+            "active": false,
+            "paused": false
+          },
+          {
+            "key": "PurificationScene",
+            "active": false,
+            "paused": false
+          }
+        ]
+      },
+      "text": "那天之后\n\nAFTER THAT DAY\n\n继续\n重新开始\n潮汐\n第 1 潮\n涨潮\n出击\n1\n稳定度\n0%\n未完成",
+      "diagnostics": {
+        "surface": null,
+        "saveCharacters": 105695,
+        "physicsGridSize": null
+      }
+    }
+  ],
+  "entryIdentity": {
+    "worldId": "procedural-rift",
+    "layoutId": "procedural-rift",
+    "seed": 319288108,
+    "recipeId": "world-space:open-scars",
+    "signature": "1d3af37f",
+    "generation": {
+      "version": 2,
+      "requestedSeed": 4107260098,
+      "profile": {
+        "id": "carmine-lacquer",
+        "label": "猩釉层原",
+        "description": "饱和绛釉与青蓝裸床",
+        "material": "glaze",
+        "surface": {
+          "substrate": "strata",
+          "coating": "glaze",
+          "organization": "patches",
+          "coverage": 0.68,
+          "wear": 0.28,
+          "deposits": 0.55,
+          "scale": 1.2,
+          "relief": 0.5,
+          "contrast": 0.65,
+          "regionScale": 1.4,
+          "quietness": 0.46,
+          "formScale": 1.45,
+          "fragmentation": 0.42,
+          "accentCoverage": 0.14
+        },
+        "palette": {
+          "void": 1448997,
+          "shadow": 1512231,
+          "floorDeep": 1320759,
+          "floor": 2315112,
+          "floorLight": 4361364,
+          "materialDark": 5247786,
+          "materialMid": 9774917,
+          "materialLight": 13980262,
+          "faceLight": 15963525,
+          "accentDim": 2441094,
+          "accent": 3571652,
+          "accentLight": 7522780,
+          "peak": 16764589,
+          "actorDark": 2369326,
+          "actorMid": 4936539,
+          "actorLight": 12750939,
+          "ground": 2315112,
+          "groundLight": 4361364,
+          "groundDark": 1320759,
+          "wall": 9774917,
+          "wallLight": 15963525,
+          "wallDark": 5247786
+        }
+      },
+      "space": {
+        "id": "open-scars",
+        "label": "疏落蚀坑",
+        "voidFraction": 0.09,
+        "crackFraction": 0.2,
+        "holeScale": 1,
+        "directionality": 0.2,
+        "clustering": 0.25
+      },
+      "contentFragmentTypeId": "frag-library",
+      "paintGeometryVersion": 2,
+      "conditions": {
+        "version": 1,
+        "programId": "layered-deposition",
+        "programVersion": 1,
+        "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+        "seed": 4107260098,
+        "rule": "deposition",
+        "requiredCapabilities": [
+          "surface:strata",
+          "field:direction",
+          "support:single-plane"
+        ],
+        "excludedCapabilities": [
+          "collision:dynamic",
+          "space:multilevel"
+        ],
+        "parameters": {
+          "strength": 0.35952011090703306,
+          "coherence": 0.6789910924830473,
+          "scale": 0.9636919966898859
+        },
+        "streams": {
+          "world": 805513869,
+          "layout": 319288108,
+          "material": 2074872388,
+          "placement": 3082655715,
+          "encounters": 2586923801,
+          "motion": 3611563009
+        },
+        "semantic": {
+          "minimumDeepDetourPx": 332.51188166439533,
+          "safeMaxThreat": 0.08,
+          "routeThreatPenalty": 6,
+          "bodySizePx": 20,
+          "supportStepPx": 8,
+          "voidBlocksSight": true,
+          "sceneryBlocksMovement": false
+        },
+        "scenery": {
+          "kind": "glaze-basin",
+          "scale": 0.9636919966898859,
+          "radiusPx": 91.17388999180868,
+          "density": 0.4245966921758373,
+          "motion": {
+            "kind": "settle",
+            "amplitude": 1.0125065626576544,
+            "periodSeconds": 9.799889981746674
+          }
+        },
+        "fallbackSeeds": [
+          70421,
+          175150,
+          1000
+        ]
+      }
+    },
+    "catalogVersion": "contaminant-v1",
+    "lootAlgorithmVersion": 1,
+    "combatRulesVersion": 2
+  },
+  "failure": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+  "finished": "2026-10-02T06:36:32.483Z"
+}

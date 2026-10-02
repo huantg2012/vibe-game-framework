@@ -389,7 +389,9 @@ export class RiftScene extends Phaser.Scene {
     this.visibility.setExtractionPosition(layout.extractionPoint.position);
 
     this.trail.create(this, tileMap.cols, tileMap.tileSize, this.visibilityAt);
-    this.createLandmarkDecals(layout.landmarks, tileMap.tileSize);
+    // Conditional worlds bake material landmarks into the same lit/occluded ground.
+    // Historical runs retain their exact original decal presentation.
+    if (!productionWorld?.sample.scenery) this.createLandmarkDecals(layout.landmarks, tileMap.tileSize);
 
     // Sight and walkability are independent. Stage chasms are open air for perception;
     // every movement, body clearance and path still uses the physical grid.

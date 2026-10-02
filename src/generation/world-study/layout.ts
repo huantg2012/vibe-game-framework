@@ -1,7 +1,7 @@
 import { SeededRandom } from '@/utils/random';
 import { worldProfileById } from './profiles';
 import type { WorldFormation, WorldProfile, WorldProfileId, WorldSample, WorldTopologyId } from './types';
-import { erodeOpenLand } from './open-space';
+import { erodeOpenLand, validateWorldOrganization, type WorldOrganization } from './open-space';
 import { evaluateOpenSpace, type SpaceQuality } from './space-quality';
 import { spaceProfileForTopology, validateSpaceProfile, type SpaceProfile } from './space-profile';
 
@@ -94,25 +94,28 @@ export const MAX_SPACE_ATTEMPTS = 12;
 
 /** Geometry depends on numeric space controls and seed, never visual identity. */
 export function generateWorldSample(profileId: WorldProfileId | string | WorldProfile, topologyId: WorldTopologyId, seed: number,
-  spaceProfile?: SpaceProfile): WorldSample {
+  spaceProfile?: SpaceProfile, organization?: WorldOrganization): WorldSample {
   if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('World seed must be an unsigned 32-bit integer');
   if (topologyId !== 'loops' && topologyId !== 'channels') throw new Error(`Unknown topology: ${topologyId}`);
   const profile = typeof profileId === 'string' ? worldProfileById(profileId) : profileId;
   const space = spaceProfile ?? spaceProfileForTopology(topologyId);
   validateSpaceProfile(space);
+  if (organization) validateWorldOrganization(organization);
   const land = makeLand(seed);
   const flowAngle = new Float32Array(land.length), deposition = new Float32Array(land.length);
   const fieldRng = new SeededRandom(splitSeed(seed, 0x891957e1));
   const phase = fieldRng.nextFloat(0, Math.PI * 2), axis = fieldRng.nextFloat(-.7, .7);
   for (let row = 0; row < ROWS; row++) for (let col = 0; col < COLS; col++) {
     const index = row * COLS + col;
-    flowAngle[index] = axis + .45 * Math.sin(row * .09 + phase) + .15 * Math.cos(col * .06 + phase);
+    flowAngle[index] = organization
+      ? organization.axis + (1 - organization.coherence) * (.45 * Math.sin(row * .09 + phase) + .15 * Math.cos(col * .06 + phase))
+      : axis + .45 * Math.sin(row * .09 + phase) + .15 * Math.cos(col * .06 + phase);
     deposition[index] = .5 + .24 * Math.sin(col * .077 + row * .04 + phase) + .22 * Math.cos(row * .13 - col * .032 + phase);
   }
   let reason = 'No erosion candidate';
   for (let attempt = 0; attempt < MAX_SPACE_ATTEMPTS; attempt++) {
     const rng = new SeededRandom(splitSeed(seed, 0x2156198d + attempt * 0x9e3779b1));
-    const erosion = erodeOpenLand(land, COLS, ROWS, rng, space), walls = erosion.walls;
+    const erosion = erodeOpenLand(land, COLS, ROWS, rng, space, organization), walls = erosion.walls;
     if (erosion.actualFraction < space.voidFraction * .85) { reason = 'Requested erosion density could not fit broad spacing'; continue; }
     const floor = Uint8Array.from(land, (value, index) => value && !walls[index] ? 1 : 0);
     const seats: number[] = [];

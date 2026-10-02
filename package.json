@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "worlds:codegen": "node tools/map-preview/codegen-world-profiles.mjs && node tools/map-preview/codegen-world-spaces.mjs && node tools/map-preview/codegen-world-pool.mjs",
+    "worlds:codegen": "node tools/map-preview/codegen-world-profiles.mjs && node tools/map-preview/codegen-world-spaces.mjs && node tools/map-preview/codegen-world-pool.mjs && node tools/world-study/codegen-world-conditions.mjs",
     "check:worlds": "node tools/map-preview/codegen-world-pool.mjs --check && node tools/map-preview/codegen-world-profiles.mjs --check && node --import tsx tools/map-preview/check-world-study.ts && node --import tsx tools/world-study/check-runtime.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-movement.ts && node tools/map-preview/codegen-world-spaces.mjs --check && node --import tsx tools/world-study/check-open-space.ts docs/qa/artifacts/rift-world-study/space-check.json && node --import tsx tools/world-study/check-surface-system.ts docs/qa/artifacts/rift-world-study/surface-system-check.json && node --import tsx tools/world-study/check-material-response.ts && node --import tsx tools/world-study/check-composition.ts",
     "capture:worlds": "node tools/world-study/capture.mjs",
     "preview:worlds": "node --import tsx tools/world-study/render.ts",
@@ -102,7 +102,10 @@
     "check:game-state-tool": "node --test .agents/skills/game-state/scripts/check.test.mjs",
     "check:iteration-31": "node tools/qa/check-iteration-31.mjs",
     "check:atmosphere": "node --import tsx tools/atmosphere-copy/check.mjs",
-    "check:haven-narration": "node --import tsx tools/qa/check-haven-narration.ts"
+    "check:haven-narration": "node --import tsx tools/qa/check-haven-narration.ts",
+    "check:world-conditions": "node tools/world-study/codegen-world-conditions.mjs --check && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-world-conditions.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-semantic-deployment.ts",
+    "check:world-scenery": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-world-scenery.ts",
+    "worlds:compile-library": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/compile-world-library.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1",

@@ -220,7 +220,7 @@ function paintLandBreaks(raster: Raster, sample: WorldSample, onFloor: (x: numbe
     // Short correlated segments follow the material grain. Most shoreline is
     // left alone; this is a broken upper surface, never a continuous sidewall.
     const patch = materialHash(Math.floor((x * nx + y * ny) / 15),
-      Math.floor((-x * ny + y * nx) / 9), sample.seed ^ 0x3289);
+      Math.floor((-x * ny + y * nx) / 9), (sample.materialSeed ?? sample.seed) ^ 0x3289);
     if (patch > (.15 + split * .24 + field.wear * .10) * (1 - field.quiet * .55)) continue;
     const depth = atEdge(1) ? 1 : atEdge(2) ? 2 : 3;
     const coated = field.coverage > .5, material = coated ? spec.coating : spec.substrate;
@@ -251,13 +251,13 @@ export function paintMaterialForms(raster: Raster, sample: WorldSample, floorMas
     const stride = 88;
     const selected: FormSeat[] = [];
     for (let row = 0; row < height / stride; row++) for (let col = 0; col < width / stride; col++) {
-      const x = (col + materialHash(col, row, sample.seed ^ 0x6713)) * stride;
-      const y = (row + materialHash(col, row, sample.seed ^ 0x4371)) * stride;
+      const x = (col + materialHash(col, row, (sample.materialSeed ?? sample.seed) ^ 0x6713)) * stride;
+      const y = (row + materialHash(col, row, (sample.materialSeed ?? sample.seed) ^ 0x4371)) * stride;
       if (!worldSupportAt(sample, x, y)) continue;
       const field = sampleSurfaceField(sample, x, y);
       const chance = (.16 + spec.relief * .55) * field.activity * (1 - field.quiet * .88) * (1 + field.accent * .6);
-      if (materialHash(col, row, sample.seed ^ 0x9911) > chance) continue;
-      const seed = hash(sample.seed ^ Math.imul(col, 8191) ^ Math.imul(row, 131071));
+      if (materialHash(col, row, (sample.materialSeed ?? sample.seed) ^ 0x9911) > chance) continue;
+      const seed = hash((sample.materialSeed ?? sample.seed) ^ Math.imul(col, 8191) ^ Math.imul(row, 131071));
       const coated = field.coverage > .5, material = coated ? spec.coating : spec.substrate;
       let length = (88 + seed % 33) * formScale;
       let breadth = (52 + (seed >>> 9) % 25) * formScale;
@@ -282,4 +282,43 @@ export function paintMaterialForms(raster: Raster, sample: WorldSample, floorMas
   } finally {
     raster.setClip(null);
   }
+}
+
+/** Larger connected formations use the native face/cleavage/peel painters.
+ * No emblem, nested ring or new flat drawing style is pasted onto the terrain. */
+export function paintMaterialLandmarks(raster: Raster, sample: WorldSample): void {
+  raster.setClip((x, y) => worldSupportAt(sample, x, y));
+  try {
+    const fragmentation = compositionOf(sample.profile.surface).fragmentation;
+    for (const landmark of sample.scenery ?? []) {
+      const material: WorldMaterial = landmark.kind === 'crystal-fan' ? 'crystal'
+        : landmark.kind === 'glaze-basin' ? 'glaze' : 'strata';
+      const nx = Math.cos(landmark.angle), ny = Math.sin(landmark.angle);
+      // A dominant broken section and offset continuations; no symmetric wreath.
+      const members = [
+        {u:-.32,v:-.34,length:1.16,breadth:.65,turn:-.10},
+        {u:.28,v:-.20,length:.88,breadth:.64,turn:.13},
+        {u:-.12,v:.13,length:1.75,breadth:1.04,turn:0},
+        {u:.44,v:.40,length:.60,breadth:.43,turn:-.23},
+      ];
+      for (const [index, member] of members.entries()) {
+        const seed = hash(landmark.seed ^ Math.imul(index + 1, 1297));
+        const variance = (seed % 101 - 50) / 700, angle = landmark.angle + member.turn + variance;
+        const x = landmark.x + (nx * member.u - ny * member.v) * landmark.radius;
+        const y = landmark.y + (ny * member.u + nx * member.v) * landmark.radius;
+        if (!worldSupportAt(sample, x, y)) continue;
+        const field = sampleSurfaceField(sample, x, y);
+        const base = formColors(sample, true, .08);
+        const seat: FormSeat = { x, y, nx: Math.cos(angle), ny: Math.sin(angle), seed,
+          length: landmark.radius * member.length, breadth: landmark.radius * member.breadth,
+          fragment: Math.max(0, Math.min(1, fragmentation + ((seed >>> 9) % 31 - 15) / 100)),
+          field: { ...field, wear: Math.max(.35, field.wear), deposit: .4 + landmark.density * .45 },
+          colors: { ...base, mid: materialMix(base.mid, base.dark, index === 2 ? .05 : .13),
+            light: materialMix(base.light, base.mid, index === 2 ? .06 : .2) } };
+        if (material === 'strata') paintStrata(raster, sample, seat);
+        else if (material === 'crystal') paintCrystal(raster, sample, seat);
+        else paintGlaze(raster, sample, seat);
+      }
+    }
+  } finally { raster.setClip(null); }
 }
