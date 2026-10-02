@@ -1,9 +1,9 @@
-import { createWorldProductionMap, type WorldProductionMap } from '@/generation/world-study/production-map';
-import { selectWorldProductionRecipe, validWorldProductionRecipe, type WorldProductionRecipe } from '@/generation/world-study/production-recipe';
+import type { WorldProductionMap } from '@/generation/world-study/production-map';
+import { selectWorldProductionRecipe, type WorldProductionRecipe } from '@/generation/world-study/production-recipe';
 import { validateHostRuntimeSnapshot } from '@/systems/contamination-host-system';
 import { createCombatRuntimeConfigurationSignature } from '@/systems/combat-system';
 /** Formal 2D world admission. Generation is deterministic; no runtime is replayed on load. */
-import { generateRiftLayout } from '@/generation/rift-layout';
+import { restoreLegacyProceduralLayout, restoreLegacyProductionWorld, validLegacyWorldRecipe } from '@/generation/legacy-rift-generation';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import { saveManager } from './save-manager';
 import { createAIRuntimeConfiguration } from '@/systems/ai/ai-system';
@@ -71,16 +71,14 @@ export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpo
     signature, ...(generationRecipes.has(layout) ? { generation: generationRecipes.get(layout)! } : {}) };
 }
 function rememberWorld(generation: WorldProductionRecipe): GeneratedRiftLayout {
-  if (!validWorldProductionRecipe(generation)) throw new Error('Invalid saved world recipe');
-  const world = createWorldProductionMap(generation.profile, generation.space, generation.requestedSeed,
-    { contentFragmentTypeId: generation.contentFragmentTypeId, paintGeometryVersion: generation.paintGeometryVersion ?? 1,
-      ...(generation.version === 2 ? { generationVersion: 2, conditions: generation.conditions,
-        fallbackSeeds: generation.conditions.fallbackSeeds } : {}) });
+  // Creation and recovery dispatch by the same contract version. A later live
+  // generator cannot accidentally create a v2 departure that v2 cannot restore.
+  const world = restoreLegacyProductionWorld(generation);
   worlds.set(world.layout, world); generationRecipes.set(world.layout, generation);
   return world.layout;
 }
 function layoutKey(identity: RiftCheckpoint['identity']): string {
-  return `${identity.seed}:${identity.recipeId}:${identity.generation ? checkpointChecksum(identity.generation) : 'legacy'}`;
+  return `${identity.seed}:${identity.recipeId}:${identity.generation ? JSON.stringify(identity.generation) : 'legacy'}`;
 }
 export function createProceduralDeparture(): RiftCheckpoint['identity'] {
   const values = new Uint32Array(1); crypto.getRandomValues(values);
@@ -91,10 +89,11 @@ export function createProceduralDeparture(): RiftCheckpoint['identity'] {
 }
 export function restoreProceduralLayout(identity: RiftCheckpoint['identity']): GeneratedRiftLayout {
   if (identity.worldId !== 'procedural-rift' || identity.layoutId !== 'procedural-rift') throw new Error('Unsupported procedural world');
+  if (identity.generation && !validLegacyWorldRecipe(identity.generation)) throw new Error('Invalid saved world recipe');
   const key = layoutKey(identity);
   let layout = layouts.get(key);
   if (!layout) {
-    layout = identity.generation ? rememberWorld(identity.generation) : generateRiftLayout(identity.seed);
+    layout = identity.generation ? rememberWorld(identity.generation) : restoreLegacyProceduralLayout(identity.seed);
     if (layouts.size >= 4) layouts.clear(); layouts.set(key, layout);
   }
   const actual = proceduralRiftIdentity(layout);

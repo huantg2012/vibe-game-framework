@@ -1,5 +1,6 @@
 /** DEV-only host for an admitted production map. No browser-save reads or writes. */
 import Phaser from 'phaser';
+import { RiftGymPerformance } from './rift-gym-performance';
 import { gameConfigWithScenes } from '@/config/game-config';
 import { eventBus } from '@/core/event-bus';
 import { BUILD_LAB_LOADOUTS } from '@/generated/build-lab-data';
@@ -16,6 +17,7 @@ import { bindDomUiRootToGame } from '@/ui/dom/panel-styles';
 import { BuildLabMemoryStorage, prepareBuildLabRun } from './build-lab-session';
 
 export interface RiftGymRuntimeState {
+  readonly performance: ReturnType<RiftGymPerformance['snapshot']>;
   readonly ready: boolean;
   readonly running: boolean;
   readonly starting: boolean;
@@ -45,6 +47,7 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
   // Must precede Phaser boot and every inventory/session initialization.
   saveManager.setStorage(new BuildLabMemoryStorage());
   let ready = false, running = false, starting = false, created = false, disposed = false;
+  const frameProbe = new RiftGymPerformance();
   let epoch = 0;
   let detachCreate: (() => void) | null = null;
 
@@ -66,10 +69,12 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
 
   const game = new Phaser.Game(gameConfigWithScenes([RiftGymBoot, RiftScene]));
   bindDomUiRootToGame(game);
+  game.events.on(Phaser.Core.Events.PRE_STEP, () => frameProbe.before(running && created && !game.scene.isPaused('RiftScene')));
+  game.events.on(Phaser.Core.Events.POST_RENDER, () => frameProbe.after());
   const scene = (): RiftScene => game.scene.getScene('RiftScene') as RiftScene;
   function getState(): RiftGymRuntimeState {
     return {
-      ready, running, starting,
+      ready, running, starting, performance: frameProbe.snapshot(),
       paused: running && created && game.scene.isPaused('RiftScene'),
       probe: running && created ? scene().probeBuildLabState() : null,
     };
@@ -144,6 +149,7 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
         detachCreate = null;
         if (disposed || runEpoch !== epoch || !starting) return;
         starting = false; running = true; created = true;
+        frameProbe.reset();
         if (game.input.keyboard) game.input.keyboard.enabled = true;
         eventBus.emit(GameEvent.RIFT_ENTERED, { cycle: gameState.getCycle() });
         game.scale.refresh();

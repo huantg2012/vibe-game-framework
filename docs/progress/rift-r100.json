@@ -4,7 +4,7 @@
     "id": "R100",
     "title": "Rift 百世界与污染分级大版本",
     "targetWorlds": 108,
-    "status": "awaiting-start",
+    "status": "active",
     "planStatus": "prepared",
     "date": "2026-10-02",
     "baselineRevision": "087855a",
@@ -22,7 +22,13 @@
       "COH-F008",
       "COH-F023"
     ],
-    "startAuthorization": null,
+    "startAuthorization": {
+      "date": "2026-10-02",
+      "evidenceIds": [
+        "R100-H-START"
+      ],
+      "note": "用户明确开工；常规工作依合同持续执行，人审检查点保留。"
+    },
     "finalAcceptance": null,
     "requiredGrades": [
       "low",
@@ -34,9 +40,9 @@
   },
   "resume": {
     "iteration": "R100-I01",
-    "batch": null,
-    "nextAction": "等待用户敲钟；之后打开I01，先保护旧局并冻结世界×等级、备行选择、压力/回报/保存合同与测量预算。",
-    "lastCompleted": "依据最新要求完成美术独立门与三级远征方案修订；14轮排产、108世界/324等级资格目标；开发未启动。"
+    "batch": "R100-I01-B01/B02/B03/B04",
+    "nextAction": "并行封存旧生成器、实现最小CSV世界/等级包、测量基线并建立I02母版任务；证据通过后收口I01接续I02。",
+    "lastCompleted": "用户启动授权已登记；R100开发开始，当前0世界/0等级资格。"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -108,8 +114,8 @@
       "targetWorlds": 0,
       "phase": "foundation",
       "dependencies": [],
-      "state": "planned",
-      "stage": "not-started",
+      "state": "active",
+      "stage": "implementation",
       "goal": "先保护旧局，明确108世界×三级、知情选级与非常态重度远征的制作及发布合同。",
       "technical": "冻结旧算法恢复路径；定义WorldPackage最小身份/能力版本、统一实体几何及数据来源合同；测量生成、恢复、帧时、内存与离线成本。 建立可扩展到新几何的最小CSV包编译、依赖版本/哈希、正式硬准入与可重复资格入口；不等I05规模化才开始验证。 独立pollutionGrade在候选生成前冻结；设计等级暴露选择、周期危险、遭遇/奖励预算、抗性及暂停/恢复合同，旧age不重命名。明确等级经济必要验证范围。",
       "visual": "记录现五样本的正常视野与已知局限；设计地面/实体/虚空的视觉区分和前三构造的母版任务，明确画法假设，不凭灰盒验美术。 按R100美术七项标准锁三档同源母版任务与成品基准；先做折叠板的低/中/重，再跨材料验证。",
@@ -128,10 +134,12 @@
         "pollutionGrade不等于age/实体覆盖/玩家混乱；重试不能换级，品质和功能级不可混淆"
       ],
       "exit": "没有新世界计数；包版本与旧局保护在新几何启用前通过。",
-      "actualRevision": null,
+      "actualRevision": "ac9ddd7 + I01 worktree",
       "gateResults": [],
       "issueIds": [],
-      "evidenceIds": [],
+      "evidenceIds": [
+        "R100-H-START"
+      ],
       "targetGradeCases": 0
     },
     {
@@ -562,7 +570,17 @@
     }
   ],
   "worlds": [],
-  "evidence": [],
+  "evidence": [
+    {
+      "id": "R100-H-START",
+      "kind": "human",
+      "purpose": "start-authority",
+      "revision": "ac9ddd7",
+      "path": "docs/tasks/rift-r100-i01.md",
+      "scope": "用户于2026-10-02明确“开工！！！！”，启动已准备的R100整个大版本。",
+      "limitations": "不构成未制作世界、母版、重度关卡或最终版本的审美及体验认可。"
+    }
+  ],
   "risks": [
     {
       "id": "R100-R01",
@@ -639,6 +657,11 @@
       "date": "2026-10-02",
       "kind": "scope-revision",
       "note": "采纳用户关键补充：专业美术独立门、低中重污染、需准备的非常态重度与部分主动选级。计划由12轮增为14轮，新增前期远征纵切片和终期等级经济审核；108身份/324等级覆盖。仍等待敲钟，非开发授权。"
+    },
+    {
+      "date": "2026-10-02",
+      "kind": "start",
+      "note": "用户“开工！！！！”；R100转active，I01并行执行旧局保护、最小包、测量预算和母版任务。"
     }
   ],
   "qualityPlan": {

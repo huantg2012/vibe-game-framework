@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "id": "legacy-rift-through-v2",
+  "sourceRevision": "ac9ddd7fab04202d629a97293ffeeb19f71acaec",
+  "esbuildVersion": "0.21.5",
+  "formats": [
+    "unversioned",
+    "world-production-v1",
+    "world-production-v2"
+  ],
+  "executorSha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074",
+  "executorBytes": 376195,
+  "entrySha256": "5601d18471f5a44717046b060920f083008d19d9684329e8019840d97188840b",
+  "imports": [],
+  "dependencies": [
+    {
+      "path": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    {
+      "path": "src/entities/form-renderers/d/environment-pixels.ts",
+      "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+    },
+    {
+      "path": "src/entities/form-renderers/d/fragment-ramp.ts",
+      "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+      "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+      "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/topology.ts",
+      "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+    },
+    {
+      "path": "src/generated/contamination-body-data.ts",
+      "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+    },
+    {
+      "path": "src/generated/contamination-capability-data.ts",
+      "sha256": "9d2e8adfade83f546849fc6e024ae5b61b186c38faba33f657e0307c1d0e0d3b"
+    },
+    {
+      "path": "src/generated/contamination-family-data.ts",
+      "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+    },
+    {
+      "path": "src/generated/contamination-lexicon-data.ts",
+      "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+    },
+    {
+      "path": "src/generated/enemy-data.ts",
+      "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+    },
+    {
+      "path": "src/generated/rift-fragment-data.ts",
+      "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+    },
+    {
+      "path": "src/generated/rift-world-conditions-data.ts",
+      "sha256": "257fb47e344dc4ed8b9c67e2fe69362207aa3a3aaeecee750ae8dbca10fd9be4"
+    },
+    {
+      "path": "src/generated/rift-world-pool-data.ts",
+      "sha256": "f181f51e8a332b357818ce17f97e2373aaee4ef3c7c8e39e611a9c07676e5514"
+    },
+    {
+      "path": "src/generated/rift-world-profile-data.ts",
+      "sha256": "9550a5faca9e262d2ccf7679d29fd4b0306e883785bf352b31f3007c13d39fe8"
+    },
+    {
+      "path": "src/generated/rift-world-space-data.ts",
+      "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+    },
+    {
+      "path": "src/generation/atmosphere.ts",
+      "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+    },
+    {
+      "path": "src/generation/connectivity.ts",
+      "sha256": "09ce50871f059aa2293d3011e52c6031b9f6712a952032374a5016b6ffa3a790"
+    },
+    {
+      "path": "src/generation/contamination-draw.ts",
+      "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+    },
+    {
+      "path": "src/generation/contamination-pins.ts",
+      "sha256": "c15713531378ae833b13cd6e45417fca25867ea19dc30f7a464534a9b1b69b1b"
+    },
+    {
+      "path": "src/generation/cover.ts",
+      "sha256": "1df3e511b090dd8d99d0374e7431fd2048ac805c458b758cafbb976d2d8ba7d9"
+    },
+    {
+      "path": "src/generation/draft-pipeline.ts",
+      "sha256": "bd84d233e3afc414e8f14810b64de9594608b4a35248b259b70c22149edfc575"
+    },
+    {
+      "path": "src/generation/dual-path.ts",
+      "sha256": "3df3c42227ffe0498f4e7555d8f75c5abe7d39e219418e2c0c2a6b4ad75dd699"
+    },
+    {
+      "path": "src/generation/fragment-roll.ts",
+      "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+    },
+    {
+      "path": "src/generation/masses.ts",
+      "sha256": "e1d8e88c574f04122d77490bdfeff5e70e540c4e7079e98688ab06e9384ce195"
+    },
+    {
+      "path": "src/generation/outline-mask.ts",
+      "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+    },
+    {
+      "path": "src/generation/palette-quantize.ts",
+      "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+    },
+    {
+      "path": "src/generation/preview-paint.ts",
+      "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+    },
+    {
+      "path": "src/generation/recipes.ts",
+      "sha256": "4231c82c8dd3caec74b008705e55904b724609d08f8cf41f455a122b72c88f81"
+    },
+    {
+      "path": "src/generation/rift-layout.ts",
+      "sha256": "f251fb0e7f26f8f6f22d62b57d55acac98e24aa403de768c8e91f3f4be3abe4f"
+    },
+    {
+      "path": "src/generation/seed-fork.ts",
+      "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+    },
+    {
+      "path": "src/generation/silhouette.ts",
+      "sha256": "56d62e0540e19e9c723e1b0efb33dd4498cc1262615358c9e82cae13bc4718f8"
+    },
+    {
+      "path": "src/generation/static-body-access.ts",
+      "sha256": "9e88f47f5ada1daf3a3cbb01af3b76427389fe0fa6450958902dcf9ab5c90bb7"
+    },
+    {
+      "path": "src/generation/stealth-density.ts",
+      "sha256": "5d289db0f7d848e438c9bb0a7aad603550c9ebda4d3e9cbdf9d339da9bb477f8"
+    },
+    {
+      "path": "src/generation/structure-grammars.ts",
+      "sha256": "23c52627de2378e4f53788f60a91c57bf41582ada2cd500e298e0558ac676858"
+    },
+    {
+      "path": "src/generation/terrain-safe-volume-seat.ts",
+      "sha256": "7c2fc5d75240a302a41b4d25e64cf1840939c944db7ae13fec7231148b7e78fa"
+    },
+    {
+      "path": "src/generation/wall-edge-path.ts",
+      "sha256": "a0c1f2944b266640b643bc5fd4da54c9c71de2dc2a2e7cff37a0321416baa925"
+    },
+    {
+      "path": "src/generation/wall-host-placement.ts",
+      "sha256": "37883e816361daaeb478903ba71170867a1c25f4c4443ae5a1df884e948ac800"
+    },
+    {
+      "path": "src/generation/world-study/layout.ts",
+      "sha256": "0658f1317e4deb12aa2266ab48a87a5d2bc67290c09b0e8a11875bb9a33ee23c"
+    },
+    {
+      "path": "src/generation/world-study/material-field.ts",
+      "sha256": "f3971a905e6dcddc2d67a9393df604e412fd2c1c08686bf01e84fd19ef23bc10"
+    },
+    {
+      "path": "src/generation/world-study/material-noise.ts",
+      "sha256": "e401a0d6289738fb030344f6d6c00027e690d778fe1faf8f280cc8754f4292d5"
+    },
+    {
+      "path": "src/generation/world-study/open-space.ts",
+      "sha256": "19fa36a60c12e7303572d2c6526d2b00d9085169bb3d2c01d338cee7f2ffefe4"
+    },
+    {
+      "path": "src/generation/world-study/production-map.ts",
+      "sha256": "1f65c431b2c50e6d69f341d6f817653ea4c6e64f8e94de1d8b506a8d8ab1c932"
+    },
+    {
+      "path": "src/generation/world-study/production-recipe.ts",
+      "sha256": "49cfea26c7c77ba48af32fa93155907bee0065ffe792bdfd4b6d3e6e2f6c5c87"
+    },
+    {
+      "path": "src/generation/world-study/profiles.ts",
+      "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+    },
+    {
+      "path": "src/generation/world-study/region-field.ts",
+      "sha256": "03e2256d3d0cf0d80e51d9f3af7f353884162445370e63aa27c63083f40ea4b7"
+    },
+    {
+      "path": "src/generation/world-study/semantic-deployment.ts",
+      "sha256": "4e339e6c006c7eaafe619e5d7c0494fc878a8e3b50bb912ad72e5ed58fc979bc"
+    },
+    {
+      "path": "src/generation/world-study/shape.ts",
+      "sha256": "498f846e415e8aeec8f3a08464e2120fa45702d04a3b4cdaeb73862a94f06364"
+    },
+    {
+      "path": "src/generation/world-study/space-profile.ts",
+      "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+    },
+    {
+      "path": "src/generation/world-study/space-quality.ts",
+      "sha256": "1c69fb82a366e5f57c7f92500b959d293da1d5bcb5daf768a68c2bd477893724"
+    },
+    {
+      "path": "src/generation/world-study/support.ts",
+      "sha256": "21c380b643339d80ae304ad5f9490d7c41bc11654404ac1f721e83f5e9f0bcc9"
+    },
+    {
+      "path": "src/generation/world-study/surface-field.ts",
+      "sha256": "8bf31fe2fdbe9983573cea1030aa5bd7028bcf4bdda4e936b69a1ef2d19c77bb"
+    },
+    {
+      "path": "src/generation/world-study/world-conditions.ts",
+      "sha256": "c3f83782511fafebafbf6d6da2dbb5dc4e02a3a8a1942109e591d256d50fcccd"
+    },
+    {
+      "path": "src/generation/world-study/world-scenery.ts",
+      "sha256": "171f1b193730d9cdd87ab42ecb349d9c2fe05594201ccfc08f3d269c0a396176"
+    },
+    {
+      "path": "src/scenes/rift-map-data.ts",
+      "sha256": "2e473be1b6585cdf9bacdae4774d59ef75c889484bb0db1c02d7cd257b0c28c8"
+    },
+    {
+      "path": "src/systems/ai/physical-grid.ts",
+      "sha256": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1"
+    },
+    {
+      "path": "src/systems/contamination-host-live.ts",
+      "sha256": "0f5f31b67d8206568c6bb3e13fd4525a62bd4cbf969cffbe7b9eab642c6f2cd0"
+    },
+    {
+      "path": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "path": "src/types/game-types.ts",
+      "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+    },
+    {
+      "path": "src/utils/grid-raycast.ts",
+      "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+    },
+    {
+      "path": "src/utils/random.ts",
+      "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+    }
+  ]
+}

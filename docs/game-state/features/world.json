@@ -394,12 +394,13 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "已接有界3过程与五世界生产子集；R100计划修订为14轮、108独立世界/324低中重资格格，专业美术独立门、主动选级与需准备的重度远征/净收益为关键范围。当前等待用户敲钟，分级/选级与R100新物质能力均未实施。",
+    "summary": "R100已获启动授权。I01已实现旧生成执行器封存、CSV世界/三级DEV合同和测量入口；32自然样本冷恢复通过，发现秒级同步生成长尾。108世界/324等级开发继续，当前新世界与新等级合格数均为0。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "净化点 → 备行 → 正式新出击v2：已落地有界3过程子集（COH-F011/012/013）；完整24维能力未全实现",
-      "离线资格编译 tools/world-study/compile-world-library.ts；有限机器资格不是逐包人审入库"
+      "离线资格编译 tools/world-study/compile-world-library.ts；有限机器资格不是逐包人审入库",
+      "R100进度 docs/reading/rift-r100.html；I01最小包 npm run check:r100；首组三档母版制作单 docs/art/rift-r100-masters.md"
     ],
     "sources": [
       {
@@ -478,6 +479,42 @@
         "path": "docs/qa/rift-r100-plan-2026-10-02.md",
         "role": "doc",
         "note": "方案和管理工具检查；不是游戏实现或体验验收"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i01.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-r100-i01.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-masters.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-rift-generation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/world-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/pollution-grade.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-world-packages.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-pollution-grades.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/world-study/measure-r100-baseline.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -495,12 +532,13 @@
       "COH-E120",
       "COH-E122",
       "COH-E123",
-      "COH-E124"
+      "COH-E124",
+      "COH-E125"
     ],
     "unknowns": [
       "多区域过程、高体积景观、稀有例外、描述符历史新奇权重及逐包人审入库尚未实现；有界3过程不等于24维全部规则和未来材料能力完成。",
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
-      "R100仅方案与管理工具就绪；108世界/324等级、14轮开发、美术母版与预算测量均未实施。低中重地图等级不等于既有年龄，知情选级/周期压力/等级回报尚未接入。相关经济与准备验证纳入R100，不相关I28/四B边界保持。内部审查不能代签用户认可。"
+      "R100 I01底座和有限测量已完成；108世界/324等级、三级可玩母版、知情选级/周期压力/等级回报尚未实现。现行同步生成样本最长15.365s与冷恢复p95 8.331s需整改；12s静止帧时不证明移动/重度/GPU/回收达标。相关经济与准备验证纳入R100，不相关I28/四B边界保持。内部审查不代签用户认可。"
     ]
   }
 ]

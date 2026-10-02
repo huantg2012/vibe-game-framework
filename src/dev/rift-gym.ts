@@ -266,7 +266,7 @@ function initialize(): void {
   button('export').onclick = () => {
     if (!map || !mapSelection) return;
     const record = { selection: mapSelection, metadata: map.metadata, layout: { ...map.layout, walkableMask: undefined, ruins: undefined },
-      recipe: { version: 2, conditions: map.metadata.conditions }, checked: Object.fromEntries(results), scope: 'DEV training; no production inventory or save' };
+      recipe: { version: 2, conditions: map.metadata.conditions }, checked: Object.fromEntries(results), runtime: runtime.getState(), scope: 'DEV training; no production inventory or save' };
     const url = URL.createObjectURL(new Blob([JSON.stringify(record, null, 2)], { type: 'application/json' }));
     const anchor = document.createElement('a'); anchor.href = url; anchor.download = `rift-${mapSelection.world}-${mapSelection.space}-${mapSelection.program}-${mapSelection.seed}.json`; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 0);
   };

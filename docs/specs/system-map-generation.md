@@ -2,10 +2,10 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: director（条件生成v2与语义部署）
+last-modified-by: director（R100-I01冻结恢复与DEV世界包）
 last-modified-date: 2026-10-02
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
-interface-changed: true
+interface-changed: false
 slice: 6
 interfaces-with:
   - system-chaos-scavenge-extract  # 消费其薪柴分档与「一个撤离、走近按 E」；坐标改由本系统生成器给出
@@ -27,6 +27,18 @@ exposes:
 ---
 
 # 系统设计：裂隙地图生成
+
+## R100 I01：版本执行与最小世界包（2026-10-02，已实现）
+
+**兼容执行器。** `generation/legacy-rift-v2/executor.js` 是从 `ac9ddd7` 的61个依赖封存的纯生成闭包；`manifest.json`记录源修订、依赖SHA与执行器SHA。`tools/recovery/freeze-legacy-generation.mjs --check`核对封存产物，重建只读取固定Git基线，不从当前源码重新定义旧世界。`legacy-rift-generation.ts`负责版本路由和旧配方校验；正式v1/v2新出击与恢复均走该执行器，无generation的旧图也走封存算法。当前随机选池及新局条件仍用现行CSV选择，但生成版本必须有对应执行器。未来新算法使用显式新版本，不继续借用v2；不能生成一份旧执行器无法恢复的新v2局。
+
+签名、完整检查点及损坏包拒绝保持原合同；封存保护地貌、部署、Host生成与材料参数结果，不等于冻结所有未来渲染、AI或战斗实现。修改这些外部合同仍须单独做版本兼容。DEV的`production-map.ts`保留为后续开发源；现在与封存v2样本等价，未来开发能力不因此自动进入正式v2。正式恢复不再依赖该live生成器和live配方验证器。
+
+**CSV→DEV包。** `rift-world-packages.csv`仅登记五份既有demo；`rift-pollution-grades.csv`独立声明low/medium/severe的版本与设计意图。编译器`codegen-world-packages.ts`输出generated模块及依赖manifest；`--check`校核CSV、静态依赖闭包和生成结果，未知能力/版本、缺级、production伪声明、来源篡改拒绝。包目前固定`origin=legacy-demo, scope=dev-contract, algorithm=world-production@2`；每级`implementation=unimplemented`。世界包身份、来源hash、依赖hash及可用材料/支撑能力与等级记录分别存在。依赖范围是当前生成源与合同，不冒充全部声音/视觉资产清单，也不替代前述封存执行器。
+
+`WorldPackage`不是可直接出击的运行配方，也不是R100资格；当前五包/十五格全部不计合格数。`pollutionGrade`与contaminationAge、实体覆盖档、玩家chaos相互独立；本轮未把三级写进正式存档、备行、敌人或收益。等级进入、压力相位和回报的待实现合同在[设计依据](../design-notes/rift-world-space.md#rift-pollution-grades)，不能把声明有三级说成已有三级玩法。
+
+**界面核对。** 本轮不改变GeneratedRiftLayout或现行检查点结构；地图、移动/视野、敌人、句法、搜撤及成长调用方消费原结果。前轮v2快照合同已由当前源码与恢复总回归复核，本轮清除其遗留的interface-changed标记。未来新实体几何和等级运行字段进入实现时重新升起标记。
 
 ## 条件生成 v2（2026-10-02，当前新出击合同）
 
@@ -59,7 +71,7 @@ exposes:
 
 ## 生产与DEV共享 · 裂隙世界空间（DEC-170 / 迭代26；2026-09-20接线）
 
-新世界能力位于 `generation/world-study/`。`rift-worlds.html` 仍是材料/空间查看器；`rift-world-play.html` 是隔离体验入口，保留内存存储。正式入口使用 `production-map.ts` 的生产内容投放，不能复用体验入口的2+2少量摆放。`systems/world-space-surface.ts` 由正式与DEV共同调用，不存在两份地面渲染实现；正式场景独立管理其创建/释放，游戏状态仍由原各玩法系统保存。
+新世界能力位于 `generation/world-study/`。`rift-worlds.html` 仍是材料/空间查看器；`rift-world-play.html` 是隔离体验入口，保留内存存储。正式v1/v2入口使用封存的 `production-map.ts` 内容投放闭包，DEV使用其当前开发源，不能复用体验入口的2+2少量摆放。`systems/world-space-surface.ts` 由正式与DEV共同调用，不存在两份地面渲染实现；正式场景独立管理其创建/释放，游戏状态仍由原各玩法系统保存。
 
 新世界正式与DEV都把未见区域和VOID置黑，禁用会提前泄露轮廓的VOID底噪；原光域/暖光/转向/玩法遮挡保持一份实现。地表反射只能留在最终支撑且当前可视的像素；不提供第二套视野。不因这次接线代勾完整美术验收或长期体验采样。
 

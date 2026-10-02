@@ -147,6 +147,14 @@
       {
         "path": "docs/qa/rift-gym-2026-10-02.md",
         "role": "doc"
+      },
+      {
+        "path": "src/dev/rift-gym-performance.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-gym-performance.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -157,7 +165,8 @@
     ],
     "evidence": [
       "COH-E-SRC-development",
-      "COH-E121"
+      "COH-E121",
+      "COH-E125"
     ],
     "unknowns": [
       "当前目录30组合及固定种子巡检不是穷举uint32种子或连续条件；预览仅原生地表与只读部署注解，模型/实时光照在试玩查看。",

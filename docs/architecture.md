@@ -10,6 +10,14 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+## R100 I01：持久生成版本与DEV资格底座
+
+`managers/rift-recovery.ts` → `generation/legacy-rift-generation.ts` → `legacy-rift-v2/executor.js`：正式v1/v2新局及续局、无generation旧图均使用固定ac9ddd7闭包；新局选池仍由当前CSV解析。`types/rift-checkpoint.ts`用封存recipe validator读取旧身份，避免live能力校验变动拒绝合法旧局。归档manifest、固定基线重建工具、跨进程完整世界金样共同保护；新算法必须注册新版本。恢复协议本身不新增字段。
+
+`data/rift-world-packages.csv` 与 `rift-pollution-grades.csv` → `tools/world-study/codegen-world-packages.ts` → generated模块与依赖manifest。`world-package.ts` / `pollution-grade.ts`只拥有DEV合同校验，不负责运行时出击或资格判定；五份旧demo、十五个未实施级别不自动进R100已验收台账。哈希范围明确为生成依赖与合同，最终资产发布清单尚未实现。
+
+`dev/rift-gym-performance.ts`由隔离Gym记录原生Phaser帧间隔与CPU提交时段：2秒预热、12秒有界采样，暂停/失焦排除，JSON随原诊断和导出记录提供。不是GPU计时器、全硬件认证或正式游戏HUD；已有运行规则和存档隔离不变。
+
 ## 2026-10-02：Rift v2 地图巡览 gym
 
 `rift-gym.html` → `src/dev/rift-gym.ts` 为独立DEV元界面；`gym.html?lesson=rift-world` 转入并保留选择查询。`rift-gym-model.ts` 从正式世界池与能力兼容的过程数据枚举组合，调用同一条件编译和生产地图准入；`rift-gym-worker.ts` 后台执行并烘焙共享地表，只序列化数据，主线程重建TileGrid的方法。取消会终止Worker，request ID隔离迟到响应；不缓存无限地图。
@@ -115,7 +123,7 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 **2026-10-02条件生成v2：** `rift-world-conditions.csv` → 专用codegen → `world-conditions.ts`（能力匹配、独立命名随机流、冻结参数、共同组织轴）→ `production-map.ts`（8个地貌候选及有界同地貌重排、完整Host准入）→ `semantic-deployment.ts`（最终形态感知场、8向路线、风险/额外成本布点）→ `world-scenery.ts` / 共享native material painters（座位绑定、低浮雕与可视局部动效）。`production-recipe.ts` 和 `rift-recovery.ts` 以version区分旧无快照/v1/v2，只有v2读取冻结conditions；旧签名不补新默认字段。`tools/world-study/compile-world-library.ts` 记录组合边界与正式选池回归，不替代运行时准入或人审。完整合同仍在原地图spec，本次未增加第二套移动、光照、掉落或场景引擎。
 
-`index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；新出击经 `createProceduralDeparture` 选择 `rift-world-pool.csv` 的世界/空间候选，`createWorldProductionMap` 投放完整正式内容，原生 `TileGrid`、像素角色、视野/战斗/搜撤保持。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。旧在途存档没有generation快照，仍按 `generateRiftLayout` 与原地表恢复；返回后下一趟使用新世界。完整合同见 `specs/system-map-generation.md`。
+`index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。`PurificationScene` 默认不传 `devFixture`；新出击经 `createProceduralDeparture` 选择 `rift-world-pool.csv` 的世界/空间候选，按version dispatch调用封存的 `createWorldProductionMap` 投放完整正式内容，原生 `TileGrid`、像素角色、视野/战斗/搜撤保持。逻辑分辨率960×640，`pixelArt` 与 `roundPixels` 保持开启。旧在途存档没有generation快照，仍按 `generateRiftLayout` 与原地表恢复；返回后下一趟使用新世界。完整合同见 `specs/system-map-generation.md`。
 
 三维/绘制式关卡探索已由用户终止。下述迭代21–23扩展仅描述仍保留的归档DEV代码，不进入正式随机池，不再作为待推广的技术主线。2026-09-16回退时无运行接口、玩法、CSV或存档格式变更；其基线验证见 [2D记录](qa/rift-2d-baseline.md)。
 

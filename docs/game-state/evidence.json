@@ -4737,5 +4737,46 @@
     "features": [
       "COH-F052"
     ]
+  },
+  {
+    "id": "COH-E125",
+    "kind": "automated",
+    "result": "partial",
+    "date": "2026-10-02",
+    "revision": "ac9ddd7 + R100-I01; source hashes in generation evidence",
+    "scope": "旧生成归档/跨进程恢复/自然selector等价；五DEV包与三级声明校验；32自然与8定向/历史测量、缓存修复后9例复核；隔离原生12s静止基线；I02制作合同。",
+    "limitations": "不是108世界或三级玩法交付，不声明新美术或玩家体验通过；当前同步长尾不达预算，浏览器不同视口不混合比较、未测移动/重度/GPU/生命周期。原32例属缓存修复前，另9例证明修后结果相同。",
+    "sources": [
+      {
+        "path": "docs/qa/rift-r100-i01.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i01.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/generation/legacy-rift-v2/manifest.json",
+        "role": "data"
+      },
+      {
+        "path": "docs/qa/artifacts/rift-r100-i01/generation-baseline.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/rift-r100-i01/generation-post-cache-fix.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/rift-r100-i01/native/performance.json",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F052",
+      "COH-F011",
+      "COH-F049",
+      "COH-F044"
+    ]
   }
 ]

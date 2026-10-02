@@ -1,4 +1,5 @@
-import { validWorldProductionRecipe, type WorldProductionRecipe } from '@/generation/world-study/production-recipe';
+import type { WorldProductionRecipe } from '@/generation/world-study/production-recipe';
+import { validLegacyWorldRecipe } from '@/generation/legacy-rift-generation';
 /** A complete simulation state has one revision with the containing base and
  * inventory record. Domain owners validate `state` before it touches a scene. */
 export interface RiftCheckpoint<State = unknown> {
@@ -32,7 +33,7 @@ export function validRiftCheckpoint(value: unknown): value is RiftCheckpoint {
     && (identity.worldId === 'procedural-rift' ? identity.layoutId === 'procedural-rift' : ['sea-open-channel', 'sea-folded-ridge'].includes(identity.layoutId))
     && Number.isSafeInteger(identity.seed) && identity.seed >= 0
     && (identity.recipeId === undefined || typeof identity.recipeId === 'string')
-    && (identity.generation === undefined || (identity.worldId === 'procedural-rift' && validWorldProductionRecipe(identity.generation)))
+    && (identity.generation === undefined || (identity.worldId === 'procedural-rift' && validLegacyWorldRecipe(identity.generation)))
     && (identity.catalogVersion === undefined || ['legacy-v1','contaminant-v1'].includes(identity.catalogVersion))
     && (identity.lootAlgorithmVersion === undefined || identity.lootAlgorithmVersion === 1)
     && (identity.combatRulesVersion === undefined || identity.combatRulesVersion === 1 || identity.combatRulesVersion === 2)

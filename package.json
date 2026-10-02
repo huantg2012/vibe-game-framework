@@ -105,7 +105,9 @@
     "check:haven-narration": "node --import tsx tools/qa/check-haven-narration.ts",
     "check:world-conditions": "node tools/world-study/codegen-world-conditions.mjs --check && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-world-conditions.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-semantic-deployment.ts",
     "check:world-scenery": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-world-scenery.ts",
-    "worlds:compile-library": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/compile-world-library.ts"
+    "worlds:compile-library": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/compile-world-library.ts",
+    "worlds:packages": "node --import tsx tools/world-study/codegen-world-packages.ts",
+    "check:r100": "node tools/world-study/r100-progress.mjs check && node tools/world-study/r100-progress.mjs self-test && node --import tsx tools/world-study/codegen-world-packages.ts --check && node --import tsx tools/world-study/check-world-packages.ts && node tools/recovery/freeze-legacy-generation.mjs --check && node --import tsx tools/world-study/check-gym-performance.ts"
   },
   "dependencies": {
     "phaser": "^3.80.1",

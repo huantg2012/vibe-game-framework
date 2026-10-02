@@ -365,7 +365,19 @@ ${releaseOverview}
 }
 
 export function selfTest(base, root = ROOT) {
+  // Fixtures must stay independent of the real release's advancing state. Never
+  // clear actual approval/progress just to make an awaiting-start test pass.
+  const actual = base;
+  base = structuredClone(actual);
+  Object.assign(base.version, { status: 'awaiting-start', startAuthorization: null, finalAcceptance: null, releaseManifest: null });
+  base.worlds = []; base.evidence = []; base.issues = []; base.releaseGateResults = [];
+  for (const iteration of base.iterations) {
+    Object.assign(iteration, { state: 'planned', stage: 'not-started', actualRevision: null, evidenceIds: [], gateResults: [], issueIds: [] });
+    delete iteration.achievement;
+  }
   const cases = [];
+  assert(checkPlan(actual, { root }).ok, 'The actual canonical plan must remain valid');
+  cases.push('actual active or planned canonical state accepted without fixture mutation');
   const test = (name, mutate, ok) => { const data = structuredClone(base); mutate(data); const result = checkPlan(data, { root });
     assert.equal(result.ok, ok, `${name}: ${result.errors.join('; ')}`); cases.push(name); return result; };
   test('canonical awaiting-start accepted with zero derived count', () => {}, true);

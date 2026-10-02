@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-02",
+  "method": "CUA normal button entry; Phaser 2s warmup + 12s stationary sampling. Not GPU timing or full gameplay qualification.",
+  "revision": "ac9ddd7 + I01 worktree; source hashes in generation-post-cache-fix.json",
+  "limitations": [
+    "First two pilot cases used different viewport/DPR; do not pool with fixed1600×1040 DPR1 cases.",
+    "Parallel CLI measurements may contend for CPU.",
+    "No fixed walking/pressure route or retention measurement.",
+    "Hot-update interrupted first carmine run; only completed rerun is retained."
+  ],
+  "results": [
+    {
+      "world": "ash-strata",
+      "seed": 20261002,
+      "performance": {
+        "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+        "state": "complete",
+        "warmupMs": 2000,
+        "requestedMs": 12000,
+        "sampledMs": 12000,
+        "frames": {
+          "count": 1414,
+          "p50Ms": 8.3,
+          "p95Ms": 10.9,
+          "maxMs": 20.4,
+          "over33ms": 0
+        },
+        "cpuSubmission": {
+          "count": 1415,
+          "p50Ms": 5,
+          "p95Ms": 8.1,
+          "maxMs": 16.3,
+          "over33ms": 0
+        },
+        "heapStartBytes": 134115279,
+        "heapEndBytes": 130537101,
+        "pauseSegmentsExcluded": 0,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "viewport": [
+          1280,
+          720
+        ],
+        "dpr": 2,
+        "limitations": "Single 12s segment after 2s warmup; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+      },
+      "player": {
+        "x": 212,
+        "y": 852
+      },
+      "mode": "stationary"
+    },
+    {
+      "world": "crystal-fibre",
+      "seed": 20261002,
+      "performance": {
+        "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+        "state": "complete",
+        "warmupMs": 2000,
+        "requestedMs": 12000,
+        "sampledMs": 12009.5,
+        "frames": {
+          "count": 1415,
+          "p50Ms": 8.3,
+          "p95Ms": 10.7,
+          "maxMs": 21.2,
+          "over33ms": 0
+        },
+        "cpuSubmission": {
+          "count": 1416,
+          "p50Ms": 6.5,
+          "p95Ms": 10.1,
+          "maxMs": 20.5,
+          "over33ms": 0
+        },
+        "heapStartBytes": 129814368,
+        "heapEndBytes": 168697146,
+        "pauseSegmentsExcluded": 0,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "viewport": [
+          824,
+          987
+        ],
+        "dpr": 2,
+        "limitations": "Single 12s segment after 2s warmup; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+      },
+      "player": {
+        "x": 212,
+        "y": 852
+      },
+      "mode": "stationary"
+    },
+    {
+      "world": "ivory-basin",
+      "seed": 20261002,
+      "performance": {
+        "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+        "state": "complete",
+        "warmupMs": 2000,
+        "requestedMs": 12000,
+        "sampledMs": 12008.1,
+        "frames": {
+          "count": 1128,
+          "p50Ms": 9.2,
+          "p95Ms": 19.3,
+          "maxMs": 25.9,
+          "over33ms": 0
+        },
+        "cpuSubmission": {
+          "count": 1129,
+          "p50Ms": 8.5,
+          "p95Ms": 18.6,
+          "maxMs": 25.3,
+          "over33ms": 0
+        },
+        "heapStartBytes": 145343693,
+        "heapEndBytes": 144924696,
+        "pauseSegmentsExcluded": 0,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "viewport": [
+          1600,
+          1040
+        ],
+        "dpr": 1,
+        "limitations": "Single 12s segment after 2s warmup; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+      },
+      "player": {
+        "x": 212,
+        "y": 852
+      },
+      "mode": "stationary"
+    },
+    {
+      "world": "carmine-lacquer",
+      "seed": 20261002,
+      "performance": {
+        "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+        "state": "complete",
+        "warmupMs": 2000,
+        "requestedMs": 12000,
+        "sampledMs": 12010.2,
+        "frames": {
+          "count": 1290,
+          "p50Ms": 8.3,
+          "p95Ms": 17.2,
+          "maxMs": 35.3,
+          "over33ms": 1
+        },
+        "cpuSubmission": {
+          "count": 1291,
+          "p50Ms": 6.3,
+          "p95Ms": 16.7,
+          "maxMs": 32.6,
+          "over33ms": 0
+        },
+        "heapStartBytes": 143151211,
+        "heapEndBytes": 165073485,
+        "pauseSegmentsExcluded": 0,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "viewport": [
+          1600,
+          1040
+        ],
+        "dpr": 1,
+        "limitations": "Single 12s segment after 2s warmup; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+      },
+      "player": {
+        "x": 212,
+        "y": 852
+      },
+      "mode": "stationary"
+    },
+    {
+      "world": "cobalt-gold",
+      "seed": 20261002,
+      "performance": {
+        "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+        "state": "complete",
+        "warmupMs": 2000,
+        "requestedMs": 12000,
+        "sampledMs": 12004.7,
+        "frames": {
+          "count": 1256,
+          "p50Ms": 8.9,
+          "p95Ms": 14.3,
+          "maxMs": 27,
+          "over33ms": 0
+        },
+        "cpuSubmission": {
+          "count": 1257,
+          "p50Ms": 8,
+          "p95Ms": 13,
+          "maxMs": 22.2,
+          "over33ms": 0
+        },
+        "heapStartBytes": 145574864,
+        "heapEndBytes": 187979102,
+        "pauseSegmentsExcluded": 0,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+        "viewport": [
+          1600,
+          1040
+        ],
+        "dpr": 1,
+        "limitations": "Single 12s segment after 2s warmup; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+      },
+      "player": {
+        "x": 212,
+        "y": 852
+      },
+      "mode": "stationary"
+    }
+  ],
+  "sourceFiles": {
+    "src/dev/rift-gym-performance.ts": "121e01ce7a58de13cac16abf4dcbaff7f311597e325ced7681a8885737f2977e",
+    "src/dev/rift-gym-runtime.ts": "49760de4f5bbb3d3e5646cda8a8073f874351f34042d3050c17219d2950572ef",
+    "src/dev/rift-gym.ts": "34708f32e70735fe55914e00c9570a7ae9aa75830aea12ee2e9c0b472518f65c"
+  }
+}
