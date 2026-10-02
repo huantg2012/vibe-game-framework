@@ -3,7 +3,7 @@
     "id": "COH-F043",
     "title": "世界主题与游戏内叙事载体",
     "domain": "narrative",
-    "summary": "世界主题通过场景、物件说明与节制的角色自语呈现。净化点坐下/驻足/归来、裂隙入场/安全间隙/混乱阈值及结果报告已接共享CSV旁白，按语义池无放回轮换；独立表现历史跨重载保留，不进入玩法存档或随机流。",
+    "summary": "世界主题通过场景、物件说明与节制的角色自语呈现。净化点坐下/驻足/归来、裂隙入场/安全间隙/混乱阈值及结果报告已接共享CSV旁白，按语义池无放回轮换；独立表现历史跨重载保留，不进入玩法存档或随机流。 同场景每次起身再坐立即重新选句，不再复用30秒旧句。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -120,6 +120,10 @@
       {
         "path": "docs/qa/artifacts/rift-narration/result.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/atmosphere-rest-rotation-2026-10-02/result.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -129,7 +133,8 @@
     ],
     "evidence": [
       "COH-E-SRC-narrative",
-      "COH-E117"
+      "COH-E117",
+      "COH-E118"
     ],
     "unknowns": [
       "本轮154句氛围文案与64句遭遇低语的写作质量、自然出现节奏及长期重复感仍待玩家复看；技术/生命周期验证不代替体验认可。",

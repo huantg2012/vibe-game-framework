@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "at": "2026-10-02T05:52:51.855Z",
+  "origin": "http://127.0.0.1:3027/",
+  "checks": [
+    "real arrival after title, blur hides/freezes and resume retains remaining reading",
+    "real sit/stand clears; immediate resit rotates; continued rest becomes silent",
+    "three separate sits in the same scene consume three different lines",
+    "Continue after reload retains used rest history without changing gameplay record format",
+    "actual result components: empty/loaded/death/abandon retain facts; exempt/held/old broken/damaged/new broken choose truthful pool"
+  ],
+  "lines": [
+    {
+      "context": "real new-game arrival",
+      "text": "先在光里站稳。"
+    },
+    {
+      "context": "real E sit",
+      "text": "从这里看，炉子刚好挡住一小块黑。"
+    },
+    {
+      "context": "immediate resit without reload",
+      "text": "这块断石原来接着哪里，已经看不出了。"
+    },
+    {
+      "context": "third sit in same scene without 30-second cooldown",
+      "text": "再坐一会儿。灯还照着路。"
+    },
+    {
+      "context": "rest after real page reload",
+      "text": "石头硌着腿。这点疼倒很清楚。"
+    },
+    {
+      "pool": "result.empty",
+      "text": "手指还保持着握紧的样子。"
+    },
+    {
+      "pool": "result.return",
+      "text": "出口到了。肩上的东西这才觉得沉。"
+    },
+    {
+      "pool": "result.death",
+      "text": "地还在脚下，身子已经撑不住了。"
+    },
+    {
+      "pool": "result.abandon",
+      "text": "把这一页合上。"
+    },
+    {
+      "pool": null,
+      "text": null
+    },
+    {
+      "pool": "impact.held",
+      "text": "这一回，没添新的破口。"
+    },
+    {
+      "pool": "impact.damaged",
+      "text": "有些东西又得修一遍。"
+    },
+    {
+      "pool": "impact.broken",
+      "text": "有一处得从头补了。"
+    }
+  ],
+  "errors": [],
+  "scope": "Fresh isolated context, actual root menu and E/Esc sitting. Result/impact components tested with explicitly injected presentation fixtures, not natural full sorties. User browser/save untouched."
+}

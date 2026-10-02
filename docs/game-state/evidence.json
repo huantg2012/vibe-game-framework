@@ -4383,5 +4383,40 @@
         "note": "19脚本最终执行结果由本轮QA收尾记录；菜单/CSS测试适配不作为业务变更。"
       }
     ]
+  },
+  {
+    "id": "COH-E118",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-02",
+    "revision": "5644b72之后的同场景坐下旁白轮换修复工作树（2026-10-02）",
+    "scope": "删除Haven坐下旁白30秒旧句缓存；每次真实重新坐下立即走共享轮换。新断言拦截旧实现；6组Haven、7组轮换、类型和生产构建通过。受控18句池整轮不重复与跨轮/恢复历史联合测试；独立浏览器5组含根入口3次连续E/Esc起坐不同句、继续坐着淡出、刷新继续第4句、派发blur暂停恢复与结果组件夹具，无pageerror。",
+    "limitations": "仅修F043有效呈现选句；样式/镜头/业务存档不改，用户浏览器记录未触碰。18句遍历为受控控制器联合测试，非18次自然实机；blur为派发事件，结果为呈现夹具。首次测试暂停队列竞态已通过等待真实暂停事件处理修正。未重跑19脚本恢复回归；E117快速起坐复用旧句是历史规则，不适用本轮。文案审美仍待人审。",
+    "sources": [
+      {
+        "path": "src/ui/dom/haven-narration.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/specs/system-atmosphere-narration.md",
+        "role": "spec"
+      },
+      {
+        "path": "tools/qa/check-haven-narration.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-atmosphere-browser.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/atmosphere-copy-2026-10-02.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/atmosphere-rest-rotation-2026-10-02/result.json",
+        "role": "doc"
+      }
+    ]
   }
 ]

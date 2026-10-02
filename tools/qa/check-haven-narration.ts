@@ -1,7 +1,8 @@
 /** Exercise the real narration controller with a minimal DOM, not its timing model. */
 import assert from 'node:assert/strict';
 import { HavenNarration } from '../../src/ui/dom/haven-narration.ts';
-import type { AtmospherePool } from '../../src/narrative/atmosphere.ts';
+import { NarrationMemory, type AtmospherePool } from '../../src/narrative/atmosphere.ts';
+import { ATMOSPHERE_LINES } from '../../src/generated/atmosphere-copy-data.ts';
 
 class Element {
   id = '';
@@ -93,19 +94,19 @@ const checks: string[] = [];
   subject.stand();
   assert.equal(line(), null);
   subject.sit();
-  assert.equal(line()?.textContent, first);
-  assert.deepEqual(picks, ['haven.rest'], 'Rapid sit/stand does not empty the writing bank');
+  assert.notEqual(line()?.textContent, first, 'Every new sit must rotate immediately without reloading');
+  assert.deepEqual(picks, ['haven.rest', 'haven.rest'], 'Two distinct sits consume two sentences');
   advance(subject, 10000, { ...idle, resting: true, target: 'core' });
   assert.equal(line(), null);
-  assert.equal(picks.length, 1, 'Rest suppresses arrival and object observations');
+  assert.equal(picks.length, 2, 'Rest suppresses arrival and object observations');
   subject.tick(16, { ...idle, blocked: true, resting: true });
   assert.equal(line(), null);
   advance(subject, 22000, { ...idle, resting: true });
   subject.stand(); subject.sit();
-  assert.deepEqual(picks, ['haven.rest', 'haven.rest'], 'A later rest can select a new sentence');
+  assert.deepEqual(picks, ['haven.rest', 'haven.rest', 'haven.rest'], 'A later rest also selects a new sentence');
   subject.destroy();
   assert.equal(line(), null);
-  checks.push('rapid rest reuses its sentence; later rest rotates; resting never queues other observations');
+  checks.push('every separate rest rotates immediately; continued rest stays silent; resting never queues other observations');
 }
 {
   const { subject, picks } = make();
@@ -123,5 +124,32 @@ const checks: string[] = [];
   assert.equal(root()?.children.length, 1, 'A new scene mounts exactly one sentence');
   next.subject.destroy();
   checks.push('expired arrivals are not consumed; destroy clears pending work and next scene has no duplicate DOM');
+}
+{
+  const data = new Map<string, string>();
+  const storage = { getItem: (key: string) => data.get(key) ?? null,
+    setItem: (key: string, value: string) => { data.set(key, value); } };
+  const memory = new NarrationMemory(storage, () => 0);
+  const subject = new HavenNarration(pool => memory.choose(pool, ATMOSPHERE_LINES[pool]).text);
+  const seen = new Set<string>();
+  let previous = '';
+  for (let i = 0; i < ATMOSPHERE_LINES['haven.rest'].length; i++) {
+    subject.sit();
+    const current = line()!.textContent;
+    assert(!seen.has(current), 'Distinct sits exhaust the real rest pool before any repeat');
+    seen.add(current); previous = current;
+    advance(subject, 400, { ...idle, resting: true });
+    subject.stand();
+  }
+  subject.sit();
+  const nextCycle = line()!.textContent;
+  assert.notEqual(nextCycle, previous, 'Cross-cycle adjacent sits must differ');
+  subject.destroy();
+  const restored = new NarrationMemory(storage, () => 0);
+  const next = new HavenNarration(pool => restored.choose(pool, ATMOSPHERE_LINES[pool]).text);
+  next.sit();
+  assert.notEqual(line()!.textContent, nextCycle, 'Rest history continues across controller/storage reload');
+  next.destroy();
+  checks.push('real 18-line rest pool exhausted without repeats within 8 seconds; cycle boundary and restored history rotate');
 }
 console.log(JSON.stringify({ status: 'PASS', checks: checks.length, details: checks }, null, 2));

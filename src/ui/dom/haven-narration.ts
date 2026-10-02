@@ -18,7 +18,6 @@ export class HavenNarration {
   private observations = 0;
   private readonly observed = new Set<string>();
   private arrival: { pool: AtmospherePool; ready: number; expires: number } | null = null;
-  private lastRest = { text: '', at: -Infinity };
 
   constructor(private readonly pick = pickAtmosphere) {}
 
@@ -63,11 +62,9 @@ export class HavenNarration {
 
   sit(): void {
     this.arrival = null;
-    // Rapid stand/sit is one rest, not a way to empty the writing bank.
-    if (this.now - this.lastRest.at >= 30000 || !this.lastRest.text) {
-      this.lastRest = { text: this.pick('haven.rest'), at: this.now };
-    }
-    this.show(this.lastRest.text, true);
+    // The scene calls this only when entering a new seated interaction.
+    // Each new interaction draws from the shared bag, even immediately after standing.
+    this.show(this.pick('haven.rest'), true);
     this.nextObservationAt = this.now + 32000;
   }
 
