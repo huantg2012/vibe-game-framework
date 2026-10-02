@@ -2,12 +2,16 @@
 status: ACTIVE
 created-by: director agent
 created-when: Foundation 整合时
-last-modified: 2026-09-29
+last-modified: 2026-10-02
 last-closed-slice: 9
 note: I31修复与能力收益兑现已实现并有限验证；I30 Last Light A已正式接入，94faa33局部移动修复已验证，整体画面/动态仍待用户完整验收。I28挂起与四B扩产锁保留。
 ---
 
 # Roadmap
+
+## 待启动大版本 · R100（2026-10-02）
+
+用户要求以100+世界为终点连续管理多迭代，而非在3/6样本结束。已排12轮，明确交付108个合格且正式可达的世界；包含统一几何/新物质与空间、世界包产线、分批扩容、连续体验及最终验收。每轮目标、技术、美术视听、实施与独立审核均有要求。执行规则归[大版本合同](../tasks/rift-r100.md)，当前事实归[唯一台账](rift-r100.json)/[看板](../reading/rift-r100.html)。**计划准备完成，开发等用户敲钟；不解锁不相关I28/四B/终局。**
 
 ## Rift条件生成增量（2026-10-02）
 
