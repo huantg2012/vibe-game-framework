@@ -3,7 +3,7 @@
     "id": "COH-F006",
     "title": "玩家移动、转向与碰撞",
     "domain": "controls",
-    "summary": "净化点保留1.8m/s世界步速、完整脚圆碰撞、贴边滑动、单西坡与1035帧距离步态。2026-09-30新裂隙切口参与同源导航，七处交互调用实际脚圆可达判定；本轮10组移动检查通过。94faa33的7851帧贴边节奏与38076步进为历史证据，不自动覆盖新切口或当前全场手感；新几何边界回归及自然往返范围以本轮QA为准。",
+    "summary": "净化点保留1.8m/s世界步速、完整脚圆碰撞、贴边滑动、单西坡与1035帧距离步态。2026-09-30新裂隙切口参与同源导航，七处交互调用实际脚圆可达判定；本轮10组移动检查通过。94faa33的7851帧贴边节奏与38076步进为历史证据，不自动覆盖新切口或当前全场手感；新几何边界回归及自然往返范围以本轮QA为准。 R100-I02为DEV巡查增加可选方向输入，正式入口不提供该回调；键盘优先，既有Player速度/碰撞/动画仍唯一执行。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -299,6 +299,18 @@
       {
         "path": "tools/last-light/check-rift-throat.ts",
         "role": "test"
+      },
+      {
+        "path": "src/entities/player-movement-input.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-master-patrol.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [],
@@ -316,7 +328,8 @@
       "COH-E-I30-LAST-LIGHT-HUMAN-CHANGES",
       "COH-E-I30-LAST-LIGHT-RENDER-REPAIR",
       "COH-E-I30-LAST-LIGHT-ACTOR-REPAIR",
-      "COH-E103"
+      "COH-E103",
+      "COH-E126"
     ],
     "unknowns": [
       "2026-09-30十组移动检查不等于全部新切口边界、根页自然按键路线或帧率验收；当前新增浏览器记录主要针对交互资格，后续脚圆边界回归须有本轮执行记录后才算覆盖。",
@@ -333,7 +346,7 @@
     "id": "COH-F007",
     "title": "有限视野与不可照亮的空间空洞",
     "domain": "controls",
-    "summary": "朝向视域与环身弱光按地图遮挡求可见性；空间空洞不产生可照亮表面，局部照到群落时只显示受光部分。",
+    "summary": "朝向视域与环身弱光按地图遮挡求可见性；空间空洞不产生可照亮表面，局部照到群落时只显示受光部分。 R100-I02将原范围/朝向/混乱带只读查询暴露给DEV实体受光；正式目标仍使用原LOS，缓存按真实视野revision失效。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -359,6 +372,18 @@
       {
         "path": "docs/specs/system-movement-vision.md",
         "role": "spec"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/visibility.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-native-volume-visibility.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -367,7 +392,8 @@
     ],
     "evidence": [
       "COH-E-SRC-control",
-      "COH-E-HIST-PAINT"
+      "COH-E-HIST-PAINT",
+      "COH-E126"
     ],
     "unknowns": [
       "不同世界全光照、压力与动态辨识的扩展验收仍挂起。"

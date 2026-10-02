@@ -121,7 +121,8 @@
       "COH-E-SRC-world",
       "COH-E-HIST-PRODUCTION",
       "COH-E119",
-      "COH-E120"
+      "COH-E120",
+      "COH-E126"
     ],
     "unknowns": [
       "支持范围为已有材料/单层碰撞能力内的有界条件链；完整24维设计、罕见世界供给和历史新奇权重尚未完成。",
@@ -394,13 +395,14 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100已获启动授权。I01已实现旧生成执行器封存、CSV世界/三级DEV合同和测量入口；32自然样本冷恢复通过，发现秒级同步生成长尾。108世界/324等级开发继续，当前新世界与新等级合格数均为0。",
+    "summary": "R100已获启动授权。I01已实现旧生成执行器封存、CSV世界/三级DEV合同和测量入口；32自然样本冷恢复通过，发现秒级同步生成长尾。108世界/324等级开发继续，当前新世界与新等级合格数均为0。 I02已有原生实体试制/九格作者配置及实际沿边巡查；美术与性能仍退回，不构成母版或世界通过。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "净化点 → 备行 → 正式新出击v2：已落地有界3过程子集（COH-F011/012/013）；完整24维能力未全实现",
       "离线资格编译 tools/world-study/compile-world-library.ts；有限机器资格不是逐包人审入库",
-      "R100进度 docs/reading/rift-r100.html；I01最小包 npm run check:r100；首组三档母版制作单 docs/art/rift-r100-masters.md"
+      "R100进度 docs/reading/rift-r100.html；I01最小包 npm run check:r100；首组三档母版制作单 docs/art/rift-r100-masters.md",
+      "DEV原生试制 rift-r100-masters.html；npm run check:r100-masters；美术/性能未过，不属正式生成池"
     ],
     "sources": [
       {
@@ -453,7 +455,7 @@
       {
         "path": "docs/tasks/rift-r100.md",
         "role": "doc",
-        "note": "大版本执行合同，待用户敲钟；不是当前系统已实现规则"
+        "note": "已获启动的跨迭代执行合同；未实现部分不是现行游戏规则"
       },
       {
         "path": "docs/progress/rift-r100.json",
@@ -515,6 +517,90 @@
       {
         "path": "tools/world-study/measure-r100-baseline.ts",
         "role": "test"
+      },
+      {
+        "path": "rift-r100-masters.html",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-geometry.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-raster.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-master-scenes.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/world-study/generate-master-scenes.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-native-volumes.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-native-shadow-cache.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-native-volume-visibility.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-master-scenes.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-master-patrol.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i02.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i02-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/generated-scenes.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/ground.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/main.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/patrol.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/style.css",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/visibility.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/world.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -533,7 +619,8 @@
       "COH-E122",
       "COH-E123",
       "COH-E124",
-      "COH-E125"
+      "COH-E125",
+      "COH-E126"
     ],
     "unknowns": [
       "多区域过程、高体积景观、稀有例外、描述符历史新奇权重及逐包人审入库尚未实现；有界3过程不等于24维全部规则和未来材料能力完成。",

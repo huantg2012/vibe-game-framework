@@ -1,0 +1,408 @@
+
+> coh@0.1.0 check:r100-masters
+> node tools/world-study/generate-master-scenes.mjs --check && node --import tsx tools/world-study/check-native-volumes.ts && node --import tsx tools/world-study/check-native-shadow-cache.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-native-volume-visibility.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-scenes.ts && TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/check-master-patrol.ts
+
+9 art-lab scenes / 3 families × 3 grades: CSV and generated data match
+{
+  "status": "pass",
+  "checks": 59,
+  "metrics": [
+    {
+      "family": "folded-slab",
+      "triangles": 1784,
+      "matterPixels": 36368,
+      "physicalCells": 636,
+      "opticalCells": 342,
+      "lampChangedPixels": 25861,
+      "shadowedSamples": 361,
+      "elapsedMs": 76.04150000000027
+    },
+    {
+      "family": "fibre-knot",
+      "triangles": 3384,
+      "matterPixels": 11869,
+      "physicalCells": 244,
+      "opticalCells": 181,
+      "lampChangedPixels": 5649,
+      "shadowedSamples": 518,
+      "elapsedMs": 51.12712499999998
+    },
+    {
+      "family": "broken-shell",
+      "triangles": 3584,
+      "matterPixels": 24796,
+      "physicalCells": 433,
+      "opticalCells": 213,
+      "lampChangedPixels": 9488,
+      "shadowedSamples": 441,
+      "elapsedMs": 61.27445799999987
+    }
+  ]
+}
+{"checked":5310,"changed":1707,"passed":["all-axis invalidation","stationary reuse","colour/intensity independent","empty receivers","shadow mode changes"]}
+{"checked":16900,"wallSurfaces":1920,"outside":12640,"passed":["same gameplay LOS","finite range/facing","same bands","chaos modulation","near-foot safety"]}
+{
+  "checks": 24,
+  "status": "pass",
+  "scope": "18 authored family/grade/seed geometry-first native-body admissions; invalid seeds; not production/world/art qualification",
+  "results": [
+    {
+      "id": "folded-slab-low",
+      "seed": 20261002,
+      "geometryFingerprint": "f3a8fdad",
+      "seats": 5986,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 48795
+    },
+    {
+      "id": "folded-slab-low",
+      "seed": 20261003,
+      "geometryFingerprint": "e73bdaae",
+      "seats": 5996,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 48427
+    },
+    {
+      "id": "folded-slab-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "01b5d852",
+      "seats": 5185,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 92673
+    },
+    {
+      "id": "folded-slab-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "2e6e536e",
+      "seats": 5201,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 92090
+    },
+    {
+      "id": "folded-slab-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "c2555775",
+      "seats": 4179,
+      "spawn": {
+        "x": 260,
+        "y": 396
+      },
+      "pixels": 152171
+    },
+    {
+      "id": "folded-slab-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "55e96b36",
+      "seats": 4180,
+      "spawn": {
+        "x": 260,
+        "y": 396
+      },
+      "pixels": 152024
+    },
+    {
+      "id": "fibre-knot-low",
+      "seed": 20261002,
+      "geometryFingerprint": "f87f3561",
+      "seats": 6494,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 13364
+    },
+    {
+      "id": "fibre-knot-low",
+      "seed": 20261003,
+      "geometryFingerprint": "21312f3d",
+      "seats": 6494,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 13388
+    },
+    {
+      "id": "fibre-knot-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "16d7eaec",
+      "seats": 6040,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 28486
+    },
+    {
+      "id": "fibre-knot-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "1935d7df",
+      "seats": 6039,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 28474
+    },
+    {
+      "id": "fibre-knot-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "ecd8e879",
+      "seats": 5450,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 52301
+    },
+    {
+      "id": "fibre-knot-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "60823d01",
+      "seats": 5453,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 52293
+    },
+    {
+      "id": "broken-shell-low",
+      "seed": 20261002,
+      "geometryFingerprint": "f83046cc",
+      "seats": 6123,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 39779
+    },
+    {
+      "id": "broken-shell-low",
+      "seed": 20261003,
+      "geometryFingerprint": "c896912e",
+      "seats": 6123,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 39779
+    },
+    {
+      "id": "broken-shell-medium",
+      "seed": 20261002,
+      "geometryFingerprint": "8e926471",
+      "seats": 5613,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 70017
+    },
+    {
+      "id": "broken-shell-medium",
+      "seed": 20261003,
+      "geometryFingerprint": "006154a9",
+      "seats": 5613,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 70017
+    },
+    {
+      "id": "broken-shell-severe",
+      "seed": 20261002,
+      "geometryFingerprint": "180ca936",
+      "seats": 4864,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 121397
+    },
+    {
+      "id": "broken-shell-severe",
+      "seed": 20261003,
+      "geometryFingerprint": "3b91e13c",
+      "seats": 4864,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "pixels": 121397
+    }
+  ]
+}
+{
+  "status": "pass",
+  "checks": [
+    "native-keyboard-default",
+    "diagonal-normalization",
+    "external-normalization",
+    "keyboard-priority",
+    "freeze",
+    "invalid-intent",
+    "callback-clear",
+    "route-follow",
+    "manual-cancel",
+    "pause-stop",
+    "blocked-exit",
+    "3-folded-body-safe-routes"
+  ],
+  "results": [
+    {
+      "id": "folded-slab-low",
+      "distance": 1504,
+      "points": 188,
+      "stations": [
+        {
+          "name": "侧缘",
+          "position": {
+            "x": 260,
+            "y": 276
+          },
+          "index": 12
+        },
+        {
+          "name": "背面",
+          "position": {
+            "x": 444,
+            "y": 148
+          },
+          "index": 51
+        },
+        {
+          "name": "另一侧缘",
+          "position": {
+            "x": 644,
+            "y": 220
+          },
+          "index": 85
+        },
+        {
+          "name": "搜取点",
+          "position": {
+            "x": 548,
+            "y": 420
+          },
+          "index": 146
+        },
+        {
+          "name": "回到入口",
+          "position": {
+            "x": 260,
+            "y": 380
+          },
+          "index": 187
+        }
+      ]
+    },
+    {
+      "id": "folded-slab-medium",
+      "distance": 1872,
+      "points": 234,
+      "stations": [
+        {
+          "name": "侧缘",
+          "position": {
+            "x": 228,
+            "y": 276
+          },
+          "index": 16
+        },
+        {
+          "name": "背面",
+          "position": {
+            "x": 444,
+            "y": 84
+          },
+          "index": 69
+        },
+        {
+          "name": "另一侧缘",
+          "position": {
+            "x": 692,
+            "y": 244
+          },
+          "index": 128
+        },
+        {
+          "name": "搜取点",
+          "position": {
+            "x": 572,
+            "y": 436
+          },
+          "index": 187
+        },
+        {
+          "name": "回到入口",
+          "position": {
+            "x": 260,
+            "y": 380
+          },
+          "index": 233
+        }
+      ]
+    },
+    {
+      "id": "folded-slab-severe",
+      "distance": 3184,
+      "points": 398,
+      "stations": [
+        {
+          "name": "侧缘",
+          "position": {
+            "x": 140,
+            "y": 244
+          },
+          "index": 35
+        },
+        {
+          "name": "背面",
+          "position": {
+            "x": 348,
+            "y": 44
+          },
+          "index": 86
+        },
+        {
+          "name": "另一侧缘",
+          "position": {
+            "x": 756,
+            "y": 244
+          },
+          "index": 282
+        },
+        {
+          "name": "搜取点",
+          "position": {
+            "x": 620,
+            "y": 452
+          },
+          "index": 345
+        },
+        {
+          "name": "回到入口",
+          "position": {
+            "x": 260,
+            "y": 396
+          },
+          "index": 397
+        }
+      ]
+    }
+  ]
+}

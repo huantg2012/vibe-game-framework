@@ -47,6 +47,7 @@ import { isActorWalking } from '@/entities/actor-motion';
 import { Enemy } from '@/entities/enemy-factory';
 import { getFormRenderer, type FormVisual, type FormVisualSignal } from '@/entities/form-renderers/registry';
 import { Player } from '@/entities/player';
+import type { PlayerMovementInputReader } from '@/entities/player-movement-input';
 import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
 import { generateRiftLayout } from '@/generation/rift-layout';
 import type { GeneratedRiftLayout } from '@/generation/types';
@@ -56,6 +57,8 @@ import type { WorldProductionMap } from '@/generation/world-study/production-map
 export interface RiftDevFixture {
   recovery?: { identity: RiftCheckpoint['identity']; externalTargetIds: readonly string[]; checkpoint?: RiftCheckpoint<RiftRecoveryState> };
   createLayout(): GeneratedRiftLayout;
+  /** DEV-only QA intent, fed through the original Player motion path. */
+  readMovementInput?: PlayerMovementInputReader;
   /** The same admitted world used by the DEV preview, including its 32px Host support. */
   productionWorld?: WorldProductionMap;
   onCreateError?(reason: unknown): void;
@@ -104,6 +107,10 @@ export interface RiftDevRuntimeContext {
   readonly registerMeleeTargets: (provider: { collectMeleeTargets(out: MeleeTarget[]): void }) => () => void;
   readonly readEntryView: () => RiftEntryView;
   readonly visibilityAt: (position: Readonly<{ x: number; y: number }>) => number;
+  /** Partial range/facing only; DEV receiver surfaces must resolve geometry/VOID themselves. */
+  readonly unoccludedVisibilityAt: (position: Readonly<{ x: number; y: number }>) => number;
+  /** Changes when committed position/facing/range/occluders change. */
+  readonly getVisibilityRevision: () => number;
   readonly getFootprint: () => Readonly<{ x: number; y: number; width: number; height: number }>;
   readonly getGroundVisualDepth: (groundY: number) => number;
   readonly revealProjectedTerrain: (image: Phaser.GameObjects.Image, visibility: number) => void;
@@ -392,7 +399,7 @@ export class RiftScene extends Phaser.Scene {
     camera.setBackgroundColor(suppressVoidNoise ? 0x000000 : GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
 
     const beforePlayer = this.devFixture?.createRuntime ? new Set(this.children.list) : null;
-    this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right' });
+    this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right', readMovementInput: this.devFixture?.readMovementInput });
     const playerVisuals = beforePlayer ? this.children.list.filter(child => !beforePlayer.has(child)) : [];
     this.physics.add.collider(this.player.getSprite(), layer);
     camera.startFollow(this.player.getSprite(), true);
@@ -696,6 +703,8 @@ export class RiftScene extends Phaser.Scene {
         registerMeleeTargets: this.registerDevMeleeTargets,
         readEntryView: () => this.entryView,
         visibilityAt: this.visibilityAt,
+        unoccludedVisibilityAt: point => this.visibility.getUnoccludedVisibilityAt(point),
+        getVisibilityRevision: () => this.visibility.getQueryRevision(),
         getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
         revealProjectedTerrain: (image, visibility) => this.visibility.revealProjectedTerrain(image, visibility),
         readPresentationFrame: () => {

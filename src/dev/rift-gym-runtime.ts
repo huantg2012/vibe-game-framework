@@ -5,6 +5,7 @@ import { gameConfigWithScenes } from '@/config/game-config';
 import { eventBus } from '@/core/event-bus';
 import { BUILD_LAB_LOADOUTS } from '@/generated/build-lab-data';
 import type { WorldProductionMap } from '@/generation/world-study/production-map';
+import type { GeneratedRiftLayout } from '@/generation/types';
 import { audioManager } from '@/managers/audio-manager';
 import { gameState } from '@/managers/game-state';
 import { saveManager } from '@/managers/save-manager';
@@ -33,8 +34,11 @@ export interface RiftGymRuntimeOptions {
   readonly onError: (reason: unknown) => void;
 }
 
+export type RiftGymFixtureOverrides = Partial<Omit<RiftDevFixture,
+  'createLayout' | 'productionWorld' | 'onCreateError' | 'onReturn' | 'onPause'>>;
+
 export interface RiftGymRuntime {
-  start(map: WorldProductionMap, loadoutId: string): void;
+  start(map: WorldProductionMap | GeneratedRiftLayout, loadoutId: string, fixtureOverrides?: RiftGymFixtureOverrides): void;
   stop(): void;
   togglePause(): void;
   pause(): void;
@@ -131,7 +135,7 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
     } else pause();
   }
 
-  function start(map: WorldProductionMap, loadoutId: string): void {
+  function start(map: WorldProductionMap | GeneratedRiftLayout, loadoutId: string, fixtureOverrides?: RiftGymFixtureOverrides): void {
     if (disposed) throw new Error('This Rift gym runtime has been destroyed');
     if (!ready) { options.onError(new Error('试玩资源仍在载入')); return; }
     if (starting) return;
@@ -159,8 +163,9 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
       scene().events.once(Phaser.Scenes.Events.CREATE, onCreated);
       detachCreate = () => scene().events.off(Phaser.Scenes.Events.CREATE, onCreated);
       const fixture: RiftDevFixture = {
-        createLayout: () => map.layout,
-        productionWorld: map,
+        ...fixtureOverrides,
+        createLayout: () => 'sample' in map ? map.layout : map,
+        ...('sample' in map ? { productionWorld: map } : {}),
         onCreateError: reason => { if (runEpoch === epoch) fail(reason); },
         onReturn: () => {
           if (runEpoch !== epoch) return;

@@ -10,6 +10,18 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+## R100 I02：原生实体母版（DEV 制作中）
+
+`rift-r100-masters.html` → `dev/rift-r100-masters/` 复用 `createRiftGymRuntime` 与正式 `RiftScene`。Gym 接口额外接受作者 `GeneratedRiftLayout` 和限定 fixture 覆盖；只有真实 `WorldProductionMap` 才注入 `productionWorld`，作者小场景不伪装正式生成准入。CSV 描述三种构造、三级配置与观察落点，生成模块由编译工具产出。
+
+`native-volume-geometry.ts` 以同一局部几何建立可见面、面法向、材料区和高度；`native-volume-raster.ts` 生成原生像素接收面与 8px 物理/光学掩膜。地图先合成实体占地，再按完整 20px 身体求出生、翻找和撤离的可达站位。XY 为原 Rift 顶视地面，高度不向屏幕 Y 投影；不新增可走第二层或可钻过的悬挑。
+
+`VisibilitySystem.getUnoccludedVisibilityAt` 只开放已有有限范围、朝向、混乱与明暗带，供 DEV 实体表面另求几何遮蔽。原 `getVisibilityAt` 仍合成完整 2D LOS，角色、敌人、物件与玩法查询不改用部分结果。接收面必须同时受同源几何和不透明 VOID 限制后，才可用 `revealProjectedTerrain` 擦除自身像素处的原迷雾；不能因一个角落可见而暴露整件实体。
+
+当前美术、逐级压力动效与帧时仍在反复验证；实现入口不等于母版通过。状态和限制归 [I02 任务](tasks/rift-r100-i02.md) 与 [独立美术记录](art/rift-r100-i02-review.md)，不计入 108 世界或 324 等级资格。
+
+`PlayerConfig.readMovementInput` 经 `RiftDevFixture` 接入可选 DEV 巡查方向，真实按键始终优先。`MasterPatrol` 只沿最终身体网格提供意图，不移动sprite；速度、加速度、碰撞与动画仍归原 Player。`getVisibilityRevision`转发原生视野查询版本以正确复用接收面；静态几何的遮光缓存由灯XYZ失效，装饰光强变化不触发重复射线。完整边界与测量见 [I02 QA](qa/rift-r100-i02.md)。
+
 ## R100 I01：持久生成版本与DEV资格底座
 
 `managers/rift-recovery.ts` → `generation/legacy-rift-generation.ts` → `legacy-rift-v2/executor.js`：正式v1/v2新局及续局、无generation旧图均使用固定ac9ddd7闭包；新局选池仍由当前CSV解析。`types/rift-checkpoint.ts`用封存recipe validator读取旧身份，避免live能力校验变动拒绝合法旧局。归档manifest、固定基线重建工具、跨进程完整世界金样共同保护；新算法必须注册新版本。恢复协议本身不新增字段。

@@ -57,15 +57,16 @@
     "id": "COH-F049",
     "title": "世界方向查看与隔离搜撤体验",
     "domain": "development",
-    "summary": "新增Rift v2地图巡览gym：从正式启用池与兼容过程枚举当前30组合，任意uint32种子、同种子巡检、完整投放/路线注解，并将同一productionWorld传入原生RiftScene试玩；Boot前内存存储隔离。旧材料查看器及缩减试玩继续保留。",
+    "summary": "新增Rift v2地图巡览gym：从正式启用池与兼容过程枚举当前30组合，任意uint32种子、同种子巡检、完整投放/路线注解，并将同一productionWorld传入原生RiftScene试玩；Boot前内存存储隔离。旧材料查看器及缩减试玩继续保留。 R100-I02新增原生实体试制入口与可由键盘接管的真实移动巡查；9作者场景尚未过美术/性能，不计世界资格。",
     "delivery": "dev",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "rift-worlds.html",
       "rift-world-play.html",
       "world-study.html",
       "rift-gym.html",
-      "gym.html?lesson=rift-world → rift-gym.html"
+      "gym.html?lesson=rift-world → rift-gym.html",
+      "rift-r100-masters.html（I02在制试验，不属正式出击池）"
     ],
     "sources": [
       {
@@ -155,6 +156,26 @@
       {
         "path": "tools/world-study/check-gym-performance.ts",
         "role": "test"
+      },
+      {
+        "path": "rift-r100-masters.html",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/main.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/patrol.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-master-patrol.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i02.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -166,7 +187,8 @@
     "evidence": [
       "COH-E-SRC-development",
       "COH-E121",
-      "COH-E125"
+      "COH-E125",
+      "COH-E126"
     ],
     "unknowns": [
       "当前目录30组合及固定种子巡检不是穷举uint32种子或连续条件；预览仅原生地表与只读部署注解，模型/实时光照在试玩查看。",

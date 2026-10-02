@@ -13,6 +13,7 @@
  */
 
 import Phaser from 'phaser';
+import { resolvePlayerMovementInput, type PlayerMovementInputReader } from './player-movement-input';
 import { copyRuntimeVector, runtimeFacing, runtimeNumber, runtimeRecord, runtimeVector } from '@/systems/ai/runtime-validation';
 import { PlayerWeaponRig } from '@/entities/player-weapon-rig';
 import type { CrowbarQuality, CrowbarVariant } from '@/art/crowbar-pixels';
@@ -35,6 +36,8 @@ export interface PlayerBodyConfig {
 export interface PlayerConfig {
   /** World position (px) to spawn at. */
   readonly spawn: Vector2;
+  /** Explicit scene fixture intent source. Native keyboard always takes priority. */
+  readonly readMovementInput?: PlayerMovementInputReader;
   /** Texture keys; defaults are the dense pixels generated in BootScene. */
   readonly bodyTexture?: string;
   readonly facingTexture?: string;
@@ -105,6 +108,9 @@ export class Player {
   /** Live view of the player position. Callers may read it every frame; never mutate it. */
   private readonly position: Vector2 = { x: 0, y: 0 };
   private readonly inputVector: Vector2 = { x: 0, y: 0 };
+  private readonly keyboardVector: Vector2 = { x: 0, y: 0 };
+  private readonly movementInputFrame = { position: this.position, keyboard: this.keyboardVector, keyboardActive: false, deltaMs: 0 };
+  private movementInputReader: PlayerMovementInputReader | undefined;
 
   private baseSpeed: number = GAME_CONSTANTS.PLAYER.SPEED;
   private readonly speedModifiers = new Map<string, number>();
@@ -131,6 +137,7 @@ export class Player {
 
   create(scene: Phaser.Scene, config: PlayerConfig): void {
     this.scene = scene;
+    this.movementInputReader = config.readMovementInput;
     this.inputEnabled = true;
     this.moving = false;
     this.speedModifiers.clear();
@@ -376,6 +383,9 @@ export class Player {
   }
 
   destroy(): void {
+    this.movementInputReader = undefined;
+    this.inputVector.x = 0; this.inputVector.y = 0;
+    this.keyboardVector.x = 0; this.keyboardVector.y = 0;
     const keyboard = this.scene?.input?.keyboard;
     if (keyboard) {
       for (const key of this.keys) keyboard.removeKey(key, true);
@@ -413,27 +423,14 @@ export class Player {
   }
 
   private readInput(): void {
-    if (!this.inputEnabled) return;
-
-    const up = isDown(this.keyUp);
-    const down = isDown(this.keyDown);
-    const left = isDown(this.keyLeft);
-    const right = isDown(this.keyRight);
-
-    // Opposing keys on the same axis cancel out.
-    let x = (right ? 1 : 0) - (left ? 1 : 0);
-    let y = (down ? 1 : 0) - (up ? 1 : 0);
-
-    if (x !== 0 && y !== 0) {
-      // Diagonals are normalised: moving diagonally is not faster.
-      const inv = Math.SQRT1_2;
-      x *= inv;
-      y *= inv;
-    }
-
-    this.inputVector.x = x;
-    this.inputVector.y = y;
-    this.moving = x !== 0 || y !== 0;
+    const up = isDown(this.keyUp), down = isDown(this.keyDown);
+    const left = isDown(this.keyLeft), right = isDown(this.keyRight);
+    this.keyboardVector.x = (right ? 1 : 0) - (left ? 1 : 0);
+    this.keyboardVector.y = (down ? 1 : 0) - (up ? 1 : 0);
+    this.movementInputFrame.keyboardActive = up || down || left || right;
+    this.movementInputFrame.deltaMs = this.lastDeltaMs;
+    resolvePlayerMovementInput(this.movementInputFrame, this.movementInputReader, this.inputEnabled, this.inputVector);
+    this.moving = this.inputVector.x !== 0 || this.inputVector.y !== 0;
   }
 
   /**

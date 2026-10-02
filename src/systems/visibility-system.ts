@@ -479,19 +479,26 @@ export class VisibilitySystem {
    * so what the player sees and what the game considers visible never disagree.
    */
   getVisibilityAt(point: Vector2): number {
+    const visibility = this.getUnoccludedVisibilityAt(point);
+    return visibility > 0 && hasLineOfSight(this.occluders, this.origin, point) ? visibility : 0;
+  }
+
+  /** Range/facing/chaos bands ONLY. A DEV solid-surface renderer must separately
+   * resolve the same world geometry (including opaque VOID) before revealing a
+   * receiver face. Never use this partial query for actors, pickups or gameplay. */
+  getUnoccludedVisibilityAt(point: Vector2): number {
     const deltaX = point.x - this.origin.x;
     const deltaY = point.y - this.origin.y;
     const dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     const config = this.config;
 
     if (dist <= config.minSolidRadius) {
-      return hasLineOfSight(this.occluders, this.origin, point) ? config.bandAlphas[0] : 0;
+      return config.bandAlphas[0];
     }
 
     const offset = shortestArc(Math.atan2(deltaY, deltaX) - this.facingCache);
     const range = this.getEffectiveRadius(offset);
     if (dist > range) return 0;
-    if (!hasLineOfSight(this.occluders, this.origin, point, range)) return 0;
 
     const bandWidth = clamp((range - config.minSolidRadius) / 2, 0, config.edgeBandWidth);
     const coreEdge = Math.max(range - bandWidth * 2, config.minSolidRadius);

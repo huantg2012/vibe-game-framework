@@ -1,0 +1,216 @@
+{
+  "world": {
+    "identity": "folded-slab-severe",
+    "family": "folded-slab",
+    "grade": "severe",
+    "seed": 20261002,
+    "sourceHash": "bc3afcfbdbbdc52a790047f736db05c07c79d01c7bef2ee68ab0f7497cdcda15",
+    "geometryFingerprint": "92927673",
+    "qualification": "author-local-art-lab; not a production-world admission",
+    "projection": "native XY topdown; height projection 0",
+    "nativeCanvas": [
+      960,
+      640
+    ],
+    "cameraZoom": 1.5,
+    "actorBody": 20,
+    "movementPxPerSecond": 80,
+    "supportCell": 8,
+    "triangles": 26424,
+    "reachableBodySeats": 4711,
+    "spawnPoint": {
+      "x": 260,
+      "y": 380
+    },
+    "exitPoint": {
+      "x": 196,
+      "y": 460
+    },
+    "searchPoint": {
+      "x": 620,
+      "y": 452
+    },
+    "enemyPoint": {
+      "x": 756,
+      "y": 164
+    },
+    "geometryBeforeDeployment": true,
+    "dynamicTopology": false,
+    "gradeMechanics": false,
+    "materialSounds": "existing Rift ambience; new material-specific soundscape not yet authored"
+  },
+  "presentation": {
+    "mode": "normal",
+    "motion": true,
+    "phase": "静默",
+    "elapsedMs": 48472.54000000018,
+    "activity": 0.22,
+    "visibleSurfacePixels": 15788,
+    "lastRenderMs": 29.700000047683716,
+    "shoulderLight": {
+      "x": 260,
+      "y": 380,
+      "z": 28,
+      "radius": 264,
+      "intensity": 2.4,
+      "color": [
+        1,
+        0.93,
+        0.82
+      ]
+    },
+    "sourceLights": [
+      {
+        "x": 404,
+        "y": 204,
+        "z": 184.95297241210938,
+        "radius": 154,
+        "intensity": 0.15839999999999999,
+        "color": [
+          0.10904575163398693,
+          0.25492810457516335,
+          0.22818300653594772
+        ]
+      },
+      {
+        "x": 678,
+        "y": 270,
+        "z": 134.685546875,
+        "radius": 154,
+        "intensity": 0.15839999999999999,
+        "color": [
+          0.10904575163398693,
+          0.25492810457516335,
+          0.22818300653594772
+        ]
+      },
+      {
+        "x": 446,
+        "y": 153,
+        "z": 104.48716735839844,
+        "radius": 154,
+        "intensity": 0.15839999999999999,
+        "color": [
+          0.10904575163398693,
+          0.25492810457516335,
+          0.22818300653594772
+        ]
+      }
+    ],
+    "geometryDiagnostics": {
+      "identity": "folded-slab-severe",
+      "family": "folded-slab",
+      "grade": "severe",
+      "seed": 20261002,
+      "sourceHash": "bc3afcfbdbbdc52a790047f736db05c07c79d01c7bef2ee68ab0f7497cdcda15",
+      "geometryFingerprint": "92927673",
+      "qualification": "author-local-art-lab; not a production-world admission",
+      "projection": "native XY topdown; height projection 0",
+      "nativeCanvas": [
+        960,
+        640
+      ],
+      "cameraZoom": 1.5,
+      "actorBody": 20,
+      "movementPxPerSecond": 80,
+      "supportCell": 8,
+      "triangles": 26424,
+      "reachableBodySeats": 4711,
+      "spawnPoint": {
+        "x": 260,
+        "y": 380
+      },
+      "exitPoint": {
+        "x": 196,
+        "y": 460
+      },
+      "searchPoint": {
+        "x": 620,
+        "y": 452
+      },
+      "enemyPoint": {
+        "x": 756,
+        "y": 164
+      },
+      "geometryBeforeDeployment": true,
+      "dynamicTopology": false,
+      "gradeMechanics": false,
+      "materialSounds": "existing Rift ambience; new material-specific soundscape not yet authored"
+    },
+    "surfaceVisibility": "native unoccluded range × same-heightfield LOS; original floor/actors retain native vision",
+    "occlusion": "same-heightfield player pixel mask; no walkable undercuts",
+    "sounds": "existing Rift mix; material-specific sound production pending"
+  },
+  "runtime": {
+    "ready": true,
+    "running": true,
+    "starting": false,
+    "performance": {
+      "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+      "state": "complete",
+      "warmupMs": 2000,
+      "requestedMs": 12000,
+      "sampledMs": 12000.6,
+      "frames": {
+        "count": 1250,
+        "p50Ms": 8.3,
+        "p95Ms": 27,
+        "maxMs": 66,
+        "over33ms": 6
+      },
+      "cpuSubmission": {
+        "count": 1251,
+        "p50Ms": 2.7,
+        "p95Ms": 26.5,
+        "maxMs": 57.8,
+        "over33ms": 4
+      },
+      "heapStartBytes": 220452388,
+      "heapEndBytes": 217812936,
+      "pauseSegmentsExcluded": 1,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36",
+      "viewport": [
+        1600,
+        1040
+      ],
+      "dpr": 1,
+      "limitations": "Single 12s segment after 2s warmup; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+    },
+    "paused": true,
+    "probe": {
+      "elapsedMs": 48472.54000000018,
+      "ended": false,
+      "player": {
+        "x": 260,
+        "y": 380
+      },
+      "hp": 100,
+      "chaos": 34.14665330000043,
+      "attack": {
+        "phase": "idle",
+        "cooldownRemainingMs": 0
+      },
+      "kindling": 0,
+      "search": {
+        "prompt": null,
+        "progress": null,
+        "remaining": 1
+      },
+      "enemies": [
+        {
+          "id": "master-listener",
+          "state": "patrol",
+          "position": {
+            "x": 756,
+            "y": 164
+          },
+          "hp": 75,
+          "detection": 0,
+          "engaged": false,
+          "visible": false
+        }
+      ],
+      "hosts": []
+    }
+  }
+}
