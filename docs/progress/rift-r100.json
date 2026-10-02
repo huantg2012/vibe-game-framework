@@ -39,10 +39,10 @@
     "releaseManifest": null
   },
   "resume": {
-    "iteration": "R100-I01",
-    "batch": "R100-I01-B01/B02/B03/B04",
-    "nextAction": "并行封存旧生成器、实现最小CSV世界/等级包、测量基线并建立I02母版任务；证据通过后收口I01接续I02。",
-    "lastCompleted": "用户启动授权已登记；R100开发开始，当前0世界/0等级资格。"
+    "iteration": "R100-I02",
+    "batch": "R100-I02-B01 folded-slab low/medium/severe",
+    "nextAction": "制作共享顶视实体/表面缓冲与原生DEV母版入口；首组三档板体看图整改后迁移束/壳，不以九格存在代签质量。",
+    "lastCompleted": "I01已交付并提交302d529：旧局封存、CSV包/三级声明、测量预算与独立审核；性能问题已明确阻断路由，合格0世界/0格。"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -114,8 +114,8 @@
       "targetWorlds": 0,
       "phase": "foundation",
       "dependencies": [],
-      "state": "active",
-      "stage": "implementation",
+      "state": "closed",
+      "stage": "close",
       "goal": "先保护旧局，明确108世界×三级、知情选级与非常态重度远征的制作及发布合同。",
       "technical": "冻结旧算法恢复路径；定义WorldPackage最小身份/能力版本、统一实体几何及数据来源合同；测量生成、恢复、帧时、内存与离线成本。 建立可扩展到新几何的最小CSV包编译、依赖版本/哈希、正式硬准入与可重复资格入口；不等I05规模化才开始验证。 独立pollutionGrade在候选生成前冻结；设计等级暴露选择、周期危险、遭遇/奖励预算、抗性及暂停/恢复合同，旧age不重命名。明确等级经济必要验证范围。",
       "visual": "记录现五样本的正常视野与已知局限；设计地面/实体/虚空的视觉区分和前三构造的母版任务，明确画法假设，不凭灰盒验美术。 按R100美术七项标准锁三档同源母版任务与成品基准；先做折叠板的低/中/重，再跨材料验证。",
@@ -134,13 +134,66 @@
         "pollutionGrade不等于age/实体覆盖/玩家混乱；重试不能换级，品质和功能级不可混淆"
       ],
       "exit": "没有新世界计数；包版本与旧局保护在新几何启用前通过。",
-      "actualRevision": "ac9ddd7 + I01 worktree",
-      "gateResults": [],
-      "issueIds": [],
-      "evidenceIds": [
-        "R100-H-START"
+      "actualRevision": "302d529",
+      "gateResults": [
+        {
+          "id": "frozen-generation",
+          "status": "pass",
+          "revision": "302d529",
+          "evidenceIds": [
+            "R100-E-I01"
+          ]
+        },
+        {
+          "id": "csv-dev-contract",
+          "status": "pass",
+          "revision": "302d529",
+          "evidenceIds": [
+            "R100-E-I01"
+          ]
+        },
+        {
+          "id": "measured-budget-and-sampling",
+          "status": "pass",
+          "revision": "302d529",
+          "evidenceIds": [
+            "R100-E-I01"
+          ]
+        },
+        {
+          "id": "i02-production-brief",
+          "status": "pass",
+          "revision": "302d529",
+          "evidenceIds": [
+            "R100-E-I01"
+          ]
+        },
+        {
+          "id": "independent-contract-review",
+          "status": "pass",
+          "revision": "302d529",
+          "evidenceIds": [
+            "R100-E-I01"
+          ]
+        }
       ],
-      "targetGradeCases": 0
+      "issueIds": [
+        "R100-P01",
+        "R100-P02"
+      ],
+      "evidenceIds": [
+        "R100-H-START",
+        "R100-E-I01"
+      ],
+      "targetGradeCases": 0,
+      "achievement": {
+        "revision": "302d529",
+        "qualifiedWorldIds": [],
+        "gradeCases": [],
+        "evidenceIds": [
+          "R100-E-I01"
+        ]
+      }
     },
     {
       "id": "R100-I02",
@@ -150,8 +203,8 @@
       "dependencies": [
         "R100-I01"
       ],
-      "state": "planned",
-      "stage": "not-started",
+      "state": "active",
+      "stage": "implementation",
       "goal": "做出三种新构造与三档成品对照，先证明渲染和形体压迫；仍是待完整玩法审核的样板，不报合格世界数。",
       "technical": "统一几何进入通行/视线/内容准入；实现高体量排序与受光、束/板/壳三个共享形体算子及对应空间组织。 三种新包同步接入最小编译/冻结恢复与多种子、混合边界资格，此轮不给完整世界资格；I03补齐压力/准备/回报闭环再审。",
       "visual": "逐个完成真实角色尺度的材料与光影母版，再扩为整张原生地图；转折/断面/内腔必须成立，角色和敌人融入。 折叠板先做低/中/重同源样板，纤维和壳腔再迁移；三档都达到成品质量，重度有静帧压力和峰后可读间隙。",
@@ -171,9 +224,11 @@
         "三档母版、受控动态与现有搜撤承载关系可审；新增压力/准备/回报完整体验保持pending，转I03验证。"
       ],
       "exit": "三构造及其三级待验样板；美术人审检查点，合格计数仍0。压力机制及完整出行未通过前不扩产。",
-      "actualRevision": null,
+      "actualRevision": "302d529 + I02 worktree",
       "gateResults": [],
-      "issueIds": [],
+      "issueIds": [
+        "R100-P02"
+      ],
       "evidenceIds": [],
       "targetGradeCases": 0
     },
@@ -579,6 +634,17 @@
       "path": "docs/tasks/rift-r100-i01.md",
       "scope": "用户于2026-10-02明确“开工！！！！”，启动已准备的R100整个大版本。",
       "limitations": "不构成未制作世界、母版、重度关卡或最终版本的审美及体验认可。"
+    },
+    {
+      "id": "R100-E-I01",
+      "kind": "automated",
+      "purpose": "iteration-achievement",
+      "iterationId": "R100-I01",
+      "revision": "302d529",
+      "path": "docs/qa/rift-r100-i01.md",
+      "scope": "I01已交付旧执行器保护、最小CSV包、预算与限定测量、I02制作合同；非新世界资格。",
+      "limitations": "现同步生成/CPU预算尚未通过；没有新三级玩法或审美通过。自然大样本属于缓存修复前，修后9例独立证据。",
+      "achievementHash": "ffb5bbef8cedb9e085f68482879254328265c6ab0d5d244b2521d8e56122aee1"
     }
   ],
   "risks": [
@@ -646,7 +712,32 @@
       "response": "世界和等级双账、每级多种子/三审；测实际工时并拆小批，不能只审中档或豁免重档。"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "id": "R100-P01",
+      "title": "当前正式同步生成和冷恢复有秒级长尾，I03新生成不得主线程阻塞",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I03",
+      "owner": "code",
+      "evidenceIds": [
+        "R100-E-I01"
+      ],
+      "note": "32自然：生成p95 8.311s/max15.365s；冷恢复p95 8.331s。worker/可取消加载与预算复测为正式接入阻断。"
+    },
+    {
+      "id": "R100-P02",
+      "title": "固定原生短样本CPU提交超过12ms预算，须隔离长路线复测并约束新实体成本",
+      "severity": "P2",
+      "status": "open",
+      "iteration": "R100-I02",
+      "owner": "code/art",
+      "evidenceIds": [
+        "R100-E-I01"
+      ],
+      "note": "I01并行负载下三固定视口12s样本p95为18.6/16.7/13.0ms；不是GPU或长路线资格。"
+    }
+  ],
   "changeLog": [
     {
       "date": "2026-10-02",
@@ -662,6 +753,11 @@
       "date": "2026-10-02",
       "kind": "start",
       "note": "用户“开工！！！！”；R100转active，I01并行执行旧局保护、最小包、测量预算和母版任务。"
+    },
+    {
+      "date": "2026-10-02",
+      "kind": "iteration-close",
+      "note": "I01在302d529结单，测量完成但性能不虚报通过；P01/P02转入后续阻断/整改。I02立即接续三构造三级原生母版。"
     }
   ],
   "qualityPlan": {
