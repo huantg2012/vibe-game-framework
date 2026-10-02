@@ -4645,5 +4645,36 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E122",
+    "kind": "source",
+    "result": "partial",
+    "date": "2026-10-02",
+    "revision": "working-tree:2026-10-02-rift-100-worlds-direction",
+    "scope": "核对当前五世界、两空间侵蚀预设和三类条件改写的实际含义；记录用户100+世界目标及新物质/空间必做要求，并在现有设计稿提出共享能力、世界包筛选和阶段方向。",
+    "limitations": "源码与设计方向核查；仅文档改动。无新增世界、正式池变更、运行验证或美术验收；阶段、候选和计数门槛为提案。",
+    "sources": [
+      {
+        "path": "docs/design-notes/rift-world-space.md",
+        "role": "doc"
+      },
+      {
+        "path": "data/rift-world-profiles.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-world-spaces.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/world-conditions.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/production-map.ts",
+        "role": "code"
+      }
+    ]
   }
 ]
