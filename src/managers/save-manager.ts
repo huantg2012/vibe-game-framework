@@ -30,6 +30,13 @@ const SAVE = GAME_CONSTANTS.SAVE;
 /** Defaults to browser storage; isolated development sessions inject their own backend. */
 export type SaveStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 export type SaveRecordPresence = 'absent' | 'present' | 'unavailable';
+/** Read-only preparation ticket. Loading must compare the exact bytes again,
+ * after asynchronous world preparation and before distributing any state. */
+export interface SaveLoadSnapshot {
+  readonly raw: string | null;
+  readonly checkpoint: RiftCheckpoint | null;
+  readonly departure: RiftDepartureIntent | null;
+}
 let injectedStorage: SaveStorage | null = null;
 let newRecordPending = false;
 let currentRiftCheckpoint: RiftCheckpoint | undefined;
@@ -340,16 +347,35 @@ export const saveManager = {
     eventBus.emit(GameEvent.GAME_SAVED, { timestamp: Date.now() });
   },
 
-  /**
-   * Load save data from localStorage and distribute to all systems.
-   * Returns true if load was successful, false if no save or invalid data.
-   * Emits GAME_LOADED on success.
-   */
-  load(mode?: 'abandon-active'): boolean {
+  /** Snapshot only; envelope checks never invoke a procedural world validator. */
+  captureLoadSnapshot(): SaveLoadSnapshot | null {
+    try {
+      const raw = storage().getItem(SAVE.KEY);
+      let checkpoint: RiftCheckpoint | null = null, departure: RiftDepartureIntent | null = null;
+      if (raw) {
+        try {
+          const data = JSON.parse(raw) as ExpeditionSaveData;
+          if (validSaveEnvelope(data) && data.version === 2) {
+            checkpoint = data.riftCheckpoint ?? null; departure = data.riftDeparture ?? null;
+          }
+        } catch { /* Preserve unreadable bytes; the normal loader rejects them. */ }
+      }
+      return { raw, checkpoint, departure };
+    } catch { return null; }
+  },
+
+  matchesLoadSnapshot(snapshot: SaveLoadSnapshot): boolean {
+    try { return storage().getItem(SAVE.KEY) === snapshot.raw; } catch { return false; }
+  },
+
+  /** Restore after full admission; an optional preparation ticket must still
+   * match the exact stored bytes before any live system is changed. */
+  load(mode?: 'abandon-active', snapshot?: SaveLoadSnapshot): boolean {
     if (pendingWorldSave || inventoryStore.hasFrameTransaction()) return false;
     let raw: string | null;
     try { raw = storage().getItem(SAVE.KEY); }
     catch { return false; }
+    if (snapshot && raw !== snapshot.raw) return false;
     if (!raw) return false;
 
     let data: ExpeditionSaveData;

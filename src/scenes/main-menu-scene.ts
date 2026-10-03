@@ -12,7 +12,7 @@ import { t } from '@/i18n';
 import '@/ui/dom/main-menu.css';
 
 export const TITLE_ART_URL = '/assets/art/menu-refuge-f.png';
-type MenuMode = 'root' | 'overwrite' | 'abandon';
+type MenuMode = 'root' | 'overwrite' | 'abandon' | 'loading';
 interface MenuAction { label: string; run: () => void; }
 /** Review hooks never change the production storage or session implementation. */
 interface TitlePresentation {
@@ -35,6 +35,7 @@ export class MainMenuScene extends Phaser.Scene {
   private actions: MenuAction[] = [];
   private selected = 0;
   private abort: AbortController | null = null;
+  private loadAbort: AbortController | null = null;
   private motion: JointTitleMotion | null = null;
 
   constructor(private readonly presentation: TitlePresentation = {}) { super({ key: 'MainMenuScene' }); }
@@ -90,16 +91,24 @@ export class MainMenuScene extends Phaser.Scene {
     };
     void loadArt();
     audioManager.unlock(); audioManager.playBGM('bgm-menu-void-pad');
-    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      this.generation++; this.abort?.abort(); this.abort = null;
-      this.motion?.destroy(); this.motion = null;
-      this.titleRoot?.remove(); this.titleRoot = null;
-      if (!this.handedOff) { this.transition?.destroy(); audioManager.haltNonBgm(); }
-      this.transition = null; this.ready = false;
-    });
+    this.events.once(Phaser.Scenes.Events.DESTROY, this.releaseTitle);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.releaseTitle);
   }
 
   update(_time: number, delta: number): void { this.motion?.update(delta); }
+
+  /** Phaser may destroy a scene without shutdown, after invalidating its scene
+   * plugin. Release ownership before promise continuations; never resume here. */
+  private readonly releaseTitle = (): void => {
+    this.events.off(Phaser.Scenes.Events.DESTROY, this.releaseTitle);
+    this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.releaseTitle);
+    this.generation++; this.abort?.abort(); this.abort = null;
+    this.loadAbort?.abort(); this.loadAbort = null;
+    this.motion?.destroy(); this.motion = null;
+    this.titleRoot?.remove(); this.titleRoot = null;
+    if (!this.handedOff) { this.transition?.destroy(); audioManager.haltNonBgm(); }
+    this.transition = null; this.ready = false;
+  };
 
   private renderMenu(mode: MenuMode = 'root'): void {
     if (!this.titleRoot) return;
@@ -108,7 +117,10 @@ export class MainMenuScene extends Phaser.Scene {
     warning.hidden = mode === 'root';
     this.titleRoot.querySelector<HTMLParagraphElement>('.joint-back-hint')!.hidden = mode === 'root';
     this.titleRoot.querySelector<HTMLParagraphElement>('.joint-english')!.hidden = mode !== 'root';
-    if (mode === 'overwrite') {
+    if (mode === 'loading') {
+      warning.textContent = '正在辨认归途。原记录仍保留。';
+      this.actions = [{ label: '取消载入', run: () => this.loadAbort?.abort() }];
+    } else if (mode === 'overwrite') {
       const tideNumber = saveManager.peekTideNumber();
       warning.textContent = tideNumber === null
         ? '已有记录暂时无法读取。清除后将永久替换这份记录。'
@@ -193,7 +205,10 @@ export class MainMenuScene extends Phaser.Scene {
     // scene is paused: held Enter must not turn a resume into a new action.
     event.preventDefault();
     if (!this.interactive() || event.repeat) return;
-    if (event.key === 'Escape' && this.mode !== 'root') { event.preventDefault(); this.renderMenu(); }
+    if (event.key === 'Escape' && this.mode !== 'root') {
+      event.preventDefault();
+      if (this.mode === 'loading') this.loadAbort?.abort(); else this.renderMenu();
+    }
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault(); this.selected = (this.selected + (event.key === 'ArrowDown' ? 1 : -1) + this.actions.length) % this.actions.length;
       this.refreshActions(); audioManager.playSFX('sfx-ui-hover');
@@ -211,13 +226,19 @@ export class MainMenuScene extends Phaser.Scene {
   }
 
   private continueRecord(): void {
-    // Native Rift recovery queues a scene directly without the haven entry
-    // callback. Lock repeated clicks until that queued operation completes.
-    this.ready = false; this.refreshActions();
-    loadExpedition(this, this.enter, () => this.renderMenu('abandon'));
-    if (!this.transition) this.time.delayedCall(0, () => {
-      if (!this.titleRoot || !this.scene.isActive()) return;
-      this.ready = true; this.refreshActions();
+    if (this.loadAbort) return;
+    const controller = new AbortController();
+    this.loadAbort = controller;
+    this.renderMenu('loading');
+    let message: string | undefined;
+    void loadExpedition(this, this.enter, () => this.renderMenu('abandon'), {
+      signal: controller.signal, onError: error => { message = error; },
+    }).then(result => {
+      if (this.loadAbort !== controller || !this.titleRoot) return;
+      this.loadAbort = null;
+      if (result === 'entered') { this.ready = false; this.refreshActions(); return; }
+      if (result !== 'interrupted') this.renderMenu();
+      if (message) this.warn(message);
     });
   }
 

@@ -4,6 +4,9 @@ import { validateHostRuntimeSnapshot } from '@/systems/contamination-host-system
 import { createCombatRuntimeConfigurationSignature } from '@/systems/combat-system';
 /** Formal 2D world admission. Generation is deterministic; no runtime is replayed on load. */
 import { restoreLegacyProceduralLayout, restoreLegacyProductionWorld, validLegacyWorldRecipe } from '@/generation/legacy-rift-generation';
+import { assertMatchingRiftIdentity, generatedRiftIdentity } from '@/generation/rift-generation-identity';
+import { RiftGenerationClient } from '@/generation/rift-generation-client';
+import { hydrateRiftGeneration, type RiftGenerationInput } from '@/generation/rift-generation-protocol';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import { saveManager } from './save-manager';
 import { createAIRuntimeConfiguration } from '@/systems/ai/ai-system';
@@ -17,7 +20,7 @@ import { bakePaintGenome, collectPaintGenomeFloorTiles } from '@/entities/form-r
 import { resolvePaintVeinVariant } from '@/entities/form-renderers/d/paint-genome/topology';
 import { colonyNucleusSeatsInFloors, resolveStopLoss } from '@/systems/contamination-host-live';
 import type { InventoryState } from '@/types/inventory-types';
-import { checkpointChecksum, validRiftCheckpoint, validRiftDeparture, type RiftCheckpoint } from '@/types/rift-checkpoint';
+import { validRiftCheckpoint, validRiftDeparture, type RiftCheckpoint } from '@/types/rift-checkpoint';
 
 const worlds = new WeakMap<GeneratedRiftLayout, WorldProductionMap>();
 const generationRecipes = new WeakMap<GeneratedRiftLayout, WorldProductionRecipe>();
@@ -25,6 +28,19 @@ const layouts = new Map<string, GeneratedRiftLayout>();
 const recipes = new Map<string, ReturnType<typeof createAIRuntimeConfiguration>>();
 const signatures = new WeakMap<GeneratedRiftLayout, string>();
 const hostManifests = new WeakMap<GeneratedRiftLayout, { targets: string[]; nucleusCounts: Map<string, number> }>();
+const generationClient = new RiftGenerationClient();
+let requiredPreparedKey: string | null = null;
+export interface ProceduralPreparationOptions { readonly signal?: AbortSignal }
+export interface ProceduralPreparationMetrics {
+  readonly generationMs: number;
+  readonly elapsedMs: number;
+  readonly hydrateMs: number;
+  readonly verifyMs: number;
+  readonly cacheMs: number;
+}
+let lastPreparationMetrics: ProceduralPreparationMetrics | null = null;
+/** Last operation only; no growing telemetry buffer in a long game session. */
+export function getProceduralPreparationMetrics(): ProceduralPreparationMetrics | null { return lastPreparationMetrics; }
 /** The same pure paint footprint and nucleus placement used by the production
  * renderer/host. Stored target names are never allowed to define their own world. */
 function hostManifest(layout: GeneratedRiftLayout): { targets: string[]; nucleusCounts: Map<string, number> } {
@@ -60,11 +76,7 @@ function hostManifest(layout: GeneratedRiftLayout): { targets: string[]; nucleus
 export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpoint['identity'] {
   let signature = signatures.get(layout);
   if (!signature) {
-    signature = checkpointChecksum({ tileMap: layout.tileMap, spawns: layout.enemySpawns, pins: layout.contaminationPins, draw: layout.contaminationDraw, spawn: layout.spawnPoint, exit: layout.extractionPoint, fuel: layout.kindlingNodes, items: layout.contaminantNodes });
-    const generation = generationRecipes.get(layout);
-    if (generation) signature = checkpointChecksum({ layout: signature, generation, hostTileMap: worlds.get(layout)!.hostTileMap,
-      ...(generation.version === 2 ? { landmarks: layout.landmarks,
-        contaminationAge: layout.contaminationAge, ruinSeverity: layout.ruinSeverity } : {}) });
+    signature = generatedRiftIdentity(layout, generationRecipes.get(layout), worlds.get(layout)).signature;
     signatures.set(layout, signature);
   }
   return { worldId: 'procedural-rift', layoutId: 'procedural-rift', seed: layout.seed, recipeId: layout.recipeId,
@@ -80,6 +92,73 @@ function rememberWorld(generation: WorldProductionRecipe): GeneratedRiftLayout {
 function layoutKey(identity: RiftCheckpoint['identity']): string {
   return `${identity.seed}:${identity.recipeId}:${identity.generation ? JSON.stringify(identity.generation) : 'legacy'}`;
 }
+function validProceduralIdentity(identity: RiftCheckpoint['identity']): boolean {
+  return identity.worldId === 'procedural-rift' && identity.layoutId === 'procedural-rift'
+    && Number.isSafeInteger(identity.seed) && identity.seed >= 0 && identity.seed <= 0xffffffff
+    && (identity.generation === undefined || validLegacyWorldRecipe(identity.generation));
+}
+function throwIfCancelled(signal?: AbortSignal): void {
+  if (signal?.aborted) throw new DOMException('Generation cancelled', 'AbortError');
+}
+async function prepareGeneratedLayout(input: RiftGenerationInput, options: ProceduralPreparationOptions): Promise<RiftCheckpoint['identity']> {
+  const started = performance.now();
+  const wire = await generationClient.generate(input, options.signal);
+  throwIfCancelled(options.signal);
+  const hydrateStarted = performance.now();
+  const { layout, world } = hydrateRiftGeneration(wire);
+  const verifyStarted = performance.now();
+  const generation = input.kind === 'departure' ? input.generation : input.identity.generation;
+  if (!!generation !== !!world) throw new Error('Generated world transfer does not match the requested contract');
+  const actual = generatedRiftIdentity(layout, generation, world);
+  assertMatchingRiftIdentity(actual, wire.identity);
+  if (input.kind === 'recovery') assertMatchingRiftIdentity(actual, input.identity);
+  const cacheStarted = performance.now();
+  throwIfCancelled(options.signal);
+  if (world) worlds.set(layout, world);
+  if (generation) generationRecipes.set(layout, generation);
+  signatures.set(layout, actual.signature);
+  // Preparing does not start a run, consume inventory, or evict every old record.
+  // Keep the existing four-entry bound, including independently restored worlds.
+  if (layouts.size >= 4) layouts.clear();
+  layouts.set(layoutKey(input.kind === 'recovery' ? input.identity : actual), layout);
+  lastPreparationMetrics = { generationMs: wire.generationMs, elapsedMs: performance.now() - started,
+    hydrateMs: verifyStarted - hydrateStarted, verifyMs: cacheStarted - verifyStarted, cacheMs: performance.now() - cacheStarted };
+  return actual;
+}
+
+/** Freeze one random recipe before the cancellable wait; commit remains the scene's responsibility. */
+export async function prepareProceduralDeparture(options: ProceduralPreparationOptions = {}): Promise<RiftCheckpoint['identity']> {
+  throwIfCancelled(options.signal);
+  const values = new Uint32Array(1); crypto.getRandomValues(values);
+  const generation = selectWorldProductionRecipe(values[0]!);
+  const identity = await prepareGeneratedLayout({ kind: 'departure', generation }, options);
+  return { ...identity, catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 };
+}
+
+/** Only a ready exact identity is a cache hit; malformed contracts cannot bypass validation. */
+export function hasPreparedProceduralLayout(identity: RiftCheckpoint['identity']): boolean {
+  if (!validProceduralIdentity(identity)) return false;
+  const layout = layouts.get(layoutKey(identity));
+  if (!layout) return false;
+  try { assertMatchingRiftIdentity(proceduralRiftIdentity(layout), identity); return true; }
+  catch { return false; }
+}
+
+export async function prepareProceduralRecovery(identity: RiftCheckpoint['identity'], options: ProceduralPreparationOptions = {}): Promise<void> {
+  throwIfCancelled(options.signal);
+  if (!validProceduralIdentity(identity)) throw new Error('Invalid saved world recipe');
+  if (hasPreparedProceduralLayout(identity)) return;
+  // A caller changing its object while the worker runs cannot change the promise being generated.
+  await prepareGeneratedLayout({ kind: 'recovery', identity: structuredClone(identity) }, options);
+}
+
+/** Sync admission after async preparation must fail closed, never regenerate on a cache miss. */
+export function withPreparedProceduralRecovery<T>(identity: RiftCheckpoint['identity'], action: () => T): T {
+  if (!hasPreparedProceduralLayout(identity)) throw new Error('Procedural world has not been prepared');
+  const previous = requiredPreparedKey;
+  requiredPreparedKey = layoutKey(identity);
+  try { return action(); } finally { requiredPreparedKey = previous; }
+}
 export function createProceduralDeparture(): RiftCheckpoint['identity'] {
   const values = new Uint32Array(1); crypto.getRandomValues(values);
   const layout = rememberWorld(selectWorldProductionRecipe(values[0]!));
@@ -88,10 +167,11 @@ export function createProceduralDeparture(): RiftCheckpoint['identity'] {
   return { ...identity, catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 };
 }
 export function restoreProceduralLayout(identity: RiftCheckpoint['identity']): GeneratedRiftLayout {
-  if (identity.worldId !== 'procedural-rift' || identity.layoutId !== 'procedural-rift') throw new Error('Unsupported procedural world');
-  if (identity.generation && !validLegacyWorldRecipe(identity.generation)) throw new Error('Invalid saved world recipe');
+  if (!validProceduralIdentity(identity)) throw new Error('Invalid saved world recipe');
   const key = layoutKey(identity);
   let layout = layouts.get(key);
+  if (requiredPreparedKey !== null && (key !== requiredPreparedKey || !layout))
+    throw new Error('Prepared recovery cannot synchronously generate a world');
   if (!layout) {
     layout = identity.generation ? rememberWorld(identity.generation) : restoreLegacyProceduralLayout(identity.seed);
     if (layouts.size >= 4) layouts.clear(); layouts.set(key, layout);

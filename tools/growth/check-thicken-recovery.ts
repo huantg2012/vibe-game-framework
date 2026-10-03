@@ -53,7 +53,7 @@ for (const entry of ['checkpoint', 'departure'] as const) {
   const bytes = JSON.stringify(record);
   records.set(GAME_CONSTANTS.SAVE.KEY, bytes);
   let routed: RoutedEntry | null = null;
-  loadExpedition({ scene: { start(key: string, data: { modifiers: RoutedEntry['modifiers']; recovery: { checkpoint: RoutedEntry['checkpoint'] } }) {
+  await loadExpedition({ scene: { start(key: string, data: { modifiers: RoutedEntry['modifiers']; recovery: { checkpoint: RoutedEntry['checkpoint'] } }) {
     routed = { key, modifiers: data.modifiers, checkpoint: data.recovery.checkpoint };
   } } } as never);
   assert(routed, 'actual continue route must enter the saved Rift');

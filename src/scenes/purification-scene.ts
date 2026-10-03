@@ -1,6 +1,6 @@
 import { projectItemForPlayer } from '@/systems/contaminant-catalog';
 import { itemIconUrl } from '@/ui/contaminant-presentation';
-import { createProceduralDeparture, installProceduralRiftRecovery } from '@/managers/rift-recovery';
+import { prepareProceduralDeparture, installProceduralRiftRecovery, withPreparedProceduralRecovery } from '@/managers/rift-recovery';
 import type { RiftCheckpoint } from '@/types/rift-checkpoint';
 import { mix32 } from '@/generation/seed-fork';
 import { SeededRandom } from '@/utils/random';
@@ -188,6 +188,7 @@ export class PurificationScene extends Phaser.Scene {
   private transitioning = false;
   private devSession: PurificationDevSession | null = null;
   private productionDeparture: RiftCheckpoint['identity'] | null = null;
+  private departureAbort: AbortController | null = null;
   private devDeparture: PurificationDevDeparture | null = null;
   private menuEntry: MenuEntryTransition | null = null;
   private transitionDelay: Phaser.Time.TimerEvent | null = null;
@@ -930,16 +931,67 @@ export class PurificationScene extends Phaser.Scene {
 
   /** D4: Scene transition with narrative overlay + T10 radial glow. */
   private transitionToRift(): void {
-    if (this.transitioning || saveManager.hasPendingSave()) return;
+    if (this.transitioning || this.shuttingDown || this.departureAbort || saveManager.hasPendingSave()) return;
     if (contaminantSystem.getSortieLoadout().some(item => item && item.type !== 'catalog' && !ACTIVE_CONTAMINANT_TYPES.includes(item.type))) {
       showToastInline('行装中有已封存的旧式工具。请先将它卸下，再进入裂隙；物件仍会保留在储藏中。', {});
       return;
     }
+    if (!this.devSession) { void this.prepareRiftDeparture(); return; }
     try {
       this.devDeparture = this.devSession?.prepareDeparture() ?? null;
-      if (!this.devSession) { installProceduralRiftRecovery(); this.productionDeparture = createProceduralDeparture(); }
     }
     catch (reason) { showToastInline(reason instanceof Error ? reason.message : String(reason), {}); return; }
+    this.commitRiftDeparture();
+  }
+
+  private async prepareRiftDeparture(): Promise<void> {
+    const controller = new AbortController();
+    this.departureAbort = controller;
+    const cancel = (): void => controller.abort();
+    const destroy = (): void => {
+      // Direct sys.destroy can invalidate ScenePlugin without SHUTDOWN. The
+      // pending continuation must neither resume that plugin nor repaint a menu.
+      this.shuttingDown = true;
+      controller.abort();
+      if (this.departureAbort === controller) {
+        this.departureAbort = null;
+        pauseMenu.discard();
+      }
+    };
+    const preparationState = (): string => JSON.stringify({ inventory: inventoryStore.getState(),
+      cycle: gameState.getCycle(), modifiers: gameState.getSortieModifiers() });
+    const before = preparationState();
+    const savedRecord = saveManager.captureLoadSnapshot();
+    inventoryPanel.close();
+    pauseMenu.open(this, { preparation: { message: '正在辨认裂隙。行装尚未消耗。', cancel } });
+    window.addEventListener('blur', cancel, { once: true });
+    this.events.once(Phaser.Scenes.Events.DESTROY, destroy);
+    try {
+      installProceduralRiftRecovery();
+      const identity = await prepareProceduralDeparture({ signal: controller.signal });
+      if (controller.signal.aborted || this.shuttingDown || this.departureAbort !== controller) return;
+      if (!savedRecord || !saveManager.matchesLoadSnapshot(savedRecord) || before !== preparationState() || saveManager.hasPendingSave())
+        throw new Error('行装或记录已发生变化，请重新准备。');
+      this.productionDeparture = identity;
+      // Cancel is no longer offered once the durable departure transaction starts.
+      pauseMenu.finishPreparation();
+      withPreparedProceduralRecovery(identity, () => this.commitRiftDeparture());
+    } catch (reason) {
+      if (!controller.signal.aborted && !this.shuttingDown) {
+        console.error('Rift preparation failed before departure', reason);
+        showToastInline('这次未能备好裂隙，请重试。行装与原记录已保留。', {});
+      }
+    } finally {
+      window.removeEventListener('blur', cancel);
+      this.events.off(Phaser.Scenes.Events.DESTROY, destroy);
+      if (this.departureAbort === controller) {
+        this.departureAbort = null;
+        if (!this.shuttingDown) pauseMenu.finishPreparation(!document.hidden && document.hasFocus());
+      }
+    }
+  }
+
+  private commitRiftDeparture(): void {
     let error: string | null = null;
     const saved = saveManager.commitWorldTransaction(() => {
       const begun = inventoryStore.beginRun(crypto.randomUUID(), this.productionDeparture ? {
@@ -1197,6 +1249,7 @@ export class PurificationScene extends Phaser.Scene {
     if (this.cleanupComplete) return null;
     this.cleanupComplete = true;
     this.shuttingDown = true;
+    this.departureAbort?.abort(); this.departureAbort = null;
     const failures: string[] = [];
     const dispose = (stage: string, action: () => void): void => {
       this.cleanupStage = stage;

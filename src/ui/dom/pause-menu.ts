@@ -18,9 +18,10 @@ import { beginNewExpedition, hasReadableSave, loadExpedition } from '@/managers/
 import { saveManager } from '@/managers/save-manager';
 import { getDomUiRoot, injectPanelStyles } from './panel-styles';
 
-type MenuMode = 'root' | 'confirmOverwrite' | 'confirmAbandon';
-export interface PauseMenuOptions { onAbandon?: () => void }
+type MenuMode = 'root' | 'confirmOverwrite' | 'confirmAbandon' | 'preparing';
+export interface PauseMenuOptions { onAbandon?: () => void; preparation?: { message: string; cancel: () => void } }
 let recoveryOptions: PauseMenuOptions | undefined;
+let loadAbort: AbortController | null = null;
 
 interface MenuItem {
   label: string;
@@ -99,12 +100,27 @@ function startNewRecord(confirmedReplacement = false): void {
 }
 
 function onLoadSave(): void {
+  if (!host || loadAbort) return;
   if (inventoryStore.getRun()?.status === 'active' || saveManager.hasPendingSave()) {
     const note = panel?.querySelector('.readout-note');
     if (note) note.textContent = saveManager.hasPendingSave() ? '结算尚未保存。请合上菜单，重试保存。' : '当前仍在裂隙中。请完成撤离后再载入纪录。';
     return;
   }
-  leaveForSession(loadExpedition);
+  const scene = host, controller = new AbortController();
+  loadAbort = controller; mode = 'preparing'; selectedIndex = 0;
+  items = [{ label: '取消载入', action: () => controller.abort() }];
+  paint();
+  const note = panel?.querySelector('.readout-note');
+  if (note) note.textContent = '正在辨认归途。原记录仍保留。';
+  let message: string | undefined;
+  void loadExpedition(scene, undefined, undefined, { signal: controller.signal, onError: error => { message = error; } }).then(result => {
+    if (loadAbort !== controller || host !== scene) return;
+    loadAbort = null;
+    if (result === 'entered') { audioManager.resumeAll(); pauseMenu.discard(); return; }
+    mode = 'root'; buildRootItems(); paint();
+    const currentNote = panel?.querySelector('.readout-note');
+    if (message && currentNote) currentNote.textContent = message;
+  });
 }
 
 function buildRootItems(): void {
@@ -156,7 +172,7 @@ function paint(): void {
 
   panel.innerHTML =
     `<div class="panel-title">${t('menu.pauseTitle')}</div>` +
-    `<div class="readout-note">${mode === 'confirmAbandon' ? '只有明确放弃才结损。' : mode === 'root' ? (recoveryOptions ? '当前行动已暂停。关闭或刷新后，继续这一趟。' : '当前行动已暂停。') : '此操作将替换已保存的纪录。'}</div>` +
+    `<div class="readout-note">${mode === 'preparing' ? (recoveryOptions?.preparation?.message ?? '正在辨认归途。原记录仍保留。') : mode === 'confirmAbandon' ? '只有明确放弃才结损。' : mode === 'root' ? (recoveryOptions?.onAbandon ? '当前行动已暂停。关闭或刷新后，继续这一趟。' : '当前行动已暂停。') : '此操作将替换已保存的纪录。'}</div>` +
     warning +
     `<div class="pause-menu-list">${rows}</div>` +
     buildKeyHintBar() +
@@ -210,8 +226,9 @@ function onKey(e: KeyboardEvent): void {
   if (e.repeat) return;
   if (e.key === 'Escape') {
     e.preventDefault();
-    e.stopPropagation();
+    e.stopImmediatePropagation();
     if (performance.now() < ignoreEscUntil) return;
+    if (loadAbort) { loadAbort.abort(); return; }
     if (mode === 'confirmOverwrite' || mode === 'confirmAbandon') {
       mode = 'root';
       buildRootItems();
@@ -254,7 +271,7 @@ export const pauseMenu = {
 
   open(scene: Phaser.Scene, options?: PauseMenuOptions): void {
     if (panel) return;
-    if (performance.now() < closedAt + 200) return;
+    if (!options?.preparation && performance.now() < closedAt + 200) return;
     injectPanelStyles();
     host = scene;
     recoveryOptions = options;
@@ -282,13 +299,20 @@ export const pauseMenu = {
 
     root.appendChild(backdrop);
     root.appendChild(panel);
-    buildRootItems();
+    if (options?.preparation) {
+      mode = 'preparing'; selectedIndex = 0;
+      items = [{ label: '取消准备', action: () => pauseMenu.close() }];
+    } else buildRootItems();
     paint();
     document.addEventListener('keydown', onKey, true);
   },
 
   close(): void {
     if (!panel) return;
+    loadAbort?.abort(); loadAbort = null;
+    const cancel = recoveryOptions?.preparation?.cancel;
+    if (recoveryOptions) delete recoveryOptions.preparation;
+    cancel?.();
     audioManager.playSFX('sfx-ui-close');
     destroyDom();
     document.removeEventListener('keydown', onKey, true);
@@ -300,6 +324,8 @@ export const pauseMenu = {
 
   /** Tear down without resuming the host scene (scene is stopping). */
   discard(): void {
+    loadAbort?.abort(); loadAbort = null;
+    recoveryOptions?.preparation?.cancel();
     recoveryOptions = undefined;
     if (!panel) {
       host = null;
@@ -309,5 +335,14 @@ export const pauseMenu = {
     document.removeEventListener('keydown', onKey, true);
     host = null;
     closedAt = performance.now();
+  },
+
+  /** Preparation owns no inventory commit. Keep the normal pause menu after
+   * focus loss; do not resume a hidden scene merely because a Promise settled. */
+  finishPreparation(resume = true): void {
+    if (!recoveryOptions?.preparation) return;
+    delete recoveryOptions.preparation;
+    if (resume) this.close();
+    else { mode = 'root'; buildRootItems(); paint(); }
   },
 };

@@ -6,7 +6,7 @@ import { projectItemForPlayer } from '@/systems/contaminant-catalog';
 import { projectRunPassiveReceipts } from '@/systems/run-passive-receipt';
 import { CATALOG_ITEMS } from '@/generated/contaminant-catalog-data';
 import { sweepGroundDash } from '@/systems/tool-targeting';
-import { proceduralRiftIdentity, restoreProceduralLayout, restoreProceduralWorld, installProceduralRiftRecovery } from '@/managers/rift-recovery';
+import { proceduralRiftIdentity, installProceduralRiftRecovery, restoreProceduralLayout, restoreProceduralWorld, withPreparedProceduralRecovery } from '@/managers/rift-recovery';
 import type { RiftRecoveryConditions } from '@/systems/rift-recovery-state';
 import { RiftFrameCommit } from '@/systems/rift-frame-commit';
 import { validateRiftRecoveryState, type RiftRecoveryState } from '@/systems/rift-recovery-state';
@@ -32,7 +32,7 @@ import type { MeleeTarget } from '@/systems/weapon-swing';
  *
  * At this point it owns the generated layout, the player, the limited field of view,
  * the enemies and combat. Chaos/loot/extraction plug in on top; the layout
- * comes from `generateRiftLayout(seed)` for this sortie.
+ * comes from the prepared, frozen generation identity for this sortie.
  *
  * The scene is the orchestration layer: it owns the system instances and does the wiring
  * between them, which is what keeps the systems from calling each other directly
@@ -42,6 +42,7 @@ import type { MeleeTarget } from '@/systems/weapon-swing';
 
 import Phaser from 'phaser';
 import { GAME_CONSTANTS } from '@/config/constants';
+import { generateRiftLayout } from '@/generation/rift-layout';
 import { eventBus } from '@/core/event-bus';
 import { isActorWalking } from '@/entities/actor-motion';
 import { Enemy } from '@/entities/enemy-factory';
@@ -49,7 +50,6 @@ import { getFormRenderer, type FormVisual, type FormVisualSignal } from '@/entit
 import { Player } from '@/entities/player';
 import type { PlayerMovementInputReader } from '@/entities/player-movement-input';
 import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
-import { generateRiftLayout } from '@/generation/rift-layout';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import type { WorldProductionMap } from '@/generation/world-study/production-map';
 
@@ -335,21 +335,26 @@ export class RiftScene extends Phaser.Scene {
     const sortieModifiers = restoring?.state.conditions.modifiers ?? data?.modifiers;
     this.recoveryConditions = { modifiers: { ...(sortieModifiers ?? gameState.getSortieModifiers()) }, cycle: data?.cycle ?? gameState.getCycle(), maxHealth: GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus, kindlingAffinity: growthSystem.getModifiers().kindlingAffinity };
     const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
-    let seed = readRiftSeed();
-    const recipeId = readRiftRecipeId();
-    let generated;
-    try {
-      generated = this.devFixture?.createLayout() ?? (this.recovery ? restoreProceduralLayout(this.recovery.identity) : generateRiftLayout(seed, recipeId ? { recipeId } : undefined));
-      seed = generated.seed;
-    } catch (err) {
-      console.error(`[RiftScene] generateRiftLayout(${seed}) failed`, err);
-      throw err;
-    }
-    if (!this.devFixture && !this.recovery) {
+    // Formal entry must have completed its cancellable preparation. Scene.start
+    // runs on a later frame: recheck here as well as in the transaction so an
+    // evicted/invalid identity cannot fall back to synchronous generation.
+    const directDevEntry = import.meta.env.DEV && !this.devFixture && !this.recovery;
+    if (!this.devFixture && !this.recovery && !directDevEntry) throw new Error('Rift entry requires a prepared departure');
+    const admitted = !this.devFixture && this.recovery
+      ? withPreparedProceduralRecovery(this.recovery.identity, () => ({
+        layout: restoreProceduralLayout(this.recovery!.identity),
+        world: restoreProceduralWorld(this.recovery!.identity),
+      })) : null;
+    // Historical DEV deep links/actor review own no formal departure. Keep that
+    // explicit debug path; a formal recovery never uses it on a cache miss.
+    const generated = this.devFixture ? this.devFixture.createLayout() : directDevEntry
+      ? generateRiftLayout(readRiftSeed(), readRiftRecipeId() ? { recipeId: readRiftRecipeId()! } : undefined) : admitted!.layout;
+    if (directDevEntry) {
       installProceduralRiftRecovery();
       this.recovery = { identity: proceduralRiftIdentity(generated), externalTargetIds: [] };
     }
-    const productionWorld = this.devFixture?.productionWorld ?? (!this.devFixture && this.recovery ? restoreProceduralWorld(this.recovery.identity) : null);
+    const seed = generated.seed;
+    const productionWorld = this.devFixture?.productionWorld ?? admitted?.world ?? null;
     if (this.devFixture?.productionWorld && generated !== productionWorld?.layout) {
       throw new Error('A production-world fixture must use that exact admitted layout');
     }
@@ -2530,15 +2535,11 @@ export class RiftScene extends Phaser.Scene {
 function readRiftSeed(): number {
   const query = new URLSearchParams(window.location.search).get('riftSeed');
   if (query && Number.isFinite(Number(query))) return Number(query) >>> 0;
-  const hash = window.location.hash;
-  const tagged = /^#rift=(\d+)$/.exec(hash);
-  if (tagged) return Number(tagged[1]) >>> 0;
-  return Date.now() >>> 0;
+  const tagged = /^#rift=(\d+)$/.exec(window.location.hash);
+  return tagged ? Number(tagged[1]) >>> 0 : Date.now() >>> 0;
 }
 
-/** Dev-only recipe lock for review screenshots. Omit = live pickRecipe. */
 function readRiftRecipeId(): string | undefined {
   if (!import.meta.env.DEV) return undefined;
-  const query = new URLSearchParams(window.location.search).get('riftRecipe');
-  return query && query.length > 0 ? query : undefined;
+  return new URLSearchParams(window.location.search).get('riftRecipe') || undefined;
 }
