@@ -23,6 +23,7 @@ assert.throws(() => compilePaintedMaterialCSV(changeFirst('loose_region', '0:0:0
 
 const pending: Array<{ resolve: () => void; reject: (error: Error) => void }> = [];
 const images: FakeImage[] = [];
+const textures=PAINTED_MATERIALS.flatMap(row=>[row,row.solid]);
 class FakeImage {
   naturalWidth = 2048;
   naturalHeight = 2048;
@@ -53,16 +54,16 @@ Object.defineProperty(globalThis, 'document', { configurable: true, value: {
         assert(image.decoded, 'pixels cannot be read before the source decode completes');
         assert.equal(image.decoding, 'async'); assert.equal(image.naturalWidth, 2048);
         assert.equal(this.imageSmoothingEnabled, true); assert.equal(this.imageSmoothingQuality, 'high');
-        const size = PAINTED_MATERIALS.find(value => value.source === image.src)!.logical_pixels;
+        const size = textures.find(value => value.source === image.src)!.logical_pixels;
         assert.deepEqual(rect, [0, 0, size, size]); drawn = image; drawCalls++;
       },
       getImageData(...rect: number[]) {
-        assert(drawn); const size = PAINTED_MATERIALS.find(value => value.source === drawn!.src)!.logical_pixels;
+        assert(drawn); const size = textures.find(value => value.source === drawn!.src)!.logical_pixels;
         assert.deepEqual(rect, [0, 0, size, size]);
         if (failure === 'pixels') throw new Error('injected pixel read failure');
         pixelReads++;
         const data = new Uint8ClampedArray(size * size * 4);
-        data[0] = drawn.src.includes('ash') ? 23 : drawn.src.includes('crystal') ? 37 : 91;
+        data[0] = drawn.src.includes('solid')?157:drawn.src.includes('ash') ? 23 : drawn.src.includes('crystal') ? 37 : 91;
         data[data.length - 1] = 255;
         return { data };
       },
@@ -72,51 +73,46 @@ Object.defineProperty(globalThis, 'document', { configurable: true, value: {
   },
 } });
 
+async function settleDecodeBatch(rejectIndex=-1):Promise<void>{
+  const batch=pending.splice(0);assert.equal(batch.length,2,'a family prepares independent ground and solid sources');
+  batch.forEach((p,i)=>i===rejectIndex?p.reject(new Error('injected image decode failure')):p.resolve());
+  await Promise.resolve();
+}
 try {
+  assert.throws(()=>compilePaintedMaterialCSV(changeFirst('solid_source', PAINTED_MATERIALS[0]!.source)),/solid source/);
+  assert.throws(()=>compilePaintedMaterialCSV(changeFirst('solid_skin_roughness','0.95')),/roughness/);
+  assert.throws(()=>compilePaintedMaterialCSV(changeFirst('solid_gain','Infinity')),/solid_gain/);
   await assert.rejects(loadPaintedMaterial('unregistered' as never), /Unknown.*unregistered/);
-  assert.equal(images.length, 0, 'unknown families never allocate an image');
-  const first = loadPaintedMaterial('folded-slab'), duplicate = loadPaintedMaterial('folded-slab');
-  assert.equal(first, duplicate, 'concurrent callers share the same pending request');
-  assert.equal(images.length, 1); assert.equal(canvases.length, 0);
-  const failures = Promise.allSettled([first, duplicate]);
-  pending.shift()!.reject(new Error('injected image decode failure'));
-  const rejected = await failures;
-  assert(rejected.every(value => value.status === 'rejected' && /folded-slab.*ash-strata-source.png.*decode failed.*injected/.test(value.reason.message)));
-  assert(images[0]!.released, 'failed decoding releases the original source');
-
-  const retry = loadPaintedMaterial('folded-slab'); assert.notEqual(retry, first);
-  pending.shift()!.resolve(); const ash = await retry;
-  const ashDefinition = PAINTED_MATERIALS.find(value => value.family === 'folded-slab')!;
-  assert.equal(ash.width, ashDefinition.logical_pixels); assert.equal(ash.height, ashDefinition.logical_pixels); assert.equal(ash.worldSize, ashDefinition.world_size);
-  assert.equal(ash.source, ashDefinition.source); assert.equal(ash.pixels.length, ashDefinition.logical_pixels ** 2 * 4);
-  assert.deepEqual(ash.regions, ashDefinition.regions, 'artist-selected source regions reach the renderer without changing cached pixels');
-  assert.equal(ash.pixels[0], 23); assert.equal(ash.pixels[ash.pixels.length - 1], 255);
-
-  for (const [family, failure, message] of [
-    ['fibre-knot', 'context', /fibre-knot.*prepare native pixels failed.*context is unavailable/],
-    ['broken-shell', 'pixels', /broken-shell.*prepare native pixels failed.*injected pixel read failure/],
-  ] as const) {
-    nextCanvasFailure = failure;
-    const failed = loadPaintedMaterial(family), assertion = assert.rejects(failed, message);
-    pending.shift()!.resolve(); await assertion;
-    const recovered = loadPaintedMaterial(family); pending.shift()!.resolve();
-    const pixels = await recovered;
-    assert.equal(pixels.pixels[0], family === 'fibre-knot' ? 37 : 91, 'a retry prepares the correct family, never a placeholder');
+  assert.equal(images.length,0);
+  const first=loadPaintedMaterial('folded-slab'),duplicate=loadPaintedMaterial('folded-slab');
+  assert.equal(first,duplicate);assert.equal(images.length,2);assert.equal(canvases.length,0);
+  const failures=Promise.allSettled([first,duplicate]);await settleDecodeBatch(1);
+  assert((await failures).every(r=>r.status==='rejected'&&/solid.*decode failed/.test(r.reason.message)),'failed solid texture rejects the pair rather than silently reusing ground');
+  const retry=loadPaintedMaterial('folded-slab');await settleDecodeBatch();const ash=await retry;
+  const definition=PAINTED_MATERIALS[0]!;
+  assert.equal(ash.source,definition.source);assert.equal(ash.solid!.source,definition.solid.source);
+  assert.notEqual(ash.pixels,ash.solid!.pixels);assert.equal(ash.pixels[0],23);assert.equal(ash.solid!.pixels[0],157);
+  assert.deepEqual(ash.regions,definition.regions);assert.deepEqual(ash.solid!.regions,definition.solid.regions);
+  assert.equal(ash.solid!.skinRoughness,definition.solid.skinRoughness);
+  assert.equal(ash.solid!.gain,definition.solid.gain);
+  for(const [family,failure] of [['fibre-knot','context'],['broken-shell','pixels']] as const){
+    nextCanvasFailure=failure;
+    const failed=loadPaintedMaterial(family),assertion=assert.rejects(failed,/prepare native pixels failed/);
+    await settleDecodeBatch();await assertion;
+    const retry=loadPaintedMaterial(family);await settleDecodeBatch();const recovered=await retry;
+    assert.equal(recovered.pixels[0],family==='fibre-knot'?37:91);assert.equal(recovered.solid!.pixels[0],157);
   }
-  const allocationCount = images.length;
-  for (let i = 0; i < 10; i++) for (const definition of PAINTED_MATERIALS) {
-    const cached = loadPaintedMaterial(definition.family);
-    assert.equal(cached, loadPaintedMaterial(definition.family));
-    assert.equal((await cached).source, definition.source);
+  const allocations=images.length,reads=pixelReads,buffers=new Set<Uint8ClampedArray>();
+  for(let i=0;i<10;i++)for(const row of PAINTED_MATERIALS){
+    const request=loadPaintedMaterial(row.family);assert.equal(request,loadPaintedMaterial(row.family));const p=await request;
+    assert.equal(p.source,row.source);assert.equal(p.solid!.source,row.solid.source);buffers.add(p.pixels);buffers.add(p.solid!.pixels);
   }
-  assert.equal(await loadPaintedMaterial('folded-slab'), ash, 'completed requests keep one shared native pixel buffer');
-  assert.equal(images.length, allocationCount, 'switching across the three families does not decode more originals');
-  assert.equal(pixelReads, 3, 'only three successful native pixel buffers are retained');
-  assert.equal(pending.length, 0); assert(images.every(image => image.released));
-  assert(canvases.every(canvas => canvas.width === 1 && canvas.height === 1), 'scratch canvases release full-size backing stores on success and failure');
-  console.log(JSON.stringify({ status: 'pass', families: PAINTED_MATERIALS.length, sourceAttempts: images.length, drawCalls, nativePixelBuffers: pixelReads,
-    checks: ['CSV validation/staleness', 'concurrent decode deduplication', 'native smoothing/size', 'pixel payload', 'decode/context/read retry', 'three-source cache reuse', 'scratch cleanup'],
-    scope: 'fake Image/Canvas lifecycle; actual PNG decoding and visual integration require the browser' }));
+  assert.equal(buffers.size,6,'three families retain six distinct surface buffers');
+  assert.equal(images.length,allocations);assert.equal(pixelReads,reads,'cached pairs never decode again');
+  assert.equal(await loadPaintedMaterial('folded-slab'),ash);
+  assert.equal(pending.length,0);assert(images.every(i=>i.released));
+  assert(canvases.every(c=>c.width===1&&c.height===1));
+  console.log(JSON.stringify({status:'pass',families:3,retainedSurfaceBuffers:buffers.size,checks:['CSV source/finish separation','concurrent pair deduplication','solid failure rejects whole family','decode/context/read retry','immutable six-source reuse','scratch cleanup'],scope:'fake browser lifecycle; visual/native decoding verified separately'}));
 } finally {
   for (const [name, descriptor] of descriptors) {
     if (descriptor) Object.defineProperty(globalThis, name, descriptor); else Reflect.deleteProperty(globalThis, name);

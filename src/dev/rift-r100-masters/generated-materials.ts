@@ -1,5 +1,5 @@
 // GENERATED from data/rift-master-materials.csv; edit the CSV, not this file.
-export const PAINTED_MATERIALS_SOURCE_HASH = '5168963e24c0ff91a157441495e14df0303a6a9ee0f00e8b9888b13712bd849e';
+export const PAINTED_MATERIALS_SOURCE_HASH = 'f3ed064b3f614cc129af9fb10e24a04ea7cf451d144866d38a16a1b1e586adb7';
 export const PAINTED_MATERIALS = [
   {
     "family": "folded-slab",
@@ -25,6 +25,35 @@ export const PAINTED_MATERIALS = [
         "width": 0.08,
         "height": 0.21
       }
+    },
+    "solid": {
+      "source": "/assets/r100-materials/slab-solid-source.png",
+      "logical_pixels": 512,
+      "world_size": 512,
+      "regions": {
+        "skin": {
+          "x": 0.025,
+          "y": 0.025,
+          "width": 0.6,
+          "height": 0.95
+        },
+        "cleaved": {
+          "x": 0.69,
+          "y": 0.025,
+          "width": 0.28,
+          "height": 0.95
+        },
+        "loose": {
+          "x": 0.69,
+          "y": 0.025,
+          "width": 0.28,
+          "height": 0.95
+        }
+      },
+      "skinRoughness": 0.43,
+      "cutRoughness": 0.83,
+      "gain": 1.03,
+      "cutGain": 0.96
     }
   },
   {
@@ -51,6 +80,35 @@ export const PAINTED_MATERIALS = [
         "width": 0.12,
         "height": 0.18
       }
+    },
+    "solid": {
+      "source": "/assets/r100-materials/fibre-solid-source.png",
+      "logical_pixels": 512,
+      "world_size": 512,
+      "regions": {
+        "skin": {
+          "x": 0.025,
+          "y": 0.025,
+          "width": 0.6,
+          "height": 0.95
+        },
+        "cleaved": {
+          "x": 0.69,
+          "y": 0.025,
+          "width": 0.28,
+          "height": 0.95
+        },
+        "loose": {
+          "x": 0.69,
+          "y": 0.025,
+          "width": 0.28,
+          "height": 0.95
+        }
+      },
+      "skinRoughness": 0.49,
+      "cutRoughness": 0.87,
+      "gain": 0.88,
+      "cutGain": 1.05
     }
   },
   {
@@ -77,6 +135,35 @@ export const PAINTED_MATERIALS = [
         "width": 0.19,
         "height": 0.19
       }
+    },
+    "solid": {
+      "source": "/assets/r100-materials/shell-solid-source.png",
+      "logical_pixels": 512,
+      "world_size": 512,
+      "regions": {
+        "skin": {
+          "x": 0.025,
+          "y": 0.025,
+          "width": 0.6,
+          "height": 0.95
+        },
+        "cleaved": {
+          "x": 0.69,
+          "y": 0.025,
+          "width": 0.28,
+          "height": 0.95
+        },
+        "loose": {
+          "x": 0.69,
+          "y": 0.025,
+          "width": 0.28,
+          "height": 0.95
+        }
+      },
+      "skinRoughness": 0.34,
+      "cutRoughness": 0.9,
+      "gain": 0.67,
+      "cutGain": 1.15
     }
   }
 ] as const;

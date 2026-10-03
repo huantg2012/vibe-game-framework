@@ -1,7 +1,7 @@
 /** Prepared material pixels only. World geometry, erosion and lighting remain native. */
 import { PAINTED_MATERIALS, type PaintedMaterialFamily } from './generated-materials';
 
-export interface PaintedMaterial {
+export interface PaintedSurface {
   readonly width: number;
   readonly height: number;
   /** Shared cached pixels: consumers must only read this buffer. */
@@ -12,11 +12,16 @@ export interface PaintedMaterial {
   readonly regions?:Readonly<Record<'skin'|'cleaved'|'loose',Readonly<{x:number;y:number;width:number;height:number}>>>;
 }
 
-// The CSV admits exactly three unique sources. Pending requests occupy the same
-// entry as completed pixels, so overlapping rebuilds never decode a source twice.
+export interface PaintedMaterial extends PaintedSurface {
+  /** A separate compact skin/fracture atlas. Never used for walkable ground. */
+  readonly solid?: PaintedSurface & {readonly skinRoughness:number;readonly cutRoughness:number;readonly gain:number;readonly cutGain:number};
+}
+// Three family requests each own two immutable 512px buffers. Overlapping
+// rebuilds share one pending request; a failed pair can be retried as a pair.
 const materials = new Map<string, Promise<PaintedMaterial>>();
 
-async function prepareMaterial(definition: typeof PAINTED_MATERIALS[number]): Promise<PaintedMaterial> {
+type SurfaceDefinition={readonly source:string;readonly logical_pixels:number;readonly world_size:number;readonly regions:NonNullable<PaintedSurface['regions']>};
+async function prepareMaterial(definition: SurfaceDefinition, family:string): Promise<PaintedSurface> {
   let image: HTMLImageElement | undefined, canvas: HTMLCanvasElement | undefined;
   let stage = 'decode';
   try {
@@ -37,7 +42,7 @@ async function prepareMaterial(definition: typeof PAINTED_MATERIALS[number]): Pr
     return { width: canvas.width, height: canvas.height, pixels, worldSize: definition.world_size, source: definition.source,regions:definition.regions };
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error);
-    throw new Error(`R100 painted material ${definition.family} (${definition.source}): ${stage} failed: ${reason}`);
+    throw new Error(`R100 painted material ${family} (${definition.source}): ${stage} failed: ${reason}`);
   } finally {
     // Retain only native CPU pixels, never the decoded original or scratch canvas.
     if (canvas) { canvas.width = 1; canvas.height = 1; }
@@ -50,7 +55,9 @@ export function loadPaintedMaterial(family: PaintedMaterialFamily): Promise<Pain
   if (!definition) return Promise.reject(new Error(`Unknown R100 painted material family: ${family}`));
   const existing = materials.get(definition.source);
   if (existing) return existing;
-  const request = prepareMaterial(definition).catch(error => {
+  const request = Promise.all([prepareMaterial(definition,family),prepareMaterial(definition.solid,`${family} solid`)]).then(([ground,solid])=>({
+    ...ground,solid:{...solid,skinRoughness:definition.solid.skinRoughness,cutRoughness:definition.solid.cutRoughness,gain:definition.solid.gain,cutGain:definition.solid.cutGain},
+  })).catch(error => {
     materials.delete(definition.source);
     throw error;
   });

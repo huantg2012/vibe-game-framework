@@ -96,7 +96,7 @@ function installUploadSink() {
 // whose output arrays have the same dimensions as the live palette constructor.
 const material = { base: [90, 95, 92], dark: [35, 40, 38], light: [160, 166, 158], roughness: .8, structure: .6 } as const;
 const palette: NativeVolumeMaterialSet = { outer: material, cut: material, inner: material, joint: material };
-const materialSources = [...new Map(PAINTED_MATERIALS.map(row => [row.source, row])).values()];
+const materialSources = [...new Map(PAINTED_MATERIALS.flatMap(row => [[row.source, row] as const,[row.solid.source, row.solid] as const])).values()];
 const materialCacheBytes = materialSources.reduce((sum, row) => sum + row.logical_pixels ** 2 * 4, 0);
 
 function measure(definition: typeof MASTER_SCENES[number], seed: number) {
@@ -132,7 +132,7 @@ function measure(definition: typeof MASTER_SCENES[number], seed: number) {
         volumePreparationExclusiveBytes: bytesOf([...volumeBuffers].filter(buffer => !worldBuffers.has(buffer))) },
       allocationBytesByPhase: byPhase, hiddenWorldRetentionUpperBoundBytes: hiddenWorldUpperBound,
       uploadStagingBytes: sink.uploads.reduce((sum, value) => sum + value, 0), quadUploadBytes: sink.quadBytes(),
-      allThreeMaterialCacheBytes: materialCacheBytes, explicitResidentUpperBoundBytes: residentUpperBound,
+      allFamilyMaterialCacheBytes: materialCacheBytes, explicitResidentUpperBoundBytes: residentUpperBound,
       cumulativeExplicitAllocationUpperBoundBytes: explicitAllocationUpperBound,
       estimatedGpuBytes: renderer.gpuBytes };
     renderer.destroy(); renderer.destroy(); assert.equal(sink.losses(), 1);
@@ -173,7 +173,7 @@ else {
     cpuCacheLimitBytes: CPU_CACHE_LIMIT, maximumExplicitResidentUpperBoundBytes: Math.max(...results.map(row => row.explicitResidentUpperBoundBytes)),
     maximumCumulativeExplicitAllocationUpperBoundBytes: Math.max(...results.map(row => row.cumulativeExplicitAllocationUpperBoundBytes)),
     materialCache: { bytes: materialCacheBytes, sources: materialSources.map(row => ({ source: row.source, logicalPixels: row.logical_pixels, rgbaBytes: row.logical_pixels ** 2 * 4 })),
-      method: 'Manifest-sized decoded native pixel caches, summed separately across three sources; source-image decode and scratch Canvas are not measured in Node.' },
+      method: 'Manifest-sized decoded native pixel caches, summed separately across six ground/solid sources; source-image decode and scratch Canvas are not measured in Node.' },
     limitations: ['World closures are opaque: all unexposed world allocations are conservatively included as potentially resident.',
       'Cumulative explicit allocation upper bound assumes no intermediate collection and includes scratch/preparation/upload arrays; it is not a measured concurrent peak or resident cache.',
       'Plain JS objects/arrays, strings, closure/Map overhead, browser image decode/Canvas backing, Phaser actors/fog/audio and driver copies are excluded.',

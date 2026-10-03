@@ -475,7 +475,7 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100目标108世界/324等级。2026-10-03用户明确否决I01/I02，两轮重开；历史代理图像意见不构成人审通过。本轮继续整改三材料×低中重九组DEV母版：绿色侵蚀覆盖与反光、普通结构边缘、吞光可见表现、真实占漆/占空数量面积及随时间增长的混乱曲线。18例有限运行、54张静帧独立复核支持局部改进；现状仍HUMAN-CHANGES-REQUESTED，待用户复评。合格世界0/108、等级0/324，正式有界v2生成池与历史Worker/GC工程成果保留各自范围。 e8888655后用户指出普通折板南侧仍像可走地面，现补真实短陡断面与独立材质映射；44/48方向受控验证及本轮54张局部独立图像支持受测边缘改善，不代替全周边或用户验收。 b5dd6cdd后的翻找物一致性修复已按五个现有来源接入四种主形和材料；E134为当批14图与有限行为证据，不扩充世界资格。",
+    "summary": "R100目标108世界/324等级。2026-10-03用户明确否决I01/I02，两轮重开；历史代理图像意见不构成人审通过。本轮继续整改三材料×低中重九组DEV母版：绿色侵蚀覆盖与反光、普通结构边缘、吞光可见表现、真实占漆/占空数量面积及随时间增长的混乱曲线。18例有限运行、54张静帧独立复核支持局部改进；现状仍HUMAN-CHANGES-REQUESTED，待用户复评。合格世界0/108、等级0/324，正式有界v2生成池与历史Worker/GC工程成果保留各自范围。 e8888655后用户指出普通折板南侧仍像可走地面，现补真实短陡断面与独立材质映射；44/48方向受控验证及本轮54张局部独立图像支持受测边缘改善，不代替全周边或用户验收。 b5dd6cdd后的翻找物一致性修复已按五个现有来源接入四种主形和材料；E134为当批14图与有限行为证据，不扩充世界资格。 本轮三族实体有独立表皮／断面素材、粗糙度与几何大面法线；13次正常原生接近及11组前后对照归E135，为作者限定复查，未取得用户认可。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -834,6 +834,34 @@
       {
         "path": "docs/qa/world-search-remains-2026-10-03.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-material-separation.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/r100-material-separation.md",
+        "role": "doc"
+      },
+      {
+        "path": "public/assets/r100-materials/slab-solid-source.png",
+        "role": "art"
+      },
+      {
+        "path": "public/assets/r100-materials/fibre-solid-source.png",
+        "role": "art"
+      },
+      {
+        "path": "public/assets/r100-materials/shell-solid-source.png",
+        "role": "art"
+      },
+      {
+        "path": "tools/qa/capture-r100-material-separation.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/render-r100-material-separation.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -861,7 +889,8 @@
       "COH-E131",
       "COH-E132",
       "COH-E133",
-      "COH-E134"
+      "COH-E134",
+      "COH-E135"
     ],
     "unknowns": [
       "多区域过程、高体积景观、稀有例外、描述符历史新奇权重及逐包人审入库尚未实现；有界3过程不等于24维全部规则和未来材料能力完成。",

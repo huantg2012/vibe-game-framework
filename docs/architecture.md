@@ -42,7 +42,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `master-ground-field.ts` 先烤连续基材与成因分区，输出底色、浅高度、法向、粗糙度、AO；`MasterSurfaceRenderer` 将地表和同源实体字段交给WebGL2。构造贴地部分继承基床，GPU按肩灯和局部污染源实时着色，独立侵蚀DDA阻断光传播。4份RGBA输入、1份离屏目标和1份Phaser纹理副本计入显式GPU估算；驱动开销另列。字段烤好并上传后不在每帧分配或重扫全图。初始化失败/销毁释放context，context丢失显式报告。
 
-`rift-master-materials.csv` → 材料编译器 → `generated-materials.ts` 声明三族绘制来源。`painted-material.ts` 异步解码原图、准备512像素母片，并有界缓存三份；失败可重试，并发复用同一请求。`build` 用序列token拒绝过期成功和过期错误。材料色映射不从亮度生成碰撞或高度；几何法向、浅起伏、粗糙度、接触暗部保持独立来源。原图与制作记录在 `public/assets/r100-materials/`。
+`rift-master-materials.csv` → 材料编译器 → `generated-materials.ts` 声明三族各自的地面与实体绘制来源，实体表皮／断面区域、粗糙度及各自倍率由CSV编译。`painted-material.ts` 异步准备512像素母片，有界缓存三族六图（6MiB）；同族成对加载，任一失败即拒绝准备且可重试，并发复用同一请求。只有solid用独立实体图与几何大面法线，地面和浅起伏继续用原图；纹理色不生成法线。详见[材质分工](art/rift-r100-material-separation.md)。`build` 用序列token拒绝过期成功和过期错误。材料色映射不从亮度生成碰撞或高度；几何法向、浅起伏、粗糙度、接触暗部保持独立来源。原图与制作记录在 `public/assets/r100-materials/`。
 
 `MasterMaterialAudio` 消费与材质压力相同的有效时间，复用现有环境摩擦/阻力音源。至多两个低优先级声部，最近真实接点提供距离与声像；静默、减动、销毁及时间跳变不补播历史。没有把装饰相位接成伤害、搜取或奖励反馈。声音行为检查与实际审听分别记录。
 

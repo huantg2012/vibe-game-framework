@@ -151,6 +151,22 @@ try{
   assert(actualAlbedo[4]!<actualAlbedo[12]!*.90,'outside-edge brightening must not erase the solid/ground material difference');
   flatRenderer.destroy();assert.equal(flatContext.liveResources(),0);
 
+  // Dedicated solid atlas: poisoning either input must not contaminate the
+  // other receiver. This tests the actual upload, not a label or palette claim.
+  const solidPixels=new Uint8ClampedArray(flatPixels.length);for(let i=0;i<64;i++)solidPixels.set([70,84,96,255],i*4);
+  const separated:PaintedMaterial={...painting,solid:{...painting,pixels:solidPixels,source:'test:solid',skinRoughness:.4,cutRoughness:.86,gain:1,cutGain:1}};
+  function uploadsFor(p:PaintedMaterial){const c=fakeContext();install(c);const r=new MasterSurfaceRenderer(blockingWorld,value.ground,value.volume,p);r.destroy();return c.uploads;}
+  const distinct=uploadsFor(separated),changedGround=uploadsFor({...separated,pixels:flatPixels});
+  assert.deepEqual(distinct[0]!.slice(0,7),changedGround[0]!.slice(0,7),'ground palette cannot leak into compact solid albedo');
+  assert.notDeepEqual(distinct[0]!.slice(12,19),changedGround[0]!.slice(12,19),'ground still consumes its own atlas');
+  const changedSolid=uploadsFor({...separated,solid:{...separated.solid!,pixels:flatPixels}});
+  assert.deepEqual(distinct[0]!.slice(12,19),changedSolid[0]!.slice(12,19),'solid atlas cannot change ground pixels');
+  assert.notDeepEqual(distinct[0]!.slice(0,7),changedSolid[0]!.slice(0,7),'solid actually consumes its independent atlas');
+  assert(distinct[2]![0]!<distinct[2]![12]!*.7,'compact skin is materially smoother than ground');
+  for(const channel of [1,2,3])assert.deepEqual(distinct[channel],changedSolid[channel],'paint brightness cannot invent normals, geometry or emission');
+  raster.material[1]=1;const fracture=uploadsFor(separated);
+  assert(fracture[2]![4]!>fracture[2]![0]!+70,'fracture is rougher than coherent skin');raster.material[1]=0;
+
   const failedPaintContext=fakeContext();install(failedPaintContext);
   const failedPaint:PaintedMaterial={...painting,get pixels():Uint8ClampedArray{throw new Error('injected painted pixel read failure');}};
   assert.throws(()=>new MasterSurfaceRenderer(value.world,value.ground,value.volume,failedPaint),/painted pixel read failure/);
@@ -159,4 +175,4 @@ try{
 }finally{
   if(originalDocument)Object.defineProperty(globalThis,'document',originalDocument);else Reflect.deleteProperty(globalThis,'document');
 }
-console.log(JSON.stringify({status:'pass',checks:['real authored world metadata fixture','seven GL initialization failures rollback','painted preparation failure rollback','matter-clipped uploads including painting','ground/volume height byte roundtrip','normal encoding','emission ownership','six RGBA allocations','light-count bounds','context-lost rejection','idempotent resource release','painted albedo and explicit event finish without geometry mutation','shared cached pixels remain read-only','cut and blocking-face UV independent of ground material coordinates','blocking boundary retains material value separation','seed-dependent pigment placement','inner/joint material response'],scope:'CPU upload/lifecycle contract with fake GL; no GLSL execution, browser or visual approval'}));
+console.log(JSON.stringify({status:'pass',checks:['real authored world metadata fixture','seven GL initialization failures rollback','painted preparation failure rollback','matter-clipped uploads including painting','ground/volume height byte roundtrip','normal encoding','emission ownership','six RGBA allocations','light-count bounds','context-lost rejection','idempotent resource release','painted albedo and explicit event finish without geometry mutation','shared cached pixels remain read-only','cut and blocking-face UV independent of ground material coordinates','blocking boundary retains material value separation','seed-dependent pigment placement','inner/joint material response','solid/ground atlas isolation','skin/cut roughness separation','solid paint does not create normals, height or emission'],scope:'CPU upload/lifecycle contract with fake GL; no GLSL execution, browser or visual approval'}));
