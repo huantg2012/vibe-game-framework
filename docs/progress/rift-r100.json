@@ -40,12 +40,12 @@
   },
   "resume": {
     "iteration": "R100-I02",
-    "batch": "I01 / I02 six-feedback corrections implemented in native masters",
-    "nextAction": "先读集中原话，再运行新母版与新54帧/动态证据；六项已有实际修正和限定验证，按新版本接受人审并继续处理具体意见。不得把旧批准或自动检查当本轮验收，不扩产，不恢复未发生的通过。",
-    "lastCompleted": "真实占漆/占空与三级污染增长已进入九组DEV；下沿漏画、微弱绿色和吞光反光穿角已修；18组原生双seed运行、54图独立复核及共享代码回归完成。人审仍未通过，0/108、0/324。",
-    "headline": "六项反馈已整改到可玩母版，I01 / I02 保留人审未通过",
+    "batch": "I02 impassable solid boundary repair",
+    "nextAction": "查看不可通行边界修前／修后及原生试玩，按本版本继续复审；不将44方向受控接近外推成全周边、全种子或人审通过。",
+    "lastCompleted": "用户指出的折板南侧低面已增加真实断面、分离实体纹理；原占地与可走区域保持。50次真实按键接近覆盖44个独立方向；4方向缺测试站位已注明。类型、构建和几何／材料／视野回归通过。",
+    "headline": "实体边界已复修，正常画面可在碰撞前辨认断面",
     "updatedDate": "2026-10-03",
-    "evidenceRevision": "r100-corrections-20261003"
+    "evidenceRevision": "r100-solid-boundaries-20261003"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -253,7 +253,7 @@
         "三档母版、受控动态与现有搜撤承载关系可审；新增压力/准备/回报完整体验保持pending，转I03验证。"
       ],
       "exit": "六项人审整改有新版本实图、连续实际游玩和数值证据；再次独立检查后供用户审查。未通过前不扩产，合格世界及等级仍0。",
-      "actualRevision": "r100-corrections-20261003",
+      "actualRevision": "r100-solid-boundaries-20261003",
       "gateResults": [
         {
           "id": "terrain-erosion-semantics",
@@ -348,12 +348,13 @@
         {
           "id": "visible-solid-boundaries",
           "status": "changes-required",
-          "label": "实体可见边界与身体碰撞一致",
+          "label": "实体边界复修并完成44方向局部实走；待本版本人审",
           "evidenceIds": [
             "R100-H-I01-I02-REJECT-20261003",
-            "R100-E-I02-POLLUTION-CORRECTIONS"
+            "R100-E-I02-POLLUTION-CORRECTIONS",
+            "R100-E-I02-SOLID-BOUNDARY-REPAIR"
           ],
-          "revision": "ba3ea28e"
+          "revision": "r100-solid-boundaries-20261003"
         },
         {
           "id": "visible-light-consumption",
@@ -422,19 +423,21 @@
         "R100-E-I02-V1-AUDIO",
         "R100-E-ASYNC-ENTRY",
         "R100-H-I01-I02-REJECT-20261003",
-        "R100-E-I02-POLLUTION-CORRECTIONS"
+        "R100-E-I02-POLLUTION-CORRECTIONS",
+        "R100-E-I02-SOLID-BOUNDARY-REPAIR"
       ],
       "targetGradeCases": 0,
       "rework": {
         "state": "open",
         "reason": "2026-10-03当前两轮被用户明确否决：六项污染表现/实体边界/玩家增长要求必须整改。",
         "task": "docs/tasks/rift-r100-i02.md",
-        "revision": "r100-corrections-20261003",
+        "revision": "r100-solid-boundaries-20261003",
         "evidenceIds": [
           "R100-H-I01-I02-REJECT-20261003",
-          "R100-E-I02-POLLUTION-CORRECTIONS"
+          "R100-E-I02-POLLUTION-CORRECTIONS",
+          "R100-E-I02-SOLID-BOUNDARY-REPAIR"
         ],
-        "note": "六项已有新实现及限定证据，见I02 QA顶部；人审未重新认可，rework保持open。直接描述行为和数值。"
+        "note": "六项整改之后，用户继续指出折板南侧不可通行下沿不清；已修真实厚度、材质并多向实走，保留人审未通过和4个测试站位缺失，不扩产。"
       }
     },
     {
@@ -919,6 +922,16 @@
       "limitations": "只覆盖列明样本，不计正式世界；中档入口首次显露污染次序、远斜照边缘和重壳亮片保留意见，完整搜撤/收益平衡与用户复审未过。动态另附真实录像；历史性能/GC不重签。",
       "iterationId": "R100-I02",
       "revision": "r100-corrections-20261003"
+    },
+    {
+      "id": "R100-E-I02-SOLID-BOUNDARY-REPAIR",
+      "kind": "runtime",
+      "purpose": "solid-boundary-repair",
+      "path": "docs/qa/artifacts/rift-r100-solid-boundaries/report.md",
+      "scope": "同站位中／重折板南侧修前后；64组种子旋转几何及旧relief保留；50次真实按键接近覆盖44个独立方向，600采样身体有支持，正常视野下南／东南／西南断面可辨。源SHA256绑定冻结工作树，类型、构建及定向回归通过。",
+      "limitations": "4方向在64/40px受控直线起点缺合法站位；4初批样本有战斗干扰。只证明列明局部样本，非自然全程搜撤、所有边界、任意种子或用户验收；I01/I02资格仍不通过。",
+      "iterationId": "R100-I02",
+      "revision": "r100-solid-boundaries-20261003"
     }
   ],
   "risks": [
@@ -1074,9 +1087,10 @@
       "owner": "art/code",
       "evidenceIds": [
         "R100-H-I01-I02-REJECT-20261003",
-        "R100-E-I02-POLLUTION-CORRECTIONS"
+        "R100-E-I02-POLLUTION-CORRECTIONS",
+        "R100-E-I02-SOLID-BOUNDARY-REPAIR"
       ],
-      "note": "保留结构方向，修正与地面的材料区别、接地和受光；下沿、侧沿、背面、转角连续实走，肩灯照见时不得有透明障碍。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+      "note": "最新用户两图反例证明前批正照结论不足：不可走低斜面像地板。现以真实短陡断面、对象局部纹理及撤除错误沿边提亮修正，保持原占地。50次真实接近覆盖44个独立方向，600采样均身体有支持；4方向无测试站位，4初批有战斗干扰。正常南／东南／西南实图复核有改善，待本版本用户复审，不标全周边已通过。"
     },
     {
       "id": "R100-P08",
@@ -1176,6 +1190,11 @@
       "date": "2026-10-03",
       "kind": "pollution-corrections-implemented",
       "note": "六项整改进入九组原生DEV母版，真实Host数量面积与污染曲线启用；18运行54帧、GPU7例及兼容回归有新证据。局部视觉意见保留，I01/I02继续changes-required，不晋级世界或I03。"
+    },
+    {
+      "date": "2026-10-03",
+      "kind": "solid-boundary-repair",
+      "note": "将不可通行边界清晰记录为硬性游戏体验要求；修正折板低端真实断面和实体纹理，补同站位对照及44方向局部真实接近。4未测方向明示，I01/I02仍changes-required，0世界0等级。"
     }
   ],
   "qualityPlan": {

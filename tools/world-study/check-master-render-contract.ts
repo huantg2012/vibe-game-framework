@@ -134,6 +134,23 @@ try{
   raster.material[0]=3;const joint=renderPainting(value.world);
   assert.notDeepEqual(inner.slice(0,3),joint.slice(0,3),'inner material and joint do not collapse to one pigment response');
 
+  // A blocking outer face must not stitch the exact ground texels through its
+  // boundary, or an impassable shallow slab reads as a walkable floor patch.
+  raster.material[0]=0;raster.material[1]=0;raster.region[0]=0;raster.region[1]=0;
+  const blockingDefinition=MASTER_SCENES.find(definition=>definition.id==='folded-slab-medium')!;
+  const blockingWorld:MasterWorld={...value.world,definition:blockingDefinition};
+  const blockingBase=renderPainting(blockingWorld);
+  const axisChanged:MasterWorld={...blockingWorld,definition:{...blockingDefinition,axis:otherDefinition.axis} as MasterWorld['definition']};
+  const blockingRotated=renderPainting(axisChanged);
+  assert.deepEqual(blockingRotated.slice(0,7),blockingBase.slice(0,7),'blocking outer material stays in object UV when the ground formation axis changes');
+  assert.notDeepEqual(blockingRotated.slice(12,19),blockingBase.slice(12,19),'ground keeps its independent world axis');
+  const flatPixels=new Uint8ClampedArray(8*8*4);for(let i=0;i<64;i++)flatPixels.set([120,120,120,255],i*4);
+  const flatContext=fakeContext();install(flatContext);
+  const flatRenderer=new MasterSurfaceRenderer(blockingWorld,value.ground,value.volume,{...painting,pixels:flatPixels});
+  const actualAlbedo=flatContext.uploads[0]!;
+  assert(actualAlbedo[4]!<actualAlbedo[12]!*.90,'outside-edge brightening must not erase the solid/ground material difference');
+  flatRenderer.destroy();assert.equal(flatContext.liveResources(),0);
+
   const failedPaintContext=fakeContext();install(failedPaintContext);
   const failedPaint:PaintedMaterial={...painting,get pixels():Uint8ClampedArray{throw new Error('injected painted pixel read failure');}};
   assert.throws(()=>new MasterSurfaceRenderer(value.world,value.ground,value.volume,failedPaint),/painted pixel read failure/);
@@ -142,4 +159,4 @@ try{
 }finally{
   if(originalDocument)Object.defineProperty(globalThis,'document',originalDocument);else Reflect.deleteProperty(globalThis,'document');
 }
-console.log(JSON.stringify({status:'pass',checks:['real authored world metadata fixture','seven GL initialization failures rollback','painted preparation failure rollback','matter-clipped uploads including painting','ground/volume height byte roundtrip','normal encoding','emission ownership','six RGBA allocations','light-count bounds','context-lost rejection','idempotent resource release','painted albedo and explicit event finish without geometry mutation','shared cached pixels remain read-only','cut UV versus world-axis material coordinates','seed-dependent pigment placement','inner/joint material response'],scope:'CPU upload/lifecycle contract with fake GL; no GLSL execution, browser or visual approval'}));
+console.log(JSON.stringify({status:'pass',checks:['real authored world metadata fixture','seven GL initialization failures rollback','painted preparation failure rollback','matter-clipped uploads including painting','ground/volume height byte roundtrip','normal encoding','emission ownership','six RGBA allocations','light-count bounds','context-lost rejection','idempotent resource release','painted albedo and explicit event finish without geometry mutation','shared cached pixels remain read-only','cut and blocking-face UV independent of ground material coordinates','blocking boundary retains material value separation','seed-dependent pigment placement','inner/joint material response'],scope:'CPU upload/lifecycle contract with fake GL; no GLSL execution, browser or visual approval'}));

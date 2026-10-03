@@ -1,0 +1,137 @@
+{
+  "date": "2026-10-03T15:17:15.993Z",
+  "status": "limited-local-boundary-verification",
+  "plannedDirections": 48,
+  "coveredDirectionCount": 44,
+  "approachCount": 50,
+  "bodySampleCount": 600,
+  "states": {
+    "stopped": 47,
+    "blocked-and-sliding": 3
+  },
+  "allObservedBodiesSupported": true,
+  "allApproachesObservedCollision": true,
+  "allPreCollisionEdgeVisibilityOne": true,
+  "coveredDirectionIds": [
+    "folded-slab-low-south",
+    "folded-slab-low-south-east",
+    "folded-slab-low-east",
+    "folded-slab-low-north-east",
+    "folded-slab-low-north",
+    "folded-slab-low-north-west",
+    "folded-slab-low-west",
+    "folded-slab-low-south-west",
+    "folded-slab-medium-south",
+    "folded-slab-medium-south-east",
+    "folded-slab-medium-east",
+    "folded-slab-medium-north-east",
+    "folded-slab-medium-north",
+    "folded-slab-medium-north-west",
+    "folded-slab-medium-west",
+    "folded-slab-medium-south-west",
+    "folded-slab-severe-south",
+    "folded-slab-severe-south-east",
+    "folded-slab-severe-east",
+    "folded-slab-severe-north-east",
+    "folded-slab-severe-north",
+    "folded-slab-severe-north-west",
+    "folded-slab-severe-south-west",
+    "fibre-knot-low-south",
+    "fibre-knot-low-north",
+    "fibre-knot-low-west",
+    "fibre-knot-medium-south",
+    "fibre-knot-medium-north",
+    "fibre-knot-medium-west",
+    "fibre-knot-severe-south",
+    "fibre-knot-severe-north",
+    "fibre-knot-severe-west",
+    "broken-shell-low-south",
+    "broken-shell-low-east",
+    "broken-shell-low-north",
+    "broken-shell-low-west",
+    "broken-shell-medium-south",
+    "broken-shell-medium-east",
+    "broken-shell-medium-north",
+    "broken-shell-medium-west",
+    "broken-shell-severe-south",
+    "broken-shell-severe-east",
+    "broken-shell-severe-west",
+    "fibre-knot-medium-east"
+  ],
+  "unavailable": [
+    {
+      "id": "folded-slab-severe-west",
+      "testedOffsets": [
+        64,
+        40
+      ],
+      "meaning": "No suitable tested straight approach seat; not proof that the whole direction is inaccessible"
+    },
+    {
+      "id": "fibre-knot-low-east",
+      "testedOffsets": [
+        64,
+        40
+      ],
+      "meaning": "No suitable tested straight approach seat; not proof that the whole direction is inaccessible"
+    },
+    {
+      "id": "fibre-knot-severe-east",
+      "testedOffsets": [
+        64,
+        40
+      ],
+      "meaning": "No suitable tested straight approach seat; not proof that the whole direction is inaccessible"
+    },
+    {
+      "id": "broken-shell-severe-north",
+      "testedOffsets": [
+        64,
+        40
+      ],
+      "meaning": "No suitable tested straight approach seat; not proof that the whole direction is inaccessible"
+    }
+  ],
+  "combatInterference": [
+    {
+      "id": "folded-slab-low-north-east",
+      "beforeHP": 100,
+      "afterHP": 85
+    },
+    {
+      "id": "folded-slab-severe-east",
+      "beforeHP": 100,
+      "afterHP": 85
+    },
+    {
+      "id": "folded-slab-severe-north-east",
+      "beforeHP": 100,
+      "afterHP": 85
+    },
+    {
+      "id": "broken-shell-low-north",
+      "beforeHP": 100,
+      "afterHP": 85
+    }
+  ],
+  "sourceHashes": {
+    "src/dev/rift-r100-masters/surface-renderer.ts": "8225cbbcf537caadf3fe2e0edc287923f64656516cdb7aba281a04869bed2c4c",
+    "src/generation/world-study/native-volume-geometry.ts": "154fc7706937e9edf80726b4d80c2b8d5372b8576a2411f0fc27f85f71de348b",
+    "src/dev/rift-r100-masters/world.ts": "d7b1282692272cc116bd2070aaa2f998854f075311ff90a7216d4e3305e58a5b"
+  },
+  "sourceStableDuringBothBatches": true,
+  "pageErrors": [],
+  "recoveredDriverIssue": "First close-range attempt timed out awaiting Playwright element stability; retried successfully using the measured native 960x640 canvas clip. No gameplay change or pause.",
+  "limits": [
+    "Controlled legal starts, not natural full-run traversal",
+    "150ms samples, not every physics frame",
+    "A visibility value of 1 is not aesthetic approval",
+    "Four directions remain untested",
+    "Six close-range folded-slab directions repeat the primary batch"
+  ],
+  "reports": [
+    "after/report.json",
+    "closer/report.json",
+    "report.md"
+  ]
+}

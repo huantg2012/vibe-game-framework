@@ -82,7 +82,7 @@ export function createMasterWorld(definition: MasterDefinition, seed: number): M
   const roles = new Map<number, MasterPhysicalRole>();
   const meshes = definition.instances.map(instance => {
     const { role, ...geometry } = instance; roles.set(instance.id, role);
-    return buildNativeVolume({ ...geometry, family: definition.family, seed: seed ^ Math.imul(instance.id, 104729) });
+    return buildNativeVolume({ ...geometry, blocking: role === 'solid' ? 1 : 0, family: definition.family, seed: seed ^ Math.imul(instance.id, 104729) });
   });
   const raster = compileNativeVolumeRaster(meshes, { x:0, y:0, width, height, pixelSize:1, supportCellSize:SUPPORT, opticalHeight:24 });
   const land = new Uint8Array(definition.cols * definition.rows), walls = new Uint8Array(land.length);

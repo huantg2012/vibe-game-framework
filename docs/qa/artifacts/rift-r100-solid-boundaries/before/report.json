@@ -1,0 +1,926 @@
+{
+  "phase": "before",
+  "at": "2026-10-03T14:40:10.817Z",
+  "scope": "Controlled legal starts, actual native keyboard facing/movement and finite normal FOV. Geometry diagnostic is not an art approval. Not natural complete-run traversal.",
+  "sources": {
+    "src/dev/rift-r100-masters/surface-renderer.ts": "725f9a86bddf32f489603077ea79815209ee0e2525bdce9eb2acc1ded5c68408",
+    "src/generation/world-study/native-volume-geometry.ts": "994580013e68c6b276b1b25656a09e5ede6461661c5c66aedc5eabfaa4e323a5"
+  },
+  "cases": [
+    {
+      "family": "folded-slab",
+      "grade": "medium",
+      "direction": "south",
+      "seat": {
+        "point": {
+          "x": 444,
+          "y": 420
+        },
+        "edge": {
+          "x": 444,
+          "y": 360
+        },
+        "score": 4.884700506406148
+      },
+      "state": {
+        "probe": {
+          "elapsedMs": 981.8666666666701,
+          "ended": false,
+          "player": {
+            "x": 444,
+            "y": 420
+          },
+          "hp": 100,
+          "chaos": 15.325783360000012,
+          "chaosRate": 0.3318,
+          "pollutionGrade": "medium",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 180
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 432,
+                "y": 80
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 144,
+                "y": 272
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_03",
+              "substrate": "oil_film",
+              "position": {
+                "x": 784,
+                "y": 112
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_04",
+              "substrate": "oil_film",
+              "position": {
+                "x": 560,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 168.81566254545456,
+                "y": 560
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 981.8666666666701,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_02",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 808.8156625454545,
+                "y": 80
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 981.8666666666701,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        "presentation": {
+          "mode": "normal",
+          "motion": true,
+          "phase": "缓慢闪动",
+          "elapsedMs": 981.8666666666701,
+          "activity": 0.72,
+          "lastRenderMs": 0,
+          "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+          "gpuBytes": 13762560,
+          "surfaces": {
+            "structuralEmissionPixels": 1543,
+            "erosionEdgePixels": 5593,
+            "solidFootBlendsIntoGround": false,
+            "greenOwnership": "actual fractured object or authored light-eaten edge; never the whole floor"
+          },
+          "shoulderLight": {
+            "x": 444,
+            "y": 420,
+            "z": 28,
+            "radius": 264,
+            "intensity": 3.1,
+            "color": [
+              1,
+              0.94,
+              0.86
+            ],
+            "castsShadow": false
+          },
+          "sourceLights": [
+            {
+              "x": 448,
+              "y": 274,
+              "z": 23.919235229492188,
+              "radius": 132,
+              "intensity": 0.6435000000000001,
+              "castsShadow": false,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ]
+            },
+            {
+              "x": 633,
+              "y": 291,
+              "z": 4.029802918434143,
+              "radius": 132,
+              "intensity": 0.6435000000000001,
+              "castsShadow": false,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ]
+            },
+            {
+              "x": 436,
+              "y": 161,
+              "z": 4.2803720235824585,
+              "radius": 132,
+              "intensity": 0.6435000000000001,
+              "castsShadow": false,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ]
+            }
+          ],
+          "erosionLights": [
+            {
+              "x": 572,
+              "y": 364,
+              "z": 12,
+              "radius": 64,
+              "intensity": 0.48,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 212,
+              "y": 180,
+              "z": 12,
+              "radius": 64,
+              "intensity": 0.48,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            }
+          ],
+          "hostLights": [
+            {
+              "x": 432,
+              "y": 80,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.29922235946595394,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 144,
+              "y": 272,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.2886267333367844,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 784,
+              "y": 112,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.2841060335271042,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 560,
+              "y": 560,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.3382934520292103,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 160,
+              "y": 560,
+              "z": 7,
+              "radius": 82,
+              "intensity": 0.1412418313750364,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 800,
+              "y": 80,
+              "z": 7,
+              "radius": 82,
+              "intensity": 0.13912990960447427,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            }
+          ],
+          "activeLightCount": 8,
+          "geometryDiagnostics": {
+            "identity": "folded-slab-medium",
+            "family": "folded-slab",
+            "grade": "medium",
+            "seed": 20261002,
+            "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+            "geometryFingerprint": "e142ebcc",
+            "qualification": "author-local-art-lab; not a production-world admission",
+            "projection": "native XY topdown; height projection 0",
+            "nativeCanvas": [
+              960,
+              640
+            ],
+            "cameraZoom": 1.5,
+            "actorBody": 20,
+            "movementPxPerSecond": 80,
+            "supportCell": 8,
+            "triangles": 666,
+            "reachableBodySeats": 5950,
+            "spawnPoint": {
+              "x": 260,
+              "y": 380
+            },
+            "exitPoint": {
+              "x": 196,
+              "y": 460
+            },
+            "searchPoint": {
+              "x": 572,
+              "y": 436
+            },
+            "enemyPoint": {
+              "x": 716,
+              "y": 180
+            },
+            "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+            "erosionCells": 212,
+            "solidCells": 583,
+            "physicalRoles": [
+              {
+                "id": 1,
+                "role": "solid"
+              },
+              {
+                "id": 2,
+                "role": "relief"
+              },
+              {
+                "id": 3,
+                "role": "relief"
+              }
+            ],
+            "geometryBeforeDeployment": true,
+            "dynamicTopology": false,
+            "gradeMechanics": true,
+            "paintHosts": 4,
+            "volumeHosts": 2,
+            "paintContactAreaPx": 30720,
+            "volumeBoundsAreaPx": 24576,
+            "chaosRateStart": 0.42,
+            "chaosRateEnd": 0.6,
+            "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+          },
+          "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+          "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+          "sounds": {
+            "family": "folded-slab",
+            "grade": "medium",
+            "phase": "quiet",
+            "paused": false,
+            "disposed": false,
+            "clock": 981.8666666666701,
+            "pressure": 0,
+            "sourceIndex": -1,
+            "source": {
+              "x": 0,
+              "y": 0
+            },
+            "gain": 0,
+            "pan": 0,
+            "loop": null,
+            "lastEvent": null,
+            "eventCount": 0,
+            "maximumOwnedVoices": 2,
+            "priority": "low",
+            "runtimeSynthesis": false
+          }
+        },
+        "camera": {
+          "x": -36,
+          "y": 100,
+          "zoom": 1.5
+        }
+      }
+    },
+    {
+      "family": "folded-slab",
+      "grade": "severe",
+      "direction": "south",
+      "seat": {
+        "point": {
+          "x": 444,
+          "y": 404
+        },
+        "edge": {
+          "x": 444,
+          "y": 344
+        },
+        "score": 12.006684021587603
+      },
+      "state": {
+        "probe": {
+          "elapsedMs": 882.1000000000001,
+          "ended": false,
+          "player": {
+            "x": 444,
+            "y": 404
+          },
+          "hp": 100,
+          "chaos": 15.445989760000007,
+          "chaosRate": 0.5056,
+          "pollutionGrade": "severe",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 756,
+                "y": 164
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 400,
+                "y": 80
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 784,
+                "y": 112
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_03",
+              "substrate": "oil_film",
+              "position": {
+                "x": 112,
+                "y": 368
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_04",
+              "substrate": "oil_film",
+              "position": {
+                "x": 112,
+                "y": 528
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_05",
+              "substrate": "oil_film",
+              "position": {
+                "x": 80,
+                "y": 240
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_06",
+              "substrate": "oil_film",
+              "position": {
+                "x": 592,
+                "y": 528
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 122.86720727272727,
+                "y": 528
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 882.1000000000001,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_02",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 794.8672072727272,
+                "y": 80
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 882.1000000000001,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_03",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 634.8672072727272,
+                "y": 560
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 882.1000000000001,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        "presentation": {
+          "mode": "normal",
+          "motion": true,
+          "phase": "缓慢闪动",
+          "elapsedMs": 882.1000000000001,
+          "activity": 0.72,
+          "lastRenderMs": 0.10000014305114746,
+          "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+          "gpuBytes": 13762560,
+          "surfaces": {
+            "structuralEmissionPixels": 2841,
+            "erosionEdgePixels": 15520,
+            "solidFootBlendsIntoGround": false,
+            "greenOwnership": "actual fractured object or authored light-eaten edge; never the whole floor"
+          },
+          "shoulderLight": {
+            "x": 444,
+            "y": 404,
+            "z": 28,
+            "radius": 264,
+            "intensity": 3.1,
+            "color": [
+              1,
+              0.94,
+              0.86
+            ],
+            "castsShadow": false
+          },
+          "sourceLights": [
+            {
+              "x": 446,
+              "y": 243,
+              "z": 36.488563537597656,
+              "radius": 154,
+              "intensity": 0.8424,
+              "castsShadow": false,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ]
+            },
+            {
+              "x": 675,
+              "y": 304,
+              "z": 26.07488441467285,
+              "radius": 154,
+              "intensity": 0.8424,
+              "castsShadow": false,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ]
+            },
+            {
+              "x": 408,
+              "y": 133,
+              "z": 4.149403691291809,
+              "radius": 154,
+              "intensity": 0.8424,
+              "castsShadow": false,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ]
+            }
+          ],
+          "erosionLights": [
+            {
+              "x": 556,
+              "y": 388,
+              "z": 12,
+              "radius": 64,
+              "intensity": 0.48,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 252,
+              "y": 188,
+              "z": 12,
+              "radius": 64,
+              "intensity": 0.48,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 324,
+              "y": 476,
+              "z": 12,
+              "radius": 64,
+              "intensity": 0.48,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            }
+          ],
+          "hostLights": [
+            {
+              "x": 400,
+              "y": 80,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.27896322805777013,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 784,
+              "y": 112,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.29191879444366325,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 112,
+              "y": 368,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.30958604667227135,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 112,
+              "y": 528,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.30958604667227135,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 80,
+              "y": 240,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.32147031804578613,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 592,
+              "y": 528,
+              "z": 7,
+              "radius": 68,
+              "intensity": 0.33941336483320045,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 112,
+              "y": 528,
+              "z": 7,
+              "radius": 82,
+              "intensity": 0.15479302333613568,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 784,
+              "y": 80,
+              "z": 7,
+              "radius": 82,
+              "intensity": 0.14595939722183163,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            },
+            {
+              "x": 624,
+              "y": 560,
+              "z": 7,
+              "radius": 82,
+              "intensity": 0.16977026381188268,
+              "color": [
+                0.20790300853165694,
+                1,
+                0.876066457117198
+              ],
+              "castsShadow": false
+            }
+          ],
+          "activeLightCount": 8,
+          "geometryDiagnostics": {
+            "identity": "folded-slab-severe",
+            "family": "folded-slab",
+            "grade": "severe",
+            "seed": 20261002,
+            "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+            "geometryFingerprint": "cdf17c02",
+            "qualification": "author-local-art-lab; not a production-world admission",
+            "projection": "native XY topdown; height projection 0",
+            "nativeCanvas": [
+              960,
+              640
+            ],
+            "cameraZoom": 1.5,
+            "actorBody": 20,
+            "movementPxPerSecond": 80,
+            "supportCell": 8,
+            "triangles": 666,
+            "reachableBodySeats": 4631,
+            "spawnPoint": {
+              "x": 260,
+              "y": 380
+            },
+            "exitPoint": {
+              "x": 196,
+              "y": 460
+            },
+            "searchPoint": {
+              "x": 620,
+              "y": 452
+            },
+            "enemyPoint": {
+              "x": 756,
+              "y": 164
+            },
+            "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+            "erosionCells": 612,
+            "solidCells": 1307,
+            "physicalRoles": [
+              {
+                "id": 1,
+                "role": "solid"
+              },
+              {
+                "id": 2,
+                "role": "solid"
+              },
+              {
+                "id": 3,
+                "role": "relief"
+              }
+            ],
+            "geometryBeforeDeployment": true,
+            "dynamicTopology": false,
+            "gradeMechanics": true,
+            "paintHosts": 6,
+            "volumeHosts": 3,
+            "paintContactAreaPx": 61440,
+            "volumeBoundsAreaPx": 46080,
+            "chaosRateStart": 0.64,
+            "chaosRateEnd": 0.96,
+            "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+          },
+          "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+          "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+          "sounds": {
+            "family": "folded-slab",
+            "grade": "severe",
+            "phase": "quiet",
+            "paused": false,
+            "disposed": false,
+            "clock": 882.1000000000001,
+            "pressure": 0,
+            "sourceIndex": -1,
+            "source": {
+              "x": 0,
+              "y": 0
+            },
+            "gain": 0,
+            "pan": 0,
+            "loop": null,
+            "lastEvent": null,
+            "eventCount": 0,
+            "maximumOwnedVoices": 2,
+            "priority": "low",
+            "runtimeSynthesis": false
+          }
+        },
+        "camera": {
+          "x": -36,
+          "y": 84,
+          "zoom": 1.5
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "status": "captured"
+}

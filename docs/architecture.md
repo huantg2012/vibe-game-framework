@@ -26,6 +26,8 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 ## R100 I02：原生实体母版（DEV 制作中）
 
+2026-10-03边界复修：作者`solid/relief`显式驱动`NativeVolumeSpec.blocking`，仅阻挡折板补低端真实厚度与短断面，原XY外足和保守碰撞格不变。`MasterSurfaceRenderer`区分有表面与阻挡实体，本地UV表达阻挡材料；不再统一提亮其边缘。`check-master-solid-foot.ts`保护投影、接地、法线、发光面和旧relief；原生多向接近证据独立于数值检查。
+
 2026-10-03用户否决I01/I02后再次整改：`surface-fields.ts`沿真实物体断面生成灰绿侵蚀与实体完整边沿，显式吞光区保留黑内核；不以多贴污斑或提高全图亮度替代。`pollution.ts`复用原生占漆烘焙、32px Host部署及接触范围，物理地面仍8px；局部光通过 `readPollutionSources` 读取活体位置/存在状态，不维护独立生命周期。`RiftDevFixture.hostTileMap`仅供Host支持，`pollutionGrade`进入共享ChaosSystem的模拟时间曲线。Scene每帧组合占空视野倍率与混乱倍率，避免污染读数未跨显示阈值时视野不响应。新增数值与投放来源仍是CSV；正式等级选择、风险收益闭环未在本轮推广。
 
 `rift-r100-masters.html` → `dev/rift-r100-masters/` 复用 `createRiftGymRuntime` 与正式 `RiftScene`。Gym 接口额外接受作者 `GeneratedRiftLayout` 和限定 fixture 覆盖；只有真实 `WorldProductionMap` 才注入 `productionWorld`，作者小场景不伪装正式生成准入。CSV 描述三种构造、三级配置与观察落点，生成模块由编译工具产出。

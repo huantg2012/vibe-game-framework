@@ -12,6 +12,8 @@ export interface NativeVolumeSpec {
   length: number; width: number; height: number; thickness: number;
   /** Shape controls, supplied by the content table; these are not game grades. */
   fold: number; branches: number; opening: number; distortion: number;
+  /** Explicit physical role from the author. Omitted/0 preserves relief geometry. */
+  blocking?: number;
 }
 export interface NativeVolumePoint { x: number; y: number; z: number }
 export interface NativeVolumeJoint extends NativeVolumePoint { readonly index: number }
@@ -45,13 +47,15 @@ function phase(seed: number, salt: number): number {
 
 function validateSpec(spec: Readonly<NativeVolumeSpec>): void {
   for (const [key, value] of Object.entries(spec)) {
-    if (key !== 'family' && (typeof value !== 'number' || !Number.isFinite(value))) {
+    if (key !== 'family' && !(key === 'blocking' && value === undefined)
+      && (typeof value !== 'number' || !Number.isFinite(value))) {
       throw new Error(`Native volume ${key} must be finite`);
     }
   }
   if (!['folded-slab', 'fibre-knot', 'broken-shell'].includes(spec.family)) throw new Error('Unknown native volume family');
   if (!Number.isInteger(spec.id) || spec.id < 1 || spec.id > 0x7fffffff) throw new Error('Volume id must be a positive Int32');
   if (!Number.isInteger(spec.seed)) throw new Error('Volume seed must be an integer');
+  if (spec.blocking !== undefined && spec.blocking !== 0 && spec.blocking !== 1) throw new Error('Native volume blocking must be 0 or 1');
   if (spec.length < 16 || spec.width < 12 || spec.height < 2 || spec.thickness < 1
     || spec.length > 2048 || spec.width > 2048 || spec.height > 512
     || spec.thickness > Math.min(spec.length, spec.width) * .45) throw new Error('Native volume dimensions outside bounded construction range');
@@ -176,6 +180,12 @@ function foldedSlab(b: MeshBuilder): void {
 function bedMass(b:MeshBuilder,top:readonly Point[],centre:Point,salt:number,faultEdges:readonly number[],cutWidth:number):void {
   const n=top.length,s=b.spec;
   const lerp=(a:Point,c:Point,t:number):Point=>[a[0]+(c[0]-a[0])*t,a[1]+(c[1]-a[1])*t,a[2]+(c[2]-a[2])*t];
+  // A solid bed ends in a real section, including its otherwise flat outlet.
+  // The affine lift retains each broad mother plane and the authored maximum
+  // height; three unequal beds do not acquire one level, regular pedestal.
+  const footHeight=s.blocking===1?Math.min(s.height*.42,8.5+salt*.9+phase(s.seed,810+salt)*1.2):0;
+  const lift=(p:Point):Point=>footHeight>0?[p[0],p[1],footHeight+p[2]*(1-footHeight/s.height)]:p;
+  const surfaceCentre=lift(centre);
   type EdgePoint={top:Point;foot:Point;shoulder:Point;mouth:number;distance:number;fault:boolean};
   const rim:EdgePoint[]=[];
   let distance=0;
@@ -193,11 +203,23 @@ function bedMass(b:MeshBuilder,top:readonly Point[],centre:Point,salt:number,fau
       const radius=Math.hypot(at[0]-centre[0],at[1]-centre[1])||1;
       const nx=(at[0]-centre[0])/radius,ny=(at[1]-centre[1])/radius;
       const inset=cutWidth*mouth*(salt===2?.52:.78);
-      const lip=lerp(at,centre,Math.min(.26,inset/radius));
+      let lip=lerp(at,centre,Math.min(.26,inset/radius));
       const burial=clamp(at[2]/Math.max(3,s.height*.16),0,1);
       const spread=cutWidth*burial*(fault?.13+mouth*1.8:.26);
       const foot:Point=[at[0]+nx*spread,at[1]+ny*spread,0];
-      const shoulder=lerp(lip,centre,Math.min(.34,(5+cutWidth*.7)*mouth/radius));
+      if(footHeight>0){
+        // Leave the exact old foot and all high shoulders in place. Where the
+        // old plane buried itself into the ground, draw its upper end inward
+        // to expose 6–10 native pixels of steep section. The existing wide
+        // fault mouth remains wide rather than gaining a second uniform rim.
+        const sectionWidth=6.5+phase(s.seed,830+salt)*1.5+(at[0]/s.length+.5)*1.1+mouth*.8;
+        const run=Math.hypot(lip[0]-foot[0],lip[1]-foot[1]);
+        const lowEnd=1-clamp(at[2]/(footHeight*2),0,1);
+        const toCentre=Math.hypot(lip[0]-centre[0],lip[1]-centre[1])||1;
+        lip=lerp(lip,centre,clamp((sectionWidth-run)*lowEnd/toCentre,0,.34));
+      }
+      const shoulder=lift(lerp(lip,centre,Math.min(.34,(5+cutWidth*.7)*mouth/radius)));
+      lip=lift(lip);
       rim.push({top:lip,foot,shoulder,mouth,distance:distance+edgeLength*t,fault});
     }
     distance+=edgeLength;
@@ -207,8 +229,8 @@ function bedMass(b:MeshBuilder,top:readonly Point[],centre:Point,salt:number,fau
     const next=(i+1)%rim.length,a=rim[i]!,c=rim[next]!;
     const region=salt===2?NATIVE_VOLUME_REGIONS.compressed:NATIVE_VOLUME_REGIONS.intact;
     const topUv=(p:Point):UV=>[p[0],p[1]];
-    b.quad(centre,a.shoulder,c.shoulder,centre,0,
-      [topUv(centre),topUv(a.shoulder),topUv(c.shoulder),topUv(centre)],[0,0,1],region);
+    b.quad(surfaceCentre,a.shoulder,c.shoulder,surfaceCentre,0,
+      [topUv(surfaceCentre),topUv(a.shoulder),topUv(c.shoulder),topUv(surfaceCentre)],[0,0,1],region);
     // The exposure is assigned to an actual shoulder adjacent to the mouth;
     // arbitrary triangles elsewhere on the broad top cannot acquire it.
     b.quad(a.shoulder,a.top,c.top,c.shoulder,0,

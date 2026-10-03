@@ -103,27 +103,29 @@ export class MasterSurfaceRenderer {
   gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
   const position=gl.getAttribLocation(program,'position');gl.enableVertexAttribArray(position);gl.vertexAttribPointer(position,2,gl.FLOAT,false,0,0);
   const fields=buildMasterSurfaceFields(world),ramp=deriveFragmentContamRamp('frag-outdoor');
-  this.surfaceDiagnostics={structuralEmissionPixels:fields.infection.reduce((n,v)=>n+(v>.15?1:0),0),erosionEdgePixels:fields.erosion.reduce((n,v)=>n+(v>.1?1:0),0),solidFootBlendsIntoGround:false,greenOwnership:'actual fractured object or authored light-eaten edge; never the whole floor'};
+  this.surfaceDiagnostics={structuralEmissionPixels:fields.infection.reduce((n,v)=>n+(v>.15?1:0),0),erosionEdgePixels:fields.erosion.reduce((n,v)=>n+(v>.1?1:0),0),blockingSurfaceMaterial:'object-local UV; no perimeter brightening',greenOwnership:'actual fractured object or authored light-eaten edge; never the whole floor'};
   const albedo=new Uint8Array(size*4),normal=new Uint8Array(size*4),response=new Uint8Array(size*4),emission=new Uint8Array(size*4);
   const axis=painting?world.definition.axis:0,ca=Math.cos(axis),sa=Math.sin(axis),seed=painting?world.sample.seed:0;
   const mirror=(v:number,extent:number):number=>{const period=extent*2,n=((Math.floor(v)%period)+period)%period;return n<extent?n:period-n-1;};
   for(let i=0;i<size;i++){
    const x=i%w,y=Math.floor(i/w),q=i*4,n=i*3;if(!world.matterAt(x,y))continue;
-   const solid=r.matter[i]===1,height=solid?r.heightField[i]!:ground.heightField[i]!;
-   const cut=solid&&r.material[i]===1;
+   const hasSurface=r.matter[i]===1,height=hasSurface?r.heightField[i]!:ground.heightField[i]!;
+   const cut=hasSurface&&r.material[i]===1;
    let paintingIndex=0,worldPaintingIndex=0;
    let paintRegion:'skin'|'cleaved'|'loose'='skin';
    if(painting){
     // The selected photograph region follows the *construction event*. Lower
     // frequency alone cannot turn loose fracture products into intact skin.
-    if(solid){
+    if(hasSurface){
      paintRegion=cut||r.region[i]===2||r.region[i]===3||r.region[i]===4?'cleaved':'skin';
      // A fibre surface is already exposed lengthwise material; its local UV
      // follows the swept strand instead of putting one world stripe across it.
      if(r.family[i]===2)paintRegion=r.material[i]===2?'loose':'cleaved';
      if(r.family[i]===3&&r.material[i]===2)paintRegion='cleaved';
     }else paintRegion=ground.materialEvents[i]===2?'loose':ground.materialEvents[i]===1?'cleaved':'skin';
-    const local=cut||(solid&&r.family[i]===2);
+    // Blocking matter owns its material coordinates. Reusing the substrate's
+    // world field makes a shallow, impassable face look like walkable ground.
+    const local=fields.solid[i]===1||cut||(hasSurface&&r.family[i]===2);
     const u=local?r.uv[i*2]!:x*ca+y*sa,v=local?r.uv[i*2+1]!:-x*sa+y*ca;
     const scale=painting.width/painting.worldSize;
     const px=mirror(u*scale+(seed%83),painting.width),py=mirror(v*scale+((seed>>>8)%97),painting.height);
@@ -139,8 +141,8 @@ export class MasterSurfaceRenderer {
      paintingIndex=(sy*painting.width+sx)*4;
     }else paintingIndex=worldPaintingIndex;
    }
-   let ao=solid?r.ambientOcclusion[i]!:ground.ambientOcclusion[i]!;
-   if(!solid){
+   let ao=hasSurface?r.ambientOcclusion[i]!:ground.ambientOcclusion[i]!;
+   if(!hasSurface){
     let enclosure=0;
     for(const [dx,dy] of [[3,0],[-3,0],[0,3],[0,-3],[7,7],[-7,7],[7,-7],[-7,-7],[14,0],[-14,0],[0,14],[0,-14]]){
      const xx=x+dx!,yy=y+dy!;if(xx<0||yy<0||xx>=w||yy>=h)continue;
@@ -152,16 +154,16 @@ export class MasterSurfaceRenderer {
     // Shallow bedded matter inherits its substrate; only an exposed raised
     // section fully owns the new material. This is a buried foot, not a decal.
     const exposure=fields.solid[i]?1:Math.min(1,Math.max(0,height-ground.heightField[i]!)/10);
-    albedo[q+c]=solid?ground.albedo[q+c]!*(1-exposure)+volume.albedo[n+c]!*exposure:ground.albedo[q+c]!;
+    albedo[q+c]=hasSurface?ground.albedo[q+c]!*(1-exposure)+volume.albedo[n+c]!*exposure:ground.albedo[q+c]!;
     if(painting){
      const pigment=painting.pixels[paintingIndex+c]!*.92+painting.pixels[worldPaintingIndex+c]!*.08;
      // Use the authored tonal range directly, not a second narrow palette ramp.
      // Native geometry, shallow relief and lights continue to own illumination.
-     const gain=cut?1.12:fields.solid[i]?(r.material[i]===2?.64:.73):solid?.87+.13*exposure:.87;
+     const gain=cut?1.12:fields.solid[i]?(r.material[i]===2?.64:.73):hasSurface?.87+.13*exposure:.87;
      albedo[q+c]=Math.min(255,pigment*gain*.94+albedo[q+c]!*.06);
     }
-    normal[q+c]=Math.round(((solid?volume.shadingNormals[n+c]!:ground.normals[n+c]!)*.5+.5)*255);
-    emission[q+c]=solid?Math.min(255,volume.emission[n+c]!):0;
+    normal[q+c]=Math.round(((hasSurface?volume.shadingNormals[n+c]!:ground.normals[n+c]!)*.5+.5)*255);
+    emission[q+c]=hasSurface?Math.min(255,volume.emission[n+c]!):0;
     const erosion=fields.erosion[i]!;
     const infection=Math.max(fields.infection[i]!,erosion*.82);
     if(infection>0){
@@ -174,21 +176,16 @@ export class MasterSurfaceRenderer {
      emission[q+c]=Math.max(emission[q+c]!,Math.min(255,glow));
     }
    }
-   if(fields.solid[i]&&fields.edgeDistance[i]!<=4.5){
-    // Exposed foot has material thickness. It may be low, but cannot dissolve
-    // into the identical floor while its body still blocks the player.
-    const edge=(1-fields.edgeDistance[i]!/5);
-    const grain=.88+.12*Math.sin(r.uv[i*2]!*.31+r.uv[i*2+1]!*.53);
-    for(let c=0;c<3;c++)albedo[q+c]=Math.min(255,albedo[q+c]!*(1+edge*.24*grain));
-    ao=Math.max(ao,.72);
-   }
+   // A blocking boundary is drawn by its actual section geometry and material.
+   // Do not brighten every outside pixel: that cancelled the solid/ground
+   // material difference and erased the very edge it was meant to reveal.
    albedo[q+3]=255;normal[q+3]=Math.round(ao*255);
    const encoded=Math.max(0,Math.min(65535,Math.round(height*128)));
-   const roughness=solid?volume.roughness[i]!:ground.roughness[i]!;
+   const roughness=hasSurface?volume.roughness[i]!:ground.roughness[i]!;
    // Event-specific pigment and finish change together. This does not derive
    // geometric height or tactical visibility from a dark mark in the source.
    const finish=paintRegion==='loose'?.94:paintRegion==='cleaved'?.76:.86;
-   response[q]=Math.round((painting?roughness*.35+finish*.65:roughness)*255);response[q+1]=encoded>>>8;response[q+2]=encoded&255;response[q+3]=solid?255:0;
+   response[q]=Math.round((painting?roughness*.35+finish*.65:roughness)*255);response[q+1]=encoded>>>8;response[q+2]=encoded&255;response[q+3]=hasSurface?255:0;
   }
   const names=['albedoMap','normalMap','responseMap','emissionMap'];
   for(const [unit,data]of [albedo,normal,response,emission].entries()){
