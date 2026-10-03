@@ -14,7 +14,7 @@ import { RiftScene, type RiftDevFixture } from '@/scenes/rift-scene';
 import { generatePlaceholderTextures } from '@/scenes/placeholder-textures';
 import { contaminantSystem } from '@/systems/contaminant-system';
 import { inventoryStore } from '@/systems/inventory-store';
-import { createSearchObjectVisual, ensureLootSearchTextures } from '@/systems/loot-search-presentation';
+import { createWorldSearchVisual } from '@/systems/world-search-presentation';
 import { GameEvent, type EventPayloads } from '@/types/events';
 import type { Vector2 } from '@/types/game-types';
 import { bindDomUiRootToGame } from '@/ui/dom/panel-styles';
@@ -147,10 +147,9 @@ if (import.meta.env.DEV) {
       game.scene.start('RiftScene', { modifiers: gameState.getSortieModifiers(), cycle: gameState.getCycle(), loadout: contaminantSystem.getSortieLoadout(),
         devFixture: { createLayout: () => map.layout, onReturn: () => stopRun(), returnLabel: '返回配置', onPause: togglePause,
           freezeAfterEnd: true, worldSurface: 'runtime', footstepMaterial: 'soil', suppressVoidNoise: true, extractionGlowRadius: 8,
-          createSearchObjectVisual: (targetScene, position, visualSeed, getPlayerPos) => {
-            const slots = ensureLootSearchTextures(targetScene, 'frag-outdoor');
-            return createSearchObjectVisual(targetScene, position.x, position.y, visualSeed, 'frag-outdoor', slots, getPlayerPos);
-          },
+          createSearchObjectVisual: (targetScene, position, visualSeed, getPlayerPos) => createWorldSearchVisual(
+            targetScene, position, visualSeed, getPlayerPos, map.sample.profile, map.sample.seed,
+          ),
           createRuntime: context => { surface = createWorldPlaySurface(context, map.sample); return surface; } } satisfies RiftDevFixture });
     } catch (reason) { if (initialized) failStart(reason); else showError(reason); }
   }

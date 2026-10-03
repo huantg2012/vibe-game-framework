@@ -3,6 +3,7 @@ import { MASTER_SCENES } from './generated-scenes';
 import { createMasterWorld, type MasterFamily, type MasterGrade, type MasterWorld } from './world';
 import { MasterPresentation, type MasterViewMode } from './presentation';
 import { loadPaintedMaterial } from './painted-material';
+import { createWorldSearchVisual } from '@/systems/world-search-presentation';
 import { createMasterPatrolRoute, createMasterLightPatrolRoute, MasterPatrol } from './patrol';
 
 if (!import.meta.env.DEV) throw new Error('R100 art masters are available only in development');
@@ -57,6 +58,7 @@ async function build(lightPatrol=false):Promise<void>{
     const current=world;
     runtime.start(world.layout,'bare',{worldSurface:'runtime',materialLighting:true,footstepMaterial:'soil',suppressVoidNoise:true,extractionGlowRadius:8,
       hostTileMap:current.hostTileMap,pollutionGrade:current.definition.grade,
+      createSearchObjectVisual:(scene,position,visualSeed,getPlayerPos)=>createWorldSearchVisual(scene,position,visualSeed,getPlayerPos,current.sample.profile,current.sample.seed,painting),
       createSightGrid:()=>current.sight,createCombatGrid:()=>current.combat,readMovementInput:patrol.readInput,
       createRuntime:context=>{presentation=new MasterPresentation(context,current,painting);presentation.setMode(mode);presentation.setMotion(motion);$('loading').hidden=true;return presentation;}});
   }catch(reason){if(token===serial)reportError(reason);}

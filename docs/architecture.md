@@ -10,6 +10,12 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 # 技术架构
 
+## 世界来源对应的翻找残骸（2026-10-03）
+
+`data/rift-search-remains.csv` → `generate-search-remains.mjs` → `generated/rift-search-remains.ts` 定义世界来源对应的形制，纯像素生成器 `generation/world-study/search-remains.ts` 用当前WorldProfile色槽或已有材料原图绘制小型断裂残体。`systems/world-search-presentation.ts` 通过已有 `LootSearchCreateConfig.createVisual` 接入正式Rift、world-play及R100母版；Rift Gym复用正式入口。旧fragment身份和搜刮状态协议不变，独立场景的显式工厂仍优先。
+
+`loot-search-presentation.ts` 只新增可替换外壳纹理接口，共用原翻找／揭晓表现。新纹理按来源、形制及最终像素指纹隔离；每个可视对象持有引用，最后一个销毁或场景关闭时释放。旧揭晓小纹理共用；销毁先取消对应Tween，重复清理幂等。未新增游戏HUD、按钮或UI样式。
+
 ## R100 工程前置：正式出击与冷续局的异步准备
 
 `PurificationScene.prepareRiftDeparture` → `managers/rift-recovery.ts` → `generation/rift-generation-client.ts` → 专用 `rift-generation-worker.ts`。主线程先固定一次配方，Worker 的 `rift-generation-execute.ts` 使用原冻结执行器生成并计算身份；`rift-generation-identity.ts` 是两端共用的纯签名算法。执行器/协议不依赖 Phaser、SaveManager 或其他有副作用的会话单例。每次请求独占 Worker，request id 拒绝旧响应，60秒硬截止；成功、取消、错误和消息反序列化失败均清计时器/监听并 terminate。

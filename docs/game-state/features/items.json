@@ -3,7 +3,7 @@
     "id": "COH-F019",
     "title": "主动翻找与一次揭晓",
     "domain": "items",
-    "summary": "按住 E 翻找，过程发声且可被移动、攻击、受击打断；成功后固定物品身份和批次，容量不足留地。I31实际薪柴入账与修复、备行和报告共用逐堆取整函数，未改基值、亲和、倍率或掉率。",
+    "summary": "按住 E 翻找，过程发声且可被移动、攻击、受击打断；成功后固定物品身份和批次，容量不足留地。I31实际薪柴入账与修复、备行和报告共用逐堆取整函数，未改基值、亲和、倍率或掉率。 现有五来源的生成／恢复地图与DEV母版翻找物按真实世界配置四种形体和材料；R100复用母版碎料/断面。外观不读取隐藏奖励，旧四碎片及专用世界保留原外观，交互和产出规则不变。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -61,6 +61,43 @@
       {
         "path": "src/ui/dom/inventory-panel-styles.ts",
         "role": "code"
+      },
+      {
+        "path": "docs/art/rift-r100-i02-review.md",
+        "role": "art",
+        "note": "翻找对象的世界来源要求：#loot-world-origin-feedback-2026-10-03"
+      },
+      {
+        "path": "data/rift-search-remains.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/rift-search-remains.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/search-remains.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/world-search-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/generate-search-remains.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-search-remains.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-world-search-remains.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/world-search-remains-2026-10-03.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -72,9 +109,12 @@
       "COH-E-SRC-items",
       "COH-E-HIST-CATALOG",
       "COH-E-HIST-PRODUCTION",
-      "COH-E101"
+      "COH-E101",
+      "COH-E134"
     ],
-    "unknowns": []
+    "unknowns": [
+      "E134支持五来源/九组母版的14张当批正常镜头和三种中档有限翻找；不证明所有种子、暗处发现率、全部奖励分支或长期自然搜撤。采集后并行地形材料已改，截图不证明新的完整地形版本；用户来源一致性修复的最终评价待给出。"
+    ]
   },
   {
     "id": "COH-F020",

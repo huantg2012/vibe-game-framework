@@ -1,0 +1,3038 @@
+{
+  "phase": "behavior",
+  "at": "2026-10-03T15:33:46.485Z",
+  "status": "captured",
+  "method": "Fresh isolated browser; controlled full-body-legal starting seat, then real keyboard approach/search. Native normal FOV, enemies and simulation unchanged. Not a natural full-run or human art approval.",
+  "sources": {
+    "src/scenes/rift-scene.ts": "4aea9ad6f1a98fbf551f799046d9af006bd9726c1f7067fa0319ee9d8b7585ee",
+    "src/systems/loot-search-presentation.ts": "19edb90df120dfe5c7b73caff3604ec947bb0255494c6bba7d58ac31ae32e561",
+    "src/systems/world-search-presentation.ts": "3f5fa7badfed2758292e56eee83b42fc33c05fde60099e1c73ba73331ca21140",
+    "src/generation/world-study/search-remains.ts": "0b872bd480dcce014179b46cd0c1175e068ef036f759fd69ac69e6d97879b8da",
+    "src/dev/rift-r100-masters/main.ts": "cceeea54fc8cdf06b24bfc53eb9868b198c13ae481b7f222026156e7bbeb957d",
+    "data/rift-search-remains.csv": "b91ebe3ec23bb384c80926b00510a331fe8357cf9d6a699066bc52459b03f5ae",
+    "src/generated/rift-search-remains.ts": "fdf46d4eda7d00262debecf1853905f7b50c5a21a1ae55ad964289361a5efb8c"
+  },
+  "cases": [
+    {
+      "id": "folded-slab-medium",
+      "kind": "r100-master",
+      "entry": {
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 1,
+          "kindling": 0,
+          "fragmentTypeId": "frag-outdoor",
+          "seed": 20261002,
+          "player": {
+            "x": 260,
+            "y": 380
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "kind": "kindling",
+              "x": 572,
+              "y": 436,
+              "collected": false
+            }
+          ]
+        },
+        "nodes": [
+          {
+            "id": "master-search",
+            "collected": false,
+            "visibility": 0,
+            "visualClass": "PileVisual",
+            "sprite": {
+              "key": "__world_search_ash-strata_laminated-flakes_c8ddecbd",
+              "name": "search-remains:ash-strata:laminated-flakes",
+              "visible": true,
+              "alpha": 0,
+              "x": 572,
+              "y": 436
+            }
+          }
+        ],
+        "probe": {
+          "elapsedMs": 282.9733333333329,
+          "ended": false,
+          "player": {
+            "x": 260,
+            "y": 380
+          },
+          "hp": 100,
+          "chaos": 15.093890552000001,
+          "chaosRate": 0.3318,
+          "pollutionGrade": "medium",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 180
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 432,
+                "y": 80
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 144,
+                "y": 272
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_03",
+              "substrate": "oil_film",
+              "position": {
+                "x": 784,
+                "y": 112
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_04",
+              "substrate": "oil_film",
+              "position": {
+                "x": 560,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 167.96174196363637,
+                "y": 560
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 282.9733333333329,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_02",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 807.9617419636363,
+                "y": 80
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 282.9733333333329,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        "textures": [
+          "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+        ],
+        "worldProfile": "ash-strata",
+        "camera": {
+          "x": 0,
+          "y": 167,
+          "zoom": 1.5
+        },
+        "storage": {
+          "reads": 1,
+          "writes": 0,
+          "saveReads": 0,
+          "saveWrites": 0,
+          "events": [
+            {
+              "method": "getItem",
+              "key": "coh_locale"
+            }
+          ]
+        }
+      },
+      "seat": {
+        "point": {
+          "x": 500,
+          "y": 436
+        },
+        "node": {
+          "id": "master-search",
+          "kind": "kindling",
+          "x": 572,
+          "y": 436,
+          "collected": false
+        },
+        "key": "d",
+        "score": 246.44674881198983
+      },
+      "state": {
+        "search": {
+          "prompt": "search",
+          "progress": null,
+          "remaining": 1,
+          "kindling": 0,
+          "fragmentTypeId": "frag-outdoor",
+          "seed": 20261002,
+          "player": {
+            "x": 540.7779111111109,
+            "y": 436
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "kind": "kindling",
+              "x": 572,
+              "y": 436,
+              "collected": false
+            }
+          ]
+        },
+        "nodes": [
+          {
+            "id": "master-search",
+            "collected": false,
+            "visibility": 1,
+            "visualClass": "PileVisual",
+            "sprite": {
+              "key": "__world_search_ash-strata_laminated-flakes_c8ddecbd",
+              "name": "search-remains:ash-strata:laminated-flakes",
+              "visible": true,
+              "alpha": 1,
+              "x": 572,
+              "y": 436
+            }
+          }
+        ],
+        "probe": {
+          "elapsedMs": 1015.2199999999982,
+          "ended": false,
+          "player": {
+            "x": 540.7779111111109,
+            "y": 436
+          },
+          "hp": 100,
+          "chaos": 15.336849996000003,
+          "chaosRate": 0.3318,
+          "pollutionGrade": "medium",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 180
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 432,
+                "y": 80
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 144,
+                "y": 272
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_03",
+              "substrate": "oil_film",
+              "position": {
+                "x": 784,
+                "y": 112
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_04",
+              "substrate": "oil_film",
+              "position": {
+                "x": 560,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 168.85641425454546,
+                "y": 560
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 1015.2199999999982,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_02",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 808.8564142545455,
+                "y": 80
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 1015.2199999999982,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        "textures": [
+          "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+        ],
+        "worldProfile": "ash-strata",
+        "camera": {
+          "x": 220,
+          "y": 213,
+          "zoom": 1.5
+        },
+        "storage": {
+          "reads": 2,
+          "writes": 1,
+          "saveReads": 0,
+          "saveWrites": 0,
+          "events": [
+            {
+              "method": "getItem",
+              "key": "coh_locale"
+            },
+            {
+              "method": "getItem",
+              "key": "coh.atmosphere.v1"
+            },
+            {
+              "method": "setItem",
+              "key": "coh.atmosphere.v1"
+            }
+          ]
+        }
+      },
+      "images": {
+        "frame": "folded-slab-medium.png",
+        "crop": "folded-slab-medium-crop.png",
+        "clip": {
+          "x": 718,
+          "y": 312.5,
+          "width": 160,
+          "height": 160
+        }
+      },
+      "interaction": {
+        "held": {
+          "search": {
+            "prompt": "search",
+            "progress": 0.3467500000000019,
+            "remaining": 1,
+            "kindling": 0,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 540.7779111111109,
+              "y": 436
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 572,
+                "y": 436,
+                "collected": false
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": false,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_ash-strata_laminated-flakes_c8ddecbd",
+                "name": "search-remains:ash-strata:laminated-flakes",
+                "visible": true,
+                "alpha": 1,
+                "x": 572.6230457691493,
+                "y": 436
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 1564.4666666666674,
+            "ended": false,
+            "player": {
+              "x": 540.7779111111109,
+              "y": 436
+            },
+            "hp": 100,
+            "chaos": 15.519090040000005,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": "search",
+              "progress": 0.3467500000000019,
+              "remaining": 1
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 180
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 167.51943876923076,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1564.4666666666674,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 807.5194387692308,
+                  "y": 80
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1564.4666666666674,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+          ],
+          "worldProfile": "ash-strata",
+          "camera": {
+            "x": 220,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "interrupted": {
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 1,
+            "kindling": 0,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 540.7779111111109,
+              "y": 436
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 572,
+                "y": 436,
+                "collected": false
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": false,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_ash-strata_laminated-flakes_c8ddecbd",
+                "name": "search-remains:ash-strata:laminated-flakes",
+                "visible": true,
+                "alpha": 1,
+                "x": 572,
+                "y": 436
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 1697.6166666666682,
+            "ended": false,
+            "player": {
+              "x": 540.7779111111109,
+              "y": 436
+            },
+            "hp": 100,
+            "chaos": 15.563269210000005,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": "search",
+              "progress": null,
+              "remaining": 1
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 180
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 167.1064689230769,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1697.6166666666682,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 807.1064689230769,
+                  "y": 80
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1697.6166666666682,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+          ],
+          "worldProfile": "ash-strata",
+          "camera": {
+            "x": 220,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "completed": {
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 0,
+            "kindling": 1,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 540.7779111111109,
+              "y": 436
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 572,
+                "y": 436,
+                "collected": true
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": true,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_ash-strata_laminated-flakes_c8ddecbd",
+                "name": "search-remains:ash-strata:laminated-flakes",
+                "visible": false,
+                "alpha": 1,
+                "x": 572,
+                "y": 436
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 3947.4366666666656,
+            "ended": false,
+            "player": {
+              "x": 540.7779111111109,
+              "y": 436
+            },
+            "hp": 100,
+            "chaos": 16.309759485999933,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 1,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 0
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 180
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 168.25049712941177,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3947.4366666666656,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 808.2504971294118,
+                  "y": 80
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3947.4366666666656,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+          ],
+          "worldProfile": "ash-strata",
+          "camera": {
+            "x": 220,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "images": {
+          "frame": "folded-slab-medium-completed.png",
+          "crop": "folded-slab-medium-completed-crop.png",
+          "clip": {
+            "x": 718,
+            "y": 312.5,
+            "width": 160,
+            "height": 160
+          }
+        }
+      }
+    },
+    {
+      "id": "fibre-knot-medium",
+      "kind": "r100-master",
+      "entry": {
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 1,
+          "kindling": 0,
+          "fragmentTypeId": "frag-outdoor",
+          "seed": 20261002,
+          "player": {
+            "x": 260,
+            "y": 380
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "kind": "kindling",
+              "x": 596,
+              "y": 444,
+              "collected": false
+            }
+          ]
+        },
+        "nodes": [
+          {
+            "id": "master-search",
+            "collected": false,
+            "visibility": 0,
+            "visualClass": "PileVisual",
+            "sprite": {
+              "key": "__world_search_crystal-fibre_fractured-fibres_210822d",
+              "name": "search-remains:crystal-fibre:fractured-fibres",
+              "visible": true,
+              "alpha": 0,
+              "x": 596,
+              "y": 444
+            }
+          }
+        ],
+        "probe": {
+          "elapsedMs": 282.85999999999984,
+          "ended": false,
+          "player": {
+            "x": 260,
+            "y": 380
+          },
+          "hp": 100,
+          "chaos": 15.093852948,
+          "chaosRate": 0.3318,
+          "pollutionGrade": "medium",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 172
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 432,
+                "y": 80
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 144,
+                "y": 272
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_03",
+              "substrate": "oil_film",
+              "position": {
+                "x": 784,
+                "y": 112
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_04",
+              "substrate": "oil_film",
+              "position": {
+                "x": 560,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 391.9616034909091,
+                "y": 208
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 282.85999999999984,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_02",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 103.96160349090908,
+                "y": 560
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 282.85999999999984,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        "textures": [
+          "__world_search_crystal-fibre_fractured-fibres_210822d"
+        ],
+        "worldProfile": "crystal-fibre",
+        "camera": {
+          "x": 0,
+          "y": 167,
+          "zoom": 1.5
+        },
+        "storage": {
+          "reads": 2,
+          "writes": 1,
+          "saveReads": 0,
+          "saveWrites": 0,
+          "events": [
+            {
+              "method": "getItem",
+              "key": "coh_locale"
+            },
+            {
+              "method": "getItem",
+              "key": "coh.atmosphere.v1"
+            },
+            {
+              "method": "setItem",
+              "key": "coh.atmosphere.v1"
+            }
+          ]
+        }
+      },
+      "seat": {
+        "point": {
+          "x": 524,
+          "y": 444
+        },
+        "node": {
+          "id": "master-search",
+          "kind": "kindling",
+          "x": 596,
+          "y": 444,
+          "collected": false
+        },
+        "key": "d",
+        "score": 271.64682954159434
+      },
+      "state": {
+        "search": {
+          "prompt": "search",
+          "progress": null,
+          "remaining": 1,
+          "kindling": 0,
+          "fragmentTypeId": "frag-outdoor",
+          "seed": 20261002,
+          "player": {
+            "x": 566.1137555555564,
+            "y": 444
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "kind": "kindling",
+              "x": 596,
+              "y": 444,
+              "collected": false
+            }
+          ]
+        },
+        "nodes": [
+          {
+            "id": "master-search",
+            "collected": false,
+            "visibility": 1,
+            "visualClass": "PileVisual",
+            "sprite": {
+              "key": "__world_search_crystal-fibre_fractured-fibres_210822d",
+              "name": "search-remains:crystal-fibre:fractured-fibres",
+              "visible": true,
+              "alpha": 1,
+              "x": 596,
+              "y": 444
+            }
+          }
+        ],
+        "probe": {
+          "elapsedMs": 1031.8533333333323,
+          "ended": false,
+          "player": {
+            "x": 566.1137555555564,
+            "y": 444
+          },
+          "hp": 100,
+          "chaos": 15.342368936000003,
+          "chaosRate": 0.3318,
+          "pollutionGrade": "medium",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 172
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 432,
+                "y": 80
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 144,
+                "y": 272
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_03",
+              "substrate": "oil_film",
+              "position": {
+                "x": 784,
+                "y": 112
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_04",
+              "substrate": "oil_film",
+              "position": {
+                "x": 560,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 392.87673716363634,
+                "y": 208
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 1031.8533333333323,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_02",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 104.87673716363636,
+                "y": 560
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 1031.8533333333323,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        "textures": [
+          "__world_search_crystal-fibre_fractured-fibres_210822d"
+        ],
+        "worldProfile": "crystal-fibre",
+        "camera": {
+          "x": 246,
+          "y": 213,
+          "zoom": 1.5
+        },
+        "storage": {
+          "reads": 2,
+          "writes": 1,
+          "saveReads": 0,
+          "saveWrites": 0,
+          "events": [
+            {
+              "method": "getItem",
+              "key": "coh_locale"
+            },
+            {
+              "method": "getItem",
+              "key": "coh.atmosphere.v1"
+            },
+            {
+              "method": "setItem",
+              "key": "coh.atmosphere.v1"
+            }
+          ]
+        }
+      },
+      "images": {
+        "frame": "fibre-knot-medium.png",
+        "crop": "fibre-knot-medium-crop.png",
+        "clip": {
+          "x": 715,
+          "y": 324.5,
+          "width": 160,
+          "height": 160
+        }
+      },
+      "interaction": {
+        "held": {
+          "search": {
+            "prompt": "search",
+            "progress": 0.34667499999999934,
+            "remaining": 1,
+            "kindling": 0,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 566.1137555555564,
+              "y": 444
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 596,
+                "y": 444,
+                "collected": false
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": false,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_crystal-fibre_fractured-fibres_210822d",
+                "name": "search-remains:crystal-fibre:fractured-fibres",
+                "visible": true,
+                "alpha": 1,
+                "x": 596.626501887879,
+                "y": 444
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 1664.1833333333277,
+            "ended": false,
+            "player": {
+              "x": 566.1137555555564,
+              "y": 444
+            },
+            "hp": 100,
+            "chaos": 15.552176030000004,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": "search",
+              "progress": 0.34667499999999934,
+              "remaining": 1
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 172
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 391.21016369230773,
+                  "y": 208
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1664.1833333333277,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 103.2101636923077,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1664.1833333333277,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_crystal-fibre_fractured-fibres_210822d"
+          ],
+          "worldProfile": "crystal-fibre",
+          "camera": {
+            "x": 246,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "interrupted": {
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 1,
+            "kindling": 0,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 566.1137555555564,
+              "y": 444
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 596,
+                "y": 444,
+                "collected": false
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": false,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_crystal-fibre_fractured-fibres_210822d",
+                "name": "search-remains:crystal-fibre:fractured-fibres",
+                "visible": true,
+                "alpha": 1,
+                "x": 596,
+                "y": 444
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 1814.1333333333284,
+            "ended": false,
+            "player": {
+              "x": 566.1137555555564,
+              "y": 444
+            },
+            "hp": 100,
+            "chaos": 15.601929440000001,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": "search",
+              "progress": null,
+              "remaining": 1
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 172
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 390.745088,
+                  "y": 208
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1814.1333333333284,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 102.74508800000001,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1814.1333333333284,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_crystal-fibre_fractured-fibres_210822d"
+          ],
+          "worldProfile": "crystal-fibre",
+          "camera": {
+            "x": 246,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "completed": {
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 0,
+            "kindling": 1,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 566.1137555555564,
+              "y": 444
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 596,
+                "y": 444,
+                "collected": true
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": true,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_crystal-fibre_fractured-fibres_210822d",
+                "name": "search-remains:crystal-fibre:fractured-fibres",
+                "visible": false,
+                "alpha": 1,
+                "x": 596,
+                "y": 444
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 4047.4033333333264,
+            "ended": false,
+            "player": {
+              "x": 566.1137555555564,
+              "y": 444
+            },
+            "hp": 100,
+            "chaos": 16.342928425999926,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 1,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 0
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 172
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 392.17146465882354,
+                  "y": 208
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 4047.4033333333264,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 104.17146465882354,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 4047.4033333333264,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_crystal-fibre_fractured-fibres_210822d"
+          ],
+          "worldProfile": "crystal-fibre",
+          "camera": {
+            "x": 246,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "images": {
+          "frame": "fibre-knot-medium-completed.png",
+          "crop": "fibre-knot-medium-completed-crop.png",
+          "clip": {
+            "x": 715,
+            "y": 324.5,
+            "width": 160,
+            "height": 160
+          }
+        }
+      }
+    },
+    {
+      "id": "broken-shell-medium",
+      "kind": "r100-master",
+      "entry": {
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 1,
+          "kindling": 0,
+          "fragmentTypeId": "frag-outdoor",
+          "seed": 20261002,
+          "player": {
+            "x": 260,
+            "y": 380
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "kind": "kindling",
+              "x": 580,
+              "y": 452,
+              "collected": false
+            }
+          ]
+        },
+        "nodes": [
+          {
+            "id": "master-search",
+            "collected": false,
+            "visibility": 0,
+            "visualClass": "PileVisual",
+            "sprite": {
+              "key": "__world_search_ivory-basin_glaze-shell_cf7b25f8",
+              "name": "search-remains:ivory-basin:glaze-shell",
+              "visible": true,
+              "alpha": 0,
+              "x": 580,
+              "y": 452
+            }
+          }
+        ],
+        "probe": {
+          "elapsedMs": 249.55333333333368,
+          "ended": false,
+          "player": {
+            "x": 260,
+            "y": 380
+          },
+          "hp": 100,
+          "chaos": 15.082801796000004,
+          "chaosRate": 0.3318,
+          "pollutionGrade": "medium",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 172
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 80,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 144,
+                "y": 272
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_03",
+              "substrate": "oil_film",
+              "position": {
+                "x": 784,
+                "y": 112
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_04",
+              "substrate": "oil_film",
+              "position": {
+                "x": 560,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 167.9209088,
+                "y": 560
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 249.55333333333368,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_02",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 807.9209088,
+                "y": 80
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 249.55333333333368,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        "textures": [
+          "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+        ],
+        "worldProfile": "ivory-basin",
+        "camera": {
+          "x": 0,
+          "y": 167,
+          "zoom": 1.5
+        },
+        "storage": {
+          "reads": 1,
+          "writes": 0,
+          "saveReads": 0,
+          "saveWrites": 0,
+          "events": [
+            {
+              "method": "getItem",
+              "key": "coh_locale"
+            }
+          ]
+        }
+      },
+      "seat": {
+        "point": {
+          "x": 508,
+          "y": 452
+        },
+        "node": {
+          "id": "master-search",
+          "kind": "kindling",
+          "x": 580,
+          "y": 452,
+          "collected": false
+        },
+        "key": "d",
+        "score": 258.2401982651036
+      },
+      "state": {
+        "search": {
+          "prompt": "search",
+          "progress": null,
+          "remaining": 1,
+          "kindling": 0,
+          "fragmentTypeId": "frag-outdoor",
+          "seed": 20261002,
+          "player": {
+            "x": 550.113666666667,
+            "y": 452
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "kind": "kindling",
+              "x": 580,
+              "y": 452,
+              "collected": false
+            }
+          ]
+        },
+        "nodes": [
+          {
+            "id": "master-search",
+            "collected": false,
+            "visibility": 1,
+            "visualClass": "PileVisual",
+            "sprite": {
+              "key": "__world_search_ivory-basin_glaze-shell_cf7b25f8",
+              "name": "search-remains:ivory-basin:glaze-shell",
+              "visible": true,
+              "alpha": 1,
+              "x": 580,
+              "y": 452
+            }
+          }
+        ],
+        "probe": {
+          "elapsedMs": 1015.1666666666675,
+          "ended": false,
+          "player": {
+            "x": 550.113666666667,
+            "y": 452
+          },
+          "hp": 100,
+          "chaos": 15.336832300000006,
+          "chaosRate": 0.3318,
+          "pollutionGrade": "medium",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 1
+          },
+          "enemies": [
+            {
+              "id": "master-listener",
+              "state": "patrol",
+              "position": {
+                "x": 716,
+                "y": 172
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 80,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 144,
+                "y": 272
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_03",
+              "substrate": "oil_film",
+              "position": {
+                "x": 784,
+                "y": 112
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_04",
+              "substrate": "oil_film",
+              "position": {
+                "x": 560,
+                "y": 560
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 168.8563490909091,
+                "y": 560
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 1015.1666666666675,
+                "hazardActive": false
+              }
+            },
+            {
+              "id": "ENM_DING_02",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 808.8563490909091,
+                "y": 80
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "rest",
+                "elapsedMs": 1015.1666666666675,
+                "hazardActive": false
+              }
+            }
+          ]
+        },
+        "textures": [
+          "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+        ],
+        "worldProfile": "ivory-basin",
+        "camera": {
+          "x": 230,
+          "y": 213,
+          "zoom": 1.5
+        },
+        "storage": {
+          "reads": 2,
+          "writes": 1,
+          "saveReads": 0,
+          "saveWrites": 0,
+          "events": [
+            {
+              "method": "getItem",
+              "key": "coh_locale"
+            },
+            {
+              "method": "getItem",
+              "key": "coh.atmosphere.v1"
+            },
+            {
+              "method": "setItem",
+              "key": "coh.atmosphere.v1"
+            }
+          ]
+        }
+      },
+      "images": {
+        "frame": "broken-shell-medium.png",
+        "crop": "broken-shell-medium-crop.png",
+        "clip": {
+          "x": 715,
+          "y": 336.5,
+          "width": 160,
+          "height": 160
+        }
+      },
+      "interaction": {
+        "held": {
+          "search": {
+            "prompt": "search",
+            "progress": 0.3470249999999994,
+            "remaining": 1,
+            "kindling": 0,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 550.113666666667,
+              "y": 452
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 580,
+                "y": 452,
+                "collected": false
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": false,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_ivory-basin_glaze-shell_cf7b25f8",
+                "name": "search-remains:ivory-basin:glaze-shell",
+                "visible": true,
+                "alpha": 1,
+                "x": 580.6101837621082,
+                "y": 452
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 1914.2033333333334,
+            "ended": false,
+            "player": {
+              "x": 550.113666666667,
+              "y": 452
+            },
+            "hp": 100,
+            "chaos": 15.635132666000002,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": "search",
+              "progress": 0.3470249999999994,
+              "remaining": 1
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 172
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 80,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 166.43471704615385,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1914.2033333333334,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 806.4347170461539,
+                  "y": 80
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 1914.2033333333334,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+          ],
+          "worldProfile": "ivory-basin",
+          "camera": {
+            "x": 230,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "interrupted": {
+          "search": {
+            "prompt": "search",
+            "progress": null,
+            "remaining": 1,
+            "kindling": 0,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 550.113666666667,
+              "y": 452
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 580,
+                "y": 452,
+                "collected": false
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": false,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_ivory-basin_glaze-shell_cf7b25f8",
+                "name": "search-remains:ivory-basin:glaze-shell",
+                "visible": true,
+                "alpha": 1,
+                "x": 580,
+                "y": 452
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 2080.853333333334,
+            "ended": false,
+            "player": {
+              "x": 550.113666666667,
+              "y": 452
+            },
+            "hp": 100,
+            "chaos": 15.690427136,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": "search",
+              "progress": null,
+              "remaining": 1
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 172
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 80,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 165.91784566153845,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 2080.853333333334,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 805.9178456615384,
+                  "y": 80
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "gather",
+                  "elapsedMs": 2080.853333333334,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+          ],
+          "worldProfile": "ivory-basin",
+          "camera": {
+            "x": 230,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "completed": {
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 0,
+            "kindling": 1,
+            "fragmentTypeId": "frag-outdoor",
+            "seed": 20261002,
+            "player": {
+              "x": 550.113666666667,
+              "y": 452
+            },
+            "nodes": [
+              {
+                "id": "master-search",
+                "kind": "kindling",
+                "x": 580,
+                "y": 452,
+                "collected": true
+              }
+            ]
+          },
+          "nodes": [
+            {
+              "id": "master-search",
+              "collected": true,
+              "visibility": 1,
+              "visualClass": "PileVisual",
+              "sprite": {
+                "key": "__world_search_ivory-basin_glaze-shell_cf7b25f8",
+                "name": "search-remains:ivory-basin:glaze-shell",
+                "visible": false,
+                "alpha": 1,
+                "x": 580,
+                "y": 452
+              }
+            }
+          ],
+          "probe": {
+            "elapsedMs": 4330.743333333331,
+            "ended": false,
+            "player": {
+              "x": 550.113666666667,
+              "y": 452
+            },
+            "hp": 100,
+            "chaos": 16.43694063799991,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 1,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 0
+            },
+            "enemies": [
+              {
+                "id": "master-listener",
+                "state": "patrol",
+                "position": {
+                  "x": 716,
+                  "y": 172
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 80,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 272
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 784,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 560,
+                  "y": 560
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 167.9474593882353,
+                  "y": 560
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 4330.743333333331,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 807.9474593882353,
+                  "y": 80
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 4330.743333333331,
+                  "hazardActive": false
+                }
+              }
+            ]
+          },
+          "textures": [
+            "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+          ],
+          "worldProfile": "ivory-basin",
+          "camera": {
+            "x": 230,
+            "y": 213,
+            "zoom": 1.5
+          },
+          "storage": {
+            "reads": 2,
+            "writes": 1,
+            "saveReads": 0,
+            "saveWrites": 0,
+            "events": [
+              {
+                "method": "getItem",
+                "key": "coh_locale"
+              },
+              {
+                "method": "getItem",
+                "key": "coh.atmosphere.v1"
+              },
+              {
+                "method": "setItem",
+                "key": "coh.atmosphere.v1"
+              }
+            ]
+          }
+        },
+        "images": {
+          "frame": "broken-shell-medium-completed.png",
+          "crop": "broken-shell-medium-completed-crop.png",
+          "clip": {
+            "x": 715,
+            "y": 336.5,
+            "width": 160,
+            "height": 160
+          }
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "cleanup": [
+    {
+      "i": 0,
+      "family": "folded-slab",
+      "previousKeys": [
+        "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+      ],
+      "currentKeys": [
+        "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+      ],
+      "oldSpritesDestroyed": true
+    },
+    {
+      "i": 1,
+      "family": "fibre-knot",
+      "previousKeys": [
+        "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+      ],
+      "currentKeys": [
+        "__world_search_crystal-fibre_fractured-fibres_210822d"
+      ],
+      "oldSpritesDestroyed": true
+    },
+    {
+      "i": 2,
+      "family": "broken-shell",
+      "previousKeys": [
+        "__world_search_crystal-fibre_fractured-fibres_210822d"
+      ],
+      "currentKeys": [
+        "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+      ],
+      "oldSpritesDestroyed": true
+    },
+    {
+      "i": 3,
+      "family": "folded-slab",
+      "previousKeys": [
+        "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+      ],
+      "currentKeys": [
+        "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+      ],
+      "oldSpritesDestroyed": true
+    },
+    {
+      "i": 4,
+      "family": "fibre-knot",
+      "previousKeys": [
+        "__world_search_ash-strata_laminated-flakes_c8ddecbd"
+      ],
+      "currentKeys": [
+        "__world_search_crystal-fibre_fractured-fibres_210822d"
+      ],
+      "oldSpritesDestroyed": true
+    },
+    {
+      "i": 5,
+      "family": "broken-shell",
+      "previousKeys": [
+        "__world_search_crystal-fibre_fractured-fibres_210822d"
+      ],
+      "currentKeys": [
+        "__world_search_ivory-basin_glaze-shell_cf7b25f8"
+      ],
+      "oldSpritesDestroyed": true
+    }
+  ],
+  "endSources": {
+    "src/scenes/rift-scene.ts": "4aea9ad6f1a98fbf551f799046d9af006bd9726c1f7067fa0319ee9d8b7585ee",
+    "src/systems/loot-search-presentation.ts": "19edb90df120dfe5c7b73caff3604ec947bb0255494c6bba7d58ac31ae32e561",
+    "src/systems/world-search-presentation.ts": "3f5fa7badfed2758292e56eee83b42fc33c05fde60099e1c73ba73331ca21140",
+    "src/generation/world-study/search-remains.ts": "0b872bd480dcce014179b46cd0c1175e068ef036f759fd69ac69e6d97879b8da",
+    "src/dev/rift-r100-masters/main.ts": "cceeea54fc8cdf06b24bfc53eb9868b198c13ae481b7f222026156e7bbeb957d",
+    "data/rift-search-remains.csv": "b91ebe3ec23bb384c80926b00510a331fe8357cf9d6a699066bc52459b03f5ae",
+    "src/generated/rift-search-remains.ts": "fdf46d4eda7d00262debecf1853905f7b50c5a21a1ae55ad964289361a5efb8c"
+  },
+  "sourceChangedDuringCapture": false
+}

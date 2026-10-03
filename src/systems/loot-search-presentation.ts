@@ -117,10 +117,14 @@ export function ensureLootSearchTextures(scene: Phaser.Scene, fragmentTypeId: st
     const key = pileTextureKey(fragmentTypeId, v);
     if (!scene.textures.exists(key)) bakePile(scene, key, fragmentTypeId, v, slots);
   }
+  ensureRevealTextures(scene);
+  return slots;
+}
+
+function ensureRevealTextures(scene: Phaser.Scene): void {
   if (!scene.textures.exists(TEX_CRYSTAL)) bakeCrystal(scene);
   if (!scene.textures.exists(TEX_MOTE)) bakeMote(scene);
   if (!scene.textures.exists(TEX_CHIP)) bakeChip(scene);
-  return slots;
 }
 
 export function createSearchObjectVisual(
@@ -133,6 +137,21 @@ export function createSearchObjectVisual(
   getPlayerPos: () => Readonly<Vector2>,
 ): SearchObjectVisual {
   return new PileVisual(scene, x, y, seed, fragmentTypeId, slots, getPlayerPos);
+}
+
+/** Native world material can replace the shell without forking search/reveal behavior. */
+export interface SearchObjectAppearance {
+  readonly textureKey: string;
+  readonly name: string;
+  readonly release: () => void;
+}
+
+export function createTexturedSearchObjectVisual(
+  scene: Phaser.Scene, position: Readonly<Vector2>, seed: number,
+  slots: PileSlots, getPlayerPos: () => Readonly<Vector2>, appearance: SearchObjectAppearance,
+): SearchObjectVisual {
+  ensureRevealTextures(scene);
+  return new PileVisual(scene, position.x, position.y, seed, '', slots, getPlayerPos, appearance);
 }
 
 function namedHex(name: string): string {
@@ -183,6 +202,7 @@ class PileVisual implements SearchObjectVisual {
     fragmentTypeId: string,
     slots: PileSlots,
     getPlayerPos: () => Readonly<Vector2>,
+    private readonly appearance?: SearchObjectAppearance,
   ) {
     this.scene = scene;
     this.x = x;
@@ -195,7 +215,8 @@ class PileVisual implements SearchObjectVisual {
     this.hz = 8 + ((seed >>> 16) % 5);
     this.phase = ((seed >>> 4) % 1000) / 1000 * Math.PI * 2;
 
-    this.sprite = scene.add.image(x, y, pileTextureKey(fragmentTypeId, variant));
+    this.sprite = scene.add.image(x, y, appearance?.textureKey ?? pileTextureKey(fragmentTypeId, variant));
+    if (appearance) this.sprite.setName(appearance.name);
     this.sprite.setDepth(NODE_DEPTH);
     this.sprite.setOrigin(0.5, 1);
 
@@ -286,12 +307,17 @@ class PileVisual implements SearchObjectVisual {
   }
 
   destroy(): void {
+    if (this.destroyed) return;
     this.destroyed = true;
+    this.scene.tweens.killTweensOf(this.sprite);
     this.sprite.destroy();
-    for (const img of this.chips) img.destroy();
-    for (const img of this.reveal) img.destroy();
+    for (const img of [...this.chips, ...this.reveal]) {
+      this.scene.tweens.killTweensOf(img);
+      img.destroy();
+    }
     this.chips.length = 0;
     this.reveal.length = 0;
+    this.appearance?.release();
   }
 
   private spawnDebris(): void {

@@ -1,5 +1,5 @@
 import { createWorldPlaySurface, type WorldPlaySurface } from '@/systems/world-space-surface';
-import { createSearchObjectVisual, ensureLootSearchTextures } from '@/systems/loot-search-presentation';
+import { createWorldSearchVisual } from '@/systems/world-search-presentation';
 import { createContaminantSourceRegions } from '@/generation/contaminant-source-regions';
 import { createContaminantDropPlan } from '@/systems/contaminant-drop-plan';
 import { projectItemForPlayer } from '@/systems/contaminant-catalog';
@@ -528,13 +528,11 @@ export class RiftScene extends Phaser.Scene {
       overlayRoot: getDomUiRoot(),
       getVisibilityAt: this.visibilityAt,
       fragmentTypeId: generated.fragmentTypeId,
-      // The source identity remains the world profile; only the established wreckage
-      // model uses its existing outdoor material, just as in the accepted play scene.
+      // Visual source is the restored world profile, not the gameplay loot-table fragment.
       createVisual: this.devFixture?.createSearchObjectVisual ?? (productionWorld
-        ? (scene, position, visualSeed, getPlayerPos) => {
-          const slots = ensureLootSearchTextures(scene, 'frag-outdoor');
-          return createSearchObjectVisual(scene, position.x, position.y, visualSeed, 'frag-outdoor', slots, getPlayerPos);
-        } : undefined),
+        ? (scene, position, visualSeed, getPlayerPos) => createWorldSearchVisual(
+          scene, position, visualSeed, getPlayerPos, productionWorld.sample.profile, productionWorld.sample.seed,
+        ) : undefined),
       extraction: {
         position: layout.extractionPoint.position,
         radius: layout.extractionPoint.triggerRadius,

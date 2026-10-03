@@ -5109,5 +5109,71 @@
       "COH-F049",
       "COH-F007"
     ]
+  },
+  {
+    "id": "COH-E134",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-03",
+    "revision": "working-tree-after-b5dd6cdd-2026-10-03",
+    "scope": "薪柴翻找物按真实地图来源重做：五来源/四形体，正式生成恢复、DEV world-play及九组母版共用工厂。非实现作者逐张查看当批14张正常整帧（九母版＋五正式来源）与三种中档翻找前后6帧，主形和材料延续所在世界，未见旧泛用棕堆；三组按E/取消/完成、薪柴0→1与目标消失，六次重建销毁及纹理释放有运行记录。45样本/CSV同步、真实工厂生命周期、typecheck/build及原库存恢复检查见QA。",
+    "limitations": "受控合法起点后键盘接近，非自然完整搜撤、全种子或任意距离发现率；正式来源图不证明原地形整体美术达R100标准。before尝试含新代码且失败，旧依据仅用户截图。14图与行为不同批次、版本各见report；核心7源稳定不代表完整视觉依赖冻结，并行四个地形材料文件采集后变更，事后指纹不算起点基线，不签新地形版本。未改奖励/旧局规则，不代用户验收；I01/I02 HUMAN-CHANGES-REQUESTED、0/108世界、0/324等级保持。",
+    "sources": [
+      {
+        "path": "docs/art/rift-r100-i02-review.md",
+        "role": "art",
+        "note": "#loot-world-origin-feedback-2026-10-03；原话与独立限定观察"
+      },
+      {
+        "path": "docs/qa/world-search-remains-2026-10-03.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-search-remains/user-before.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/world-search-remains/after/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-search-remains/after/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-search-remains/behavior/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/world-search-remains/after/folded-slab-medium.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/world-search-remains/after/fibre-knot-medium.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/world-search-remains/after/broken-shell-medium.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/world-search-remains/after/formal-cobalt-gold.png",
+        "role": "art"
+      },
+      {
+        "path": "tools/world-study/check-search-remains.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-world-search-remains.mjs",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F019",
+      "COH-F013",
+      "COH-F049",
+      "COH-F052"
+    ]
   }
 ]
