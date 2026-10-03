@@ -42,7 +42,10 @@
     "iteration": "R100-I02",
     "batch": "I01 correction complete; I02 implemented and independently image-reviewed",
     "nextAction": "以03d4e4c的九格双种子原生母版继续验收；补实际声景审听与受控GC保留量验证、用户审美检查点。不要重开已修复的地表/吞光混淆，不假结I02，不计新世界。I03正式接入前仍须解决同步生成长尾。",
-    "lastCompleted": "I01绘制方法及普通景观/侵蚀语义纠偏完成；I02三材料九格、双seed128帧独立图像审核、原生65秒往返与60秒帧时、十次重建计数、真实受击修复及工程检查完成；0/108、0/324。"
+    "lastCompleted": "I01绘制方法及普通景观/侵蚀语义纠偏完成；I02三材料九格、双seed128帧独立图像审核、原生65秒往返与60秒帧时、十次重建计数、真实受击修复及工程检查完成；0/108、0/324。",
+    "headline": "I01 纠偏完成，I02 三构造九格进入审核",
+    "updatedDate": "2026-10-03",
+    "evidenceRevision": "c560dc9"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -142,7 +145,8 @@
           "revision": "302d529",
           "evidenceIds": [
             "R100-E-I01"
-          ]
+          ],
+          "label": "旧局生成执行器冻结"
         },
         {
           "id": "csv-dev-contract",
@@ -150,7 +154,8 @@
           "revision": "302d529",
           "evidenceIds": [
             "R100-E-I01"
-          ]
+          ],
+          "label": "CSV世界与等级合同"
         },
         {
           "id": "measured-budget-and-sampling",
@@ -158,7 +163,8 @@
           "revision": "302d529",
           "evidenceIds": [
             "R100-E-I01"
-          ]
+          ],
+          "label": "测量与预算方法"
         },
         {
           "id": "i02-production-brief",
@@ -166,7 +172,8 @@
           "revision": "302d529",
           "evidenceIds": [
             "R100-E-I01"
-          ]
+          ],
+          "label": "初版母版制作任务包"
         },
         {
           "id": "independent-contract-review",
@@ -174,7 +181,8 @@
           "revision": "302d529",
           "evidenceIds": [
             "R100-E-I01"
-          ]
+          ],
+          "label": "合同独立复核"
         }
       ],
       "issueIds": [
@@ -243,7 +251,8 @@
           "revision": "03d4e4c",
           "evidenceIds": [
             "R100-E-I02-REBUILD"
-          ]
+          ],
+          "label": "普通景观与吞光侵蚀分离"
         },
         {
           "id": "eighteen-native-material-cases",
@@ -251,7 +260,8 @@
           "revision": "03d4e4c",
           "evidenceIds": [
             "R100-E-I02-REBUILD"
-          ]
+          ],
+          "label": "三构造 × 三级 × 双种子的18组原生实景"
         },
         {
           "id": "independent-image-review",
@@ -259,7 +269,8 @@
           "revision": "03d4e4c",
           "evidenceIds": [
             "R100-E-I02-REBUILD"
-          ]
+          ],
+          "label": "128帧独立图像复审"
         },
         {
           "id": "native-60s-sample-cpu-frame-budget",
@@ -267,7 +278,8 @@
           "revision": "03d4e4c",
           "evidenceIds": [
             "R100-E-I02-REBUILD"
-          ]
+          ],
+          "label": "持续移动60秒帧时与CPU样本"
         },
         {
           "id": "ten-rebuild-registry-counts",
@@ -275,7 +287,8 @@
           "revision": "03d4e4c",
           "evidenceIds": [
             "R100-E-I02-REBUILD"
-          ]
+          ],
+          "label": "十次重建资源计数"
         },
         {
           "id": "native-hit-recovery-death",
@@ -283,19 +296,23 @@
           "revision": "03d4e4c",
           "evidenceIds": [
             "R100-E-I02-REBUILD"
-          ]
+          ],
+          "label": "受击、恢复与死亡显示修复"
         },
         {
           "id": "actual-material-audio-listening",
-          "status": "pending"
+          "status": "pending",
+          "label": "材料声景实际审听"
         },
         {
           "id": "controlled-retained-memory",
-          "status": "pending"
+          "status": "pending",
+          "label": "受控GC后保留内存验证"
         },
         {
           "id": "human-art-review",
-          "status": "pending"
+          "status": "pending",
+          "label": "用户审美验收"
         }
       ],
       "issueIds": [
@@ -891,6 +908,11 @@
       "date": "2026-10-03",
       "kind": "rebuild-review",
       "note": "03d4e4c重做地床/三材料及吞光语义；I01纠偏重结。I02实现与独立图像审核完成，真实65s输入/60s采样和十次重建有界；听感/受控GC及人审仍待验，状态in-review，0世界0格。"
+    },
+    {
+      "date": "2026-10-03",
+      "kind": "board-refresh",
+      "note": "按用户要求更新看板：置顶当前I02，展示已通过/待验项、I01纠偏与实际提交，展开问题处理状态；不更改资格结论。"
     }
   ],
   "qualityPlan": {
