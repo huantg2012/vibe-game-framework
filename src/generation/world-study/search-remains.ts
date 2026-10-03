@@ -63,7 +63,7 @@ export function createSearchRemainsPixels(profile: WorldProfile, seed: number, p
     // The granularity follows the fracture, not a uniform salt-and-pepper mask.
     const u = direction ? y : x, v = direction ? x : y;
     const band = hash(Math.floor(u / 5), Math.floor(v / 2), seed + piece * 103) % 5;
-    const tone = [.91, .97, 1, 1.03, 1.07][band]!;
+    const tone = [.95, .98, 1, 1.02, 1.04][band]!;
     if (painting) {
       const patch = painting.regions?.[face === 'top' ? 'loose' : 'cleaved'];
       const left = patch ? Math.floor(patch.x * painting.width) : 0;
@@ -73,13 +73,27 @@ export function createSearchRemainsPixels(profile: WorldProfile, seed: number, p
       const sx = left + mirror(u * 1.6 + (seed % 97) + piece * 17, w);
       const sy = top + mirror(v * 1.6 + ((seed >>> 8) % 71) + piece * 13, h);
       const offset = (sy * painting.width + sx) * 4;
-      const gain = face === 'top' ? 1.08 : face === 'cut' ? .83 : face === 'side' ? .49 : face === 'contact' ? .29 : .62;
-      return [0, 1, 2].map(c => Math.min(255, painting.pixels[offset + c]! * gain * tone));
+      // A broken face is a readable plane, not another patch of loose floor.
+      // Keep the source pigment, but let its finer grain recede behind the face.
+      // Filtering stays strictly inside the selected source-material patch.
+      const offsets: number[] = [];
+      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+        const px = Math.max(left, Math.min(left + w - 1, sx + dx));
+        const py = Math.max(top, Math.min(top + h - 1, sy + dy));
+        offsets.push((py * painting.width + px) * 4);
+      }
+      const grain = face === 'cut' ? .22 : face === 'top' ? .38 : .45;
+      const gain = face === 'top' ? 1.39 : face === 'cut' ? 1.43 : face === 'side' ? .40 : face === 'contact' ? .23 : .56;
+      return [0, 1, 2].map(c => {
+        const plane = offsets.reduce((sum, i) => sum + painting.pixels[i + c]!, 0) / offsets.length;
+        const pigment = painting.pixels[offset + c]! * grain + plane * (1 - grain);
+        return Math.min(255, pigment * gain * tone);
+      });
     }
-    const a = face === 'top' ? mid : dark;
-    const b = face === 'top' ? light : face === 'cut' ? fresh : mid;
-    const t = face === 'top' ? .66 : face === 'cut' ? .51 : face === 'side' ? .25 : .13;
-    return [0, 1, 2].map(c => (a[c]! * (1 - t) + b[c]! * t) * tone * (face === 'contact' ? .56 : 1));
+    const a = face === 'top' ? light : dark;
+    const b = face === 'top' || face === 'cut' ? fresh : mid;
+    const t = face === 'top' ? .52 : face === 'cut' ? .92 : face === 'side' ? .1 : .13;
+    return [0, 1, 2].map(c => (a[c]! * (1 - t) + b[c]! * t) * tone * (face === 'contact' ? .46 : 1));
   };
 
   const fill = (points: readonly Point[], face: Face, piece: number, direction = 0): void => {

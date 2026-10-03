@@ -5227,5 +5227,105 @@
       "COH-F049",
       "COH-F007"
     ]
+  },
+  {
+    "id": "COH-E136",
+    "kind": "human",
+    "result": "partial",
+    "date": "2026-10-04",
+    "revision": "04cde7e9",
+    "scope": "用户明确评价翻找物“差异性和风格一致性都完美”，肯定当前来源和形体；同时指出唯一问题是不够显眼，建议更清晰边界/地表材质区别和适度动效。",
+    "limitations": "认可限于当前翻找物来源差异与风格，不关闭新增的显著性工作，不代签I01/I02、地形、完整搜撤或世界资格；0/108与0/324保持。",
+    "sources": [
+      {
+        "path": "docs/art/rift-r100-i02-review.md",
+        "role": "art",
+        "note": "#loot-salience-feedback-2026-10-04；用户原话与有限认可范围"
+      }
+    ],
+    "features": [
+      "COH-F019",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E137",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-04",
+    "revision": "working-tree-after-04cde7e9-2026-10-04",
+    "scope": "已获人认可的翻找物保留来源与透明形状，仅增强材料明暗和局部反光/落屑。非作者逐张查看最终八同点前后16张正常整帧，顶面/断面更易与地面分开，无统一白堆或外部光圈；另看三种中档反光整帧与三个原生局部。实际三段约10.5s录制与554条50ms采样支持主体位置/缩放/透明度/颜色静止、局部变化、暂停冻结；E取消/完成、FOV隐藏及六次重建见QA。45样本、30形体黄金alpha、1280旧alpha对比、typecheck/build等为工程证据。",
+    "limitations": "first-pass被否决，不当最终产物。独立记录者未直接观看连续webm，只看关键帧并核对时序，未签动画节奏观感。八站位使用合法起点、真实键盘后按基线归位，最大约34px，不冒充自然完整搜撤；三中档动效不等于所有等级/种子/发现距离。最终after与behavior分别固定源、无采集中变化；不改奖励/存档，不外推用户来源风格认可到显著性或整体I01/I02。仍HUMAN-CHANGES-REQUESTED、0/108世界、0/324等级。",
+    "sources": [
+      {
+        "path": "docs/art/rift-r100-i02-review.md",
+        "role": "art",
+        "note": "#loot-salience-feedback-2026-10-04；认可范围与限定独立观察"
+      },
+      {
+        "path": "docs/qa/world-search-remains-2026-10-03.md",
+        "role": "doc",
+        "note": "用户认可后的可发现性精修"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/before/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/after/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/after/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/behavior/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/behavior/index.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/after/fibre-knot-medium.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/after/formal-cobalt-gold.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/behavior/broken-shell-medium-reflection.png",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/behavior/folded-slab-medium-motion.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/behavior/fibre-knot-medium-motion.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/search-remains-readability/behavior/broken-shell-medium-motion.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/capture-search-remains-readability.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-search-remains.ts",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F019",
+      "COH-F013",
+      "COH-F049",
+      "COH-F052"
+    ]
   }
 ]

@@ -6,11 +6,23 @@ import { SEARCH_REMAINS } from '../../src/generated/rift-search-remains';
 
 const digest = (data: Uint8Array | Uint8ClampedArray): string => createHash('sha256').update(data).digest('hex');
 const silhouette = (pixels: Uint8ClampedArray): Uint8Array => Uint8Array.from({ length: pixels.length / 4 }, (_, i) => pixels[i * 4 + 3]!);
+// Captured from accepted 7eaa783d pixels, unchanged at 04cde7e9. These six
+// seeds cover every existing mirror/vertical-offset shape. Material readability
+// revisions may change RGB, never expand or replace these approved silhouettes.
+const acceptedAlpha: Readonly<Record<string, string>> = {
+  'laminated-flakes': 'ffa8d5194a029da31aa6123da9dc2fe22e72be788c5140646bbda59188069774',
+  'fractured-fibres': '818574fd6d2797c53653714ed2f678570111795e6dc53e3bee48dce2391fa7f6',
+  'glaze-shell': '6694a7fdbc48546be573cc8dcc8a7caafcbf6f78ce86a7be5866999c922d0018',
+  'mineral-splinters': '4e27df9161ef5bfab3135ea15893f882b0b2eec0e1f72d78c7475b3ae9591287',
+};
 const sourceBefore = JSON.stringify(WORLD_PROFILES);
 const all = [];
 for (const profile of WORLD_PROFILES) {
   const definition = SEARCH_REMAINS.find(row => row.worldId === profile.id);
   assert.ok(definition, `Missing authored source identity for ${profile.id}`);
+  const alphaFingerprint = createHash('sha256');
+  for (const seed of [0, 1, 3, 4, 6, 8]) alphaFingerprint.update(silhouette(createSearchRemainsPixels(profile, seed).pixels));
+  assert.equal(alphaFingerprint.digest('hex'), acceptedAlpha[definition.grammar], `${profile.id}: approved alpha silhouette changed`);
   const variants = new Set<string>();
   for (const seed of [0, 1, 2, 7, 932, 10007, 70421, 20261003, 0xffffffff]) {
     const image = createSearchRemainsPixels(profile, seed);
@@ -74,4 +86,4 @@ assert.throws(() => createSearchRemainsPixels(WORLD_PROFILES[0]!, 7, { ...materi
 assert.throws(() => createSearchRemainsPixels(WORLD_PROFILES[0]!, 7, { ...material, regions: { ...material.regions!, loose: { x: .9, y: 0, width: .5, height: .5 } } }), /source patch/);
 const profileWithUnrelatedLoot = { ...WORLD_PROFILES[0]!, lootKind: 'contaminant', rarity: 'rare', tier: 'deep', baseValue: 900 };
 assert.deepEqual(createSearchRemainsPixels(profileWithUnrelatedLoot, 7).pixels, createSearchRemainsPixels(WORLD_PROFILES[0]!, 7).pixels, 'Source appearance must not inspect unrelated hidden loot fields');
-console.log(JSON.stringify({ status: 'pass', samples: all.length, distinctGrammars: representativeByGrammar.size, limits: 'CPU pixels, deterministic provenance and structure only; native lit-world readability needs visual review.', samplesDetail: all }, null, 2));
+console.log(JSON.stringify({ status: 'pass', samples: all.length, acceptedSilhouetteChecks: WORLD_PROFILES.length * 6, silhouetteBaseline: '7eaa783d / 04cde7e9', distinctGrammars: representativeByGrammar.size, limits: 'CPU pixels, deterministic provenance and structure only; native lit-world readability needs visual review.', samplesDetail: all }, null, 2));

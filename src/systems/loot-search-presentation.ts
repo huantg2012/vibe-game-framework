@@ -144,6 +144,13 @@ export interface SearchObjectAppearance {
   readonly textureKey: string;
   readonly name: string;
   readonly release: () => void;
+  readonly ambient?: SearchObjectAmbient;
+}
+
+export interface SearchObjectAmbient {
+  update(deltaMs: number, visibility: number, rummaging: boolean, bodyX: number): void;
+  hide(): void;
+  destroy(): void;
 }
 
 export function createTexturedSearchObjectVisual(
@@ -239,8 +246,12 @@ class PileVisual implements SearchObjectVisual {
   }
 
   setVisibility(vis: number): void {
-    this.vis = vis;
-    if (this.sprite.visible) this.sprite.setAlpha(vis);
+    this.vis = Math.max(0, Math.min(1, vis));
+    if (this.sprite.visible) this.sprite.setAlpha(this.vis);
+    if (this.vis <= .02) {
+      this.appearance?.ambient?.hide();
+      for (const chip of this.chips) { this.scene.tweens.killTweensOf(chip); chip.setVisible(false); }
+    }
   }
 
   setRummaging(on: boolean): void {
@@ -249,12 +260,14 @@ class PileVisual implements SearchObjectVisual {
       this.rummageClock = 0;
     }
     this.rummaging = on;
+    if (on) this.appearance?.ambient?.hide();
   }
 
   update(deltaMs: number): void {
     if (this.destroyed || !this.sprite.visible) return;
     const vis = this.vis;
     this.sprite.setAlpha(vis);
+    this.appearance?.ambient?.update(deltaMs, vis, this.rummaging, this.sprite.x);
     if (this.rummaging) {
       this.rummageClock += deltaMs;
       const t = this.rummageClock * 0.001;
@@ -264,7 +277,7 @@ class PileVisual implements SearchObjectVisual {
       this.sprite.setX(this.x + wobble);
     }
     this.debrisAcc += deltaMs;
-    const interval = this.rummaging ? this.rummageMs : this.idleMs;
+    const interval = this.rummaging ? this.rummageMs : this.appearance?.ambient ? Infinity : this.idleMs;
     if (this.debrisAcc >= interval) {
       this.debrisAcc = 0;
       this.spawnDebris();
@@ -277,6 +290,8 @@ class PileVisual implements SearchObjectVisual {
     playerPos: Readonly<Vector2>;
   }): void {
     this.sprite.setVisible(false);
+    this.appearance?.ambient?.hide();
+    for (const chip of this.chips) { this.scene.tweens.killTweensOf(chip); chip.setVisible(false); }
     this.rummaging = false;
     const bits = this.reveal;
     for (let i = 0; i < 4; i++) {
@@ -317,6 +332,7 @@ class PileVisual implements SearchObjectVisual {
     }
     this.chips.length = 0;
     this.reveal.length = 0;
+    this.appearance?.ambient?.destroy();
     this.appearance?.release();
   }
 
