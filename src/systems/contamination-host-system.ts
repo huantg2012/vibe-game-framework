@@ -242,11 +242,11 @@ export function validateHostRuntimeSnapshot(value: unknown, draw: SortieDraw): v
   const forms = draw.forms.filter(form => form.portfolio !== 'jia');
   if (forms.length !== value.hosts.length) return false;
   const ids = new Set<string>();
-  let paintSlot = 0;
+  let paintSlot = 0, volumeSlot = 0;
   for (let index = 0; index < forms.length; index++) {
     const form = forms[index]!, row = value.hosts[index];
     if (!runtimeRecord(row) || !runtimeRecord(row.state) || row.kind !== form.portfolio || typeof row.id !== 'string' || ids.has(row.id)) return false;
-    const expected = form.portfolio === 'bing' ? `ENM_BING_${String(++paintSlot).padStart(2, '0')}` : `ENM_${form.portfolio.toUpperCase()}_01`;
+    const expected = form.portfolio === 'bing' ? `ENM_BING_${String(++paintSlot).padStart(2, '0')}` : form.portfolio === 'ding' ? `ENM_DING_${String(++volumeSlot).padStart(2, '0')}` : `ENM_${form.portfolio.toUpperCase()}_01`;
     if (row.id !== expected) return false; ids.add(row.id);
     const state = row.state, keys = HOST_RUNTIME_KEYS[row.kind as Host['kind']];
     if (!keys || Object.keys(state).length !== keys.length || !keys.every(key => key in state)
@@ -373,14 +373,19 @@ export class ContaminationHostSystem {
     this.lastDraw = drawn;
     for (const w of drawn.warnings) console.warn(`[contamination-hosts] ${w}`);
 
-    let bingSlot = 0;
+    let bingSlot = 0, dingSlot = 0;
+    const volumeCount = drawn.forms.filter(form => form.portfolio === 'ding').length;
     for (const form of drawn.forms) {
       if (form.portfolio === 'jia') continue;
       if (form.portfolio === 'yi') this.spawnYi(scene, form, this.wallSeat(form, pins));
       else if (form.portfolio === 'bing') {
         this.spawnBing(scene, form, pins.paintFloors[bingSlot], bingSlot, false);
         bingSlot++;
-      } else if (form.portfolio === 'ding') this.spawnDing(scene, form, this.volumeSeat(form, pins));
+      } else if (form.portfolio === 'ding') {
+        const volumePins = volumeCount > 1
+          ? { ...pins, corridorAabbs: pins.corridorAabbs[dingSlot] ? [pins.corridorAabbs[dingSlot]!] : [] } : pins;
+        this.spawnDing(scene, form, this.volumeSeat(form, volumePins), dingSlot++, false);
+      }
     }
   }
 
@@ -960,6 +965,7 @@ export class ContaminationHostSystem {
     form: ContaminationForm,
     box: CorridorAabb | undefined,
     slot = 0,
+    stagger = true,
   ): void {
     if (!box) {
       console.warn('[contamination-hosts] ding skipped: no corridor');
@@ -971,7 +977,7 @@ export class ContaminationHostSystem {
     }
     const gfx = scene.add.graphics().setDepth(C.VOLUME_DEPTH);
     const core = {
-      x: box.coreCol * TILE + TILE / 2 + (slot % 2) * TILE,
+      x: box.coreCol * TILE + TILE / 2 + (stagger ? (slot % 2) * TILE : 0),
       y: box.coreRow * TILE + TILE / 2,
     };
     this.paintDing(gfx, box, core, false);

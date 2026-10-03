@@ -1,0 +1,164 @@
+{
+  "sourcePath": "/tmp/r100-shader-before-qa.ts",
+  "sourceHash": "b39b28fe65a7bd927e1cb0534c25d52363adbf2a8b97fe268498a86b1a2a1952",
+  "shaderLightPath": "bool darkCell(vec2 cell){\n vec2 at=(cell+.5)*8.;return any(lessThan(at,vec2(0)))||any(greaterThanEqual(at,size))||texture(albedoMap,at/size).a<.5;\n}\nfloat materialLightPath(vec2 from,vec2 to){\n vec2 cell=floor(from/8.),end=floor(to/8.),delta=to-from,stepDirection=sign(delta);\n vec2 tStep=vec2(abs(delta.x)>.00001?8./abs(delta.x):1e8,abs(delta.y)>.00001?8./abs(delta.y):1e8);\n vec2 edge=(cell+max(stepDirection,vec2(0)))*8.;\n vec2 next=vec2(abs(delta.x)>.00001?(edge.x-from.x)/delta.x:1e8,abs(delta.y)>.00001?(edge.y-from.y)/delta.y:1e8);\n for(int j=0;j<96;j++){\n  if(all(equal(cell,end)))return 1.;\n  if(abs(next.x-next.y)<.000001){\n   if(darkCell(cell+vec2(stepDirection.x,0))&&darkCell(cell+vec2(0,stepDirection.y)))return 0.;\n   cell+=stepDirection;next+=tStep;\n  }else if(next.x<next.y){cell.x+=stepDirection.x;next.x+=tStep.x;}\n  else{cell.y+=stepDirection.y;next.y+=tStep.y;}\n  if(darkCell(cell))return 0.;\n }\n return 0.;\n}\n",
+  "cases": [
+    {
+      "name": "clear diagonal",
+      "cells": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "from": [
+        4,
+        4
+      ],
+      "to": [
+        12,
+        12
+      ]
+    },
+    {
+      "name": "single east corner",
+      "cells": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "from": [
+        4,
+        4
+      ],
+      "to": [
+        12,
+        12
+      ]
+    },
+    {
+      "name": "single south corner",
+      "cells": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "from": [
+        4,
+        4
+      ],
+      "to": [
+        12,
+        12
+      ]
+    },
+    {
+      "name": "both corner cells",
+      "cells": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "from": [
+        4,
+        4
+      ],
+      "to": [
+        12,
+        12
+      ]
+    },
+    {
+      "name": "single corner reversed",
+      "cells": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "from": [
+        12,
+        12
+      ],
+      "to": [
+        4,
+        4
+      ]
+    },
+    {
+      "name": "direct black cell",
+      "cells": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "from": [
+        4,
+        4
+      ],
+      "to": [
+        12,
+        4
+      ]
+    },
+    {
+      "name": "clear horizontal",
+      "cells": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "from": [
+        4,
+        4
+      ],
+      "to": [
+        12,
+        4
+      ]
+    }
+  ],
+  "status": "fail",
+  "results": [
+    {
+      "name": "clear diagonal",
+      "actual": true,
+      "expected": true
+    },
+    {
+      "name": "single east corner",
+      "actual": true,
+      "expected": false
+    },
+    {
+      "name": "single south corner",
+      "actual": true,
+      "expected": false
+    },
+    {
+      "name": "both corner cells",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "single corner reversed",
+      "actual": true,
+      "expected": false
+    },
+    {
+      "name": "direct black cell",
+      "actual": false,
+      "expected": false
+    },
+    {
+      "name": "clear horizontal",
+      "actual": true,
+      "expected": true
+    }
+  ]
+}

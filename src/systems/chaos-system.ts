@@ -11,6 +11,8 @@
  */
 
 import { GAME_CONSTANTS } from '@/config/constants';
+import { POLLUTION_GRADE_DEFINITIONS } from '@/generated/rift-pollution-grade-data';
+import { isPollutionGrade, pollutionExposureBetween, pollutionRateAt, type PollutionGrade, type PollutionGradeDefinition } from '@/generation/world-study/pollution-grade';
 import { eventBus } from '@/core/event-bus';
 import { GameEvent } from '@/types/events';
 import { clamp } from '@/utils/math';
@@ -25,6 +27,8 @@ export interface ChaosRuntimeState {
   readonly paused: boolean;
   readonly clockMs: number;
   readonly chaosRateModifier: number;
+  /** Absent on every historical/ungraded run. Explicit grade is resume identity. */
+  readonly pollutionGrade?: PollutionGrade;
   readonly lastEmitted: number;
   readonly lastModulated: number;
   readonly thresholdsFired: readonly [boolean, boolean, boolean];
@@ -38,6 +42,7 @@ export interface ChaosRuntimeState {
 
 export function validateChaosRuntimeState(value: unknown): value is ChaosRuntimeState {
   if (!runtimeRecord(value) || value.version !== 1 || typeof value.paused !== 'boolean'
+    || (value.pollutionGrade !== undefined && !isPollutionGrade(value.pollutionGrade))
     || !runtimeNumber(value.value, 0, GAME_CONSTANTS.CHAOS.HARD_CAP)
     || !runtimeNumber(value.peak, value.value, GAME_CONSTANTS.CHAOS.HARD_CAP)
     || !runtimeNumber(value.clockMs, 0) || !runtimeNumber(value.chaosRateModifier, 0)
@@ -126,6 +131,8 @@ export interface ChaosSystemAPI {
 }
 
 export interface ChaosSystemConfig {
+  /** Explicit authored grade only; omitted preserves the historical constant rate. */
+  pollutionGrade?: PollutionGrade;
   isEnemyTargetingLure?: (enemyId: string) => boolean;
   /** Effective equipped resistance; evaluated on positive inflow only. */
   getPollutionResistance?: () => number;
@@ -144,6 +151,7 @@ export interface ChaosSystemConfig {
 const DT_CLAMP_MS = 100;
 
 export class ChaosSystem implements ChaosSystemAPI {
+  private readonly pollutionDefinition: PollutionGradeDefinition | null;
   private readonly getPollutionResistance: () => number;
   private value = 0;
   private peak = 0;
@@ -175,6 +183,9 @@ export class ChaosSystem implements ChaosSystemAPI {
   private readonly onEnemyKilled: (payload: { enemyId: string; position: { x: number; y: number } }) => void;
 
   constructor(config?: ChaosSystemConfig) {
+    this.pollutionDefinition = config?.pollutionGrade === undefined ? null
+      : POLLUTION_GRADE_DEFINITIONS.find(definition => definition.id === config.pollutionGrade) ?? null;
+    if (config?.pollutionGrade !== undefined && !this.pollutionDefinition) throw new Error('Unsupported map pollution grade');
     this.getPollutionResistance = config?.getPollutionResistance ?? (() => 0);
     this.chaosRateModifier = config?.chaosRateModifier ?? 1.0;
     this.onModulate = config?.onModulate ?? null;
@@ -237,7 +248,10 @@ export class ChaosSystem implements ChaosSystemAPI {
     const effectiveRateMult = this.tempRateDeadlineMs > 0
       ? Math.max(this.rateMultiplier, this.tempRateMult)
       : this.rateMultiplier;
-    const increment = chaos.BASE_RATE * this.chaosRateModifier * effectiveRateMult * this.reductionMult * dtSec * this.resistanceFactor();
+    const exposure = this.pollutionDefinition
+      ? pollutionExposureBetween(this.pollutionDefinition, (this.clockMs - dtMs) / 1000, this.clockMs / 1000)
+      : chaos.BASE_RATE * dtSec;
+    const increment = exposure * this.chaosRateModifier * effectiveRateMult * this.reductionMult * this.resistanceFactor();
     this.value = Math.min(this.value + increment, chaos.HARD_CAP);
     if (this.value > this.peak) this.peak = this.value;
 
@@ -269,6 +283,7 @@ export class ChaosSystem implements ChaosSystemAPI {
   exportRuntimeState(): ChaosRuntimeState {
     return {
       version: 1, value: this.value, peak: this.peak, paused: this.paused, clockMs: this.clockMs,
+      ...(this.pollutionDefinition ? { pollutionGrade: this.pollutionDefinition.id } : {}),
       chaosRateModifier: this.chaosRateModifier, lastEmitted: this.lastEmitted, lastModulated: this.lastModulated,
       thresholdsFired: [...this.thresholdsFired], chasingEnemyIds: [...this.chasingEnemies],
       detectionCooldowns: [...this.detectionCooldowns].map(([enemyId, atMs]) => ({ enemyId, atMs })),
@@ -278,7 +293,8 @@ export class ChaosSystem implements ChaosSystemAPI {
   }
 
   validateRuntimeState(value: unknown): value is ChaosRuntimeState {
-    return validateChaosRuntimeState(value) && value.chaosRateModifier === this.chaosRateModifier;
+    return validateChaosRuntimeState(value) && value.chaosRateModifier === this.chaosRateModifier
+      && value.pollutionGrade === this.pollutionDefinition?.id;
   }
 
   restoreRuntimeState(value: unknown): void {
@@ -305,7 +321,8 @@ export class ChaosSystem implements ChaosSystemAPI {
 
   getRate(): number {
     const rate = this.tempRateDeadlineMs > 0 ? Math.max(this.rateMultiplier, this.tempRateMult) : this.rateMultiplier;
-    return GAME_CONSTANTS.CHAOS.BASE_RATE * this.chaosRateModifier * rate * this.reductionMult * this.resistanceFactor();
+    const baseRate = this.pollutionDefinition ? pollutionRateAt(this.pollutionDefinition, this.clockMs / 1000) : GAME_CONSTANTS.CHAOS.BASE_RATE;
+    return baseRate * this.chaosRateModifier * rate * this.reductionMult * this.resistanceFactor();
   }
 
   getStage(): 'safe' | 'warning' | 'danger' | 'overflow' {

@@ -75,8 +75,8 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
       }
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
-    "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
+    "gradeSourceHash": "e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066",
+    "dependencyHash": "637c7b60ad535eccafcf93f447304e4b592dfaa0c8b2892f23277e5dab5ddef6"
   },
   {
     "schemaVersion": 1,
@@ -156,8 +156,8 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
       }
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
-    "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
+    "gradeSourceHash": "e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066",
+    "dependencyHash": "637c7b60ad535eccafcf93f447304e4b592dfaa0c8b2892f23277e5dab5ddef6"
   },
   {
     "schemaVersion": 1,
@@ -237,8 +237,8 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
       }
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
-    "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
+    "gradeSourceHash": "e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066",
+    "dependencyHash": "637c7b60ad535eccafcf93f447304e4b592dfaa0c8b2892f23277e5dab5ddef6"
   },
   {
     "schemaVersion": 1,
@@ -318,8 +318,8 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
       }
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
-    "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
+    "gradeSourceHash": "e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066",
+    "dependencyHash": "637c7b60ad535eccafcf93f447304e4b592dfaa0c8b2892f23277e5dab5ddef6"
   },
   {
     "schemaVersion": 1,
@@ -399,7 +399,7 @@ export const WORLD_PACKAGES: readonly WorldPackage[] = [
       }
     },
     "sourceHash": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f",
-    "gradeSourceHash": "c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18",
-    "dependencyHash": "7080193340197bad5d4b0c88f977e49e98259bda0d2e21f3cb3b61ad234dcd42"
+    "gradeSourceHash": "e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066",
+    "dependencyHash": "637c7b60ad535eccafcf93f447304e4b592dfaa0c8b2892f23277e5dab5ddef6"
   }
 ];

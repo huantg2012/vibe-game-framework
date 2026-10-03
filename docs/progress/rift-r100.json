@@ -40,12 +40,12 @@
   },
   "resume": {
     "iteration": "R100-I02",
-    "batch": "I02 V1 validation + formal async entry implemented",
-    "nextAction": "I02保留声景实听与用户审美两项待验；从音画对照页审查三材料。工程继续定位新Rift入场302ms/冷入场242ms主线程长任务，并对自然种子复测总等待长尾；同时为旧v2跨运行时签名风险R100-P05建立兼容方案；完成加载预算后再接I03等级选择/压力/准备/回报闭环，不越过美术检查点扩产。",
-    "lastCompleted": "I01纠偏及I02九格独立图像审核保持；V1补受控GC与实际音画录制，正式新出击/冷续局改为可取消Worker准备，完成快照竞争/旧局兼容/销毁回调修复与真实浏览器验证。0/108、0/324。",
-    "headline": "I02受控GC已验，正式异步出入接通",
+    "batch": "I01 / I02 six-feedback corrections implemented in native masters",
+    "nextAction": "先读集中原话，再运行新母版与新54帧/动态证据；六项已有实际修正和限定验证，按新版本接受人审并继续处理具体意见。不得把旧批准或自动检查当本轮验收，不扩产，不恢复未发生的通过。",
+    "lastCompleted": "真实占漆/占空与三级污染增长已进入九组DEV；下沿漏画、微弱绿色和吞光反光穿角已修；18组原生双seed运行、54图独立复核及共享代码回归完成。人审仍未通过，0/108、0/324。",
+    "headline": "六项反馈已整改到可玩母版，I01 / I02 保留人审未通过",
     "updatedDate": "2026-10-03",
-    "evidenceRevision": "ae5ae3ef"
+    "evidenceRevision": "r100-corrections-20261003"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -117,8 +117,8 @@
       "targetWorlds": 0,
       "phase": "foundation",
       "dependencies": [],
-      "state": "closed",
-      "stage": "close",
+      "state": "changes-required",
+      "stage": "implementation",
       "goal": "先保护旧局，明确108世界×三级、知情选级与非常态重度远征的制作及发布合同。",
       "technical": "冻结旧算法恢复路径；定义WorldPackage最小身份/能力版本、统一实体几何及数据来源合同；测量生成、恢复、帧时、内存与离线成本。 建立可扩展到新几何的最小CSV包编译、依赖版本/哈希、正式硬准入与可重复资格入口；不等I05规模化才开始验证。 独立pollutionGrade在候选生成前冻结；设计等级暴露选择、周期危险、遭遇/奖励预算、抗性及暂停/恢复合同，旧age不重命名。明确等级经济必要验证范围。",
       "visual": "记录现五样本的正常视野与已知局限；设计地面/实体/虚空的视觉区分和前三构造的母版任务，明确画法假设，不凭灰盒验美术。 按R100美术七项标准锁三档同源母版任务与成品基准；先做折叠板的低/中/重，再跨材料验证。",
@@ -168,12 +168,12 @@
         },
         {
           "id": "i02-production-brief",
-          "status": "pass",
-          "revision": "302d529",
+          "status": "changes-required",
+          "revision": "ba3ea28e",
           "evidenceIds": [
-            "R100-E-I01"
+            "R100-H-I01-I02-REJECT-20261003"
           ],
-          "label": "初版母版制作任务包"
+          "label": "母版制作与三级污染要求按人审重做"
         },
         {
           "id": "independent-contract-review",
@@ -187,12 +187,20 @@
       ],
       "issueIds": [
         "R100-P01",
-        "R100-P02"
+        "R100-P02",
+        "R100-P06",
+        "R100-P07",
+        "R100-P08",
+        "R100-P09",
+        "R100-P10",
+        "R100-P11"
       ],
       "evidenceIds": [
         "R100-H-START",
         "R100-E-I01",
-        "R100-E-I02-REBUILD"
+        "R100-E-I02-REBUILD",
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS"
       ],
       "targetGradeCases": 0,
       "achievement": {
@@ -204,14 +212,15 @@
         ]
       },
       "rework": {
-        "state": "closed",
-        "reason": "用户否决景观/吞光混淆与地面薄弱，保留旧恢复/包编译有效证据",
+        "state": "open",
+        "reason": "2026-10-03当前两轮被用户明确否决：六项污染表现/实体边界/玩家增长要求必须整改。",
         "task": "docs/tasks/rift-r100-i01.md",
-        "revision": "03d4e4c",
+        "revision": "r100-corrections-20261003",
         "evidenceIds": [
-          "R100-E-I02-REBUILD"
+          "R100-H-I01-I02-REJECT-20261003",
+          "R100-E-I02-POLLUTION-CORRECTIONS"
         ],
-        "note": "普通材料/光照与侵蚀语义独立、绘制方法有实景证据；原302d529兼容底座历史达成保持。"
+        "note": "六项已有新实现及限定证据，见I02 QA顶部；人审未重新认可，rework保持open。直接描述行为和数值。"
       }
     },
     {
@@ -222,10 +231,10 @@
       "dependencies": [
         "R100-I01"
       ],
-      "state": "in-review",
-      "stage": "visual-review",
-      "goal": "做出三种新构造与三档成品对照，先证明渲染和形体压迫；仍是待完整玩法审核的样板，不报合格世界数。",
-      "technical": "统一几何进入通行/视线/内容准入；实现高体量排序与受光、束/板/壳三个共享形体算子及对应空间组织。 三种新包同步接入最小编译/冻结恢复与多种子、混合边界资格，此轮不给完整世界资格；I03补齐压力/准备/回报闭环再审。",
+      "state": "changes-required",
+      "stage": "implementation",
+      "goal": "按用户六项反馈重做三构造三级母版，真实污染体与玩家污染增长必须可感知、可验证；0合格世界，完整选级/准备/收益仍在I03。",
+      "technical": "统一几何进入通行/视线/内容准入；实现高体量排序与受光、束/板/壳三个共享形体算子及对应空间组织。 三种新包同步接入最小编译/冻结恢复与多种子、混合边界资格，此轮不给完整世界资格；I03补齐压力/准备/回报闭环再审。 最新授权要求本轮补真实占漆/占空数量面积及三级混乱增长；不以I03尚未开工推迟这两项核心缺失，仍不启用正式新池/等级奖励/新保存。",
       "visual": "逐个完成真实角色尺度的材料与光影母版，再扩为整张原生地图；转折/断面/内腔必须成立，角色和敌人融入。 折叠板先做低/中/重同源样板，纤维和壳腔再迁移；三档都达到成品质量，重度有静帧压力和峰后可读间隙。",
       "batches": [
         "共享实体几何、遮挡/排序及新包编译/恢复/硬准入适配",
@@ -233,7 +242,8 @@
         "折叠板：母版→多种子地图→整趟",
         "泡腔：母版→多种子地图→整趟",
         "三个世界并置审核和首次用户审美检查点",
-        "三个世界的三级母版与有界压力表现；原生静帧/连续移动/真实声音对照"
+        "三个世界的三级母版与有界压力表现；原生静帧/连续移动/真实声音对照",
+        "按六项人审要求修正可见侵蚀/实体边界/吞光，补真实污染体分布和三级玩家增长，原生实走与曲线验收"
       ],
       "review": [
         "同源可见边界、身体碰撞、视线和Host站位",
@@ -242,15 +252,16 @@
         "高体量占地、可见投影、前后排序与受光分别验，不能仅把高物体烘入地面层",
         "三档母版、受控动态与现有搜撤承载关系可审；新增压力/准备/回报完整体验保持pending，转I03验证。"
       ],
-      "exit": "三构造及其三级待验样板；美术人审检查点，合格计数仍0。压力机制及完整出行未通过前不扩产。",
-      "actualRevision": "03d4e4c",
+      "exit": "六项人审整改有新版本实图、连续实际游玩和数值证据；再次独立检查后供用户审查。未通过前不扩产，合格世界及等级仍0。",
+      "actualRevision": "r100-corrections-20261003",
       "gateResults": [
         {
           "id": "terrain-erosion-semantics",
-          "status": "pass",
-          "revision": "03d4e4c",
+          "status": "changes-required",
+          "revision": "ba3ea28e",
           "evidenceIds": [
-            "R100-E-I02-REBUILD"
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS"
           ],
           "label": "普通景观与吞光侵蚀分离"
         },
@@ -265,12 +276,13 @@
         },
         {
           "id": "independent-image-review",
-          "status": "pass",
-          "revision": "03d4e4c",
+          "status": "changes-required",
+          "revision": "ba3ea28e",
           "evidenceIds": [
-            "R100-E-I02-REBUILD"
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS"
           ],
-          "label": "128帧独立图像复审"
+          "label": "新版本独立实图复审：旧128帧判断已不足以通过"
         },
         {
           "id": "native-60s-sample-cpu-frame-budget",
@@ -315,24 +327,115 @@
         },
         {
           "id": "human-art-review",
-          "status": "pending",
-          "label": "用户审美验收"
+          "status": "changes-required",
+          "label": "用户审美与等级体验：明确未通过",
+          "evidenceIds": [
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS"
+          ],
+          "revision": "ba3ea28e"
+        },
+        {
+          "id": "visible-green-motion",
+          "status": "changes-required",
+          "label": "绿色侵蚀动效正常游玩时清楚可见",
+          "evidenceIds": [
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS"
+          ],
+          "revision": "ba3ea28e"
+        },
+        {
+          "id": "visible-solid-boundaries",
+          "status": "changes-required",
+          "label": "实体可见边界与身体碰撞一致",
+          "evidenceIds": [
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS"
+          ],
+          "revision": "ba3ea28e"
+        },
+        {
+          "id": "visible-light-consumption",
+          "status": "changes-required",
+          "label": "真实污染对象的吞光直接可感知",
+          "evidenceIds": [
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS"
+          ],
+          "revision": "ba3ea28e"
+        },
+        {
+          "id": "paint-volume-grade-population",
+          "status": "pass",
+          "label": "占漆/占空数量面积参与三级区分（DEV双seed18例；非完整平衡验收）",
+          "evidenceIds": [
+            "R100-E-I02-POLLUTION-CORRECTIONS"
+          ],
+          "revision": "r100-corrections-20261003"
+        },
+        {
+          "id": "green-pollution-identity",
+          "status": "changes-required",
+          "label": "绿色侵蚀成为明确直接的污染表现",
+          "evidenceIds": [
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS"
+          ],
+          "revision": "ba3ea28e"
+        },
+        {
+          "id": "grade-chaos-curve",
+          "status": "pass",
+          "label": "三级玩家污染增长与抗性有实际曲线验证（DEV双seed18例；非完整平衡验收）",
+          "evidenceIds": [
+            "R100-E-I02-POLLUTION-CORRECTIONS"
+          ],
+          "revision": "r100-corrections-20261003"
+        },
+        {
+          "id": "corrected-native-browser-samples",
+          "status": "pass",
+          "revision": "r100-corrections-20261003",
+          "evidenceIds": [
+            "R100-E-I02-POLLUTION-CORRECTIONS"
+          ],
+          "label": "新18组原生入场、移动与暂停；不替代全程游玩/人审"
         }
       ],
       "issueIds": [
         "R100-P02",
         "R100-P03",
         "R100-P04",
-        "R100-P05"
+        "R100-P05",
+        "R100-P06",
+        "R100-P07",
+        "R100-P08",
+        "R100-P09",
+        "R100-P10",
+        "R100-P11"
       ],
       "evidenceIds": [
         "R100-E-I02-B01",
         "R100-E-I02-REBUILD",
         "R100-E-I02-V1-MEMORY",
         "R100-E-I02-V1-AUDIO",
-        "R100-E-ASYNC-ENTRY"
+        "R100-E-ASYNC-ENTRY",
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS"
       ],
-      "targetGradeCases": 0
+      "targetGradeCases": 0,
+      "rework": {
+        "state": "open",
+        "reason": "2026-10-03当前两轮被用户明确否决：六项污染表现/实体边界/玩家增长要求必须整改。",
+        "task": "docs/tasks/rift-r100-i02.md",
+        "revision": "r100-corrections-20261003",
+        "evidenceIds": [
+          "R100-H-I01-I02-REJECT-20261003",
+          "R100-E-I02-POLLUTION-CORRECTIONS"
+        ],
+        "note": "六项已有新实现及限定证据，见I02 QA顶部；人审未重新认可，rework保持open。直接描述行为和数值。"
+      }
     },
     {
       "id": "R100-I03",
@@ -797,6 +900,25 @@
       "limitations": "有限样本非自然总体预算；算法等待长尾未减少，样本新/冷入场仍有302/242ms主线程长任务。UI未作新的人审，I03机制及新世界未交付。",
       "iterationId": "R100-I02",
       "revision": "ae5ae3ef"
+    },
+    {
+      "id": "R100-H-I01-I02-REJECT-20261003",
+      "kind": "human",
+      "purpose": "changes-requested",
+      "path": "docs/art/rift-r100-i02-review.md",
+      "scope": "2026-10-03用户明确否决当前I01/I02：侵蚀动效难辨、结构边界/碰撞不一致、吞光不显；缺真实占漆/占空数量面积、重点绿色侵蚀、三级玩家污染增长。要求永远避免造词并长期记录。",
+      "limitations": "本证据证明人审要求返工，不是修复完成；旧兼容、Worker、GC和有限图像证据保留各自历史范围。",
+      "revision": "ba3ea28e"
+    },
+    {
+      "id": "R100-E-I02-POLLUTION-CORRECTIONS",
+      "kind": "runtime",
+      "purpose": "six-feedback-corrections",
+      "path": "docs/qa/rift-r100-i02.md",
+      "scope": "九组DEV母版修正实体下沿、沿材料绿色侵蚀与灯照截断；低中重真实占漆2/4/6和占空1/2/3、分级污染积分。18组原生入场/行走/暂停，18张边界近照，真实Host/曲线与GPU7例、24项恢复、类型/构建通过，源码SHA256见运行报告。",
+      "limitations": "只覆盖列明样本，不计正式世界；中档入口首次显露污染次序、远斜照边缘和重壳亮片保留意见，完整搜撤/收益平衡与用户复审未过。动态另附真实录像；历史性能/GC不重签。",
+      "iterationId": "R100-I02",
+      "revision": "r100-corrections-20261003"
     }
   ],
   "risks": [
@@ -929,6 +1051,84 @@
         "R100-E-ASYNC-ENTRY"
       ],
       "note": "生产Worker烟测发现Node v22.14与Chromium的Math.atan2末位差异使v2-0身份23e24a0c/9ef02d95不同；浏览器DEV与生产同值，非Worker迁移或压缩引入。保留严格历史签名，未偷偷改冻结执行器；跨引擎/浏览器升级的长期兼容需独立方案与显式迁移验收。"
+    },
+    {
+      "id": "R100-P06",
+      "title": "绿色侵蚀动效低档几乎不可见、重档也易被忽略",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I02",
+      "owner": "art/code",
+      "evidenceIds": [
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS"
+      ],
+      "note": "原生尺寸和正常肩灯下重做可见范围、形状及变化；低档减少数量不压低单处辨识度，不能靠诊断与说明才看见。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+    },
+    {
+      "id": "R100-P07",
+      "title": "变异结构部分边缘看不见却发生碰撞",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I02",
+      "owner": "art/code",
+      "evidenceIds": [
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS"
+      ],
+      "note": "保留结构方向，修正与地面的材料区别、接地和受光；下沿、侧沿、背面、转角连续实走，肩灯照见时不得有透明障碍。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+    },
+    {
+      "id": "R100-P08",
+      "title": "吞光作用几乎无法感知",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I02",
+      "owner": "art/code",
+      "evidenceIds": [
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS"
+      ],
+      "note": "使用真实污染对象和显隐规则，让正常灯照出现明确被吞掉的区域；区别普通背光和地图外虚空，不以黑色涂片或地形洞代替。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+    },
+    {
+      "id": "R100-P09",
+      "title": "等级未体现占漆/占空污染体数量与面积",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I02",
+      "owner": "design/code",
+      "evidenceIds": [
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS"
+      ],
+      "note": "三级必须有真实占漆和占空，记录数量、覆盖面积、通路改变与退路，不只改变单模型尺寸或孔洞。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+    },
+    {
+      "id": "R100-P10",
+      "title": "绿色侵蚀未承担污染的直接表达",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I02",
+      "owner": "art/code",
+      "evidenceIds": [
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS"
+      ],
+      "note": "以明确来源的病态污染绿表现侵蚀及其局部光，结构/声音作为补充；保持材料身份和正常通路，不把全图染绿。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+    },
+    {
+      "id": "R100-P11",
+      "title": "地图等级未改变玩家污染增长曲线",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I02",
+      "owner": "design/code",
+      "evidenceIds": [
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS"
+      ],
+      "note": "在既有混乱系统内落实三级时间增长和接触代价，记录同起始状态/路线的曲线和阈值时间、装备抗性及暂停；不重复计费。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
     }
   ],
   "changeLog": [
@@ -966,6 +1166,16 @@
       "date": "2026-10-03",
       "kind": "board-refresh",
       "note": "按用户要求更新看板：置顶当前I02，展示已通过/待验项、I01纠偏与实际提交，展开问题处理状态；不更改资格结论。"
+    },
+    {
+      "date": "2026-10-03",
+      "kind": "human-changes-requested",
+      "note": "用户明确否决当前I01/I02；六项整改及永远避免造词的表达要求已集中永久记录，两轮changes-required/rework open。旧兼容、Worker、GC证据保留原范围；0世界0等级，不将旧代理实图复核当人审通过。"
+    },
+    {
+      "date": "2026-10-03",
+      "kind": "pollution-corrections-implemented",
+      "note": "六项整改进入九组原生DEV母版，真实Host数量面积与污染曲线启用；18运行54帧、GPU7例及兼容回归有新证据。局部视觉意见保留，I01/I02继续changes-required，不晋级世界或I03。"
     }
   ],
   "qualityPlan": {
@@ -993,22 +1203,22 @@
       {
         "id": "low",
         "label": "低污染",
-        "visual": "残存关系可读，异常精准嵌入；静区与材料完整，仍有不安。",
-        "play": "观察、定位、低损耗搜取，支持恢复与基础成长。",
+        "visual": "普通材料与空间可读；绿色侵蚀数量和面积较少，但单处必须直接可辨。真实占漆/占空保留低密度来源。",
+        "play": "正常搜撤，污染随时间与接触增长较缓，仍有撤退与遭遇风险；曲线与抗性须实测。",
         "preparation": "正常出击条件；保留混乱、遭遇与撤离风险。"
       },
       {
         "id": "medium",
         "label": "中污染",
-        "visual": "改写贯穿结构，交界与新遮挡组织画面。",
-        "play": "路线、暴露、翻找与撤路相互牵制，承担常规搜撤主体验。",
+        "visual": "真实占漆/占空数量和面积扩大，绿色侵蚀与结构改写共同改变路线；边界与碰撞必须一致。",
+        "play": "污染增长与接触代价提高，绕行、搜取、撤退时间相互牵制；曲线与可行退路须实测。",
         "preparation": "根据目标准备工具与返程余量。"
       },
       {
         "id": "severe",
         "label": "重度污染",
-        "visual": "巨大异源结构挤压人的空间，异常平衡濒临失守；强烈而可读。",
-        "play": "有预兆的周期侵蚀、高承诺收益支路与可放弃目标；低/中不被掏空。",
+        "visual": "大范围绿色侵蚀、更多更大占漆/占空及挤压通行的异变结构共同形成压迫；吞光清楚可辨，正常空间仍有主次。",
+        "play": "污染增长明显更紧迫，准备和抗性有实际价值；主动选择、高回报和完整搜撤后续实施，当前不得用纯视觉闪动冒充危险。",
         "preparation": "主动选择，至少两种有效功能配装与相应技巧；为观察、深入、返程留足有效游玩时间，暂停不惩罚。"
       }
     ],

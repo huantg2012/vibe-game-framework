@@ -35,7 +35,7 @@ check('Three map grades are distinct from age, entity coverage and personal chao
   assert.throws(() => parsePollutionGradeCsv(gradeCsv.replace(/severe,1,[^\n]+\n?/, '')));
   assert.throws(() => parsePollutionGradeCsv(`${gradeCsv.trim()}\n${gradeCsv.split('\n')[1]}\n`));
   assert.throws(() => parsePollutionGradeCsv(gradeCsv.replace('severe,1,', 'severe,2,')));
-  assert.throws(() => parsePollutionGradeCsv(gradeCsv.replace('contract-only', 'production')));
+  assert.throws(() => parsePollutionGradeCsv(gradeCsv.replace('dev-masters', 'production')));
   assert.throws(() => validatePollutionGradeDefinitions([{ ...POLLUTION_GRADE_DEFINITIONS[0], chaos: 10 },
     ...POLLUTION_GRADE_DEFINITIONS.slice(1)]));
 });
@@ -117,7 +117,7 @@ check('Real source mutation and newly imported dependency invalidate a previousl
     writeFileSync(dialectsPath, dialects);
     assert.deepEqual(readWorldPackageCompilerContext(temporaryRoot).fragmentIds, context.fragmentIds);
     const gradesPath = resolve(temporaryRoot, 'data/rift-pollution-grades.csv');
-    writeFileSync(gradesPath, gradeCsv.replace('近崩溃', '完全崩溃'));
+    writeFileSync(gradesPath, gradeCsv.replace('低污染', '改变后的低污染名称'));
     assert.throws(() => verifyWorldPackageManifest(manifest, temporaryRoot), /changed/);
     writeFileSync(gradesPath, gradeCsv);
     const productionPath = resolve(temporaryRoot, 'src/generation/world-study/production-map.ts');
@@ -134,6 +134,6 @@ check('Real source mutation and newly imported dependency invalidate a previousl
 
 console.log(JSON.stringify({ result: 'pass', checks, packages: WORLD_PACKAGES.length, activeGradedWorlds: 0,
   dependencyHash: manifest.hash, dependencyFiles: manifest.dependencies.length,
-  limitations: ['DEV contract only; no grade gameplay, art approval or production selection enabled.',
+  limitations: ['Legacy package inventory only; graded native master mechanics are tested separately, with no art approval or graded production selection.',
     'Source closure is conservative; an unchanged fingerprint is not a gameplay/art qualification.',
     'Exact package comparison does not supply a frozen old-version executor or migrate saves.'] }, null, 2));

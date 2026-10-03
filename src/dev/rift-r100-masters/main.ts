@@ -56,6 +56,7 @@ async function build(lightPatrol=false):Promise<void>{
     const url=new URL(location.href);url.searchParams.set('family',family);url.searchParams.set('grade',grade);url.searchParams.set('seed',String(seed));history.replaceState(null,'',url);
     const current=world;
     runtime.start(world.layout,'bare',{worldSurface:'runtime',materialLighting:true,footstepMaterial:'soil',suppressVoidNoise:true,extractionGlowRadius:8,
+      hostTileMap:current.hostTileMap,pollutionGrade:current.definition.grade,
       createSightGrid:()=>current.sight,createCombatGrid:()=>current.combat,readMovementInput:patrol.readInput,
       createRuntime:context=>{presentation=new MasterPresentation(context,current,painting);presentation.setMode(mode);presentation.setMotion(motion);$('loading').hidden=true;return presentation;}});
   }catch(reason){if(token===serial)reportError(reason);}

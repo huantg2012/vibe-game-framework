@@ -26,6 +26,8 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 ## R100 I02：原生实体母版（DEV 制作中）
 
+2026-10-03用户否决I01/I02后再次整改：`surface-fields.ts`沿真实物体断面生成灰绿侵蚀与实体完整边沿，显式吞光区保留黑内核；不以多贴污斑或提高全图亮度替代。`pollution.ts`复用原生占漆烘焙、32px Host部署及接触范围，物理地面仍8px；局部光通过 `readPollutionSources` 读取活体位置/存在状态，不维护独立生命周期。`RiftDevFixture.hostTileMap`仅供Host支持，`pollutionGrade`进入共享ChaosSystem的模拟时间曲线。Scene每帧组合占空视野倍率与混乱倍率，避免污染读数未跨显示阈值时视野不响应。新增数值与投放来源仍是CSV；正式等级选择、风险收益闭环未在本轮推广。
+
 `rift-r100-masters.html` → `dev/rift-r100-masters/` 复用 `createRiftGymRuntime` 与正式 `RiftScene`。Gym 接口额外接受作者 `GeneratedRiftLayout` 和限定 fixture 覆盖；只有真实 `WorldProductionMap` 才注入 `productionWorld`，作者小场景不伪装正式生成准入。CSV 描述三种构造、三级配置与观察落点，生成模块由编译工具产出。
 
 `native-volume-geometry.ts` 生成真XY顶视可见面、逐三角形法向、材质区和高度。`native-volume-raster.ts` 编译静态像素字段；高度只服务形体和受光，不授予吞光资格。CSV显式 `relief/solid` 与独立 `erosion`：8px物理网格含solid与侵蚀，观察网格仅侵蚀/缺失地面，攻击网格另阻挡solid。DEV `createCombatGrid` 分离观察与攻击，正式默认不变。部署在最终20px身体连通后进行。
@@ -44,7 +46,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `managers/rift-recovery.ts` → `generation/legacy-rift-generation.ts` → `legacy-rift-v2/executor.js`：正式v1/v2新局及续局、无generation旧图均使用固定ac9ddd7闭包；新局选池仍由当前CSV解析。`types/rift-checkpoint.ts`用封存recipe validator读取旧身份，避免live能力校验变动拒绝合法旧局。归档manifest、固定基线重建工具、跨进程完整世界金样共同保护；新算法必须注册新版本。恢复协议本身不新增字段。
 
-`data/rift-world-packages.csv` 与 `rift-pollution-grades.csv` → `tools/world-study/codegen-world-packages.ts` → generated模块与依赖manifest。`world-package.ts` / `pollution-grade.ts`只拥有DEV合同校验，不负责运行时出击或资格判定；五份旧demo、十五个未实施级别不自动进R100已验收台账。哈希范围明确为生成依赖与合同，最终资产发布清单尚未实现。
+`data/rift-world-packages.csv` 与 `rift-pollution-grades.csv` → `tools/world-study/codegen-world-packages.ts` → generated模块与依赖manifest。`world-package.ts`拥有DEV包合同校验；`pollution-grade.ts`提供等级合同与纯数值积分供九格母版的ChaosSystem消费，不替代正式选级或资格判定；五份旧demo、十五个未实施级别不自动进R100已验收台账。哈希范围明确为生成依赖与合同，最终资产发布清单尚未实现。
 
 `dev/rift-gym-performance.ts`由隔离Gym记录原生Phaser帧间隔与CPU提交时段：2秒预热，普通Gym默认12秒，R100母版显式60秒有界采样；暂停/失焦排除，JSON随原诊断和导出记录提供。灯光往返从新建入口沿可达路线行走65秒，记录输入有效时长与实际位移，两者不混称实际移动时间。不是GPU计时器、全硬件认证或正式游戏HUD；已有运行规则和存档隔离不变。
 

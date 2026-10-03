@@ -362,12 +362,12 @@
     "id": "COH-F007",
     "title": "有限视野与不可照亮的空间空洞",
     "domain": "controls",
-    "summary": "朝向视域与环身弱光按地图遮挡求可见性；空间空洞不产生可照亮表面，局部照到群落时只显示受光部分。R100-I02 DEV将普通solid/relief景观与8px缺地/侵蚀分开：普通实体可挡身体和近战，视野只由缺地/侵蚀阻断。GPU材质受光在原生有限fog下合成，materialLighting仅关闭重复ADD灯图；正式入口默认配置与目标LOS保持。",
+    "summary": "朝向视域与环身弱光按地图遮挡求可见性；空间空洞不产生可照亮表面。R100九组DEV将普通实体/浅浮雕与8px缺地/作者侵蚀区分开：普通实体挡身体和近战；作者侵蚀区沿既有DEC-106转为VOID，不可走且不可照。本轮强化受光实体边缘、绿色表面与反光、静态吞光边界和黑暗截断，修复绿色反光穿单侧吞光角点。真实占空仍是0.7视距缩减，不是完全遮黑；未新增可行走的Host完全吞光层。有限静帧支持近侧可读性改善，尚待用户复评；正式默认配置与目标LOS保持。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "进入 Rift，移动/转向观察地形与敌人",
-      "DEV：rift-r100-masters.html；原生有限视野覆盖普通地表/实体材质，独立侵蚀仍阻光。"
+      "DEV：rift-r100-masters.html；原生有限视野覆盖普通地表/实体材质，作者侵蚀VOID区独立阻光/阻行。"
     ],
     "sources": [
       {
@@ -427,6 +427,26 @@
         "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
         "role": "doc",
         "note": "2026-10-03限定代码审查及CPU合同：两项P2修复复核；不签GLSL、浏览器性能、视觉或听感；绘画映射再改须重跑。"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/surface-fields.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-master-surface-fields.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-r100-corrections-light-path.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/rift-r100-i02-review.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/report-r100-corrections-code.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -437,22 +457,28 @@
       "COH-E-SRC-control",
       "COH-E-HIST-PAINT",
       "COH-E126",
-      "COH-E127"
+      "COH-E127",
+      "COH-E130",
+      "COH-E131",
+      "COH-E132"
     ],
     "unknowns": [
       "历史I28所列全世界光照、压力与动态辨识扩展验收仍沿原挂起边界；R100专项按当前任务推进，不由旧记录判通过。",
-      "R100受光与战术可见性分离只在DEV母版入口接入；当前GLSL实际结果、跨设备与新美术资格按独立证据判定，不能沿用E126旧试制通过范围。"
+      "R100受光与战术可见性分离只在DEV母版入口接入；当前GLSL实际结果、跨设备与新美术资格按独立证据判定，不能沿用E126旧试制通过范围。",
+      "54张静帧中的近侧可读性不保证任意灯向、远端背光或全碰撞轮廓；占空接触仍有既有一帧位置提交差，不称物理越界与视野严格同帧。",
+      "静态作者侵蚀VOID的可感知截断不能冒充动态Host全黑遮挡；本轮没有更改VOID通行规则，也没有新增可走完全黑暗区域。"
     ]
   },
   {
     "id": "COH-F008",
     "title": "混乱压力与污染抗性",
     "domain": "controls",
-    "summary": "时间与危险累积混乱，作用于视野和行动；污染抗性汇总正向来源，降低增量而非改写空间遮挡。",
+    "summary": "时间与危险累积混乱，污染抗性降低增量而非改写空间遮挡。R100母版DEV新增CSV低/中/重污染时间曲线，ChaosSystem按模拟时间精确积分并应用既有核心修正、抗性及追击；暂停不推进，同等级恢复验证配置。未指定等级的正式/历史流程仍为原0.5点/秒，旧快照保持兼容。占漆与占空继续走真实Host接触。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "Rift 出发后持续模拟；HUD 读取混乱和效果"
+      "Rift 出发后持续模拟；HUD 读取混乱和效果",
+      "DEV：rift-r100-masters.html → 低/中/重污染母版；等级由devFixture传入"
     ],
     "sources": [
       {
@@ -474,6 +500,30 @@
       {
         "path": "docs/specs/system-survival-attributes.md",
         "role": "spec"
+      },
+      {
+        "path": "data/rift-pollution-grades.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/rift-pollution-grade-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/pollution-grade.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-master-pollution.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/report-r100-corrections-code.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i02-review.md",
+        "role": "art"
       }
     ],
     "dependsOn": [
@@ -483,10 +533,13 @@
     ],
     "evidence": [
       "COH-E-SRC-control",
-      "COH-E-HIST-CATALOG"
+      "COH-E-HIST-CATALOG",
+      "COH-E130",
+      "COH-E131"
     ],
     "unknowns": [
-      "长期压力曲线及能力选择收益不由受控机制检查证明。"
+      "90/180秒无接触曲线与抗性检查不等于自然搜撤平衡；开发局初始核心状态影响起点/速率，不能直接套用零起点理论值。",
+      "持续25%抗性只是敏感性分析，真实准备价值须以现有武器与30秒限时工具实际使用验证；等级选择/回报尚未进入正式流程。"
     ]
   },
   {

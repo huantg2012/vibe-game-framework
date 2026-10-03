@@ -61,6 +61,10 @@ export interface RiftDevFixture {
   readMovementInput?: PlayerMovementInputReader;
   /** The same admitted world used by the DEV preview, including its 32px Host support. */
   productionWorld?: WorldProductionMap;
+  /** Native Host footprints use 32px cells even when the physical fixture is finer. */
+  hostTileMap?: import('@/types/map-types').TileMapData;
+  /** Explicitly graded fixtures; omission retains historical sortie rules. */
+  pollutionGrade?: 'low' | 'medium' | 'severe';
   onCreateError?(reason: unknown): void;
   /** Optical terrain only; physics and navigation always retain the source TileGrid. */
   createSightGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid): OccluderGrid;
@@ -116,6 +120,12 @@ export interface RiftDevRuntimeContext {
   readonly unoccludedVisibilityAt: (position: Readonly<{ x: number; y: number }>) => number;
   /** Changes when committed position/facing/range/occluders change. */
   readonly getVisibilityRevision: () => number;
+  /** Live native pollution, only for local material reflection. It grants no
+   * visibility and never changes the host's contact shape or lifetime. */
+  readonly readPollutionSources?: () => readonly {
+    readonly id: string; readonly kind: 'paint' | 'volume';
+    readonly x: number; readonly y: number; readonly active: boolean;
+  }[];
   readonly getFootprint: () => Readonly<{ x: number; y: number; width: number; height: number }>;
   readonly getGroundVisualDepth: (groundY: number) => number;
   readonly revealProjectedTerrain: (image: Phaser.GameObjects.Image, visibility: number) => void;
@@ -245,6 +255,7 @@ export class RiftScene extends Phaser.Scene {
   private readonly minimap = new Minimap();
   private readonly riftSurface = new RiftSurfacePainter();
   private chaos!: ChaosSystem;
+  private chaosVisionScale = 1;
 
   private landmarkGraphics: Phaser.GameObjects.Graphics | null = null;
 
@@ -373,7 +384,8 @@ export class RiftScene extends Phaser.Scene {
     const sightGrid = this.devFixture?.createSightGrid?.(generated, grid) ?? grid;
     const combatGrid = this.devFixture?.createCombatGrid?.(generated, grid, sightGrid) ?? sightGrid;
     this.formFloorGrid = grid;
-    this.hostFloorGrid = productionWorld ? new TileGrid(productionWorld.hostTileMap) : grid;
+    const hostTileMap = productionWorld?.hostTileMap ?? this.devFixture?.hostTileMap;
+    this.hostFloorGrid = hostTileMap ? new TileGrid(hostTileMap) : grid;
     const layout = generated;
     if (this.devPresentation) {
       Object.assign(this.devPresentation.exit.position, layout.extractionPoint.position);
@@ -481,9 +493,10 @@ export class RiftScene extends Phaser.Scene {
       onModulate: this.applyChaosModulators,
       chaosRateModifier: effectiveChaosRate,
       startingValue: openingChaos,
+      pollutionGrade: this.devFixture?.pollutionGrade,
       getPollutionResistance: () => sumPollutionResistance([getSurvivalAttributes().resistancePercent, this.toolSystem.getPollutionResistanceBonus()]),
     });
-    const hostLayout = productionWorld ? { ...layout, tileMap: productionWorld.hostTileMap } : layout;
+    const hostLayout = hostTileMap ? { ...layout, tileMap: hostTileMap } : layout;
     this.hosts.create(this, hostLayout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: this.hostFloorGrid, sightGrid,
       hearingPolicy: {
         getRangeMultiplier: () => this.ai.getHearingRangeMultiplier(),
@@ -719,6 +732,16 @@ export class RiftScene extends Phaser.Scene {
         visibilityAt: this.visibilityAt,
         unoccludedVisibilityAt: point => this.visibility.getUnoccludedVisibilityAt(point),
         getVisibilityRevision: () => this.visibility.getQueryRevision(),
+        readPollutionSources: () => this.hosts.getSubjects().flatMap(host => {
+          if (host.form.portfolio !== 'bing' && host.form.portfolio !== 'ding') return [];
+          const pin = this.hosts.getVisualPin(host.id);
+          if (!pin) return [];
+          const volume = host.form.portfolio === 'ding';
+          return [{ id: host.id, kind: volume ? 'volume' as const : 'paint' as const,
+            x: pin.x + (volume ? (pin.width ?? 0) / 2 : 0),
+            y: pin.y + (volume ? (pin.height ?? 0) / 2 : 0),
+            active: !volume || this.hosts.getVolumePresenceFrame(host.id)?.hasPresence !== false }];
+        }),
         getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
         revealProjectedTerrain: (image, visibility) => this.visibility.revealProjectedTerrain(image, visibility),
         readPresentationFrame: () => {
@@ -895,6 +918,9 @@ export class RiftScene extends Phaser.Scene {
       return;
     }
     this.player.postUpdate();
+    // Entering/leaving a volume must affect this frame's lamp. Chaos publishes
+    // only when its number changes enough; that cadence cannot own local fog.
+    this.visibility.setRadiusScale(this.chaosVisionScale * this.hosts.getVolumeSightMult());
     this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
     // Enemies are drawn last of the three: their visibility is looked up against the mask
     // this frame produced, so an enemy is never drawn into darkness (rule R4).
@@ -1414,6 +1440,7 @@ export class RiftScene extends Phaser.Scene {
 
   /** Wired as the chaos system's onModulate callback. */
   private readonly applyChaosModulators = (mods: ChaosModulators): void => {
+    this.chaosVisionScale = mods.radiusScale;
     this.visibility.setRadiusScale(mods.radiusScale * this.hosts.getVolumeSightMult());
     this.visibility.setAbilityRadiusMultiplier(this.toolSystem.getVisionRadiusMultiplier());
     this.visibility.setEdgeCorruption(mods.edgeCorruption);
@@ -2442,6 +2469,8 @@ export class RiftScene extends Phaser.Scene {
     return {
       elapsedMs: this.devElapsedMs, ended: this.runController.isRunEnded(),
       player: { ...this.player.getPosition() }, hp: this.combat.getHealth(), chaos: this.chaos.getValue(),
+      chaosRate: this.chaos.getRate(), pollutionGrade: this.devFixture.pollutionGrade ?? null,
+      volumeSightMultiplier: this.hosts.getVolumeSightMult(),
       attack: { ...this.combat.getAttackState() }, kindling: this.search.getCarriedKindling(),
       search: { prompt: this.search.getPrompt(), progress: this.search.getChannelProgress01(), remaining: this.search.getRemainingCount() },
       enemies: this.ai.getEnemies().map(enemy => ({ id: enemy.getId(), state: enemy.getState(),

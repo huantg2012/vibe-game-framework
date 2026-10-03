@@ -22,20 +22,24 @@ export class MasterPresentation implements RiftDevRuntime {
  private readonly key:string;
  private readonly phaseSources:NativeVolumeLight[]=[];
  private readonly sourceAxes:number[]=[];
+ private readonly erosionSources:NativeVolumeLight[]=[];
+ private readonly hostSources=new Map<string,NativeVolumeLight>();
+ private readonly pollutionColor:Rgb;
  private readonly lamp:NativeVolumeLight={x:0,y:0,z:28,radius:264,intensity:3.1,color:[1,.94,.86],castsShadow:false};
  private readonly lights:NativeVolumeLight[];
  private readonly actorMasks:Array<{actor:RiftDevActorVisuals;graphics:Phaser.GameObjects.Graphics;mask:Phaser.Display.Masks.GeometryMask;objects:Phaser.GameObjects.Components.Mask[];key:string;retired:boolean}>=[];
  private mode:MasterViewMode='normal';private motion=true;private destroyed=false;
- private time=0;private lastElapsed=0;private phase='静默';private activity=.22;private renderMs=0;
+ private time=0;private lastElapsed=0;private phase='缓慢闪动';private activity=.72;private renderMs=0;
  constructor(private readonly context:RiftDevRuntimeContext,readonly world:MasterWorld,painting?:PaintedMaterial){
   const {scene}=context,r=world.raster,p=world.sample.profile.palette;
   const ramp=deriveFragmentContamRamp('frag-outdoor'),neutral=(ramp.mid[0]+ramp.mid[1]+ramp.mid[2])/3;
-  const sourceColor=mix(ramp.mid,[neutral,neutral,neutral],.38);
+  const sourceColor=mix(ramp.core,[neutral,neutral,neutral],.20);
+  this.pollutionColor=sourceColor.map(v=>v/Math.max(...sourceColor)) as unknown as Rgb;
   const palette:NativeVolumeMaterialSet={
    outer:{base:rgb(p.materialMid),dark:rgb(p.materialDark),light:rgb(p.materialLight),roughness:.84,structure:.75},
    cut:{base:mix(rgb(p.materialMid),rgb(p.materialLight),.25),dark:rgb(p.materialDark),light:rgb(p.faceLight),roughness:.93,structure:.82},
    inner:{base:rgb(p.materialMid),dark:rgb(p.shadow),light:rgb(p.materialLight),roughness:.62,structure:.72},
-   joint:{base:rgb(p.shadow),dark:rgb(p.floorDeep),light:rgb(p.materialMid),roughness:.51,structure:.5,emission:sourceColor,emissionStrength:world.definition.emission*2.2},
+   joint:{base:rgb(p.shadow),dark:rgb(p.floorDeep),light:rgb(p.materialMid),roughness:.51,structure:.5,emission:sourceColor,emissionStrength:.72+world.definition.emission*.40},
   };
   this.renderer=new MasterSurfaceRenderer(world,paintMasterGround(world),new NativeVolumeLighting(r,palette,{seed:world.sample.seed,axis:world.definition.axis}),painting);
   this.key=`r100-master-${world.definition.id}-${world.layout.seed}`;
@@ -62,7 +66,18 @@ export class MasterPresentation implements RiftDevRuntime {
    this.phaseSources.push({x,y,z:r.heightField[index]!+3,radius:world.definition.light_radius,intensity:world.definition.emission,castsShadow:false,color:[sourceColor[0]/Math.max(...sourceColor),sourceColor[1]/Math.max(...sourceColor),sourceColor[2]/Math.max(...sourceColor)]});
    this.sourceAxes.push(mesh.spec.rotation??world.definition.axis);
   }
-  this.lights=[this.lamp,...this.phaseSources];
+  // Eaten-light regions have a faint damaged lip on the surviving material.
+  // Their black interior never receives a light or a drawn receiver.
+  for(const polygon of world.definition.erosion){
+   let found:{x:number;y:number}|null=null,distance=Infinity;
+   for(const vertex of polygon)for(let dy=-12;dy<=12;dy+=4)for(let dx=-12;dx<=12;dx+=4){
+    const x=vertex.x+dx,y=vertex.y+dy;if(!world.matterAt(x,y))continue;
+    const d=(x-world.layout.spawnPoint.x)**2+(y-world.layout.spawnPoint.y)**2;
+    if(d<distance){distance=d;found={x,y};}
+   }
+   if(found)this.erosionSources.push({...found,z:12,radius:64,intensity:.55,color:[sourceColor[0]/Math.max(...sourceColor),sourceColor[1]/Math.max(...sourceColor),sourceColor[2]/Math.max(...sourceColor)],castsShadow:false});
+  }
+  this.lights=[this.lamp];
   for(const actor of [context.player,...context.enemies]){
    const graphics=scene.add.graphics().setVisible(false);rollback.push(()=>graphics.destroy());
    const mask=graphics.createGeometryMask(),objects:Phaser.GameObjects.Components.Mask[]=[];rollback.push(()=>mask.destroy());
@@ -79,9 +94,24 @@ export class MasterPresentation implements RiftDevRuntime {
   this.lamp.x=frame.player.position.x;this.lamp.y=frame.player.position.y;
   const cycle=(this.time/1000%this.world.definition.motion_period)/this.world.definition.motion_period;
   const pressure=cycle<.56?0:cycle<.76?(cycle-.56)/.20:cycle<.83?1:Math.max(0,1-(cycle-.83)/.17);
-  this.activity=.22+pressure*.78;this.phase=cycle<.56?'静默':cycle<.76?'接点收紧':cycle<.83?'层间承压':'余压回落';
-  for(let i=0;i<this.phaseSources.length;i++)this.phaseSources[i]!.intensity=this.world.definition.emission*(.22+Math.max(0,pressure-i*.14)*.78);
+  this.activity=.72+pressure*.40;this.phase=cycle<.56?'缓慢闪动':cycle<.76?'绿色侵蚀逐渐变亮':cycle<.83?'绿色侵蚀强烈闪动':'绿色侵蚀逐渐变暗';
+  for(let i=0;i<this.phaseSources.length;i++)this.phaseSources[i]!.intensity=this.world.definition.emission*1.8*(.65+Math.max(0,pressure-i*.09)*.55);
+  for(const light of this.erosionSources)light.intensity=.48+pressure*.36;
   this.audio.update(this.time,pressure,frame.player.position,this.phaseSources,this.motion);
+  const liveHosts=this.context.readPollutionSources?.()??[],seen=new Set<string>();
+  for(const source of liveHosts){
+   seen.add(source.id);let light=this.hostSources.get(source.id);
+   if(!light){light={x:source.x,y:source.y,z:7,radius:source.kind==='paint'?68:82,intensity:0,color:this.pollutionColor,castsShadow:false};this.hostSources.set(source.id,light);}
+   light.x=source.x;light.y=source.y;
+   // A live film weakly reflects onto nearby matter. A light-eating volume's
+   // reflection is weaker still; neither changes the native observation mask.
+   light.intensity=source.active?(source.kind==='paint'?.34:.17)*(.88+.12*Math.sin(this.time*.002+source.x*.01)):0;
+  }
+  for(const id of this.hostSources.keys())if(!seen.has(id))this.hostSources.delete(id);
+  const candidates=[...this.phaseSources,...this.erosionSources,...this.hostSources.values()];
+  const score=(light:NativeVolumeLight):number=>light.intensity*Math.max(0,1-Math.hypot(light.x-this.lamp.x,light.y-this.lamp.y)/(light.radius+160));
+  candidates.sort((a,b)=>score(b)-score(a));
+  this.lights.length=1;this.lights.push(...candidates.filter(light=>light.intensity>0).slice(0,7));
   this.renderer.draw(this.lights,this.activity,this.time/1000,['normal','albedo','light','geometry'].indexOf(this.mode));
   this.texture.source[0]!.update();this.drawStress(cycle);this.maskActor();this.renderMs=performance.now()-began;
  }
@@ -131,8 +161,8 @@ export class MasterPresentation implements RiftDevRuntime {
   }
  }
  snapshot():Record<string,unknown>&{phase:string}{return{mode:this.mode,motion:this.motion,phase:this.phase,elapsedMs:this.time,activity:this.activity,lastRenderMs:this.renderMs,
-  renderer:'native-pixel WebGL2 material receiver under unchanged Rift fog',gpuBytes:this.renderer.gpuBytes,
-  shoulderLight:this.lamp,sourceLights:this.phaseSources,geometryDiagnostics:this.world.diagnostics,
+  renderer:'native-pixel WebGL2 material receiver under unchanged Rift fog',gpuBytes:this.renderer.gpuBytes,surfaces:this.renderer.surfaceDiagnostics,
+  shoulderLight:this.lamp,sourceLights:this.phaseSources,erosionLights:this.erosionSources,hostLights:[...this.hostSources.values()],activeLightCount:this.lights.length,geometryDiagnostics:this.world.diagnostics,
   surfaceVisibility:'native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility',
   occlusion:'explicit solid role masks foreground; walkable relief never clips actors',sounds:this.audio.snapshot()};}
  exportRuntimeState():unknown{return{version:1,artLab:true,elapsedMs:this.time};}

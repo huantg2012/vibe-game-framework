@@ -1,0 +1,997 @@
+{
+  "id": "fibre-knot-low-20261003",
+  "family": "fibre-knot",
+  "grade": "low",
+  "seed": 20261003,
+  "counts": {
+    "paint": 2,
+    "volume": 1
+  },
+  "before": {
+    "world": {
+      "identity": "fibre-knot-low",
+      "family": "fibre-knot",
+      "grade": "low",
+      "seed": 20261003,
+      "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+      "geometryFingerprint": "4f67df07",
+      "qualification": "author-local-art-lab; not a production-world admission",
+      "projection": "native XY topdown; height projection 0",
+      "nativeCanvas": [
+        960,
+        640
+      ],
+      "cameraZoom": 1.5,
+      "actorBody": 20,
+      "movementPxPerSecond": 80,
+      "supportCell": 8,
+      "triangles": 5652,
+      "reachableBodySeats": 6781,
+      "spawnPoint": {
+        "x": 260,
+        "y": 380
+      },
+      "exitPoint": {
+        "x": 196,
+        "y": 460
+      },
+      "searchPoint": {
+        "x": 540,
+        "y": 420
+      },
+      "enemyPoint": {
+        "x": 708,
+        "y": 180
+      },
+      "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+      "erosionCells": 37,
+      "solidCells": 97,
+      "physicalRoles": [
+        {
+          "id": 1,
+          "role": "relief"
+        },
+        {
+          "id": 2,
+          "role": "solid"
+        }
+      ],
+      "geometryBeforeDeployment": true,
+      "dynamicTopology": false,
+      "gradeMechanics": true,
+      "paintHosts": 2,
+      "volumeHosts": 1,
+      "paintContactAreaPx": 16384,
+      "volumeBoundsAreaPx": 9216,
+      "chaosRateStart": 0.24,
+      "chaosRateEnd": 0.34,
+      "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+    },
+    "presentation": {
+      "mode": "normal",
+      "motion": true,
+      "phase": "缓慢闪动",
+      "elapsedMs": 549.1599999999996,
+      "activity": 0.72,
+      "lastRenderMs": 0.09999990463256836,
+      "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+      "gpuBytes": 13762560,
+      "surfaces": {
+        "structuralEmissionPixels": 491,
+        "erosionEdgePixels": 1179,
+        "solidFootBlendsIntoGround": false,
+        "greenOwnership": "actual fractured object or authored light-eaten edge; never the whole floor"
+      },
+      "shoulderLight": {
+        "x": 260,
+        "y": 380,
+        "z": 28,
+        "radius": 264,
+        "intensity": 3.1,
+        "color": [
+          1,
+          0.94,
+          0.86
+        ],
+        "castsShadow": false
+      },
+      "sourceLights": [
+        {
+          "x": 484,
+          "y": 256,
+          "z": 5.10152530670166,
+          "radius": 112,
+          "intensity": 0.40950000000000003,
+          "castsShadow": false,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ]
+        },
+        {
+          "x": 630,
+          "y": 310,
+          "z": 45.481014251708984,
+          "radius": 112,
+          "intensity": 0.40950000000000003,
+          "castsShadow": false,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ]
+        }
+      ],
+      "erosionLights": [
+        {
+          "x": 608,
+          "y": 364,
+          "z": 12,
+          "radius": 64,
+          "intensity": 0.48,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ],
+          "castsShadow": false
+        }
+      ],
+      "hostLights": [
+        {
+          "x": 336,
+          "y": 240,
+          "z": 7,
+          "radius": 68,
+          "intensity": 0.25970977295488834,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ],
+          "castsShadow": false
+        },
+        {
+          "x": 816,
+          "y": 496,
+          "z": 7,
+          "radius": 68,
+          "intensity": 0.30596016485909305,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ],
+          "castsShadow": false
+        },
+        {
+          "x": 80,
+          "y": 272,
+          "z": 7,
+          "radius": 82,
+          "intensity": 0.16891557432111215,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ],
+          "castsShadow": false
+        }
+      ],
+      "activeLightCount": 7,
+      "geometryDiagnostics": {
+        "identity": "fibre-knot-low",
+        "family": "fibre-knot",
+        "grade": "low",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "4f67df07",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 5652,
+        "reachableBodySeats": 6781,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 540,
+          "y": 420
+        },
+        "enemyPoint": {
+          "x": 708,
+          "y": 180
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 37,
+        "solidCells": 97,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "relief"
+          },
+          {
+            "id": 2,
+            "role": "solid"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": true,
+        "paintHosts": 2,
+        "volumeHosts": 1,
+        "paintContactAreaPx": 16384,
+        "volumeBoundsAreaPx": 9216,
+        "chaosRateStart": 0.24,
+        "chaosRateEnd": 0.34,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+      "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+      "sounds": {
+        "family": "fibre-knot",
+        "grade": "low",
+        "phase": "quiet",
+        "paused": false,
+        "disposed": false,
+        "clock": 549.1599999999996,
+        "pressure": 0,
+        "sourceIndex": -1,
+        "source": {
+          "x": 0,
+          "y": 0
+        },
+        "gain": 0,
+        "pan": 0,
+        "loop": null,
+        "lastEvent": null,
+        "eventCount": 0,
+        "maximumOwnedVoices": 2,
+        "priority": "low",
+        "runtimeSynthesis": false
+      }
+    },
+    "patrol": {
+      "mode": null,
+      "active": false,
+      "status": "场景重建",
+      "outcome": "stopped",
+      "elapsedMs": 0,
+      "activeMovementInputMs": 0,
+      "minimumDurationMs": 0,
+      "stationDwellMs": 650,
+      "completedLegs": 0,
+      "legDirection": 1,
+      "blocked": null,
+      "actualDistance": 0,
+      "targetIndex": 0,
+      "plannedDistance": 0,
+      "stations": [],
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "samples": [],
+      "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+    },
+    "runtime": {
+      "ready": true,
+      "running": true,
+      "starting": false,
+      "performance": {
+        "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+        "state": "sampling",
+        "warmupMs": 2000,
+        "requestedMs": 60000,
+        "sampledMs": 0,
+        "sampleCapacity": 60001,
+        "frames": null,
+        "cpuSubmission": null,
+        "heapStartBytes": 274750347,
+        "heapEndBytes": 274750347,
+        "pauseSegmentsExcluded": 0,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+        "viewport": [
+          1340,
+          900
+        ],
+        "dpr": 1,
+        "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+      },
+      "resources": {
+        "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+        "textureKeys": 276,
+        "registeredTextureCanvases": 263,
+        "domCanvases": 3,
+        "sharedCanvasPoolUsed": 263,
+        "sharedCanvasPoolFree": 0,
+        "displayListEntries": 81,
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false,
+            "displayListEntries": 0
+          },
+          {
+            "key": "RiftScene",
+            "active": true,
+            "paused": false,
+            "displayListEntries": 81
+          }
+        ],
+        "soundsRegistered": 3,
+        "soundsPlaying": 3,
+        "soundsPaused": 0,
+        "soundsPendingRemoval": 0,
+        "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+      },
+      "paused": false,
+      "probe": {
+        "elapsedMs": 549.1599999999996,
+        "ended": false,
+        "player": {
+          "x": 260,
+          "y": 380
+        },
+        "hp": 100,
+        "chaos": 15.104120736000008,
+        "chaosRate": 0.1896,
+        "pollutionGrade": "low",
+        "volumeSightMultiplier": 1,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 1
+        },
+        "enemies": [
+          {
+            "id": "master-listener",
+            "state": "patrol",
+            "position": {
+              "x": 708,
+              "y": 180
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_BING_01",
+            "substrate": "oil_film",
+            "position": {
+              "x": 336,
+              "y": 240
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_02",
+            "substrate": "oil_film",
+            "position": {
+              "x": 816,
+              "y": 496
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 86.21523025454546,
+              "y": 272
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "rest",
+              "elapsedMs": 549.1599999999996,
+              "hazardActive": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "after": {
+    "world": {
+      "identity": "fibre-knot-low",
+      "family": "fibre-knot",
+      "grade": "low",
+      "seed": 20261003,
+      "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+      "geometryFingerprint": "4f67df07",
+      "qualification": "author-local-art-lab; not a production-world admission",
+      "projection": "native XY topdown; height projection 0",
+      "nativeCanvas": [
+        960,
+        640
+      ],
+      "cameraZoom": 1.5,
+      "actorBody": 20,
+      "movementPxPerSecond": 80,
+      "supportCell": 8,
+      "triangles": 5652,
+      "reachableBodySeats": 6781,
+      "spawnPoint": {
+        "x": 260,
+        "y": 380
+      },
+      "exitPoint": {
+        "x": 196,
+        "y": 460
+      },
+      "searchPoint": {
+        "x": 540,
+        "y": 420
+      },
+      "enemyPoint": {
+        "x": 708,
+        "y": 180
+      },
+      "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+      "erosionCells": 37,
+      "solidCells": 97,
+      "physicalRoles": [
+        {
+          "id": 1,
+          "role": "relief"
+        },
+        {
+          "id": 2,
+          "role": "solid"
+        }
+      ],
+      "geometryBeforeDeployment": true,
+      "dynamicTopology": false,
+      "gradeMechanics": true,
+      "paintHosts": 2,
+      "volumeHosts": 1,
+      "paintContactAreaPx": 16384,
+      "volumeBoundsAreaPx": 9216,
+      "chaosRateStart": 0.24,
+      "chaosRateEnd": 0.34,
+      "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+    },
+    "presentation": {
+      "mode": "normal",
+      "motion": true,
+      "phase": "缓慢闪动",
+      "elapsedMs": 7147.019999999991,
+      "activity": 0.72,
+      "lastRenderMs": 0.2999999523162842,
+      "renderer": "native-pixel WebGL2 material receiver under unchanged Rift fog",
+      "gpuBytes": 13762560,
+      "surfaces": {
+        "structuralEmissionPixels": 491,
+        "erosionEdgePixels": 1179,
+        "solidFootBlendsIntoGround": false,
+        "greenOwnership": "actual fractured object or authored light-eaten edge; never the whole floor"
+      },
+      "shoulderLight": {
+        "x": 467.99999999999665,
+        "y": 160.330256491593,
+        "z": 28,
+        "radius": 264,
+        "intensity": 3.1,
+        "color": [
+          1,
+          0.94,
+          0.86
+        ],
+        "castsShadow": false
+      },
+      "sourceLights": [
+        {
+          "x": 484,
+          "y": 256,
+          "z": 5.10152530670166,
+          "radius": 112,
+          "intensity": 0.40950000000000003,
+          "castsShadow": false,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ]
+        },
+        {
+          "x": 630,
+          "y": 310,
+          "z": 45.481014251708984,
+          "radius": 112,
+          "intensity": 0.40950000000000003,
+          "castsShadow": false,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ]
+        }
+      ],
+      "erosionLights": [
+        {
+          "x": 608,
+          "y": 364,
+          "z": 12,
+          "radius": 64,
+          "intensity": 0.48,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ],
+          "castsShadow": false
+        }
+      ],
+      "hostLights": [
+        {
+          "x": 336,
+          "y": 240,
+          "z": 7,
+          "radius": 68,
+          "intensity": 0.2612394808719374,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ],
+          "castsShadow": false
+        },
+        {
+          "x": 816,
+          "y": 496,
+          "z": 7,
+          "radius": 68,
+          "intensity": 0.28098128566491065,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ],
+          "castsShadow": false
+        },
+        {
+          "x": 80,
+          "y": 272,
+          "z": 7,
+          "radius": 82,
+          "intensity": 0.16135200633389668,
+          "color": [
+            0.20790300853165694,
+            1,
+            0.876066457117198
+          ],
+          "castsShadow": false
+        }
+      ],
+      "activeLightCount": 7,
+      "geometryDiagnostics": {
+        "identity": "fibre-knot-low",
+        "family": "fibre-knot",
+        "grade": "low",
+        "seed": 20261003,
+        "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+        "geometryFingerprint": "4f67df07",
+        "qualification": "author-local-art-lab; not a production-world admission",
+        "projection": "native XY topdown; height projection 0",
+        "nativeCanvas": [
+          960,
+          640
+        ],
+        "cameraZoom": 1.5,
+        "actorBody": 20,
+        "movementPxPerSecond": 80,
+        "supportCell": 8,
+        "triangles": 5652,
+        "reachableBodySeats": 6781,
+        "spawnPoint": {
+          "x": 260,
+          "y": 380
+        },
+        "exitPoint": {
+          "x": 196,
+          "y": 460
+        },
+        "searchPoint": {
+          "x": 540,
+          "y": 420
+        },
+        "enemyPoint": {
+          "x": 708,
+          "y": 180
+        },
+        "sightPolicy": "only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent",
+        "erosionCells": 37,
+        "solidCells": 97,
+        "physicalRoles": [
+          {
+            "id": 1,
+            "role": "relief"
+          },
+          {
+            "id": 2,
+            "role": "solid"
+          }
+        ],
+        "geometryBeforeDeployment": true,
+        "dynamicTopology": false,
+        "gradeMechanics": true,
+        "paintHosts": 2,
+        "volumeHosts": 1,
+        "paintContactAreaPx": 16384,
+        "volumeBoundsAreaPx": 9216,
+        "chaosRateStart": 0.24,
+        "chaosRateEnd": 0.34,
+        "materialSounds": "registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately"
+      },
+      "surfaceVisibility": "native finite fog: only erosion/void blocks sight; local material shading never changes tactical visibility",
+      "occlusion": "explicit solid role masks foreground; walkable relief never clips actors",
+      "sounds": {
+        "family": "fibre-knot",
+        "grade": "low",
+        "phase": "quiet",
+        "paused": false,
+        "disposed": false,
+        "clock": 7147.019999999991,
+        "pressure": 0,
+        "sourceIndex": -1,
+        "source": {
+          "x": 0,
+          "y": 0
+        },
+        "gain": 0,
+        "pan": 0,
+        "loop": null,
+        "lastEvent": null,
+        "eventCount": 0,
+        "maximumOwnedVoices": 2,
+        "priority": "low",
+        "runtimeSynthesis": false
+      }
+    },
+    "patrol": {
+      "mode": "five-station",
+      "active": true,
+      "status": "观察：背面",
+      "outcome": "running",
+      "elapsedMs": 6414.793333333333,
+      "activeMovementInputMs": 5631.516666666666,
+      "minimumDurationMs": 0,
+      "stationDwellMs": 650,
+      "completedLegs": 0,
+      "legDirection": 1,
+      "blocked": null,
+      "actualDistance": 442.83072399045307,
+      "targetIndex": 53,
+      "plannedDistance": 1376,
+      "stations": [
+        {
+          "name": "侧缘",
+          "position": {
+            "x": 284,
+            "y": 268
+          },
+          "index": 16
+        },
+        {
+          "name": "背面",
+          "position": {
+            "x": 468,
+            "y": 164
+          },
+          "index": 52
+        },
+        {
+          "name": "另一侧缘",
+          "position": {
+            "x": 660,
+            "y": 268
+          },
+          "index": 89
+        },
+        {
+          "name": "搜取点",
+          "position": {
+            "x": 540,
+            "y": 420
+          },
+          "index": 131
+        },
+        {
+          "name": "回到入口",
+          "position": {
+            "x": 260,
+            "y": 380
+          },
+          "index": 171
+        }
+      ],
+      "position": {
+        "x": 467.9999999999969,
+        "y": 160.55252315825965
+      },
+      "samples": [
+        {
+          "elapsedMs": 16.64666666666666,
+          "x": 260,
+          "y": 380,
+          "actualDistance": 0,
+          "activeMovementInputMs": 0
+        },
+        {
+          "elapsedMs": 532.5466666666667,
+          "x": 281.0496825071847,
+          "y": 371.94741007519343,
+          "actualDistance": 33.88439625209421,
+          "activeMovementInputMs": 515.9
+        },
+        {
+          "elapsedMs": 1048.4133333333332,
+          "x": 284.00010344602805,
+          "y": 339.8061591852382,
+          "actualDistance": 72.33970054288335,
+          "activeMovementInputMs": 1031.7666666666662
+        },
+        {
+          "elapsedMs": 1564.9833333333354,
+          "x": 283.99999999977626,
+          "y": 298.47282586037886,
+          "actualDistance": 113.6730338762164,
+          "activeMovementInputMs": 1548.3366666666684
+        },
+        {
+          "elapsedMs": 2081.6333333333373,
+          "x": 284,
+          "y": 264.47295919371265,
+          "actualDistance": 147.6729005428826,
+          "activeMovementInputMs": 1914.98666666667
+        },
+        {
+          "elapsedMs": 2598.2733333333363,
+          "x": 284,
+          "y": 264.47295919371265,
+          "actualDistance": 147.6729005428826,
+          "activeMovementInputMs": 1914.98666666667
+        },
+        {
+          "elapsedMs": 3114.923333333336,
+          "x": 319.3756230484172,
+          "y": 268.00000487349473,
+          "actualDistance": 183.76631580816826,
+          "activeMovementInputMs": 2414.97666666667
+        },
+        {
+          "elapsedMs": 3631.5633333333353,
+          "x": 360.7089563817477,
+          "y": 268.0000000000004,
+          "actualDistance": 225.09964914150106,
+          "activeMovementInputMs": 2931.6166666666695
+        },
+        {
+          "elapsedMs": 4148.203333333335,
+          "x": 402.04228971508047,
+          "y": 268,
+          "actualDistance": 266.4329824748338,
+          "activeMovementInputMs": 3448.256666666669
+        },
+        {
+          "elapsedMs": 4664.843333333334,
+          "x": 443.3756230484132,
+          "y": 268,
+          "actualDistance": 307.76631580816655,
+          "activeMovementInputMs": 3964.8966666666674
+        },
+        {
+          "elapsedMs": 5164.843333333334,
+          "x": 467.25557423236273,
+          "y": 258.0153789347128,
+          "actualDistance": 345.18966800810273,
+          "activeMovementInputMs": 4464.896666666667
+        },
+        {
+          "elapsedMs": 5681.493333333334,
+          "x": 468.00001037835665,
+          "y": 216.99692315824825,
+          "actualDistance": 386.3863239904522,
+          "activeMovementInputMs": 4981.546666666667
+        },
+        {
+          "elapsedMs": 6198.123333333333,
+          "x": 467.9999999999621,
+          "y": 175.6635898249264,
+          "actualDistance": 427.7196573237861,
+          "activeMovementInputMs": 5498.176666666666
+        }
+      ],
+      "method": "DEV-generated BFS intent through native Player acceleration/facing/collision; optional duration repeats the same edges in reverse; activeMovementInputMs counts nonzero input time (including blocked intent), not measured movement duration; actualDistance sums observed positions only; not a human playtest"
+    },
+    "runtime": {
+      "ready": true,
+      "running": true,
+      "starting": false,
+      "performance": {
+        "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+        "state": "sampling",
+        "warmupMs": 2000,
+        "requestedMs": 60000,
+        "sampledMs": 3950.2,
+        "sampleCapacity": 60001,
+        "frames": {
+          "count": 237,
+          "p50Ms": 16.7,
+          "p95Ms": 17.3,
+          "p99Ms": 17.3,
+          "maxMs": 17.5,
+          "over33ms": 0,
+          "over50ms": 0
+        },
+        "cpuSubmission": {
+          "count": 238,
+          "p50Ms": 3,
+          "p95Ms": 3.4,
+          "p99Ms": 3.6,
+          "maxMs": 3.6,
+          "over33ms": 0,
+          "over50ms": 0
+        },
+        "heapStartBytes": 169120866,
+        "heapEndBytes": 154936958,
+        "pauseSegmentsExcluded": 0,
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+        "viewport": [
+          1340,
+          900
+        ],
+        "dpr": 1,
+        "limitations": "Single 60s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+      },
+      "resources": {
+        "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+        "textureKeys": 276,
+        "registeredTextureCanvases": 263,
+        "domCanvases": 3,
+        "sharedCanvasPoolUsed": 263,
+        "sharedCanvasPoolFree": 0,
+        "displayListEntries": 81,
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false,
+            "displayListEntries": 0
+          },
+          {
+            "key": "RiftScene",
+            "active": true,
+            "paused": false,
+            "displayListEntries": 81
+          }
+        ],
+        "soundsRegistered": 4,
+        "soundsPlaying": 4,
+        "soundsPaused": 0,
+        "soundsPendingRemoval": 0,
+        "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+      },
+      "paused": false,
+      "probe": {
+        "elapsedMs": 7147.019999999991,
+        "ended": false,
+        "player": {
+          "x": 467.99999999999665,
+          "y": 160.330256491593
+        },
+        "hp": 100,
+        "chaos": 24.355074992,
+        "chaosRate": 0.1896,
+        "pollutionGrade": "low",
+        "volumeSightMultiplier": 1,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 1
+        },
+        "enemies": [
+          {
+            "id": "master-listener",
+            "state": "patrol",
+            "position": {
+              "x": 708,
+              "y": 180
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_BING_01",
+            "substrate": "oil_film",
+            "position": {
+              "x": 336,
+              "y": 240
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_02",
+            "substrate": "oil_film",
+            "position": {
+              "x": 816,
+              "y": 496
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 83.70293193846156,
+              "y": 272
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "gather",
+              "elapsedMs": 7147.019999999991,
+              "hazardActive": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "paused": {
+    "chaos": 24.399310567999997,
+    "elapsedMs": 7380.329999999991
+  },
+  "screenshots": [
+    "fibre-knot-low-20261003-entry.png",
+    "fibre-knot-low-20261003-walk.png"
+  ]
+}

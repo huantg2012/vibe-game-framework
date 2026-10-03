@@ -273,11 +273,12 @@
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "v2在最终真实敌人形态与地形上计算路线暴露、额外行程与资源分档；必要时有界迁移非出口敌人并重测。短路与低地面敌人暴露退路形成合同，完整占漆在同轮部署中避开整条身体扫掠和全部资源点；原配额、听觉目标与旧版本投放保持。",
+    "summary": "v2在最终真实敌人形态与地形上计算路线暴露、额外行程与资源分档；必要时有界迁移非出口敌人并重测。短路与低地面敌人暴露退路形成合同，完整占漆在同轮部署中避开整条身体扫掠和全部资源点；原配额、听觉目标与旧版本投放保持。 R100九组DEV作者地段另接真实Host：低/中/重占漆2/4/6、占空1/2/3，面积随CSV等级变化；完整污染足迹准入并保留入口至翻堆/撤离的非必经污染路线。此接入未替换正式生成投放。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "每次正式出击生成时自动部署"
+      "每次正式出击生成时自动部署",
+      "DEV：rift-r100-masters.html → 九组作者地段原生Host投放"
     ],
     "sources": [
       {
@@ -360,6 +361,26 @@
         "path": "docs/qa/rift-conditions-2026-10-02.md",
         "role": "doc",
         "note": "本轮最终实现与限定自动/运行验证；人审和完整24维未完成"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/world.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-pollution-grades.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/world-study/check-master-pollution.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/report-r100-corrections-code.md",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -371,12 +392,15 @@
       "COH-E-SRC-world",
       "COH-E-HIST-PRODUCTION",
       "COH-E119",
-      "COH-E120"
+      "COH-E120",
+      "COH-E130",
+      "COH-E131"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
       "E119路线/分档问题已在v2通过最终感知、八向路程与完整占漆准入改写；深区再按真实8px支撑、20px身体、全部48px可达可见翻找站位及有效撤离圈精查。94例的282个deep均满足各自冻结门槛，属于离散网格合同，不证明连续任意角度最短路、有限视野下取舍可读、自然40–60秒节奏或长期平衡；旧版本保持历史生成。",
-      "退路合同指低地面敌人潜在感知暴露且无必经占漆；其他环境Host不纳入该威胁指标，不能宣称绝对安全。"
+      "退路合同指低地面敌人潜在感知暴露且无必经占漆；其他环境Host不纳入该威胁指标，不能宣称绝对安全。",
+      "本轮18例为九组DEV作者地段×两种子；数量/足迹和保护路线检查不代表任意种子投放成功、正式世界资格或自然搜撤取舍与平衡已验。"
     ]
   },
   {
@@ -428,14 +452,14 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100已启动108世界/324等级大版本。I01保留旧生成执行器、CSV包及测量底座，普通景观/吞光语义与制作方法纠偏完成。03d4e4c已实现三材料九档DEV地段，两种子128帧独立图像审核、65秒原生往返及60秒CPU/帧时、十次重建计数与受击修复完成；V1补受控GC限定通过、三材料音画实录与正式Worker可取消出入；实际声景听验及人审待验。仍0新世界/0等级资格，正式出击池不由作者样板替换。",
+    "summary": "R100目标108世界/324等级。2026-10-03用户明确否决I01/I02，两轮重开；历史代理图像意见不构成人审通过。本轮继续整改三材料×低中重九组DEV母版：绿色侵蚀覆盖与反光、普通结构边缘、吞光可见表现、真实占漆/占空数量面积及随时间增长的混乱曲线。18例有限运行、54张静帧独立复核支持局部改进；现状仍HUMAN-CHANGES-REQUESTED，待用户复评。合格世界0/108、等级0/324，正式有界v2生成池与历史Worker/GC工程成果保留各自范围。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
       "净化点 → 备行 → 正式新出击v2：已落地有界3过程子集（COH-F011/012/013）；完整24维能力未全实现",
       "离线资格编译 tools/world-study/compile-world-library.ts；有限机器资格不是逐包人审入库",
       "R100进度 docs/reading/rift-r100.html；I01最小包 npm run check:r100；首组三档母版制作单 docs/art/rift-r100-masters.md",
-      "DEV原生母版 rift-r100-masters.html；18组实际图 docs/qa/interactive/r100-i02-rebuild.html；npm run check:r100-masters；不属正式生成池"
+      "DEV原生母版 rift-r100-masters.html；本轮实际画面对照 docs/qa/interactive/r100-i02-corrections.html；九组作者地段不属正式生成池"
     ],
     "sources": [
       {
@@ -715,6 +739,50 @@
         "path": "docs/qa/rift-r100-async-entry-2026-10-03.md",
         "role": "doc",
         "note": "Worker/取消/恢复/场景销毁有限验证及入场预算缺口"
+      },
+      {
+        "path": "docs/qa/report-r100-corrections-code.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/interactive/r100-i02-corrections.html",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/surface-fields.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/rift-pollution-grade-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-master-pollution.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-master-surface-fields.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-r100-corrections.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-r100-corrections-animation.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-r100-corrections-light-path.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/render-r100-corrections.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -737,12 +805,15 @@
       "COH-E126",
       "COH-E127",
       "COH-E129",
-      "COH-E128"
+      "COH-E128",
+      "COH-E130",
+      "COH-E131",
+      "COH-E132"
     ],
     "unknowns": [
       "多区域过程、高体积景观、稀有例外、描述符历史新奇权重及逐包人审入库尚未实现；有界3过程不等于24维全部规则和未来材料能力完成。",
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
-      "I02材料/图像审核与本次60s原生样本完成，受控GC已限定通过，实际听感及用户审美未验，不代签全门结单。108世界/324等级、知情选级/周期压力/等级回报尚未实现；历史总生成最长15.365s及冷恢复p95 8.331s未复测，Worker不代表总等待缩短；新/冷入场302/242ms仍待整改，不由DEV帧时通过抵消。",
+      "I01/I02人审退回的六项要求见美术记录#user-feedback-2026-10-03；本轮有限机制/局部画面证据不代签用户认可。108世界/324等级、正式知情选级与等级回报仍未实现；实际完整搜撤、准备收益、声音审听、任意种子及所有碰撞周边待验。",
       "正式异步准备已接；历史自然种子生成长尾没有因Worker而消失，实际新/冷入场仍有302/242ms主线程长任务，加载预算保持待修。"
     ]
   }

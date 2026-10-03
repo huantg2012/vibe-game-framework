@@ -1,5 +1,5 @@
 /** R100 I01: CSV -> an explicitly unqualified DEV package inventory.
- * No production selector, balance value or save migration is changed here.
+ * Compiles native master grade values without enabling a production selector or migrating saves.
  */
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -19,7 +19,7 @@ export const WORLD_PACKAGE_MANIFEST_PATH = 'src/generated/rift-world-package-man
 const OUTPUTS = new Set([GRADES_OUTPUT, PACKAGES_OUTPUT, WORLD_PACKAGE_MANIFEST_PATH]);
 const EXISTING_COMPILERS = ['tools/map-preview/codegen-world-profiles.mjs', 'tools/map-preview/codegen-world-spaces.mjs',
   'tools/map-preview/codegen-world-pool.mjs', 'tools/world-study/codegen-world-conditions.mjs'];
-const GRADE_HEADER = 'id,version,label,status,intent';
+const GRADE_HEADER = 'id,version,label,status,intent,paint_count,paint_substrate,paint_continuity,paint_coverage,volume_count,volume_substrate,volume_coverage,volume_cols,volume_rows,chaos_start_rate,chaos_end_rate,chaos_ramp_start_seconds,chaos_ramp_end_seconds';
 const PACKAGE_HEADER = 'id,world_id,profile_id,origin,scope,algorithm_id,algorithm_version,space_ids,condition_program_ids,content_fragment_id,capabilities,grade_ids';
 export const sha256 = (value: string | Buffer): string => createHash('sha256').update(value).digest('hex');
 
@@ -43,7 +43,12 @@ function list(value: string, context: string): string[] {
 }
 export function parsePollutionGradeCsv(raw: string): readonly PollutionGradeDefinition[] {
   const definitions = readCsv(raw, GRADE_HEADER).map(row => ({ id: row.id, version: Number(row.version),
-    label: row.label, status: row.status, intent: row.intent }));
+    label: row.label, status: row.status, intent: row.intent,
+    paintCount: Number(row.paint_count), paintSubstrate: row.paint_substrate, paintContinuity: row.paint_continuity, paintCoverage: row.paint_coverage,
+    volumeCount: Number(row.volume_count), volumeSubstrate: row.volume_substrate, volumeCoverage: row.volume_coverage,
+    volumeCols: Number(row.volume_cols), volumeRows: Number(row.volume_rows), chaosStartRate: Number(row.chaos_start_rate),
+    chaosEndRate: Number(row.chaos_end_rate), chaosRampStartSeconds: Number(row.chaos_ramp_start_seconds),
+    chaosRampEndSeconds: Number(row.chaos_ramp_end_seconds) }));
   validatePollutionGradeDefinitions(definitions);
   return definitions;
 }
@@ -196,7 +201,7 @@ export function generateWorldPackages({ root = ROOT, check = false } = {}): { pa
   const packages = parseWorldPackageCsv(readFileSync(resolve(root, PACKAGES_INPUT), 'utf8'), context);
   if (!packages.length) throw new Error('Empty world package inventory');
   const generated = new Map([
-    [GRADES_OUTPUT, `// Generated from ${GRADES_INPUT}; contract-only, no graded departures enabled.\nimport type { PollutionGradeDefinition } from '../generation/world-study/pollution-grade';\nexport const POLLUTION_GRADE_SOURCE_HASH = '${context.gradeSourceHash}';\nexport const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = ${JSON.stringify(context.gradeDefinitions, null, 2)};\n`],
+    [GRADES_OUTPUT, `// Generated from ${GRADES_INPUT}; native DEV master grading only, no graded production departures enabled.\nimport type { PollutionGradeDefinition } from '../generation/world-study/pollution-grade';\nexport const POLLUTION_GRADE_SOURCE_HASH = '${context.gradeSourceHash}';\nexport const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = ${JSON.stringify(context.gradeDefinitions, null, 2)};\n`],
     [PACKAGES_OUTPUT, `// Generated from ${PACKAGES_INPUT}; legacy DEV inventory, not a qualified production pool.\nimport type { WorldPackage } from '../generation/world-study/world-package';\nexport const WORLD_PACKAGES: readonly WorldPackage[] = ${JSON.stringify(packages, null, 2)};\n`],
     [WORLD_PACKAGE_MANIFEST_PATH, `${JSON.stringify(manifest, null, 2)}\n`],
   ]);

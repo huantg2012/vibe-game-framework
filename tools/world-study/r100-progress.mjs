@@ -255,8 +255,16 @@ export function checkPlan(data, { root = ROOT } = {}) {
       }
     }
     if (iteration.state === 'planned') require(iteration.stage === 'not-started', `${iteration.id}: planned iteration cannot claim an active workflow stage`);
-    if (iteration.state !== 'planned') for (const dependency of list(iteration.dependencies))
-      require(iterations.get(dependency)?.state === 'closed', `${iteration.id}: dependency ${dependency} is not closed`);
+    if (iteration.state !== 'planned') for (const dependency of list(iteration.dependencies)) {
+      const preceding = iterations.get(dependency);
+      // A human rejection can reopen an already executed dependent and its
+      // foundation together. This never admits starting a new downstream round.
+      const reopening = iteration.state === 'changes-required' && record(iteration.rework)
+        && iteration.rework.state !== 'closed' && text(iteration.actualRevision)
+        && preceding?.state === 'changes-required' && record(preceding.rework)
+        && preceding.rework.state !== 'closed' && text(preceding.actualRevision);
+      require(preceding?.state === 'closed' || reopening, `${iteration.id}: dependency ${dependency} is not closed`);
+    }
     if (['verified', 'closed'].includes(iteration.state)) {
       proof(iteration.id, iteration.evidenceIds, iteration.actualRevision);
       const achievement = record(iteration.achievement) ? iteration.achievement : {};
@@ -336,7 +344,7 @@ export function renderPlan(data, source, result) {
   const releaseResults = new Map(data.releaseGateResults.map(row => [row.id, row]));
   const current = data.iterations.find(row => row.id === data.resume.iteration);
   const gateList = gates => gates.length ? `<ul class="gate-list">${gates.map(gate => `<li>${badge(gate.status)} <span>${escape(gate.label ?? gate.id)}</span></li>`).join('')}</ul>` : '<p class="small">尚无该类记录</p>';
-  const currentOverview = current ? `<section class="section current-overview" id="current"><div class="section-head"><div><div class="eyebrow">Current / ${escape(data.resume.updatedDate ?? v.date)}</div><h2>${escape(data.resume.headline ?? current.title)}</h2></div>${badge(current.state)}</div><p class="current-summary">${escape(data.resume.lastCompleted)}</p><div class="current-gates"><div><h3>已完成并验证</h3>${gateList(current.gateResults.filter(row => row.status === 'pass'))}</div><div><h3>仍待验收</h3>${gateList(current.gateResults.filter(row => row.status !== 'pass'))}<p class="small">这些项目未完成前，I02保持审核状态；世界与等级资格计数分别记录。</p></div></div><div class="current-revisions">实施提交 <code>${escape(current.actualRevision ?? '未实施')}</code> · 证据归档 <code>${escape(data.resume.evidenceRevision ?? '未登记')}</code> · 已结迭代 ${data.iterations.filter(row => row.state === 'closed').length} / ${data.iterations.length}（不等于世界完成比例）</div><div class="current-links"><a href="../../rift-r100-masters.html">运行九格母版 ↗</a><a href="../qa/interactive/r100-i02-rebuild.html">18组实景对照 ↗</a><a href="../qa/rift-r100-i02.md">验证记录</a><a href="#${escape(current.id)}">查看当前迭代</a></div></section>` : '';
+  const currentOverview = current ? `<section class="section current-overview" id="current"><div class="section-head"><div><div class="eyebrow">Current / ${escape(data.resume.updatedDate ?? v.date)}</div><h2>${escape(data.resume.headline ?? current.title)}</h2></div>${badge(current.state)}</div><p class="current-summary">${escape(data.resume.lastCompleted)}</p><div class="current-gates"><div><h3>已完成并验证</h3>${gateList(current.gateResults.filter(row => row.status === 'pass'))}</div><div><h3>仍待验收</h3>${gateList(current.gateResults.filter(row => row.status !== 'pass'))}<p class="small">${current.state === 'changes-required' ? '用户已要求返工；历史技术验证不能代替本轮美术与体验审核。' : '这些项目未完成前不关闭当前迭代；世界与等级资格分别记录。'}</p></div></div><div class="current-revisions">实施提交 <code>${escape(current.actualRevision ?? '未实施')}</code> · 证据归档 <code>${escape(data.resume.evidenceRevision ?? '未登记')}</code> · 已结迭代 ${data.iterations.filter(row => row.state === 'closed').length} / ${data.iterations.length}（不等于世界完成比例）</div><div class="current-links"><a href="../../rift-r100-masters.html">运行九格母版 ↗</a><a href="../qa/interactive/r100-i02-corrections.html">本轮整改实景对照 ↗</a><a href="../qa/rift-r100-i02.md">验证记录</a><a href="#${escape(current.id)}">查看当前迭代</a></div></section>` : '';
   const issueOverview = data.issues.length ? `<section class="section" id="issues"><div class="section-head"><div><div class="eyebrow">Issues / Actual Follow-up</div><h2>当前问题与处理结果</h2><p>待处理 ${data.issues.filter(row => row.status === 'open').length} 项；已解决项保留原始证据与修复范围。</p></div></div><div class="issue-list">${[...data.issues].sort((a,b) => (a.status === 'resolved') - (b.status === 'resolved')).map(issue => `<details class="issue"><summary>${badge(issue.status)} <span>${escape(issue.severity)} · ${escape(issue.title)}</span><small>${escape(issue.id)} / ${escape(issue.iteration)}</small></summary><p>${escape(issue.note ?? '')}</p><p class="small">负责：${escape(issue.owner)} · ${evidenceLinks(issue.evidenceIds)}</p></details>`).join('')}</div></section>` : '';
 
   const warningOverview = result.warnings.length ? `<section class="limits" role="status"><strong>当前资格缺口</strong>${bullets(result.warnings)}<p>历史达成保留。发布判断始终使用当前有效世界、等级资格与当前候选版本证据。</p></section>` : '';
@@ -422,6 +430,20 @@ export function selfTest(base, root = ROOT) {
         review: { technical: 'pass', visual: 'pass', experience: 'pass' }, reviewEvidence: { technical: ['technical'], visual: ['visual'], experience: ['experience'] } }])),
       nearestWorldIds: [], distinctness: 'Self-test world only; never written to canonical data.', invalidated: false }];
   };
+  const reopenPair = data => {
+    activeWorld(data);
+    for (const iteration of data.iterations.slice(0, 2)) Object.assign(iteration, {
+      state: 'changes-required', stage: 'implementation', actualRevision: 'old-executed-r1',
+      rework: { state: 'open', evidenceIds: [], reason: 'Human rejected both executed rounds' },
+    });
+  };
+  test('human rejection can reopen an executed iteration and its foundation together', reopenPair, true);
+  test('a fresh dependent cannot bypass its reopened foundation', data => {
+    reopenPair(data); data.iterations[1].state = 'active';
+  }, false);
+  test('reopening without an earlier implementation cannot bypass dependency', data => {
+    reopenPair(data); data.iterations[1].actualRevision = null;
+  }, false);
   const valid = test('future qualified production world derives counts without human conflation', activeWorld, true);
   assert.deepEqual(valid.counts, { candidates: 1, qualified: 1, production: 1, humanApproved: 0, qualifiedGradeCases: 3, productionGradeCases: 3 });
   const invalidated = test('invalidated record is removed from qualified and production counts', data => { activeWorld(data); data.worlds[0].invalidated = true; }, true);

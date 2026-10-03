@@ -16,7 +16,7 @@ for(const definition of MASTER_SCENES){
     const positions=[world.layout.spawnPoint,world.layout.extractionPoint.position,...world.layout.kindlingNodes.map(n=>n.position)];
     for(const p of positions)assert(bodyHasSupport(grid,p,10,10),`${definition.id} body support`);
     assert.equal(world.layout.contaminationDraw.forms.filter(form=>form.lexemes.sense==='sense_hear').length,1);
-    assert.equal(world.diagnostics.gradeMechanics,false);
+    assert.equal(world.diagnostics.gradeMechanics,true);
     assert(world.raster.occupiedPixels.length>2000);
     assert(Number(world.diagnostics.reachableBodySeats)>2000);
     results.push({id:definition.id,seed,geometryFingerprint:world.diagnostics.geometryFingerprint,seats:world.diagnostics.reachableBodySeats,spawn:world.layout.spawnPoint,pixels:world.raster.occupiedPixels.length});

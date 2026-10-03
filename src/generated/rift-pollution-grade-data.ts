@@ -1,26 +1,65 @@
-// Generated from data/rift-pollution-grades.csv; contract-only, no graded departures enabled.
+// Generated from data/rift-pollution-grades.csv; native DEV master grading only, no graded production departures enabled.
 import type { PollutionGradeDefinition } from '../generation/world-study/pollution-grade';
-export const POLLUTION_GRADE_SOURCE_HASH = 'c19b43be9f078ce4362b3ad74642cf79bdab255cc35aa11793c5046719c05b18';
+export const POLLUTION_GRADE_SOURCE_HASH = 'e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066';
 export const POLLUTION_GRADE_DEFINITIONS: readonly PollutionGradeDefinition[] = [
   {
     "id": "low",
     "version": 1,
     "label": "低污染",
-    "status": "contract-only",
-    "intent": "原有材料与空间关系仍可辨；保持陌生感并允许观察与低损耗搜取"
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
   },
   {
     "id": "medium",
     "version": 1,
     "label": "中污染",
-    "status": "contract-only",
-    "intent": "关联侵入影响视线与绕行；根据目标和余量选择搜取与撤退"
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
   },
   {
     "id": "severe",
     "version": 1,
     "label": "重度污染",
-    "status": "contract-only",
-    "intent": "改写接管尺度与节律；充分准备后主动承担近崩溃环境的高风险高回报出行"
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
   }
 ];

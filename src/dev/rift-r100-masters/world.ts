@@ -1,6 +1,8 @@
 /** Author-local native Rift fixture. Geometry is admitted before any actor/node. */
 import { GAME_CONSTANTS } from '@/config/constants';
 import { BUILD_LAB_PLACEMENTS } from '@/generated/build-lab-data';
+import { POLLUTION_GRADE_DEFINITIONS } from '@/generated/rift-pollution-grade-data';
+import { createMasterPollution, type MasterPollution } from './pollution';
 import type { ContaminationForm } from '@/generation/contamination-draw';
 import { measureOutline } from '@/generation/outline-mask';
 import type { GeneratedRiftLayout } from '@/generation/types';
@@ -11,7 +13,7 @@ import type { WorldSample } from '@/generation/world-study/types';
 import { bodyHasSupport, bodyDisplacementFraction } from '@/systems/ai/physical-grid';
 import { TileGrid } from '@/systems/tile-grid';
 import { TileType, type Vector2 } from '@/types/game-types';
-import type { OccluderGrid } from '@/types/map-types';
+import type { TileMapData, OccluderGrid } from '@/types/map-types';
 import { MASTER_SCENES, MASTER_SCENES_SOURCE_HASH } from './generated-scenes';
 
 export type MasterDefinition = typeof MASTER_SCENES[number];
@@ -24,6 +26,8 @@ export interface MasterWorld {
   readonly raster: ReturnType<typeof compileNativeVolumeRaster>;
   readonly sample: WorldSample;
   readonly layout: GeneratedRiftLayout;
+  readonly hostTileMap: TileMapData;
+  readonly pollution: MasterPollution;
   readonly sight: OccluderGrid;
   /** Melee obstruction is physical: ordinary solid scenery still stops a swing. */
   readonly combat: OccluderGrid;
@@ -127,6 +131,8 @@ export function createMasterWorld(definition: MasterDefinition, seed: number): M
   const form:ContaminationForm={substrate:source.substrate,coverage:source.coverage as ContaminationForm['coverage'],continuity:'monolith',portfolio:'jia',occupancy:'floor',lexemes:{motion:source.motion,sense:source.sense,rhythm:source.rhythm,contact:source.contact}};
   const physicalLand=Uint8Array.from(tiles.flat(),v=>v===TileType.VOID?0:1), physicalWalls=Uint8Array.from(tiles.flat(),v=>v===TileType.WALL?1:0);
   const fragmentTypeId='frag-outdoor';
+  const grade = POLLUTION_GRADE_DEFINITIONS.find(item => item.id === definition.grade)!;
+  const pollution = createMasterPollution(grade, seed, grid, reachable, start, [exitPoint, searchPoint]);
   const outline={seed,attempt:0,cols,rows,tileSize:SUPPORT,land:physicalLand,tileMap,metrics:measureOutline(physicalLand,cols,rows)};
   const enemyCell={col:Math.floor(enemyPoint.x/SUPPORT),row:Math.floor(enemyPoint.y/SUPPORT)};
   const layout:GeneratedRiftLayout={seed,paintGeometryVersion:2,fragmentTypeId,recipeId:`r100-art-lab:${definition.id}`,contaminationAge:'new',ruinSeverity:'broken',tileMap,
@@ -134,16 +140,16 @@ export function createMasterWorld(definition: MasterDefinition, seed: number): M
     walkableMask:grid,spawnPoint,extractionPoint:{id:'master-exit',position:exitPoint,triggerRadius:GAME_CONSTANTS.EXTRACTION.TRIGGER_RADIUS},
     kindlingNodes:[{id:'master-search',position:searchPoint,tier:'safe',allowWeapon:false}],contaminantNodes:[],
     enemySpawns:[{id:'master-listener',type:'rewriter',spawn:enemyCell,facing:source.facing,patrol:{mode:'static',waypoints:[enemyCell]},form}],
-    landmarks:[],contaminationPins:{wallEdges:[],paintFloors:[],corridorAabbs:[]},contaminationDraw:{forms:[form],warnings:[]}};
+    landmarks:[],contaminationPins:pollution.pins,contaminationDraw:{forms:[form,...pollution.forms],warnings:[]}};
   const baseProfile=worldProfileById(definition.profile);
   const sample:WorldSample={profile:{...baseProfile,surface:{...baseProfile.surface,quietness:definition.ground_quietness,contrast:definition.ground_contrast,coverage:definition.ground_coverage}},topologyId:'loops',seed,cols:definition.cols,rows:definition.rows,tileSize:TILE,land,walls,spawn:spawnPoint,exit:exitPoint,formations:[],flowAngle,deposition};
   const sight:OccluderGrid={cols,rows,tileSize:SUPPORT,version:0,isOpaque:(col,row)=>col<0||row<0||col>=cols||row>=rows||!matter[row*cols+col]};
   let hash=2166136261;for(const mesh of meshes)for(const v of mesh.positions){hash=Math.imul(hash^Math.round(v*100),16777619);}for(const v of physicalWalls)hash=Math.imul(hash^v,16777619);for(const v of matter)hash=Math.imul(hash^v,16777619);
-  return{definition,meshes,raster,sample,layout,sight,combat:grid,matterAt,roleAt,diagnostics:{identity:definition.id,family:definition.family,grade:definition.grade,seed,
+  return{definition,meshes,raster,sample,layout,hostTileMap:pollution.hostTileMap,pollution,sight,combat:grid,matterAt,roleAt,diagnostics:{identity:definition.id,family:definition.family,grade:definition.grade,seed,
     sourceHash:MASTER_SCENES_SOURCE_HASH,geometryFingerprint:(hash>>>0).toString(16).padStart(8,'0'),qualification:'author-local-art-lab; not a production-world admission',projection:'native XY topdown; height projection 0',
     nativeCanvas:[960,640],cameraZoom:1.5,actorBody:HALF_BODY*2,movementPxPerSecond:80,supportCell:SUPPORT,
     triangles:meshes.reduce((n,m)=>n+m.triangleCount,0),reachableBodySeats:queue.length,spawnPoint,exitPoint,searchPoint,enemyPoint,
     sightPolicy:'only missing terrain and authored light erosion; ordinary relief/solid scenery is transparent',
     erosionCells:erosion.reduce((count,value)=>count+value,0),solidCells:physicalWalls.reduce((count,value)=>count+value,0),physicalRoles:definition.instances.map(({id,role})=>({id,role})),
-    geometryBeforeDeployment:true,dynamicTopology:false,gradeMechanics:false,materialSounds:'registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately'}};
+    geometryBeforeDeployment:true,dynamicTopology:false,gradeMechanics:true,paintHosts:grade.paintCount,volumeHosts:grade.volumeCount,paintContactAreaPx:pollution.paintAreaPx,volumeBoundsAreaPx:pollution.volumeAreaPx,chaosRateStart:grade.chaosStartRate,chaosRateEnd:grade.chaosEndRate,materialSounds:'registered material sources consume the same visible pressure clock; two low-priority voices, distance falloff; perceptual review recorded separately'}};
 }

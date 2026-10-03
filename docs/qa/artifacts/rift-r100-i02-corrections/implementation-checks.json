@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-03",
+  "baseline": "ba3ea28e3f56da95312683dc28e244c687cb1cfe",
+  "scope": "R100 native DEV correction worktree; no formal world/grade admission or user art acceptance",
+  "sources": {
+    "data/rift-pollution-grades.csv": "e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066",
+    "src/dev/rift-r100-masters/main.ts": "d12d2ab674a365a0008e4089c8f4f7ad51f8c72fb9738d44a7ed3aed650d902a",
+    "src/dev/rift-r100-masters/presentation.ts": "b06e33b862ffdc95f099de7cfe229e4a212bbe46716004a3eb6b306854ad54b6",
+    "src/dev/rift-r100-masters/surface-renderer.ts": "725f9a86bddf32f489603077ea79815209ee0e2525bdce9eb2acc1ded5c68408",
+    "src/dev/rift-r100-masters/world.ts": "ae5a2d1366fda3ccf4677ed9588adf7e574525d6098155aeedfb529046b6b430",
+    "src/generated/rift-pollution-grade-data.ts": "b0d255ab0efd5acdb3a5edb2d5b30017a7521b09de3b5a6c6852b77b9a63d69c",
+    "src/generated/rift-world-package-data.ts": "791bde6e5d631063aa337ab206e348a01015aa768b3b2204fd14646d7909b4a8",
+    "src/generated/rift-world-package-manifest.json": "d808902c1c04b5ef616501c514238dd3b294cad53879fb5d1f2b7cb5175edd43",
+    "src/generation/world-study/pollution-grade.ts": "21509fda38bf58b26df368736143eb3bbac3d60c6e2539147873a36c01cbe3bc",
+    "src/scenes/rift-scene.ts": "b21e32edd293dac2d7644080c320024822c8908d579b5e6d0fea23ff64e824f9",
+    "src/systems/chaos-system.ts": "d6c5db0ab69c2f1dd9007f78f13c36a5aba71cc3787d0ff88a609ee4b832d334",
+    "src/systems/contamination-host-system.ts": "72a0c1ff5d14d08a5bbece1a1f3133a179ab8c6dc028fa939632350d89b40139",
+    "src/dev/rift-r100-masters/pollution.ts": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f",
+    "src/dev/rift-r100-masters/surface-fields.ts": "d4ff6dc5e4b7a4b263205e340d9b95a6cc5cde4c8333609272dfb08f6f8122cd"
+  },
+  "checks": {
+    "typescript": "pass",
+    "build": "pass; existing bundle size warning",
+    "native_master_existing_contracts": "pass",
+    "native_host_grade_curves": "18 cases pass",
+    "surface_fields": "18 cases pass",
+    "actual_glsl": "7/7 pass; pre-fix3 failures retained",
+    "rift_recovery": "24 check entries pass; independent QA report",
+    "native_runtime": "18 cases, 36 raw frames, errors0",
+    "controlled_boundaries": "9 cases,18 raw frames; legal support, not a traversal proof",
+    "native_animation": "3 grades,8s each; frames change and pause freezes; incomplete full cycle",
+    "progress_self_tests": "73 pass",
+    "csv_codegen_fresh": "pass",
+    "review_viewer": "54 images/6 selections and3 video links pass"
+  }
+}

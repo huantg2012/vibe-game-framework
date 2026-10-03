@@ -4,6 +4,8 @@ import type { MasterGroundSurface } from '@/generation/world-study/master-ground
 import type { NativeVolumeLighting, NativeVolumeLight } from '@/generation/world-study/native-volume-raster';
 import type { MasterWorld } from './world';
 import type { PaintedMaterial } from './painted-material';
+import { buildMasterSurfaceFields } from './surface-fields';
+import { deriveFragmentContamRamp } from '@/entities/form-renderers/d/fragment-ramp';
 const VERTEX=`#version 300 es
 in vec2 position;out vec2 uv;void main(){uv=position*.5+.5;gl_Position=vec4(position,0,1);}`;
 const FRAGMENT=`#version 300 es
@@ -23,7 +25,7 @@ float materialLightPath(vec2 from,vec2 to){
  for(int j=0;j<96;j++){
   if(all(equal(cell,end)))return 1.;
   if(abs(next.x-next.y)<.000001){
-   if(darkCell(cell+vec2(stepDirection.x,0))&&darkCell(cell+vec2(0,stepDirection.y)))return 0.;
+   if(darkCell(cell+vec2(stepDirection.x,0))||darkCell(cell+vec2(0,stepDirection.y)))return 0.;
    cell+=stepDirection;next+=tStep;
   }else if(next.x<next.y){cell.x+=stepDirection.x;next.x+=tStep.x;}
   else{cell.y+=stepDirection.y;next.y+=tStep.y;}
@@ -46,7 +48,11 @@ void main(){
  vec4 ns=texture(normalMap,t),rs=texture(responseMap,t);vec3 n=normalize(ns.rgb*2.-1.);
  float height=(floor(rs.g*255.+.5)*256.+floor(rs.b*255.+.5))/128.;
  vec3 p=vec3(t*size,height);float volume=rs.a;
- vec3 illumination=vec3(mix(.36,.42,volume)*ns.a),specular=vec3(0);
+ // Ambient has direction and remains nonzero on shaded structural faces.
+ // A sloped face must retain a different value from the floor even when the
+ // shoulder light is behind it; it is ordinary visible matter, not eaten light.
+ float hemisphere=.48+.52*max(0.,dot(n,normalize(vec3(-.40,-.50,.76))));
+ vec3 illumination=vec3(mix(.36,.46*hemisphere,volume)*ns.a),specular=vec3(0);
  for(int i=0;i<8;i++){
   if(i>=lightCount)break;vec3 delta=lights[i].xyz-p;float d=length(delta);
   vec3 ld=delta/max(.01,d);float fall=max(0.,1.-d/lights[i].w);
@@ -63,7 +69,9 @@ void main(){
  vec3 emission=texture(emissionMap,t).rgb;
  // Bound to actual material joints; the signal travels through their existing
  // pixels, never across absent terrain or as a full-screen green filter.
- float flow=.84+.16*sin(seconds*1.2+p.x*.037+p.y*.023);
+ float travel=sin(seconds*2.2-p.x*.085-p.y*.049);
+ float surge=smoothstep(.08,.94,travel);
+ float flow=.58+.54*surge; // sustained readable body, bright sections migrate inside it
  illumination=illumination/(vec3(1.)+illumination*.28)*1.15;
  vec3 c=a.rgb*illumination+specular+emission*activity*flow;
  if(mode==1)c=a.rgb;else if(mode==2)c=illumination*.5;else if(mode==3)c=ns.rgb;
@@ -72,6 +80,7 @@ void main(){
 export class MasterSurfaceRenderer {
  readonly canvas:HTMLCanvasElement;
  readonly gpuBytes:number;
+ readonly surfaceDiagnostics:Readonly<Record<string,number|string|boolean>>;
  private readonly gl:WebGL2RenderingContext;
  private readonly program:WebGLProgram;
  private readonly textures:WebGLTexture[]=[];
@@ -93,6 +102,8 @@ export class MasterSurfaceRenderer {
   const buffer=gl.createBuffer();if(!buffer)throw new Error('Surface quad allocation failed');this.buffer=buffer;
   gl.bindBuffer(gl.ARRAY_BUFFER,buffer);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
   const position=gl.getAttribLocation(program,'position');gl.enableVertexAttribArray(position);gl.vertexAttribPointer(position,2,gl.FLOAT,false,0,0);
+  const fields=buildMasterSurfaceFields(world),ramp=deriveFragmentContamRamp('frag-outdoor');
+  this.surfaceDiagnostics={structuralEmissionPixels:fields.infection.reduce((n,v)=>n+(v>.15?1:0),0),erosionEdgePixels:fields.erosion.reduce((n,v)=>n+(v>.1?1:0),0),solidFootBlendsIntoGround:false,greenOwnership:'actual fractured object or authored light-eaten edge; never the whole floor'};
   const albedo=new Uint8Array(size*4),normal=new Uint8Array(size*4),response=new Uint8Array(size*4),emission=new Uint8Array(size*4);
   const axis=painting?world.definition.axis:0,ca=Math.cos(axis),sa=Math.sin(axis),seed=painting?world.sample.seed:0;
   const mirror=(v:number,extent:number):number=>{const period=extent*2,n=((Math.floor(v)%period)+period)%period;return n<extent?n:period-n-1;};
@@ -140,17 +151,36 @@ export class MasterSurfaceRenderer {
    for(let c=0;c<3;c++){
     // Shallow bedded matter inherits its substrate; only an exposed raised
     // section fully owns the new material. This is a buried foot, not a decal.
-    const exposure=Math.min(1,Math.max(0,height-ground.heightField[i]!)/10);
+    const exposure=fields.solid[i]?1:Math.min(1,Math.max(0,height-ground.heightField[i]!)/10);
     albedo[q+c]=solid?ground.albedo[q+c]!*(1-exposure)+volume.albedo[n+c]!*exposure:ground.albedo[q+c]!;
     if(painting){
      const pigment=painting.pixels[paintingIndex+c]!*.92+painting.pixels[worldPaintingIndex+c]!*.08;
      // Use the authored tonal range directly, not a second narrow palette ramp.
      // Native geometry, shallow relief and lights continue to own illumination.
-     const gain=cut?1.0:solid?(r.material[i]===2?.84:.87+.13*exposure):.87;
+     const gain=cut?1.12:fields.solid[i]?(r.material[i]===2?.64:.73):solid?.87+.13*exposure:.87;
      albedo[q+c]=Math.min(255,pigment*gain*.94+albedo[q+c]!*.06);
     }
     normal[q+c]=Math.round(((solid?volume.shadingNormals[n+c]!:ground.normals[n+c]!)*.5+.5)*255);
     emission[q+c]=solid?Math.min(255,volume.emission[n+c]!):0;
+    const erosion=fields.erosion[i]!;
+    const infection=Math.max(fields.infection[i]!,erosion*.82);
+    if(infection>0){
+     // Grey-green altered matter and light share one actual fracture mask.
+     // Floor marks are restricted to authored eaten-light edges; their
+     // absent interior is kept opaque black by the authoritative mask.
+     const pigment=ramp.mid[c]!*.82+ramp.core[c]!*.18;
+     albedo[q+c]=albedo[q+c]!*(1-infection*.68)+pigment*infection*.68;
+     const glow=(ramp.core[c]!*.66+ramp.mid[c]!*.34)*infection*(erosion>0?.72:1);
+     emission[q+c]=Math.max(emission[q+c]!,Math.min(255,glow));
+    }
+   }
+   if(fields.solid[i]&&fields.edgeDistance[i]!<=4.5){
+    // Exposed foot has material thickness. It may be low, but cannot dissolve
+    // into the identical floor while its body still blocks the player.
+    const edge=(1-fields.edgeDistance[i]!/5);
+    const grain=.88+.12*Math.sin(r.uv[i*2]!*.31+r.uv[i*2+1]!*.53);
+    for(let c=0;c<3;c++)albedo[q+c]=Math.min(255,albedo[q+c]!*(1+edge*.24*grain));
+    ao=Math.max(ao,.72);
    }
    albedo[q+3]=255;normal[q+3]=Math.round(ao*255);
    const encoded=Math.max(0,Math.min(65535,Math.round(height*128)));

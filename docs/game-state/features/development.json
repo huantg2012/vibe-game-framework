@@ -57,7 +57,7 @@
     "id": "COH-F049",
     "title": "世界方向查看与隔离搜撤体验",
     "domain": "development",
-    "summary": "新增Rift v2地图巡览gym：从正式启用池与兼容过程枚举当前30组合，任意uint32种子、同种子巡检、完整投放/路线注解，并将同一productionWorld传入原生RiftScene试玩；Boot前内存存储隔离。旧材料查看器及缩减试玩继续保留。 R100-I02的9格作者入口已实现并经限定独立图像审核：原生角色/有限fog下接GPU材质、普通实体/浅浮雕与独立侵蚀、同压力时钟的环境材质声，以及可被键盘接管的五站/入口往返巡查。数据、材质文件与原生接收器已接通；不是正式出击池，双seed128帧、单地段60秒帧时、十次重建计数有证据；听感/GC与用户认可仍待验，不授世界资格。 I02母版入口补受控GC重建证据与三材料实际音画对照，作者DEV范围和人审限制保留。",
+    "summary": "Rift v2地图巡览gym从正式启用池与兼容过程枚举当前30组合，支持种子巡检、投放/路线注解和同一productionWorld原生试玩；Boot前内存存储隔离，旧研究页继续保留。R100九组DEV母版接原生角色/有限视野、真实占漆占空、绿色侵蚀与反光、普通实体边缘和CSV等级混乱曲线。I01/I02已被用户退回；本轮18例有限运行与54帧独立视觉复核仅证明局部改进，仍待人审复评，0/108世界与0/324等级。历史Worker、受控GC及音画录制不转作本轮审美通过。",
     "delivery": "dev",
     "work": "active",
     "entryPoints": [
@@ -251,6 +251,54 @@
       {
         "path": "tools/qa/check-r100-async-entry.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/art/rift-r100-i02-review.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/report-r100-corrections-code.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/interactive/r100-i02-corrections.html",
+        "role": "doc"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/rift-r100-masters/surface-fields.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-pollution-grades.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/world-study/check-master-pollution.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-master-surface-fields.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-r100-corrections.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-r100-corrections-animation.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-r100-corrections-light-path.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/render-r100-corrections.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -265,12 +313,16 @@
       "COH-E125",
       "COH-E126",
       "COH-E127",
-      "COH-E128"
+      "COH-E128",
+      "COH-E130",
+      "COH-E131",
+      "COH-E132"
     ],
     "unknowns": [
       "当前目录30组合及固定种子巡检不是穷举uint32种子或连续条件；预览仅原生地表与只读部署注解，模型/实时光照在试玩查看。",
       "训练库存、内存存档与开发检查不代表正式自然资源供给、长期体验或用户美术认可；旧研究页/缩减试玩的边界保持。",
-      "R100-I02本轮为DEV接入与限定技术复核；CPU上传/资源回滚、文件解码或巡查输入检查不能替代实际GLSL、GPU性能、连续操作、美术和声音审查。后续绘画映射修改必须重跑对应合同。"
+      "R100-I02本轮为DEV接入与限定技术复核；CPU上传/资源回滚、文件解码或巡查输入检查不能替代实际GLSL、GPU性能、连续操作、美术和声音审查。后续绘画映射修改必须重跑对应合同。",
+      "54帧静态独立意见不能证明连续动效、全周边碰撞、接触代价、声音混音或自然整局体验；折板远端暗面、入口第一眼的等级次序和重壳局部过亮仍需跟进。"
     ]
   },
   {
