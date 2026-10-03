@@ -1,0 +1,213 @@
+
+> coh@0.1.0 check:rift-recovery
+> node tools/recovery/check.mjs
+
+PASS absent storage starts a new record and normal saves remain loadable
+PASS valid: no reset, entry or deletion without explicit replacement
+PASS malformed JSON: no reset, entry or deletion without explicit replacement
+PASS future version: no reset, entry or deletion without explicit replacement
+PASS empty stored string: no reset, entry or deletion without explicit replacement
+PASS JSON null: no reset, entry or deletion without explicit replacement
+PASS inaccessible storage is not treated as an empty slot, even after confirmation
+PASS confirmed replacement never deletes the old record, including a read-only deletion backend
+PASS first replacement write failure retains the exact old bytes; retry commits one complete new record
+PASS pending settlement and open inventory frames cannot be erased by new-record entry
+PASS title new-game enters confirmation for damaged/future/empty records; cancel and Escape preserve bytes
+11 save replacement checks passed. Browser layout and the in-game pause menu require runtime verification.
+PASS cancel/repeated confirmation leave the entire live state and exact saved bytes unchanged
+PASS shutdown aborts cold load without a scene handoff
+PASS destroy aborts cold load without a scene handoff
+PASS blur aborts cold load without a scene handoff
+Expedition preparation failed; saved record retained Error: Injected generation failure
+    at ControlledWorker.worker.onerror (/Users/yilungao/coh/src/generation/rift-generation-client.ts:46:38)
+    at ControlledWorker.fail (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:35:23)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:91:16)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:65:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:89:7)
+PASS worker failure preserves the live base and record and unlocks retry
+Expedition preparation failed; saved record retained Error: Saved world does not match the current generation contract
+    at ControlledWorker.worker.onmessage (/Users/yilungao/coh/src/generation/rift-generation-client.ts:42:37)
+    at ControlledWorker.complete (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:33:10)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:102:16)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:65:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:95:7)
+PASS bad outing identity retains an explicit base-rescue choice; it never abandons automatically
+Expedition preparation failed; saved record retained Error: Injected generation failure
+    at ControlledWorker.worker.onerror (/Users/yilungao/coh/src/generation/rift-generation-client.ts:46:38)
+    at ControlledWorker.fail (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:35:23)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:111:56)
+    at check (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:65:9)
+    at <anonymous> (/Users/yilungao/coh/tools/recovery/check-async-entry.ts:108:7)
+PASS a changed record is never offered the old outing rescue after Worker failure
+PASS changed bytes during preparation are rejected before admission mutates state
+PASS prepared-only scope never generates an unprepared foreign identity
+PASS admitted original checkpoint routes the saved world without rewriting it
+PASS SaveManager expected snapshot rejects replacement even at the final synchronous boundary
+PASS actual departure cancels before beginRun; duplicate confirm launches only one worker
+PASS actual departure retains one frozen transaction and identity across a failed save and retry
+Async entry: 13 checks passed; actual persistence/session paths, adapted rendering and controlled delivery.
+PASS direct haven destruction: invalid ScenePlugin is never resumed; actual waiting DOM discarded, bytes/inventory unchanged
+PASS direct title destruction: pending recovery and late art decode are cancelled; owned DOM and lifecycle listeners removed
+check:recovery-actors PASS: both layouts; JSON continuation; momentum/facing; stable RNG/search/path aliases; final-use/contact/shared budget/noise; buffer; enemy windup/latch/cooldown; control rebind; dead roster; reject-before-mutation. APIs are actor components, not complete run recovery.
+PASS last stitch: crossing history, independent stop, fade tail, source IDs and no repeat consumption
+PASS stitch before its first crossing retains previous positions, without inventing a source on export
+PASS overlapping compress anchors retain separate sources and remaining lifetimes through the final charge
+PASS compress with no contact keeps its lazy source and stable control serial
+PASS kindle resumes its real throw/pulse clock and does not replay the first lure
+PASS last siphon charge stays active independently of the cleared slot; damage never triggers a second use
+PASS last muffle episode extends only on real signals and survives an empty slot; never-signaled infinity encodes null
+PASS fresh muffle restores the initial unpublished hearing state, then the same first real update publishes it
+PASS invalid Tool state leaves runtime untouched; current families recover while retired effects refuse
+PASS chaos restores thresholds/chase cooldowns/temp reductions/last projection and advances by simulation time alone
+PASS all seven native search nodes preserve pure fuel, ground loot, cached failed roll and unrolled/none/weapon distinctions
+PASS search channel resumes exact progress without replaying start noise or reward, and release still interrupts
+PASS restored acquisition dedup never re-notifies an item after a drop/take cycle and retains unique IDs
+PASS trail and minimap retain exploration/extraction information without advancing it during offline time
+14 effect/search/memory recovery checks passed. JSON equivalence is a unit boundary, not keyboard or performance evidence.
+PASS sea-open-channel: diversion remainder, shared invulnerable contact deadline, return and next cycle match continuous water
+PASS sea-folded-ridge: diversion remainder, shared invulnerable contact deadline, return and next cycle match continuous water
+PASS terrain: only G memory is restored; R recomputes, air remains absent; invalid bits are rejected
+PASS fixed 35° follow camera: current easing, target and preceding position continue without a snap
+PASS native owner: shell and elapsed restore silently without repeating material or contact events
+5 world recovery checks passed.
+PASS real native modules export one valid active frame; validator never writes to input or inventory
+PASS cross-domain guard rejects mismatched alive roster, committed windup, interruption latch and player slowdown
+PASS known dead targets remain valid historical seam membership, without respawning them
+PASS real revealed UUIDs and pure fuel are cross-checked with the exact inventory ledger
+PASS real death, extraction and explicit abandon produce only settled receipts matching the same loss/reward ledger
+5 whole-frame recovery checks passed. Native world geometry/signature and persisted publication remain owned by runtime/SaveManager.
+PASS catalog frame: original browser save, 36 final-use parameter definitions, 161 corruption counterexamples
+PASS catalog fixed-plan admission: saved item/district authority, missing fuel district and source mismatch reject
+PASS active scene and external clocks resume the saved elapsed basis without offline time or restore events
+PASS quota failure gates timer scheduling, result publication, and return; each retry commits identical bytes
+PASS return during the terminal frame settles death once and survives reload without a duplicate RIFT_EXITED
+PASS terminal delay resumes its remaining time and an already published result restores without replay
+PASS explicit abandon loses carried equipment, persists its distinct reason, and cannot become extraction
+5 run recovery checks passed.
+PASS durability, corresponding world effect and presentation publish only as one complete commit; failed retry does not reroll
+PASS mismatched, corrupt and unsupported complete records leave live state and raw evidence intact
+PASS explicit abandon is durable and distinct from death, gives no carried reward, and repeated load cannot revive the weapon
+3 recovery persistence transport checks passed.
+check:settlement-random PASS: seeded primary/fallback and forecast blur; legacy lookahead/no reroll; five failed-save/reload returns; deterministic grants and persisted per-item cap. Impact invocation/baseSettled dedup remains the coordinator responsibility.
+PASS both layouts and seed variants match live AI/Combat configuration; JSON admission preserves all input and emits nothing
+PASS world, shell, camera, memory and actor configuration corruptions reject before hydration
+PASS memory cannot remember a VOID cell and each temporary DataTexture is disposed even on rejection
+PASS actual actor AABBs reject chasms, edge overlap, out-of-bounds and sprite/body disagreement
+PASS known dead roster remains absent while historical tool references stay admissible
+PASS terminal receipt validates same identity/ledger without actor/world payload or DataTexture allocation
+check:recovery-admission 6 passed (real state owners, no GPU or browser)
+PASS formal departure atomically records one run/cycle and refresh resumes the entry intent without a new expedition
+PASS a complete active record routes its original world and unique inventory, independent of new sidebar selection
+PASS settled receipt enters formal base impact/maturation once; another process load does not replay either
+PASS failed base write preserves the settled record and reload produces identical impact, forecast and replacement ID
+PASS bad JSON and unknown world signatures retain raw bytes and live systems, without new-game fallback
+5 journey recovery routing checks passed. Fresh processes replace module reloads; these are not gameplay or GPU evidence.
+PASS entry abandon transfers one pause, cancels entry time and repeated end notifications remain inert
+PASS Arcade world already null at terminal shutdown still releases every system and both ownership flags
+PASS Arcade world already null during entry shutdown clears entry without attempting resume
+PASS normal active finish pauses once; a later entry on the reused scene can acquire and release a new world
+PASS pre-existing external physics pause is never resumed by entry/end ownership cleanup
+PASS legacy entry without freezeAfterEnd retains its prior end behavior and normal entry resume
+check:recovery-lifecycle 6 passed (actual scene lifecycle, no GPU)
+PASS minimap: unseen exit hidden, earned bearing, unchanged exploration, stale snapshot recovery/expiry, old schema and corrupt rejection
+PASS solidify final-charge continuation
+PASS scatter final-charge continuation
+PASS retrograde final-charge continuation
+PASS delay final-charge continuation
+PASS siphon final-charge continuation
+PASS expand final-charge continuation
+PASS muffle final-charge continuation
+PASS kindle final-charge continuation
+PASS stitch final-charge continuation
+PASS compress final-charge continuation
+PASS mirror final-charge continuation
+PASS abyss final-charge continuation
+PASS combust final-charge continuation
+PASS broken-freeze boundary, legacy five-tool snapshot, bounded immutable pose serialization
+PASS procedural identity: exact original retry/recipe selection, including seed 432889249; mismatch retained
+PASS formal admission: two actual Host compositions, authored core order + 11 corrupt owner/identity/range counterexamples
+PASS explicit rescue: invalid world preserved; no automatic loss; rejection rollback; one abandon receipt keeps stash/growth/base; invalid base refused
+PASS paint geometry recovery: two actual world-space saves + 6 old colonies retain hashes, nuclei and runtime; v2 recipe/layout/Host JSON restoration; version tampering rejects.
+v2 requested=0 admitted=4240457136 signature=23e24a0c attempt=1
+v2 requested=5 admitted=936294695 signature=e9b08be0 attempt=0
+v2 requested=70421 admitted=4162163185 signature=f23b2950 attempt=0
+PASS generation versions: 4 immutable v1 complete-paint identities, 3 cold v2 JSON reconstructions; full-body retreat and all eleven resource seats free of real paint danger; bad/missing contracts and version/stream tampering rejected.
+PASS cold v1 0: original identity, terrain and Host geometry
+PASS cold v1 1: original identity, terrain and Host geometry
+PASS cold v1 2: original identity, terrain and Host geometry
+PASS cold v1 3: original identity, terrain and Host geometry
+PASS cold v2-0: full world SHA256, input preservation, corruption rejection and matching departure
+PASS cold v2-5: full world SHA256, input preservation, corruption rejection and matching departure
+PASS cold v2-70421: full world SHA256, input preservation, corruption rejection and matching departure
+PASS cold unversioned-432889249: full world SHA256, input preservation, corruption rejection and matching departure
+PASS cold unversioned-17: full world SHA256, input preservation, corruption rejection and matching departure
+PASS cold v2-0: full world SHA256, input preservation, corruption rejection and matching departure
+PASS cold unversioned-432889249: full world SHA256, input preservation, corruption rejection and matching departure
+PASS cold v1 0: original identity, terrain and Host geometry
+PASS old generation isolated from changed live execution/validation (1 function(s) poisoned)
+PASS frozen generation: 4 v1 and 5 complete-world gold records; each recovered in a fresh process
+PASS worker lifecycle: pre-abort, active abort, late/stale replies, timeout, worker/clone/post errors, success cleanup
+PASS isolated v1 identity b0a50400: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 282.166041,
+  elapsedMs: 340.868333,
+  hydrateMs: 0.7235000000000582,
+  verifyMs: 1.11587499999996,
+  cacheMs: 0.017666999999960353
+}
+PASS isolated v1 identity bcb3d082: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 163.26687500000003,
+  elapsedMs: 220.904583,
+  hydrateMs: 0.06216600000004746,
+  verifyMs: 0.34979199999997945,
+  cacheMs: 0.011666999999988548
+}
+PASS isolated v1 identity 1190e955: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 301.00804199999993,
+  elapsedMs: 359.2857090000001,
+  hydrateMs: 0.13079100000004473,
+  verifyMs: 0.44191700000010314,
+  cacheMs: 0.013916999999992186
+}
+PASS isolated v1 identity f49b04b1: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 208.44483300000002,
+  elapsedMs: 267.40554199999997,
+  hydrateMs: 0.056166000000075655,
+  verifyMs: 0.37991699999997763,
+  cacheMs: 0.01174999999989268
+}
+PASS isolated v2-0 identity 23e24a0c: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 3100.733375,
+  elapsedMs: 3159.483666,
+  hydrateMs: 0.059125000000676664,
+  verifyMs: 0.4038749999999709,
+  cacheMs: 0.01895799999965675
+}
+PASS isolated v2-5 identity e9b08be0: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 310.8294999999998,
+  elapsedMs: 375.6864999999998,
+  hydrateMs: 0.05033299999922747,
+  verifyMs: 0.3854590000000826,
+  cacheMs: 0.017083000000639004
+}
+PASS isolated v2-70421 identity f23b2950: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 545.0203750000001,
+  elapsedMs: 603.2145420000006,
+  hydrateMs: 0.06070799999997689,
+  verifyMs: 0.3602919999993901,
+  cacheMs: 0.014333000000078755
+}
+PASS isolated unversioned-432889249 identity d39e7a78: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 263.1162919999997,
+  elapsedMs: 321.2595419999998,
+  hydrateMs: 0.06287499999962165,
+  verifyMs: 0.46841700000004494,
+  cacheMs: 0.01020799999969313
+}
+PASS isolated unversioned-17 identity 569a891a: old values, rebuilt walkability and prepared-only scope {
+  generationMs: 344.4243340000003,
+  elapsedMs: 403.31958399999985,
+  hydrateMs: 0.09125000000040018,
+  verifyMs: 0.17929199999980483,
+  cacheMs: 0.010041999999884865
+}
+PASS async generation: 4 v1 + 5 gold cases; frozen new departure; 12/12 workers disposed; no Phaser/storage dependencies

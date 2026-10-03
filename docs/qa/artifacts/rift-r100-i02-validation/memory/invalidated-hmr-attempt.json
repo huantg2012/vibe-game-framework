@@ -1,0 +1,219 @@
+{
+  "startedAt": "2026-10-03T01:49:17.301Z",
+  "revision": "da653887c4d7f2d323eb275e525728f447ef7636",
+  "scope": "R100-I02 native DEV stage; isolated incognito profile; no user save or existing browser access",
+  "budget": {
+    "source": "docs/tasks/rift-r100-i01.md:84",
+    "retainedGrowthBytes": 10485760
+  },
+  "method": "Warm all nine family/grade combinations and all three painted caches. Compare the same shell/severe/20261002 baseline after ten same-case and twelve varied reconstructions. Pause only for each measurement; run two CDP HeapProfiler.collectGarbage calls in separate tasks. Snapshot real post-GC live objects and V8 external backing storage; weak instrumentation never strongly retains tested resources.",
+  "environment": {
+    "browser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/154.0.8037.93",
+      "revision": "@f89f3a4363808e117c592adedcf9947882ac3b79",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+      "jsVersion": "15.4.80.19"
+    },
+    "headless": true,
+    "viewport": "1280x900",
+    "dpr": 1,
+    "logical": "960x640",
+    "camera": 1.5,
+    "platform": "darwin",
+    "architecture": "arm64",
+    "isolatedContext": true
+  },
+  "sourceHashes": {
+    "src/dev/rift-r100-masters/main.ts": "0f7ee455d465f6182d16620f20ae35595ab6ff202c0cf4bda071e93999646bdc",
+    "src/dev/rift-r100-masters/presentation.ts": "0e59a0d24b6eaac7b69b1e0ee569ed3e8fbd382e012c0fb97fb8359a09092325",
+    "src/dev/rift-r100-masters/surface-renderer.ts": "5dccc50a68d840676551c2b724122e98d273dd7f687174749c62da926bb048cb",
+    "src/dev/rift-r100-masters/painted-material.ts": "379b8e4b4f8b44755b76619a1f64abd65103fafe5e51baa05d234e7e584d17f9",
+    "src/dev/rift-r100-masters/audio.ts": "3da1af7052709c5ccdca27c4df4e9c6a254e6935277fd41368ca8bc8562dc3e4",
+    "src/dev/rift-gym-runtime.ts": "e0d7830e0375106b19144444ab4c9d92da929a95aa3f1202eeadc66520320bef",
+    "src/scenes/rift-scene.ts": "aa7e044d66fd5bf9045aff9251e46c066663d80610f9cd723459e1583d15e185"
+  },
+  "warmups": [
+    {
+      "family": "folded-slab",
+      "grade": "low",
+      "seed": 20261002,
+      "resources": {
+        "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+        "textureKeys": 273,
+        "registeredTextureCanvases": 260,
+        "domCanvases": 3,
+        "sharedCanvasPoolUsed": 260,
+        "sharedCanvasPoolFree": 0,
+        "displayListEntries": 69,
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false,
+            "displayListEntries": 0
+          },
+          {
+            "key": "RiftScene",
+            "active": true,
+            "paused": false,
+            "displayListEntries": 69
+          }
+        ],
+        "soundsRegistered": 3,
+        "soundsPlaying": 3,
+        "soundsPaused": 0,
+        "soundsPendingRemoval": 0,
+        "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+      }
+    },
+    {
+      "family": "folded-slab",
+      "grade": "medium",
+      "seed": 20261002,
+      "resources": {
+        "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+        "textureKeys": 273,
+        "registeredTextureCanvases": 260,
+        "domCanvases": 3,
+        "sharedCanvasPoolUsed": 260,
+        "sharedCanvasPoolFree": 0,
+        "displayListEntries": 69,
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false,
+            "displayListEntries": 0
+          },
+          {
+            "key": "RiftScene",
+            "active": true,
+            "paused": false,
+            "displayListEntries": 69
+          }
+        ],
+        "soundsRegistered": 3,
+        "soundsPlaying": 3,
+        "soundsPaused": 0,
+        "soundsPendingRemoval": 0,
+        "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+      }
+    },
+    {
+      "family": "folded-slab",
+      "grade": "severe",
+      "seed": 20261002,
+      "resources": {
+        "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+        "textureKeys": 273,
+        "registeredTextureCanvases": 260,
+        "domCanvases": 3,
+        "sharedCanvasPoolUsed": 260,
+        "sharedCanvasPoolFree": 0,
+        "displayListEntries": 69,
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false,
+            "displayListEntries": 0
+          },
+          {
+            "key": "RiftScene",
+            "active": true,
+            "paused": false,
+            "displayListEntries": 69
+          }
+        ],
+        "soundsRegistered": 3,
+        "soundsPlaying": 3,
+        "soundsPaused": 0,
+        "soundsPendingRemoval": 0,
+        "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+      }
+    },
+    {
+      "family": "fibre-knot",
+      "grade": "low",
+      "seed": 20261002,
+      "resources": {
+        "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+        "textureKeys": 273,
+        "registeredTextureCanvases": 260,
+        "domCanvases": 3,
+        "sharedCanvasPoolUsed": 260,
+        "sharedCanvasPoolFree": 0,
+        "displayListEntries": 69,
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false,
+            "displayListEntries": 0
+          },
+          {
+            "key": "RiftScene",
+            "active": true,
+            "paused": false,
+            "displayListEntries": 69
+          }
+        ],
+        "soundsRegistered": 3,
+        "soundsPlaying": 3,
+        "soundsPaused": 0,
+        "soundsPendingRemoval": 0,
+        "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+      }
+    },
+    {
+      "family": "fibre-knot",
+      "grade": "medium",
+      "seed": 20261002,
+      "resources": {
+        "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+        "textureKeys": 273,
+        "registeredTextureCanvases": 260,
+        "domCanvases": 3,
+        "sharedCanvasPoolUsed": 260,
+        "sharedCanvasPoolFree": 0,
+        "displayListEntries": 69,
+        "scenes": [
+          {
+            "key": "BootScene",
+            "active": false,
+            "paused": false,
+            "displayListEntries": 0
+          },
+          {
+            "key": "RiftScene",
+            "active": true,
+            "paused": false,
+            "displayListEntries": 69
+          }
+        ],
+        "soundsRegistered": 3,
+        "soundsPlaying": 3,
+        "soundsPaused": 0,
+        "soundsPendingRemoval": 0,
+        "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+      }
+    }
+  ],
+  "samples": [],
+  "snapshots": [],
+  "errors": [
+    ""
+  ],
+  "warnings": [],
+  "failures": [
+    "page.evaluate: SyntaxError: Unexpected end of JSON input\n    at JSON.parse (<anonymous>)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:12)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at diagnostic (/Users/yilungao/coh/tools/world-study/probe-master-retained-memory.mjs:90:31)\n    at reconstruct (/Users/yilungao/coh/tools/world-study/probe-master-retained-memory.mjs:110:76)\n    at async file:///Users/yilungao/coh/tools/world-study/probe-master-retained-memory.mjs:157:120"
+  ],
+  "limitations": [
+    "CDP Runtime.getHeapUsage is the main world isolate, not total renderer RSS or GPU driver memory. UsedSize, backingStorageSize and embedderHeapUsedSize are reported separately; their sum is only a conservative observation envelope, not a certified disjoint process allocation total.",
+    "Heap snapshots count live JS/native wrappers and backing stores. WebGL delete/loseContext and wrapper reclamation do not measure physical GPU/driver bytes.",
+    "The DEV runtime retains one Phaser Game and preloaded audio assets across reconstructions; this covers native scene recreation, not whole browser/device shutdown or formal sortie transitions.",
+    "Sampling pauses the scene after a bounded running interval. It is lifecycle evidence, not frame-performance, sound-quality, or long-play certification."
+  ],
+  "completedAt": "2026-10-03T01:49:27.070Z"
+}

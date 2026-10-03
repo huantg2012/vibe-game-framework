@@ -2,18 +2,22 @@
 status: ACTIVE
 created-by: design agent
 created-when: 2026-08-16
-last-modified-by: director（R100-I01冻结恢复与DEV世界包）
-last-modified-date: 2026-10-02
+last-modified-by: code（R100可取消生成与正式入场准入）
+last-modified-date: 2026-10-03
 note: Slice 6 COMPLETE。换路硬保证（规则 21）。裂隙用锚+种子+邻域抖动生成并烤图。天空+尘点低分辨率叠层循环。画廊是样例不是成品图库。练习场可锁 generateRiftLayout 的可选参数。**DEC-104 / I8-R：** 地面不再以崩坏簇为生产主签名；看得见的漆是有主占漆。整团胀缩技术保留，应用改为占漆宿主。迷雾下亮度人终审 PASS（2026-08-28）。污染句法钉层已交（DEC-076 / DEC-077）；巡逻过渡期仍是 3–4 + 恰好 1 个改写体。I3-A：EnemySpawnData 带 form；布局交出一份 contaminationDraw。DEC-088 / DEC-089 / DEC-090 / DEC-093 / DEC-094：第二层量化仍走色温分组；碎片身份不靠底色色温；质量语法 / 渍色 / 划痕先等价再拆档；旧图书馆已启用（生产路径）；居民区公寓本迭代不启用（簇是参数点，不再当未实现生成器）。
-interface-changed: false
+interface-changed: true
 slice: 6
 interfaces-with:
+  - system-field-inventory         # Worker准备后原子出发、冷恢复快照与救援
   - system-chaos-scavenge-extract  # 消费其薪柴分档与「一个撤离、走近按 E」；坐标改由本系统生成器给出
   - system-movement-vision         # 输出 OccluderGrid / 出生点；虚空格不可走、挡视线（DEC-106 虚空吞光）
   - system-enemy-ai                # 输出 WalkGrid + 巡逻；过渡期恰好 1 个改写体占听觉主轴（DEC-077）；出击甲带 ContaminationForm
   - system-contamination-lexicon   # 交出墙缘折线 / 占漆地板格（贪婪薪柴路径） / 走廊包围盒 + 一份 contaminationDraw；菌落与场不得加墙
   - system-growth-tide             # 输出污染物节点；工具 abyss 不得再直读固定图薪柴坐标
 exposes:
+  - prepareProceduralDeparture({ signal? }?) → Promise<RiftCheckpoint.identity>（正式新出击，固定一次配方后后台生成）
+  - prepareProceduralRecovery(identity, { signal? }?) → Promise<void>（按原身份准备，不重新抽选）
+  - withPreparedProceduralRecovery(identity, action)（同步准入作用域，缓存缺失不得同步生成）
   - generateWorldSample(profileOrId, topology, seed, space?) → WorldSample（DEV共享材料／空间配方）
   - getWorldSupportGrid / worldSupportAt / canStandWorld（8px支撑与20×20身体）
   - createWorldPlayMap → 原GeneratedRiftLayout适配、部署可达性与拒绝记录（DEV）
@@ -38,7 +42,23 @@ exposes:
 
 `WorldPackage`不是可直接出击的运行配方，也不是R100资格；当前五包/十五格全部不计合格数。`pollutionGrade`与contaminationAge、实体覆盖档、玩家chaos相互独立；本轮未把三级写进正式存档、备行、敌人或收益。等级进入、压力相位和回报的待实现合同在[设计依据](../design-notes/rift-world-space.md#rift-pollution-grades)，不能把声明有三级说成已有三级玩法。
 
-**界面核对。** 本轮不改变GeneratedRiftLayout或现行检查点结构；地图、移动/视野、敌人、句法、搜撤及成长调用方消费原结果。前轮v2快照合同已由当前源码与恢复总回归复核，本轮清除其遗留的interface-changed标记。未来新实体几何和等级运行字段进入实现时重新升起标记。
+**I01界面核对（历史范围）。** I01不改变GeneratedRiftLayout或现行检查点结构；地图、移动/视野、敌人、句法、搜撤及成长调用方消费原结果。前轮v2快照合同已由当前源码与恢复总回归复核，I01清除其遗留的interface-changed标记。本次异步准备API与调用链已变更，因此重新升起标记；现行检查点结构不变。未来新实体几何和等级运行字段进入实现时仍须独立审核。
+
+## R100 工程前置：可取消生成与正式入场（2026-10-03）
+
+正式出击和冷续局的纯地图生成已移到专用 Worker。每次新出击先固定一次随机种子及完整配方，再调用原封存执行器；当前 v1/v2、无 generation 旧身份、签名和正式选池保持原合同。Worker 内的有限候选重排仍属于这份配方的原算法，不是等待失败后重新抽世界。取消、错误或单次 60,000ms 硬截止终止本次 Worker，不自动换种子重试。
+
+`rift-generation-execute.ts`只依赖纯生成、身份计算及传输合同，不导入 Phaser、存档或会话 singleton。传输结果保留普通对象与 typed array，`walkableMask` 方法不越线程：主线程以原 tileMap 重建 TileGrid，并复核生成身份和签名后才登记有界缓存。Worker 的结果不会自行开始 run、改变库存或写入存档。
+
+正式 `PurificationScene` 等待准备成功后才执行原出发事务。冷续局先读取精确存档快照，按其中身份准备，在没有 await 的同一同步段复核快照并执行 prepared-only 加载；事务及救援规则唯一正文见[统一库存第7节](system-field-inventory.md#7-死亡撤离与中断恢复)。`RiftScene.create` 在后续建场帧再次进入 prepared-only 作用域，防止等待后缓存被逐出；缺失、不匹配或未知身份拒绝入场，不能退回主线程重生成。
+
+**跨运行时限制（R100-P05）。** 精确签名包含浮点朝向；生产金样复核已确认 Node 与 Chromium 的 `Math.atan2` 末位可不同，使旧 v2 签名不一致。当前同浏览器的开发/生产 Worker 结果相同；这不等于跨引擎或浏览器升级的旧档保证。不得修改封存执行器、忽略签名或将一个平台金样直接重写成另一个平台来隐去差异；后续兼容方案需明确原环境和迁移证据。
+
+同步生成函数仍供既有离线检查与明确 DEV 入口使用。`#rift`、pollution-review 等不带正式 recovery 的 DEV 直入，以及自行提供布局的 DEV fixture 保持原开发用途；有正式出发/恢复身份的路径始终走已准备准入，不能借 DEV 例外补救正式缓存 miss。这些入口不新增正式可选世界，也不将 I02 母版翻入生产。
+
+取消、失焦、SHUTDOWN、直接 DESTROY 均撤销等待所有权；请求编号隔离过期消息，Worker 完成或终止后释放监听、计时器与 Worker。直接销毁可能先使 ScenePlugin 失效，因此 Promise 收尾不得恢复、渲染或访问失效场景。
+
+此批实现改变任务执行位置，不证明总生成时长达标。主线程的接收/重建/签名复核、完整状态准入、Host 清单、表面预烤和首次建场仍须分段测量；既有自然样本 p95 超预算结论不因使用 Worker 自动关闭。三级玩法、I03 及世界资格不随本批代码接线宣告完成。
 
 ## R100 I02：作者实体试制合同（仅 DEV）
 
@@ -81,7 +101,7 @@ exposes:
 
 `index.html` → `src/main.ts` → `BootScene` → `MainMenuScene` → `PurificationScene` → `RiftScene` 是正式入口。逻辑分辨率960×640，原像素角色、80px/s基础移动、八向视野、战斗、翻找和撤离保持生产系统所有权。
 
-**2026-09-20 正式接线修复：** 新出击通过 `createProceduralDeparture` 从 `data/rift-world-pool.csv` 选择世界/空间配方；不再从旧碎片环境池抽取。当前为5种世界 × 2种开放空间，共10条等权候选；同配方仍用不同种子生成。候选不承诺五趟不重复。CSV的 `content_fragment_id` 独立选择既有污染句法方言，当前复用旧图书馆已上线的完整敌人组合，不把场景身份伪装成旧图书馆。人物、敌人机制、8堆薪柴/3个污染物翻堆、单听觉预算与按片龄的占漆配额继续复用生产规则。
+**2026-09-20 正式接线修复（2026-10-03 执行入口更新）：** 新出击通过 `prepareProceduralDeparture` 从 `data/rift-world-pool.csv` 选择世界/空间配方；不再从旧碎片环境池抽取。当前为5种世界 × 2种开放空间，共10条等权候选；同配方仍用不同种子生成。候选不承诺五趟不重复。CSV的 `content_fragment_id` 独立选择既有污染句法方言，当前复用旧图书馆已上线的完整敌人组合，不把场景身份伪装成旧图书馆。人物、敌人机制、8堆薪柴/3个污染物翻堆、单听觉预算与按片龄的占漆配额继续复用生产规则。
 
 旧在途存档的identity没有 `generation`，仍以原 `generateRiftLayout` 和原地表恢复该趟；返回后的下一次新出击进入世界空间池。三维/绘制式关卡探索仍归档，不进入正式池。
 

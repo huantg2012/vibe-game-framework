@@ -61,7 +61,7 @@
     "id": "COH-F002",
     "title": "标题菜单、新游戏与继续记录",
     "domain": "loop",
-    "summary": "标题支持新记录、有效存档继续与明确弃局。I31记录安全语义保持：坏包也须明确替换，首笔完整保存成功后才替换原记录。用户认可48b700c并授权推广，正式默认采用F首页与已认可动效；MainMenuScene保留记录摘要、安全覆盖和在途弃局恢复。DEV比较继续隔离正式存档，生产执行范围按本轮QA记录。",
+    "summary": "标题支持新记录、有效存档继续与明确弃局。I31记录安全语义保持：坏包也须明确替换，首笔完整保存成功后才替换原记录。用户认可48b700c并授权推广，正式默认采用F首页与已认可动效；MainMenuScene保留记录摘要、安全覆盖和在途弃局恢复。DEV比较继续隔离正式存档，生产执行范围按本轮QA记录。 冷续局先以Worker准备原世界，期间显示取消载入；原记录不写入/不替换，场景销毁和迟到载入回调已防护。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -309,6 +309,11 @@
         "path": "docs/qa/2026-10-01-opening-production.md",
         "role": "doc",
         "note": "48b700c获用户认可后的正式推广：production资产、入口/存档/生命周期及未验范围单列。"
+      },
+      {
+        "path": "docs/qa/rift-r100-async-entry-2026-10-03.md",
+        "role": "doc",
+        "note": "Worker/取消/恢复/场景销毁有限验证及入场预算缺口"
       }
     ],
     "dependsOn": [
@@ -328,7 +333,8 @@
       "COH-E112",
       "COH-E113",
       "COH-E114",
-      "COH-E115"
+      "COH-E115",
+      "COH-E129"
     ],
     "unknowns": [
       "2026-10-01三版首页已制作，A/C入场与切换有限验证，WASD/E/Tab及B完整到场未验；用户尚未选中且对连续性仍不满意；均接同一初始净化点，未做每张同位几何匹配或坐姿起身衔接。生成图与DEV接线不代表生产替换或人审通过。",
@@ -341,7 +347,7 @@
     "id": "COH-F003",
     "title": "入口备行与出击配置",
     "domain": "loop",
-    "summary": "新地坪裂隙入口按同源闭合周边与统一世界操作面判定选择rift目标：内陆端、两岸完整可达地面均可操作，不再限定单条内侧阈边。E经inventory-presenter打开inventoryPanel(prepare)；入口链历史限定验证与本次周边修正证据分别归QA。备行仍选择已成熟武器及主/被动工具，出发验证容量并保存意图；I31只读出击条件与逐堆整数所得保持，legacy loadoutPanel不是正式入口。",
+    "summary": "新地坪裂隙入口按同源闭合周边与统一世界操作面判定选择rift目标：内陆端、两岸完整可达地面均可操作，不再限定单条内侧阈边。E经inventory-presenter打开inventoryPanel(prepare)；入口链历史限定验证与本次周边修正证据分别归QA。备行仍选择已成熟武器及主/被动工具，出发验证容量并保存意图；I31只读出击条件与逐堆整数所得保持，legacy loadoutPanel不是正式入口。 新出击先冻结世界选择、异步准备，成功后才beginRun；等待可取消且不消费行装，库存/潮汐/记录快照变化则拒绝提交。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -436,6 +442,11 @@
       {
         "path": "src/generated/last-light-layout.ts",
         "role": "code"
+      },
+      {
+        "path": "docs/qa/rift-r100-async-entry-2026-10-03.md",
+        "role": "doc",
+        "note": "Worker/取消/恢复/场景销毁有限验证及入场预算缺口"
       }
     ],
     "dependsOn": [
@@ -453,7 +464,8 @@
       "COH-E101",
       "COH-E102",
       "COH-E104",
-      "COH-E106"
+      "COH-E106",
+      "COH-E129"
     ],
     "unknowns": [
       "2026-09-30旧阈边受控实机仅验证裂口E打开正式备行，不自动覆盖本次全周交互区；新范围验证由本轮QA单独记录。未据此重验Shift+Enter实际出击、Rift全程、结算归来、持久localStorage或长期经济。",
@@ -519,7 +531,7 @@
     "id": "COH-F005",
     "title": "资源加载与场景过渡",
     "domain": "loop",
-    "summary": "Boot加载正式资源后进入F标题；主菜单进入净化点仍使用既有新建/继续短过渡和session存档逻辑。共用title-motion/title-exterior由Scene时间驱动，首页减动清空叠加、实景time=0保留静态。正式默认资产启用joint-depth，DEV独立profile及历史对照保持且不覆盖生产配置；生命周期执行范围按本轮QA记录。",
+    "summary": "Boot加载正式资源后进入F标题；主菜单进入净化点仍使用既有新建/继续短过渡和session存档逻辑。共用title-motion/title-exterior由Scene时间驱动，首页减动清空叠加、实景time=0保留静态。正式默认资产启用joint-depth，DEV独立profile及历史对照保持且不覆盖生产配置；生命周期执行范围按本轮QA记录。 正式Rift出入的重生成在一次性Worker执行，60秒超时、取消/失焦/退出清理；入场仍有主线程长任务，不宣称全部加载不卡。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -738,6 +750,11 @@
         "path": "docs/qa/2026-10-01-opening-production.md",
         "role": "doc",
         "note": "48b700c获用户认可后的正式推广：production资产、入口/存档/生命周期及未验范围单列。"
+      },
+      {
+        "path": "docs/qa/rift-r100-async-entry-2026-10-03.md",
+        "role": "doc",
+        "note": "Worker/取消/恢复/场景销毁有限验证及入场预算缺口"
       }
     ],
     "dependsOn": [
@@ -755,7 +772,8 @@
       "COH-E112",
       "COH-E113",
       "COH-E114",
-      "COH-E115"
+      "COH-E115",
+      "COH-E129"
     ],
     "unknowns": [
       "闪帧专项的同实例重启仅验证可见性/角色重建，不作为自然搜撤返程证据。",

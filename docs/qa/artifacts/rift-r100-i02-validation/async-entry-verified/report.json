@@ -1,0 +1,121 @@
+{
+  "revision": "da653887c4d7f2d323eb275e525728f447ef7636",
+  "date": "2026-10-03T02:07:31.654Z",
+  "scope": "Isolated empty browser; actual title/prepare/cancel/pause/continue. Opens the existing Rift interaction by its scene method; not navigation or natural supply validation. Stale-record negative mutates only isolated storage bytes. Worker timings and long tasks separately recorded.",
+  "checks": [
+    "departure cancellation preserves exact save and haven",
+    "background generation enters a real saved Rift",
+    "cold-recovery cancellation preserves exact checkpoint",
+    "changed record refused without replacing bytes or entering the Rift",
+    "same run, world signature, position and health after resume"
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "metrics": [
+    {
+      "label": "new departure",
+      "workers": [
+        {
+          "url": "http://127.0.0.1:3044/src/generation/rift-generation-worker.ts?worker_file&type=module",
+          "start": 4042.5,
+          "messages": [],
+          "end": 4199,
+          "longTasks": [],
+          "frameCount": 10
+        },
+        {
+          "url": "http://127.0.0.1:3044/src/generation/rift-generation-worker.ts?worker_file&type=module",
+          "start": 5067.5,
+          "messages": [
+            5312.399999856949
+          ],
+          "end": 5312.799999952316,
+          "longTasks": [],
+          "frameCount": 15
+        }
+      ],
+      "preparation": {
+        "generationMs": 225.79999995231628,
+        "elapsedMs": 246.20000004768372,
+        "hydrateMs": 0.2999999523162842,
+        "verifyMs": 0.5,
+        "cacheMs": 0
+      },
+      "longTasks": [
+        {
+          "start": 166.5,
+          "duration": 260,
+          "name": "self"
+        },
+        {
+          "start": 429.2999999523163,
+          "duration": 65,
+          "name": "self"
+        },
+        {
+          "start": 849.5,
+          "duration": 143,
+          "name": "self"
+        },
+        {
+          "start": 1462,
+          "duration": 388,
+          "name": "self"
+        },
+        {
+          "start": 6162,
+          "duration": 302,
+          "name": "self"
+        }
+      ]
+    },
+    {
+      "label": "cold continue",
+      "workers": [
+        {
+          "url": "http://127.0.0.1:3044/src/generation/rift-generation-worker.ts?worker_file&type=module",
+          "start": 626.1000001430511,
+          "messages": [],
+          "end": 758.9000000953674,
+          "longTasks": [],
+          "frameCount": 8
+        },
+        {
+          "url": "http://127.0.0.1:3044/src/generation/rift-generation-worker.ts?worker_file&type=module",
+          "start": 1138.9000000953674,
+          "messages": [
+            1392.1000001430511
+          ],
+          "end": 1392.6000001430511,
+          "longTasks": [],
+          "frameCount": 15
+        }
+      ],
+      "preparation": {
+        "generationMs": 234.59999990463257,
+        "elapsedMs": 254.20000004768372,
+        "hydrateMs": 0.2999999523162842,
+        "verifyMs": 0.20000004768371582,
+        "cacheMs": 0
+      },
+      "longTasks": [
+        {
+          "start": 82.70000004768372,
+          "duration": 113,
+          "name": "self"
+        },
+        {
+          "start": 501.60000014305115,
+          "duration": 112,
+          "name": "self"
+        },
+        {
+          "start": 1476,
+          "duration": 242,
+          "name": "self"
+        }
+      ]
+    }
+  ],
+  "status": "passed"
+}

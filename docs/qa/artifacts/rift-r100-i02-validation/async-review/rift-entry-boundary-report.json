@@ -1,0 +1,38 @@
+{
+  "createdAt": "2026-10-03T02:09:34.956Z",
+  "revision": "da653887c4d7f2d323eb275e525728f447ef7636",
+  "sources": {
+    "src/scenes/rift-scene.ts": "0c0515889d4d39afe8ea480da97cac1dbe2ec28a3cc8f16afdf34f90455fdb7c",
+    "src/managers/rift-recovery.ts": "2102cda6a250154c26b8a3f0e17dc33b13dd75aa89fcd8e4d47c7265611b184f",
+    "src/scenes/boot-scene.ts": "52690d8ff1ef3bbc61029284dd391535b21043e1b233f0dbcb4b5e566203fa0e"
+  },
+  "origin": "http://127.0.0.1:3027/",
+  "scope": "Real Chromium native entry branch checks. DEV direct entry is not a formal generation/performance qualification. Recovery injection deliberately omits async preparation.",
+  "checks": [
+    {
+      "id": "legacy-dev-direct-deep-link",
+      "status": "pass",
+      "seed": 17,
+      "sceneReached": "RiftScene",
+      "pageErrors": [],
+      "savePresent": false
+    },
+    {
+      "id": "unprepared-formal-recovery",
+      "status": "pass",
+      "facts": {
+        "riftActive": false,
+        "menuActive": true,
+        "saved": null
+      },
+      "pageErrors": [],
+      "expectedConsoleErrors": [
+        "Rift entry failed; saved record retained Error: Procedural world has not been prepared\n    at withPreparedProceduralRecovery (http://127.0.0.1:3027/src/managers/rift-recovery.ts?t=1790992774007:159:53)\n    at RiftScene.createRun (http://127.0.0.1:3027/src/scenes/rift-scene.ts?t=1790992835278:227:58)\n    at RiftScene.create (http://127.0.0.1:3027/src/scenes/rift-scene.ts?t=1790992835278:173:12)\n    at SceneManager2.create (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:110790:36)\n    at SceneManager2.bootScene (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:110706:28)\n    at SceneManager2.start (http://127.0.0.1:3027/node_modules/.vite/deps/phaser.js?v=ee25c2dc:111248:26)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:29)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      ],
+      "reason": "Failed closed at withPreparedProceduralRecovery; did not enter the no-identity DEV branch."
+    }
+  ],
+  "sourcesUnchanged": true,
+  "status": "pass",
+  "finishedAt": "2026-10-03T02:09:37.884Z"
+}

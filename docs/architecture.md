@@ -2,13 +2,27 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-01
+last-modified: 2026-10-03
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
 ---
 
 # 技术架构
+
+## R100 工程前置：正式出击与冷续局的异步准备
+
+`PurificationScene.prepareRiftDeparture` → `managers/rift-recovery.ts` → `generation/rift-generation-client.ts` → 专用 `rift-generation-worker.ts`。主线程先固定一次配方，Worker 的 `rift-generation-execute.ts` 使用原冻结执行器生成并计算身份；`rift-generation-identity.ts` 是两端共用的纯签名算法。执行器/协议不依赖 Phaser、SaveManager 或其他有副作用的会话单例。每次请求独占 Worker，request id 拒绝旧响应，60秒硬截止；成功、取消、错误和消息反序列化失败均清计时器/监听并 terminate。
+
+`rift-generation-protocol.ts`声明传输DTO：普通对象与typed array通过结构化克隆；`walkableMask`发为null，主线程用原tileMap重建TileGrid方法。接收端重算身份/签名，合法且请求仍有效才注册layout/world关联；layout缓存仍至多4条，末次准备分段指标只保留1份。没有把整个带Phaser/存档的恢复manager搬进Worker，也没有通过Promise包装同步生成假装离线程。
+
+`prepareProceduralDeparture`返回准备身份，不消费库存。场景保存等待前的库存/cycle/修正与存档字节，成功后复核未变，再在`withPreparedProceduralRecovery`作用域内执行原出发事务。失败写入保留原候选和既有retry，不撤销或重开该趟。`session.loadExpedition`是首页与暂停菜单共用的Promise入口：`captureLoadSnapshot`只读包 → 按原identity预热 → 同步复核raw → prepared-only作用域内`load(undefined, snapshot)`；SaveManager入口本身也比较raw，未知/改变的快照不hydrate。
+
+prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/外来身份都抛错。`RiftScene.create`在真正建场帧再包住layout/world恢复，避免准备与场景启动之间的逐出重新引发主线程生成。同步create/restore仍用于离线工具；没有正式recovery身份的`import.meta.env.DEV`直入（`#rift`、pollution-review）和显式DEV fixture保留开发路径，有正式身份的恢复不能落入此例外。
+
+等待UI复用首页或暂停菜单，根仍为`#dom-ui-root`。会话载入互斥，等待期间新建拒绝；Scene/DOM各自保存controller所有权。取消、blur、SHUTDOWN及直接DESTROY终止请求；直接销毁可能已经清空ScenePlugin.manager，净化点先置退出标志并discard等待菜单，首页SHUTDOWN/DESTROY共用幂等release，迟到Promise与图片decode不能resume或重绘。非取消准备失败仍保留现有显式弃局救援，但必须是相同存档快照且基地/库存合法。机制唯一正文见[统一库存第7节](specs/system-field-inventory.md#7-死亡撤离与中断恢复)。
+
+该改动不新增存档schema、正式世界或污染分级UI，不把I02母版推广，也不宣称I03完成。Worker迁移不等于总生成时长或建场性能合格；接收/重建/身份复核、完整准入的Host清单与AI配置、表面预烤及首次纹理提交仍按主线程阶段分别审核。新增`check-async-entry`、`check-async-destroy`、`check-generation-worker`进入既有恢复总检查，程序测试、真实浏览器与美术/性能门分别记录。
 
 ## R100 I02：原生实体母版（DEV 制作中）
 
@@ -549,7 +563,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | EventBus | src/core/event-bus.ts | 类型安全的发布/订阅系统 | emit(), on(), off(), once(), destroy() | 已实现 |
 | I18n | src/i18n/index.ts | 多语言文本查找与语言切换 | t(key, params?), setLocale(), getLocale() | 已实现 |
 | GameState | src/managers/game-state.ts | 全局状态持有和查询（净化点/薪柴/三模块 CORE·STORAGE·PURIFIER/加厚档位/冲击强度/待生效副作用），module-level singleton | getKindlingReserve(), addKindling(n), spendKindling(n), getModules(), getModule(id), allocateToModule(id, kindling), applyDamage(id, damage), healModule(id, amount), getModuleEffect(type)（仅 CORE/STORAGE，分子 min(hp,100)/100）, getStartingChaos(), getModuleMaxHpTier() / getModuleMaxHp() / getNextModuleMaxHpCost() / canRaiseModuleMaxHp() / raiseModuleMaxHp(), getSortieModifiers()（含 startingChaos）, getSortieModifiersAfterRepair(type, kindling), getNextKindlingYieldRepair(type, affinity), getCycle(), incrementCycle(), getImpactIntensity(), setImpactIntensity(v), getPendingSideEffects(), addPendingSideEffects(effects), consumePendingSideEffects(), getRepairEfficiencyMult(), setRepairEfficiencyMult(v), getUpgradeDiscount(), setUpgradeDiscount(v), consumeUpgradeDiscount(), getState(), loadState(), reset() | 已实现（Slice 7：第三模块 + 加厚 + 起始混乱） |
-| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度）。Slice 7 持久化 `moduleMaxHpTier`；老档缺 PURIFIER / 档位则补 70 / 当前档 maxHp | getRecordPresence(), hasSave(), prepareNewRecord(confirmedReplacement?), hasUncommittedNewRecord(), save(), load(), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek；Slice 7 加厚档） |
+| RiftGenerationPreparation | src/generation/rift-generation-{client,worker,execute,protocol,identity}.ts；src/managers/rift-recovery.ts | 专用Worker纯生成与DTO；身份复核、有界缓存及正式prepared-only准入 | prepareProceduralDeparture(options?), prepareProceduralRecovery(identity, options?), hasPreparedProceduralLayout(identity), withPreparedProceduralRecovery(identity, action), getProceduralPreparationMetrics() | 已接正式等待路径；不代表总耗时/建场门通过 |
+| SaveManager | src/managers/save-manager.ts | 存档序列化/反序列化（收集各系统状态 → localStorage，加载时分发回各系统）。标题屏无副作用 peek（潮汐/相位/出击/稳定度）。Slice 7 持久化 `moduleMaxHpTier`；老档缺 PURIFIER / 档位则补 70 / 当前档 maxHp | getRecordPresence(), hasSave(), prepareNewRecord(confirmedReplacement?), hasUncommittedNewRecord(), save(), captureLoadSnapshot(), matchesLoadSnapshot(snapshot), load(mode?, snapshot?), deleteSave(), peekTideNumber(), peekTidePhase(), peekCycle(), peekStability(), peekRecordSummary() | 已实现（Slice 3；Slice 5.5 补 peek；Slice 7 加厚档） |
 | AudioManager | src/managers/audio-manager.ts | 音频播放/停止/分层混音/空间衰减 | playBGM(), stopBGM(), playSFX(), playAmbient(), stopAmbient(), setLayerVolume(), playSpatialSFX(), pauseAll(), resumeAll(), unlock() | 已实现（Slice 9） |
 | Player | src/entities/player.ts | 玩家移动/朝向/碰撞体/移速调制栈（Rift+Purification 共用）。贴图为加厚程序像素 + 灯尘（DEC-068）。转向滞后剪影不改玩法朝向 | create(scene, config), update(dt), postUpdate(), getPosition(), getFacingAngle(), getFacing4(), isMoving(), setSpeedModifier(), clearSpeedModifier(), setInputEnabled(), getGroundY(), setGroundDepth(base, floorDepth), getSprite(), destroy() | 已实现（T5；2026-08-20 步态帧；DEC-068 接线） |
 | PlayerSprite | src/entities/player-sprite.ts | 旧 32×32 方块人。boot 仍画别名贴图；不再驱动 Player | generatePlayerPlaceholders(scene), playerMotionTexture(facing, gait, frame) | 已实现（档案） |
@@ -642,8 +657,8 @@ eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, ({ level }) => { /* apply penalty
 | LoadoutPanel | src/ui/dom/loadout-panel.ts | 出击装配墙机：只读身份带 + 工具槽 + 只读出击预估三项（表名薪柴价值）。无顶 Tab | isOpen(), open(onConfirm, onClose?), close() | 已实现（Slice 3+；I11-B4c 同族） |
 | StatusPanel | src/ui/dom/status-panel.ts | 存续报告墙机：身份带 + 顶 Tab（装置/残渣/潮汐/蜕变）+ 详情主-从。`open` 第二参是净化点最近 overlap 类型，用来亮走近的台 | isOpen(), open(onClose?, nearestOverlap?), close() | 已实现（Slice 3+；I11-B4a 主-从） |
 | ModuleIdentityStrip | src/ui/dom/module-identity-strip.ts | 三模块身份带 HTML helper（名 + 条 + hp/maxHp）。效果百分比不进带。供存续报告 / 分配 / 蜕变 / 供奉 / 出击装配同族 | identityBandHtml(opts) | 已实现（I11-B4c 抽出，不是新系统） |
-| PauseMenu | src/ui/dom/pause-menu.ts | 局内Esc场景菜单；普通入口保留记录操作，活动/待保存账本禁止错误载入。完整恢复入口只提供继续原局、明确确认放弃；关闭原样续玩 | isOpen(), open(scene, { onAbandon? }), close(), discard() | 迭代22恢复入口已接 |
-| Session | src/managers/session.ts | 新档/读档的共享启动序列（主菜单与记录菜单共用，避免漏 reset） | hasReadableSave(), beginNewExpedition(scene, enter?), loadExpedition(scene, enter?)；可选ExpeditionEntry回调接new/continue，只有首页传入 | 已实现 |
+| PauseMenu | src/ui/dom/pause-menu.ts | 局内Esc场景菜单；普通入口保留记录操作，活动/待保存账本禁止错误载入。完整恢复入口只提供继续原局、明确确认放弃；关闭原样续玩 | isOpen(), open(scene, { onAbandon?, preparation? }), finishPreparation(resume?), close(), discard() | 迭代22恢复入口；R100可取消准备已接 |
+| Session | src/managers/session.ts | 新档/读档共享启动；异步载入互斥、快照复核与取消，保留显式弃局救援 | hasReadableSave(), beginNewExpedition(scene, enter?, confirmedReplacement?), loadExpedition(scene, enter?, onInterrupted?, { signal?, onError? }) → Promise<ExpeditionLoadResult>；可选ExpeditionEntry回调接new/continue | 已实现（R100异步接线） |
 | PurificationHud | src/ui/dom/purification-hud.ts | 净化点贴顶 `.device-plate` 读数（薪柴上行 / 潮汐与下次归来下行）+ 底栏 `#purif-prompt`（无目标弱 / 靠近两行），挂 `#dom-ui-root`。不套 `.game-panel` | create(), updatePrompt(target), refresh(), setPromptVisible(visible), destroy() | 已实现（Slice 2+；Slice 7 净化器目标名；DEC-117 去掉加厚底栏；I11-B3 容器化） |
 
 > 另：`src/core/object-pool.ts`、`src/utils/math.ts`、`src/utils/random.ts`、`src/config/`、`src/types/`（含 `events.ts`/`game-types.ts`/`save-data.ts`/`map-types.ts`）、`src/scenes/` 已真实存在，但属于基础设施/类型/场景，不在本"系统模块"注册表内单列。其中：

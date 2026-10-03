@@ -1,0 +1,122 @@
+{
+  "status": "pass-with-stated-scope",
+  "method": "Heap-node/edge traversal after controlled GC; actual material pixels → buffer → backing_store, same heap object IDs across snapshots",
+  "oneWorldPerSnapshot": true,
+  "onePresentationRendererAudioPerSnapshot": true,
+  "sameThreeMaterialBackings": true,
+  "materialBackingBytes": 3145728,
+  "nativeArrayBufferBackingBytes": 31001856,
+  "snapshots": [
+    {
+      "label": "warmed-baseline",
+      "worlds": [
+        {
+          "objectId": 109263,
+          "rasterId": 738255,
+          "definition": "broken-shell-severe"
+        }
+      ],
+      "materials": [
+        {
+          "objectId": 554551,
+          "source": "/assets/r100-materials/ash-strata-source.png",
+          "pixelsId": 795133,
+          "bufferId": 795135,
+          "backingId": 795139,
+          "bytes": 1048576
+        },
+        {
+          "objectId": 204977,
+          "source": "/assets/r100-materials/crystal-fibre-source.png",
+          "pixelsId": 194259,
+          "bufferId": 194261,
+          "backingId": 206785,
+          "bytes": 1048576
+        },
+        {
+          "objectId": 605465,
+          "source": "/assets/r100-materials/ivory-basin-source.png",
+          "pixelsId": 595903,
+          "bufferId": 595899,
+          "backingId": 595901,
+          "bytes": 1048576
+        }
+      ],
+      "materialBackingBytes": 3145728
+    },
+    {
+      "label": "same-case-final",
+      "worlds": [
+        {
+          "objectId": 894521,
+          "rasterId": 1117497,
+          "definition": "broken-shell-severe"
+        }
+      ],
+      "materials": [
+        {
+          "objectId": 554551,
+          "source": "/assets/r100-materials/ash-strata-source.png",
+          "pixelsId": 795133,
+          "bufferId": 795135,
+          "backingId": 795139,
+          "bytes": 1048576
+        },
+        {
+          "objectId": 204977,
+          "source": "/assets/r100-materials/crystal-fibre-source.png",
+          "pixelsId": 194259,
+          "bufferId": 194261,
+          "backingId": 206785,
+          "bytes": 1048576
+        },
+        {
+          "objectId": 605465,
+          "source": "/assets/r100-materials/ivory-basin-source.png",
+          "pixelsId": 595903,
+          "bufferId": 595899,
+          "backingId": 595901,
+          "bytes": 1048576
+        }
+      ],
+      "materialBackingBytes": 3145728
+    },
+    {
+      "label": "mixed-final",
+      "worlds": [
+        {
+          "objectId": 1163333,
+          "rasterId": 1309815,
+          "definition": "broken-shell-severe"
+        }
+      ],
+      "materials": [
+        {
+          "objectId": 554551,
+          "source": "/assets/r100-materials/ash-strata-source.png",
+          "pixelsId": 795133,
+          "bufferId": 795135,
+          "backingId": 795139,
+          "bytes": 1048576
+        },
+        {
+          "objectId": 204977,
+          "source": "/assets/r100-materials/crystal-fibre-source.png",
+          "pixelsId": 194259,
+          "bufferId": 194261,
+          "backingId": 206785,
+          "bytes": 1048576
+        },
+        {
+          "objectId": 605465,
+          "source": "/assets/r100-materials/ivory-basin-source.png",
+          "pixelsId": 595903,
+          "bufferId": 595899,
+          "backingId": 595901,
+          "bytes": 1048576
+        }
+      ],
+      "materialBackingBytes": 3145728
+    }
+  ]
+}

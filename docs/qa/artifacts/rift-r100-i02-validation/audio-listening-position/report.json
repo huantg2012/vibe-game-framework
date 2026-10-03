@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-03T01:59:18.380Z",
+  "revision": "da653887c4d7f2d323eb275e525728f447ef7636",
+  "method": "Real canvas captureStream with Phaser master output, unmodified native clock and existing keyboard-input patrol. Isolated browser and in-memory DEV storage. No sound injection, gain edit, actor teleport, or hearing claim.",
+  "sources": {
+    "src/dev/rift-r100-masters/audio.ts": "3da1af7052709c5ccdca27c4df4e9c6a254e6935277fd41368ca8bc8562dc3e4",
+    "src/dev/rift-r100-masters/presentation.ts": "0e59a0d24b6eaac7b69b1e0ee569ed3e8fbd382e012c0fb97fb8359a09092325",
+    "src/managers/audio-manager.ts": "a85ea557cb857de975c39d143833dd0efd4d3f17d9df784784ff5dc6e7c2dbbb",
+    "data/rift-master-scenes.csv": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57"
+  },
+  "cases": [
+    {
+      "family": "folded-slab",
+      "grade": "severe",
+      "seed": 20261002,
+      "signal": {
+        "duration": 38.4,
+        "channels": 2,
+        "peak": 0.19176380336284637,
+        "rms": 0.03839492976542489,
+        "clipped": 0
+      },
+      "actualKeys": [
+        "bgm-rift-base-drone",
+        "amb-rift-alien-atmosphere",
+        "sfx-rift-enemy-overwriter-hum",
+        "sfx-suspended-sea-gather",
+        "sfx-suspended-sea-shell-hit",
+        "sfx-suspended-sea-drain",
+        "sfx-shared-chaos-tick",
+        "bgm-rift-high-chaos"
+      ],
+      "materialKeys": [
+        "sfx-suspended-sea-gather",
+        "sfx-suspended-sea-shell-hit",
+        "sfx-suspended-sea-drain"
+      ],
+      "sampleCount": 384,
+      "pauseSamples": 12,
+      "video": "folded-slab.webm",
+      "audio": "folded-slab-audio.webm"
+    },
+    {
+      "family": "fibre-knot",
+      "grade": "severe",
+      "seed": 20261002,
+      "signal": {
+        "duration": 38.4,
+        "channels": 2,
+        "peak": 0.21446830034255981,
+        "rms": 0.0434816041070484,
+        "clipped": 0
+      },
+      "actualKeys": [
+        "bgm-rift-base-drone",
+        "amb-rift-alien-atmosphere",
+        "sfx-rift-enemy-overwriter-hum",
+        "sfx-shared-chaos-tick",
+        "sfx-suspended-sea-contact",
+        "sfx-suspended-sea-drain",
+        "sfx-suspended-sea-fall",
+        "bgm-rift-high-chaos"
+      ],
+      "materialKeys": [
+        "sfx-suspended-sea-contact",
+        "sfx-suspended-sea-drain",
+        "sfx-suspended-sea-fall"
+      ],
+      "sampleCount": 383,
+      "pauseSamples": 11,
+      "video": "fibre-knot.webm",
+      "audio": "fibre-knot-audio.webm"
+    },
+    {
+      "family": "broken-shell",
+      "grade": "severe",
+      "seed": 20261002,
+      "signal": {
+        "duration": 38.4,
+        "channels": 2,
+        "peak": 0.2533581256866455,
+        "rms": 0.04942002663787429,
+        "clipped": 0
+      },
+      "actualKeys": [
+        "bgm-rift-base-drone",
+        "amb-rift-alien-atmosphere",
+        "sfx-rift-enemy-overwriter-hum",
+        "sfx-shared-chaos-tick",
+        "sfx-suspended-sea-contact",
+        "sfx-suspended-sea-shell-hit",
+        "sfx-suspended-sea-drain",
+        "bgm-rift-high-chaos"
+      ],
+      "materialKeys": [
+        "sfx-suspended-sea-contact",
+        "sfx-suspended-sea-shell-hit",
+        "sfx-suspended-sea-drain"
+      ],
+      "sampleCount": 384,
+      "pauseSamples": 11,
+      "video": "broken-shell.webm",
+      "audio": "broken-shell-audio.webm"
+    }
+  ],
+  "errors": [],
+  "listening": "pending; signal measurement is not listening",
+  "status": "signal-and-pause-verified-listening-pending"
+}

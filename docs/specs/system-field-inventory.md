@@ -3,10 +3,10 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-09-29
-last-modified-by: design（迭代31整趟被动真实回执与受损纪录替换保护）
-interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes]
-exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, inventoryStore.reconcileExpandedToolSlots(previousSlotCount)]
+last-modified-date: 2026-10-03
+last-modified-by: code（R100异步准备、快照复核与恢复生命周期）
+interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes, system-map-generation]
+exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, inventoryStore.reconcileExpandedToolSlots(previousSlotCount), SaveLoadSnapshot, saveManager.captureLoadSnapshot(), saveManager.matchesLoadSnapshot(snapshot), loadExpedition]
 interface-changed: true
 note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入正式随机2D。旧active或损坏世界包只在基地/库存有效且玩家明确确认后安全弃局；不删除全档。
 ---
@@ -139,6 +139,18 @@ Tab/Esc收起，Esc先取消交换草稿；移动意图退出并交回移动，�
 - 出发前拒绝已封存工具的旧配装并说明先卸下；不删除物件、不在进入裂隙后才拒绝保存。净化点移交前先清理回调/装置，再启动目标场景；清理/入场失败记录具体阶段并回到保留记录的标题入口，已提交出发意图继续可用。
 
 实现分析与实际验收边界见`docs/design-notes/rift-interruption-recovery.md`。
+
+### 异步出发与冷续局（2026-10-03）
+
+本节是等待期间库存、存档与救援行为的唯一规则正文；生成算法和 Worker 边界见[地图生成](system-map-generation.md)。不新增存档字段、污染级别选择、费用或弃局损失规则。
+
+- **新出击**：在生成前固定该次尝试的种子/完整配方，并记录当前行装、cycle、出击修正与存档字节。等待时不执行 `beginRun`、被动扣次、cycle 增量或存档写入。成功后再次核对行装与存档未变，才在原事务内提交 `beginRun + cycle + departure intent`；重复确认不能同时开始第二次准备。失败或取消后保留既有装配选择，下一次明确出发才开始新尝试。
+- **冷续局**：`captureLoadSnapshot()`只读取原始字节与合法包的检查点/出发身份，不进入世界准入、不改变 live state。按原身份完成后台准备后，在同一无 await 同步段复核原始字节，并通过 prepared-only 作用域调用 `load(undefined, snapshot)`；loader 自身再次比较精确字节。等待期间记录变更、不可读取或缓存不匹配均拒绝此次载入，不加载另一个包，不同步重新生成。实际建场仍再次核对已准备身份。
+- **取消与生命周期**：取消、超时、生成错误、失焦、SHUTDOWN 或直接 DESTROY 均终止等待，保留原存档与未消费行装。退出的请求不能因迟到回包再次提交或跳场景。直接销毁时先撤销 controller/UI 所有权，异步收尾不得调用失效 ScenePlugin；失焦不由 Worker 完成自动恢复游戏。载入期间新建/再次载入互斥。
+- **保存失败**：成功准备后的出发事务沿用原有冻结/同字节重试。写入失败时原存档仍保留，但内存出发候选已冻结；不再提供“取消准备”来伪装回滚，也不重抽身份、重开 run 或重复扣次。重试只提交同一候选，成功后再入场。
+- **坏出行救援**：异步生成/身份验证失败并不取消既有显式弃局入口。仅当原始快照仍相同、基地和库存可准入且调用方有弃局确认界面时，显示保留记录/明确放弃本趟的原选择；不自动结损。取消不触发救援，等待时被替换的记录不沿旧包提供救援，完全不可读的包不声称可救回基地。
+
+异步准备不改变 active、settled、baseSettled 的原路由，不重算旧趟的入场条件、技能余次、掉落计划或离线进度。局部实现及程序检查不代替浏览器生命周期、建场耗时或用户体验审核。
 
 ## 8. Schema、迁移与验收
 

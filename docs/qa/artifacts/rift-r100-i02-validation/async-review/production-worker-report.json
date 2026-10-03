@@ -1,0 +1,103 @@
+{
+  "createdAt": "2026-10-03T02:15:32.692Z",
+  "revision": "ae5ae3ef1d600040ab4a7d4f8da0c09ff535fd28",
+  "origin": "http://127.0.0.1:3041/",
+  "scope": "Production Vite artifact and actual Chromium Worker compatibility smoke; fixed gold cases, not latency qualification or complete production entry QA.",
+  "worker": {
+    "file": "dist/assets/rift-generation-worker-Dh2SjsVL.js",
+    "bytes": 180535,
+    "sha256": "5bd7ced2e0faf5031ffabf2d79ef482b4569e194ecd946b2eb951263f6eee4b5",
+    "references": [
+      {
+        "file": "dist/assets/game-config-DWz1RfQ4.js",
+        "sha256": "f3ab08660d6b195f5d87ffbf700b58780137e81486551ec9b62f70c10b173992"
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "file": "tools/recovery/fixtures/world-generation-v1.json",
+      "sha256": "a084b98ad8f0fb01f4bffbbe3aa01fcedf4255f13b2079429c41a2264b219b8a"
+    },
+    {
+      "file": "tools/recovery/fixtures/legacy-generation-gold.json",
+      "sha256": "4cfa7480dcbcc47312551f052a949d654c5caaf9e8c3e5e26fa28d2362c836ab"
+    }
+  ],
+  "checks": [
+    {
+      "id": "v1-0-70421",
+      "status": "pass",
+      "signature": "b0a50400",
+      "generationVersion": 1,
+      "generationMs": 168.90000009536743,
+      "elapsedMs": 178.59999990463257,
+      "sharedLayout": true,
+      "terminated": true,
+      "gold": {
+        "tileMapHash": "aaf09481",
+        "hostMapHash": "1dea0b1a"
+      },
+      "cols": 224,
+      "rows": 152
+    },
+    {
+      "id": "v1-1-175150",
+      "status": "pass",
+      "signature": "bcb3d082",
+      "generationVersion": 1,
+      "generationMs": 101.90000009536743,
+      "elapsedMs": 110.70000004768372,
+      "sharedLayout": true,
+      "terminated": true,
+      "gold": {
+        "tileMapHash": "f5e90e83",
+        "hostMapHash": "53cf974a"
+      },
+      "cols": 224,
+      "rows": 152
+    },
+    {
+      "id": "v1-2-0",
+      "status": "pass",
+      "signature": "1190e955",
+      "generationVersion": 1,
+      "generationMs": 183.59999990463257,
+      "elapsedMs": 200.79999995231628,
+      "sharedLayout": true,
+      "terminated": true,
+      "gold": {
+        "tileMapHash": "ff62a2d1",
+        "hostMapHash": "b0d303e0"
+      },
+      "cols": 224,
+      "rows": 152
+    },
+    {
+      "id": "v1-3-5",
+      "status": "pass",
+      "signature": "f49b04b1",
+      "generationVersion": 1,
+      "generationMs": 131.29999995231628,
+      "elapsedMs": 137.70000004768372,
+      "sharedLayout": true,
+      "terminated": true,
+      "gold": {
+        "tileMapHash": "943aa2fb",
+        "hostMapHash": "b4cfee32"
+      },
+      "cols": 224,
+      "rows": 152
+    }
+  ],
+  "page": {
+    "developmentApiPresent": false,
+    "saved": null,
+    "titleReady": true
+  },
+  "status": "fail",
+  "failure": "Error: page.evaluate: Error: Saved world does not match the current generation contract\n    at eval (eval at evaluate (:311:30), <anonymous>:9:59)\n    at done (eval at evaluate (:311:30), <anonymous>:5:74)\n    at worker.onmessage (eval at evaluate (:311:30), <anonymous>:8:40)",
+  "pageErrors": [],
+  "consoleErrors": [],
+  "finishedAt": "2026-10-03T02:15:37.787Z"
+}

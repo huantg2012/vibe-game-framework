@@ -1,0 +1,60 @@
+{
+  "createdAt": "2026-10-03T02:07:23.974Z",
+  "revision": "da653887c4d7f2d323eb275e525728f447ef7636",
+  "origin": "http://127.0.0.1:3027/",
+  "sources": {
+    "src/scenes/main-menu-scene.ts": "baf525ec5b1a6a61c50acafb1f8132959c6c07847eb1148999e75dfc5c3f27f3",
+    "src/scenes/purification-scene.ts": "361e83fd38d78550e708c0a081d4efb316b9feef6a8330bfff99f42e2f4cdcc2",
+    "src/scenes/rift-scene.ts": "0c0515889d4d39afe8ea480da97cac1dbe2ec28a3cc8f16afdf34f90455fdb7c",
+    "src/ui/dom/pause-menu.ts": "77bd58ff3affeb984cd01aeff13d4a1cdddae222fde6917696771247bae0ba2e",
+    "src/managers/session.ts": "3c1bc768765ca876720b6f019cb07360049a4e656b501ad4d420cc23247b55a8",
+    "src/managers/save-manager.ts": "5c696569988eb4df6d488b0aa38c3e8dff7fba1cdde6a9405e3c59247c18f9c1",
+    "src/managers/rift-recovery.ts": "2102cda6a250154c26b8a3f0e17dc33b13dd75aa89fcd8e4d47c7265611b184f",
+    "src/generation/rift-generation-client.ts": "aa686256bba14afc8f80ac42b797fd6ae3ddf9b8f1bce7fc4320f47b52e1c10c"
+  },
+  "scope": "Independent real Chromium direct-destroy regression. Isolated storage. Native menus and Worker implementation; scene.remove fault injection. No timing/visual acceptance inferred.",
+  "historicalFailure": {
+    "reproduction": "Waiting departure, then SceneManager.remove(PurificationScene)",
+    "error": "TypeError: Cannot read properties of null (reading 'isPaused')",
+    "savedBytesPreserved": true,
+    "note": "Observed before this fix in the independent /tmp reproduction; not re-created by modifying current sources."
+  },
+  "checks": [
+    {
+      "id": "haven-direct-destroy",
+      "status": "pass",
+      "errors": [],
+      "consoleErrors": [],
+      "savedBytesPreserved": true,
+      "saveSha256": "c52aadcd9f5d51b57aee99b2abf2c7c5ad9ceaea58613fbabc5f22b38505e353",
+      "workerLifecycle": [
+        {
+          "started": 3864.5999999046326,
+          "terminated": 1
+        }
+      ],
+      "sceneRemoved": true,
+      "preparationUiCount": 0
+    },
+    {
+      "id": "title-direct-destroy",
+      "status": "pass",
+      "errors": [],
+      "consoleErrors": [],
+      "savedBytesPreserved": true,
+      "saveSha256": "c271784bef0f1ff89ae592e4ffad8dbed5d5fd8295539e4f1d7e937f289a54fc",
+      "workerLifecycle": [
+        {
+          "started": 864.6000001430511,
+          "terminated": 1
+        }
+      ],
+      "sceneRemoved": true,
+      "titleUiCount": 0,
+      "activeScenes": []
+    }
+  ],
+  "sourcesUnchanged": true,
+  "status": "pass",
+  "finishedAt": "2026-10-03T02:07:37.243Z"
+}

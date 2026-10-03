@@ -57,7 +57,7 @@
     "id": "COH-F049",
     "title": "世界方向查看与隔离搜撤体验",
     "domain": "development",
-    "summary": "新增Rift v2地图巡览gym：从正式启用池与兼容过程枚举当前30组合，任意uint32种子、同种子巡检、完整投放/路线注解，并将同一productionWorld传入原生RiftScene试玩；Boot前内存存储隔离。旧材料查看器及缩减试玩继续保留。 R100-I02的9格作者入口已实现并经限定独立图像审核：原生角色/有限fog下接GPU材质、普通实体/浅浮雕与独立侵蚀、同压力时钟的环境材质声，以及可被键盘接管的五站/入口往返巡查。数据、材质文件与原生接收器已接通；不是正式出击池，双seed128帧、单地段60秒帧时、十次重建计数有证据；听感/GC与用户认可仍待验，不授世界资格。",
+    "summary": "新增Rift v2地图巡览gym：从正式启用池与兼容过程枚举当前30组合，任意uint32种子、同种子巡检、完整投放/路线注解，并将同一productionWorld传入原生RiftScene试玩；Boot前内存存储隔离。旧材料查看器及缩减试玩继续保留。 R100-I02的9格作者入口已实现并经限定独立图像审核：原生角色/有限fog下接GPU材质、普通实体/浅浮雕与独立侵蚀、同压力时钟的环境材质声，以及可被键盘接管的五站/入口往返巡查。数据、材质文件与原生接收器已接通；不是正式出击池，双seed128帧、单地段60秒帧时、十次重建计数有证据；听感/GC与用户认可仍待验，不授世界资格。 I02母版入口补受控GC重建证据与三材料实际音画对照，作者DEV范围和人审限制保留。",
     "delivery": "dev",
     "work": "active",
     "entryPoints": [
@@ -235,6 +235,22 @@
         "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
         "role": "doc",
         "note": "2026-10-03限定代码审查及CPU合同：两项P2修复复核；不签GLSL、浏览器性能、视觉或听感；绘画映射再改须重跑。"
+      },
+      {
+        "path": "tools/world-study/probe-master-retained-memory.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/analyze-master-retained-memory.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-r100-material-audio.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-r100-async-entry.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -248,7 +264,8 @@
       "COH-E121",
       "COH-E125",
       "COH-E126",
-      "COH-E127"
+      "COH-E127",
+      "COH-E128"
     ],
     "unknowns": [
       "当前目录30组合及固定种子巡检不是穷举uint32种子或连续条件；预览仅原生地表与只读部署注解，模型/实时光照在试玩查看。",

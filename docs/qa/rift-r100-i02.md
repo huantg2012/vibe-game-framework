@@ -1,5 +1,5 @@
 ---
-status: IMPLEMENTED-IMAGE-REVIEWED-AUDIO-AND-RETAINED-MEMORY-PENDING
+status: IMPLEMENTED-IMAGE-REVIEWED-GC-LIMITED-PASS-AUDIO-LISTENING-PENDING
 date: 2026-10-03
 feature: COH-F052 / COH-F049 / COH-F006 / COH-F007 / COH-F011 / COH-F012
 iteration: R100-I02
@@ -7,7 +7,19 @@ iteration: R100-I02
 
 # I02 原生材料地段：语义与制作方法重做
 
-本轮按用户否决重做普通地表、景观及侵蚀的基础关系。当前检查对象为 `rift-r100-masters.html` 的三构造×三级作者地段，正式出击池、历史存档和108世界资格均未替换。代码、素材和工具已提交 `03d4e4c`；图像及所列工程检查已完成。实际声景审听、受控GC保留量和用户认可未验，I02不假结全门；旧提交的退回事实不当新成果。
+本轮按用户否决重做普通地表、景观及侵蚀的基础关系。当前检查对象为 `rift-r100-masters.html` 的三构造×三级作者地段，正式出击池、历史存档和108世界资格均未替换。代码、素材和工具已提交 `03d4e4c`；图像及所列工程检查已完成。2026-10-03 补完受控GC重建保留量的限定检查，并采集三种材料各38.4秒真实音画；**实际声景审听和用户认可仍待验**，不据此签I02全门。旧提交的退回事实不当新成果。
+
+## 本次补证：内存与实际音画（2026-10-03）
+
+**受控GC重建检查：限定通过。** 独立Chrome、九格预热后，10次同配置重建加12次跨家族/等级/双seed选择，相对基线实际创建28次新材质context，取得23个GC样本及三个完整堆快照。相同世界/种子相对基线，V8 used＋backing＋embedder观察包络最大增长 **0.569MiB**、末端 **0.221MiB**；V8＋backing单独最大增长 **0.631MiB**，均低于10MiB。逐节点图证实每次只保留当前1个World/Presentation/Renderer/MaterialAudio，三份材料像素的同一backing对象始终复用，实际合计3MiB；旧Canvas、WebGL和Audio对象存在真实回收记录。
+
+这不是公开资源计数的改名。方法、实际载入的304个模块哈希、源指纹、23次读数、对象ID及原始堆图见[专项报告](artifacts/rift-r100-i02-validation/memory/report.md)、[受控GC记录](artifacts/rift-r100-i02-validation/memory/controlled-gc-memory.json)、[堆图核查](artifacts/rift-r100-i02-validation/memory/heap-graph-audit.json)。它验证本次DEV同页原生重建的GC后保留增长，不签GPU驱动物理字节、完整浏览器原生内存、全部声部长时行为或正式出击全链。首轮HMR中断保留，未混作成功样本。
+
+**真实音画已录制；技术信号与暂停通过，听感仍待实际审听。** 三构造的重污染/20261002，各采集38.4秒、双声道、原生960×640画面和Phaser实际主输出。通过原有键盘输入巡查到接点耳距内，没有注入声音、改增益、瞬移或推进虚构时钟。三组均观测到本材料的三类声音键，信号非静音且无削波，保留暂停期间11–12条实际状态记录；浏览器错误0。峰值分别0.192、0.214、0.253仅是测得的信号幅度，不能推出好听、身份准确或混音合格。
+
+可在[实景证据页的音画区](interactive/r100-i02-rebuild.html#audio-evidence)直接播放；[录制总记录](artifacts/rift-r100-i02-validation/audio-listening-position/report.json)与每组逐时诊断在播放器旁。这里是重档单种子的38.4秒听验素材，不覆盖低/中档、完整自然搜撤或长期变化。实际审听仍需判断材料身份、压力相位对应、主次层级、距离/声像与连续聆听疲劳，**尚无任何实际听感通过结论**。
+
+证据页保留18组/128张原生截图，并新增三组视频及独立音轨。隔离浏览器逐个验证6个媒体可解码并推进、原视频960×640、14个补充链接有效、播放互斥及媒体方向键不误切截图；[播放器验证记录](artifacts/rift-r100-i02-validation/evidence-viewer/report.json)、[实际页面](artifacts/rift-r100-i02-validation/evidence-viewer/audio-players.jpg)。此项是静音技术验证，不是审听。首轮仅缺favicon导致的404已用证据页本地空图标修复，保留失败记录；最终页面错误0。
 
 ## 本轮实现边界
 
@@ -23,7 +35,7 @@ iteration: R100-I02
 - **原生60秒灯光往返：本样本达到帧间隔/CPU提交目标。** [诊断及轨迹](artifacts/rift-r100-i02-rebuild/continuous-light-patrol-60s.json)、[实际图](artifacts/rift-r100-i02-rebuild/continuous-light-patrol-60s.jpg)：壳重档/20261002，1280×900浏览器视口、DPR1，逻辑960×640、镜头1.5；普通视野与原生敌人保持。沿入口至第一侧缘208px路径往返65,000.68ms，24条单程，实际累计4,973.12px，`blocked=null`、HP100、`outcome=completed`。`activeMovementInputMs=64,992.33`仅表示非零输入意图时长（可包含受阻意图），不是反推的真实移动时长；真实位移由逐帧位置独立累积。启动时重置测量，预热2秒后完整采样60秒/7200个帧间隔：p95 **9.1ms**、p99 **11.0ms**、max **15.1ms**；CPU提交7201次，p95 **1.8ms**、p99 **1.9ms**、max **2.1ms**，两者>33ms与>50ms均0。该记录是单设备、单作者地段、安全路线的真实持续物理输入，不能扩写为九格性能、GPU计时、完整潜行/战斗负载或I01 worldpkg生成长尾通过。堆读数从214,624,022降至122,299,110B不说明GC后驻留或无泄漏。
 - **显式CPU缓冲核算：18格保守驻留上界最高24.381MiB。** [资源报告](artifacts/rift-r100-i02-rebuild/cpu-buffer-resources-2026-10-03.json)通过实际world/mesh/raster构造对象的backing `ArrayBuffer`身份去重；含最多三份512²RGBA材料缓存合计3MiB，以及无法枚举闭包的全部world阶段额外分配44,800B。最高25,565,652B出现于壳重档；renderer自身仅保留两块uniform数组256B，ground/volume准备对象与上传数组未写入其字段。ground返回缓冲20,070,400B、volume独占准备缓冲20,070,400B、四份上传staging9,175,040B分别记为准备/上传阶段；包含scratch并假定全程不回收的累计分配上界为86,923,764B（82.897MiB），**不等于同期峰值或驻留量**。三材料缓存字节来自manifest原生像素尺寸，未在Node模拟源图解码；GPU13,762,560B仍是六份RGBA容量估计。该工具验证指定调用链的显式缓冲归属，不覆盖JS对象/闭包开销、图片解码、Canvas、Phaser/音频或driver复制，不能写成完整64MiB浏览器预算、GC或十次进退无泄漏通过。工具自检及独立静态核算均通过。
 
-- **十次原生重建：公开资源计数未递增，保留堆量未验证。** [十次按钮重建记录](artifacts/rift-r100-i02-rebuild/ten-native-rebuilds.json)均等待折层低档原生运行就绪；每次texture keys 273、注册纹理Canvas260、DOM Canvas3、CanvasPool已用260/空闲0、顶层display entries69、已注册/播放声音3、待移除声音0。所列公开容器计数稳定，只说明这些注册表未累加；不覆盖所有离屏Canvas、嵌套Container、GPU/音频存储或任意保留对象。同期未强制GC的heap为181,406,970–370,719,962B，不能声称十次后retained增长<10MiB或无泄漏。
+- **前次十次原生重建：仅公开资源计数未递增。** [十次按钮重建记录](artifacts/rift-r100-i02-rebuild/ten-native-rebuilds.json)均等待折层低档原生运行就绪；每次texture keys 273、注册纹理Canvas260、DOM Canvas3、CanvasPool已用260/空闲0、顶层display entries69、已注册/播放声音3、待移除声音0。所列公开容器计数稳定，只说明这些注册表未累加；不覆盖所有离屏Canvas、嵌套Container、GPU/音频存储或任意保留对象。同期未强制GC的heap为181,406,970–370,719,962B；该历史记录本身不能声称十次后retained增长<10MiB或无泄漏，新的受控GC证据另见上节。
 
 九格双种子的独立实际图结论另见[非作者视觉复核](rift-r100-i02-visual-review-2026-10-03.md)：原128帧中的受击白块P2已由真实闪白/恢复/死亡补证关闭，折层局部硬切面P3保留。补证命中帧及60秒性能图文件实测为1010×673的浏览器显示尺寸，逻辑画布仍960×640；不以这些JPEG作逐像素检验。最终工程回归及其他尚未观察的项目仍须各自证据。性能只报告帧间隔与CPU提交；声音行为测试不等于实际审听，代理复核不等于用户认可。
 
@@ -35,7 +47,7 @@ iteration: R100-I02
 
 [独立图像复核](rift-r100-i02-visual-review-2026-10-03.md)实际查看三家族×三级×双seed的128帧；连续地床/家族身份/普通背光纠偏成立，受击P2以真实短闪白、恢复和死亡关闭，折层长硬缝保留P3审美意见。[独立技术审查](rift-r100-i02-tech-review-2026-10-03.md)关闭过期加载覆盖新场景、过滤光源后粒子方向错配两项P2。审查范围按各文声明，不冒充全游戏潜行体验、动态视频审查或人类认可。
 
-图像对照入口：[18组实景审查页](interactive/r100-i02-rebuild.html)；交互入口：`/rift-r100-masters.html`。I01纠偏已完成；I02三材料九格实现及图像审核完成，**实际材料声音听感/混音与受控GC后的保留内存仍未验**。当前工具不能提供实际听觉或受控浏览器GC观察，资源文件、音频行为、公开对象计数均不代替这两项，因此保持I02审核状态，不写完整结单，不计正式世界/等级。
+图像对照入口：[18组实景审查页](interactive/r100-i02-rebuild.html)；交互入口：`/rift-r100-masters.html`。I01纠偏已完成；I02三材料九格实现及图像审核完成，受控GC后同页重建保留量已按本报告范围补验。**实际材料声音听感/混音与用户审美仍待验**：三组录音、音频数值、行为与对象图不能替代实际审听或用户认可。因此保持I02审核状态，不写完整结单，不计正式世界/等级。另行推进的正式生成异步入口与本DEV母版门分开记录，见[异步入口QA](rift-r100-async-entry-2026-10-03.md)。
 
 现状地图结构检查无错误，返回2是历史来源漂移/证据适用性提醒；保留全库旧基线，未用本轮限定审查为无关旧文件重新背书。已更新本轮功能源、E127与文本索引。[原始检查输出](artifacts/rift-r100-i02-rebuild/game-state-check.txt)。
 

@@ -40,12 +40,12 @@
   },
   "resume": {
     "iteration": "R100-I02",
-    "batch": "I01 correction complete; I02 implemented and independently image-reviewed",
-    "nextAction": "以03d4e4c的九格双种子原生母版继续验收；补实际声景审听与受控GC保留量验证、用户审美检查点。不要重开已修复的地表/吞光混淆，不假结I02，不计新世界。I03正式接入前仍须解决同步生成长尾。",
-    "lastCompleted": "I01绘制方法及普通景观/侵蚀语义纠偏完成；I02三材料九格、双seed128帧独立图像审核、原生65秒往返与60秒帧时、十次重建计数、真实受击修复及工程检查完成；0/108、0/324。",
-    "headline": "I01 纠偏完成，I02 三构造九格进入审核",
+    "batch": "I02 V1 validation + formal async entry implemented",
+    "nextAction": "I02保留声景实听与用户审美两项待验；从音画对照页审查三材料。工程继续定位新Rift入场302ms/冷入场242ms主线程长任务，并对自然种子复测总等待长尾；同时为旧v2跨运行时签名风险R100-P05建立兼容方案；完成加载预算后再接I03等级选择/压力/准备/回报闭环，不越过美术检查点扩产。",
+    "lastCompleted": "I01纠偏及I02九格独立图像审核保持；V1补受控GC与实际音画录制，正式新出击/冷续局改为可取消Worker准备，完成快照竞争/旧局兼容/销毁回调修复与真实浏览器验证。0/108、0/324。",
+    "headline": "I02受控GC已验，正式异步出入接通",
     "updatedDate": "2026-10-03",
-    "evidenceRevision": "c560dc9"
+    "evidenceRevision": "ae5ae3ef"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -306,8 +306,12 @@
         },
         {
           "id": "controlled-retained-memory",
-          "status": "pending",
-          "label": "受控GC后保留内存验证"
+          "status": "pass",
+          "label": "受控GC后保留内存验证（限定同页重建）",
+          "revision": "ae5ae3ef",
+          "evidenceIds": [
+            "R100-E-I02-V1-MEMORY"
+          ]
         },
         {
           "id": "human-art-review",
@@ -318,11 +322,15 @@
       "issueIds": [
         "R100-P02",
         "R100-P03",
-        "R100-P04"
+        "R100-P04",
+        "R100-P05"
       ],
       "evidenceIds": [
         "R100-E-I02-B01",
-        "R100-E-I02-REBUILD"
+        "R100-E-I02-REBUILD",
+        "R100-E-I02-V1-MEMORY",
+        "R100-E-I02-V1-AUDIO",
+        "R100-E-ASYNC-ENTRY"
       ],
       "targetGradeCases": 0
     },
@@ -759,6 +767,36 @@
       "path": "docs/qa/rift-r100-i02.md",
       "scope": "三材料九格×双seed的原生128帧与非作者图像审查；FOV/身体/近战语义分离；60秒持续输入帧时、十次重建公开计数及受击/死亡修复；I01绘制及显隐纠偏。",
       "limitations": "仅作者DEV母版；普通路线巡查非自然完整搜撤。实际声景审听、受控GC保留量和用户认可未验，不构成I02全门结单或新世界/正式等级准入。"
+    },
+    {
+      "id": "R100-E-I02-V1-MEMORY",
+      "kind": "runtime",
+      "purpose": "scoped-memory-verification",
+      "path": "docs/qa/artifacts/rift-r100-i02-validation/memory/report.md",
+      "scope": "预热九格后10次同配置和12次混合选择、23个双GC样本及三堆图；同配置观察包络最大增长0.569MiB、V8+backing最大0.631MiB，旧世界/材质context已回收。",
+      "limitations": "具体运行模块按304个响应哈希记录，非整最终源码重跑。只限单设备同页DEV重建，不是GPU物理显存、全原生分配或长期全流程无泄漏证明。",
+      "iterationId": "R100-I02",
+      "revision": "ae5ae3ef"
+    },
+    {
+      "id": "R100-E-I02-V1-AUDIO",
+      "kind": "runtime",
+      "purpose": "audio-capture-not-listening",
+      "path": "docs/qa/artifacts/rift-r100-i02-validation/audio-listening-position/report.json",
+      "scope": "三材料重档真实巡查到听音位置，每种38.4秒原生canvas与音轨同步实录，覆盖两周期及暂停/恢复；有材料声部、相位事件与非零输出，无削波。",
+      "limitations": "采集和机器同步核查不等于实际听感、混音、审美或玩家压迫感通过，实际审听仍pending。",
+      "iterationId": "R100-I02",
+      "revision": "ae5ae3ef"
+    },
+    {
+      "id": "R100-E-ASYNC-ENTRY",
+      "kind": "runtime",
+      "purpose": "partial-loading-remediation",
+      "path": "docs/qa/rift-r100-async-entry-2026-10-03.md",
+      "scope": "正式生成移入单次可取消Worker；24恢复脚本与构建、旧金样、五项真实菜单链、两种直接destroy验证。取消保留字节、变更记录拒绝、同局恢复与损坏出行救援成立。",
+      "limitations": "有限样本非自然总体预算；算法等待长尾未减少，样本新/冷入场仍有302/242ms主线程长任务。UI未作新的人审，I03机制及新世界未交付。",
+      "iterationId": "R100-I02",
+      "revision": "ae5ae3ef"
     }
   ],
   "risks": [
@@ -829,28 +867,30 @@
   "issues": [
     {
       "id": "R100-P01",
-      "title": "当前正式同步生成和冷恢复有秒级长尾，I03新生成不得主线程阻塞",
+      "title": "生成已移入可取消Worker；总等待长尾与入场主线程预算仍未结清",
       "severity": "P1",
       "status": "open",
       "iteration": "R100-I03",
       "owner": "code",
       "evidenceIds": [
-        "R100-E-I01"
+        "R100-E-I01",
+        "R100-E-ASYNC-ENTRY"
       ],
-      "note": "32自然：生成p95 8.311s/max15.365s；冷恢复p95 8.331s。worker/可取消加载与预算复测为正式接入阻断。"
+      "note": "历史32自然生成p95 8.311s/max15.365s、冷恢复p95 8.331s不作废。ae5ae3ef完成Worker/取消/冷恢复接线及数据保护；单次新/冷worker约225.8/234.6ms且等待时窗0长任务，仅代表该样本。新Rift入场302ms、冷入场242ms及初始加载388ms长任务仍需定位；完整自然种子总耗时和入场预算未通过，保持open。"
     },
     {
       "id": "R100-P02",
-      "title": "新增材料地段单样本CPU已达标；完整负载及GC保留量仍需验证",
+      "title": "单样本帧时与受控GC已通过；完整负载和GPU物理占用未验",
       "severity": "P2",
       "status": "open",
       "iteration": "R100-I02",
       "owner": "code/art",
       "evidenceIds": [
         "R100-E-I01",
-        "R100-E-I02-REBUILD"
+        "R100-E-I02-REBUILD",
+        "R100-E-I02-V1-MEMORY"
       ],
-      "note": "I01并行负载下三固定视口12s样本p95为18.6/16.7/13.0ms；不是GPU或长路线资格。 I02低折板R4移动12秒段：frame p95 20.1ms，CPU p95 18.9ms；24秒巡查完成但不是60秒/GPU/回收资格。 03d4e4c：原生壳重档安全往返60s frame p95 8.7ms/p99 10.2ms、CPU p95 1.9ms通过本样本；18格显式CPU驻留上界24.381MiB、十次重建计数稳定。不能外推整池/战斗/GPU/GC后保留量，通过部分不覆盖未测部分。"
+      "note": "I01并行负载下三固定视口12s样本p95为18.6/16.7/13.0ms；不是GPU或长路线资格。 I02低折板R4移动12秒段：frame p95 20.1ms，CPU p95 18.9ms；24秒巡查完成但不是60秒/GPU/回收资格。 03d4e4c：原生壳重档安全往返60s frame p95 8.7ms/p99 10.2ms、CPU p95 1.9ms通过本样本；18格显式CPU驻留上界24.381MiB、十次重建计数稳定。不能外推整池/战斗/GPU/GC后保留量，通过部分不覆盖未测部分。 V1另补受控GC：10同配置+12混合，最大同配置观察包络0.569MiB，实际对象图回收通过；该项已关闭，GPU驱动物理占用、完整战斗和多设备范围仍open。"
     },
     {
       "id": "R100-P03",
@@ -867,15 +907,28 @@
     },
     {
       "id": "R100-P04",
-      "title": "材料声音实际审听与视听同步尚无可听验收证据",
+      "title": "材料音画实录已提供，听感与混音实际审听仍待验",
       "severity": "P2",
       "status": "open",
       "iteration": "R100-I02",
       "owner": "art/audio",
       "evidenceIds": [
-        "R100-E-I02-REBUILD"
+        "R100-E-I02-REBUILD",
+        "R100-E-I02-V1-AUDIO"
       ],
-      "note": "真实原生资源和最多两声部播放已接，47项行为与音源检查通过；未实际听到，不以文件/波形/测试代签最终混音与听感。"
+      "note": "真实原生资源和最多两声部播放已接，47项行为与音源检查通过；未实际听到，不以文件/波形/测试代签最终混音与听感。 V1三材料重档各38.4秒同步实录及诊断可播放；非零/无削波/暂停核查不能代替审听。"
+    },
+    {
+      "id": "R100-P05",
+      "title": "旧v2精确签名存在跨V8浮点差异的恢复风险",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I03",
+      "owner": "code",
+      "evidenceIds": [
+        "R100-E-ASYNC-ENTRY"
+      ],
+      "note": "生产Worker烟测发现Node v22.14与Chromium的Math.atan2末位差异使v2-0身份23e24a0c/9ef02d95不同；浏览器DEV与生产同值，非Worker迁移或压缩引入。保留严格历史签名，未偷偷改冻结执行器；跨引擎/浏览器升级的长期兼容需独立方案与显式迁移验收。"
     }
   ],
   "changeLog": [

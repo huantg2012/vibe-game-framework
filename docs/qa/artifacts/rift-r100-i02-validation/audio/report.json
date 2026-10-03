@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-03T01:55:20.388Z",
+  "revision": "da653887c4d7f2d323eb275e525728f447ef7636",
+  "method": "Real canvas captureStream with Phaser master output, unmodified native clock and existing keyboard-input patrol. Isolated browser and in-memory DEV storage. No sound injection, gain edit, actor teleport, or hearing claim.",
+  "sources": {
+    "src/dev/rift-r100-masters/audio.ts": "3da1af7052709c5ccdca27c4df4e9c6a254e6935277fd41368ca8bc8562dc3e4",
+    "src/dev/rift-r100-masters/presentation.ts": "0e59a0d24b6eaac7b69b1e0ee569ed3e8fbd382e012c0fb97fb8359a09092325",
+    "src/managers/audio-manager.ts": "a85ea557cb857de975c39d143833dd0efd4d3f17d9df784784ff5dc6e7c2dbbb",
+    "data/rift-master-scenes.csv": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57"
+  },
+  "cases": [
+    {
+      "family": "folded-slab",
+      "grade": "severe",
+      "seed": 20261002,
+      "signal": {
+        "duration": 35.4,
+        "channels": 2,
+        "peak": 0.7501886487007141,
+        "rms": 0.09607125349891119,
+        "clipped": 0
+      },
+      "actualKeys": [
+        "bgm-rift-base-drone",
+        "sfx-rift-enter",
+        "amb-rift-alien-atmosphere",
+        "sfx-shared-player-step-organic",
+        "sfx-shared-chaos-tick",
+        "sfx-rift-enemy-overwriter-hum",
+        "sfx-suspended-sea-gather",
+        "sfx-suspended-sea-shell-hit",
+        "sfx-suspended-sea-drain",
+        "bgm-rift-threat",
+        "sfx-rift-enemy-chase",
+        "sfx-rift-enemy-alert",
+        "sfx-shared-player-hurt",
+        "bgm-rift-high-chaos"
+      ],
+      "materialKeys": [
+        "sfx-suspended-sea-gather",
+        "sfx-suspended-sea-shell-hit",
+        "sfx-suspended-sea-drain"
+      ],
+      "sampleCount": 354,
+      "pauseSamples": 12,
+      "video": "folded-slab.webm",
+      "audio": "folded-slab-audio.webm"
+    },
+    {
+      "family": "fibre-knot",
+      "grade": "severe",
+      "seed": 20261002,
+      "signal": {
+        "duration": 35.4,
+        "channels": 2,
+        "peak": 0.7306541204452515,
+        "rms": 0.10207058722858639,
+        "clipped": 0
+      },
+      "actualKeys": [
+        "bgm-rift-base-drone",
+        "sfx-rift-enter",
+        "amb-rift-alien-atmosphere",
+        "sfx-shared-player-step-organic",
+        "sfx-shared-chaos-tick",
+        "sfx-rift-enemy-overwriter-hum",
+        "sfx-suspended-sea-contact",
+        "sfx-suspended-sea-drain",
+        "bgm-rift-threat",
+        "sfx-rift-enemy-chase",
+        "sfx-rift-enemy-alert",
+        "sfx-shared-player-hurt",
+        "bgm-rift-high-chaos"
+      ],
+      "materialKeys": [
+        "sfx-suspended-sea-contact",
+        "sfx-suspended-sea-drain"
+      ],
+      "sampleCount": 354,
+      "pauseSamples": 12,
+      "video": "fibre-knot.webm",
+      "audio": "fibre-knot-audio.webm"
+    }
+  ],
+  "errors": [],
+  "listening": "pending; signal measurement is not listening",
+  "status": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: natural pressure must produce owned events"
+}

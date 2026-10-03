@@ -3,7 +3,7 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "已有5世界×2空间继续作为正式底座；本轮新出击默认v2，将CSV的3类有界过程编译为冻结条件，经共享组织轴、最终遭遇语义与完整地形/Host准入生成世界。v1及无generation旧在途局保留原算法和身份。",
+    "summary": "已有5世界×2空间继续作为正式底座；本轮新出击默认v2，将CSV的3类有界过程编译为冻结条件，经共享组织轴、最终遭遇语义与完整地形/Host准入生成世界。v1及无generation旧在途局保留原算法和身份。 冻结执行器已接正式Worker异步准备；DTO恢复walkableMask并核对身份，正式场景只接已准备的精确身份，缓存缺失不会偷偷同步生成。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -111,6 +111,35 @@
         "path": "docs/qa/rift-conditions-2026-10-02.md",
         "role": "doc",
         "note": "本轮最终实现与限定自动/运行验证；人审和完整24维未完成"
+      },
+      {
+        "path": "docs/qa/rift-r100-async-entry-2026-10-03.md",
+        "role": "doc",
+        "note": "Worker/取消/恢复/场景销毁有限验证及入场预算缺口"
+      },
+      {
+        "path": "src/generation/rift-generation-client.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/rift-generation-worker.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/rift-generation-execute.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/rift-generation-identity.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/rift-generation-protocol.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/recovery/check-generation-worker.ts",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -123,7 +152,8 @@
       "COH-E119",
       "COH-E120",
       "COH-E126",
-      "COH-E127"
+      "COH-E127",
+      "COH-E129"
     ],
     "unknowns": [
       "支持范围为已有材料/单层碰撞能力内的有界条件链；完整24维设计、罕见世界供给和历史新奇权重尚未完成。",
@@ -134,7 +164,7 @@
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "共享地表、材料形体与光响应继续由CSV供给；v2地貌裂向、材料历史和原生层理/晶面/釉盆地标消费同一组织轴。地标绑定转折、深区与出口地形，局部动效受实际支撑和视野裁剪；不按世界ID补绘。",
+    "summary": "共享地表、材料形体与光响应继续由CSV供给；v2地貌裂向、材料历史和原生层理/晶面/釉盆地标消费同一组织轴。地标绑定转折、深区与出口地形，局部动效受实际支撑和视野裁剪；不按世界ID补绘。 I02三材料缓存与Renderer重建已作受控GC限定观测，材料背板3MiB实际对象ID复用、旧世界/context回收；不是GPU物理字节验收。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -231,7 +261,8 @@
       "COH-E-HIST-PRODUCTION",
       "COH-E119",
       "COH-E120",
-      "COH-E127"
+      "COH-E127",
+      "COH-E128"
     ],
     "unknowns": [
       "v1与无generation旧局维持旧地面/地标表现；新的material随机支流与地标不改变可走碰撞。未实现多层可行走、高体积阻挡景观或动态改碰撞。",
@@ -397,7 +428,7 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100已启动108世界/324等级大版本。I01保留旧生成执行器、CSV包及测量底座，普通景观/吞光语义与制作方法纠偏完成。03d4e4c已实现三材料九档DEV地段，两种子128帧独立图像审核、65秒原生往返及60秒CPU/帧时、十次重建计数与受击修复完成；实际声景听验、受控GC保留量及人审待验。仍0新世界/0等级资格，正式出击池不由作者样板替换。",
+    "summary": "R100已启动108世界/324等级大版本。I01保留旧生成执行器、CSV包及测量底座，普通景观/吞光语义与制作方法纠偏完成。03d4e4c已实现三材料九档DEV地段，两种子128帧独立图像审核、65秒原生往返及60秒CPU/帧时、十次重建计数与受击修复完成；V1补受控GC限定通过、三材料音画实录与正式Worker可取消出入；实际声景听验及人审待验。仍0新世界/0等级资格，正式出击池不由作者样板替换。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -679,6 +710,11 @@
       {
         "path": "docs/qa/rift-r100-i02-tech-review-2026-10-03.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-r100-async-entry-2026-10-03.md",
+        "role": "doc",
+        "note": "Worker/取消/恢复/场景销毁有限验证及入场预算缺口"
       }
     ],
     "dependsOn": [
@@ -699,12 +735,15 @@
       "COH-E124",
       "COH-E125",
       "COH-E126",
-      "COH-E127"
+      "COH-E127",
+      "COH-E129",
+      "COH-E128"
     ],
     "unknowns": [
       "多区域过程、高体积景观、稀有例外、描述符历史新奇权重及逐包人审入库尚未实现；有界3过程不等于24维全部规则和未来材料能力完成。",
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
-      "I02材料/图像审核与本次60s原生样本完成，实际听感、受控GC及用户审美未验，不代签全门结单。108世界/324等级、知情选级/周期压力/等级回报尚未实现；正式同步生成最长15.365s及冷恢复p95 8.331s仍待I03整改，不由DEV帧时通过抵消。"
+      "I02材料/图像审核与本次60s原生样本完成，受控GC已限定通过，实际听感及用户审美未验，不代签全门结单。108世界/324等级、知情选级/周期压力/等级回报尚未实现；历史总生成最长15.365s及冷恢复p95 8.331s未复测，Worker不代表总等待缩短；新/冷入场302/242ms仍待整改，不由DEV帧时通过抵消。",
+      "正式异步准备已接；历史自然种子生成长尾没有因Worker而消失，实际新/冷入场仍有302/242ms主线程长任务，加载预算保持待修。"
     ]
   }
 ]

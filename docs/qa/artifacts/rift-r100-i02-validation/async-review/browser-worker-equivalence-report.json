@@ -1,0 +1,189 @@
+{
+  "createdAt": "2026-10-03T02:20:08.558Z",
+  "revision": "ae5ae3ef1d600040ab4a7d4f8da0c09ff535fd28",
+  "development": "http://127.0.0.1:3027/",
+  "production": "http://127.0.0.1:3041/",
+  "files": {
+    "dist/assets/rift-generation-worker-Dh2SjsVL.js": "5bd7ced2e0faf5031ffabf2d79ef482b4569e194ecd946b2eb951263f6eee4b5",
+    "src/generation/legacy-rift-v2/executor.js": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074",
+    "src/generation/legacy-rift-generation.ts": "bc96608ee48a0fc211acd7da91136a3f6bdd629b56f956cf38ab4c0bb590b9cb",
+    "src/generation/rift-generation-identity.ts": "083e905dea0ac3cb5480865e31b730161e400b26a4bcda7c33e6288e99d4d2f9",
+    "src/generation/rift-generation-execute.ts": "e279d60f07412a3c29850c35f8c020037852870ff71829e85102583a152cb563",
+    "src/generation/rift-generation-worker.ts": "ab779e3a5fc72d5013764e07b0bc3c0c0134ab016dfc87905323bd389b9028d1"
+  },
+  "fixture": {
+    "file": "tools/recovery/fixtures/legacy-generation-gold.json",
+    "sha256": "4cfa7480dcbcc47312551f052a949d654c5caaf9e8c3e5e26fa28d2362c836ab"
+  },
+  "scope": "Runtime-equivalent migration smoke: browser historical synchronous frozen executor, DEV module Worker, Vite production Worker, fresh-worker identity recovery. Node gold cross-V8 failure is recorded separately and is not waived.",
+  "checks": [
+    {
+      "id": "v2-0",
+      "status": "pass",
+      "generationVersion": 2,
+      "browserSignature": "9ef02d95",
+      "nodeGoldSignature": "23e24a0c",
+      "nodeGoldMatches": false,
+      "nodeGoldDifferences": [
+        {
+          "field": "layoutSha256",
+          "nodeGold": "fab328cd5e515257f37aeb40e63e7187944c6e6ae88627f2484a3fb476b2563e",
+          "browser": "0330d8f41d2b123830b183de49d512428cfcc6751a7da3c68327184111517705"
+        },
+        {
+          "field": "sampleSha256",
+          "nodeGold": "f3a0ebab689688112410f41a7fc0140a64c4a3e5b3ff2c9fe66eaf090d86f905",
+          "browser": "f81918347d72da4176f9547e43327e990419dc11b885eb89c131587a41af2f18"
+        },
+        {
+          "field": "metadataSha256",
+          "nodeGold": "0d29adb56ec797a1b2ee8888d5645b6a6ddc752303a43f2f042fb405d6a4e8f9",
+          "browser": "7e5178ec07b9518e079002a263f12448109a01bbeb09afe5e334778b50e5efcc"
+        }
+      ],
+      "allGeneratedValuesEqual": true,
+      "devWorkerColdRecovery": true,
+      "productionWorkerColdRecovery": true,
+      "sharedReferencePreserved": true,
+      "workerTerminations": 2,
+      "gold": {
+        "layoutSha256": "0330d8f41d2b123830b183de49d512428cfcc6751a7da3c68327184111517705",
+        "tileMapSha256": "b3b25d19e731b9fc6bdeb34342982717a730d9983adcfd32554cb107c85c31c8",
+        "hostMapSha256": "e3f5e33f3d7f0b0c6d030782a0a1b41805ad7dc4e6638230b7df9de0f1ec0a93",
+        "sampleSha256": "f81918347d72da4176f9547e43327e990419dc11b885eb89c131587a41af2f18",
+        "metadataSha256": "7e5178ec07b9518e079002a263f12448109a01bbeb09afe5e334778b50e5efcc"
+      },
+      "descriptiveOnlyTimingMs": {
+        "sync": 2537.2999999523163,
+        "devWorker": 12863.799999952316,
+        "productionWorker": 2479.5999999046326
+      }
+    },
+    {
+      "id": "v2-5",
+      "status": "pass",
+      "generationVersion": 2,
+      "browserSignature": "e9b08be0",
+      "nodeGoldSignature": "e9b08be0",
+      "nodeGoldMatches": false,
+      "nodeGoldDifferences": [
+        {
+          "field": "sampleSha256",
+          "nodeGold": "4cb1158df5a43c244eb16b3934d2658058215844c81451f6e470ab9b78ada735",
+          "browser": "c8ff4c2d2b468af7fe5c5a210db91e603e111429b4193fa4f90d1113674fb702"
+        }
+      ],
+      "allGeneratedValuesEqual": true,
+      "devWorkerColdRecovery": true,
+      "productionWorkerColdRecovery": true,
+      "sharedReferencePreserved": true,
+      "workerTerminations": 2,
+      "gold": {
+        "layoutSha256": "7b7cd148c960d6354cafcdb0079b88e72deb38ccf005b17b4cd9915e9d82c296",
+        "tileMapSha256": "2a5e7732e4f1c80023870154c6133f17cca9ecfa4aadac0f46c65ddbd1616b9b",
+        "hostMapSha256": "25a000a05a9a5ffa9906c8f3f684e128924528cbf234f516216f81c73fe2e651",
+        "sampleSha256": "c8ff4c2d2b468af7fe5c5a210db91e603e111429b4193fa4f90d1113674fb702",
+        "metadataSha256": "0434abf209c9afffb9112d9234810ae286bc72b37e485d7042d36cc9089d21aa"
+      },
+      "descriptiveOnlyTimingMs": {
+        "sync": 824.7000000476837,
+        "devWorker": 1187.2999999523163,
+        "productionWorker": 218.89999985694885
+      }
+    },
+    {
+      "id": "v2-70421",
+      "status": "pass",
+      "generationVersion": 2,
+      "browserSignature": "f23b2950",
+      "nodeGoldSignature": "f23b2950",
+      "nodeGoldMatches": false,
+      "nodeGoldDifferences": [
+        {
+          "field": "sampleSha256",
+          "nodeGold": "a25707f6e22c08f455cd159a55908d9b84a3d0b0cf833d4912cee216432fd940",
+          "browser": "2672696721dc8b3fed7c291ca23e1198be48d5c9cc030e5de514bf0d95d68de3"
+        }
+      ],
+      "allGeneratedValuesEqual": true,
+      "devWorkerColdRecovery": true,
+      "productionWorkerColdRecovery": true,
+      "sharedReferencePreserved": true,
+      "workerTerminations": 2,
+      "gold": {
+        "layoutSha256": "bbb2171158ff6361cda9e58da1b5f5f366c2276edca48e332bcee1b7ef83e8bd",
+        "tileMapSha256": "6a91846e9919840126171eb93f271d683b45f1ddf9f328eaa3e9b2c5318b7ba3",
+        "hostMapSha256": "1b809fc3f3347875eabd528e68dc4cc8b467d08ce40d1cc2e778c1d95e2935ea",
+        "sampleSha256": "2672696721dc8b3fed7c291ca23e1198be48d5c9cc030e5de514bf0d95d68de3",
+        "metadataSha256": "ee057f15a55db997b0065f500be68f46905ec4515199044ffe09a7a5f8943866"
+      },
+      "descriptiveOnlyTimingMs": {
+        "sync": 1392.2000000476837,
+        "devWorker": 1955.2999999523163,
+        "productionWorker": 391.40000009536743
+      }
+    },
+    {
+      "id": "unversioned-432889249",
+      "status": "pass",
+      "generationVersion": "unversioned",
+      "browserSignature": "d39e7a78",
+      "nodeGoldSignature": "d39e7a78",
+      "nodeGoldMatches": true,
+      "nodeGoldDifferences": [],
+      "allGeneratedValuesEqual": true,
+      "devWorkerColdRecovery": true,
+      "productionWorkerColdRecovery": true,
+      "sharedReferencePreserved": true,
+      "workerTerminations": 2,
+      "gold": {
+        "layoutSha256": "f0c27b223b7287af8b789080b2642de32132d1de0f44ca8616a6d9d2f60b2086",
+        "tileMapSha256": "c8dc8c3e0017182d63375d8ecb2155ef3de8d32e8d6a5fa4ddafb66700d520f7",
+        "hostMapSha256": null,
+        "sampleSha256": null,
+        "metadataSha256": null
+      },
+      "descriptiveOnlyTimingMs": {
+        "sync": 966.3000001907349,
+        "devWorker": 1105.4000000953674,
+        "productionWorker": 217.20000004768372
+      }
+    },
+    {
+      "id": "unversioned-17",
+      "status": "pass",
+      "generationVersion": "unversioned",
+      "browserSignature": "569a891a",
+      "nodeGoldSignature": "569a891a",
+      "nodeGoldMatches": true,
+      "nodeGoldDifferences": [],
+      "allGeneratedValuesEqual": true,
+      "devWorkerColdRecovery": true,
+      "productionWorkerColdRecovery": true,
+      "sharedReferencePreserved": true,
+      "workerTerminations": 2,
+      "gold": {
+        "layoutSha256": "55008bae94b97c0de4cec00ef6924965a1b12686fca967d123d1bc644d4aa6f4",
+        "tileMapSha256": "6cf257ba5ec679f5686028009ea188c72c4827eb69b7ea0fc74f1ad16dbcb7f2",
+        "hostMapSha256": null,
+        "sampleSha256": null,
+        "metadataSha256": null
+      },
+      "descriptiveOnlyTimingMs": {
+        "sync": 1187.4000000953674,
+        "devWorker": 295.40000009536743,
+        "productionWorker": 291.2999999523163
+      }
+    }
+  ],
+  "browser": {
+    "version": "154.0.8037.93",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36"
+  },
+  "pageErrors": [],
+  "consoleErrors": [],
+  "protectedFilesUnchanged": true,
+  "status": "pass",
+  "nodeCrossRuntimeStatus": "not-compatible-for-all-gold-records; see original production-worker-report.json and diagnosis",
+  "finishedAt": "2026-10-03T02:20:40.745Z"
+}
