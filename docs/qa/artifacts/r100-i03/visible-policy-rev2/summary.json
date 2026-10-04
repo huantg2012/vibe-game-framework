@@ -1,0 +1,72 @@
+{
+  "source": "docs/qa/artifacts/r100-i06/production-source-rev2/source-snapshot.json",
+  "scope": "Three bounded real-input revision-2 cases after correcting permanent patrol coverage. Controlled ordinary loadouts and world seeds. Full macro geometry planning, current visible opponents for local decisions. Not the natural 90.",
+  "cases": [
+    {
+      "case": "ash-severe-20261004-b",
+      "outcome": "extract",
+      "hp": 85,
+      "chaos": 87.61462308536204,
+      "returnedKindling": 1,
+      "collected": 2,
+      "performance": {
+        "activeSimulationMs": 40890.01999999986,
+        "frames": 2447,
+        "intervalCount": 2447,
+        "frameIntervalP95": 18.200000047683716,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 7.400000095367432,
+        "lastRenderMsP95": 1.6000001430511475,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "source": "docs/qa/artifacts/r100-i03/visible-policy-rev2/ash-severe-20261004-b/report.json"
+    },
+    {
+      "case": "ash-severe-20261005-a",
+      "outcome": "extract",
+      "hp": 100,
+      "chaos": 98.49037197577601,
+      "returnedKindling": 5,
+      "collected": 5,
+      "performance": {
+        "activeSimulationMs": 75680.31000000008,
+        "frames": 4536,
+        "intervalCount": 4536,
+        "frameIntervalP95": 18.100000143051147,
+        "frameIntervalP99": 18.5,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 6.799999952316284,
+        "lastRenderMsP95": 1.2000000476837158,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "source": "docs/qa/artifacts/r100-i03/visible-policy-rev2/ash-severe-20261005-a/report.json"
+    },
+    {
+      "case": "fibre-severe-20261005-b",
+      "outcome": "extract",
+      "hp": 70,
+      "chaos": 79.97525718018716,
+      "returnedKindling": 3,
+      "collected": 3,
+      "performance": {
+        "activeSimulationMs": 40081.73999999972,
+        "frames": 2399,
+        "intervalCount": 2399,
+        "frameIntervalP95": 18,
+        "frameIntervalP99": 18.5,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 6.400000095367432,
+        "lastRenderMsP95": 1,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "source": "docs/qa/artifacts/r100-i03/visible-policy-rev2/fibre-severe-20261005-b/report.json"
+    }
+  ]
+}

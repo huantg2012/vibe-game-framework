@@ -3,6 +3,18 @@ import type { OccluderGrid, WalkGrid } from '@/types/map-types';
 
 const BODY_CLEARANCE_EPSILON = 1e-6;
 
+/** Optional exact body geometry for a scene whose navigation grid is conservative.
+ * Navigation/Host grids keep their authored resolution; only actual bodies use
+ * this contract. A phase exemption applies to solid matter, never missing floor. */
+export interface PhysicalSolidExemption {
+  readonly left: number; readonly top: number; readonly right: number; readonly bottom: number;
+}
+export interface PhysicalBodyQueries {
+  supports(center: Readonly<Vector2>, halfWidth: number, halfHeight: number): boolean;
+  displacementFraction(center: Readonly<Vector2>, halfWidth: number, halfHeight: number,
+    dx: number, dy: number, exemption?: Readonly<PhysicalSolidExemption>): number;
+}
+
 /** Static counterpart of the displacement sweep, for admitting restored bodies.
  * Touching a tile boundary is legal; overlapping unsupported space is not. */
 export function bodyHasSupport(walk: WalkGrid, center: Readonly<Vector2>, halfWidth: number, halfHeight: number): boolean {

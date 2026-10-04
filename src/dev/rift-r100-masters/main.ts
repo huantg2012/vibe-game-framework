@@ -16,7 +16,7 @@ let mode:MasterViewMode='normal',motion=true,serial=0;
 let patrolMode:'five-station'|'lighting-return'|null=null,queuedLightPatrol:number|null=null;
 const patrol=new MasterPatrol();
 const seedInput=$<HTMLInputElement>('seed');seedInput.value=params.get('seed')??'20261002';
-const familyNames:Record<MasterFamily,string>={'folded-slab':'01　折叠板','fibre-knot':'02　纤维结','broken-shell':'03　厚壳腔'};
+const familyNames:Record<MasterFamily,string>={'folded-slab':'01　折叠板','fibre-knot':'02　纤维结','broken-shell':'03　厚壳腔','granular-ridge':'04　颗粒脊','membrane-rim':'05　膜厚缘','gel-flow':'06　凝胶流前沿'};
 const gradeNames:Record<MasterGrade,string>={low:'低污染',medium:'中污染',severe:'重污染'};
 function reportError(reason:unknown):void{queuedLightPatrol=null;const error=$('error');error.textContent=reason instanceof Error?reason.message:String(reason);error.hidden=false;$('loading').hidden=true;}
 function updateSelections():void{

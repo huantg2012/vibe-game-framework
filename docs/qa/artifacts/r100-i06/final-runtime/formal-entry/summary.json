@@ -1,0 +1,1689 @@
+{
+  "status": "passed",
+  "worlds": 20,
+  "gradeCases": 60,
+  "formalEntries": 60,
+  "coldRecoveries": 60,
+  "replacementDraws": 0,
+  "failures": 0,
+  "method": "Every enabled world once per grade, fixed seed selected before entry. Two isolated browser processes. No replacement draws or gameplay state overrides.",
+  "base": "http://127.0.0.1:3074/",
+  "sourceSnapshot": "docs/qa/artifacts/r100-i06/final-runtime/frozen/source-snapshot.json",
+  "sourceSnapshotSHA256": "5a010f5f380b77572c2a37577e53a96a757276b1486197329ba9dedf94cc8ce2",
+  "scriptSHA256": "0b2fd8b8a4fb24522779a19ddc7245bb97b659a8077378946e5bd9f65da80575",
+  "sourceDifferences": [],
+  "servedSourceHashes": {
+    "path": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/served-source-hashes.json",
+    "sha256": "adda901fbb919cba742d0d03d96de5ba61d7d80901cffc72eebd94fbac647345",
+    "count": 341
+  },
+  "dependencyManifestIndex": "docs/qa/artifacts/r100-i06/final-runtime/packages/index.json",
+  "runtimeDependencyCount": 284,
+  "coverage": [
+    "production-entry",
+    "recovery"
+  ],
+  "limitations": "Controlled world/grade integration, fresh ordinary inventory and actual renderer/checkpoint/Continue; not a natural journey, economic result, art approval or full gameplay review. Two concurrent browsers make measured long tasks unsuitable as isolated P01 benchmarks. Other historical samples retain their own source revisions.",
+  "worldRecords": [
+    {
+      "worldId": "ash-strata",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/ash-strata.json",
+        "hash": "28784a3bd0b1f67c9077fcf28563b6f3bae2e4931c4a3921f059c1cd8cf745a2"
+      },
+      "cases": [
+        {
+          "worldId": "ash-strata",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "28784a3bd0b1f67c9077fcf28563b6f3bae2e4931c4a3921f059c1cd8cf745a2",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 64,
+          "effectiveSeed": 64,
+          "identitySignature": "ce067708",
+          "definitionId": "folded-slab-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ash-strata-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ash-strata-low-restored.png"
+        },
+        {
+          "worldId": "ash-strata",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "28784a3bd0b1f67c9077fcf28563b6f3bae2e4931c4a3921f059c1cd8cf745a2",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 64,
+          "effectiveSeed": 64,
+          "identitySignature": "6555af78",
+          "definitionId": "folded-slab-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ash-strata-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ash-strata-medium-restored.png"
+        },
+        {
+          "worldId": "ash-strata",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "28784a3bd0b1f67c9077fcf28563b6f3bae2e4931c4a3921f059c1cd8cf745a2",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 64,
+          "effectiveSeed": 64,
+          "identitySignature": "5cb852e9",
+          "definitionId": "folded-slab-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ash-strata-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ash-strata-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/crystal-fibre.json",
+        "hash": "57326ada65234cc7cfed7774d3cb5a050c255c370c181ef1da0cdedb4290d797"
+      },
+      "cases": [
+        {
+          "worldId": "crystal-fibre",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "57326ada65234cc7cfed7774d3cb5a050c255c370c181ef1da0cdedb4290d797",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 14,
+          "effectiveSeed": 14,
+          "identitySignature": "ebbc1505",
+          "definitionId": "fibre-knot-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/crystal-fibre-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/crystal-fibre-low-restored.png"
+        },
+        {
+          "worldId": "crystal-fibre",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "57326ada65234cc7cfed7774d3cb5a050c255c370c181ef1da0cdedb4290d797",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 14,
+          "effectiveSeed": 14,
+          "identitySignature": "0734273c",
+          "definitionId": "fibre-knot-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/crystal-fibre-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/crystal-fibre-medium-restored.png"
+        },
+        {
+          "worldId": "crystal-fibre",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "57326ada65234cc7cfed7774d3cb5a050c255c370c181ef1da0cdedb4290d797",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 14,
+          "effectiveSeed": 14,
+          "identitySignature": "7c7f0246",
+          "definitionId": "fibre-knot-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/crystal-fibre-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/crystal-fibre-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "ivory-basin",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/ivory-basin.json",
+        "hash": "4859343045bc0e0e775775e7b95c209907dd0bbd319a3bd57dc6c0e5e177907b"
+      },
+      "cases": [
+        {
+          "worldId": "ivory-basin",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "4859343045bc0e0e775775e7b95c209907dd0bbd319a3bd57dc6c0e5e177907b",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 55,
+          "effectiveSeed": 55,
+          "identitySignature": "f4c6c5a0",
+          "definitionId": "broken-shell-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ivory-basin-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ivory-basin-low-restored.png"
+        },
+        {
+          "worldId": "ivory-basin",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "4859343045bc0e0e775775e7b95c209907dd0bbd319a3bd57dc6c0e5e177907b",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 55,
+          "effectiveSeed": 55,
+          "identitySignature": "ebe23a72",
+          "definitionId": "broken-shell-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ivory-basin-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ivory-basin-medium-restored.png"
+        },
+        {
+          "worldId": "ivory-basin",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "4859343045bc0e0e775775e7b95c209907dd0bbd319a3bd57dc6c0e5e177907b",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 55,
+          "effectiveSeed": 55,
+          "identitySignature": "e3481d22",
+          "definitionId": "broken-shell-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ivory-basin-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/ivory-basin-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/cinder-ridge.json",
+        "hash": "6486f761fb759c3200fa12b394525035204378c71efb1b3e6281d5550a0ac214"
+      },
+      "cases": [
+        {
+          "worldId": "cinder-ridge",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "6486f761fb759c3200fa12b394525035204378c71efb1b3e6281d5550a0ac214",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 20,
+          "effectiveSeed": 20,
+          "identitySignature": "ac55f4fd",
+          "definitionId": "cinder-ridge-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/cinder-ridge-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/cinder-ridge-low-restored.png"
+        },
+        {
+          "worldId": "cinder-ridge",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "6486f761fb759c3200fa12b394525035204378c71efb1b3e6281d5550a0ac214",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 20,
+          "effectiveSeed": 20,
+          "identitySignature": "4345b126",
+          "definitionId": "cinder-ridge-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/cinder-ridge-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/cinder-ridge-medium-restored.png"
+        },
+        {
+          "worldId": "cinder-ridge",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "6486f761fb759c3200fa12b394525035204378c71efb1b3e6281d5550a0ac214",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 20,
+          "effectiveSeed": 20,
+          "identitySignature": "89147617",
+          "definitionId": "cinder-ridge-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/cinder-ridge-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/cinder-ridge-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "pallid-membrane",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/pallid-membrane.json",
+        "hash": "282096f60d6eefabe8bed45503e71bad12aecc43434bf223f2e8b348a7890d8d"
+      },
+      "cases": [
+        {
+          "worldId": "pallid-membrane",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "282096f60d6eefabe8bed45503e71bad12aecc43434bf223f2e8b348a7890d8d",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 9,
+          "effectiveSeed": 9,
+          "identitySignature": "7b36a12b",
+          "definitionId": "pallid-membrane-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/pallid-membrane-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/pallid-membrane-low-restored.png"
+        },
+        {
+          "worldId": "pallid-membrane",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "282096f60d6eefabe8bed45503e71bad12aecc43434bf223f2e8b348a7890d8d",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 9,
+          "effectiveSeed": 9,
+          "identitySignature": "d0b7ccec",
+          "definitionId": "pallid-membrane-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/pallid-membrane-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/pallid-membrane-medium-restored.png"
+        },
+        {
+          "worldId": "pallid-membrane",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "282096f60d6eefabe8bed45503e71bad12aecc43434bf223f2e8b348a7890d8d",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 9,
+          "effectiveSeed": 9,
+          "identitySignature": "a2c008d2",
+          "definitionId": "pallid-membrane-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/pallid-membrane-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/pallid-membrane-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "silt-gel",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/silt-gel.json",
+        "hash": "5b1ff32cc6f6ab8776e274adf1354a0de1197440538af6e007cbee4af0144cff"
+      },
+      "cases": [
+        {
+          "worldId": "silt-gel",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "5b1ff32cc6f6ab8776e274adf1354a0de1197440538af6e007cbee4af0144cff",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 13,
+          "effectiveSeed": 13,
+          "identitySignature": "9924a386",
+          "definitionId": "silt-gel-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/silt-gel-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/silt-gel-low-restored.png"
+        },
+        {
+          "worldId": "silt-gel",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "5b1ff32cc6f6ab8776e274adf1354a0de1197440538af6e007cbee4af0144cff",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 13,
+          "effectiveSeed": 13,
+          "identitySignature": "d5ef56d0",
+          "definitionId": "silt-gel-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/silt-gel-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/silt-gel-medium-restored.png"
+        },
+        {
+          "worldId": "silt-gel",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "5b1ff32cc6f6ab8776e274adf1354a0de1197440538af6e007cbee4af0144cff",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 13,
+          "effectiveSeed": 13,
+          "identitySignature": "029228e8",
+          "definitionId": "silt-gel-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/silt-gel-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/silt-gel-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "schist-shear",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/schist-shear.json",
+        "hash": "d00b16f15e53d5a8526da1decb587353c08600fb2c9c3336f8596922bd374ac6"
+      },
+      "cases": [
+        {
+          "worldId": "schist-shear",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "d00b16f15e53d5a8526da1decb587353c08600fb2c9c3336f8596922bd374ac6",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 10,
+          "effectiveSeed": 10,
+          "identitySignature": "13279f35",
+          "definitionId": "schist-shear-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/schist-shear-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/schist-shear-low-restored.png"
+        },
+        {
+          "worldId": "schist-shear",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "d00b16f15e53d5a8526da1decb587353c08600fb2c9c3336f8596922bd374ac6",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 10,
+          "effectiveSeed": 10,
+          "identitySignature": "edf5217c",
+          "definitionId": "schist-shear-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/schist-shear-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/schist-shear-medium-restored.png"
+        },
+        {
+          "worldId": "schist-shear",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "d00b16f15e53d5a8526da1decb587353c08600fb2c9c3336f8596922bd374ac6",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 10,
+          "effectiveSeed": 10,
+          "identitySignature": "8c012b1f",
+          "definitionId": "schist-shear-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/schist-shear-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/schist-shear-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "splayed-fibres",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/splayed-fibres.json",
+        "hash": "7276a75575d6b078e719a2df954d1a82d88bcf79123e59bc332df9d74f65cb43"
+      },
+      "cases": [
+        {
+          "worldId": "splayed-fibres",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "7276a75575d6b078e719a2df954d1a82d88bcf79123e59bc332df9d74f65cb43",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 40,
+          "effectiveSeed": 40,
+          "identitySignature": "e75622cf",
+          "definitionId": "splayed-fibres-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/splayed-fibres-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/splayed-fibres-low-restored.png"
+        },
+        {
+          "worldId": "splayed-fibres",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "7276a75575d6b078e719a2df954d1a82d88bcf79123e59bc332df9d74f65cb43",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 40,
+          "effectiveSeed": 40,
+          "identitySignature": "74619510",
+          "definitionId": "splayed-fibres-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/splayed-fibres-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/splayed-fibres-medium-restored.png"
+        },
+        {
+          "worldId": "splayed-fibres",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "7276a75575d6b078e719a2df954d1a82d88bcf79123e59bc332df9d74f65cb43",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 40,
+          "effectiveSeed": 40,
+          "identitySignature": "0cc97bf7",
+          "definitionId": "splayed-fibres-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/splayed-fibres-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/splayed-fibres-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "shell-chain",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/shell-chain.json",
+        "hash": "b31ca91e37bc8aa74fa3247e74f4e83647ee161d0b686de5f0c3553680dae5ff"
+      },
+      "cases": [
+        {
+          "worldId": "shell-chain",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b31ca91e37bc8aa74fa3247e74f4e83647ee161d0b686de5f0c3553680dae5ff",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 37,
+          "effectiveSeed": 37,
+          "identitySignature": "6a4bdfd3",
+          "definitionId": "shell-chain-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/shell-chain-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/shell-chain-low-restored.png"
+        },
+        {
+          "worldId": "shell-chain",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b31ca91e37bc8aa74fa3247e74f4e83647ee161d0b686de5f0c3553680dae5ff",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 37,
+          "effectiveSeed": 37,
+          "identitySignature": "157df837",
+          "definitionId": "shell-chain-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/shell-chain-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/shell-chain-medium-restored.png"
+        },
+        {
+          "worldId": "shell-chain",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b31ca91e37bc8aa74fa3247e74f4e83647ee161d0b686de5f0c3553680dae5ff",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 37,
+          "effectiveSeed": 37,
+          "identitySignature": "0d679331",
+          "definitionId": "shell-chain-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/shell-chain-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/shell-chain-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "grain-laminate",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/grain-laminate.json",
+        "hash": "f2edb61c4f47be3d8fc8a0e17da62d369e8d790add07b6362f2f9e3bff45ba1f"
+      },
+      "cases": [
+        {
+          "worldId": "grain-laminate",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "f2edb61c4f47be3d8fc8a0e17da62d369e8d790add07b6362f2f9e3bff45ba1f",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 5,
+          "effectiveSeed": 5,
+          "identitySignature": "16d7aa75",
+          "definitionId": "grain-laminate-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/grain-laminate-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/grain-laminate-low-restored.png"
+        },
+        {
+          "worldId": "grain-laminate",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "f2edb61c4f47be3d8fc8a0e17da62d369e8d790add07b6362f2f9e3bff45ba1f",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 5,
+          "effectiveSeed": 5,
+          "identitySignature": "3e862eb7",
+          "definitionId": "grain-laminate-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/grain-laminate-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/grain-laminate-medium-restored.png"
+        },
+        {
+          "worldId": "grain-laminate",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "f2edb61c4f47be3d8fc8a0e17da62d369e8d790add07b6362f2f9e3bff45ba1f",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/report.json",
+          "controlledRequestedSeed": 5,
+          "effectiveSeed": 5,
+          "identitySignature": "06dfe440",
+          "definitionId": "grain-laminate-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/grain-laminate-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-a/grain-laminate-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "tension-membrane",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/tension-membrane.json",
+        "hash": "3ebf98e43340150b5b72b3cb4c09d93ae54d85a053dcd482e7dae30fa2934754"
+      },
+      "cases": [
+        {
+          "worldId": "tension-membrane",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "3ebf98e43340150b5b72b3cb4c09d93ae54d85a053dcd482e7dae30fa2934754",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 4,
+          "effectiveSeed": 4,
+          "identitySignature": "4157a5c8",
+          "definitionId": "tension-membrane-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/tension-membrane-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/tension-membrane-low-restored.png"
+        },
+        {
+          "worldId": "tension-membrane",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "3ebf98e43340150b5b72b3cb4c09d93ae54d85a053dcd482e7dae30fa2934754",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 4,
+          "effectiveSeed": 4,
+          "identitySignature": "8d8bb7f8",
+          "definitionId": "tension-membrane-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/tension-membrane-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/tension-membrane-medium-restored.png"
+        },
+        {
+          "worldId": "tension-membrane",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "3ebf98e43340150b5b72b3cb4c09d93ae54d85a053dcd482e7dae30fa2934754",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 4,
+          "effectiveSeed": 4,
+          "identitySignature": "e4aebd2e",
+          "definitionId": "tension-membrane-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/tension-membrane-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/tension-membrane-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "shell-gel-delta",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/shell-gel-delta.json",
+        "hash": "b89f87d485eef73d0d2a88b8e8feac4446c0586466c3b795c30b3b7f9b471fdd"
+      },
+      "cases": [
+        {
+          "worldId": "shell-gel-delta",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b89f87d485eef73d0d2a88b8e8feac4446c0586466c3b795c30b3b7f9b471fdd",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 1,
+          "effectiveSeed": 1,
+          "identitySignature": "67225592",
+          "definitionId": "shell-gel-delta-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-gel-delta-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-gel-delta-low-restored.png"
+        },
+        {
+          "worldId": "shell-gel-delta",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b89f87d485eef73d0d2a88b8e8feac4446c0586466c3b795c30b3b7f9b471fdd",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 1,
+          "effectiveSeed": 1,
+          "identitySignature": "5f239b9f",
+          "definitionId": "shell-gel-delta-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-gel-delta-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-gel-delta-medium-restored.png"
+        },
+        {
+          "worldId": "shell-gel-delta",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b89f87d485eef73d0d2a88b8e8feac4446c0586466c3b795c30b3b7f9b471fdd",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 1,
+          "effectiveSeed": 1,
+          "identitySignature": "0268cf7b",
+          "definitionId": "shell-gel-delta-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-gel-delta-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-gel-delta-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "pressed-dunes",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/pressed-dunes.json",
+        "hash": "3a81e0708d5d485130183f78757dbd8e64683537ca6aa3f9ad5ecf9eaa0aece9"
+      },
+      "cases": [
+        {
+          "worldId": "pressed-dunes",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "3a81e0708d5d485130183f78757dbd8e64683537ca6aa3f9ad5ecf9eaa0aece9",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 12,
+          "effectiveSeed": 12,
+          "identitySignature": "6074c785",
+          "definitionId": "pressed-dunes-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/pressed-dunes-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/pressed-dunes-low-restored.png"
+        },
+        {
+          "worldId": "pressed-dunes",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "3a81e0708d5d485130183f78757dbd8e64683537ca6aa3f9ad5ecf9eaa0aece9",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 12,
+          "effectiveSeed": 12,
+          "identitySignature": "20107bdc",
+          "definitionId": "pressed-dunes-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/pressed-dunes-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/pressed-dunes-medium-restored.png"
+        },
+        {
+          "worldId": "pressed-dunes",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "3a81e0708d5d485130183f78757dbd8e64683537ca6aa3f9ad5ecf9eaa0aece9",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 12,
+          "effectiveSeed": 12,
+          "identitySignature": "4d01cfb1",
+          "definitionId": "pressed-dunes-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/pressed-dunes-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/pressed-dunes-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "ruptured-film",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/ruptured-film.json",
+        "hash": "37154e32095f33d5021e31542fe0f285df1fcc8b97cbe8e73b7176c91453f6e6"
+      },
+      "cases": [
+        {
+          "worldId": "ruptured-film",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "37154e32095f33d5021e31542fe0f285df1fcc8b97cbe8e73b7176c91453f6e6",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 3,
+          "effectiveSeed": 3,
+          "identitySignature": "66cc703c",
+          "definitionId": "ruptured-film-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/ruptured-film-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/ruptured-film-low-restored.png"
+        },
+        {
+          "worldId": "ruptured-film",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "37154e32095f33d5021e31542fe0f285df1fcc8b97cbe8e73b7176c91453f6e6",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 3,
+          "effectiveSeed": 3,
+          "identitySignature": "fd21e3d2",
+          "definitionId": "ruptured-film-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/ruptured-film-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/ruptured-film-medium-restored.png"
+        },
+        {
+          "worldId": "ruptured-film",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "37154e32095f33d5021e31542fe0f285df1fcc8b97cbe8e73b7176c91453f6e6",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 3,
+          "effectiveSeed": 3,
+          "identitySignature": "36fd52d4",
+          "definitionId": "ruptured-film-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/ruptured-film-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/ruptured-film-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "reversed-flow",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/reversed-flow.json",
+        "hash": "34b6197b2836798914acae69ed379fe576762bf400307e7c7390d082e0050b3d"
+      },
+      "cases": [
+        {
+          "worldId": "reversed-flow",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "34b6197b2836798914acae69ed379fe576762bf400307e7c7390d082e0050b3d",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 6,
+          "effectiveSeed": 6,
+          "identitySignature": "cda0e682",
+          "definitionId": "reversed-flow-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/reversed-flow-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/reversed-flow-low-restored.png"
+        },
+        {
+          "worldId": "reversed-flow",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "34b6197b2836798914acae69ed379fe576762bf400307e7c7390d082e0050b3d",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 6,
+          "effectiveSeed": 6,
+          "identitySignature": "d2436778",
+          "definitionId": "reversed-flow-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/reversed-flow-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/reversed-flow-medium-restored.png"
+        },
+        {
+          "worldId": "reversed-flow",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "34b6197b2836798914acae69ed379fe576762bf400307e7c7390d082e0050b3d",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 6,
+          "effectiveSeed": 6,
+          "identitySignature": "ac09a87d",
+          "definitionId": "reversed-flow-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/reversed-flow-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/reversed-flow-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "laminate-shell",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/laminate-shell.json",
+        "hash": "1a25525dbbf90ab5ac85c5669b98db69f13ccf171c1c4340fd9a1a29e4a844d5"
+      },
+      "cases": [
+        {
+          "worldId": "laminate-shell",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "1a25525dbbf90ab5ac85c5669b98db69f13ccf171c1c4340fd9a1a29e4a844d5",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 21,
+          "effectiveSeed": 21,
+          "identitySignature": "43d1e9af",
+          "definitionId": "laminate-shell-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/laminate-shell-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/laminate-shell-low-restored.png"
+        },
+        {
+          "worldId": "laminate-shell",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "1a25525dbbf90ab5ac85c5669b98db69f13ccf171c1c4340fd9a1a29e4a844d5",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 21,
+          "effectiveSeed": 21,
+          "identitySignature": "c441b3c6",
+          "definitionId": "laminate-shell-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/laminate-shell-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/laminate-shell-medium-restored.png"
+        },
+        {
+          "worldId": "laminate-shell",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "1a25525dbbf90ab5ac85c5669b98db69f13ccf171c1c4340fd9a1a29e4a844d5",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 21,
+          "effectiveSeed": 21,
+          "identitySignature": "77d2764a",
+          "definitionId": "laminate-shell-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/laminate-shell-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/laminate-shell-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "fibre-silt",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/fibre-silt.json",
+        "hash": "bfcd4a5cf7ebe48535da349091a821a078a75b1bb86eec1d5174fa21efeb93b4"
+      },
+      "cases": [
+        {
+          "worldId": "fibre-silt",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "bfcd4a5cf7ebe48535da349091a821a078a75b1bb86eec1d5174fa21efeb93b4",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 36,
+          "effectiveSeed": 36,
+          "identitySignature": "b581c5c7",
+          "definitionId": "fibre-silt-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/fibre-silt-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/fibre-silt-low-restored.png"
+        },
+        {
+          "worldId": "fibre-silt",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "bfcd4a5cf7ebe48535da349091a821a078a75b1bb86eec1d5174fa21efeb93b4",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 36,
+          "effectiveSeed": 36,
+          "identitySignature": "702e3748",
+          "definitionId": "fibre-silt-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/fibre-silt-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/fibre-silt-medium-restored.png"
+        },
+        {
+          "worldId": "fibre-silt",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "bfcd4a5cf7ebe48535da349091a821a078a75b1bb86eec1d5174fa21efeb93b4",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 36,
+          "effectiveSeed": 36,
+          "identitySignature": "7bfe4da0",
+          "definitionId": "fibre-silt-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/fibre-silt-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/fibre-silt-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "film-laminate",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/film-laminate.json",
+        "hash": "0bc8aaab24448c5eb64c7e830b760bc5bf3093a886bcb14b466f1ba859bba63b"
+      },
+      "cases": [
+        {
+          "worldId": "film-laminate",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "0bc8aaab24448c5eb64c7e830b760bc5bf3093a886bcb14b466f1ba859bba63b",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 23,
+          "effectiveSeed": 23,
+          "identitySignature": "e1a33a65",
+          "definitionId": "film-laminate-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/film-laminate-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/film-laminate-low-restored.png"
+        },
+        {
+          "worldId": "film-laminate",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "0bc8aaab24448c5eb64c7e830b760bc5bf3093a886bcb14b466f1ba859bba63b",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 23,
+          "effectiveSeed": 23,
+          "identitySignature": "fa0e18cf",
+          "definitionId": "film-laminate-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/film-laminate-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/film-laminate-medium-restored.png"
+        },
+        {
+          "worldId": "film-laminate",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "0bc8aaab24448c5eb64c7e830b760bc5bf3093a886bcb14b466f1ba859bba63b",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 23,
+          "effectiveSeed": 23,
+          "identitySignature": "29191646",
+          "definitionId": "film-laminate-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/film-laminate-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/film-laminate-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "gel-fibre",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/gel-fibre.json",
+        "hash": "b150699bff09a2ac411d42fc35ee6c29305b0af55a493f3ca98d126c63adeb69"
+      },
+      "cases": [
+        {
+          "worldId": "gel-fibre",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b150699bff09a2ac411d42fc35ee6c29305b0af55a493f3ca98d126c63adeb69",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 8,
+          "effectiveSeed": 8,
+          "identitySignature": "ede00fd0",
+          "definitionId": "gel-fibre-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/gel-fibre-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/gel-fibre-low-restored.png"
+        },
+        {
+          "worldId": "gel-fibre",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b150699bff09a2ac411d42fc35ee6c29305b0af55a493f3ca98d126c63adeb69",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 8,
+          "effectiveSeed": 8,
+          "identitySignature": "d323be07",
+          "definitionId": "gel-fibre-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/gel-fibre-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/gel-fibre-medium-restored.png"
+        },
+        {
+          "worldId": "gel-fibre",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "b150699bff09a2ac411d42fc35ee6c29305b0af55a493f3ca98d126c63adeb69",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 8,
+          "effectiveSeed": 8,
+          "identitySignature": "f1b78d4c",
+          "definitionId": "gel-fibre-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/gel-fibre-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/gel-fibre-severe-restored.png"
+        }
+      ]
+    },
+    {
+      "worldId": "shell-grit",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "dependencyManifest": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/shell-grit.json",
+        "hash": "ba1d51d94bbba9724f1313ab290bdc5a47171738fd90a9496ceae9e3a0966e77"
+      },
+      "cases": [
+        {
+          "worldId": "shell-grit",
+          "grade": "low",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "ba1d51d94bbba9724f1313ab290bdc5a47171738fd90a9496ceae9e3a0966e77",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 0,
+          "effectiveSeed": 0,
+          "identitySignature": "37fffb95",
+          "definitionId": "shell-grit-low",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-grit-low-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-grit-low-restored.png"
+        },
+        {
+          "worldId": "shell-grit",
+          "grade": "medium",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "ba1d51d94bbba9724f1313ab290bdc5a47171738fd90a9496ceae9e3a0966e77",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 0,
+          "effectiveSeed": 0,
+          "identitySignature": "cc00bfdc",
+          "definitionId": "shell-grit-medium",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-grit-medium-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-grit-medium-restored.png"
+        },
+        {
+          "worldId": "shell-grit",
+          "grade": "severe",
+          "status": "passed",
+          "coverage": [
+            "production-entry",
+            "recovery"
+          ],
+          "dependencyHash": "ba1d51d94bbba9724f1313ab290bdc5a47171738fd90a9496ceae9e3a0966e77",
+          "report": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/report.json",
+          "controlledRequestedSeed": 0,
+          "effectiveSeed": 0,
+          "identitySignature": "2d913c62",
+          "definitionId": "shell-grit-severe",
+          "algorithmRevision": 2,
+          "bodyGeometry": {
+            "version": 1,
+            "fullBodyCheckpointAdmitted": true,
+            "coldBodyPositionPreserved": true
+          },
+          "entryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-grit-severe-entry.png",
+          "recoveryScreenshot": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/part-b/shell-grit-severe-restored.png"
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+import { validR100ProductionRecipe } from './world-study/r100-package';
+import { createR100ProductionMap } from './world-study/r100-production-map';
 /** Pure worker executor: frozen algorithms only, no Phaser/session/localStorage imports. */
 import { restoreLegacyProceduralLayout, restoreLegacyProductionWorld, validLegacyWorldRecipe } from './legacy-rift-generation';
 import { assertMatchingRiftIdentity, generatedRiftIdentity } from './rift-generation-identity';
@@ -10,9 +12,9 @@ export function executeRiftGeneration(input: RiftGenerationInput): RiftGeneratio
   if (input.kind === 'recovery' && (input.identity.worldId !== 'procedural-rift'
     || input.identity.layoutId !== 'procedural-rift' || !Number.isSafeInteger(input.identity.seed)
     || input.identity.seed < 0 || input.identity.seed > 0xffffffff)) throw new Error('Unsupported procedural world');
-  if ((input.kind === 'departure' || generation !== undefined) && !validLegacyWorldRecipe(generation))
+  if ((input.kind === 'departure' || generation !== undefined) && !(validLegacyWorldRecipe(generation) || validR100ProductionRecipe(generation)))
     throw new Error('Invalid historical world recipe');
-  const world = generation ? restoreLegacyProductionWorld(generation) : null;
+  const world = generation ? generation.version === 3 ? createR100ProductionMap(generation) : restoreLegacyProductionWorld(generation) : null;
   const layout = world?.layout ?? restoreLegacyProceduralLayout(input.kind === 'recovery' ? input.identity.seed : -1);
   const identity = generatedRiftIdentity(layout, generation, world);
   if (input.kind === 'recovery') assertMatchingRiftIdentity(identity, input.identity);

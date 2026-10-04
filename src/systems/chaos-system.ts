@@ -12,7 +12,7 @@
 
 import { GAME_CONSTANTS } from '@/config/constants';
 import { POLLUTION_GRADE_DEFINITIONS } from '@/generated/rift-pollution-grade-data';
-import { isPollutionGrade, pollutionExposureBetween, pollutionRateAt, type PollutionGrade, type PollutionGradeDefinition } from '@/generation/world-study/pollution-grade';
+import { isPollutionGrade, isPollutionGradeDefinition, pollutionExposureBetween, pollutionRateAt, type PollutionGrade, type PollutionGradeDefinition } from '@/generation/world-study/pollution-grade';
 import { eventBus } from '@/core/event-bus';
 import { GameEvent } from '@/types/events';
 import { clamp } from '@/utils/math';
@@ -133,6 +133,8 @@ export interface ChaosSystemAPI {
 export interface ChaosSystemConfig {
   /** Explicit authored grade only; omitted preserves the historical constant rate. */
   pollutionGrade?: PollutionGrade;
+  /** Frozen departure rules; future catalog balancing must not rewrite an active run. */
+  pollutionDefinition?: PollutionGradeDefinition;
   isEnemyTargetingLure?: (enemyId: string) => boolean;
   /** Effective equipped resistance; evaluated on positive inflow only. */
   getPollutionResistance?: () => number;
@@ -183,7 +185,10 @@ export class ChaosSystem implements ChaosSystemAPI {
   private readonly onEnemyKilled: (payload: { enemyId: string; position: { x: number; y: number } }) => void;
 
   constructor(config?: ChaosSystemConfig) {
-    this.pollutionDefinition = config?.pollutionGrade === undefined ? null
+    if (config?.pollutionDefinition && (!isPollutionGradeDefinition(config.pollutionDefinition)
+      || config.pollutionDefinition.id !== config.pollutionGrade)) throw new Error('Incompatible frozen pollution rules');
+    this.pollutionDefinition = config?.pollutionDefinition ? structuredClone(config.pollutionDefinition)
+      : config?.pollutionGrade === undefined ? null
       : POLLUTION_GRADE_DEFINITIONS.find(definition => definition.id === config.pollutionGrade) ?? null;
     if (config?.pollutionGrade !== undefined && !this.pollutionDefinition) throw new Error('Unsupported map pollution grade');
     this.getPollutionResistance = config?.getPollutionResistance ?? (() => 0);

@@ -1,0 +1,738 @@
+{
+  "status": "completed-12-no-extension-not-growth-sustainability-approved",
+  "actualUniqueRunIds": 12,
+  "sourceStateExactMatch": true,
+  "sequentialCycles": [
+    7,
+    19
+  ],
+  "accountVerified": true,
+  "totals": {
+    "returned": 99,
+    "repairPaid": 99,
+    "growthPaid": 0,
+    "extracted": 12,
+    "deaths": 0,
+    "startReserve": 7,
+    "endReserve": 7,
+    "startCycle": 7,
+    "endCycle": 19,
+    "startModules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 72,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 70,
+        "maxHp": 100
+      }
+    ],
+    "endModules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 53,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 52,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 50,
+        "maxHp": 100
+      }
+    ],
+    "startGrowth": {
+      "growth_chaos_resist": 0,
+      "growth_kindling_affinity": 0,
+      "growth_vitality": 0,
+      "growth_sortie_slot": 0,
+      "growth_defense_slot": 0,
+      "growth_forecast_clarity": 0
+    },
+    "endGrowth": {
+      "growth_chaos_resist": 0,
+      "growth_kindling_affinity": 0,
+      "growth_vitality": 0,
+      "growth_sortie_slot": 0,
+      "growth_defense_slot": 0,
+      "growth_forecast_clarity": 0
+    }
+  },
+  "moduleHpSumLoss": 57,
+  "worlds": [
+    "r100-film-laminate",
+    "r100-gel-fibre",
+    "r100-ivory-basin",
+    "r100-laminate-shell",
+    "r100-ruptured-film",
+    "r100-shell-gel-delta",
+    "r100-shell-grit",
+    "r100-splayed-fibres",
+    "r100-tension-membrane"
+  ],
+  "deepSearchesCollected": 8,
+  "consoleErrors": 0,
+  "navigationWarnings": [],
+  "frozenHarnessChecks": [
+    {
+      "file": "tools/world-study/r100-real-journeys.mjs",
+      "same": true
+    },
+    {
+      "file": "tools/world-study/r100-visible-encounters.mjs",
+      "same": true
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "same": true
+    },
+    {
+      "file": "tools/contam-preview/tsconfig.json",
+      "same": true
+    },
+    {
+      "file": "tools/contam-preview/phaser-stub.ts",
+      "same": true
+    },
+    {
+      "file": "package.json",
+      "same": true
+    },
+    {
+      "file": "tsconfig.json",
+      "same": true
+    }
+  ],
+  "frozenGameSourceFilesVerified": 1338,
+  "changedFrozenGameSources": [],
+  "sourceVersionLimit": "Frozen3062 revision2 source precedes later native-body/presentation source fixes tested on3072. No claim of final3072 whole journey equivalence.",
+  "performance": {
+    "qualified60s": 9,
+    "shortRuns": 3,
+    "allIntervals": 54142,
+    "over50All": 0,
+    "qualifiedFrameP95MinMax": [
+      17.199999809265137,
+      18.09999990463257
+    ],
+    "qualifiedFrameP99MinMax": [
+      17.399999856948853,
+      18.59999990463257
+    ],
+    "qualifiedCPUp95MinMax": [
+      4.199999809265137,
+      4.400000095367432
+    ],
+    "qualifiedRenderP95MinMax": [
+      0.6000001430511475,
+      0.8000001907348633
+    ]
+  },
+  "referenceMachine": {
+    "cpu": "Apple M4 Pro",
+    "memoryGiB": 48,
+    "chrome": "154.0.8037.93",
+    "viewport": "1440x960",
+    "logical": "960x640",
+    "parallel": "Part overlaps low30 and controlled heavy4 plus other QA; headless observational overhead included. Not GPU timing."
+  },
+  "initialInventory": [
+    {
+      "id": "WPN_a95db16e-9f20-43bb-84b5-45d6c31d028e",
+      "kind": "weapon",
+      "location": {
+        "kind": "carried"
+      },
+      "definition": "crowbar_plain",
+      "remaining": 43,
+      "stage": "tool"
+    },
+    {
+      "id": "WPN_5a8c2cee-943e-4cf7-b4cf-1836446745b2",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_standard",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "scorched_scarf",
+      "remaining": 6,
+      "stage": "tool"
+    },
+    {
+      "id": "CAT_3cc016dd-3217-4b72-a0d0-5e82258e357e_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "defense",
+        "slot": 0
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_ef5828bf-31b7-405f-b1ea-f174ed51ae7c",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_standard",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_dce7696a-8eba-4bc9-beeb-9c2e5d9078fa_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_ed5fde24-4af6-4f3d-b14c-68eacae0b98d",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_fine_standard",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_9d7e9662-3517-45e4-ad90-418567186484",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_plain",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_d0b399ee-9364-46bb-a436-9bc3620906e0",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_light",
+      "remaining": 0,
+      "stage": "defense"
+    }
+  ],
+  "finalInventory": [
+    {
+      "id": "WPN_a95db16e-9f20-43bb-84b5-45d6c31d028e",
+      "kind": "weapon",
+      "location": {
+        "kind": "carried"
+      },
+      "definition": "crowbar_plain",
+      "remaining": 12,
+      "stage": "tool"
+    },
+    {
+      "id": "WPN_5a8c2cee-943e-4cf7-b4cf-1836446745b2",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_standard",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_ef5828bf-31b7-405f-b1ea-f174ed51ae7c",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_standard",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_dce7696a-8eba-4bc9-beeb-9c2e5d9078fa_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_ed5fde24-4af6-4f3d-b14c-68eacae0b98d",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_fine_standard",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "carried"
+      },
+      "definition": "stopped_pocket_watch",
+      "remaining": 1,
+      "stage": "tool"
+    },
+    {
+      "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_9d7e9662-3517-45e4-ad90-418567186484",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_plain",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "carried"
+      },
+      "definition": "silver_back_hand_mirror",
+      "remaining": 1,
+      "stage": "tool"
+    },
+    {
+      "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_d0b399ee-9364-46bb-a436-9bc3620906e0",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_light",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_70da4b2a-b425-439b-b4a1-a573c6144cd0_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_f0dda909-880f-4cad-859f-b56c686a1066",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_fine_standard",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_70da4b2a-b425-439b-b4a1-a573c6144cd0_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_7aa27775-f985-4000-8e5b-387bbfa4f76b_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "hollow_eyelet",
+      "remaining": 3,
+      "stage": "tool"
+    },
+    {
+      "id": "CAT_a9b4aae9-33f4-4c76-9c0d-04b1621e12d7_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_a9b4aae9-33f4-4c76-9c0d-04b1621e12d7_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_3b5b539e-541d-4481-94d7-40e1a5baaeda_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_f2c51e41-913d-436b-976d-97071935dac5",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_light",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_3b5b539e-541d-4481-94d7-40e1a5baaeda_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_fd1bd9f4-1ab7-4fe0-a094-8a2a161e171f_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_4ff405d8-a494-4900-b343-69c86100220e_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_4ff405d8-a494-4900-b343-69c86100220e_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "brass_monocle",
+      "remaining": 3,
+      "stage": "tool"
+    },
+    {
+      "id": "CAT_ff420307-2d95-4219-baeb-7687150afb0b_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_ff420307-2d95-4219-baeb-7687150afb0b_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_c0cb6c19-650c-4176-a99e-a2ca1cbc9310",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_resistant",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_0f5f0783-d52f-4dae-8ccf-e57c589d5693_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_3daaaf5d-f2ff-4bda-ae3f-d5e4badf82b6",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_standard",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "WPN_a9ddb3fd-2f8c-452d-a814-1d8adf13bf4b",
+      "kind": "weapon",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": "crowbar_good_resistant",
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_313abf65-a570-4dd1-b6f4-fb42776d15e4_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_313abf65-a570-4dd1-b6f4-fb42776d15e4_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_0c2a24a8-9a96-4210-9d80-5fa36c204470_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_0c2a24a8-9a96-4210-9d80-5fa36c204470_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "defense",
+        "slot": 0
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_b0403f8b-a42a-4b9f-bbed-e69aac229f93_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_b0403f8b-a42a-4b9f-bbed-e69aac229f93_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_1f8bc05b-576a-4b78-ba3c-40e7a5f5eb58_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    },
+    {
+      "id": "CAT_1f8bc05b-576a-4b78-ba3c-40e7a5f5eb58_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "location": {
+        "kind": "stash"
+      },
+      "definition": null,
+      "remaining": 0,
+      "stage": "defense"
+    }
+  ],
+  "limits": [
+    "Actual branch from cycle7, not natural recovery from original30 ending state. Prior7 are not re-counted.",
+    "Concealed search contents cannot be targeted by fuel kind; no such sorting occurred.",
+    "75 chaos / 40HP and95-return estimate are cautious policy, not game100/150 hard limits.",
+    "Cash7 to7 does not prove break-even: total moduleHP fell57. All99 income spent on repair, no growth. Tools stocked are listed separately, not converted into imaginary fuel.",
+    "Fixed12 ended, no extension. Does not prove skilled player impossibility or justify automatic global reward inflation."
+  ]
+}

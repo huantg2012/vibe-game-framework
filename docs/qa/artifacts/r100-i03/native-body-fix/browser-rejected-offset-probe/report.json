@@ -1,0 +1,227 @@
+{
+  "base": "http://127.0.0.1:3072",
+  "method": "Four exact former contact points placed explicitly by QA while paused, then ordinary keyboard input and actual Arcade WORLD_STEP. No geometry/collision/body size/rule changes. Additional diagonal walking and an explicitly injected immovable 20px enemy-sized collider pressure fixture; every actual physics step checked. This is a focused regression, not natural gameplay.",
+  "cases": [
+    {
+      "id": "008-up",
+      "before": {
+        "position": {
+          "x": 574.5722793894035,
+          "y": 300
+        },
+        "sprite": {
+          "x": 580.5722793894035,
+          "y": 306
+        },
+        "supported": false,
+        "steps": 0,
+        "invalid": [],
+        "mismatches": []
+      },
+      "after": {
+        "position": {
+          "x": 591.9783056731152,
+          "y": 293.5629780158444
+        },
+        "sprite": {
+          "x": 591.9783056731152,
+          "y": 293.5629780158444
+        },
+        "supported": true,
+        "steps": 32,
+        "invalid": [],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "013-left",
+      "before": {
+        "position": {
+          "x": 532,
+          "y": 328
+        },
+        "sprite": {
+          "x": 538,
+          "y": 334
+        },
+        "supported": false,
+        "steps": 32,
+        "invalid": [],
+        "mismatches": []
+      },
+      "after": {
+        "position": {
+          "x": 505.9341271400302,
+          "y": 343.56291231542383
+        },
+        "sprite": {
+          "x": 505.9341271400302,
+          "y": 343.56291231542383
+        },
+        "supported": true,
+        "steps": 64,
+        "invalid": [],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "016-up",
+      "before": {
+        "position": {
+          "x": 335.60328455516486,
+          "y": 348
+        },
+        "sprite": {
+          "x": 341.60328455516486,
+          "y": 354
+        },
+        "supported": false,
+        "steps": 64,
+        "invalid": [],
+        "mismatches": []
+      },
+      "after": {
+        "position": {
+          "x": 331.2563334531539,
+          "y": 348.3869477440051
+        },
+        "sprite": {
+          "x": 331.2563334531539,
+          "y": 348.3869477440051
+        },
+        "supported": true,
+        "steps": 96,
+        "invalid": [],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "018-up",
+      "before": {
+        "position": {
+          "x": 258.9192628084076,
+          "y": 324
+        },
+        "sprite": {
+          "x": 264.9192628084076,
+          "y": 330
+        },
+        "supported": false,
+        "steps": 96,
+        "invalid": [],
+        "mismatches": []
+      },
+      "after": {
+        "position": {
+          "x": 266.65680286699916,
+          "y": 324.9210690473224
+        },
+        "sprite": {
+          "x": 266.65680286699916,
+          "y": 324.9210690473224
+        },
+        "supported": true,
+        "steps": 128,
+        "invalid": [],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "diagonal-aw",
+      "after": {
+        "position": {
+          "x": 497.03269696347104,
+          "y": 344.94525079188963
+        },
+        "sprite": {
+          "x": 497.03269696347104,
+          "y": 344.94525079188963
+        },
+        "supported": true,
+        "steps": 238,
+        "invalid": [],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "diagonal-dw",
+      "after": {
+        "position": {
+          "x": 591.9783031322814,
+          "y": 293.5629617085044
+        },
+        "sprite": {
+          "x": 591.9783031322814,
+          "y": 293.5629617085044
+        },
+        "supported": true,
+        "steps": 348,
+        "invalid": [],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "diagonal-as",
+      "after": {
+        "position": {
+          "x": 439.2140553706473,
+          "y": 432.78594462935274
+        },
+        "sprite": {
+          "x": 439.2140553706473,
+          "y": 432.78594462935274
+        },
+        "supported": true,
+        "steps": 458,
+        "invalid": [],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "diagonal-ds",
+      "after": {
+        "position": {
+          "x": 565.9999706490025,
+          "y": 373.99990010000005
+        },
+        "sprite": {
+          "x": 565.9999706490025,
+          "y": 373.99990010000005
+        },
+        "supported": true,
+        "steps": 568,
+        "invalid": [],
+        "mismatches": []
+      }
+    },
+    {
+      "id": "immovable-enemy-pressure",
+      "after": {
+        "position": {
+          "x": 461.13750362306627,
+          "y": 350.51946378349487
+        },
+        "sprite": {
+          "x": 461.13750362306627,
+          "y": 350.51946378349487
+        },
+        "supported": true,
+        "steps": 630,
+        "invalid": [],
+        "mismatches": []
+      }
+    }
+  ],
+  "errors": [],
+  "physics": {
+    "steps": 630,
+    "invalid": [],
+    "mismatches": [],
+    "queryMs": {
+      "p50": 0,
+      "p95": 0.10000014305114746,
+      "max": 0.20000004768371582
+    }
+  },
+  "status": "pass"
+}

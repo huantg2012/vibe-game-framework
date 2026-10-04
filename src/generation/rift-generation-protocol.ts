@@ -32,3 +32,17 @@ export function hydrateRiftGeneration(wire: RiftGenerationWire): { layout: Gener
   const layout: GeneratedRiftLayout = { ...wire.layout, walkableMask: new TileGrid(wire.layout.tileMap) };
   return { layout, world: wire.world ? { ...wire.world, layout } : null };
 }
+
+/** Native raster buffers can be tens of MB. Transfer their ownership once rather
+ * than copying them on the Worker exit; shared references are deduplicated. */
+export function riftGenerationTransferables(wire: RiftGenerationWire): ArrayBuffer[] {
+  const buffers = new Set<ArrayBuffer>(), visited = new Set<object>();
+  const visit = (value: unknown): void => {
+    if (!value || typeof value !== 'object' || visited.has(value)) return;
+    visited.add(value);
+    if (ArrayBuffer.isView(value)) { if (value.buffer instanceof ArrayBuffer) buffers.add(value.buffer); return; }
+    if (value instanceof ArrayBuffer) { buffers.add(value); return; }
+    for (const item of Object.values(value)) visit(item);
+  };
+  visit(wire); return [...buffers];
+}

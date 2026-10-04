@@ -1,4 +1,6 @@
+import { restoreProceduralWorld } from '@/managers/rift-recovery';
 import { installProceduralRiftRecovery, prepareProceduralRecovery, withPreparedProceduralRecovery } from './rift-recovery';
+import { prepareR100Presentation } from '@/systems/r100-world-presentation';
 import { inventoryStore } from '@/systems/inventory-store';
 import { showToastInline } from '@/ui/dom/panel-styles';
 /**
@@ -70,6 +72,7 @@ export async function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry
   const snapshot = saveManager.captureLoadSnapshot();
   if (!snapshot) return fail('暂时无法读取浏览器存储，原记录已保留。');
   const controller = new AbortController();
+  let handedToRift = false;
   activeLoad = controller;
   const cancel = (): void => controller.abort();
   options.signal?.addEventListener('abort', cancel, { once: true });
@@ -80,6 +83,7 @@ export async function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry
     installProceduralRiftRecovery();
     const identity = snapshot.checkpoint?.identity ?? snapshot.departure?.identity;
     if (identity?.worldId === 'procedural-rift') await prepareProceduralRecovery(identity, { signal: controller.signal });
+    if (identity?.generation?.version === 3) await prepareR100Presentation(identity.generation, { signal: controller.signal, world: restoreProceduralWorld(identity)! });
     if (controller.signal.aborted) return 'cancelled';
     // No await between this comparison, the prepared-only validation scope and
     // load. A cache miss inside validation is an error, never main-thread work.
@@ -94,6 +98,7 @@ export async function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry
       if (identity?.worldId === 'procedural-rift') {
         const conditions = checkpoint ? (checkpoint.state as import('@/systems/rift-recovery-state').RiftRecoveryState).conditions : departure!.conditions;
         host.scene.start('RiftScene', { ...conditions, recovery: { identity, externalTargetIds: [], checkpoint } });
+        handedToRift = true;
         return 'entered';
       } else if (onInterrupted) { onInterrupted(); return 'interrupted'; }
       return fail('旧记录缺少出行状态。请在标题页选择放弃本趟，基地与收存保留。');
@@ -129,6 +134,9 @@ export async function loadExpedition(host: Phaser.Scene, enter?: ExpeditionEntry
     if (typeof window !== 'undefined') window.removeEventListener('blur', cancel);
     host.events?.off(Phaser.Scenes.Events.SHUTDOWN, cancel);
     host.events?.off(Phaser.Scenes.Events.DESTROY, cancel);
+    // A prepared GPU surface belongs to the next RiftScene only after admission.
+    // Rejected/replaced loads must release it even without a caller cancellation.
+    if (!handedToRift) controller.abort();
   }
 }
 

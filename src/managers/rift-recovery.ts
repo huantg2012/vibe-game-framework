@@ -1,5 +1,15 @@
+import { nativeRiftPlayerForRestore } from '@/systems/native-rift-body-recovery';
+import { nativeBodyCollision } from '@/generation/world-study/native-body-collision';
+import { createRiftHostManifest, type RiftHostManifest } from '@/systems/rift-host-manifest';
+import { readR100PreparedGameplay, requireR100GameplayPreparation } from '@/systems/r100-world/prepared-gameplay';
+import { selectMasterSourceCells } from '@/systems/r100-world/source-cells';
+import { hydrateR100MasterWorld } from '@/generation/world-study/r100-native-data';
+import { r100PresentationIdentity, validR100PresentationState } from '@/systems/r100-world/presentation-state';
+import { selectR100ProductionRecipe, validR100ProductionRecipe } from '@/generation/world-study/r100-package';
+import { createR100ProductionMap } from '@/generation/world-study/r100-production-map';
+import type { PollutionGrade } from '@/generation/world-study/pollution-grade';
 import type { WorldProductionMap } from '@/generation/world-study/production-map';
-import { selectWorldProductionRecipe, type WorldProductionRecipe } from '@/generation/world-study/production-recipe';
+import { type WorldProductionRecipe } from '@/generation/world-study/production-recipe';
 import { validateHostRuntimeSnapshot } from '@/systems/contamination-host-system';
 import { createCombatRuntimeConfigurationSignature } from '@/systems/combat-system';
 /** Formal 2D world admission. Generation is deterministic; no runtime is replayed on load. */
@@ -15,22 +25,19 @@ import { runtimeRecord, runtimeNumber } from '@/systems/ai/runtime-validation';
 import { validateRiftRecoveryState } from '@/systems/rift-recovery-state';
 import { TileGrid } from '@/systems/tile-grid';
 import { GAME_CONSTANTS } from '@/config/constants';
-import { mix32 } from '@/generation/seed-fork';
-import { bakePaintGenome, collectPaintGenomeFloorTiles } from '@/entities/form-renderers/d/paint-genome/bake';
-import { resolvePaintVeinVariant } from '@/entities/form-renderers/d/paint-genome/topology';
-import { colonyNucleusSeatsInFloors, resolveStopLoss } from '@/systems/contamination-host-live';
 import type { InventoryState } from '@/types/inventory-types';
 import { validRiftCheckpoint, validRiftDeparture, type RiftCheckpoint } from '@/types/rift-checkpoint';
 
 const worlds = new WeakMap<GeneratedRiftLayout, WorldProductionMap>();
+const nativeSourceCounts = new WeakMap<GeneratedRiftLayout, number>();
 const generationRecipes = new WeakMap<GeneratedRiftLayout, WorldProductionRecipe>();
 const layouts = new Map<string, GeneratedRiftLayout>();
 const recipes = new Map<string, ReturnType<typeof createAIRuntimeConfiguration>>();
 const signatures = new WeakMap<GeneratedRiftLayout, string>();
-const hostManifests = new WeakMap<GeneratedRiftLayout, { targets: string[]; nucleusCounts: Map<string, number> }>();
+const hostManifests = new WeakMap<GeneratedRiftLayout, RiftHostManifest>();
 const generationClient = new RiftGenerationClient();
 let requiredPreparedKey: string | null = null;
-export interface ProceduralPreparationOptions { readonly signal?: AbortSignal }
+export interface ProceduralPreparationOptions { readonly signal?: AbortSignal; readonly pollutionGrade?: PollutionGrade }
 export interface ProceduralPreparationMetrics {
   readonly generationMs: number;
   readonly elapsedMs: number;
@@ -43,35 +50,17 @@ let lastPreparationMetrics: ProceduralPreparationMetrics | null = null;
 export function getProceduralPreparationMetrics(): ProceduralPreparationMetrics | null { return lastPreparationMetrics; }
 /** The same pure paint footprint and nucleus placement used by the production
  * renderer/host. Stored target names are never allowed to define their own world. */
-function hostManifest(layout: GeneratedRiftLayout): { targets: string[]; nucleusCounts: Map<string, number> } {
+function hostManifest(layout: GeneratedRiftLayout): RiftHostManifest {
+  const world = worlds.get(layout);
+  if (world?.native) {
+    const prepared = readR100PreparedGameplay(layout, world.native);
+    if (prepared) return prepared.hostManifest;
+  }
   const cached = hostManifests.get(layout);
   if (cached) return cached;
-  const manifest = { targets: [] as string[], nucleusCounts: new Map<string, number>() };
-  const grid = new TileGrid(worlds.get(layout)?.hostTileMap ?? layout.tileMap), tile = GAME_CONSTANTS.TILE_SIZE, c = GAME_CONSTANTS.CONTAMINATION;
-  let paintIndex = 0;
-  for (const form of layout.contaminationDraw.forms) {
-    if (form.portfolio === 'jia') continue;
-    const stop = resolveStopLoss(form);
-    if (stop === 'illegal') throw new Error('Invalid authored host');
-    const id = form.portfolio === 'bing' ? `ENM_BING_${String(paintIndex + 1).padStart(2, '0')}` : `ENM_${form.portfolio.toUpperCase()}_01`;
-    let targetCount = 1;
-    if (form.portfolio === 'bing') {
-      const pin = layout.contaminationPins.paintFloors[paintIndex++]!;
-      const seed = mix32(layout.seed, id);
-      const baked = bakePaintGenome({ substrate: form.substrate, coverage: form.coverage, seed, continuity: form.continuity,
-        sense: form.lexemes.sense, rhythm: form.lexemes.rhythm, fragmentTypeId: layout.fragmentTypeId,
-        veinVariant: resolvePaintVeinVariant(form.substrate, seed), geometryVersion: layout.paintGeometryVersion ?? 1 });
-      const floors = collectPaintGenomeFloorTiles(baked.field, baked.canvasW, baked.canvasH,
-        pin.floorCol * tile + tile / 2, pin.floorRow * tile + tile / 2, tile).filter(p => grid.isWalkable(p.col, p.row));
-      const seats = stop.family === 'scatter_rejoin'
-        ? colonyNucleusSeatsInFloors(floors, c.COLONY_NUCLEUS_COUNT_MIN, c.COLONY_NUCLEUS_COUNT_MAX, c.COLONY_NUCLEUS_MIN_TILE_GAP, 2) : [];
-      manifest.nucleusCounts.set(id, stop.family === 'scatter_rejoin' ? Math.max(c.COLONY_NUCLEUS_COUNT_MIN, seats.length) : 0);
-      targetCount = floors.length === 0 || (stop.family === 'scatter_rejoin' && seats.length < c.COLONY_NUCLEUS_COUNT_MIN) ? 0 : Math.max(1, seats.length);
-    }
-    if (stop.hittable) for (let i = 0; i < targetCount; i++) manifest.targets.push(`core:${id}:${i}`);
-  }
-  // Preserve the authored host/nucleus traversal, exactly as Combat registers it.
-  hostManifests.set(layout, manifest); return manifest;
+  const manifest = createRiftHostManifest(layout, world?.hostTileMap ?? layout.tileMap);
+  hostManifests.set(layout, manifest);
+  return manifest;
 }
 export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpoint['identity'] {
   let signature = signatures.get(layout);
@@ -85,7 +74,7 @@ export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpo
 function rememberWorld(generation: WorldProductionRecipe): GeneratedRiftLayout {
   // Creation and recovery dispatch by the same contract version. A later live
   // generator cannot accidentally create a v2 departure that v2 cannot restore.
-  const world = restoreLegacyProductionWorld(generation);
+  const world = generation.version === 3 ? createR100ProductionMap(generation) : restoreLegacyProductionWorld(generation);
   worlds.set(world.layout, world); generationRecipes.set(world.layout, generation);
   return world.layout;
 }
@@ -95,7 +84,7 @@ function layoutKey(identity: RiftCheckpoint['identity']): string {
 function validProceduralIdentity(identity: RiftCheckpoint['identity']): boolean {
   return identity.worldId === 'procedural-rift' && identity.layoutId === 'procedural-rift'
     && Number.isSafeInteger(identity.seed) && identity.seed >= 0 && identity.seed <= 0xffffffff
-    && (identity.generation === undefined || validLegacyWorldRecipe(identity.generation));
+    && (identity.generation === undefined || validLegacyWorldRecipe(identity.generation) || validR100ProductionRecipe(identity.generation));
 }
 function throwIfCancelled(signal?: AbortSignal): void {
   if (signal?.aborted) throw new DOMException('Generation cancelled', 'AbortError');
@@ -115,6 +104,7 @@ async function prepareGeneratedLayout(input: RiftGenerationInput, options: Proce
   const cacheStarted = performance.now();
   throwIfCancelled(options.signal);
   if (world) worlds.set(layout, world);
+  if (world?.native) requireR100GameplayPreparation(layout);
   if (generation) generationRecipes.set(layout, generation);
   signatures.set(layout, actual.signature);
   // Preparing does not start a run, consume inventory, or evict every old record.
@@ -130,7 +120,7 @@ async function prepareGeneratedLayout(input: RiftGenerationInput, options: Proce
 export async function prepareProceduralDeparture(options: ProceduralPreparationOptions = {}): Promise<RiftCheckpoint['identity']> {
   throwIfCancelled(options.signal);
   const values = new Uint32Array(1); crypto.getRandomValues(values);
-  const generation = selectWorldProductionRecipe(values[0]!);
+  const generation = selectR100ProductionRecipe(values[0]!, options.pollutionGrade ?? 'low');
   const identity = await prepareGeneratedLayout({ kind: 'departure', generation }, options);
   return { ...identity, catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 };
 }
@@ -159,9 +149,9 @@ export function withPreparedProceduralRecovery<T>(identity: RiftCheckpoint['iden
   requiredPreparedKey = layoutKey(identity);
   try { return action(); } finally { requiredPreparedKey = previous; }
 }
-export function createProceduralDeparture(): RiftCheckpoint['identity'] {
+export function createProceduralDeparture(pollutionGrade: PollutionGrade = 'low'): RiftCheckpoint['identity'] {
   const values = new Uint32Array(1); crypto.getRandomValues(values);
-  const layout = rememberWorld(selectWorldProductionRecipe(values[0]!));
+  const layout = rememberWorld(selectR100ProductionRecipe(values[0]!, pollutionGrade));
   const identity = proceduralRiftIdentity(layout);
   layouts.clear(); layouts.set(layoutKey(identity), layout);
   return { ...identity, catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 };
@@ -223,6 +213,24 @@ export function validateProceduralRiftAdmission(checkpoint: unknown, inventory: 
       || state.minimap.mapWidth !== grid.cols || state.minimap.mapHeight !== grid.rows
       || !runtimeRecord(state.world) || state.world.version !== 1 || !runtimeRecord(state.world.hosts)
       || !validateHostRuntimeSnapshot(state.world.hosts, layout.contaminationDraw) || !finiteJson(state.world)) return false;
+    const generation = checkpoint.identity.generation;
+    if (generation?.version === 3) {
+      if (state.chaos.pollutionGrade !== generation.gradeDefinition.id
+        || !validR100PresentationState(state.world.nativePresentation,
+          r100PresentationIdentity(generation.nativeDefinition.id, layout.seed, generation.package.dependencyHash))
+        || state.world.nativePresentation.elapsedMs > checkpoint.elapsedMs + .001
+        || state.world.nativePresentation.lastElapsedMs > checkpoint.elapsedMs + .001) return false;
+      const native=worlds.get(layout)?.native;if(!native)return false;
+      const preparedGameplay=readR100PreparedGameplay(layout,native);
+      let sourceCount=preparedGameplay?.sourceCells.length??nativeSourceCounts.get(layout);
+      if(sourceCount===undefined){
+        const native=worlds.get(layout)?.native;if(!native)return false;
+        const prepared=readR100PreparedGameplay(layout,native);
+        sourceCount=prepared?.sourceCells.length??selectMasterSourceCells(hydrateR100MasterWorld(native,layout)).length;nativeSourceCounts.set(layout,sourceCount);
+      }
+      if(state.world.nativePresentation.audio.sourceIndex>=sourceCount)return false;
+    } else if (state.chaos.pollutionGrade !== undefined || state.world.nativePresentation !== undefined
+      || state.world.bodyGeometryVersion !== undefined) return false;
     const manifest = hostManifest(layout);
     if (state.combat.externalTargetIds.length !== manifest.targets.length
       || state.combat.externalTargetIds.some((id, index) => id !== manifest.targets[index])
@@ -242,7 +250,11 @@ export function validateProceduralRiftAdmission(checkpoint: unknown, inventory: 
       return node.value === 0 && node.tier === (def.tier ?? 'safe') && node.lootPoolId === (def.lootPoolId ?? null) && node.allowWeapon === null;
     })) return false;
     const validPosition = (p: { x: number; y: number }): boolean => runtimeNumber(p.x, 0, grid.widthPx) && runtimeNumber(p.y, 0, grid.heightPx);
-    if (!validPosition(state.player.position) || !grid.isWalkableAt(state.player.position.x, state.player.position.y)) return false;
+    if (!validPosition(state.player.position)) return false;
+    if (generation?.version === 3) {
+      const native = worlds.get(layout)?.native;
+      if (!native || !nativeRiftPlayerForRestore(state, nativeBodyCollision(native, layout))) return false;
+    } else if (!grid.isWalkableAt(state.player.position.x, state.player.position.y)) return false;
     return state.ai.enemies.every(enemy => {
       const authored = recipe!.enemies.find(candidate => candidate.id === enemy.id);
       return !!authored && validPosition(enemy.entity.position) && validateEnemyAIBindings({ ...authored, role: authored.config.role }, enemy.state);

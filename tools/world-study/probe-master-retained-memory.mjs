@@ -27,7 +27,7 @@ const report = {
     'Sampling pauses the scene after a bounded running interval. It is lifecycle evidence, not frame-performance, sound-quality, or long-play certification.',
   ],
 };
-for (const file of ['src/dev/rift-r100-masters/main.ts', 'src/dev/rift-r100-masters/presentation.ts', 'src/dev/rift-r100-masters/surface-renderer.ts', 'src/dev/rift-r100-masters/painted-material.ts', 'src/dev/rift-r100-masters/audio.ts', 'src/dev/rift-gym-runtime.ts', 'src/scenes/rift-scene.ts']) {
+for (const file of ['src/dev/rift-r100-masters/main.ts', 'src/systems/r100-world/presentation.ts', 'src/systems/r100-world/surface-renderer.ts', 'src/systems/r100-world/painted-material.ts', 'src/systems/r100-world/audio.ts', 'src/dev/rift-gym-runtime.ts', 'src/scenes/rift-scene.ts']) {
   report.sourceHashes[file] = createHash('sha256').update(await readFile(path.join(root, file))).digest('hex');
 }
 const browser = await chromium.launch({ headless: true, executablePath, args: ['--enable-precise-memory-info', '--autoplay-policy=no-user-gesture-required'] });

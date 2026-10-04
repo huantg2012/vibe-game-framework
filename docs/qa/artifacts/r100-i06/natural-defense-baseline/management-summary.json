@@ -1,0 +1,4719 @@
+{
+  "generatedAt": "2026-10-04T03:54:30.777Z",
+  "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i06/natural-defense-baseline/report.json",
+  "sourceSha256": "ebb9074b163979c86e6f407797005cc3461350cafb430fca9b53657e844cecbc",
+  "phase": "Independent natural new save. 30 low-grade native-input returns.",
+  "policyFreeze": {
+    "frozenAt": "2026-10-04T03:01:51.599Z",
+    "root": "/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-defense-policy-06Jl8i",
+    "gameUrl": "http://127.0.0.1:3062/",
+    "sourceSnapshot": "/Users/yilungao/coh/docs/qa/artifacts/r100-i06/production-source-rev2/source-snapshot.json",
+    "kind": "Independent natural new save. 30 low-grade native-input returns.",
+    "changedPolicy": "At each vacant offering slot prefer an actually owned contaminant with public canOffer=true; otherwise preserve first legal tile. Do not inspect hidden ability, resistance profile or future loot. Grade fixed low for separate baseline; original 90 continue unchanged.",
+    "unchanged": "Same frozen visible encounter/macro route, actual return and repair target70, no growth purchases, no resources/gear/clock/position/seed/world grants. Separate denominator. Game immutable source identical to original90.",
+    "hashes": [
+      {
+        "file": "tools/world-study/r100-real-journeys.mjs",
+        "sha256": "24b2e1eb3e34cd15e68c7cc59afde61234e5f868b9121ed191aa40de82debafd"
+      },
+      {
+        "file": "tools/world-study/r100-visible-encounters.mjs",
+        "sha256": "47779812e4999a7e6b1eb3b64029dbcfcdf117a05181f8ac9189698ccd04ad58"
+      },
+      {
+        "file": "tools/qa/i27-journey-driver.mjs",
+        "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+      },
+      {
+        "file": "tools/contam-preview/tsconfig.json",
+        "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+      },
+      {
+        "file": "tools/contam-preview/phaser-stub.ts",
+        "sha256": "3c2cd48b23caf46274ce924d5b36ae161159534ca60aef916c3dcc069fc21be7"
+      },
+      {
+        "file": "package.json",
+        "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+      },
+      {
+        "file": "tsconfig.json",
+        "sha256": "f4ffc0588ba5e2914f15f857206c8bde4dac5d39d4120254a171d1501686361e"
+      }
+    ]
+  },
+  "sourceStatus": "completed-limited-real-input",
+  "count": 30,
+  "failedOrPending": [],
+  "totals": {
+    "returned": 191,
+    "repairPaid": 191,
+    "growthPaid": 0,
+    "extracted": 30,
+    "deaths": 0,
+    "startReserve": 0,
+    "endReserve": 0,
+    "startCycle": 0,
+    "endCycle": 30,
+    "startModules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 70,
+        "maxHp": 100
+      }
+    ],
+    "endModules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 13,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 20,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 0,
+        "maxHp": 100
+      }
+    ],
+    "startGrowth": {
+      "growth_chaos_resist": 0,
+      "growth_kindling_affinity": 0,
+      "growth_vitality": 0,
+      "growth_sortie_slot": 0,
+      "growth_defense_slot": 0,
+      "growth_forecast_clarity": 0
+    },
+    "endGrowth": {
+      "growth_chaos_resist": 0,
+      "growth_kindling_affinity": 0,
+      "growth_vitality": 0,
+      "growth_sortie_slot": 0,
+      "growth_defense_slot": 0,
+      "growth_forecast_clarity": 0
+    }
+  },
+  "continuityAndFuelAccounts": true,
+  "records": [
+    {
+      "ordinal": 1,
+      "cycleBefore": 0,
+      "cycleAfter": 1,
+      "world": "r100-shell-chain",
+      "grade": "low",
+      "runId": "785acf20-afa7-4a1c-9bab-55fafe11cd12",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 3,
+      "repairPaid": 0,
+      "growthPaid": 0,
+      "afterReserve": 3,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 70,
+          "afterImpact": 70,
+          "afterMaintenance": 70
+        },
+        {
+          "type": "STORAGE",
+          "before": 70,
+          "afterImpact": 70,
+          "afterMaintenance": 70
+        },
+        {
+          "type": "PURIFIER",
+          "before": 70,
+          "afterImpact": 70,
+          "afterMaintenance": 70
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 100,
+      "fieldChaos": 71.06263593600069,
+      "fieldMs": 87263.14000000016,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.881596391999981,
+          "carried": 0,
+          "elapsedMs": 4649.769999999998
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.30501490399997,
+          "carried": 1,
+          "elapsedMs": 6882.989999999995
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 18.140904119999938,
+          "carried": 3,
+          "elapsedMs": 16565.949999999983
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 18.987750623999922,
+          "carried": 3,
+          "elapsedMs": 21032.439999999853
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": false,
+          "hp": 100,
+          "chaos": 34.751761944000066,
+          "carried": 3,
+          "elapsedMs": 52014.53999999988
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": false,
+          "hp": 100,
+          "chaos": 66.74624784000048,
+          "carried": 3,
+          "elapsedMs": 75880.2599999999
+        }
+      ],
+      "offered": [
+        "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-safe-1"
+      ],
+      "activeToolsAtReturn": [],
+      "performance": {
+        "activeSimulationMs": 87229.82000000015,
+        "frames": 5229,
+        "intervalCount": 5229,
+        "frameIntervalP95": 17.899999856948853,
+        "frameIntervalP99": 18.5,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4,
+        "lastRenderMsP95": 0.8999998569488525,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 2,
+      "cycleBefore": 1,
+      "cycleAfter": 2,
+      "world": "r100-shell-chain",
+      "grade": "low",
+      "runId": "3cc016dd-3217-4b72-a0d0-5e82258e357e",
+      "outcome": "extract",
+      "beforeReserve": 3,
+      "earned": 5,
+      "repairPaid": 7,
+      "growthPaid": 0,
+      "afterReserve": 1,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 70,
+          "afterImpact": 65,
+          "afterMaintenance": 73
+        },
+        {
+          "type": "STORAGE",
+          "before": 70,
+          "afterImpact": 66,
+          "afterMaintenance": 70
+        },
+        {
+          "type": "PURIFIER",
+          "before": 70,
+          "afterImpact": 55,
+          "afterMaintenance": 71
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 40,
+      "fieldChaos": 42.48822272000012,
+      "fieldMs": 55831.10999999984,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.922684607999988,
+          "carried": 1,
+          "elapsedMs": 4866.479999999999
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.37138627999998,
+          "carried": 1,
+          "elapsedMs": 7233.050000000022
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 18.469541591999942,
+          "carried": 3,
+          "elapsedMs": 18299.270000000095
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 19.17735631199993,
+          "carried": 5,
+          "elapsedMs": 22032.470000000085
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [],
+      "performance": {
+        "activeSimulationMs": 55797.75999999984,
+        "frames": 3345,
+        "intervalCount": 3345,
+        "frameIntervalP95": 17.200000047683716,
+        "frameIntervalP99": 18.200000047683716,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.3999998569488525,
+        "lastRenderMsP95": 1.5,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 3,
+      "cycleBefore": 2,
+      "cycleAfter": 3,
+      "world": "r100-pressed-dunes",
+      "grade": "low",
+      "runId": "7981702b-85ec-4479-af27-7af72a2a83b2",
+      "outcome": "extract",
+      "beforeReserve": 1,
+      "earned": 3,
+      "repairPaid": 4,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 73,
+          "afterImpact": 68,
+          "afterMaintenance": 68
+        },
+        {
+          "type": "STORAGE",
+          "before": 70,
+          "afterImpact": 52,
+          "afterMaintenance": 68
+        },
+        {
+          "type": "PURIFIER",
+          "before": 71,
+          "afterImpact": 66,
+          "afterMaintenance": 66
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 70.10490052000245,
+      "fieldMs": 78830.17999999777,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.955908386399924,
+          "carried": 1,
+          "elapsedMs": 5099.809999999996
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.38075801599993,
+          "carried": 1,
+          "elapsedMs": 7366.4
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.839603535999935,
+          "carried": 3,
+          "elapsedMs": 15149.400000000005
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": false,
+          "hp": 100,
+          "chaos": 26.081464353599973,
+          "carried": 3,
+          "elapsedMs": 34598.61999999981
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 70,
+          "chaos": 59.26084767040018,
+          "carried": 3,
+          "elapsedMs": 49747.999999998654
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": false,
+          "hp": 70,
+          "chaos": 65.90016771520129,
+          "carried": 3,
+          "elapsedMs": 67613.96999999757
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [],
+      "performance": {
+        "activeSimulationMs": 78796.85999999776,
+        "frames": 4726,
+        "intervalCount": 4726,
+        "frameIntervalP95": 17.700000047683716,
+        "frameIntervalP99": 18.40000009536743,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.599999904632568,
+        "lastRenderMsP95": 0.7000000476837158,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 4,
+      "cycleBefore": 3,
+      "cycleAfter": 4,
+      "world": "r100-laminate-shell",
+      "grade": "low",
+      "runId": "dce7696a-8eba-4bc9-beeb-9c2e5d9078fa",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 8,
+      "repairPaid": 8,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 68,
+          "afterImpact": 48,
+          "afterMaintenance": 72
+        },
+        {
+          "type": "STORAGE",
+          "before": 68,
+          "afterImpact": 62,
+          "afterMaintenance": 62
+        },
+        {
+          "type": "PURIFIER",
+          "before": 66,
+          "afterImpact": 61,
+          "afterMaintenance": 69
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 91.2563211327991,
+      "fieldMs": 64080.759999997856,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.971077334400047,
+          "carried": 1,
+          "elapsedMs": 5083.109999999993
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 18.410455961600057,
+          "carried": 1,
+          "elapsedMs": 7383.03999999999
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 20.14248191360015,
+          "carried": 3,
+          "elapsedMs": 16449.340000000157
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 100,
+          "chaos": 38.45051909120004,
+          "carried": 8,
+          "elapsedMs": 33181.990000000056
+        }
+      ],
+      "offered": [
+        "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-contested-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-safe-1",
+          "remaining": 5,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 64047.42999999786,
+        "frames": 3842,
+        "intervalCount": 3842,
+        "frameIntervalP95": 17.59999990463257,
+        "frameIntervalP99": 18.299999952316284,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.599999904632568,
+        "lastRenderMsP95": 1.6999998092651367,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 5,
+      "cycleBefore": 4,
+      "cycleAfter": 5,
+      "world": "r100-crystal-fibre",
+      "grade": "low",
+      "runId": "42ce8d4b-befb-4298-aad1-fba2d9dfedec",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 10,
+      "repairPaid": 10,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 72,
+          "afterImpact": 66,
+          "afterMaintenance": 70
+        },
+        {
+          "type": "STORAGE",
+          "before": 62,
+          "afterImpact": 42,
+          "afterMaintenance": 70
+        },
+        {
+          "type": "PURIFIER",
+          "before": 69,
+          "afterImpact": 64,
+          "afterMaintenance": 72
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 59.45325450240031,
+      "fieldMs": 46914.769999999124,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.76515075840006,
+          "carried": 1,
+          "elapsedMs": 4066.4899999999834
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.229258688000094,
+          "carried": 1,
+          "elapsedMs": 6533.049999999995
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 21.853645849600056,
+          "carried": 3,
+          "elapsedMs": 12982.790000000074
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 85,
+          "chaos": 29.876628172799776,
+          "carried": 3,
+          "elapsedMs": 21015.800000000097
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 85,
+          "chaos": 34.927489382399855,
+          "carried": 5,
+          "elapsedMs": 26465.58000000008
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 70,
+          "chaos": 52.752916876800036,
+          "carried": 10,
+          "elapsedMs": 36215.189999999835
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-safe-1",
+          "remaining": 1,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 46881.449999999124,
+        "frames": 2812,
+        "intervalCount": 2812,
+        "frameIntervalP95": 17.399999856948853,
+        "frameIntervalP99": 18.200000047683716,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 3.799999952316284,
+        "lastRenderMsP95": 0.7999999523162842,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 6,
+      "cycleBefore": 5,
+      "cycleAfter": 6,
+      "world": "r100-shell-chain",
+      "grade": "low",
+      "runId": "123a7e98-6ae1-46da-852f-c731f5c6b34a",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 10,
+      "repairPaid": 8,
+      "growthPaid": 0,
+      "afterReserve": 2,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 70,
+          "afterImpact": 65,
+          "afterMaintenance": 73
+        },
+        {
+          "type": "STORAGE",
+          "before": 70,
+          "afterImpact": 65,
+          "afterMaintenance": 73
+        },
+        {
+          "type": "PURIFIER",
+          "before": 72,
+          "afterImpact": 54,
+          "afterMaintenance": 70
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 52.352550040000985,
+      "fieldMs": 60997.57999999968,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 14.985887767999962,
+          "carried": 1,
+          "elapsedMs": 5199.830000000005
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.466184383999963,
+          "carried": 1,
+          "elapsedMs": 7733.040000000035
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.080880552,
+          "carried": 3,
+          "elapsedMs": 16249.370000000017
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.567496536000032,
+          "carried": 3,
+          "elapsedMs": 18815.909999999873
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 18.33850683200008,
+          "carried": 5,
+          "elapsedMs": 22882.419999999645
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 70,
+          "chaos": 32.31383236000032,
+          "carried": 10,
+          "elapsedMs": 39798.42999999927
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [],
+      "performance": {
+        "activeSimulationMs": 60947.57999999968,
+        "frames": 3656,
+        "intervalCount": 3656,
+        "frameIntervalP95": 17.5,
+        "frameIntervalP99": 18.300000190734863,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.5,
+        "lastRenderMsP95": 1.0999999046325684,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 7,
+      "cycleBefore": 6,
+      "cycleAfter": 7,
+      "world": "r100-gel-fibre",
+      "grade": "low",
+      "runId": "81cee7fe-f0a6-445e-9f84-952954fc5b72",
+      "outcome": "extract",
+      "beforeReserve": 2,
+      "earned": 10,
+      "repairPaid": 5,
+      "growthPaid": 0,
+      "afterReserve": 7,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 73,
+          "afterImpact": 68,
+          "afterMaintenance": 72
+        },
+        {
+          "type": "STORAGE",
+          "before": 73,
+          "afterImpact": 58,
+          "afterMaintenance": 70
+        },
+        {
+          "type": "PURIFIER",
+          "before": 70,
+          "afterImpact": 66,
+          "afterMaintenance": 70
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 80.56302981440398,
+      "fieldMs": 86763.19000000441,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.859063761600051,
+          "carried": 0,
+          "elapsedMs": 4583.140000000007
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.337022640800033,
+          "carried": 1,
+          "elapsedMs": 7133.070000000027
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.98642153919992,
+          "carried": 1,
+          "elapsedMs": 15932.680000000017
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 19.713926685599816,
+          "carried": 3,
+          "elapsedMs": 25148.98999999955
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 27.424734369600067,
+          "carried": 5,
+          "elapsedMs": 46381.47999999942
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 85,
+          "chaos": 56.841172952001024,
+          "carried": 10,
+          "elapsedMs": 63497.45999999982
+        }
+      ],
+      "offered": [
+        "CAT_3cc016dd-3217-4b72-a0d0-5e82258e357e_r100-contaminant-safe-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-contested-1",
+          "remaining": 6,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 86713.19000000441,
+        "frames": 5202,
+        "intervalCount": 5202,
+        "frameIntervalP95": 18.200000047683716,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.300000190734863,
+        "lastRenderMsP95": 0.6000001430511475,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 8,
+      "cycleBefore": 7,
+      "cycleAfter": 8,
+      "world": "r100-gel-fibre",
+      "grade": "low",
+      "runId": "a195b977-8b67-4594-80c4-b063539b7b07",
+      "outcome": "extract",
+      "beforeReserve": 7,
+      "earned": 6,
+      "repairPaid": 11,
+      "growthPaid": 0,
+      "afterReserve": 2,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 72,
+          "afterImpact": 64,
+          "afterMaintenance": 72
+        },
+        {
+          "type": "STORAGE",
+          "before": 70,
+          "afterImpact": 63,
+          "afterMaintenance": 71
+        },
+        {
+          "type": "PURIFIER",
+          "before": 70,
+          "afterImpact": 43,
+          "afterMaintenance": 71
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 40,
+      "fieldChaos": 66.24065546240219,
+      "fieldMs": 84579.96000000385,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.90940738560005,
+          "carried": 0,
+          "elapsedMs": 4833.160000000004
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.376653824000083,
+          "carried": 1,
+          "elapsedMs": 7316.400000000036
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 21.302074406400273,
+          "carried": 1,
+          "elapsedMs": 16982.649999999983
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": false,
+          "hp": 100,
+          "chaos": 23.967575308799987,
+          "carried": 1,
+          "elapsedMs": 24065.71999999959
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 55,
+          "chaos": 53.65115632640015,
+          "carried": 6,
+          "elapsedMs": 58897.66999999963
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-contested-1",
+          "remaining": 4,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 84546.63000000385,
+        "frames": 5072,
+        "intervalCount": 5072,
+        "frameIntervalP95": 18.09999990463257,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 3.8999998569488525,
+        "lastRenderMsP95": 0.7999999523162842,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 9,
+      "cycleBefore": 8,
+      "cycleAfter": 9,
+      "world": "r100-schist-shear",
+      "grade": "low",
+      "runId": "1e63e655-8ecc-4afd-b3b9-c93fcd662908",
+      "outcome": "extract",
+      "beforeReserve": 2,
+      "earned": 10,
+      "repairPaid": 12,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 72,
+          "afterImpact": 63,
+          "afterMaintenance": 71
+        },
+        {
+          "type": "STORAGE",
+          "before": 71,
+          "afterImpact": 40,
+          "afterMaintenance": 72
+        },
+        {
+          "type": "PURIFIER",
+          "before": 71,
+          "afterImpact": 63,
+          "afterMaintenance": 71
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 59.44555701760082,
+      "fieldMs": 77280.23000000247,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.947033740800066,
+          "carried": 1,
+          "elapsedMs": 5033.130000000025
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.398600806400097,
+          "carried": 1,
+          "elapsedMs": 7433.040000000045
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.449118784000227,
+          "carried": 3,
+          "elapsedMs": 13016.150000000045
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": false,
+          "hp": 85,
+          "chaos": 43.04107560959986,
+          "carried": 3,
+          "elapsedMs": 34415.29999999923
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 70,
+          "chaos": 52.233730112000245,
+          "carried": 8,
+          "elapsedMs": 49581.319999999476
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 70,
+          "chaos": 54.569960422400406,
+          "carried": 10,
+          "elapsedMs": 61997.50999999975
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-contested-1",
+          "remaining": 2,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 77246.91000000246,
+        "frames": 4635,
+        "intervalCount": 4635,
+        "frameIntervalP95": 17.799999952316284,
+        "frameIntervalP99": 18.299999952316284,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.200000047683716,
+        "lastRenderMsP95": 0.7000000476837158,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 10,
+      "cycleBefore": 9,
+      "cycleAfter": 10,
+      "world": "r100-shell-chain",
+      "grade": "low",
+      "runId": "8f19791a-fe93-4ac5-829d-acbce62121af",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 10,
+      "repairPaid": 10,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 71,
+          "afterImpact": 61,
+          "afterMaintenance": 65
+        },
+        {
+          "type": "STORAGE",
+          "before": 72,
+          "afterImpact": 63,
+          "afterMaintenance": 63
+        },
+        {
+          "type": "PURIFIER",
+          "before": 71,
+          "afterImpact": 36,
+          "afterMaintenance": 72
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 56.92077377999925,
+      "fieldMs": 87046.52000000399,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.818447260799902,
+          "carried": 0,
+          "elapsedMs": 4333.160000000002
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.259147743199872,
+          "carried": 1,
+          "elapsedMs": 6666.389999999981
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 18.742817747999688,
+          "carried": 3,
+          "elapsedMs": 19815.849999999744
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 19.92956589839964,
+          "carried": 5,
+          "elapsedMs": 26098.92999999973
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 100,
+          "chaos": 25.192890383999682,
+          "carried": 10,
+          "elapsedMs": 36265.200000000266
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": false,
+          "hp": 100,
+          "chaos": 52.620777031199324,
+          "carried": 10,
+          "elapsedMs": 75663.64000000416
+        }
+      ],
+      "offered": [
+        "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-safe-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_3cc016dd-3217-4b72-a0d0-5e82258e357e_r100-contaminant-safe-1",
+          "remaining": 3,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 87013.19000000399,
+        "frames": 5218,
+        "intervalCount": 5218,
+        "frameIntervalP95": 18.299999952316284,
+        "frameIntervalP99": 18.600000143051147,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.200000047683716,
+        "lastRenderMsP95": 1.5,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 11,
+      "cycleBefore": 10,
+      "cycleAfter": 11,
+      "world": "r100-film-laminate",
+      "grade": "low",
+      "runId": "d66ce652-99a1-4e19-b196-5fff91619acd",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 10,
+      "repairPaid": 10,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 65,
+          "afterImpact": 54,
+          "afterMaintenance": 54
+        },
+        {
+          "type": "STORAGE",
+          "before": 63,
+          "afterImpact": 24,
+          "afterMaintenance": 64
+        },
+        {
+          "type": "PURIFIER",
+          "before": 72,
+          "afterImpact": 62,
+          "afterMaintenance": 62
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 56.01499746560045,
+      "fieldMs": 64264.08000000426,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 14.775340193600023,
+          "carried": 0,
+          "elapsedMs": 4633.120000000058
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.089603950400026,
+          "carried": 1,
+          "elapsedMs": 6666.400000000039
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 16.091625704000013,
+          "carried": 3,
+          "elapsedMs": 13149.459999999897
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.740198212799555,
+          "carried": 8,
+          "elapsedMs": 23815.689999999755
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 85,
+          "chaos": 47.09319496000023,
+          "carried": 8,
+          "elapsedMs": 47948.07000000197
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 85,
+          "chaos": 47.52079292800028,
+          "carried": 10,
+          "elapsedMs": 50714.620000002404
+        }
+      ],
+      "offered": [
+        "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-contested-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_3cc016dd-3217-4b72-a0d0-5e82258e357e_r100-contaminant-safe-1",
+          "remaining": 1,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-safe-1",
+          "remaining": 3,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 64230.76000000426,
+        "frames": 3853,
+        "intervalCount": 3853,
+        "frameIntervalP95": 18.299999952316284,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.400000095367432,
+        "lastRenderMsP95": 0.8999998569488525,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 12,
+      "cycleBefore": 11,
+      "cycleAfter": 12,
+      "world": "r100-shell-gel-delta",
+      "grade": "low",
+      "runId": "c3550972-5679-42d0-b3f9-9ee6b1ed7454",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 10,
+      "repairPaid": 10,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 54,
+          "afterImpact": 29,
+          "afterMaintenance": 69
+        },
+        {
+          "type": "STORAGE",
+          "before": 64,
+          "afterImpact": 57,
+          "afterMaintenance": 57
+        },
+        {
+          "type": "PURIFIER",
+          "before": 62,
+          "afterImpact": 55,
+          "afterMaintenance": 55
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 90.45843210496471,
+      "fieldMs": 79913.4900000042,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 19.88422408000029,
+          "carried": 0,
+          "elapsedMs": 5116.470000000012
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 20.264995726720475,
+          "carried": 1,
+          "elapsedMs": 7483.040000000027
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 21.4716690668809,
+          "carried": 3,
+          "elapsedMs": 14982.749999999824
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 100,
+          "chaos": 44.39612900416233,
+          "carried": 8,
+          "elapsedMs": 42931.620000001276
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 70,
+          "chaos": 70.74121360416446,
+          "carried": 10,
+          "elapsedMs": 61430.9000000039
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [],
+      "performance": {
+        "activeSimulationMs": 79880.1600000042,
+        "frames": 4792,
+        "intervalCount": 4792,
+        "frameIntervalP95": 18.200000047683716,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.299999952316284,
+        "lastRenderMsP95": 0.7000000476837158,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 13,
+      "cycleBefore": 12,
+      "cycleAfter": 13,
+      "world": "r100-ruptured-film",
+      "grade": "low",
+      "runId": "8c257137-d229-4705-bf5d-ec9b9ad3705d",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 5,
+      "repairPaid": 5,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 69,
+          "afterImpact": 47,
+          "afterMaintenance": 67
+        },
+        {
+          "type": "STORAGE",
+          "before": 57,
+          "afterImpact": 50,
+          "afterMaintenance": 50
+        },
+        {
+          "type": "PURIFIER",
+          "before": 55,
+          "afterImpact": 49,
+          "afterMaintenance": 49
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 98.11139551520102,
+      "fieldMs": 71163.84000000436,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 22.964250570399802,
+          "carried": 1,
+          "elapsedMs": 5066.470000000058
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 23.459061635199692,
+          "carried": 1,
+          "elapsedMs": 7666.360000000045
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 25.447825700799307,
+          "carried": 1,
+          "elapsedMs": 18115.9399999998
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 26.136123690399188,
+          "carried": 3,
+          "elapsedMs": 21732.469999999794
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 36.15488845599878,
+          "carried": 5,
+          "elapsedMs": 33398.679999999964
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [],
+      "performance": {
+        "activeSimulationMs": 71112.17000000436,
+        "frames": 4265,
+        "intervalCount": 4265,
+        "frameIntervalP95": 18.200000047683716,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.3999998569488525,
+        "lastRenderMsP95": 0.7000000476837158,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 14,
+      "cycleBefore": 13,
+      "cycleAfter": 14,
+      "world": "r100-shell-gel-delta",
+      "grade": "low",
+      "runId": "ad47c31d-632a-49b6-87d9-31ce866250b9",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 10,
+      "repairPaid": 10,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 67,
+          "afterImpact": 48,
+          "afterMaintenance": 48
+        },
+        {
+          "type": "STORAGE",
+          "before": 50,
+          "afterImpact": 45,
+          "afterMaintenance": 57
+        },
+        {
+          "type": "PURIFIER",
+          "before": 49,
+          "afterImpact": 44,
+          "afterMaintenance": 72
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 71.60169048198321,
+      "fieldMs": 95329.53000000381,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 27.006707400799968,
+          "carried": 1,
+          "elapsedMs": 5249.830000000045
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 27.489277193599932,
+          "carried": 1,
+          "elapsedMs": 7766.360000000044
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 30.54773221999991,
+          "carried": 3,
+          "elapsedMs": 23715.749999999814
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 85,
+          "chaos": 65.79492110480037,
+          "carried": 5,
+          "elapsedMs": 65097.40000000439
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 85,
+          "chaos": 66.14966751680012,
+          "carried": 5,
+          "elapsedMs": 66947.3500000044
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 85,
+          "chaos": 68.23017722479865,
+          "carried": 10,
+          "elapsedMs": 77796.90000000419
+        }
+      ],
+      "offered": [
+        "CAT_dce7696a-8eba-4bc9-beeb-9c2e5d9078fa_r100-contaminant-safe-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-contested-1",
+          "remaining": 4,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 95296.19000000381,
+        "frames": 5717,
+        "intervalCount": 5717,
+        "frameIntervalP95": 18.100000143051147,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.5,
+        "lastRenderMsP95": 1,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 15,
+      "cycleBefore": 14,
+      "cycleAfter": 15,
+      "world": "r100-fibre-silt",
+      "grade": "low",
+      "runId": "33ca2eee-a59c-48e6-b4e4-c2681928a052",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 8,
+      "repairPaid": 8,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 48,
+          "afterImpact": 39,
+          "afterMaintenance": 39
+        },
+        {
+          "type": "STORAGE",
+          "before": 57,
+          "afterImpact": 23,
+          "afterMaintenance": 55
+        },
+        {
+          "type": "PURIFIER",
+          "before": 72,
+          "afterImpact": 63,
+          "afterMaintenance": 63
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 40,
+      "fieldChaos": 84.35440918400158,
+      "fieldMs": 71047.18000000431,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.06825102079996,
+          "carried": 1,
+          "elapsedMs": 5199.819999999988
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 15.561280313599926,
+          "carried": 1,
+          "elapsedMs": 7599.690000000001
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 17.33826646399984,
+          "carried": 3,
+          "elapsedMs": 16249.349999999726
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 100,
+          "chaos": 20.63887166719978,
+          "carried": 8,
+          "elapsedMs": 32315.37999999979
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": false,
+          "hp": 55,
+          "chaos": 50.527218886400874,
+          "carried": 8,
+          "elapsedMs": 54431.16000000284
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-contested-1",
+          "remaining": 3,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 70997.18000000433,
+        "frames": 4259,
+        "intervalCount": 4259,
+        "frameIntervalP95": 18.299999952316284,
+        "frameIntervalP99": 18.600000143051147,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.599999904632568,
+        "lastRenderMsP95": 0.6000001430511475,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 16,
+      "cycleBefore": 15,
+      "cycleAfter": 16,
+      "world": "r100-cinder-ridge",
+      "grade": "low",
+      "runId": "a3e41a25-0c30-42cc-bd19-5328cf7e6a71",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 1,
+      "repairPaid": 1,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 39,
+          "afterImpact": 28,
+          "afterMaintenance": 28
+        },
+        {
+          "type": "STORAGE",
+          "before": 55,
+          "afterImpact": 17,
+          "afterMaintenance": 21
+        },
+        {
+          "type": "PURIFIER",
+          "before": 63,
+          "afterImpact": 53,
+          "afterMaintenance": 53
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 91.01102667760244,
+      "fieldMs": 65464.03000000435,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 20.056027028799846,
+          "carried": 1,
+          "elapsedMs": 4983.140000000028
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 20.60699571759972,
+          "carried": 1,
+          "elapsedMs": 7583.029999999993
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 21.807827682399434,
+          "carried": 1,
+          "elapsedMs": 13249.469999999857
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": false,
+          "hp": 85,
+          "chaos": 67.3751506679996,
+          "carried": 1,
+          "elapsedMs": 44964.870000001545
+        }
+      ],
+      "offered": [
+        "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-contested-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_dce7696a-8eba-4bc9-beeb-9c2e5d9078fa_r100-contaminant-safe-1",
+          "remaining": 5,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 65412.36000000433,
+        "frames": 3923,
+        "intervalCount": 3923,
+        "frameIntervalP95": 18.399999856948853,
+        "frameIntervalP99": 18.600000143051147,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.300000190734863,
+        "lastRenderMsP95": 0.8999998569488525,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 17,
+      "cycleBefore": 16,
+      "cycleAfter": 17,
+      "world": "r100-pressed-dunes",
+      "grade": "low",
+      "runId": "12b33de1-d104-4240-ac79-3e34ecf08bff",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 3,
+      "repairPaid": 3,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 28,
+          "afterImpact": 21,
+          "afterMaintenance": 21
+        },
+        {
+          "type": "STORAGE",
+          "before": 21,
+          "afterImpact": 0,
+          "afterMaintenance": 12
+        },
+        {
+          "type": "PURIFIER",
+          "before": 53,
+          "afterImpact": 47,
+          "afterMaintenance": 47
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 40,
+      "fieldChaos": 92.15576310618914,
+      "fieldMs": 93546.24000000389,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 25.106481100799897,
+          "carried": 1,
+          "elapsedMs": 5033.120000000012
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 25.634072918399866,
+          "carried": 1,
+          "elapsedMs": 7433.010000000023
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 27.960624249599714,
+          "carried": 3,
+          "elapsedMs": 18015.9399999997
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": false,
+          "hp": 100,
+          "chaos": 34.371679276799995,
+          "carried": 3,
+          "elapsedMs": 27782.22999999983
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": false,
+          "hp": 100,
+          "chaos": 35.412208377600024,
+          "carried": 3,
+          "elapsedMs": 30148.78999999977
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-contested-1",
+          "remaining": 1,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_dce7696a-8eba-4bc9-beeb-9c2e5d9078fa_r100-contaminant-safe-1",
+          "remaining": 3,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 93512.9100000039,
+        "frames": 5607,
+        "intervalCount": 5607,
+        "frameIntervalP95": 18.09999990463257,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 1,
+        "over50Fraction": 0.00017834849295523454,
+        "cpuDispatchP95": 4.400000095367432,
+        "lastRenderMsP95": 0.6999998092651367,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 18,
+      "cycleBefore": 17,
+      "cycleAfter": 18,
+      "world": "r100-film-laminate",
+      "grade": "low",
+      "runId": "c2232251-6f9b-45d1-97ba-e8e344e229d9",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 5,
+      "repairPaid": 5,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 21,
+          "afterImpact": 14,
+          "afterMaintenance": 14
+        },
+        {
+          "type": "STORAGE",
+          "before": 12,
+          "afterImpact": 0,
+          "afterMaintenance": 20
+        },
+        {
+          "type": "PURIFIER",
+          "before": 47,
+          "afterImpact": 40,
+          "afterMaintenance": 40
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 68.5102662504037,
+      "fieldMs": 67880.62000000427,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 28.16933102400014,
+          "carried": 1,
+          "elapsedMs": 5199.799999999993
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 28.75024553760021,
+          "carried": 1,
+          "elapsedMs": 7783.019999999986
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 31.122632839200424,
+          "carried": 3,
+          "elapsedMs": 18332.58999999968
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 32.9965556304009,
+          "carried": 5,
+          "elapsedMs": 26665.579999999718
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 37.22960640240136,
+          "carried": 5,
+          "elapsedMs": 31682.06999999975
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": false,
+          "hp": 100,
+          "chaos": 44.99687350320201,
+          "carried": 5,
+          "elapsedMs": 42281.650000001115
+        }
+      ],
+      "offered": [
+        "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-contested-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_dce7696a-8eba-4bc9-beeb-9c2e5d9078fa_r100-contaminant-safe-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 5,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 67847.29000000429,
+        "frames": 4071,
+        "intervalCount": 4071,
+        "frameIntervalP95": 18.200000047683716,
+        "frameIntervalP99": 18.5,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.5,
+        "lastRenderMsP95": 0.6000001430511475,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 19,
+      "cycleBefore": 18,
+      "cycleAfter": 19,
+      "world": "r100-shell-grit",
+      "grade": "low",
+      "runId": "eaf5aa71-152f-4f08-b5ee-75d0bf4f6c8d",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 5,
+      "repairPaid": 5,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 14,
+          "afterImpact": 0,
+          "afterMaintenance": 20
+        },
+        {
+          "type": "STORAGE",
+          "before": 20,
+          "afterImpact": 13,
+          "afterMaintenance": 13
+        },
+        {
+          "type": "PURIFIER",
+          "before": 40,
+          "afterImpact": 33,
+          "afterMaintenance": 33
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 93.03051872640276,
+      "fieldMs": 79846.78999999707,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 31.253006520000447,
+          "carried": 1,
+          "elapsedMs": 5449.74999999998
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 31.82012029440061,
+          "carried": 1,
+          "elapsedMs": 7916.319999999953
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 33.188096011200614,
+          "carried": 3,
+          "elapsedMs": 13866.109999999933
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 57.009232528002826,
+          "carried": 5,
+          "elapsedMs": 38481.78000000118
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 57.92120560960283,
+          "carried": 5,
+          "elapsedMs": 40465.020000001176
+        }
+      ],
+      "offered": [
+        "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-safe-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 5,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-contested-1",
+          "remaining": 2,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 79813.44999999704,
+        "frames": 4789,
+        "intervalCount": 4789,
+        "frameIntervalP95": 18,
+        "frameIntervalP99": 18.5,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.699999809265137,
+        "lastRenderMsP95": 1.5999999046325684,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 20,
+      "cycleBefore": 19,
+      "cycleAfter": 20,
+      "world": "r100-crystal-fibre",
+      "grade": "low",
+      "runId": "c2488160-9176-4a15-8894-013fb372a32c",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 1,
+      "repairPaid": 1,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 20,
+          "afterImpact": 10,
+          "afterMaintenance": 10
+        },
+        {
+          "type": "STORAGE",
+          "before": 13,
+          "afterImpact": 4,
+          "afterMaintenance": 4
+        },
+        {
+          "type": "PURIFIER",
+          "before": 33,
+          "afterImpact": 0,
+          "afterMaintenance": 4
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 75.74249433600163,
+      "fieldMs": 38281.83000000108,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 34.917409167999935,
+          "carried": 1,
+          "elapsedMs": 4066.5299999999393
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 38.67689607999996,
+          "carried": 1,
+          "elapsedMs": 6833.079999999843
+        },
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": false,
+          "hp": 70,
+          "chaos": 71.87736172800176,
+          "carried": 1,
+          "elapsedMs": 29715.49000000089
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 5,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-contested-1",
+          "remaining": 1,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 38248.49000000109,
+        "frames": 2295,
+        "intervalCount": 2295,
+        "frameIntervalP95": 18.299999952316284,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.400000095367432,
+        "lastRenderMsP95": 1.1000001430511475,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 21,
+      "cycleBefore": 20,
+      "cycleAfter": 21,
+      "world": "r100-crystal-fibre",
+      "grade": "low",
+      "runId": "c58010fc-50d1-4f1f-b9ef-cec6b8fa3dca",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 5,
+      "repairPaid": 5,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 10,
+          "afterImpact": 2,
+          "afterMaintenance": 2
+        },
+        {
+          "type": "STORAGE",
+          "before": 4,
+          "afterImpact": 0,
+          "afterMaintenance": 20
+        },
+        {
+          "type": "PURIFIER",
+          "before": 4,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 100,
+      "fieldChaos": 79.12939154399939,
+      "fieldMs": 35848.56000000114,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 48.892368959999985,
+          "carried": 0,
+          "elapsedMs": 3833.2000000000044
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 49.48985481599997,
+          "carried": 1,
+          "elapsedMs": 6399.71999999998
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.445300319999895,
+          "carried": 3,
+          "elapsedMs": 14799.399999999923
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 56.61026349599974,
+          "carried": 3,
+          "elapsedMs": 19699.230000000192
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 75.2262667439996,
+          "carried": 5,
+          "elapsedMs": 27465.56000000079
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 3,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 35815.22000000115,
+        "frames": 2149,
+        "intervalCount": 2149,
+        "frameIntervalP95": 16.800000190734863,
+        "frameIntervalP99": 17.299999952316284,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.299999952316284,
+        "lastRenderMsP95": 0.8999998569488525,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 22,
+      "cycleBefore": 21,
+      "cycleAfter": 22,
+      "world": "r100-grain-laminate",
+      "grade": "low",
+      "runId": "8cb2326f-ba52-4ea6-bdca-d80d36227b78",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 9,
+      "repairPaid": 9,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 2,
+          "afterImpact": 0,
+          "afterMaintenance": 36
+        },
+        {
+          "type": "STORAGE",
+          "before": 20,
+          "afterImpact": 12,
+          "afterMaintenance": 12
+        },
+        {
+          "type": "PURIFIER",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 85.45363161760284,
+      "fieldMs": 63680.800000001174,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.08937469760027,
+          "carried": 0,
+          "elapsedMs": 4566.459999999959
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.61419476960042,
+          "carried": 1,
+          "elapsedMs": 6766.4099999998725
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 53.355606430400904,
+          "carried": 3,
+          "elapsedMs": 14066.089999999871
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 55.26401724800146,
+          "carried": 5,
+          "elapsedMs": 22065.80000000029
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 85,
+          "chaos": 65.3728070480016,
+          "carried": 9,
+          "elapsedMs": 38198.4600000011
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 85,
+          "chaos": 73.0166016944029,
+          "carried": 9,
+          "elapsedMs": 47931.4300000011
+        }
+      ],
+      "offered": [
+        "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-contested-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-safe-1",
+          "remaining": 5,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 63629.140000001215,
+        "frames": 3817,
+        "intervalCount": 3817,
+        "frameIntervalP95": 18,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.300000190734863,
+        "lastRenderMsP95": 0.7999999523162842,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 23,
+      "cycleBefore": 22,
+      "cycleAfter": 23,
+      "world": "r100-reversed-flow",
+      "grade": "low",
+      "runId": "79bdcb54-8a96-4fa6-9641-5a30a58623c5",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 9,
+      "repairPaid": 9,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 36,
+          "afterImpact": 25,
+          "afterMaintenance": 25
+        },
+        {
+          "type": "STORAGE",
+          "before": 12,
+          "afterImpact": 0,
+          "afterMaintenance": 36
+        },
+        {
+          "type": "PURIFIER",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 100,
+      "fieldChaos": 76.3760316416007,
+      "fieldMs": 63847.430000001215,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.070352902400224,
+          "carried": 0,
+          "elapsedMs": 4999.77999999997
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.54131177600038,
+          "carried": 1,
+          "elapsedMs": 7199.699999999948
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 53.43940499840081,
+          "carried": 3,
+          "elapsedMs": 16065.97999999991
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 100,
+          "chaos": 59.108169094401184,
+          "carried": 7,
+          "elapsedMs": 26832.240000000686
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 64.90235989760093,
+          "carried": 9,
+          "elapsedMs": 40365.010000001115
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 66.87539396480021,
+          "carried": 9,
+          "elapsedMs": 47648.07000000115
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-safe-1",
+          "remaining": 3,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 63814.100000001235,
+        "frames": 3825,
+        "intervalCount": 3825,
+        "frameIntervalP95": 18.200000047683716,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.299999952316284,
+        "lastRenderMsP95": 0.6000001430511475,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 24,
+      "cycleBefore": 23,
+      "cycleAfter": 24,
+      "world": "r100-tension-membrane",
+      "grade": "low",
+      "runId": "e9fb32d1-c652-4879-adae-a673a5ac5e97",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 5,
+      "repairPaid": 5,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 25,
+          "afterImpact": 13,
+          "afterMaintenance": 13
+        },
+        {
+          "type": "STORAGE",
+          "before": 36,
+          "afterImpact": 24,
+          "afterMaintenance": 24
+        },
+        {
+          "type": "PURIFIER",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 20
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 85,
+      "fieldChaos": 93.88417037999989,
+      "fieldMs": 55364.4500000012,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.00265412000003,
+          "carried": 0,
+          "elapsedMs": 4516.460000000006
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.45773858000006,
+          "carried": 1,
+          "elapsedMs": 6566.389999999904
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 54.90982094000006,
+          "carried": 3,
+          "elapsedMs": 21665.770000000328
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 55.54619948000009,
+          "carried": 5,
+          "elapsedMs": 24532.34000000051
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 61.33959218000013,
+          "carried": 5,
+          "elapsedMs": 31615.40000000099
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-safe-1",
+          "remaining": 1,
+          "location": "carried"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 55331.11000000121,
+        "frames": 3319,
+        "intervalCount": 3319,
+        "frameIntervalP95": 18.200000047683716,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.5,
+        "lastRenderMsP95": 0.7000000476837158,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 25,
+      "cycleBefore": 24,
+      "cycleAfter": 25,
+      "world": "r100-gel-fibre",
+      "grade": "low",
+      "runId": "64c7ac2b-2e58-4380-8240-6d984fcf957e",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 7,
+      "repairPaid": 7,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 13,
+          "afterImpact": 0,
+          "afterMaintenance": 28
+        },
+        {
+          "type": "STORAGE",
+          "before": 24,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        },
+        {
+          "type": "PURIFIER",
+          "before": 20,
+          "afterImpact": 7,
+          "afterMaintenance": 7
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 25,
+      "fieldChaos": 100.04770759040102,
+      "fieldMs": 64630.7700000012,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 41.241562796800324,
+          "carried": 1,
+          "elapsedMs": 5383.119999999953
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 41.78739080800046,
+          "carried": 1,
+          "elapsedMs": 7749.699999999891
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 43.716996546400644,
+          "carried": 3,
+          "elapsedMs": 16116.009999999975
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 100,
+          "chaos": 50.58775616800154,
+          "carried": 7,
+          "elapsedMs": 31115.44000000099
+        }
+      ],
+      "offered": [
+        "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-contested-1",
+          "remaining": 4,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 64579.12000000115,
+        "frames": 3874,
+        "intervalCount": 3874,
+        "frameIntervalP95": 17.700000047683716,
+        "frameIntervalP99": 18.299999952316284,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.5,
+        "lastRenderMsP95": 1.1999998092651367,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 26,
+      "cycleBefore": 25,
+      "cycleAfter": 26,
+      "world": "r100-reversed-flow",
+      "grade": "low",
+      "runId": "e4185ec1-eda4-4b0f-aab4-26e2fa3c6832",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 1,
+      "repairPaid": 1,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 28,
+          "afterImpact": 20,
+          "afterMaintenance": 20
+        },
+        {
+          "type": "STORAGE",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 4
+        },
+        {
+          "type": "PURIFIER",
+          "before": 7,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 98.17522004800163,
+      "fieldMs": 43364.940000001196,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 48.183429497600066,
+          "carried": 1,
+          "elapsedMs": 5383.139999999972
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 48.634081712000096,
+          "carried": 1,
+          "elapsedMs": 7433.04999999999
+        }
+      ],
+      "offered": [
+        "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-contested-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-contested-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1",
+          "remaining": 4,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 43331.600000001155,
+        "frames": 2599,
+        "intervalCount": 2599,
+        "frameIntervalP95": 17.200000047683716,
+        "frameIntervalP99": 18,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.5,
+        "lastRenderMsP95": 2.0999999046325684,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 27,
+      "cycleBefore": 26,
+      "cycleAfter": 27,
+      "world": "r100-film-laminate",
+      "grade": "low",
+      "runId": "dbb590eb-97f6-43c7-9944-c4eaffd37cad",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 9,
+      "repairPaid": 9,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 20,
+          "afterImpact": 9,
+          "afterMaintenance": 9
+        },
+        {
+          "type": "STORAGE",
+          "before": 4,
+          "afterImpact": 0,
+          "afterMaintenance": 36
+        },
+        {
+          "type": "PURIFIER",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 100,
+      "fieldChaos": 92.81865172800077,
+      "fieldMs": 67263.98000000075,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.01515262399997,
+          "carried": 0,
+          "elapsedMs": 4499.790000000081
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.48514059199994,
+          "carried": 1,
+          "elapsedMs": 6583.070000000024
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 53.01915516799987,
+          "carried": 3,
+          "elapsedMs": 13382.78
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 58.58338342400002,
+          "carried": 5,
+          "elapsedMs": 22865.760000000453
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 65.07287571200118,
+          "carried": 5,
+          "elapsedMs": 38181.79000000123
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "hp": 100,
+          "chaos": 70.33629569600107,
+          "carried": 9,
+          "elapsedMs": 46248.12000000124
+        }
+      ],
+      "offered": [
+        "CAT_a195b977-8b67-4594-80c4-b063539b7b07_r100-contaminant-safe-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 1,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-contested-1",
+          "remaining": 1,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1",
+          "remaining": 4,
+          "location": "stash"
+        },
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-contested-1",
+          "remaining": 3,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 67230.65000000078,
+        "frames": 4033,
+        "intervalCount": 4033,
+        "frameIntervalP95": 17.59999990463257,
+        "frameIntervalP99": 18.399999856948853,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.799999952316284,
+        "lastRenderMsP95": 0.7999999523162842,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 28,
+      "cycleBefore": 27,
+      "cycleAfter": 28,
+      "world": "r100-shell-grit",
+      "grade": "low",
+      "runId": "444c5e9d-651a-4749-abbf-6b92597cd537",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 3,
+      "repairPaid": 3,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 9,
+          "afterImpact": 0,
+          "afterMaintenance": 12
+        },
+        {
+          "type": "STORAGE",
+          "before": 36,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        },
+        {
+          "type": "PURIFIER",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 70,
+      "fieldChaos": 90.95594180159856,
+      "fieldMs": 40481.710000001156,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.218145403999436,
+          "carried": 1,
+          "elapsedMs": 5216.449999999938
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.7941341599992,
+          "carried": 1,
+          "elapsedMs": 7682.999999999939
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 53.22244522879866,
+          "carried": 1,
+          "elapsedMs": 13799.439999999871
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 57.5223109567988,
+          "carried": 3,
+          "elapsedMs": 16782.64999999995
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1",
+          "remaining": 1,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1",
+          "remaining": 4,
+          "location": "stash"
+        },
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-contested-1",
+          "remaining": 3,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 40448.370000001116,
+        "frames": 2426,
+        "intervalCount": 2426,
+        "frameIntervalP95": 18.09999990463257,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.400000095367432,
+        "lastRenderMsP95": 1.7999999523162842,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": false
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 29,
+      "cycleBefore": 28,
+      "cycleAfter": 29,
+      "world": "r100-silt-gel",
+      "grade": "low",
+      "runId": "7aaf57ec-8281-4006-9c61-a57a09f5fba3",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 5,
+      "repairPaid": 5,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 12,
+          "afterImpact": 0,
+          "afterMaintenance": 20
+        },
+        {
+          "type": "STORAGE",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        },
+        {
+          "type": "PURIFIER",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 55,
+      "fieldChaos": 86.1902408127983,
+      "fieldMs": 72947.08999999908,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.07963912639977,
+          "carried": 0,
+          "elapsedMs": 4666.490000000031
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.55004953279968,
+          "carried": 1,
+          "elapsedMs": 6699.729999999984
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 54.056349276799324,
+          "carried": 3,
+          "elapsedMs": 17532.63000000008
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 56.39684950399957,
+          "carried": 5,
+          "elapsedMs": 27648.900000000747
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 57.457211715199726,
+          "carried": 5,
+          "elapsedMs": 32232.070000001077
+        }
+      ],
+      "offered": [
+        "CAT_a195b977-8b67-4594-80c4-b063539b7b07_r100-contaminant-contested-1"
+      ],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-contested-1",
+          "remaining": 3,
+          "location": "stash"
+        },
+        {
+          "id": "CAT_a195b977-8b67-4594-80c4-b063539b7b07_r100-contaminant-safe-1",
+          "remaining": 3,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 72913.75999999906,
+        "frames": 4374,
+        "intervalCount": 4374,
+        "frameIntervalP95": 18.200000047683716,
+        "frameIntervalP99": 18.59999990463257,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.300000190734863,
+        "lastRenderMsP95": 0.7000000476837158,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    },
+    {
+      "ordinal": 30,
+      "cycleBefore": 29,
+      "cycleAfter": 30,
+      "world": "r100-gel-fibre",
+      "grade": "low",
+      "runId": "6542e904-1c78-43d4-8601-97c6fed3b171",
+      "outcome": "extract",
+      "beforeReserve": 0,
+      "earned": 5,
+      "repairPaid": 5,
+      "growthPaid": 0,
+      "afterReserve": 0,
+      "modules": [
+        {
+          "type": "CORE",
+          "before": 20,
+          "afterImpact": 13,
+          "afterMaintenance": 13
+        },
+        {
+          "type": "STORAGE",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 20
+        },
+        {
+          "type": "PURIFIER",
+          "before": 0,
+          "afterImpact": 0,
+          "afterMaintenance": 0
+        }
+      ],
+      "growthBefore": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthAfter": {
+        "growth_chaos_resist": 0,
+        "growth_kindling_affinity": 0,
+        "growth_vitality": 0,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 0,
+        "growth_forecast_clarity": 0
+      },
+      "growthActions": [],
+      "fieldHp": 100,
+      "fieldChaos": 79.52161999999946,
+      "fieldMs": 70963.81999999963,
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.20690811199993,
+          "carried": 1,
+          "elapsedMs": 5349.769999999908
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "hp": 100,
+          "chaos": 51.72952630399991,
+          "carried": 1,
+          "elapsedMs": 7666.339999999884
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 56.805323263999696,
+          "carried": 3,
+          "elapsedMs": 30165.44000000088
+        },
+        {
+          "searchDecision": {
+            "attempted": true,
+            "reason": "collected"
+          },
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "hp": 100,
+          "chaos": 75.0098004799997,
+          "carried": 5,
+          "elapsedMs": 60964.22000000114
+        }
+      ],
+      "offered": [],
+      "activeToolsAtReturn": [
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1",
+          "remaining": 2,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-contested-1",
+          "remaining": 1,
+          "location": "carried"
+        },
+        {
+          "id": "CAT_a195b977-8b67-4594-80c4-b063539b7b07_r100-contaminant-safe-1",
+          "remaining": 3,
+          "location": "stash"
+        }
+      ],
+      "performance": {
+        "activeSimulationMs": 70930.47999999965,
+        "frames": 4255,
+        "intervalCount": 4255,
+        "frameIntervalP95": 18.09999990463257,
+        "frameIntervalP99": 18.5,
+        "over50Count": 0,
+        "over50Fraction": 0,
+        "cpuDispatchP95": 4.799999952316284,
+        "lastRenderMsP95": 1.1000001430511475,
+        "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+        "meets60SecondDuration": true
+      },
+      "navigationWarning": null,
+      "consoleErrors": []
+    }
+  ],
+  "limits": [
+    "Only completed real-input records are counted; failed and pending attempts retained.",
+    "Full-map geometry and node positions aid macro routing; micro decisions use disclosed visible projections. This is not a human blind playtest.",
+    "An actual saved-state branch does not make its previous seven journeys new income and cannot be pooled into the original natural cohort.",
+    "No death in a sample cannot prove death recovery or expected value. No claim of optimal play or long-term balance follows from one phase."
+  ]
+}

@@ -1,3 +1,4 @@
+import { createLegacyV2Departure } from './legacy-departure-helper';
 /** Immutable v1 identities plus cold JSON reconstruction of condition worlds. */
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -10,7 +11,7 @@ import { mix32 } from '../../src/generation/seed-fork';
 import type { WorldProductionMap } from '../../src/generation/world-study/production-map';
 
 Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: { getItem: () => null } });
-const { createProceduralDeparture, proceduralRiftIdentity, restoreProceduralLayout, restoreProceduralWorld } =
+const { proceduralRiftIdentity, restoreProceduralLayout, restoreProceduralWorld } =
   await import('../../src/managers/rift-recovery');
 const json = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 const fixture = JSON.parse(readFileSync('tools/recovery/fixtures/world-generation-v1.json', 'utf8')) as {
@@ -78,8 +79,8 @@ Object.defineProperty(globalThis, 'crypto', { configurable: true, value: {
 const records: { identity: RiftCheckpoint['identity']; tileMapHash: string; hostMapHash: string }[] = [];
 try {
   for (const seed of seeds) {
-    const identity = createProceduralDeparture(), world = restoreProceduralWorld(identity)!;
-    assert.equal(identity.generation!.version, 2, 'new departures must use condition generation');
+    const identity = createLegacyV2Departure(), world = restoreProceduralWorld(identity)!;
+    assert.equal(identity.generation!.version, 2, 'historical v2 departures retain condition generation');
     assert.equal(identity.generation!.requestedSeed, seed);
     assert(world.metadata.conditions && world.metadata.semantic, 'conditions and semantic admission reach the production map');
     assert.equal(world.sample.materialSeed, world.metadata.conditions.streams.material);

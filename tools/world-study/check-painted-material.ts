@@ -6,7 +6,7 @@ import { PAINTED_MATERIALS } from '../../src/dev/rift-r100-masters/generated-mat
 import { compilePaintedMaterialCSV } from './generate-master-materials.mjs';
 
 const csv = await readFile('data/rift-master-materials.csv', 'utf8');
-assert.equal(compilePaintedMaterialCSV(csv), await readFile('src/dev/rift-r100-masters/generated-materials.ts', 'utf8'));
+assert.equal(compilePaintedMaterialCSV(csv), await readFile('src/generated/r100-materials.ts', 'utf8'));
 function changeFirst(column: string, value: string): string {
   const lines = csv.trim().split(/\r?\n/), fields = lines[0]!.split(','), row = lines[1]!.split(',');
   row[fields.indexOf(column)] = value; lines[1] = row.join(','); return lines.join('\n');
@@ -102,17 +102,21 @@ try {
     const retry=loadPaintedMaterial(family);await settleDecodeBatch();const recovered=await retry;
     assert.equal(recovered.pixels[0],family==='fibre-knot'?37:91);assert.equal(recovered.solid!.pixels[0],157);
   }
+  for (const row of PAINTED_MATERIALS.slice(3)) {
+    const request = loadPaintedMaterial(row.family); await settleDecodeBatch();
+    const material = await request; assert.equal(material.source, row.source); assert.equal(material.solid!.source, row.solid.source);
+  }
   const allocations=images.length,reads=pixelReads,buffers=new Set<Uint8ClampedArray>();
   for(let i=0;i<10;i++)for(const row of PAINTED_MATERIALS){
     const request=loadPaintedMaterial(row.family);assert.equal(request,loadPaintedMaterial(row.family));const p=await request;
     assert.equal(p.source,row.source);assert.equal(p.solid!.source,row.solid.source);buffers.add(p.pixels);buffers.add(p.solid!.pixels);
   }
-  assert.equal(buffers.size,6,'three families retain six distinct surface buffers');
+  assert.equal(buffers.size,PAINTED_MATERIALS.length*2,'each family retains independent ground and solid buffers');
   assert.equal(images.length,allocations);assert.equal(pixelReads,reads,'cached pairs never decode again');
   assert.equal(await loadPaintedMaterial('folded-slab'),ash);
   assert.equal(pending.length,0);assert(images.every(i=>i.released));
   assert(canvases.every(c=>c.width===1&&c.height===1));
-  console.log(JSON.stringify({status:'pass',families:3,retainedSurfaceBuffers:buffers.size,checks:['CSV source/finish separation','concurrent pair deduplication','solid failure rejects whole family','decode/context/read retry','immutable six-source reuse','scratch cleanup'],scope:'fake browser lifecycle; visual/native decoding verified separately'}));
+  console.log(JSON.stringify({status:'pass',families:PAINTED_MATERIALS.length,retainedSurfaceBuffers:buffers.size,checks:['CSV source/finish separation','concurrent pair deduplication','solid failure rejects whole family','decode/context/read retry','immutable independent-source reuse','scratch cleanup'],scope:'fake browser lifecycle; visual/native decoding verified separately'}));
 } finally {
   for (const [name, descriptor] of descriptors) {
     if (descriptor) Object.defineProperty(globalThis, name, descriptor); else Reflect.deleteProperty(globalThis, name);

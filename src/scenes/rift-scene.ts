@@ -1,5 +1,9 @@
+import { nativeRiftPlayerForRestore, NATIVE_BODY_GEOMETRY_VERSION } from '@/systems/native-rift-body-recovery';
+import { nativeBodyCollision, type NativeBodyCollision, type NativeBodyMotion } from '@/generation/world-study/native-body-collision';
+import { createR100WorldPresentation, getPreparedR100Presentation } from '@/systems/r100-world-presentation';
 import { createWorldPlaySurface, type WorldPlaySurface } from '@/systems/world-space-surface';
 import { createWorldSearchVisual } from '@/systems/world-search-presentation';
+import { createR100ExtractionVisual } from '@/systems/r100-extraction-presentation';
 import { createContaminantSourceRegions } from '@/generation/contaminant-source-regions';
 import { createContaminantDropPlan } from '@/systems/contaminant-drop-plan';
 import { projectItemForPlayer } from '@/systems/contaminant-catalog';
@@ -9,6 +13,7 @@ import { sweepGroundDash } from '@/systems/tool-targeting';
 import { proceduralRiftIdentity, installProceduralRiftRecovery, restoreProceduralLayout, restoreProceduralWorld, withPreparedProceduralRecovery } from '@/managers/rift-recovery';
 import type { RiftRecoveryConditions } from '@/systems/rift-recovery-state';
 import { RiftFrameCommit } from '@/systems/rift-frame-commit';
+import { RiftEntryFrameFence } from '@/systems/rift-entry-frame-fence';
 import { validateRiftRecoveryState, type RiftRecoveryState } from '@/systems/rift-recovery-state';
 import { afterStateCommit, commitEffects } from '@/core/commit-effects';
 import type { RiftCheckpoint } from '@/types/rift-checkpoint';
@@ -52,6 +57,7 @@ import type { PlayerMovementInputReader } from '@/entities/player-movement-input
 import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import type { WorldProductionMap } from '@/generation/world-study/production-map';
+import type { WorldProductionRecipeV3 } from '@/generation/world-study/production-recipe';
 
 /** Development encounters still use the complete production scene lifecycle. */
 export interface RiftDevFixture {
@@ -61,6 +67,8 @@ export interface RiftDevFixture {
   readMovementInput?: PlayerMovementInputReader;
   /** The same admitted world used by the DEV preview, including its 32px Host support. */
   productionWorld?: WorldProductionMap;
+  /** Same frozen v3 recipe in the isolated gym; never an alternate visual layout. */
+  productionRecipe?: WorldProductionRecipeV3;
   /** Native Host footprints use 32px cells even when the physical fixture is finer. */
   hostTileMap?: import('@/types/map-types').TileMapData;
   /** Explicitly graded fixtures; omission retains historical sortie rules. */
@@ -227,6 +235,8 @@ export class RiftScene extends Phaser.Scene {
   private readonly fieldInventory = new FieldLootInventory();
   private devFixture: RiftDevFixture | null = null;
   private devRuntime: RiftDevRuntime | null = null;
+  /** Production rendering owns only its surfaces; native Hosts remain scene-owned. */
+  private nativeWorldPresentation: ReturnType<typeof createR100WorldPresentation> | null = null;
   private worldSurface: WorldPlaySurface | null = null;
   private hostFloorGrid: TileGrid | null = null;
   private readonly devEnemyVisuals: RiftDevActorVisuals[] = [];
@@ -238,6 +248,8 @@ export class RiftScene extends Phaser.Scene {
   private readonly entryView = { active: false, elapsedMs: 0, durationMs: 0, progress: 1 };
   private readonly entryHeldKeys = new Set<number>();
   private entryOwnsPhysicsPause = false;
+  private nativeEntryFence: RiftEntryFrameFence | null = null;
+  private nativeEntryPauseRequested = false;
   private entryFrameFrozen = false;
   private inventoryClosedAt = -1000;
   private readonly runController = new RunController();
@@ -296,6 +308,10 @@ export class RiftScene extends Phaser.Scene {
   private groundDepthSorter: GroundDepthSorter | null = null;
   private readonly formVisuals = new Map<string, FormVisual>();
   private formFloorGrid: TileGrid | null = null;
+  private nativeBody: NativeBodyCollision | null = null;
+  private shutdownComplete = false;
+  private readonly nativeBodyOrigin: Vector2 = { x: 0, y: 0 };
+  private readonly nativeBodyMotion: NativeBodyMotion = { x: 0, y: 0, velocityX: 0, velocityY: 0, collided: false };
 
   constructor() {
     super({ key: 'RiftScene' });
@@ -315,9 +331,15 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private createRun(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): void {
+    this.shutdownComplete = false;
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+    // SceneManager.remove/Game.destroy emit DESTROY directly, without SHUTDOWN.
+    this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
     this.devFixture = import.meta.env.DEV ? data?.devFixture ?? null : null;
     this.frameCommit = null;
+    this.nativeWorldPresentation = null;
+    this.nativeEntryFence?.destroy(); this.nativeEntryFence = null;
+    this.nativeEntryPauseRequested = false;
     this.recovery = this.devFixture?.recovery ?? data?.recovery ?? null;
     this.devElapsedMs = 0;
     this.devPresentation = this.devFixture ? createPresentationFrame() : null;
@@ -372,6 +394,18 @@ export class RiftScene extends Phaser.Scene {
     if (productionWorld && this.devFixture?.worldSurface === 'runtime') {
       throw new Error('A production-world fixture already owns its native world surface');
     }
+    const nativeRecipe = this.recovery?.identity.generation?.version === 3
+      ? this.recovery.identity.generation : this.devFixture?.productionRecipe;
+    if (productionWorld?.native) {
+      if (!nativeRecipe || nativeRecipe.package.dependencyHash !== productionWorld.native.packageHash)
+        throw new Error('Native production terrain requires its matching frozen v3 departure');
+      this.nativeWorldPresentation = createR100WorldPresentation(productionWorld.native, generated, getPreparedR100Presentation(nativeRecipe));
+      this.devPresentation = createPresentationFrame();
+      this.nativeBody = nativeBodyCollision(productionWorld.native, generated);
+      if (!this.entryView.active) this.nativeEntryFence = this.createNativeEntryFence();
+    }
+    const nativePresentation = this.nativeWorldPresentation;
+    const createRuntime = nativePresentation?.createRuntime ?? this.devFixture?.createRuntime;
     const worldId = productionWorld?.sample.profile.id ?? this.recovery?.identity.generation?.profile.id;
     this.narrationWorld = worldId && NARRATED_WORLDS.has(worldId) ? worldId : 'generic';
     const narrationRunId = inventoryStore.getRun()?.id ?? `legacy:${generated.seed}:${this.recoveryConditions.cycle}`;
@@ -381,8 +415,8 @@ export class RiftScene extends Phaser.Scene {
     const suppressVoidNoise = !!productionWorld || !!this.devFixture?.suppressVoidNoise;
     const tileMap = generated.tileMap;
     const grid = new TileGrid(tileMap);
-    const sightGrid = this.devFixture?.createSightGrid?.(generated, grid) ?? grid;
-    const combatGrid = this.devFixture?.createCombatGrid?.(generated, grid, sightGrid) ?? sightGrid;
+    const sightGrid = nativePresentation?.world.sight ?? this.devFixture?.createSightGrid?.(generated, grid) ?? grid;
+    const combatGrid = nativePresentation?.world.combat ?? this.devFixture?.createCombatGrid?.(generated, grid, sightGrid) ?? sightGrid;
     this.formFloorGrid = grid;
     const hostTileMap = productionWorld?.hostTileMap ?? this.devFixture?.hostTileMap;
     this.hostFloorGrid = hostTileMap ? new TileGrid(hostTileMap) : grid;
@@ -421,17 +455,21 @@ export class RiftScene extends Phaser.Scene {
     this.devFixture?.configureCamera?.(camera);
     camera.setBackgroundColor(suppressVoidNoise ? 0x000000 : GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
 
-    const beforePlayer = this.devFixture?.createRuntime ? new Set(this.children.list) : null;
+    const beforePlayer = createRuntime ? new Set(this.children.list) : null;
     this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right', readMovementInput: this.devFixture?.readMovementInput });
     const playerVisuals = beforePlayer ? this.children.list.filter(child => !beforePlayer.has(child)) : [];
-    this.physics.add.collider(this.player.getSprite(), layer);
+    if (this.nativeBody) {
+      if (!this.nativeBody.supports(layout.spawnPoint, GAME_CONSTANTS.PLAYER.BODY_SIZE / 2, GAME_CONSTANTS.PLAYER.BODY_SIZE / 2))
+        throw new Error('Native spawn cannot support the complete player body');
+      this.physics.world.on('worldstep', this.onNativeBodyStep, this);
+    } else this.physics.add.collider(this.player.getSprite(), layer);
     camera.startFollow(this.player.getSprite(), true);
 
     const visionConfig = createRiftVisionConfig(DEPTH.visionMask);
     this.visibility.create(this, {
       ...visionConfig,
       ...(suppressVoidNoise ? {voidNoiseEnabled:false,voidColor:0x000000} : {}),
-      ...(this.devFixture?.materialLighting ? {playerLampEnabled:false,flashlightEnabled:false} : {}),
+      ...((nativePresentation || this.devFixture?.materialLighting) ? {playerLampEnabled:false,flashlightEnabled:false} : {}),
     }, sightGrid);
     this.visibility.clipLightsToIsland(tileMap);
     this.visibility.setExtractionPosition(layout.extractionPoint.position);
@@ -493,7 +531,8 @@ export class RiftScene extends Phaser.Scene {
       onModulate: this.applyChaosModulators,
       chaosRateModifier: effectiveChaosRate,
       startingValue: openingChaos,
-      pollutionGrade: this.devFixture?.pollutionGrade,
+      pollutionGrade: nativePresentation?.world.definition.grade ?? this.devFixture?.pollutionGrade,
+      pollutionDefinition: nativeRecipe?.gradeDefinition,
       getPollutionResistance: () => sumPollutionResistance([getSurvivalAttributes().resistancePercent, this.toolSystem.getPollutionResistanceBonus()]),
     });
     const hostLayout = hostTileMap ? { ...layout, tileMap: hostTileMap } : layout;
@@ -506,7 +545,7 @@ export class RiftScene extends Phaser.Scene {
 
     const run = inventoryStore.getRun();
     const newCatalogRun = run?.catalogVersion === 'contaminant-v1';
-    const sourceRegions = run?.dropPlan?.sourceRegions ? new Map(Object.entries(run.dropPlan.sourceRegions)) : newCatalogRun ? createContaminantSourceRegions({ grid, spawn: layout.spawnPoint,
+    const sourceRegions = run?.dropPlan?.sourceRegions ? new Map(Object.entries(run.dropPlan.sourceRegions)) : newCatalogRun ? nativePresentation?.sourceRegions ?? createContaminantSourceRegions({ grid, spawn: layout.spawnPoint,
       nodes: [...layout.kindlingNodes, ...layout.contaminantNodes], seed }) : undefined;
     if (newCatalogRun && !run.dropPlan) {
       const tutorialNode = inventoryStore.isCatalogTutorialEligible() ? [...layout.contaminantNodes]
@@ -532,6 +571,7 @@ export class RiftScene extends Phaser.Scene {
       createVisual: this.devFixture?.createSearchObjectVisual ?? (productionWorld
         ? (scene, position, visualSeed, getPlayerPos) => createWorldSearchVisual(
           scene, position, visualSeed, getPlayerPos, productionWorld.sample.profile, productionWorld.sample.seed,
+          nativeRecipe ? getPreparedR100Presentation(nativeRecipe) : undefined,
         ) : undefined),
       extraction: {
         position: layout.extractionPoint.position,
@@ -567,7 +607,7 @@ export class RiftScene extends Phaser.Scene {
           return this.sweepPlayerDash({ x: pos.x + Math.cos(angle) * distance, y: pos.y + Math.sin(angle) * distance });
         },
         advanceGroundDash: (target, dtMs) => this.advancePlayerDash(target, dtMs),
-        isGroundConnected: (from, to, range) => collectToolRevealSnapshot(from, range, grid, [to], []).enemyPositions.length > 0,
+        isGroundConnected: (from, to, range) => collectToolRevealSnapshot(from, range, grid, [to], [], undefined, this.nativeBody ?? undefined).enemyPositions.length > 0,
         getPlayerSprite: () => this.player.getSprite(),
         getPlayerGroundY: () => this.player.getGroundY(),
         getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
@@ -585,7 +625,7 @@ export class RiftScene extends Phaser.Scene {
           if (!body) return null;
           const angle = this.player.getFacingAngle();
           return findSoundLureLanding(body.center, { x: Math.cos(angle), y: Math.sin(angle) }, maxDistance,
-            grid, Math.max(body.halfWidth, body.halfHeight) * 2);
+            grid, Math.max(body.halfWidth, body.halfHeight) * 2, this.nativeBody ?? undefined);
         },
         getStitchPlacement: (length, distance) => {
           const angle = this.player.getFacingAngle();
@@ -594,7 +634,7 @@ export class RiftScene extends Phaser.Scene {
         },
         getRevealSnapshot: range => collectToolRevealSnapshot(this.player.getPosition(), range, grid,
           this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
-          this.search.getUncollectedSearchPositions(), this.hosts.getToolTargets().map(host => host.position)),
+          this.search.getUncollectedSearchPositions(), this.hosts.getToolTargets().map(host => host.position), this.nativeBody ?? undefined),
         delayEnvironmentHazard: (id, source, duration) => this.hosts.delayNextHazard(id, source, duration),
         getEnvironmentTargets: () => this.hosts.getToolTargets(),
         suppressEnvironmentHazard: (id, source, duration, includeWall) => this.hosts.suppressHazard(id, source, duration, includeWall),
@@ -608,13 +648,15 @@ export class RiftScene extends Phaser.Scene {
             origin: body.center, direction: { x: Math.cos(angle), y: Math.sin(angle) },
             maxDistance: CONTAMINANT_DATA.expand.toolRangePx,
             bodyHalfWidth: body.halfWidth, bodyHalfHeight: body.halfHeight,
-            grid, isPhaseableWall: (col, row) => grid.getTile(col, row) === TileType.WALL,
+            bodyQueries: this.nativeBody ?? undefined, grid, isPhaseableWall: (col, row) => grid.getTile(col, row) === TileType.WALL,
           });
           return landing ? { x: sprite.x + landing.x - body.center.x, y: sprite.y + landing.y - body.center.y } : null;
         },
         movePlayerTo: position => {
           const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
-          body.reset(position.x, position.y);
+          if (this.nativeBody && !this.nativeBody.supports(position, body.halfWidth, body.halfHeight))
+            throw new Error('Native ability landing must support the complete player body');
+          this.resetPlayerBody(body, position.x, position.y);
           this.player.postUpdate();
         },
         setPlayerCollision: (enabled) => {
@@ -654,7 +696,16 @@ export class RiftScene extends Phaser.Scene {
       layout.extractionPoint,
       () => this.player.getPosition(),
       () => this.runController.isRunEnded(),
-      { registerGlowSource: (id, pos, r) => this.visibility.registerGlowSource(id, pos, this.devFixture?.extractionGlowRadius ?? (productionWorld ? 8 : r)) },
+      {
+        // Native return wounds are revealed by the same sight and map memory as
+        // their surroundings. The legacy through-fog disk would cover the art.
+        ...(!nativePresentation ? { registerGlowSource: (id: string, pos: Vector2, r: number) =>
+          this.visibility.registerGlowSource(id, pos, this.devFixture?.extractionGlowRadius ?? (productionWorld ? 8 : r)) } : {}),
+        ...(nativePresentation && productionWorld && nativeRecipe ? {
+          createVisual: (scene: Phaser.Scene, pos: Readonly<Vector2>) => createR100ExtractionVisual(scene, pos,
+            productionWorld.sample.profile, getPreparedR100Presentation(nativeRecipe)),
+        } : {}),
+      },
     );
 
     this.runController.create(this, {
@@ -716,14 +767,15 @@ export class RiftScene extends Phaser.Scene {
     this.bindExtractionKeys();
     this.bindToolKeys();
     this.beginEntryGate();
+    if (this.nativeEntryFence?.isActive()) this.bindEntryInputLatch();
 
     this.attachSchemeD();
     this.syncDevPresentation();
     try {
-      this.devRuntime = this.devFixture?.createRuntime?.({ scene: this, layout,
+      this.devRuntime = createRuntime?.({ scene: this, layout,
         player: { id: 'player', objects: playerVisuals, getPosition: () => this.player.getPosition(), getGroundY: () => this.player.getGroundY() },
         enemies: this.devEnemyVisuals,
-        applyHazardHit: (source, damage) => !this.entryView.active && this.combat.applyHazardHit(source, damage),
+        applyHazardHit: (source, damage) => !this.entryView.active && !this.nativeEntryFence?.isActive() && this.combat.applyHazardHit(source, damage),
         isRunEnded: () => this.runController.isRunEnded(),
         registerMeleeTargets: this.registerDevMeleeTargets,
         readEntryView: () => this.entryView,
@@ -743,7 +795,7 @@ export class RiftScene extends Phaser.Scene {
         getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
         revealProjectedTerrain: (image, visibility) => this.visibility.revealProjectedTerrain(image, visibility),
         readPresentationFrame: () => {
-          if (!this.devPresentation) throw new Error('Presentation bridge requires an active DEV fixture');
+          if (!this.devPresentation) throw new Error('Presentation bridge requires an active world renderer');
           return this.devPresentation;
         },
         setWorldProjector: projector => { this.devWorldProjector = projector; },
@@ -758,7 +810,7 @@ export class RiftScene extends Phaser.Scene {
       throw error;
     }
 
-    this.worldSurface = productionWorld ? createWorldPlaySurface({ scene: this,
+    this.worldSurface = productionWorld && !nativePresentation ? createWorldPlaySurface({ scene: this,
       player: { getPosition: () => this.player.getPosition() },
       isRunEnded: () => this.runController.isRunEnded(), visibilityAt: this.visibilityAt,
       getFootprint: () => {
@@ -780,14 +832,15 @@ export class RiftScene extends Phaser.Scene {
 
     if (this.recovery) this.initializeRecovery(restoring);
     this.hud.restoreReadouts({ health: this.combat.getHealth(), maxHealth: this.combat.getMaxHealth(), chaos: this.chaos.getValue(), kindling: this.search.getCarriedKindling() });
-    this.startRiftAudio(!restoring);
+    if (!this.nativeEntryFence?.isActive()) this.startRiftAudio(!restoring);
     if (import.meta.env.DEV) this.createDebugOverlay();
   }
 
   update(_time: number, delta: number): void {
     if (this.frameCommit?.isBlocked()) return;
-    this.frameCommit?.begin();
     this.resetEntryHeldKeys();
+    if (this.nativeEntryFence?.isActive()) return;
+    this.frameCommit?.begin();
     this.entryFrameFrozen = this.entryView.active;
     if (this.entryView.active) {
       this.entryView.elapsedMs = Math.min(this.entryView.durationMs, this.entryView.elapsedMs + Math.max(0, delta));
@@ -799,7 +852,8 @@ export class RiftScene extends Phaser.Scene {
       this.devRuntime?.update(this.devElapsedMs, true);
       return;
     }
-    if ((this.devFixture || this.recovery) && !this.runController.isRunEnded()) this.devElapsedMs += delta;
+    if ((this.devFixture || this.recovery) && !this.runController.isRunEnded()) this.devElapsedMs += this.nativeWorldPresentation
+      ? Math.max(0, Math.min(delta, GAME_CONSTANTS.AI.DT_CLAMP_MS)) : delta;
     this.devRuntime?.beforeCombat?.(this.devElapsedMs, this.runController.isRunEnded());
     this.player.update(delta);
     const dashing = this.toolSystem.isGroundDashing();
@@ -860,7 +914,7 @@ export class RiftScene extends Phaser.Scene {
     this.syncHudActiveEffects();
     this.extraction.update(delta);
     this.hud.update(delta);
-    if (!this.worldSurface && this.devFixture?.worldSurface !== 'runtime') this.riftSurface.update(delta);
+    if (!this.worldSurface && !this.nativeWorldPresentation && this.devFixture?.worldSurface !== 'runtime') this.riftSurface.update(delta);
 
     // Tool key input (edge-triggered), one entry per active sortie slot.
     for (let i = 0; i < this.toolKeys.length; i++) {
@@ -895,8 +949,45 @@ export class RiftScene extends Phaser.Scene {
     // Restart key handled via event listener (see bindExtractionKeys)
   }
 
+  /** Arcade has resolved actors for this fixed substep, but has not yet applied
+   * the body displacement to the sprite. Keep prevFrame intact for postUpdate. */
+  private onNativeBodyStep(): void {
+    const collision = this.nativeBody, body = this.player.getSprite().body as Phaser.Physics.Arcade.Body | null;
+    if (!collision || !body?.enable) return;
+    const origin = this.nativeBodyOrigin;
+    origin.x = body.prev.x + body.halfWidth; origin.y = body.prev.y + body.halfHeight;
+    const motion = this.nativeBodyMotion;
+    collision.resolveMotion(origin, body.halfWidth, body.halfHeight,
+      body.position.x - body.prev.x, body.position.y - body.prev.y, body.velocity, motion);
+    if (!motion.collided) return;
+    body.position.set(motion.x - body.halfWidth, motion.y - body.halfHeight);
+    body.updateCenter();
+    body.velocity.set(motion.velocityX, motion.velocityY);
+    body.speed = Math.hypot(motion.velocityX, motion.velocityY);
+    if (body.speed > 0) body.angle = Math.atan2(motion.velocityY, motion.velocityX);
+  }
+
   private onPostUpdate(_time: number, delta: number): void {
     if (this.frameCommit?.isBlocked()) return;
+    if (this.nativeEntryFence?.isActive()) {
+      if (!this.nativeEntryFence.needsPresentation()) return;
+      // This frame paints the restored/fresh instant without an AI, physics,
+      // combat, tool, pollution or animation clock tick.
+      this.visibility.setRadiusScale(this.chaosVisionScale * this.hosts.getVolumeSightMult());
+      this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
+      this.syncSchemeDPoses(0);
+      this.groundDepthSorter?.update();
+      this.toolSystem.syncBodyVisuals();
+      this.syncMinimapExploration();
+      this.minimap.update(this.player.getPosition(), this.player.getFacing4(), 0);
+      this.syncDetectionPulse(0);
+      this.syncDevPresentation();
+      this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.worldSurface?.afterUpdate(this.devElapsedMs);
+      if (!this.commitRuntimeFrame(true)) return;
+      this.nativeEntryFence.markPresented();
+      return;
+    }
     if (this.devFixture?.freezeAfterEnd && this.runController.isRunEnded()) {
       this.syncSchemeDPoses(0);
       this.syncDevPresentation();
@@ -1248,13 +1339,24 @@ export class RiftScene extends Phaser.Scene {
     this.hosts.reportNoise(pos, radius);
   };
 
+  /** Body.reset starts at the texture's top-left; it does not apply the collider
+   * offset until the next preUpdate. Native relocation must be valid this frame,
+   * including intermediate dash contacts and the immediate saved snapshot. */
+  private resetPlayerBody(body: Phaser.Physics.Arcade.Body, x: number, y: number): void {
+    body.reset(x, y);
+    if (!this.nativeBody) return;
+    body.updateFromGameObject();
+    body.prev.copy(body.position); body.prevFrame.copy(body.position);
+    body.updateCenter();
+  }
+
   /** Work in body-centre space, convert back to the unchanged character's sprite origin. */
   private sweepPlayerDash(target: Readonly<Vector2>): Vector2 {
     const sprite = this.player.getSprite(), body = sprite.body as Phaser.Physics.Arcade.Body;
     const grid = this.formFloorGrid!;
     const offset = { x: body.center.x - sprite.x, y: body.center.y - sprite.y };
     const landing = sweepGroundDash({ origin: body.center, destination: { x: target.x + offset.x, y: target.y + offset.y },
-      grid, bodyHalfWidth: body.halfWidth, bodyHalfHeight: body.halfHeight,
+      grid, bodyHalfWidth: body.halfWidth, bodyHalfHeight: body.halfHeight, bodyQueries: this.nativeBody ?? undefined,
       isVisible: point => this.visibilityAt(point) > 0,
       bodies: this.ai.getEnemies().flatMap(enemy => {
         if (!(enemy instanceof Enemy) || !this.combat.isEnemyAlive(enemy.getId())) return [];
@@ -1273,7 +1375,7 @@ export class RiftScene extends Phaser.Scene {
     for (let step = 1; step <= steps; step++) {
       if (this.runController.isRunEnded()) return false;
       const fraction = step / steps;
-      body.reset(origin.x + (landing.x - origin.x) * fraction, origin.y + (landing.y - origin.y) * fraction);
+      this.resetPlayerBody(body, origin.x + (landing.x - origin.x) * fraction, origin.y + (landing.y - origin.y) * fraction);
       this.player.postUpdate();
       // Contact, attacks, acoustics and contamination observe every traversed segment.
       this.ai.update(dtMs / steps, this.player.getPosition(), true);
@@ -1729,8 +1831,33 @@ export class RiftScene extends Phaser.Scene {
     return unregister;
   };
 
-  private beginEntryGate(): void {
-    if (!this.entryView.active) return;
+  private createNativeEntryFence(): RiftEntryFrameFence {
+    return new RiftEntryFrameFence({
+      frame: () => this.game.loop.frame,
+      canPresent: () => this.scene.isActive() && !this.scene.isPaused()
+        && !document.hidden && !this.frameCommit?.isBlocked(),
+      pausePhysics: () => {
+        const owned = !this.physics.world.isPaused;
+        if (owned) this.physics.world.pause();
+        return owned;
+      },
+      resumePhysics: () => { this.physics.world?.resume(); },
+      subscribeRendered: listener => {
+        this.game.events.on(Phaser.Core.Events.POST_RENDER, listener);
+        return () => this.game.events.off(Phaser.Core.Events.POST_RENDER, listener);
+      },
+      released: () => {
+        this.resetEntryHeldKeys();
+        this.startRiftAudio(!this.recovery?.checkpoint);
+        if (this.nativeEntryPauseRequested) {
+          this.nativeEntryPauseRequested = false;
+          this.openPauseMenu();
+        }
+      },
+    });
+  }
+
+  private bindEntryInputLatch(): void {
     const keyboard = this.input.keyboard;
     for (const key of keyboard?.keys ?? []) {
       if (key?.isDown && key.keyCode !== Phaser.Input.Keyboard.KeyCodes.ESC) this.entryHeldKeys.add(key.keyCode);
@@ -1740,6 +1867,11 @@ export class RiftScene extends Phaser.Scene {
     // A paused Scene does not receive KeyboardPlugin events; a physical release
     // in the pause menu must still release this preparation-only input latch.
     if (typeof window !== 'undefined') window.addEventListener('keyup', this.onEntryKeyUp, true);
+  }
+
+  private beginEntryGate(): void {
+    if (!this.entryView.active) return;
+    this.bindEntryInputLatch();
     this.entryOwnsPhysicsPause = !this.physics.world.isPaused;
     if (this.entryOwnsPhysicsPause) this.physics.world.pause();
     this.combat.clearAttackBuffer();
@@ -1751,7 +1883,7 @@ export class RiftScene extends Phaser.Scene {
     // Escape remains the normal pause control. Held gameplay keys must be
     // released even if browser key repeat continues after the reveal finishes.
     if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.ESC) return;
-    if (this.entryView.active) this.entryHeldKeys.add(event.keyCode);
+    if (this.entryView.active || this.nativeEntryFence?.isActive()) this.entryHeldKeys.add(event.keyCode);
     if (this.entryHeldKeys.has(event.keyCode)) this.input.keyboard?.keys[event.keyCode]?.reset();
     if (this.entryView.active && event.keyCode === Phaser.Input.Keyboard.KeyCodes.ENTER) this.finishEntryGate();
   };
@@ -1793,7 +1925,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private openBag(): void {
-    if (this.frameCommit?.isBlocked() || this.entryView.active || this.entryHeldKeys.has(Phaser.Input.Keyboard.KeyCodes.TAB)) return;
+    if (this.frameCommit?.isBlocked() || this.entryView.active || this.nativeEntryFence?.isActive() || this.entryHeldKeys.has(Phaser.Input.Keyboard.KeyCodes.TAB)) return;
     if (inventoryPanel.isOpen() || this.runController.isRunEnded() || pauseMenu.isOpen() || this.time.now - this.inventoryClosedAt < 150) return;
     clearToastInline('field-loot');
     this.combat.clearAttackBuffer();
@@ -1838,6 +1970,9 @@ export class RiftScene extends Phaser.Scene {
   openRecoveredPauseMenu(): void { this.openPauseMenu(); }
 
   private openPauseMenu(): void {
+    // Preserve an early Escape/cold-load pause request until the first complete
+    // checkpoint exists; the pause menu must not abandon a half-built run.
+    if (this.nativeEntryFence?.isActive()) { this.nativeEntryPauseRequested = true; return; }
     if (inventoryPanel.isOpen() || this.time.now - this.inventoryClosedAt < 150 || riftResultPanel.isOpen()) return;
     if (!this.flushRuntimeCheckpoint()) return;
     if (this.recovery) pauseMenu.open(this, { onAbandon: () => this.abandonRecoveredRun() });
@@ -1864,7 +1999,7 @@ export class RiftScene extends Phaser.Scene {
       if (productionModelFor(view.getForm().substrate)) {
         view.setLocomotionMode('continuous');
       }
-      const beforeVisual = this.devFixture?.createRuntime ? new Set(this.children.list) : null;
+      const beforeVisual = (this.nativeWorldPresentation || this.devFixture?.createRuntime) ? new Set(this.children.list) : null;
       const visual = renderer.attach({
         scene: this,
         form: view.getForm(),
@@ -1890,6 +2025,8 @@ export class RiftScene extends Phaser.Scene {
         surfaceVisibilityRevision: () => this.visibility.getQueryRevision(),
         surfaceIntersectsSight: bounds => this.visibility.maySeeBounds(bounds),
         paintGeometryVersion: this.paintGeometryVersion,
+        preparedPaintGenome: this.nativeWorldPresentation && subject.form.portfolio === 'bing'
+          ? this.nativeWorldPresentation.takePaintGenome(subject.form, mix32(seedRoot, subject.id), fragmentTypeId) : undefined,
         seed: mix32(seedRoot, subject.id),
         depth: this.depthForHostPin(pin?.kind),
         fragmentTypeId,
@@ -1999,6 +2136,18 @@ export class RiftScene extends Phaser.Scene {
     this.groundDepthSorter = null;
   }
 
+  private validateWorldRuntimeState(value: unknown): boolean {
+    if (this.nativeWorldPresentation) {
+      if (!value || typeof value !== 'object') return false;
+      const state = value as { version?: number; hosts?: unknown; nativePresentation?: unknown; bodyGeometryVersion?: unknown };
+      return state.version === 1 && (state.bodyGeometryVersion === undefined || state.bodyGeometryVersion === NATIVE_BODY_GEOMETRY_VERSION)
+        && this.hosts.validateRuntimeState(state.hosts)
+        && this.devRuntime?.validateRuntimeState?.(state.nativePresentation) === true;
+    }
+    return this.devRuntime ? this.devRuntime.validateRuntimeState?.(value) === true
+      : this.hosts.validateRuntimeState((value as { hosts?: unknown })?.hosts);
+  }
+
   private initializeRecovery(restored?: RiftCheckpoint<RiftRecoveryState>): void {
     const recovery = this.recovery!;
     if (!restored) {
@@ -2019,7 +2168,7 @@ export class RiftScene extends Phaser.Scene {
         || !this.toolSystem.validateRuntimeState(state.tools) || !this.chaos.validateRuntimeState(state.chaos)
         || !this.search.validateRuntimeState(state.search) || !this.fieldInventory.validateRuntimeState(state.field)
         || !this.trail.validateRuntimeState(state.trail) || !this.minimap.validateRuntimeState(state.minimap)
-        || !this.runController.validateRuntimeState(state.run) || !(this.devRuntime ? this.devRuntime.validateRuntimeState?.(state.world) : this.hosts.validateRuntimeState((state.world as { hosts?: unknown }).hosts))) {
+        || !this.runController.validateRuntimeState(state.run) || !this.validateWorldRuntimeState(state.world)) {
         throw new Error('Saved Rift no longer matches this world; original record is retained');
       }
       const physics = this.physics.world;
@@ -2028,8 +2177,10 @@ export class RiftScene extends Phaser.Scene {
       }
       (physics as Phaser.Physics.Arcade.World & { _elapsed: number })._elapsed = state.physics.elapsedMs;
       this.devElapsedMs = restored.elapsedMs;
-      if (!this.devRuntime) this.hosts.restoreRuntimeState((state.world as { hosts: unknown }).hosts);
-      this.player.restoreRuntimeState(state.player);
+      if (!this.devRuntime || this.nativeWorldPresentation) this.hosts.restoreRuntimeState((state.world as { hosts: unknown }).hosts);
+      const restoredPlayer = this.nativeBody ? nativeRiftPlayerForRestore(state, this.nativeBody) : state.player;
+      if (!restoredPlayer) throw new Error('Saved native body does not match its movement state');
+      this.player.restoreRuntimeState(restoredPlayer);
       this.ai.restoreRuntimeState(state.ai);
       this.toolSystem.restoreRuntimeState(state.tools);
       this.ai.finishRuntimeRestore();
@@ -2046,22 +2197,27 @@ export class RiftScene extends Phaser.Scene {
       this.sortiePassiveTriggers = new Map(state.result.passiveTriggers);
       this.defenseHudEffects = state.defenseHudEffects.map(effect => ({ ...effect }));
       this.devEventSequence = state.presentationSequence;
-      this.endEntryGate();
-      this.entryFrameFrozen = false;
-      this.entryView.elapsedMs = this.entryView.durationMs; this.entryView.progress = 1;
-      this.input.keyboard?.resetKeys();
-      this.syncPlayerInput();
-      this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
-      // AI.postUpdate(0) is not a visual refresh: it resets the stuck watchdog.
-      this.syncSchemeDPoses(0);
-      this.syncDevPresentation();
-      if (this.devRuntime) this.devRuntime.restoreRuntimeState!(state.world);
+      if (!this.nativeEntryFence?.isActive()) {
+        this.endEntryGate();
+        this.entryFrameFrozen = false;
+        this.entryView.elapsedMs = this.entryView.durationMs; this.entryView.progress = 1;
+        this.input.keyboard?.resetKeys();
+        this.syncPlayerInput();
+        this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
+        // AI.postUpdate(0) is not a visual refresh: it resets the stuck watchdog.
+        this.syncSchemeDPoses(0);
+        this.syncDevPresentation();
+      }
+      if (this.devRuntime) this.devRuntime.restoreRuntimeState!(this.nativeWorldPresentation
+        ? (state.world as { nativePresentation: unknown }).nativePresentation : state.world);
 
       this.hud.restoreReadouts({ health: state.combat.health, maxHealth: this.combat.getMaxHealth(), chaos: this.chaos.getValue(), kindling: this.search.getCarriedKindling() });
       this.syncHudActiveEffects();
       this.runController.finishRuntimeRestore();
-      this.devRuntime?.afterUpdate(this.devElapsedMs);
-      this.worldSurface?.afterUpdate(this.devElapsedMs);
+      if (!this.nativeEntryFence?.isActive()) {
+        this.devRuntime?.afterUpdate(this.devElapsedMs);
+        this.worldSurface?.afterUpdate(this.devElapsedMs);
+      }
     }
     this.frameCommit = new RiftFrameCommit({ capture: sequence => this.captureRuntimeCheckpoint(sequence),
       onFailure: retry => {
@@ -2109,7 +2265,9 @@ export class RiftScene extends Phaser.Scene {
       ai: this.ai.exportRuntimeState(), tools: this.toolSystem.exportRuntimeState(), chaos: this.chaos.exportRuntimeState(),
       search: this.search.exportRuntimeState(), field: this.fieldInventory.exportRuntimeState(),
       trail: this.trail.exportRuntimeState(), minimap: this.minimap.exportRuntimeState(),
-      world: this.devRuntime ? this.devRuntime.exportRuntimeState!() : { version: 1, hosts: this.hosts.exportRuntimeState() }, defenseHudEffects: structuredClone(this.defenseHudEffects),
+      world: this.nativeWorldPresentation
+        ? { version: 1, bodyGeometryVersion: NATIVE_BODY_GEOMETRY_VERSION, hosts: this.hosts.exportRuntimeState(), nativePresentation: this.devRuntime!.exportRuntimeState!() }
+        : this.devRuntime ? this.devRuntime.exportRuntimeState!() : { version: 1, hosts: this.hosts.exportRuntimeState() }, defenseHudEffects: structuredClone(this.defenseHudEffects),
     };
     return { version: 1, runId: ledger.id, sequence, identity: recovery.identity, elapsedMs: this.devElapsedMs, state };
   }
@@ -2143,6 +2301,9 @@ export class RiftScene extends Phaser.Scene {
   flushRuntimeCheckpoint(): boolean {
     if (!this.frameCommit) return true;
     if (this.frameCommit.isBlocked()) return false;
+    // Before the first complete picture, the atomic departure or previous cold
+    // checkpoint remains authoritative. Never serialize a partial initialization.
+    if (this.nativeEntryFence?.isActive()) return true;
     this.syncDevPresentation();
     const committed = this.commitRuntimeFrame(true);
     if (committed) this.frameCommit?.begin();
@@ -2163,6 +2324,12 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private onShutdown(): void {
+    if (this.shutdownComplete) return;
+    this.shutdownComplete = true;
+    this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+    this.events.off(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
+    this.nativeEntryFence?.destroy(); this.nativeEntryFence = null;
+    this.nativeEntryPauseRequested = false;
     this.clearNarration();
     if (this.endOwnsPhysicsPause) this.physics.world?.resume();
     this.endOwnsPhysicsPause = false;
@@ -2173,10 +2340,13 @@ export class RiftScene extends Phaser.Scene {
     this.worldSurface?.destroy();
     this.worldSurface = null;
     this.devRuntime?.destroy(); this.devRuntime = null; this.devEnemyVisuals.length = 0;
+    this.nativeWorldPresentation?.disposeUnconsumed();
     for (const unregister of this.devTargetDisposers) unregister();
     this.endEntryGate();
-    this.devPresentation = null; this.devWorldProjector = null;
+    this.devPresentation = null; this.nativeWorldPresentation = null; this.devWorldProjector = null;
     this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
+    this.physics.world?.off('worldstep', this.onNativeBodyStep, this);
+    this.nativeBody = null;
     this.events.off(Phaser.Scenes.Events.PAUSE, this.onNarrationPause, this);
     this.events.off(Phaser.Scenes.Events.RESUME, this.onNarrationResume, this);
     this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);
@@ -2358,7 +2528,7 @@ export class RiftScene extends Phaser.Scene {
     if (frame.events.length > 32) frame.events.shift();
   }
 
-  /** Runs only for DEV fixtures, after resolved physics and the actual visibility update. */
+  /** Shared native rendering frame, after resolved physics and authoritative visibility. */
   private syncDevPresentation(): void {
     const frame = this.devPresentation;
     if (!frame) return;

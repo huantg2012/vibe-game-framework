@@ -11,7 +11,7 @@ const { chromium } = process.env.PLAYWRIGHT_MODULE ? await import(process.env.PL
 const phase = process.env.QA_PHASE ?? 'before';
 const out = path.join(root,`docs/qa/artifacts/rift-r100-solid-boundaries/${phase}`); await mkdir(out, { recursive: true });
 const report = { phase, at: new Date().toISOString(), scope: 'Controlled legal starts, actual native keyboard facing/movement and finite normal FOV. Geometry diagnostic is not an art approval. Not natural complete-run traversal.', sources: {}, cases: [], errors: [] };
-for (const file of ['src/dev/rift-r100-masters/surface-renderer.ts','src/generation/world-study/native-volume-geometry.ts','src/dev/rift-r100-masters/world.ts']) report.sources[file] = createHash('sha256').update(await readFile(path.join(root,file))).digest('hex');
+for (const file of ['src/systems/r100-world/surface-renderer.ts','src/generation/world-study/native-volume-geometry.ts','src/dev/rift-r100-masters/world.ts']) report.sources[file] = createHash('sha256').update(await readFile(path.join(root,file))).digest('hex');
 const executablePath=process.env.CHROME_EXECUTABLE??(process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':undefined);
 const browser = await chromium.launch({ headless: true,...(executablePath?{executablePath}:{}) });
 const page = await browser.newPage({ viewport: { width: 1340, height: 900 }, deviceScaleFactor: 1 });

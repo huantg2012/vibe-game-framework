@@ -1,0 +1,6332 @@
+{
+  "scope": "Normal finite FOV and camera; controlled candidate world/training loadout, actual keyboard from original spawn. Full floor geometry read for diagnostic body routing, not novice navigation; no position/HP/clock/fog edits. Enemy and pollution simulation stays active.",
+  "cases": [
+    {
+      "world": "crystal-fibre",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 260,
+                "y": 380
+              },
+              {
+                "x": 476,
+                "y": 380
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 264
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 479.06191876883446,
+              "y": 419.76444849521545
+            },
+            "hp": 100,
+            "chaos": 16.503599257999895,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:fibre-knot-medium"
+            },
+            "elapsedMs": 6184.2,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 196,
+                "y": 460
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 388
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 692,
+                  "y": 516
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 708,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 756,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 356
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 708,
+                  "y": 452
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 820,
+                  "y": 164
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 556,
+              "y": 300
+            },
+            "points": [
+              {
+                "x": 476,
+                "y": 420
+              },
+              {
+                "x": 556,
+                "y": 420
+              },
+              {
+                "x": 556,
+                "y": 300
+              }
+            ],
+            "length": 200
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 560.0324775622572,
+              "y": 288.46891632196457
+            },
+            "hp": 100,
+            "chaos": 21.339481837999788,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:fibre-knot-medium"
+            },
+            "elapsedMs": 9917.4,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 196,
+                "y": 460
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 388
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 692,
+                  "y": 516
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 708,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 756,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 356
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 708,
+                  "y": 452
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 820,
+                  "y": 164
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 796,
+              "y": 420
+            },
+            "points": [
+              {
+                "x": 564,
+                "y": 292
+              },
+              {
+                "x": 796,
+                "y": 292
+              },
+              {
+                "x": 796,
+                "y": 420
+              }
+            ],
+            "length": 360
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 802.7811417040842,
+              "y": 422.1996496314626
+            },
+            "hp": 100,
+            "chaos": 25.17716690599974,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:fibre-knot-medium"
+            },
+            "elapsedMs": 15700.5,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 196,
+                "y": 460
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 388
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 692,
+                  "y": 516
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 708,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 756,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 356
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 708,
+                  "y": 452
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 820,
+                  "y": 164
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 700,
+              "y": 596
+            },
+            "points": [
+              {
+                "x": 804,
+                "y": 420
+              },
+              {
+                "x": 732,
+                "y": 420
+              },
+              {
+                "x": 732,
+                "y": 428
+              },
+              {
+                "x": 700,
+                "y": 428
+              },
+              {
+                "x": 700,
+                "y": 596
+              }
+            ],
+            "length": 280
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 705.0350086913669,
+              "y": 592.9987
+            },
+            "hp": 100,
+            "chaos": 27.173411743999672,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:fibre-knot-medium"
+            },
+            "elapsedMs": 20550.4,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 196,
+                "y": 460
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 388
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 692,
+                  "y": 516
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 708,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 756,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 356
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 708,
+                  "y": 452
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 820,
+                  "y": 164
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "world": "splayed-fibres",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 440
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 480.56186562253157,
+              "y": 416.7410099096582
+            },
+            "hp": 100,
+            "chaos": 17.29438815199981,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:splayed-fibres-medium"
+            },
+            "elapsedMs": 8472.8,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 580,
+                  "y": 164
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 372,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 756,
+                  "y": 724
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 980,
+                  "y": 484
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 556,
+              "y": 284
+            },
+            "points": [
+              {
+                "x": 484,
+                "y": 420
+              },
+              {
+                "x": 516,
+                "y": 420
+              },
+              {
+                "x": 516,
+                "y": 292
+              },
+              {
+                "x": 524,
+                "y": 292
+              },
+              {
+                "x": 524,
+                "y": 284
+              },
+              {
+                "x": 556,
+                "y": 284
+              }
+            ],
+            "length": 208
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 566.2041649402162,
+              "y": 278.133137765528
+            },
+            "hp": 100,
+            "chaos": 22.124749579999698,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:splayed-fibres-medium"
+            },
+            "elapsedMs": 12656,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 580,
+                  "y": 164
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 372,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 756,
+                  "y": 724
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 980,
+                  "y": 484
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 796,
+              "y": 420
+            },
+            "points": [
+              {
+                "x": 564,
+                "y": 276
+              },
+              {
+                "x": 660,
+                "y": 276
+              },
+              {
+                "x": 660,
+                "y": 268
+              },
+              {
+                "x": 668,
+                "y": 268
+              },
+              {
+                "x": 668,
+                "y": 260
+              },
+              {
+                "x": 796,
+                "y": 260
+              },
+              {
+                "x": 796,
+                "y": 420
+              }
+            ],
+            "length": 408
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 802.662968053081,
+              "y": 412.6290120719469
+            },
+            "hp": 100,
+            "chaos": 26.592814831999565,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:splayed-fibres-medium"
+            },
+            "elapsedMs": 19389,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 580,
+                  "y": 164
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 372,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 756,
+                  "y": 724
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 980,
+                  "y": 484
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 700,
+              "y": 620
+            },
+            "points": [
+              {
+                "x": 804,
+                "y": 412
+              },
+              {
+                "x": 852,
+                "y": 412
+              },
+              {
+                "x": 852,
+                "y": 588
+              },
+              {
+                "x": 820,
+                "y": 588
+              },
+              {
+                "x": 820,
+                "y": 652
+              },
+              {
+                "x": 700,
+                "y": 652
+              },
+              {
+                "x": 700,
+                "y": 620
+              }
+            ],
+            "length": 472
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 706.27476096402,
+              "y": 614.5957553279322
+            },
+            "hp": 100,
+            "chaos": 41.011998055999264,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:splayed-fibres-medium"
+            },
+            "elapsedMs": 27555.4,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 580,
+                  "y": 164
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 372,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 756,
+                  "y": 724
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 980,
+                  "y": 484
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "world": "fibre-silt",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 440
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 482.9534321235084,
+              "y": 415.740511833204
+            },
+            "hp": 100,
+            "chaos": 17.272208427999793,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:fibre-silt-medium"
+            },
+            "elapsedMs": 8275.6,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 388,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 452,
+                  "y": 148
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 900,
+                  "y": 212
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 556,
+              "y": 276
+            },
+            "points": [
+              {
+                "x": 484,
+                "y": 412
+              },
+              {
+                "x": 436,
+                "y": 412
+              },
+              {
+                "x": 436,
+                "y": 300
+              },
+              {
+                "x": 444,
+                "y": 300
+              },
+              {
+                "x": 444,
+                "y": 284
+              },
+              {
+                "x": 460,
+                "y": 284
+              },
+              {
+                "x": 460,
+                "y": 276
+              },
+              {
+                "x": 556,
+                "y": 276
+              }
+            ],
+            "length": 304
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 559.9970497946207,
+              "y": 273.3668242775051
+            },
+            "hp": 85,
+            "chaos": 23.612203449999715,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:fibre-silt-medium"
+            },
+            "elapsedMs": 14325.4,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 388,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 452,
+                  "y": 148
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 900,
+                  "y": 212
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 764,
+              "y": 404
+            },
+            "points": [
+              {
+                "x": 556,
+                "y": 276
+              },
+              {
+                "x": 756,
+                "y": 276
+              },
+              {
+                "x": 756,
+                "y": 404
+              },
+              {
+                "x": 764,
+                "y": 404
+              }
+            ],
+            "length": 336
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 766,
+              "y": 402.14988344756426
+            },
+            "hp": 85,
+            "chaos": 30.372446397999582,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:fibre-silt-medium"
+            },
+            "elapsedMs": 19991.8,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 388,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 452,
+                  "y": 148
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 900,
+                  "y": 212
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 700,
+              "y": 620
+            },
+            "points": [
+              {
+                "x": 764,
+                "y": 404
+              },
+              {
+                "x": 756,
+                "y": 404
+              },
+              {
+                "x": 756,
+                "y": 356
+              },
+              {
+                "x": 796,
+                "y": 356
+              },
+              {
+                "x": 796,
+                "y": 340
+              },
+              {
+                "x": 804,
+                "y": 340
+              },
+              {
+                "x": 804,
+                "y": 324
+              },
+              {
+                "x": 908,
+                "y": 324
+              },
+              {
+                "x": 908,
+                "y": 404
+              },
+              {
+                "x": 900,
+                "y": 404
+              },
+              {
+                "x": 900,
+                "y": 412
+              },
+              {
+                "x": 892,
+                "y": 412
+              },
+              {
+                "x": 892,
+                "y": 420
+              },
+              {
+                "x": 876,
+                "y": 420
+              },
+              {
+                "x": 876,
+                "y": 428
+              },
+              {
+                "x": 868,
+                "y": 428
+              },
+              {
+                "x": 868,
+                "y": 436
+              },
+              {
+                "x": 852,
+                "y": 436
+              },
+              {
+                "x": 852,
+                "y": 444
+              },
+              {
+                "x": 844,
+                "y": 444
+              },
+              {
+                "x": 844,
+                "y": 452
+              },
+              {
+                "x": 836,
+                "y": 452
+              },
+              {
+                "x": 836,
+                "y": 460
+              },
+              {
+                "x": 828,
+                "y": 460
+              },
+              {
+                "x": 828,
+                "y": 476
+              },
+              {
+                "x": 820,
+                "y": 476
+              },
+              {
+                "x": 820,
+                "y": 532
+              },
+              {
+                "x": 700,
+                "y": 532
+              },
+              {
+                "x": 700,
+                "y": 620
+              }
+            ],
+            "length": 744
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 706.2035539433642,
+              "y": 623.7916119445234
+            },
+            "hp": 85,
+            "chaos": 38.98784574999943,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:fibre-silt-medium"
+            },
+            "elapsedMs": 32974.7,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 388,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 452,
+                  "y": 148
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 900,
+                  "y": 212
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "world": "silt-gel",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 440
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 479.6160411454828,
+              "y": 415.41326446347773
+            },
+            "hp": 100,
+            "chaos": 17.26667400399982,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:silt-gel-medium"
+            },
+            "elapsedMs": 8275.9,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 564,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 388,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 836,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 916,
+                  "y": 212
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 516,
+              "y": 332
+            },
+            "points": [
+              {
+                "x": 476,
+                "y": 412
+              },
+              {
+                "x": 516,
+                "y": 412
+              },
+              {
+                "x": 516,
+                "y": 332
+              }
+            ],
+            "length": 120
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 518,
+              "y": 330
+            },
+            "hp": 100,
+            "chaos": 18.096147459999745,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:silt-gel-medium"
+            },
+            "elapsedMs": 10775.9,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 564,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 388,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 836,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 916,
+                  "y": 212
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 796,
+              "y": 420
+            },
+            "points": [
+              {
+                "x": 516,
+                "y": 332
+              },
+              {
+                "x": 516,
+                "y": 348
+              },
+              {
+                "x": 524,
+                "y": 348
+              },
+              {
+                "x": 524,
+                "y": 356
+              },
+              {
+                "x": 532,
+                "y": 356
+              },
+              {
+                "x": 532,
+                "y": 372
+              },
+              {
+                "x": 540,
+                "y": 372
+              },
+              {
+                "x": 540,
+                "y": 380
+              },
+              {
+                "x": 796,
+                "y": 380
+              },
+              {
+                "x": 796,
+                "y": 420
+              }
+            ],
+            "length": 368
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 801.7950196063521,
+              "y": 422.90575575348726
+            },
+            "hp": 100,
+            "chaos": 20.24723672199945,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:silt-gel-medium"
+            },
+            "elapsedMs": 17258.9,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 564,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 388,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 836,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 916,
+                  "y": 212
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 700,
+              "y": 620
+            },
+            "points": [
+              {
+                "x": 804,
+                "y": 420
+              },
+              {
+                "x": 844,
+                "y": 420
+              },
+              {
+                "x": 844,
+                "y": 548
+              },
+              {
+                "x": 836,
+                "y": 548
+              },
+              {
+                "x": 836,
+                "y": 572
+              },
+              {
+                "x": 828,
+                "y": 572
+              },
+              {
+                "x": 828,
+                "y": 596
+              },
+              {
+                "x": 820,
+                "y": 596
+              },
+              {
+                "x": 820,
+                "y": 612
+              },
+              {
+                "x": 812,
+                "y": 612
+              },
+              {
+                "x": 812,
+                "y": 620
+              },
+              {
+                "x": 804,
+                "y": 620
+              },
+              {
+                "x": 804,
+                "y": 628
+              },
+              {
+                "x": 796,
+                "y": 628
+              },
+              {
+                "x": 796,
+                "y": 636
+              },
+              {
+                "x": 700,
+                "y": 636
+              },
+              {
+                "x": 700,
+                "y": 620
+              }
+            ],
+            "length": 416
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 707.003862846562,
+              "y": 610
+            },
+            "hp": 100,
+            "chaos": 22.735633863999382,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:silt-gel-medium"
+            },
+            "elapsedMs": 24758.6,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 564,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 388,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 836,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 916,
+                  "y": 212
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "world": "reversed-flow",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 440
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 480.5580121448479,
+              "y": 416.7415319624311
+            },
+            "hp": 100,
+            "chaos": 17.266699441999823,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:reversed-flow-medium"
+            },
+            "elapsedMs": 8321.1,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 804,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 164
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 900,
+                  "y": 180
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 84
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 852,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 564,
+              "y": 300
+            },
+            "points": [
+              {
+                "x": 484,
+                "y": 420
+              },
+              {
+                "x": 564,
+                "y": 420
+              },
+              {
+                "x": 564,
+                "y": 300
+              }
+            ],
+            "length": 200
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 569.8059427499576,
+              "y": 299.1317019779628
+            },
+            "hp": 100,
+            "chaos": 21.632560777999668,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:reversed-flow-medium"
+            },
+            "elapsedMs": 12271,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 804,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 164
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 900,
+                  "y": 180
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 84
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 852,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 796,
+              "y": 420
+            },
+            "points": [
+              {
+                "x": 572,
+                "y": 300
+              },
+              {
+                "x": 572,
+                "y": 316
+              },
+              {
+                "x": 580,
+                "y": 316
+              },
+              {
+                "x": 580,
+                "y": 324
+              },
+              {
+                "x": 588,
+                "y": 324
+              },
+              {
+                "x": 588,
+                "y": 332
+              },
+              {
+                "x": 604,
+                "y": 332
+              },
+              {
+                "x": 604,
+                "y": 340
+              },
+              {
+                "x": 620,
+                "y": 340
+              },
+              {
+                "x": 620,
+                "y": 348
+              },
+              {
+                "x": 644,
+                "y": 348
+              },
+              {
+                "x": 644,
+                "y": 356
+              },
+              {
+                "x": 676,
+                "y": 356
+              },
+              {
+                "x": 676,
+                "y": 364
+              },
+              {
+                "x": 796,
+                "y": 364
+              },
+              {
+                "x": 796,
+                "y": 420
+              }
+            ],
+            "length": 344
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 799.7406530915769,
+              "y": 419.22612694453574
+            },
+            "hp": 100,
+            "chaos": 28.912614877999573,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:reversed-flow-medium"
+            },
+            "elapsedMs": 18720.8,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 804,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 164
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 900,
+                  "y": 180
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 84
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 852,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 708,
+              "y": 644
+            },
+            "points": [
+              {
+                "x": 796,
+                "y": 420
+              },
+              {
+                "x": 812,
+                "y": 420
+              },
+              {
+                "x": 812,
+                "y": 484
+              },
+              {
+                "x": 804,
+                "y": 484
+              },
+              {
+                "x": 804,
+                "y": 556
+              },
+              {
+                "x": 796,
+                "y": 556
+              },
+              {
+                "x": 796,
+                "y": 564
+              },
+              {
+                "x": 780,
+                "y": 564
+              },
+              {
+                "x": 780,
+                "y": 572
+              },
+              {
+                "x": 772,
+                "y": 572
+              },
+              {
+                "x": 772,
+                "y": 644
+              },
+              {
+                "x": 708,
+                "y": 644
+              }
+            ],
+            "length": 344
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 710.9970999999998,
+              "y": 642
+            },
+            "hp": 100,
+            "chaos": 35.292202341999314,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:reversed-flow-medium"
+            },
+            "elapsedMs": 25320.5,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 804,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 164
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 900,
+                  "y": 180
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 84
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 852,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "world": "shell-gel-delta",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 440
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 480.6808364412373,
+              "y": 415.74116481857925
+            },
+            "hp": 100,
+            "chaos": 17.28877409599981,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:shell-gel-delta-medium"
+            },
+            "elapsedMs": 8272.8,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 820,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 548,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 84
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 900,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 868,
+                  "y": 244
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 508,
+              "y": 260
+            },
+            "points": [
+              {
+                "x": 484,
+                "y": 412
+              },
+              {
+                "x": 476,
+                "y": 412
+              },
+              {
+                "x": 476,
+                "y": 292
+              },
+              {
+                "x": 484,
+                "y": 292
+              },
+              {
+                "x": 484,
+                "y": 276
+              },
+              {
+                "x": 492,
+                "y": 276
+              },
+              {
+                "x": 492,
+                "y": 268
+              },
+              {
+                "x": 500,
+                "y": 268
+              },
+              {
+                "x": 500,
+                "y": 260
+              },
+              {
+                "x": 508,
+                "y": 260
+              }
+            ],
+            "length": 192
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 510.00000000000006,
+              "y": 255.19847884047655
+            },
+            "hp": 100,
+            "chaos": 18.74863768999967,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:shell-gel-delta-medium"
+            },
+            "elapsedMs": 12672.6,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 820,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 548,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 84
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 900,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 868,
+                  "y": 244
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 804,
+              "y": 404
+            },
+            "points": [
+              {
+                "x": 508,
+                "y": 252
+              },
+              {
+                "x": 508,
+                "y": 244
+              },
+              {
+                "x": 524,
+                "y": 244
+              },
+              {
+                "x": 524,
+                "y": 236
+              },
+              {
+                "x": 532,
+                "y": 236
+              },
+              {
+                "x": 532,
+                "y": 228
+              },
+              {
+                "x": 540,
+                "y": 228
+              },
+              {
+                "x": 540,
+                "y": 220
+              },
+              {
+                "x": 556,
+                "y": 220
+              },
+              {
+                "x": 556,
+                "y": 212
+              },
+              {
+                "x": 572,
+                "y": 212
+              },
+              {
+                "x": 572,
+                "y": 204
+              },
+              {
+                "x": 604,
+                "y": 204
+              },
+              {
+                "x": 604,
+                "y": 196
+              },
+              {
+                "x": 700,
+                "y": 196
+              },
+              {
+                "x": 700,
+                "y": 188
+              },
+              {
+                "x": 716,
+                "y": 188
+              },
+              {
+                "x": 716,
+                "y": 180
+              },
+              {
+                "x": 740,
+                "y": 180
+              },
+              {
+                "x": 740,
+                "y": 172
+              },
+              {
+                "x": 836,
+                "y": 172
+              },
+              {
+                "x": 836,
+                "y": 260
+              },
+              {
+                "x": 804,
+                "y": 260
+              },
+              {
+                "x": 804,
+                "y": 404
+              }
+            ],
+            "length": 672
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 807.6994302023528,
+              "y": 401.00090000000006
+            },
+            "hp": 100,
+            "chaos": 30.444326443999124,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:shell-gel-delta-medium"
+            },
+            "elapsedMs": 24955.5,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 820,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 548,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 84
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 900,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 868,
+                  "y": 244
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 700,
+              "y": 620
+            },
+            "points": [
+              {
+                "x": 804,
+                "y": 404
+              },
+              {
+                "x": 892,
+                "y": 404
+              },
+              {
+                "x": 892,
+                "y": 556
+              },
+              {
+                "x": 884,
+                "y": 556
+              },
+              {
+                "x": 884,
+                "y": 564
+              },
+              {
+                "x": 700,
+                "y": 564
+              },
+              {
+                "x": 700,
+                "y": 620
+              }
+            ],
+            "length": 496
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 705.5256952457695,
+              "y": 624.0828185350512
+            },
+            "hp": 100,
+            "chaos": 39.06257639599896,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:shell-gel-delta-medium"
+            },
+            "elapsedMs": 33421.8,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 820,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 548,
+                  "y": 116
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 84
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 900,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 404,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 868,
+                  "y": 244
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "world": "gel-fibre",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 440
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 480.2334418749107,
+              "y": 416.74159519671673
+            },
+            "hp": 100,
+            "chaos": 17.255531053999835,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:gel-fibre-medium"
+            },
+            "elapsedMs": 8142,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 564,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 420,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 836,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 564,
+              "y": 276
+            },
+            "points": [
+              {
+                "x": 484,
+                "y": 420
+              },
+              {
+                "x": 340,
+                "y": 420
+              },
+              {
+                "x": 340,
+                "y": 300
+              },
+              {
+                "x": 348,
+                "y": 300
+              },
+              {
+                "x": 348,
+                "y": 292
+              },
+              {
+                "x": 356,
+                "y": 292
+              },
+              {
+                "x": 356,
+                "y": 284
+              },
+              {
+                "x": 372,
+                "y": 284
+              },
+              {
+                "x": 372,
+                "y": 276
+              },
+              {
+                "x": 380,
+                "y": 276
+              },
+              {
+                "x": 380,
+                "y": 268
+              },
+              {
+                "x": 404,
+                "y": 268
+              },
+              {
+                "x": 404,
+                "y": 260
+              },
+              {
+                "x": 428,
+                "y": 260
+              },
+              {
+                "x": 428,
+                "y": 252
+              },
+              {
+                "x": 460,
+                "y": 252
+              },
+              {
+                "x": 460,
+                "y": 244
+              },
+              {
+                "x": 468,
+                "y": 244
+              },
+              {
+                "x": 468,
+                "y": 236
+              },
+              {
+                "x": 476,
+                "y": 236
+              },
+              {
+                "x": 476,
+                "y": 212
+              },
+              {
+                "x": 484,
+                "y": 212
+              },
+              {
+                "x": 484,
+                "y": 180
+              },
+              {
+                "x": 492,
+                "y": 180
+              },
+              {
+                "x": 492,
+                "y": 172
+              },
+              {
+                "x": 540,
+                "y": 172
+              },
+              {
+                "x": 540,
+                "y": 164
+              },
+              {
+                "x": 548,
+                "y": 164
+              },
+              {
+                "x": 548,
+                "y": 148
+              },
+              {
+                "x": 556,
+                "y": 148
+              },
+              {
+                "x": 556,
+                "y": 140
+              },
+              {
+                "x": 564,
+                "y": 140
+              },
+              {
+                "x": 564,
+                "y": 132
+              },
+              {
+                "x": 660,
+                "y": 132
+              },
+              {
+                "x": 660,
+                "y": 212
+              },
+              {
+                "x": 644,
+                "y": 212
+              },
+              {
+                "x": 644,
+                "y": 220
+              },
+              {
+                "x": 628,
+                "y": 220
+              },
+              {
+                "x": 628,
+                "y": 228
+              },
+              {
+                "x": 612,
+                "y": 228
+              },
+              {
+                "x": 612,
+                "y": 236
+              },
+              {
+                "x": 596,
+                "y": 236
+              },
+              {
+                "x": 596,
+                "y": 244
+              },
+              {
+                "x": 580,
+                "y": 244
+              },
+              {
+                "x": 580,
+                "y": 252
+              },
+              {
+                "x": 564,
+                "y": 252
+              },
+              {
+                "x": 564,
+                "y": 276
+              }
+            ],
+            "length": 992
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 569.2891055344061,
+              "y": 276.88298639612526
+            },
+            "hp": 100,
+            "chaos": 28.212891373999113,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:gel-fibre-medium"
+            },
+            "elapsedMs": 26624.6,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 564,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 420,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 836,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 804,
+              "y": 420
+            },
+            "points": [
+              {
+                "x": 572,
+                "y": 276
+              },
+              {
+                "x": 804,
+                "y": 276
+              },
+              {
+                "x": 804,
+                "y": 420
+              }
+            ],
+            "length": 376
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 809.7027695471003,
+              "y": 417.67277511486947
+            },
+            "hp": 100,
+            "chaos": 35.216449897998864,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:gel-fibre-medium"
+            },
+            "elapsedMs": 32657.7,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 564,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 420,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 836,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 700,
+              "y": 620
+            },
+            "points": [
+              {
+                "x": 812,
+                "y": 420
+              },
+              {
+                "x": 908,
+                "y": 420
+              },
+              {
+                "x": 908,
+                "y": 564
+              },
+              {
+                "x": 884,
+                "y": 564
+              },
+              {
+                "x": 884,
+                "y": 572
+              },
+              {
+                "x": 860,
+                "y": 572
+              },
+              {
+                "x": 860,
+                "y": 580
+              },
+              {
+                "x": 844,
+                "y": 580
+              },
+              {
+                "x": 844,
+                "y": 588
+              },
+              {
+                "x": 836,
+                "y": 588
+              },
+              {
+                "x": 836,
+                "y": 596
+              },
+              {
+                "x": 820,
+                "y": 596
+              },
+              {
+                "x": 820,
+                "y": 604
+              },
+              {
+                "x": 812,
+                "y": 604
+              },
+              {
+                "x": 812,
+                "y": 644
+              },
+              {
+                "x": 700,
+                "y": 644
+              },
+              {
+                "x": 700,
+                "y": 620
+              }
+            ],
+            "length": 552
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 703.4377425091942,
+              "y": 614.2176492288246
+            },
+            "hp": 100,
+            "chaos": 48.69734666999936,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:gel-fibre-medium"
+            },
+            "elapsedMs": 42423.9,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 452,
+                  "y": 580
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 564,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 612
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 68
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 500,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 420,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 836,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "world": "tension-membrane",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 588
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 440
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 480.2284024649816,
+              "y": 416.40857326372173
+            },
+            "hp": 100,
+            "chaos": 17.283175523999816,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:tension-membrane-medium"
+            },
+            "elapsedMs": 8174.1,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 804,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 372,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 916,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 820,
+                  "y": 132
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 340,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 884,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 548,
+              "y": 364
+            },
+            "points": [
+              {
+                "x": 484,
+                "y": 420
+              },
+              {
+                "x": 548,
+                "y": 420
+              },
+              {
+                "x": 548,
+                "y": 364
+              }
+            ],
+            "length": 120
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 550,
+              "y": 362
+            },
+            "hp": 100,
+            "chaos": 18.11263238999975,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:tension-membrane-medium"
+            },
+            "elapsedMs": 10674,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 804,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 372,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 916,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 820,
+                  "y": 132
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 340,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 884,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 804,
+              "y": 396
+            },
+            "points": [
+              {
+                "x": 548,
+                "y": 364
+              },
+              {
+                "x": 548,
+                "y": 372
+              },
+              {
+                "x": 804,
+                "y": 372
+              },
+              {
+                "x": 804,
+                "y": 396
+              }
+            ],
+            "length": 288
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 806,
+              "y": 392.9999666666667
+            },
+            "hp": 100,
+            "chaos": 19.74944824199956,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:tension-membrane-medium"
+            },
+            "elapsedMs": 15607.1,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 804,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 372,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 916,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 820,
+                  "y": 132
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 340,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 884,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 700,
+              "y": 620
+            },
+            "points": [
+              {
+                "x": 804,
+                "y": 396
+              },
+              {
+                "x": 804,
+                "y": 388
+              },
+              {
+                "x": 620,
+                "y": 388
+              },
+              {
+                "x": 620,
+                "y": 444
+              },
+              {
+                "x": 628,
+                "y": 444
+              },
+              {
+                "x": 628,
+                "y": 460
+              },
+              {
+                "x": 636,
+                "y": 460
+              },
+              {
+                "x": 636,
+                "y": 468
+              },
+              {
+                "x": 644,
+                "y": 468
+              },
+              {
+                "x": 644,
+                "y": 476
+              },
+              {
+                "x": 652,
+                "y": 476
+              },
+              {
+                "x": 652,
+                "y": 516
+              },
+              {
+                "x": 660,
+                "y": 516
+              },
+              {
+                "x": 660,
+                "y": 524
+              },
+              {
+                "x": 700,
+                "y": 524
+              },
+              {
+                "x": 700,
+                "y": 620
+              }
+            ],
+            "length": 504
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 703.1150370064266,
+              "y": 618.089714646326
+            },
+            "hp": 100,
+            "chaos": 23.03414215799942,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:tension-membrane-medium"
+            },
+            "elapsedMs": 25506.7,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 804,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 372,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 916,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 820,
+                  "y": 132
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 468,
+                  "y": 612
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 340,
+                  "y": 52
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 884,
+                  "y": 148
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "world": "ruptured-film",
+      "steps": [
+        {
+          "goal": {
+            "label": "01-central-approach",
+            "x": 480,
+            "y": 430
+          },
+          "route": {
+            "requested": {
+              "label": "01-central-approach",
+              "x": 480,
+              "y": 430
+            },
+            "actual": {
+              "x": 476,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 452,
+                "y": 588
+              },
+              {
+                "x": 452,
+                "y": 516
+              },
+              {
+                "x": 460,
+                "y": 516
+              },
+              {
+                "x": 460,
+                "y": 508
+              },
+              {
+                "x": 476,
+                "y": 508
+              },
+              {
+                "x": 476,
+                "y": 428
+              }
+            ],
+            "length": 440
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 482.99916666666667,
+              "y": 424.90872449169655
+            },
+            "hp": 100,
+            "chaos": 17.349578657999814,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:ruptured-film-medium"
+            },
+            "elapsedMs": 8453.9,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 420,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 452,
+                  "y": 628
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 740,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 900,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "02-upper-crossing",
+            "x": 560,
+            "y": 300
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-crossing",
+              "x": 560,
+              "y": 300
+            },
+            "actual": {
+              "x": 556,
+              "y": 300
+            },
+            "points": [
+              {
+                "x": 484,
+                "y": 428
+              },
+              {
+                "x": 556,
+                "y": 428
+              },
+              {
+                "x": 556,
+                "y": 300
+              }
+            ],
+            "length": 200
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 561.6376205908833,
+              "y": 288.05778216162474
+            },
+            "hp": 100,
+            "chaos": 18.544008887999684,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:ruptured-film-medium"
+            },
+            "elapsedMs": 12053.7,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 420,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 452,
+                  "y": 628
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 740,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 900,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "03-eastern-passage",
+            "x": 800,
+            "y": 420
+          },
+          "route": {
+            "requested": {
+              "label": "03-eastern-passage",
+              "x": 800,
+              "y": 420
+            },
+            "actual": {
+              "x": 836,
+              "y": 460
+            },
+            "points": [
+              {
+                "x": 564,
+                "y": 292
+              },
+              {
+                "x": 620,
+                "y": 292
+              },
+              {
+                "x": 620,
+                "y": 444
+              },
+              {
+                "x": 628,
+                "y": 444
+              },
+              {
+                "x": 628,
+                "y": 460
+              },
+              {
+                "x": 636,
+                "y": 460
+              },
+              {
+                "x": 636,
+                "y": 468
+              },
+              {
+                "x": 644,
+                "y": 468
+              },
+              {
+                "x": 644,
+                "y": 476
+              },
+              {
+                "x": 708,
+                "y": 476
+              },
+              {
+                "x": 708,
+                "y": 484
+              },
+              {
+                "x": 724,
+                "y": 484
+              },
+              {
+                "x": 724,
+                "y": 492
+              },
+              {
+                "x": 740,
+                "y": 492
+              },
+              {
+                "x": 740,
+                "y": 500
+              },
+              {
+                "x": 836,
+                "y": 500
+              },
+              {
+                "x": 836,
+                "y": 460
+              }
+            ],
+            "length": 520
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 843.4424371971932,
+              "y": 458
+            },
+            "hp": 100,
+            "chaos": 21.57986275799943,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:ruptured-film-medium"
+            },
+            "elapsedMs": 21203.4,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 420,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 452,
+                  "y": 628
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 740,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 900,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        },
+        {
+          "goal": {
+            "label": "04-southern-return",
+            "x": 700,
+            "y": 620
+          },
+          "route": {
+            "requested": {
+              "label": "04-southern-return",
+              "x": 700,
+              "y": 620
+            },
+            "actual": {
+              "x": 700,
+              "y": 620
+            },
+            "points": [
+              {
+                "x": 844,
+                "y": 460
+              },
+              {
+                "x": 836,
+                "y": 460
+              },
+              {
+                "x": 836,
+                "y": 468
+              },
+              {
+                "x": 828,
+                "y": 468
+              },
+              {
+                "x": 828,
+                "y": 476
+              },
+              {
+                "x": 820,
+                "y": 476
+              },
+              {
+                "x": 820,
+                "y": 484
+              },
+              {
+                "x": 804,
+                "y": 484
+              },
+              {
+                "x": 804,
+                "y": 492
+              },
+              {
+                "x": 780,
+                "y": 492
+              },
+              {
+                "x": 780,
+                "y": 500
+              },
+              {
+                "x": 700,
+                "y": 500
+              },
+              {
+                "x": 700,
+                "y": 620
+              }
+            ],
+            "length": 304
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "paused": false,
+            "ended": false,
+            "pos": {
+              "x": 706.4224804326077,
+              "y": 612.2264017191496
+            },
+            "hp": 100,
+            "chaos": 23.443397549999382,
+            "carried": 0,
+            "seed": {
+              "seed": 20261005,
+              "fragmentTypeId": "frag-outdoor",
+              "recipeId": "r100-native-v3:ruptured-film-medium"
+            },
+            "elapsedMs": 26819.9,
+            "exit": {
+              "id": "master-exit",
+              "position": {
+                "x": 148,
+                "y": 660
+              },
+              "triggerRadius": 48
+            },
+            "nodes": [
+              {
+                "id": "r100-kindling-safe-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 436,
+                  "y": 564
+                },
+                "tier": "safe",
+                "value": 1,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 420,
+                  "y": 100
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-contested-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 532,
+                  "y": 132
+                },
+                "tier": "contested",
+                "value": 2,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-1",
+                "kind": "kindling",
+                "pos": {
+                  "x": 868,
+                  "y": 116
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "kind": "kindling",
+                "pos": {
+                  "x": 836,
+                  "y": 52
+                },
+                "tier": "deep",
+                "value": 4,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 452,
+                  "y": 628
+                },
+                "tier": "safe",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 740,
+                  "y": 580
+                },
+                "tier": "contested",
+                "value": 0,
+                "collected": false
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "pos": {
+                  "x": 900,
+                  "y": 196
+                },
+                "tier": "deep",
+                "value": 0,
+                "collected": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "status": "captured"
+}

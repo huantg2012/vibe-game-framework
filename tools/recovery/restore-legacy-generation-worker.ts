@@ -1,3 +1,4 @@
+import { createLegacyV2Departure } from './legacy-departure-helper';
 /** A fresh process owns no recovery cache. Also bundled against poisoned live generators. */
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -6,7 +7,7 @@ import type { RiftCheckpoint } from '../../src/types/rift-checkpoint';
 import { checkpointChecksum, validRiftCheckpoint } from '../../src/types/rift-checkpoint';
 
 Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: { getItem: () => null } });
-const { createProceduralDeparture, restoreProceduralWorld, restoreProceduralLayout, proceduralRiftIdentity } =
+const { restoreProceduralWorld, restoreProceduralLayout, proceduralRiftIdentity } =
   await import('../../src/managers/rift-recovery');
 const json = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T;
 const mode = process.argv[2]!, index = Number(process.argv[3]);
@@ -51,7 +52,7 @@ if (mode === 'v1') {
       getRandomValues(values: Uint32Array) { values[0] = identity.generation!.requestedSeed; return values; },
     } });
     try {
-      const departure = createProceduralDeparture();
+      const departure = createLegacyV2Departure();
       assert.equal(departure.signature, identity.signature, 'new v2 uses the same immutable executor as recovery');
       assert.equal(departure.generation?.version, 2);
     } finally { if (original) Object.defineProperty(globalThis, 'crypto', original); }

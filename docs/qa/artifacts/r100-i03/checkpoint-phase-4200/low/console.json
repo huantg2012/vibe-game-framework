@@ -1,0 +1,26 @@
+[
+  {
+    "type": "debug",
+    "text": "[vite] connecting..."
+  },
+  {
+    "type": "debug",
+    "text": "[vite] connected."
+  },
+  {
+    "type": "log",
+    "text": "%c %c %c %c %c Phaser v3.90.0 (WebGL | Web Audio) %c https://phaser.io/v390 background: #ff0000 background: #ffff00 background: #00ff00 background: #00ffff color: #ffffff; background: #000000 background: transparent"
+  },
+  {
+    "type": "error",
+    "text": "Rift checkpoint validation failed; previous record retained Error: Incomplete Rift checkpoint\n    at Object.prepareRiftCommit (http://127.0.0.1:3047/src/managers/save-manager.ts:241:138)\n    at RiftFrameCommit.finish (http://127.0.0.1:3047/src/systems/rift-frame-commit.ts:41:34)\n    at RiftScene.commitRuntimeFrame (http://127.0.0.1:3047/src/scenes/rift-scene.ts:1927:31)\n    at RiftScene.onPostUpdate (http://127.0.0.1:3047/src/scenes/rift-scene.ts:799:15)\n    at EventEmitter2.emit (http://127.0.0.1:3047/node_modules/.vite/deps/phaser.js?v=e5f05b24:120:43)\n    at Systems2.step (http://127.0.0.1:3047/node_modules/.vite/deps/phaser.js?v=e5f05b24:112599:28)\n    at SceneManager2.update (http://127.0.0.1:3047/node_modules/.vite/deps/phaser.js?v=e5f05b24:110750:29)\n    at Game2.step (http://127.0.0.1:3047/node_modules/.vite/deps/phaser.js?v=e5f05b24:8625:32)\n    at TimeStep2.step (http://127.0.0.1:3047/node_modules/.vite/deps/phaser.js?v=e5f05b24:9079:26)\n    at step (http://127.0.0.1:3047/node_modules/.vite/deps/phaser.js?v=e5f05b24:16406:29)"
+  },
+  {
+    "type": "error",
+    "text": "Rift checkpoint validation failed; previous record retained Error: Incomplete Rift checkpoint\n    at Object.prepareRiftCommit (http://127.0.0.1:3047/src/managers/save-manager.ts:241:138)\n    at RiftFrameCommit.finish (http://127.0.0.1:3047/src/systems/rift-frame-commit.ts:41:34)\n    at RiftScene.commitRuntimeFrame (http://127.0.0.1:3047/src/scenes/rift-scene.ts:1927:31)\n    at RiftScene.flushRuntimeCheckpoint (http://127.0.0.1:3047/src/scenes/rift-scene.ts:1946:28)\n    at onRecoveryPageHide (http://127.0.0.1:3047/src/scenes/rift-scene.ts:1951:10)"
+  },
+  {
+    "type": "error",
+    "text": "Rift checkpoint validation failed; previous record retained Error: Incomplete Rift checkpoint\n    at Object.prepareRiftCommit (http://127.0.0.1:3047/src/managers/save-manager.ts:241:138)\n    at RiftFrameCommit.finish (http://127.0.0.1:3047/src/systems/rift-frame-commit.ts:41:34)\n    at RiftScene.commitRuntimeFrame (http://127.0.0.1:3047/src/scenes/rift-scene.ts:1927:31)\n    at RiftScene.flushRuntimeCheckpoint (http://127.0.0.1:3047/src/scenes/rift-scene.ts:1946:28)\n    at HTMLDocument.onRecoveryVisibility (http://127.0.0.1:3047/src/scenes/rift-scene.ts:1954:53)"
+  }
+]

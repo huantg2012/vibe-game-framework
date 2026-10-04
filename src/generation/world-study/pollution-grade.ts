@@ -29,24 +29,30 @@ export function isPollutionGrade(value: unknown): value is PollutionGrade {
   return typeof value === 'string' && POLLUTION_GRADES.some(grade => grade === value);
 }
 
-export function validatePollutionGradeDefinitions(value: unknown): asserts value is readonly PollutionGradeDefinition[] {
-  if (!Array.isArray(value) || value.length !== POLLUTION_GRADES.length)
-    throw new Error('Pollution grade contract requires low, medium and severe');
-  const keys = 'chaosEndRate,chaosRampEndSeconds,chaosRampStartSeconds,chaosStartRate,id,intent,label,paintContinuity,paintCount,paintCoverage,paintSubstrate,status,version,volumeCols,volumeCount,volumeCoverage,volumeRows,volumeSubstrate';
-  const seen = new Set<PollutionGrade>();
+export function isPollutionGradeDefinition(value: unknown): value is PollutionGradeDefinition {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const row = value as Record<string, unknown>;
   const coverage = ['infiltrate', 'rewrite', 'overwrite'];
-  for (const row of value) {
-    if (!row || typeof row !== 'object' || Array.isArray(row)
+  const keys = 'chaosEndRate,chaosRampEndSeconds,chaosRampStartSeconds,chaosStartRate,id,intent,label,paintContinuity,paintCount,paintCoverage,paintSubstrate,status,version,volumeCols,volumeCount,volumeCoverage,volumeRows,volumeSubstrate';
+  return !(!row || typeof row !== 'object' || Array.isArray(row)
       || Object.keys(row).sort().join(',') !== keys
-      || !isPollutionGrade(row.id) || seen.has(row.id) || row.version !== 1 || row.status !== 'dev-masters'
+      || !isPollutionGrade(row.id) || row.version !== 1 || row.status !== 'dev-masters'
       || typeof row.label !== 'string' || !row.label.trim() || row.label.length > 40
       || typeof row.intent !== 'string' || !row.intent.trim() || row.intent.length > 500
       || row.paintSubstrate !== 'oil_film' || row.paintContinuity !== 'monolith' || row.volumeSubstrate !== 'gas_mass'
-      || !coverage.includes(row.paintCoverage) || !coverage.includes(row.volumeCoverage)
-      || !['paintCount', 'volumeCount', 'volumeCols', 'volumeRows'].every(key => Number.isInteger(row[key]) && row[key] > 0 && row[key] <= 16)
-      || !['chaosStartRate', 'chaosEndRate', 'chaosRampStartSeconds', 'chaosRampEndSeconds'].every(key => Number.isFinite(row[key]) && row[key] >= 0)
-      || row.chaosStartRate <= 0 || row.chaosEndRate < row.chaosStartRate || row.chaosEndRate > 2
-      || row.chaosRampEndSeconds <= row.chaosRampStartSeconds)
+      || !coverage.includes(String(row.paintCoverage)) || !coverage.includes(String(row.volumeCoverage))
+      || !['paintCount', 'volumeCount', 'volumeCols', 'volumeRows'].every(key => typeof row[key] === 'number' && Number.isInteger(row[key]) && row[key] > 0 && row[key] <= 16)
+      || !['chaosStartRate', 'chaosEndRate', 'chaosRampStartSeconds', 'chaosRampEndSeconds'].every(key => typeof row[key] === 'number' && Number.isFinite(row[key]) && row[key] >= 0)
+      || (row.chaosStartRate as number) <= 0 || (row.chaosEndRate as number) < (row.chaosStartRate as number) || (row.chaosEndRate as number) > 2
+      || (row.chaosRampEndSeconds as number) <= (row.chaosRampStartSeconds as number));
+}
+
+export function validatePollutionGradeDefinitions(value: unknown): asserts value is readonly PollutionGradeDefinition[] {
+  if (!Array.isArray(value) || value.length !== POLLUTION_GRADES.length)
+    throw new Error('Pollution grade contract requires low, medium and severe');
+  const seen = new Set<PollutionGrade>();
+  for (const row of value) {
+    if (!isPollutionGradeDefinition(row) || seen.has(row.id))
       throw new Error('Unsupported or duplicate pollution grade definition');
     seen.add(row.id);
   }

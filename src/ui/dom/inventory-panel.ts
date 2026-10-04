@@ -36,6 +36,10 @@ export interface InventoryPanelItem {
 }
 export interface InventoryEquipmentSlot { id: string; label: string; itemId?: string | null; locked?: boolean }
 export interface InventoryPanelSnapshot {
+  departureGrades?: {
+    selected: string;
+    options: readonly { id: string; label: string; risk: string; preparation: string; reward: string }[];
+  };
   departureConditions?: readonly { label: string; value: string | number; note?: string }[];
   items: readonly InventoryPanelItem[];
   discoveries?: readonly InventoryPanelItem[];
@@ -63,6 +67,7 @@ export interface InventoryPanelOptions {
   onAction: (action: InventoryPanelAction) => void | InventoryPanelActionResult | Promise<void | InventoryPanelActionResult>;
   onClose: () => void;
   onDepart?: () => void;
+  onSelectDepartureGrade?: (id: string) => void;
   onOffering?: () => void;
   mount?: HTMLElement;
   portrait?: string;
@@ -112,6 +117,8 @@ class InventoryPanel {
   private lists: Partial<Record<Lane, ListElements>> = {};
   private equipment!: HTMLDivElement;
   private conditions!: HTMLDivElement;
+  private gradePanel!: HTMLDivElement;
+  private gradeSignature = '';
   private detail!: HTMLElement;
   private detailActions!: HTMLElement;
   private detailHint!: HTMLElement;
@@ -234,6 +241,9 @@ class InventoryPanel {
     this.lists.main = this.makeList('main', '物件');
     this.detail = element('aside', 'inventory-detail'); this.detail.setAttribute('aria-label', '正在查看的物件');
     const detailColumn = element('div', 'inventory-detail-column');
+    this.gradePanel = element('div', 'inventory-grade-choice');
+    this.gradePanel.setAttribute('aria-label', '本趟污染等级');
+    this.gradeSignature = '';
     this.detailHint = element('div', 'inventory-detail-hint');
     this.detailActions = element('div', 'inventory-actions');
     this.detailActions.setAttribute('aria-label', '当前物件操作');
@@ -247,7 +257,7 @@ class InventoryPanel {
     const help = element('span', 'inventory-key-help', embedded ? '↑↓ 查看 · Enter 操作' : this.options!.mode === 'prepare' ? '↑↓ 查看 · Tab 移步 · Esc 离开' : '↑↓ 查看 · Enter 操作 · Tab / Esc 合上');
     this.primary = button('inventory-primary', '', () => this.primaryAction());
     bottomRow.append(help, this.primary); bottom.append(this.message, bottomRow);
-    panel.append(header, this.equipment, this.conditions, filters, this.exchangeInspect, body, bottom);
+    panel.append(header, this.equipment, this.conditions, this.gradePanel, filters, this.exchangeInspect, body, bottom);
     panel.addEventListener('pointerdown', event => event.stopPropagation());
     panel.addEventListener('click', event => event.stopPropagation());
     panel.addEventListener('wheel', event => event.stopPropagation(), { passive: true });
@@ -287,6 +297,7 @@ class InventoryPanel {
     this.lists.main!.heading.textContent = this.options?.mode === 'rift' ? '本趟拾获' : this.options?.mode === 'prepare' ? '选择装配' : this.filter === 'discovered' ? '已见物件 · 不代表当前持有' : '全部物件';
     for (const [filter, control] of this.filters) { control.classList.toggle('is-current', filter === this.filter); control.setAttribute('aria-pressed', String(filter === this.filter)); }
     this.renderEquipment();
+    this.renderDepartureGrades();
     this.conditions.replaceChildren();
     this.conditions.hidden = this.options?.mode !== 'prepare' || !this.snapshot.departureConditions?.length;
     if (!this.conditions.hidden) for (const condition of this.snapshot.departureConditions ?? []) {
@@ -305,6 +316,38 @@ class InventoryPanel {
     for (const [lane, scroll] of this.pendingScroll) { this.lists[lane]!.list.scrollTop = scroll; this.renderPosition(lane); }
     this.pendingScroll.clear();
     this.renderSelection(); this.renderDetail(); this.renderFooter();
+  }
+
+  private renderDepartureGrades(): void {
+    const grades = this.snapshot?.departureGrades;
+    this.gradePanel.hidden = this.options?.mode !== 'prepare' || !grades;
+    if (this.gradePanel.hidden || !grades) return;
+    const signature = JSON.stringify(grades);
+    if (signature === this.gradeSignature) return;
+    const focused = document.activeElement instanceof HTMLElement ? document.activeElement.dataset.departureGrade : undefined;
+    this.gradeSignature = signature;
+    this.gradePanel.replaceChildren(element('span', 'inventory-grade-heading', '污染程度'));
+    const choices = element('div', 'inventory-grade-options');
+    choices.setAttribute('role', 'group');
+    choices.setAttribute('aria-label', '选择本趟污染程度');
+    for (const option of grades.options) {
+      const control = button('inventory-grade-option', option.label, () => {
+        if (this.busy) return;
+        this.options?.onSelectDepartureGrade?.(option.id);
+        this.update();
+      });
+      control.dataset.departureGrade = option.id;
+      control.setAttribute('aria-pressed', String(option.id === grades.selected));
+      choices.append(control);
+    }
+    this.gradePanel.append(choices);
+    const selected = grades.options.find(option => option.id === grades.selected);
+    if (selected) this.gradePanel.append(
+      element('p', 'inventory-grade-risk', selected.risk),
+      element('p', 'inventory-grade-reward', selected.reward),
+      element('p', 'inventory-grade-preparation', selected.preparation),
+    );
+    if (focused) [...choices.querySelectorAll<HTMLButtonElement>('button')].find(button => button.dataset.departureGrade === focused)?.focus({ preventScroll: true });
   }
 
   private renderEquipment(): void {
@@ -637,6 +680,17 @@ class InventoryPanel {
       return;
     }
     if (this.options.mode === 'rift' && ['w', 'a', 's', 'd'].includes(key)) { this.close(); return; }
+    if (target?.dataset.departureGrade && ['ArrowLeft', 'ArrowRight', ' ', 'Enter'].includes(event.key) && !event.shiftKey) {
+      event.preventDefault(); event.stopImmediatePropagation();
+      if (event.repeat || this.busy) return;
+      const buttons = [...this.gradePanel.querySelectorAll<HTMLButtonElement>('[data-departure-grade]')];
+      const index = buttons.indexOf(target as HTMLButtonElement);
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        const next = buttons[(index + (event.key === 'ArrowRight' ? 1 : -1) + buttons.length) % buttons.length];
+        next?.focus({ preventScroll: true }); next?.click();
+      } else target.click();
+      return;
+    }
     if (event.key === 'Enter' && event.shiftKey) { event.preventDefault(); event.stopImmediatePropagation(); if (!event.repeat) this.depart(); return; }
     if (target?.tagName === 'SUMMARY' && ['Enter', ' '].includes(event.key)) { event.stopImmediatePropagation(); return; }
     if (target instanceof HTMLSelectElement && ['ArrowUp', 'ArrowDown', 'Home', 'End', ' '].includes(event.key)) { event.stopImmediatePropagation(); return; }

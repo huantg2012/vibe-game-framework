@@ -16,7 +16,7 @@ await mkdir(out,{recursive:true});
 const report={date:new Date().toISOString(),revision:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),
   method:'Real canvas captureStream with Phaser master output, unmodified native clock and existing keyboard-input patrol. Isolated browser and in-memory DEV storage. No sound injection, gain edit, actor teleport, or hearing claim.',
   sources:{},cases:[],errors:[],listening:'pending; signal measurement is not listening'};
-for(const file of ['src/dev/rift-r100-masters/audio.ts','src/dev/rift-r100-masters/presentation.ts','src/managers/audio-manager.ts','data/rift-master-scenes.csv'])report.sources[file]=createHash('sha256').update(await readFile(file)).digest('hex');
+for(const file of ['src/systems/r100-world/audio.ts','src/systems/r100-world/presentation.ts','src/managers/audio-manager.ts','data/rift-master-scenes.csv'])report.sources[file]=createHash('sha256').update(await readFile(file)).digest('hex');
 try{
   for(const family of ['folded-slab','fibre-knot','broken-shell']){
     const context=await browser.newContext({viewport:{width:1500,height:1040},deviceScaleFactor:1});

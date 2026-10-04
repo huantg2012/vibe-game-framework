@@ -24,8 +24,8 @@ export interface SurfaceFields {
 const cache = new WeakMap<WorldSample, SurfaceFields>();
 
 export function validateSurfaceRecipe(recipe: SurfaceRecipe): void {
-  if (!recipe || !['strata', 'crystal', 'glaze'].includes(recipe.substrate)
-    || !['strata', 'crystal', 'glaze'].includes(recipe.coating)) throw new Error('Unsupported material operator');
+  if (!recipe || !['strata', 'crystal', 'glaze', 'granular', 'membrane', 'gel'].includes(recipe.substrate)
+    || !['strata', 'crystal', 'glaze', 'granular', 'membrane', 'gel'].includes(recipe.coating)) throw new Error('Unsupported material operator');
   const composition = compositionOf(recipe);
   if (!['patches', 'bands', 'clusters'].includes(composition.organization)) throw new Error('Invalid region organization');
   for (const key of ['regionScale', 'quietness', 'formScale', 'fragmentation', 'accentCoverage'] as const) {

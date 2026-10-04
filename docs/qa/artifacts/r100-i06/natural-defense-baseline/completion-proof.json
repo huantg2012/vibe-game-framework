@@ -1,0 +1,171 @@
+{
+  "status": "completed-not-economy-approved",
+  "actualUniqueRunIds": 30,
+  "worlds": [
+    "r100-cinder-ridge",
+    "r100-crystal-fibre",
+    "r100-fibre-silt",
+    "r100-film-laminate",
+    "r100-gel-fibre",
+    "r100-grain-laminate",
+    "r100-laminate-shell",
+    "r100-pressed-dunes",
+    "r100-reversed-flow",
+    "r100-ruptured-film",
+    "r100-schist-shear",
+    "r100-shell-chain",
+    "r100-shell-gel-delta",
+    "r100-shell-grit",
+    "r100-silt-gel",
+    "r100-tension-membrane"
+  ],
+  "allNoStateInjection": true,
+  "consoleErrors": 0,
+  "navigationWarnings": [],
+  "frozenHarnessChecks": [
+    {
+      "file": "tools/world-study/r100-real-journeys.mjs",
+      "same": true
+    },
+    {
+      "file": "tools/world-study/r100-visible-encounters.mjs",
+      "same": true
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "same": true
+    },
+    {
+      "file": "tools/contam-preview/tsconfig.json",
+      "same": true
+    },
+    {
+      "file": "tools/contam-preview/phaser-stub.ts",
+      "same": true
+    },
+    {
+      "file": "package.json",
+      "same": true
+    },
+    {
+      "file": "tsconfig.json",
+      "same": true
+    }
+  ],
+  "performance": {
+    "qualifying60s": 23,
+    "shortRuns": 7,
+    "intervalSamples": 121979,
+    "over50": 1,
+    "p95FrameMinMax": [
+      16.800000190734863,
+      18.399999856948853
+    ],
+    "cpuP95MinMax": [
+      3.799999952316284,
+      4.799999952316284
+    ],
+    "qualifyingOnly": {
+      "runs": 23,
+      "intervalSamples": 103034,
+      "over50": 1,
+      "frameP95MinMax": [
+        17.5,
+        18.399999856948853
+      ],
+      "frameP99MinMax": [
+        18.299999952316284,
+        18.600000143051147
+      ],
+      "cpuP95MinMax": [
+        3.8999998569488525,
+        4.799999952316284
+      ],
+      "renderP95MinMax": [
+        0.6000001430511475,
+        1.6999998092651367
+      ]
+    }
+  },
+  "matureActuallyObtained": {
+    "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-safe-1": {
+      "ordinal": 4,
+      "name": "amber_beetle",
+      "uses": 5
+    },
+    "CAT_785acf20-afa7-4a1c-9bab-55fafe11cd12_r100-contaminant-contested-1": {
+      "ordinal": 7,
+      "name": "scorched_scarf",
+      "uses": 6
+    },
+    "CAT_3cc016dd-3217-4b72-a0d0-5e82258e357e_r100-contaminant-safe-1": {
+      "ordinal": 10,
+      "name": "salted_vial",
+      "uses": 3
+    },
+    "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-safe-1": {
+      "ordinal": 11,
+      "name": "split_heel_boot",
+      "uses": 3
+    },
+    "CAT_7981702b-85ec-4479-af27-7af72a2a83b2_r100-contaminant-contested-1": {
+      "ordinal": 14,
+      "name": "clouded_lens",
+      "uses": 4
+    },
+    "CAT_dce7696a-8eba-4bc9-beeb-9c2e5d9078fa_r100-contaminant-safe-1": {
+      "ordinal": 16,
+      "name": "crooked_hook_needle",
+      "uses": 5
+    },
+    "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-safe-1": {
+      "ordinal": 18,
+      "name": "stopped_pocket_watch",
+      "uses": 5
+    },
+    "CAT_42ce8d4b-befb-4298-aad1-fba2d9dfedec_r100-contaminant-contested-1": {
+      "ordinal": 19,
+      "name": "clouded_lens",
+      "uses": 2
+    },
+    "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-safe-1": {
+      "ordinal": 22,
+      "name": "amber_beetle",
+      "uses": 5
+    },
+    "CAT_123a7e98-6ae1-46da-852f-c731f5c6b34a_r100-contaminant-contested-1": {
+      "ordinal": 25,
+      "name": "silver_back_hand_mirror",
+      "uses": 4
+    },
+    "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-safe-1": {
+      "ordinal": 26,
+      "name": "silver_back_hand_mirror",
+      "uses": 4
+    },
+    "CAT_81cee7fe-f0a6-445e-9f84-952954fc5b72_r100-contaminant-contested-1": {
+      "ordinal": 27,
+      "name": "cold_ash_pipe",
+      "uses": 3
+    },
+    "CAT_a195b977-8b67-4594-80c4-b063539b7b07_r100-contaminant-safe-1": {
+      "ordinal": 29,
+      "name": "ash_tooth",
+      "uses": 3
+    }
+  },
+  "notes": [
+    "All30 sequential actual new save low grade. Only offered-contaminant preference differs from original mechanical90; still70repair/no growth/conservative default tactics.",
+    "No death: actual recovery not covered. Performance is local headlessChrome with overlappingQA, not GPU or human review.",
+    "Economic failure applies to this frozen policy; neither balancing approval nor a claim of optimal ordinary play."
+  ],
+  "referenceMachine": {
+    "cpu": "Apple M4 Pro",
+    "memoryBytes": 51539607552,
+    "memoryGiB": 48,
+    "logicalViewport": "960x640",
+    "browserViewport": "1440x960",
+    "process": "Headless native Chrome via Playwright. Overlapping QA processes disclosed per sample; not GPU timing.",
+    "chromeVersion": "154.0.8037.93"
+  }
+}

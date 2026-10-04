@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-04",
+  "source": "http://127.0.0.1:3072/",
+  "sourceManifest": "docs/qa/artifacts/r100-i03/native-body-fix/frozen/source-snapshot.json",
+  "worldId": "ash-strata",
+  "seed": 20261004,
+  "grade": "severe",
+  "build": "survey-lure",
+  "controlledEquipment": [
+    "blind_needle_compass ordinary mature",
+    "split_tongue_bell ordinary mature"
+  ],
+  "method": "正式初始基地，QA明确授予普通成熟目录配装，经真实UI装入；出发前固定世界seed。进场后仅正常截图与公开HUD决定实际按键，看图时暂停，不读隐藏地图/敌人状态/掉落内容。一次完整尝试，无重置重抽。",
+  "result": {
+    "extracted": true,
+    "elapsedMs": 43644.95000000106,
+    "hp": 40,
+    "chaos": 103.13681004016635,
+    "kindling": 2,
+    "contaminants": [
+      "蜡封包 普通"
+    ],
+    "weapons": [
+      "优良撬棍"
+    ],
+    "kills": 0,
+    "compassUses": 1,
+    "bellUses": 1,
+    "crowbarDurabilitySpent": 3,
+    "deepLoot": false
+  },
+  "observations": [
+    "确实绕过实体斜边，并在脱离追击后沿已观察通路撤回，100混乱不是强制退出。",
+    "第一处未知翻找取得污染物；第二处取得薪柴和武器。不能以事后内容要求玩家预先选薪柴。",
+    "铜铃在敌人已追逐后投掷，未取消追逐，符合机制；本次不证明声诱的正确预先布置价值。",
+    "普通撬棍攻击存在朝向和时机错误，不能把损血或少收全部归因于生成。"
+  ],
+  "limitations": [
+    "固定普通成熟配装不是自然供给；未实际返回净化点继续维护，不证明经营净利润。",
+    "看图暂停且截图约100ms模拟延迟，不是实时反应、新手耗时或连续帧性能证据。",
+    "同一个seed已有上一场正常图片的路线经验，不称盲玩。",
+    "两次不同准备的有限手玩不足以证明或否定所有熟练策略；本次没有取得深堆或高收益，不签I03体验通过。",
+    "3072版本不含之后原生技能Body.reset与旧冲刺迁移；本局未用dash/phase，该结局不改标最终源重跑。"
+  ],
+  "evidence": [
+    "inputs.jsonl",
+    "fixture.json",
+    "controlled-identity.json",
+    "031-extract-known-return.png",
+    "browser-storage.json"
+  ]
+}

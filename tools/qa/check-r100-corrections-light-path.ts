@@ -6,7 +6,7 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { hasMasterMatterPath } from '../../src/dev/rift-r100-masters/visibility';
 
-const sourcePath = process.env.R100_SHADER_SOURCE ?? 'src/dev/rift-r100-masters/surface-renderer.ts';
+const sourcePath = process.env.R100_SHADER_SOURCE ?? 'src/systems/r100-world/surface-renderer.ts';
 const source = await readFile(sourcePath, 'utf8');
 const start = source.indexOf('bool darkCell('), end = source.indexOf('float heightAt(');
 assert(start >= 0 && end > start, 'actual shader light-path function must be present');

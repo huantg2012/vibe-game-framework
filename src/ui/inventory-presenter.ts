@@ -34,6 +34,9 @@ export interface InventoryPresenterOptions {
   mode: InventoryPanelMode;
   onClose: () => void;
   onDepart?: () => void;
+  /** Scene owns the selected grade; inventory edits never change it implicitly. */
+  getDepartureGrades?: () => InventoryPanelSnapshot['departureGrades'];
+  onSelectDepartureGrade?: (id: string) => void;
   /** Navigation only; offering remains owned by the purification scene. */
   onOffering?: () => void;
   mount?: HTMLElement;
@@ -115,6 +118,7 @@ function snapshot(options: InventoryPresenterOptions): InventoryPanelSnapshot {
   const survival = getSurvivalAttributes();
   const modifiers = gameState.getSortieModifiers();
   return {
+    departureGrades: options.mode === 'prepare' ? options.getDepartureGrades?.() : undefined,
     departureConditions: options.mode === 'prepare' ? [
       { label: '装置·混乱增速', value: formatChaosRateDelta(modifiers.chaosRateModifier) },
       { label: '每堆所得示例', value: calculateKindlingYieldExamples(growthSystem.getModifiers().kindlingAffinity, modifiers.kindlingValueModifier).join(' / '), note: '小 / 中 / 大份 · 已含亲和' },

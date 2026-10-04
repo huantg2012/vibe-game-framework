@@ -1,0 +1,31 @@
+{
+  "reviewer": "root, non-author of world material/layout",
+  "world": "laminate-shell",
+  "grade": "medium",
+  "seed": 20261005,
+  "sourceSnapshot": "docs/qa/artifacts/r100-i03-i06/frozen-final/source-snapshot.json",
+  "method": "Normal finite FOV screenshots and keyboard only. No map/enemy/loot/position inspection or mutation. Scene paused while reviewing stills, actual unmodified simulation between inputs. Gym starts ordinary gear, no tools.",
+  "activeSimulationMs": 52314.34333333416,
+  "result": {
+    "hp": 85,
+    "chaos": 73.99165446000009,
+    "kindling": 5,
+    "elapsedMs": 52314.34333333416,
+    "ended": true,
+    "prompt": "extract"
+  },
+  "observations": [
+    "Actually searched four visible remains, obtained five fuel plus inventory items; load rose from3 to8.",
+    "Solid folded plate blocked initial left crossing. Changed route around visible eastern end; no invisible walk-through or unexpected under-edge contact observed.",
+    "Body entered visible black/green contaminant and chaos rose sharply from20.61 to31.38 over4.33 active seconds; ordinary floor was not treated as the same hazard.",
+    "Shell outer edge required lateral clearance. Pursuing visible enemy caused one15HP hit; subsequent outside-rim retreat succeeded. No immunity, HP reset or enemy-state read.",
+    "Exit was discovered by exploring back toward arrival; only then used the actually revealed minimap marker. Narrow black surface slit could be recognized at proximity. E performed actual extraction at52.31 active seconds with85HP,73.99chaos and5fuel."
+  ],
+  "limitations": [
+    "Paused frame-by-frame deliberation does not establish real-time reaction difficulty, novice completion time, optimal stealth or natural economy.",
+    "Single medium world/seed/ordinary preparation; no claim of heavy-grade reward balance.",
+    "No audio listening, no formal haven return/repair in this Gym run.",
+    "Final later patch changes failed-create surface ownership only; this captured success branch is pre-cleanup patch.",
+    "The input label dodge-pursuer records the reviewer intent, not a dodge mechanic: Space is the ordinary melee attack; actual escape here was directional movement."
+  ]
+}

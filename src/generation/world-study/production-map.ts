@@ -45,6 +45,8 @@ export interface WorldProductionOptions {
 }
 
 export interface WorldProductionMap {
+  /** V3 pure native data: no callbacks or scene owners cross the worker boundary. */
+  readonly native?: import('./r100-native-data').R100NativeWorldData;
   readonly sample: WorldSample;
   readonly layout: GeneratedRiftLayout;
   /** Host pins/paint footprints retain their established 32px coordinate contract. */

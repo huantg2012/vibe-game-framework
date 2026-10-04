@@ -1,0 +1,583 @@
+{
+  "scope": "One persistent Phaser Game; six source-family warmups, ten identical and twelve mixed native reconstructions; two actual GC calls before each retained sample. Weak references never retain scene objects. No GPU driver byte/RSS claim; retained WebGL object/context ownership and main-isolate memory only.",
+  "samples": [
+    {
+      "label": "warmed-baseline",
+      "usage": {
+        "usedSize": 40657836,
+        "totalSize": 41975808,
+        "embedderHeapUsedSize": 3433760,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 777,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 39,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 78,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 18,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 8,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 0,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-1",
+      "usage": {
+        "usedSize": 41113628,
+        "totalSize": 42500096,
+        "embedderHeapUsedSize": 3307920,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 830,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 40,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 80,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 19,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 9,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 455792,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-2",
+      "usage": {
+        "usedSize": 41252348,
+        "totalSize": 42237952,
+        "embedderHeapUsedSize": 3345768,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 883,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 41,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 82,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 20,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 10,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 594512,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-3",
+      "usage": {
+        "usedSize": 41433432,
+        "totalSize": 43024384,
+        "embedderHeapUsedSize": 3398712,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 936,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 86,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 86,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 42,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 84,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 21,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 11,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 775596,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-4",
+      "usage": {
+        "usedSize": 41522548,
+        "totalSize": 42762240,
+        "embedderHeapUsedSize": 3417944,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 989,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 87,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 87,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 43,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 86,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 22,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 12,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 864712,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-5",
+      "usage": {
+        "usedSize": 41505944,
+        "totalSize": 43024384,
+        "embedderHeapUsedSize": 3311304,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 1042,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 88,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 88,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 44,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 88,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 23,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 13,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 848108,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-6",
+      "usage": {
+        "usedSize": 41675380,
+        "totalSize": 43024384,
+        "embedderHeapUsedSize": 3300216,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 1095,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 89,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 89,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 45,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 90,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 24,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 14,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1017544,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-7",
+      "usage": {
+        "usedSize": 41740196,
+        "totalSize": 43024384,
+        "embedderHeapUsedSize": 3348904,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 1148,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 90,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 90,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 46,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 92,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 25,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 15,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1082360,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-8",
+      "usage": {
+        "usedSize": 41830300,
+        "totalSize": 43548672,
+        "embedderHeapUsedSize": 3301960,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 1201,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 91,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 91,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 47,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 94,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 26,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 16,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1172464,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-9",
+      "usage": {
+        "usedSize": 41991608,
+        "totalSize": 43286528,
+        "embedderHeapUsedSize": 3456928,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 1254,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 92,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 92,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 48,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 96,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 27,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 17,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1333772,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-10",
+      "usage": {
+        "usedSize": 41991388,
+        "totalSize": 43286528,
+        "embedderHeapUsedSize": 3412336,
+        "backingStorageSize": 68003412
+      },
+      "objects": {
+        "Texture": {
+          "created": 1307,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 93,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 93,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 49,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 98,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 28,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 18,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1333552,
+      "backingGrowth": 0
+    },
+    {
+      "label": "after-mixed-12",
+      "usage": {
+        "usedSize": 42324020,
+        "totalSize": 43286528,
+        "embedderHeapUsedSize": 3431208,
+        "backingStorageSize": 68003560
+      },
+      "objects": {
+        "Texture": {
+          "created": 2440,
+          "live": 392,
+          "active": 392
+        },
+        "Framebuffer": {
+          "created": 118,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 118,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 74,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 148,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 53,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 43,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1666184,
+      "backingGrowth": 148
+    }
+  ],
+  "errors": [],
+  "status": "passed-bounded-lifecycle"
+}

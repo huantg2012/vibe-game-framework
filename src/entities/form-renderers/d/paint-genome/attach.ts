@@ -12,6 +12,7 @@ import {
   type PaintGrowthGuide,
 } from '@/entities/form-renderers/d/paint-genome/bake';
 import { resolvePaintVeinVariant } from '@/entities/form-renderers/d/paint-genome/topology';
+import { paintGenomePreparationKey } from './prepared';
 import { paintSurfaceMaterial } from './material';
 import { PaintSurfaceVisibility } from './visibility';
 import { fitLegacyPaintPresentation, type LegacyPaintPresentationReport } from './legacy-presentation';
@@ -98,7 +99,10 @@ class BingPaintGenomeVisual implements FormVisual {
     // Saved worlds retain their exact contact cells/nucleus seats. They do not
     // need to retain a broken, truncated texture: presentation always has the
     // complete geometry, independently of that frozen gameplay contract.
-    let baked = bakePaintGenome({ ...recipe, geometryVersion: 2 });
+    const visualRecipe = { ...recipe, geometryVersion: 2 as const };
+    if (ctx.preparedPaintGenome && ctx.preparedPaintGenome.key !== paintGenomePreparationKey(visualRecipe))
+      throw new Error('Prepared paint visual does not match the actual Host');
+    let baked = ctx.preparedPaintGenome?.baked ?? bakePaintGenome(visualRecipe);
     const contact = ctx.paintGeometryVersion === 1
       ? bakePaintGenome({ ...recipe, geometryVersion: 1 }) : baked;
     if (ctx.paintGeometryVersion === 1 && ctx.pin && ctx.surfaceFloorAt) {

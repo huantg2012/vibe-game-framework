@@ -1,6 +1,8 @@
 /** Editable material constructions in Rift's existing XY plane. Z is real height;
  * it never changes the ground projection, character scale, or walkable floor. */
-export type NativeVolumeFamily = 'folded-slab' | 'fibre-knot' | 'broken-shell';
+export type NativeVolumeFamily = 'folded-slab' | 'fibre-knot' | 'broken-shell' | 'granular-ridge' | 'membrane-rim' | 'gel-flow';
+/** Stable raster encoding; append rather than reorder existing families. */
+export const NATIVE_VOLUME_FAMILY_SEQUENCE: readonly NativeVolumeFamily[] = ['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'];
 export type NativeVolumeMaterialSlot = 'outer' | 'cut' | 'inner' | 'joint';
 export const NATIVE_VOLUME_MATERIALS = ['outer', 'cut', 'inner', 'joint'] as const;
 /** Construction history, not texture presets. The maker assigns these where
@@ -52,7 +54,7 @@ function validateSpec(spec: Readonly<NativeVolumeSpec>): void {
       throw new Error(`Native volume ${key} must be finite`);
     }
   }
-  if (!['folded-slab', 'fibre-knot', 'broken-shell'].includes(spec.family)) throw new Error('Unknown native volume family');
+  if (!['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'].includes(spec.family)) throw new Error('Unknown native volume family');
   if (!Number.isInteger(spec.id) || spec.id < 1 || spec.id > 0x7fffffff) throw new Error('Volume id must be a positive Int32');
   if (!Number.isInteger(spec.seed)) throw new Error('Volume seed must be an integer');
   if (spec.blocking !== undefined && spec.blocking !== 0 && spec.blocking !== 1) throw new Error('Native volume blocking must be 0 or 1');
@@ -387,11 +389,139 @@ function shellPetal(b: MeshBuilder, ox: number, oy: number, rx: number, ry: numb
   }
 }
 
+
+/** A continuous compacted ridge carries unequal, interlocking aggregate lobes.
+ * The granular faces are geometry, not disconnected circles or surface dots. */
+function granularRidge(b: MeshBuilder): void {
+  const s=b.spec, along=30, across=14, rows:Point[][]=[];
+  const clusters=Array.from({length:s.branches+3},(_,i)=>({
+    x:(i+.25+phase(s.seed,910+i)*.5)/(s.branches+3),
+    y:.24+phase(s.seed,950+i)*.5, span:.09+phase(s.seed,980+i)*.08,
+    rise:.10+phase(s.seed,1010+i)*.20,
+  }));
+  for(let i=0;i<=along;i++){
+    const u=i/along,taper=.25+.75*Math.pow(Math.sin(Math.PI*u),.48),row:Point[]=[];
+    const spine=Math.sin(u*4.5+phase(s.seed,897)*2)*s.width*.11;
+    for(let j=0;j<=across;j++){
+      const v=j/across,edge=Math.min(u*along,(1-u)*along,v*across,(1-v)*across);
+      const foot=Math.min(1,edge),peak=.43+.08*Math.sin(u*5.4);
+      const side=v<peak?v/peak:(1-v)/(1-peak);
+      let rise=Math.pow(Math.max(0,side),.86)*(.51+.16*Math.sin(u*4+1));
+      for(const c of clusters){
+        const distance=Math.abs(u-c.x)/c.span+Math.abs(v-c.y)/.26;
+        rise+=Math.max(0,1-distance)*c.rise;
+      }
+      const z=(s.blocking===1?Math.min(8,s.height*.26)*foot:0)+s.height*rise*foot*Math.pow(Math.sin(Math.PI*u),.34);
+      row.push([(u-.5)*s.length,(v-.5)*s.width*taper+spine,z]);
+    }rows.push(row);
+  }
+  for(let i=0;i<along;i++)for(let j=0;j<across;j++){
+    const cut=j===0||j===across-1||i===0||i===along-1;
+    const a=rows[i]![j]!,c=rows[i+1]![j]!,d=rows[i+1]![j+1]!,e=rows[i]![j+1]!;
+    b.quad(a,c,d,e,cut?1:j>8?2:0,[[i*s.length/along,j*s.width/across],[(i+1)*s.length/along,j*s.width/across],
+      [(i+1)*s.length/along,(j+1)*s.width/across],[i*s.length/along,(j+1)*s.width/across]],[0,0,1],
+      cut?NATIVE_VOLUME_REGIONS.fractured:j<6?NATIVE_VOLUME_REGIONS.compressed:NATIVE_VOLUME_REGIONS.intact);
+  }
+  surfaceFracture(b,rows,[[10.1,5.9],[11.8,6.1],[12.5,5.6],[14.2,5.8],[15.1,6.4],[17.4,6.2]],.085);
+}
+
+/** An eccentric torn sheet between thickened edges. The centre is a shallow
+ * tension membrane, not the deep opaque cavity of the approved shell family. */
+function membraneRim(b: MeshBuilder): void {
+  const s=b.spec,around=46,radial=12,rows:Point[][]=[];
+  const begin=.20+s.opening*.3,sweep=TAU-(1.35+s.opening*1.15),offset=phase(s.seed,1131)*1.4;
+  for(let i=0;i<=around;i++){
+    const angle=begin+i/around*sweep,ca=Math.cos(angle),sa=Math.sin(angle);
+    const uneven=1+.13*Math.sin(angle*3+offset)+.06*Math.cos(angle*5-.3);
+    const crown=s.height*(.64+.24*Math.sin(angle+.8)+.09*Math.cos(angle*2+offset));
+    const profile:readonly (readonly [number,number])[]=[
+      [1,0],[.955,s.blocking===1?Math.min(crown*.35,9):crown*.05],
+      [.875,crown*.82],[.78,crown],[.69,crown*.62],[.54,crown*.15],[0,crown*.075],
+    ];
+    const row:Point[]=[];
+    for(let j=0;j<=radial;j++){
+      const q=j/radial*(profile.length-1),n=Math.floor(q),f=q-n;
+      const p=profile[n]!,next=profile[Math.min(n+1,profile.length-1)]!;
+      const r=p[0]+(next[0]-p[0])*f,z=p[1]+(next[1]-p[1])*f;
+      // The sheet is pulled toward an off-centre attachment. Fine tension
+      // ridges remain on the inner material; silhouette stays one solid edge.
+      const tension=j>8?Math.sin(angle*11+r*5)*s.thickness*.12*r:0;
+      row.push([ca*s.length*.50*r*uneven+(1-r)*s.length*.10,sa*s.width*.49*r*uneven-(1-r)*s.width*.17,z+tension]);
+    }rows.push(row);
+  }
+  for(let i=0;i<around;i++)for(let j=0;j<radial;j++){
+    const a=rows[i]!,c=rows[i+1]!;
+    const slot=j<2?1:j<8?0:2;
+    b.quad(a[j]!,c[j]!,c[j+1]!,a[j+1]!,slot,[[i*s.length/around,j*s.width/radial],[(i+1)*s.length/around,j*s.width/radial],
+      [(i+1)*s.length/around,(j+1)*s.width/radial],[i*s.length/around,(j+1)*s.width/radial]],[0,0,1],
+      j>7?NATIVE_VOLUME_REGIONS.tension:NATIVE_VOLUME_REGIONS.intact);
+  }
+  surfaceFracture(b,rows,[[12.2,2.8],[13.5,3.3],[13.2,4.4],[14.1,5.0],[13.7,6.3],[14.6,7.6],[14.4,8.7]],.095);
+  // Ragged open ends have real section surfaces. No dark painted border or
+  // transparent sprite extends beyond the body footprint.
+  for(const i of [0,around])for(let j=0;j<radial;j++){
+    const a=rows[i]![j]!,c=rows[i]![j+1]!,angle=begin+i/around*sweep,sign=i===0?-1:1;
+    const dx=-Math.sin(angle)*s.thickness*.30*sign,dy=Math.cos(angle)*s.thickness*.30*sign;
+    b.quad(a,c,[c[0]+dx,c[1]+dy,0],[a[0]+dx,a[1]+dy,0],1,
+      [[j*s.width/radial,a[2]],[(j+1)*s.width/radial,c[2]],[(j+1)*s.width/radial,0],[j*s.width/radial,0]],[0,0,1],NATIVE_VOLUME_REGIONS.fractured);
+  }
+}
+
+/** A viscous front has a thick, lobed advancing edge and a broad flattened
+ * wake. Its height and footprint stay fixed; reflected light supplies motion. */
+function gelFlow(b: MeshBuilder): void {
+  const s=b.spec,along=32,across=20,rows:Point[][]=[];
+  const profile:readonly (readonly [number,number])[]=[[0,0],[.08,.11],[.33,.19],[.58,.38],[.78,.78],[.88,1],[.95,.52],[1,0]];
+  for(let i=0;i<=along;i++){
+    const u=i/along,side=Math.pow(Math.sin(Math.PI*u),.35),lobes=.12*Math.sin(u*13+phase(s.seed,1207)*2)+.055*Math.sin(u*27+.5);
+    const row:Point[]=[];
+    for(let j=0;j<=across;j++){
+      const v=j/across;let p=0;while(p+1<profile.length&&profile[p+1]![0]<v)p++;
+      const a=profile[p]!,c=profile[Math.min(p+1,profile.length-1)]!,f=(v-a[0])/Math.max(.001,c[0]-a[0]);
+      const ridge=a[1]+(c[1]-a[1])*f,edge=Math.min(u*along,(1-u)*along,v*across,(1-v)*across);
+      const foot=s.blocking===1?Math.min(s.height*.22,7)*Math.min(1,edge):0;
+      row.push([(u-.5)*s.length+(v-.5)*s.length*.08,(v-.5)*s.width*(.30+side*.70)+Math.pow(v,3)*lobes*s.width,
+        foot+ridge*s.height*side*(.75+.19*Math.sin(u*8+.2))]);
+    }rows.push(row);
+  }
+  for(let i=0;i<along;i++)for(let j=0;j<across;j++){
+    const front=j>=18,thin=j<=6;
+    const a=rows[i]![j]!,c=rows[i+1]![j]!,d=rows[i+1]![j+1]!,e=rows[i]![j+1]!;
+    b.quad(a,c,d,e,front?1:thin?2:0,[[i*s.length/along,j*s.width/across],[(i+1)*s.length/along,j*s.width/across],
+      [(i+1)*s.length/along,(j+1)*s.width/across],[i*s.length/along,(j+1)*s.width/across]],[0,0,1],
+      thin?NATIVE_VOLUME_REGIONS.peeled:front?NATIVE_VOLUME_REGIONS.compressed:NATIVE_VOLUME_REGIONS.glazed);
+  }
+  surfaceFracture(b,rows,[[10.2,17.4],[11.5,17.1],[12.1,17.7],[13.8,17.8],[14.4,18.3],[16.5,18.1]],.09);
+}
+
+/** A fracture follows a material failure across the actual triangular skin;
+ * never make entire regular tessellation cells luminous. All ribbon corners
+ * sample the same plane as the opaque construction below them. */
+function surfaceFracture(b:MeshBuilder,rows:readonly (readonly Point[])[],path:readonly (readonly[number,number])[],halfWidth:number):void {
+  const sample=(u:number,v:number):Point=>{
+    const i=clamp(Math.floor(u),0,rows.length-2),j=clamp(Math.floor(v),0,rows[0]!.length-2),a=u-i,t=v-j;
+    const p=rows[i]![j]!,q=rows[i+1]![j]!,r=rows[i+1]![j+1]!,s=rows[i]![j+1]!;
+    const weights=t<=a?[1-a,a-t,t,0]:[1-t,0,a,t-a];
+    return [p[0]*weights[0]!+q[0]*weights[1]!+r[0]*weights[2]!+s[0]*weights[3]!,
+      p[1]*weights[0]!+q[1]*weights[1]!+r[1]*weights[2]!+s[1]*weights[3]!,
+      p[2]*weights[0]!+q[2]*weights[1]!+r[2]*weights[2]!+s[2]*weights[3]!+.12];
+  };
+  for(let i=1;i<path.length;i++){
+    const a=path[i-1]!,c=path[i]!,dx=c[0]-a[0],dy=c[1]-a[1],length=Math.hypot(dx,dy),px=-dy/length*halfWidth,py=dx/length*halfWidth;
+    const uv:readonly[UV,UV,UV,UV]=[[a[0]+px,a[1]+py],[c[0]+px,c[1]+py],[c[0]-px,c[1]-py],[a[0]-px,a[1]-py]];
+    b.quad(sample(...uv[0]),sample(...uv[1]),sample(...uv[2]),sample(...uv[3]),3,uv,[0,0,1],NATIVE_VOLUME_REGIONS.fractured);
+  }
+  const centre=path[Math.floor(path.length/2)]!;b.joint(sample(...centre));
+}
+
 export function buildNativeVolume(spec: Readonly<NativeVolumeSpec>): NativeVolumeMesh {
   validateSpec(spec);
   const builder = new MeshBuilder(spec);
   if (spec.family === 'folded-slab') foldedSlab(builder);
   else if (spec.family === 'fibre-knot') fibreKnot(builder);
-  else brokenShell(builder);
+  else if (spec.family === 'broken-shell') brokenShell(builder);
+  else if (spec.family === 'granular-ridge') granularRidge(builder);
+  else if (spec.family === 'membrane-rim') membraneRim(builder);
+  else gelFlow(builder);
   return builder.finish();
 }

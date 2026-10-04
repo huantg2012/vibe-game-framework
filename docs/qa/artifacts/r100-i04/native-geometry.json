@@ -1,0 +1,101 @@
+{
+  "status": "technical-diagnostic-not-art-approval",
+  "checks": 117,
+  "metrics": [
+    {
+      "family": "folded-slab",
+      "triangles": 222,
+      "matterPixels": 21310,
+      "physicalCells": 383,
+      "opticalCells": 141,
+      "lampChangedPixels": 17501,
+      "shadowedSamples": 253,
+      "normalTriangles": 222,
+      "distinctPlanes": 162,
+      "upwardArea": 47246.90574455576,
+      "lateralArea": 15148.09216502847,
+      "projectedCutArea": 5762.577140880167,
+      "elapsedMs": 8.244458000000009
+    },
+    {
+      "family": "fibre-knot",
+      "triangles": 3276,
+      "matterPixels": 10715,
+      "physicalCells": 225,
+      "opticalCells": 154,
+      "lampChangedPixels": 5326,
+      "shadowedSamples": 478,
+      "normalTriangles": 3276,
+      "distinctPlanes": 1811,
+      "upwardArea": 14562.174257869023,
+      "lateralArea": 15531.744341963984,
+      "projectedCutArea": 0.00019060057820752263,
+      "elapsedMs": 6.584791999999993
+    },
+    {
+      "family": "broken-shell",
+      "triangles": 3518,
+      "matterPixels": 24796,
+      "physicalCells": 433,
+      "opticalCells": 198,
+      "lampChangedPixels": 9922,
+      "shadowedSamples": 438,
+      "normalTriangles": 3516,
+      "distinctPlanes": 1611,
+      "upwardArea": 9516.980051197836,
+      "lateralArea": 31158.160765907745,
+      "projectedCutArea": 8508.016871208209,
+      "elapsedMs": 2.4521250000000236
+    },
+    {
+      "family": "granular-ridge",
+      "triangles": 850,
+      "matterPixels": 27164,
+      "physicalCells": 467,
+      "opticalCells": 221,
+      "lampChangedPixels": 21588,
+      "shadowedSamples": 299,
+      "normalTriangles": 850,
+      "distinctPlanes": 446,
+      "upwardArea": 12211.687025553048,
+      "lateralArea": 11728.947802697461,
+      "projectedCutArea": 4592.348273863783,
+      "elapsedMs": 3.7759159999999383
+    },
+    {
+      "family": "membrane-rim",
+      "triangles": 1164,
+      "matterPixels": 22526,
+      "physicalCells": 394,
+      "opticalCells": 151,
+      "lampChangedPixels": 11277,
+      "shadowedSamples": 473,
+      "normalTriangles": 1164,
+      "distinctPlanes": 537,
+      "upwardArea": 9811.885879056956,
+      "lateralArea": 26872.542593144575,
+      "projectedCutArea": 2876.012549425621,
+      "elapsedMs": 4.76887499999998
+    },
+    {
+      "family": "gel-flow",
+      "triangles": 1290,
+      "matterPixels": 28819,
+      "physicalCells": 505,
+      "opticalCells": 178,
+      "lampChangedPixels": 23586,
+      "shadowedSamples": 280,
+      "normalTriangles": 1290,
+      "distinctPlanes": 634,
+      "upwardArea": 19504.402943428326,
+      "lateralArea": 19042.725837774742,
+      "projectedCutArea": 2918.177744561166,
+      "elapsedMs": 7.320500000000038
+    }
+  ],
+  "limitations": [
+    "Different materials use current CSV roles; no formal ground/actor/vision in this diagnostic.",
+    "Height-field shadows cannot trace undercuts; projected entity footprint is nonwalkable.",
+    "Timing is one cold CPU call, not a frame performance qualification."
+  ]
+}

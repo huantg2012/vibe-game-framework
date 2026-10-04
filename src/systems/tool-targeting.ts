@@ -1,5 +1,6 @@
 import type { Vector2 } from '@/types/game-types';
 import type { WalkGrid } from '@/types/map-types';
+import type { PhysicalBodyQueries } from '@/systems/ai/physical-grid';
 
 export interface VisibleTargetPolicy<T> {
   readonly getPosition: (target: T) => Readonly<Vector2>;
@@ -47,6 +48,7 @@ export interface SingleWallLandingInput {
   readonly grid: ToolWalkGrid;
   /** Must distinguish a real phaseable wall from VOID. Never called out of bounds. */
   readonly isPhaseableWall: (col: number, row: number) => boolean;
+  readonly bodyQueries?: PhysicalBodyQueries;
 }
 
 interface RayInterval { enter: number; exit: number }
@@ -71,7 +73,7 @@ export function findSingleWallLanding(input: SingleWallLandingInput): Vector2 | 
   const dy = direction.y / length;
   const size = grid.tileSize;
   const epsilon = size * 1e-7; // Numerical separation, not a gameplay clearance parameter.
-  if (!bodyFits(grid, origin.x, origin.y, halfW, halfH, epsilon)) return null;
+  if (!(input.bodyQueries?.supports(origin, halfW, halfH) ?? bodyFits(grid, origin.x, origin.y, halfW, halfH, epsilon))) return null;
 
   const endX = origin.x + dx * maxDistance;
   const endY = origin.y + dy * maxDistance;
@@ -83,6 +85,11 @@ export function findSingleWallLanding(input: SingleWallLandingInput): Vector2 | 
   let wallCol = -1;
   let wallRow = -1;
   let firstDistance = Infinity;
+  // The coarse cell containing a legal sparse corner is not itself a wall to
+  // phase through. Select the first real point contact, then retain its 8px plane.
+  const nativeContact = input.bodyQueries
+    ? input.bodyQueries.displacementFraction(origin, .001, .001, dx * maxDistance, dy * maxDistance) * maxDistance : null;
+  if (nativeContact === maxDistance) return null;
   for (let row = minRow; row <= maxRow; row++) {
     for (let col = minCol; col <= maxCol; col++) {
       if (grid.isWalkable(col, row)) continue;
@@ -90,6 +97,7 @@ export function findSingleWallLanding(input: SingleWallLandingInput): Vector2 | 
         (col + 1) * size, (row + 1) * size, interval)) continue;
       if (interval.exit - interval.enter <= epsilon || interval.enter > maxDistance
         || interval.enter >= firstDistance) continue;
+      if (nativeContact !== null && (interval.enter > nativeContact + .003 || interval.exit < nativeContact + .003)) continue;
       firstDistance = interval.enter;
       wallCol = col;
       wallRow = row;
@@ -105,7 +113,15 @@ export function findSingleWallLanding(input: SingleWallLandingInput): Vector2 | 
   if (travel > maxDistance) return null;
   const x = origin.x + dx * travel;
   const y = origin.y + dy * travel;
-  if (!bodyFits(grid, x, y, halfW, halfH, epsilon)) return null;
+  if (!(input.bodyQueries?.supports({ x, y }, halfW, halfH) ?? bodyFits(grid, x, y, halfW, halfH, epsilon))) return null;
+  if (input.bodyQueries) {
+    // Preserve one original 8px wall plane. Only its solid matter is exempt:
+    // missing floor and the rest of a thick/slanted object still stop passage.
+    const horizontal = Math.abs(dy) < 1e-10, vertical = Math.abs(dx) < 1e-10;
+    const exemption = { left: vertical ? 0 : wallCol * size, right: vertical ? grid.cols * size : (wallCol + 1) * size,
+      top: horizontal ? 0 : wallRow * size, bottom: horizontal ? grid.rows * size : (wallRow + 1) * size };
+    return input.bodyQueries.displacementFraction(origin, halfW, halfH, x - origin.x, y - origin.y, exemption) === 1 ? { x, y } : null;
+  }
 
   // A valid endpoint alone is insufficient: the body must not clip another
   // obstacle on the way, including diagonal corners beside the selected tile.
@@ -165,7 +181,7 @@ function intersectRayBox(
 /** Furthest unobstructed floor point along a throw; never crosses walls or VOID. */
 export function findSoundLureLanding(
   origin: Readonly<Vector2>, direction: Readonly<Vector2>, maxDistance: number,
-  grid: ToolWalkGrid, minDistance: number,
+  grid: ToolWalkGrid, minDistance: number, bodyQueries?: PhysicalBodyQueries,
 ): Vector2 | null {
   if (!finitePoint(origin) || !finitePoint(direction) || !Number.isFinite(maxDistance)
     || maxDistance <= 0 || !Number.isFinite(minDistance) || minDistance < 0
@@ -173,6 +189,11 @@ export function findSoundLureLanding(
   const length = Math.hypot(direction.x, direction.y);
   if (!length || !Number.isFinite(length)) return null;
   const dx = direction.x / length, dy = direction.y / length;
+  if (bodyQueries) {
+    const travel = maxDistance * bodyQueries.displacementFraction(origin, .001, .001, dx * maxDistance, dy * maxDistance);
+    const safeTravel = travel < maxDistance ? Math.max(0, travel - 1) : travel;
+    return safeTravel >= minDistance && safeTravel > 0 ? { x: origin.x + dx * safeTravel, y: origin.y + dy * safeTravel } : null;
+  }
   const col = Math.floor(origin.x / grid.tileSize), row = Math.floor(origin.y / grid.tileSize);
   if (col < 0 || row < 0 || col >= grid.cols || row >= grid.rows || !grid.isWalkable(col, row)) return null;
   let travel = maxDistance;
@@ -199,6 +220,7 @@ export interface GroundDashSweepInput {
   readonly grid: ToolWalkGrid;
   readonly bodyHalfWidth?: number;
   readonly bodyHalfHeight?: number;
+  readonly bodyQueries?: PhysicalBodyQueries;
   readonly bodies?: readonly { readonly position: Readonly<Vector2>; readonly halfWidth: number; readonly halfHeight: number }[];
   readonly isVisible?: (point: Readonly<Vector2>) => boolean;
 }
@@ -210,10 +232,10 @@ export function sweepGroundDash(input: GroundDashSweepInput): Vector2 {
   const distance = Math.hypot(destination.x - origin.x, destination.y - origin.y);
   if (!finitePoint(origin) || !finitePoint(destination) || !Number.isFinite(distance)
     || distance === 0 || halfW <= 0 || halfH <= 0 || grid.tileSize <= 0
-    || !bodyFits(grid, origin.x, origin.y, halfW, halfH, 1e-6)) return { ...origin };
+    || !(input.bodyQueries?.supports(origin, halfW, halfH) ?? bodyFits(grid, origin.x, origin.y, halfW, halfH, 1e-6))) return { ...origin };
   const dx = (destination.x - origin.x) / distance, dy = (destination.y - origin.y) / distance;
   const interval: RayInterval = { enter: 0, exit: 0 };
-  let travel = distance;
+  let travel = input.bodyQueries ? distance * input.bodyQueries.displacementFraction(origin, halfW, halfH, destination.x - origin.x, destination.y - origin.y) : distance;
   const hitBox = (left: number, top: number, right: number, bottom: number): void => {
     if (intersectRayBox(origin, dx, dy, left - halfW + 1e-6, top - halfH + 1e-6,
       right + halfW - 1e-6, bottom + halfH - 1e-6, interval) && interval.exit > 1e-6) {
@@ -221,7 +243,7 @@ export function sweepGroundDash(input: GroundDashSweepInput): Vector2 {
     }
   };
   const size = grid.tileSize;
-  for (let r = Math.max(-1, Math.floor((Math.min(origin.y, destination.y) - halfH) / size)); r <= Math.min(grid.rows, Math.floor((Math.max(origin.y, destination.y) + halfH) / size)); r++) {
+  if (!input.bodyQueries) for (let r = Math.max(-1, Math.floor((Math.min(origin.y, destination.y) - halfH) / size)); r <= Math.min(grid.rows, Math.floor((Math.max(origin.y, destination.y) + halfH) / size)); r++) {
     for (let c = Math.max(-1, Math.floor((Math.min(origin.x, destination.x) - halfW) / size)); c <= Math.min(grid.cols, Math.floor((Math.max(origin.x, destination.x) + halfW) / size)); c++) {
       if (c >= 0 && r >= 0 && c < grid.cols && r < grid.rows && grid.isWalkable(c, r)) continue;
       hitBox(c * size, r * size, (c + 1) * size, (r + 1) * size);
@@ -292,14 +314,24 @@ export function crossesToolLine(previous: Readonly<Vector2>, current: Readonly<V
 export function collectToolRevealSnapshot(
   origin: Readonly<Vector2>, range: number, grid: ToolWalkGrid,
   enemyPositions: readonly Readonly<Vector2>[], nodePositions: readonly Readonly<Vector2>[],
-  corePositions?: readonly Readonly<Vector2>[],
+  corePositions?: readonly Readonly<Vector2>[], bodyQueries?: PhysicalBodyQueries,
 ): ToolRevealSnapshot {
   const empty: ToolRevealSnapshot = { enemyPositions: [], nodePositions: [] };
   if (!finitePoint(origin) || !Number.isFinite(range) || range <= 0 || grid.tileSize <= 0) return empty;
   const col = Math.floor(origin.x / grid.tileSize), row = Math.floor(origin.y / grid.tileSize);
-  if (col < 0 || row < 0 || col >= grid.cols || row >= grid.rows || !grid.isWalkable(col, row)) return empty;
+  if (col < 0 || row < 0 || col >= grid.cols || row >= grid.rows) return empty;
   const costs = new Map<number, number>();
-  const queue = [row * grid.cols + col]; costs.set(queue[0]!, 0);
+  const queue: number[] = [];
+  if (grid.isWalkable(col, row)) { queue.push(row * grid.cols + col); costs.set(queue[0]!, 0); }
+  else if (bodyQueries?.supports(origin, 10, 10)) {
+    // A legal corner of a conservative wall cell connects only to nearby floor
+    // through an unobstructed physical segment. The remaining range/BFS is unchanged.
+    for (let y = Math.max(0, row - 1); y <= Math.min(grid.rows - 1, row + 1); y++) for (let x = Math.max(0, col - 1); x <= Math.min(grid.cols - 1, col + 1); x++) {
+      if (!grid.isWalkable(x, y)) continue;
+      const dx = (x + .5) * grid.tileSize - origin.x, dy = (y + .5) * grid.tileSize - origin.y, cost = Math.hypot(dx, dy);
+      if (cost <= range && bodyQueries.displacementFraction(origin, .001, .001, dx, dy) === 1) { const id = y * grid.cols + x; costs.set(id, cost); queue.push(id); }
+    }
+  } else return empty;
   for (let i = 0; i < queue.length; i++) {
     const cell = queue[i]!, cost = costs.get(cell)!;
     if (cost + grid.tileSize > range) continue;

@@ -1,0 +1,1912 @@
+{
+  "schemaVersion": 1,
+  "scope": "Dependency impact bridge only. Original qualification runs, natural journeys and pictures retain their recorded source revisions; this report does not relabel or rerun them.",
+  "sourceSnapshot": {
+    "path": "docs/qa/artifacts/r100-i06/final-runtime/frozen/source-snapshot.json",
+    "sha256": "5a010f5f380b77572c2a37577e53a96a757276b1486197329ba9dedf94cc8ce2",
+    "copiedSourceCount": 1343,
+    "currentSourceDifferences": []
+  },
+  "generation": {
+    "originalSourceSnapshot": "docs/qa/artifacts/r100-i05-qualification-rev2/source-snapshot.json",
+    "sourceCount": 72,
+    "generatorSourceDifferences": [
+      {
+        "path": "src/systems/ai/physical-grid.ts",
+        "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+        "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+      }
+    ],
+    "reason": "Only two erased TypeScript interfaces were added to physical-grid.ts. Actual rebuilt executable bytes are identical.",
+    "originalExecutor": "docs/qa/artifacts/r100-i05-qualification-rev2/qualification-9242daae4f79.mjs",
+    "originalSha256": "9242daae4f7958a24fbc22fe1174db0c4735be78f09e1e4138bc5e62859673cb",
+    "currentSha256": "9242daae4f7958a24fbc22fe1174db0c4735be78f09e1e4138bc5e62859673cb",
+    "bytes": 948325,
+    "byteIdentical": true,
+    "retainedCases": 2880,
+    "scope": "Generated layout, deployment, model window, Host and CPU transfer/recovery cases; not live fine-body movement or new runtime admission."
+  },
+  "worlds": [
+    {
+      "worldId": "ash-strata",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/ash-strata.json",
+        "hash": "aaaf5e94b7433845a8b847b018bd33d2c53ebe3a65498a9ef35f6d132f254dfe",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/ash-strata.json",
+        "hash": "28784a3bd0b1f67c9077fcf28563b6f3bae2e4931c4a3921f059c1cd8cf745a2",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/crystal-fibre.json",
+        "hash": "a3705f9c3976f2c317d9860856925d503140c1b7126e32ae00804e9b7bd77738",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/crystal-fibre.json",
+        "hash": "57326ada65234cc7cfed7774d3cb5a050c255c370c181ef1da0cdedb4290d797",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "ivory-basin",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/ivory-basin.json",
+        "hash": "9bebd287490994e8c2a21491f0557c2e8e3718459330dae86104ca74c9a4cd9b",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/ivory-basin.json",
+        "hash": "4859343045bc0e0e775775e7b95c209907dd0bbd319a3bd57dc6c0e5e177907b",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/cinder-ridge.json",
+        "hash": "9e7de5fd42e19399a13812c62c35ff4b8ee20588f7d43fc550b9589ffb1c9ec9",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/cinder-ridge.json",
+        "hash": "6486f761fb759c3200fa12b394525035204378c71efb1b3e6281d5550a0ac214",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "pallid-membrane",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/pallid-membrane.json",
+        "hash": "76cd1c32abd32f35facf3a4bde28b003eea61971392fb7fb451e92df5fb5bc72",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/pallid-membrane.json",
+        "hash": "282096f60d6eefabe8bed45503e71bad12aecc43434bf223f2e8b348a7890d8d",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "silt-gel",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/silt-gel.json",
+        "hash": "5b803089a6599e002dcad3cb2584c6e41bcd1e7ac568a6c3e9bd3491c95f0fcd",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/silt-gel.json",
+        "hash": "5b1ff32cc6f6ab8776e274adf1354a0de1197440538af6e007cbee4af0144cff",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "schist-shear",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/schist-shear.json",
+        "hash": "9441ffad26b47c6e6cc4fba51bcead9a57b2c7d131e9e24bc5b392ff32db4a00",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/schist-shear.json",
+        "hash": "d00b16f15e53d5a8526da1decb587353c08600fb2c9c3336f8596922bd374ac6",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "splayed-fibres",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/splayed-fibres.json",
+        "hash": "dfa774d6aa8fefc3c890ed65450a42751be29c94f779757b2a48aae9e8472c9e",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/splayed-fibres.json",
+        "hash": "7276a75575d6b078e719a2df954d1a82d88bcf79123e59bc332df9d74f65cb43",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "shell-chain",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/shell-chain.json",
+        "hash": "6e94c37fff8c1bb69713906ce4b74b4559e26955c15db57e75e5888c99d27f2d",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/shell-chain.json",
+        "hash": "b31ca91e37bc8aa74fa3247e74f4e83647ee161d0b686de5f0c3553680dae5ff",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "grain-laminate",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/grain-laminate.json",
+        "hash": "9fed6f5532cf2842eafd4ec6ff88cab0a23510de91172de3624978a5db9cef7a",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/grain-laminate.json",
+        "hash": "f2edb61c4f47be3d8fc8a0e17da62d369e8d790add07b6362f2f9e3bff45ba1f",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "tension-membrane",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/tension-membrane.json",
+        "hash": "d913f06f57f5f4b1b72be56291fb314fb71d1164f2c4e02666f500d380d4e83f",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/tension-membrane.json",
+        "hash": "3ebf98e43340150b5b72b3cb4c09d93ae54d85a053dcd482e7dae30fa2934754",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "shell-gel-delta",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/shell-gel-delta.json",
+        "hash": "f96275020cbf5329126b9a6878f38f0b0c6304be77efd924638e8769956387b8",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/shell-gel-delta.json",
+        "hash": "b89f87d485eef73d0d2a88b8e8feac4446c0586466c3b795c30b3b7f9b471fdd",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "pressed-dunes",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/pressed-dunes.json",
+        "hash": "8b008b2688083cfc0ea36f117f065cd9b0daefd67c1c413d3e1776f89d7fc2c0",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/pressed-dunes.json",
+        "hash": "3a81e0708d5d485130183f78757dbd8e64683537ca6aa3f9ad5ecf9eaa0aece9",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "ruptured-film",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/ruptured-film.json",
+        "hash": "63c5c5a7add9e7928984c16fd122e7a427243fc17422b06236bbf02069e4da2b",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/ruptured-film.json",
+        "hash": "37154e32095f33d5021e31542fe0f285df1fcc8b97cbe8e73b7176c91453f6e6",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "reversed-flow",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/reversed-flow.json",
+        "hash": "8869c9260a50312b8e052f51668c96dc246529030d401ed8aace643a265fdf16",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/reversed-flow.json",
+        "hash": "34b6197b2836798914acae69ed379fe576762bf400307e7c7390d082e0050b3d",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "laminate-shell",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/laminate-shell.json",
+        "hash": "9cf4def99b14fd73999ea5550d780329b60b4b4c2250132276703d82630ef67c",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/laminate-shell.json",
+        "hash": "1a25525dbbf90ab5ac85c5669b98db69f13ccf171c1c4340fd9a1a29e4a844d5",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "fibre-silt",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/fibre-silt.json",
+        "hash": "3d0766cded3c9755a42a307ebc7f9826112fd148831464692c6c6cae4c0fcc0c",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/fibre-silt.json",
+        "hash": "bfcd4a5cf7ebe48535da349091a821a078a75b1bb86eec1d5174fa21efeb93b4",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "film-laminate",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/film-laminate.json",
+        "hash": "82c273e5d37a087f93e1bd9c48aae890bc964e6539f4bcaffbc94a547602748e",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/film-laminate.json",
+        "hash": "0bc8aaab24448c5eb64c7e830b760bc5bf3093a886bcb14b466f1ba859bba63b",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "gel-fibre",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/gel-fibre.json",
+        "hash": "f8976096dd3fe4d5c943a4f1b561eb8a736d39b41fca314dec13e04d3123184b",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/gel-fibre.json",
+        "hash": "b150699bff09a2ac411d42fc35ee6c29305b0af55a493f3ca98d126c63adeb69",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    },
+    {
+      "worldId": "shell-grit",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "previous": {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/shell-grit.json",
+        "hash": "407b9a0af5f59dd9150cf06169fb4bffd329c09124c4f45b16c1d74bbbdd331c",
+        "runtimeDependencies": 279
+      },
+      "current": {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/packages/shell-grit.json",
+        "hash": "ba1d51d94bbba9724f1313ab290bdc5a47171738fd90a9496ceae9e3a0966e77",
+        "runtimeDependencies": 284
+      },
+      "frozenWorldContentIdentical": true,
+      "changedRuntimeDependencies": [
+        {
+          "path": "src/generation/world-study/native-body-collision.ts",
+          "change": "added",
+          "previous": null,
+          "current": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+        },
+        {
+          "path": "src/managers/rift-recovery.ts",
+          "change": "modified",
+          "previous": "c796899e60fa0801de66ed65de63214426c51c3a659ac733ea9fe8e2ee53693b",
+          "current": "8b4b9bff12d8cd686ce334a687c4663134a8ce0aa74b3546a56e923b16f175f5"
+        },
+        {
+          "path": "src/scenes/rift-scene.ts",
+          "change": "modified",
+          "previous": "558e3c9ab6e909600d0efe61ec7ad7d07ab0e30a425cfe3f4576392e6fd11f19",
+          "current": "32f46cf7a9309eebaf470166cbc215f764f852ae23fe5a2b22008796a373da6f"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "change": "modified",
+          "previous": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1",
+          "current": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/native-rift-body-recovery.ts",
+          "change": "added",
+          "previous": null,
+          "current": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+        },
+        {
+          "path": "src/systems/r100-world-presentation.ts",
+          "change": "modified",
+          "previous": "04f11badb6b245aa11ebece3a9c82e0bedc8af239064012585f20d43c03f2463",
+          "current": "e95de0197c22a2e33a7897339f65be5bdbd71f82e66a692853d86e84358304c8"
+        },
+        {
+          "path": "src/systems/r100-world/prepared-gameplay.ts",
+          "change": "added",
+          "previous": null,
+          "current": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+        },
+        {
+          "path": "src/systems/r100-world/presentation.ts",
+          "change": "modified",
+          "previous": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+          "current": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+        },
+        {
+          "path": "src/systems/r100-world/surface-preparation.ts",
+          "change": "modified",
+          "previous": "ab890fde39888fe749fb372a9e4f0d48dd6c0700d08a256dc7a9f3c771ec967a",
+          "current": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+        },
+        {
+          "path": "src/systems/rift-entry-frame-fence.ts",
+          "change": "added",
+          "previous": null,
+          "current": "6ea70c19e1b6bd554512e22c29c9a83271f4a3b06c9377564a3fbb02a6f39632"
+        },
+        {
+          "path": "src/systems/rift-host-manifest.ts",
+          "change": "added",
+          "previous": null,
+          "current": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+        },
+        {
+          "path": "src/systems/tool-targeting.ts",
+          "change": "modified",
+          "previous": "fb89027d48a085a2ba69fad2c1412333e2688fd7917a86655bb9eb07c28c14d0",
+          "current": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+        }
+      ]
+    }
+  ],
+  "impact": {
+    "unchanged": [
+      "Frozen world definitions and each grade budget/curve",
+      "World/Host generation and enemy patrol deployment",
+      "Material sources, meshes, lighting and surface RGBA algorithms",
+      "Loot values, inventory charging and enemy gameplay rules"
+    ],
+    "changed": [
+      "Native actual player body uses precise solid geometry; full 20px body validation and matching skill sweeps",
+      "Native initialization preparation/cache ownership and real-frame input/physics fence",
+      "Native dash reset corrects Phaser collider offset in the same frame",
+      "Only proven old active paid catalog dash can migrate its -6 body offset; new marked saves remain strict",
+      "SHUTDOWN/DESTROY cleanup is idempotent and removes pre-release frame listeners"
+    ],
+    "evidenceBoundaries": [
+      "Old 90/30/12 natural journeys are not rerun or rewritten; their reward and rule observations remain relevant but they do not verify the final movement/fence implementation.",
+      "120 original visual samples still describe identical material/geometry; actual foot clearance changed and requires separate fine-body evidence.",
+      "P01 remains measured 51/61ms on one severe entry, not a claim all 20 worlds meet 50ms.",
+      "No migration claimed for finished dash or legacy expand offsets; unmatched legacy body states still reject."
+    ]
+  }
+}

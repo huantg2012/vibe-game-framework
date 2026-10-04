@@ -1,6 +1,18 @@
 /** Inventory uses the accepted report's shared scene material and typography. */
 const STYLE_ID = 'inventory-panel-styles';
 const CSS = `
+.inventory-grade-choice{flex:none;display:grid;grid-template-columns:208px 1fr;grid-template-rows:14px 14px 14px;column-gap:14px;height:50px;padding:4px 0;margin:0;position:relative;background:linear-gradient(90deg,#050806bb, #050806eb 42%,#05080699)!important}
+.inventory-grade-heading{font-size:10px;color:#748568;line-height:16px}
+.inventory-grade-options{grid-column:1;grid-row:2/4;display:flex;align-items:center;gap:14px;margin:0}
+.inventory-grade-options .inventory-grade-option{padding:3px 0!important;font-size:12px!important;color:#788773!important;border-bottom:1px solid transparent!important}
+.inventory-grade-options .inventory-grade-option[aria-pressed="true"]{color:#bdc2ac!important;border-bottom-color:#82957b!important}
+.inventory-grade-choice p{margin:0;font-size:11px;line-height:14px;grid-column:2}
+.inventory-grade-risk{grid-row:1;color:#a8b195}.inventory-grade-reward{grid-row:2;color:#a49980}.inventory-grade-preparation{grid-row:3;color:#788773}
+#inventory-panel.is-prepare{gap:8px}
+#inventory-panel.is-prepare .inventory-equipment{height:96px}
+#inventory-panel.is-prepare .inventory-player-portrait{height:90px}
+#inventory-panel.is-prepare .inventory-detail-column{background:linear-gradient(90deg,transparent,#050806dd 12%,#050806e8 83%,#05080688)!important;text-shadow:0 1px 2px #000}
+#inventory-panel.is-prepare .inventory-detail .inventory-art{display:none}
 .inventory-wrap .inventory-native-item{width:24px;height:24px;display:block;margin:auto}
 .inventory-wrap .inventory-art .inventory-native-item{width:48px;height:48px}
 .inventory-wrap .inventory-slot-icon .inventory-native-item{width:24px;height:24px}

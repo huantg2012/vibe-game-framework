@@ -54,7 +54,7 @@ export interface NativeVolumeLightingOptions {
 }
 
 const clamp01 = (n: number): number => Math.max(0, Math.min(1, n));
-const FAMILY_ID = { 'folded-slab': 1, 'fibre-knot': 2, 'broken-shell': 3 } as const;
+const FAMILY_ID = { 'folded-slab': 1, 'fibre-knot': 2, 'broken-shell': 3, 'granular-ridge': 4, 'membrane-rim': 5, 'gel-flow': 6 } as const;
 
 interface SurfaceShadowCache {
   x: number; y: number; z: number;
@@ -221,7 +221,7 @@ export class NativeVolumeLighting {
       const u=context&&slot!==1?wx*Math.cos(axis)+wy*Math.sin(axis):raster.uv[index*2]!;
       const v=context&&slot!==1?-wx*Math.sin(axis)+wy*Math.cos(axis):raster.uv[index*2+1]!;
       const family=raster.family[index]!,materialSeed=context?.seed??3917+family*151;
-      const material=family===1?'strata':family===2?'crystal':'glaze';
+      const material=family===1?'strata':family===2?'crystal':family===4?'granular':family===5?'membrane':family===6?'gel':'glaze';
       const event=materialEvent(slot,region,raster.heightField[index]!);
       sampleMasterMaterial(material,u-1,v,materialSeed,materialSample,event);const hl=materialSample.relief;
       sampleMasterMaterial(material,u+1,v,materialSeed,materialSample,event);const hr=materialSample.relief;

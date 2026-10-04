@@ -1,0 +1,116 @@
+{
+  "checkpoint": null,
+  "captureError": "Error: Recoverable world requires a run ledger\n    at RiftScene.captureRuntimeCheckpoint (http://127.0.0.1:3062/src/scenes/rift-scene.ts:1893:24)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:59)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+  "inventory": {
+    "version": 3,
+    "items": [
+      {
+        "kind": "weapon",
+        "id": "WPN_a16491b6-e728-45ca-bafa-49131350c9ef",
+        "weapon": {
+          "id": "WPN_a16491b6-e728-45ca-bafa-49131350c9ef",
+          "definitionId": "crowbar_plain",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 60
+        },
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "kind": "contaminant",
+        "id": "qa-build-blind_needle_compass",
+        "contaminant": {
+          "id": "qa-build-blind_needle_compass",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "ordinary",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 3,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "blind_needle_compass",
+            "appearanceId": "wax_parcel",
+            "offeringProfileId": "resist_35",
+            "acquiredOrdinal": 1,
+            "identification": "revealed",
+            "revealedAt": 1791083979601,
+            "revealReceiptId": "qa-build:blind_needle_compass:qa-build-blind_needle_compass"
+          }
+        },
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "kind": "contaminant",
+        "id": "qa-build-split_tongue_bell",
+        "contaminant": {
+          "id": "qa-build-split_tongue_bell",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "ordinary",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 5,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "split_tongue_bell",
+            "appearanceId": "wax_parcel",
+            "offeringProfileId": "resist_35",
+            "acquiredOrdinal": 2,
+            "identification": "revealed",
+            "revealedAt": 1791083979601,
+            "revealReceiptId": "qa-build:split_tongue_bell:qa-build-split_tongue_bell"
+          }
+        },
+        "location": {
+          "kind": "carried"
+        }
+      }
+    ],
+    "equipment": {
+      "weaponId": "WPN_a16491b6-e728-45ca-bafa-49131350c9ef",
+      "toolIds": [
+        "qa-build-blind_needle_compass",
+        "qa-build-split_tongue_bell"
+      ],
+      "defenseIds": [
+        null
+      ]
+    },
+    "run": null,
+    "starterGranted": true,
+    "firstWeaponDiscovered": false,
+    "catalogTutorialRevealed": false,
+    "discoveredCatalogIds": [
+      "blind_needle_compass",
+      "split_tongue_bell"
+    ],
+    "offeringReceipts": {
+      "qa-build:blind_needle_compass": [
+        {
+          "itemId": "qa-build-blind_needle_compass",
+          "kind": "contaminant",
+          "definitionId": "blind_needle_compass",
+          "slotIndex": 0
+        }
+      ],
+      "qa-build:split_tongue_bell": [
+        {
+          "itemId": "qa-build-split_tongue_bell",
+          "kind": "contaminant",
+          "definitionId": "split_tongue_bell",
+          "slotIndex": 0
+        }
+      ]
+    },
+    "nextAcquiredOrdinal": 3
+  },
+  "inventoryError": null,
+  "frameCommitKeys": [],
+  "lastCompleteRaw": "{\"version\":2,\"kindlingReserve\":0,\"repairBonusHp\":0,\"pendingSideEffects\":[],\"upgradeDiscount\":0,\"moduleSwapActive\":false,\"modules\":[{\"id\":\"CORE\",\"type\":\"CORE\",\"hp\":70,\"maxHp\":100},{\"id\":\"STORAGE\",\"type\":\"STORAGE\",\"hp\":70,\"maxHp\":100},{\"id\":\"PURIFIER\",\"type\":\"PURIFIER\",\"hp\":70,\"maxHp\":100}],\"moduleMaxHpTier\":0,\"cycle\":0,\"tide\":{\"tideNumber\":1,\"phase\":\"rise\",\"cycleInPhase\":0,\"currentIntensity\":1},\"inventory\":{\"version\":3,\"items\":[{\"kind\":\"weapon\",\"id\":\"WPN_a16491b6-e728-45ca-bafa-49131350c9ef\",\"weapon\":{\"id\":\"WPN_a16491b6-e728-45ca-bafa-49131350c9ef\",\"definitionId\":\"crowbar_plain\",\"stage\":\"tool\",\"impactCharges\":3,\"usesRemaining\":60},\"location\":{\"kind\":\"carried\"}},{\"kind\":\"contaminant\",\"id\":\"qa-build-blind_needle_compass\",\"contaminant\":{\"id\":\"qa-build-blind_needle_compass\",\"type\":\"catalog\",\"rarity\":\"common\",\"quality\":\"ordinary\",\"stage\":\"tool\",\"impactCharges\":3,\"usesRemaining\":3,\"catalog\":{\"catalogVersion\":\"contaminant-v1\",\"definitionId\":\"blind_needle_compass\",\"appearanceId\":\"wax_parcel\",\"offeringProfileId\":\"resist_35\",\"acquiredOrdinal\":1,\"identification\":\"revealed\",\"revealedAt\":1791083979601,\"revealReceiptId\":\"qa-build:blind_needle_compass:qa-build-blind_needle_compass\"}},\"location\":{\"kind\":\"carried\"}},{\"kind\":\"contaminant\",\"id\":\"qa-build-split_tongue_bell\",\"contaminant\":{\"id\":\"qa-build-split_tongue_bell\",\"type\":\"catalog\",\"rarity\":\"common\",\"quality\":\"ordinary\",\"stage\":\"tool\",\"impactCharges\":3,\"usesRemaining\":5,\"catalog\":{\"catalogVersion\":\"contaminant-v1\",\"definitionId\":\"split_tongue_bell\",\"appearanceId\":\"wax_parcel\",\"offeringProfileId\":\"resist_35\",\"acquiredOrdinal\":2,\"identification\":\"revealed\",\"revealedAt\":1791083979601,\"revealReceiptId\":\"qa-build:split_tongue_bell:qa-build-split_tongue_bell\"}},\"location\":{\"kind\":\"carried\"}}],\"equipment\":{\"weaponId\":\"WPN_a16491b6-e728-45ca-bafa-49131350c9ef\",\"toolIds\":[\"qa-build-blind_needle_compass\",\"qa-build-split_tongue_bell\"],\"defenseIds\":[null]},\"run\":null,\"starterGranted\":true,\"firstWeaponDiscovered\":false,\"catalogTutorialRevealed\":false,\"discoveredCatalogIds\":[\"blind_needle_compass\",\"split_tongue_bell\"],\"offeringReceipts\":{\"qa-build:blind_needle_compass\":[{\"itemId\":\"qa-build-blind_needle_compass\",\"kind\":\"contaminant\",\"definitionId\":\"blind_needle_compass\",\"slotIndex\":0}],\"qa-build:split_tongue_bell\":[{\"itemId\":\"qa-build-split_tongue_bell\",\"kind\":\"contaminant\",\"definitionId\":\"split_tongue_bell\",\"slotIndex\":0}]},\"nextAcquiredOrdinal\":3},\"growth\":{\"schemaVersion\":2,\"upgrades\":{\"growth_chaos_resist\":0,\"growth_kindling_affinity\":0,\"growth_vitality\":0,\"growth_sortie_slot\":0,\"growth_defense_slot\":0,\"growth_forecast_clarity\":0},\"progression\":{\"version\":1,\"impactExperienced\":false,\"offeringCompleted\":false,\"toolRevealed\":false,\"crestExperienced\":false}},\"stability\":{\"progress\":0,\"reached\":false},\"contaminantRuntimeState\":{},\"impactForecast\":{\"version\":2,\"targetId\":\"CORE\",\"actualPrimaryId\":\"CORE\",\"committed\":false,\"consumed\":false,\"earnedPending\":false,\"display\":{\"targetId\":\"CORE\",\"severity\":\"light\"},\"lookahead\":null,\"queuedTargets\":[],\"nextIntensity\":1,\"nextNextIntensity\":1.2}}",
+  "text": "备行\n沿旧路出发\nEsc 收起\n在手\n普通撬棍\n耐久 60 / 60\n工具 Q\n盲针罗盘\n余次 3\n工具 F\n裂舌铜铃\n余次 5\n被动\n未装配\n装置·混乱增速\n-21%\n每堆所得示例\n1 / 2 / 5\n小 / 中 / 大份 · 已含亲和\n装置·初始混乱\n15\n污染程度\n低污染\n中污染\n重度污染\n\n地面与空气受侵占，混乱增长快\n\n更多收获在深处，入口无加成\n\n备好脱身工具，留出归途\n\n全部\n武器\n污染物\n原来顺序\n按名称\n选择装配\n普通撬棍\n在手 · 已成熟 · 普通\n盲针罗盘\n工具 Q · 已成熟 · 普通\n裂舌铜铃\n工具 F · 已成熟 · 普通\n1–3 / 3\n裂舌铜铃\n普通 · 已成熟 · 工具 F\n剩余次数\n5\n\n抛出声诱饵持续4秒\n\n品质\n普通\n类型\n主动\n余次\n5 / 5\n物件说明\n向下滚动查看 ↓\n装到 工具 Q\n卸下 工具 F\n只装配已成熟物件 · 空工具位不妨碍出发\n↑↓ 查看 · Tab 移步 · Esc 离开\nShift+Enter 踏入裂隙"
+}

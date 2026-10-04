@@ -1,0 +1,19 @@
+import fs from 'node:fs';import path from 'node:path';
+const{chromium}=await import('/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
+const out=path.resolve('docs/qa/artifacts/r100-i03/manual-boundary-review');
+const rows=fs.readFileSync('docs/qa/artifacts/r100-i03/manual-prepared-severe/inputs.jsonl','utf8').trim().split('\n').map(JSON.parse);
+const commands=rows.filter(r=>r.keys).slice(0,18);
+const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+const page=await browser.newPage({viewport:{width:1440,height:1000}});const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+await page.goto(rows[0].url);await page.waitForFunction(()=>window.__r100Gym?.getState().runtime.running,null,{timeout:60000});await page.locator('#pause').click();
+const records=[];
+async function read(){return page.evaluate(async()=>{
+ const{audioManager}=await import('/src/managers/audio-manager.ts');const{bodyHasSupport,bodyDisplacementFraction}=await import('/src/systems/ai/physical-grid.ts');const s=audioManager.game.scene.getScene('RiftScene'),p=s.player.getPosition(),b=s.player.getSprite().body,g=s.formFloorGrid,w=s.nativeWorldPresentation.world,r=w.raster;
+ const region={x:Math.floor(p.x)-55,y:Math.floor(p.y)-55,width:110,height:110};const pixels=[];
+ for(let y=region.y;y<region.y+region.height;y++)for(let x=region.x;x<region.x+region.width;x++){const i=y*r.width+x;pixels.push(r.matter[i]?[r.objectId[i],Math.round(r.heightField[i]*100)/100,r.material[i],r.region[i]]:null);}
+ const tiles=[];for(let row=Math.floor((p.y-60)/8);row<=Math.floor((p.y+60)/8);row++)for(let col=Math.floor((p.x-60)/8);col<=Math.floor((p.x+60)/8);col++)tiles.push({col,row,type:w.layout.tileMap.tiles[row]?.[col],walk:g.isWalkable(col,row)});
+ const cam=s.cameras.main;return{position:{x:p.x,y:p.y},body:{x:b.x,y:b.y,width:b.width,height:b.height,center:{x:b.center.x,y:b.center.y},blocked:{...b.blocked},touching:{...b.touching}},camera:{scrollX:cam.scrollX,scrollY:cam.scrollY,zoom:cam.zoom,view:{x:cam.worldView.x,y:cam.worldView.y,width:cam.worldView.width,height:cam.worldView.height},width:cam.width,height:cam.height},support:bodyHasSupport(g,b.center,b.halfWidth,b.halfHeight),fraction:Object.fromEntries(Object.entries({left:[-20,0],right:[20,0],up:[0,-20],down:[0,20]}).map(([k,[x,y]])=>[k,bodyDisplacementFraction(g,b.center,b.halfWidth,b.halfHeight,x,y)])),probe:s.probeBuildLabState(),region,pixels,tiles,instances:w.definition.instances,meshBounds:w.meshes.map(m=>({id:m.spec.id,spec:m.spec,bounds:m.bounds}))};
+ });}
+async function snap(i,label){const record=await read();record.step=i;record.label=label;records.push(record);fs.writeFileSync(path.join(out,'diagnostics.json'),JSON.stringify({method:'Independent isolated browser, exact ordinary input sequence through step18. Reads coordinates/grid/raster only after each paused frame; no teleport or rule overrides. Wall-clock timing may differ by a simulation frame from root.',url:rows[0].url,errors,records},null,2));if([0,7,8,12,13,16,17,18].includes(i))await page.locator('#game-container canvas').screenshot({path:path.join(out,`${String(i).padStart(3,'0')}-${label}.png`)});console.log(JSON.stringify({i,label,p:record.position,blocked:record.body.blocked,fraction:record.fraction}));}
+try{await snap(0,'entry');for(let i=0;i<commands.length;i++){const c=commands[i];await page.locator('#pause').click();await page.locator('#game-container').focus();try{for(const k of c.keys)await page.keyboard.down(k);await page.waitForTimeout(c.ms);}finally{for(const k of c.keys)await page.keyboard.up(k);}if(!await page.evaluate(()=>window.__r100Gym.getState().runtime.paused))await page.locator('#pause').click();await snap(i+1,c.label);}}
+finally{await browser.close();}

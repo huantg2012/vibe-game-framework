@@ -185,6 +185,39 @@ export function createSearchRemainsPixels(profile: WorldProfile, seed: number, p
       crystal([11, 21], [17, 19], 2, 4);
       break;
     }
+    case 'packed-granules': {
+      // Compacted aggregate breaks into irregular masses. The lighter fractured
+      // core spans a real plane; the small grains remain embedded in that mass.
+      plate([[5, 16], [8, 10], [13, 8], [19, 9], [22, 15], [18, 19], [9, 20]], 3, 0);
+      fill([[8, 12], [13, 9], [18, 10], [19, 14], [14, 16], [9, 15]], 'cut', 0);
+      fill([[12, 11], [15, 10], [17, 12], [14, 13]], 'top', 1);
+      plate([[20, 13], [24, 10], [28, 12], [30, 17], [25, 20], [20, 18]], 3, 2);
+      fill([[23, 13], [26, 12], [28, 15], [26, 17], [22, 16]], 'cut', 2);
+      plate([[12, 19], [16, 17], [21, 19], [20, 22], [14, 23], [11, 22]], 1, 3);
+      plate([[3, 20], [5, 18], [8, 20], [7, 22], [4, 22]], 1, 4);
+      break;
+    }
+    case 'torn-membrane': {
+      // A collapsed sheet with unequal folds and a thick severed margin. The
+      // opening is a tear, never an intact bowl or a tied bundle of human cloth.
+      plate([[5, 19], [4, 11], [7, 4], [13, 3], [18, 5], [22, 4], [25, 7], [23, 10], [17, 9], [13, 11], [12, 15], [18, 18], [27, 15], [30, 17], [28, 22], [22, 24], [15, 22], [9, 23]], 1, 0);
+      fill([[7, 18], [6, 11], [9, 6], [12, 5], [15, 7], [12, 11], [11, 16], [19, 19], [26, 17], [27, 20], [21, 22], [13, 19]], 'side', 1);
+      fill([[8, 18], [8, 10], [11, 5], [13, 5], [12, 9], [10, 13], [12, 18], [18, 20], [17, 21], [11, 19]], 'cut', 1);
+      fill([[14, 6], [21, 6], [24, 7], [22, 9], [17, 8], [13, 10]], 'inside', 2);
+      fill([[20, 20], [26, 18], [28, 18], [26, 21], [22, 23]], 'cut', 3);
+      break;
+    }
+    case 'gel-fragments': {
+      // Thick peeled flow fragments: a flattened tail joins a heavy lobed lip.
+      // Independent cut planes make the material visible without an emissive edge.
+      plate([[3, 18], [6, 15], [12, 14], [15, 9], [20, 7], [25, 9], [27, 13], [25, 19], [20, 22], [13, 20], [8, 21]], 2, 0);
+      fill([[12, 15], [16, 10], [20, 8], [24, 10], [24, 14], [20, 17], [16, 17]], 'cut', 1);
+      fill([[15, 14], [18, 11], [22, 10], [23, 12], [20, 13], [17, 16]], 'inside', 1);
+      fill([[14, 18], [20, 19], [24, 17], [25, 19], [20, 22], [15, 21]], 'side', 2);
+      fill([[7, 17], [11, 16], [15, 18], [12, 19], [8, 19]], 'top', 3);
+      plate([[27, 20], [30, 17], [31, 20], [29, 23], [26, 22]], 1, 4);
+      break;
+    }
   }
   return { width: WIDTH, height: HEIGHT, pixels, grammar: definition.grammar, sourceId: painting?.source ?? profile.id };
 }

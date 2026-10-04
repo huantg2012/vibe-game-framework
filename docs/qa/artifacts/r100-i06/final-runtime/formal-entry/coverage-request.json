@@ -1,0 +1,39 @@
+{
+  "base": "http://127.0.0.1:3074/",
+  "groups": [
+    [
+      "ash-strata",
+      "crystal-fibre",
+      "ivory-basin",
+      "cinder-ridge",
+      "pallid-membrane",
+      "silt-gel",
+      "schist-shear",
+      "splayed-fibres",
+      "shell-chain",
+      "grain-laminate"
+    ],
+    [
+      "tension-membrane",
+      "shell-gel-delta",
+      "pressed-dunes",
+      "ruptured-film",
+      "reversed-flow",
+      "laminate-shell",
+      "fibre-silt",
+      "film-laminate",
+      "gel-fibre",
+      "shell-grit"
+    ]
+  ],
+  "grades": [
+    "low",
+    "medium",
+    "severe"
+  ],
+  "stopAtFirstFailurePerProcess": true,
+  "requiredBodyVersion": 1,
+  "sourceSnapshot": "docs/qa/artifacts/r100-i06/final-runtime/frozen/source-snapshot.json",
+  "scriptSHA256": "0b2fd8b8a4fb24522779a19ddc7245bb97b659a8077378946e5bd9f65da80575",
+  "method": "Every enabled world once per grade, fixed seed selected before entry. Two isolated browser processes. No replacement draws or gameplay state overrides."
+}

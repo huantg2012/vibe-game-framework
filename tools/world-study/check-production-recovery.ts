@@ -1,3 +1,4 @@
+import { createLegacyV2Departure } from '../recovery/legacy-departure-helper';
 /** New departures freeze their recipe; old active worlds keep the old generator. */
 import assert from 'node:assert/strict';
 import { WORLD_PROFILE_DATA } from '../../src/generated/rift-world-profile-data';
@@ -5,7 +6,7 @@ import { WORLD_SPACE_DATA } from '../../src/generated/rift-world-space-data';
 import { selectWorldProductionRecipe, validWorldProductionRecipe } from '../../src/generation/world-study/production-recipe';
 import { checkpointChecksum, validRiftDeparture } from '../../src/types/rift-checkpoint';
 Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: { getItem: () => null } });
-const { createProceduralDeparture, proceduralRiftIdentity, restoreProceduralLayout, restoreProceduralWorld } = await import('../../src/managers/rift-recovery');
+const { proceduralRiftIdentity, restoreProceduralLayout, restoreProceduralWorld } = await import('../../src/managers/rift-recovery');
 const seen = new Set<string>();
 for (let seed = 0; seed < 256; seed++) {
   const recipe = selectWorldProductionRecipe(seed);
@@ -15,7 +16,7 @@ for (let seed = 0; seed < 256; seed++) {
 assert.equal(seen.size, WORLD_PROFILE_DATA.length * WORLD_SPACE_DATA.length, 'every configured combination is selectable');
 const records = [];
 for (let index = 0; index < 5; index++) {
-  const identity = createProceduralDeparture(), world = restoreProceduralWorld(identity)!;
+  const identity = createLegacyV2Departure(), world = restoreProceduralWorld(identity)!;
   assert(identity.generation, 'formal departure must select the new world generator');
   assert.equal(world.layout.tileMap.tileSize, 8);
   assert.equal(world.hostTileMap.tileSize, 32);

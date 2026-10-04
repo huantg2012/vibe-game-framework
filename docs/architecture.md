@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-03
+last-modified: 2026-10-04
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -31,6 +31,28 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 等待UI复用首页或暂停菜单，根仍为`#dom-ui-root`。会话载入互斥，等待期间新建拒绝；Scene/DOM各自保存controller所有权。取消、blur、SHUTDOWN及直接DESTROY终止请求；直接销毁可能已经清空ScenePlugin.manager，净化点先置退出标志并discard等待菜单，首页SHUTDOWN/DESTROY共用幂等release，迟到Promise与图片decode不能resume或重绘。非取消准备失败仍保留现有显式弃局救援，但必须是相同存档快照且基地/库存合法。机制唯一正文见[统一库存第7节](specs/system-field-inventory.md#7-死亡撤离与中断恢复)。
 
 该改动不新增存档schema、正式世界或污染分级UI，不把I02母版推广，也不宣称I03完成。Worker迁移不等于总生成时长或建场性能合格；接收/重建/身份复核、完整准入的Host清单与AI配置、表面预烤及首次纹理提交仍按主线程阶段分别审核。新增`check-async-entry`、`check-async-destroy`、`check-generation-worker`进入既有恢复总检查，程序测试、真实浏览器与美术/性能门分别记录。
+
+## R100 I03–I06：冻结的原生世界包与正式表现
+
+`data/rift-native-worlds.csv` 和 `data/rift-expedition-grades.csv` 经各自编译器生成世界定义及低／中／重内容预算。`r100-package.ts` 固定 v3 的请求种子、世界定义、污染曲线、搜取预算、算法修订和实际材料依赖；随机选择只读启用条目，Gym 可显式打开未获资格的候选。旧 V1/V2 继续走原冻结执行器，不把新包伪装成旧版本。
+
+`r100-production-map.ts` → `r100-master-world.ts` / `r100-pollution.ts` → `r100-expedition.ts`：先建立原生几何、8px 身体支持与独立观察/攻击权限，再布置真实 32px Host、敌人及搜取内容。20px 身体全幅寻路；搜取成本遍历 48px 范围内可达且有视线的实际站位，计入出生→站位→撤离相对直接撤离的额外距离。失败最多 8 次，保持同一世界、污染档和冻结配置。`r100-native-data.ts` 只传纯数据及 typed array；主线程按同一布局恢复查询方法。
+
+`native-body-collision.ts` 为正式v3角色提供独立于保守导航格的20×20身体查询：所有solid同源XY三角形参与连续扫掠，VOID仍用原8px支撑，浮雕不擦除实体。WASD、敌人推挤后的校正、工具扫掠与存档准入共用该查询；不改变旧v1/v2、生成器保守寻路或Host的32px投放。斜面接触保留切向运动；技能Body.reset后同步offset与前帧坐标，不能留下同帧身体偏移。详细契约归[移动规格](specs/system-movement-vision.md#r100-v3--实体足边与完整身体2026-10-04)。
+
+新出发使用 v3 `algorithmRevision: 2`；`r100-expedition-v1.ts` 保留早期正式 v3 的原部署，恢复严格按保存的修订分派。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
+
+`systems/r100-world-presentation.ts` 持有正式表现准备，DEV 母版只保留兼容导出。`surface-preparation-client.ts` / `surface-preparation-worker.ts` 是专用可终止准备 Worker：接收已准入的原生数据及共享解码像素，执行地表、材质光照、侵蚀字段和 `surface-bake.ts` 的四张 RGBA 烘焙，以 transferable 返回。等待期间提前创建并上传 WebGL 材质接收器；`MasterPresentation` 建场消费一次，正式路径缺准备时抛错，绝不临时同步补烤。异步取消、迟到响应、替换与两份上限的 LRU 均释放未消费的 GPU 资源；已消费资源由场景销毁。准备身份包含包身份、实际种子、构造 ID 和尺寸，源图片像素缓存与一次性 GPU 资源分离。
+
+同一表面 Worker 还输出 `prepared-gameplay.ts` 的小型派生事实：真实 Host 目标顺序／核数、发光源像素位置、搜取来源区域。`rift-host-manifest.ts` 抽取原准入纯函数，复用该 Worker 已烤的占漆场，不再在首帧保存时完整重烤。返回端核对 Host 清单与发光源选择；事实按实际 layout 弱引用和包／种子身份注册。正式异步 v3 一旦缺少准备或身份不符必须拒绝，旧版本和离线同步准入保留原计算。未消费 GPU 与 CPU 事实共同取消／释放，已消费运行时保留准入事实；旧所有者不能清掉后来的同键准备。RiftScene 使用已准备来源区域，MasterPresentation 使用已准备 sourceCells，原掉落和画面算法均不变。
+
+`systems/rift-entry-frame-fence.ts` 管理正式原生场景的真实帧边界：建场帧仅保持 Arcade 暂停，下一实际 engine frame 绘制完整的零时长画面并提交首个完整 checkpoint，收到该帧 `POST_RENDER` 后才交还玩法。它不使用固定毫秒假装渲染完成，不修改冷续的速度、输入向量、攻击进度或物理余量。准备期间的 pagehide 保留已持久化的出发／旧 checkpoint；提前请求暂停排到首次完整存档之后。绘制失败、保存失败、隐藏、取消、shutdown 和直接 destroy 不得放行；所拥有的暂停及渲染 listener 必须成对释放。显式 DEV 入场演出沿用其原时长合同。
+
+`systems/native-rift-body-recovery.ts` 是原生 v3 保存的身体坐标兼容边界。manager 在完整状态与库存校验后、Scene 在真正恢复玩家前调用同一纯函数。新世界状态写 `bodyGeometryVersion=1`；缺标记时仅允许已实测的旧 active paid catalog dash 省略 6px offset，且必须满足技能插值、锁输入和实际完整身体支持。它只返回身体位置副本，不重写保存或重放技能；v1/v2 沿原恢复分支。
+
+场景创建中途失败时，`RiftScene.onShutdown` 调用表现包装器的 `disposeUnconsumed`。包装器捕获具体的准备对象，按引用释放；旧场景的延迟清理不能删除同一包／种子的下一次准备，已交给运行时的纹理也不受该清理影响。
+
+`check-r100-library.ts` 以冻结 esbuild 执行器、隔离 Worker 和每例 60 秒截止跑固定批次，保留每个种子与重试过程；内容准入、Host 状态冷恢复及真正 transfer 重建均逐例执行。独立保留种子先提交 SHA-256，再在执行器冻结后揭示。`codegen-r100-packages.mjs --qualification` 输出既有包的每世界依赖收据：精确三档数据、实际材料及 SHA-256 代码依赖；不另建资格目录。运行、视觉、自然出行和完成状态仍由现有 R100 看板掌握，CPU 检查不授予美术资格。
 
 ## R100 I02：原生实体母版（DEV 制作中）
 

@@ -1,3 +1,4 @@
+import { validR100ProductionRecipe } from './r100-package';
 /** A departure freezes its selected recipe; CSV edits apply only to future trips. */
 import { WORLD_PRODUCTION_POOL } from '@/generated/rift-world-pool-data';
 import { CONTAMINATION_DIALECT_DATA } from '@/generated/contamination-family-data';
@@ -23,7 +24,15 @@ export interface WorldProductionRecipeV2 extends Omit<WorldProductionRecipeV1, '
   readonly paintGeometryVersion: 2;
   readonly conditions: ResolvedWorldConditions;
 }
-export type WorldProductionRecipe = WorldProductionRecipeV1 | WorldProductionRecipeV2;
+export interface WorldProductionRecipeV3 extends Omit<WorldProductionRecipeV1, 'version' | 'paintGeometryVersion'> {
+  readonly version: 3;
+  readonly paintGeometryVersion: 2;
+  readonly nativeDefinition: import('./r100-master-world').MasterDefinition;
+  readonly gradeDefinition: import('./pollution-grade').PollutionGradeDefinition;
+  readonly contentDefinition: import('./r100-expedition').R100ExpeditionDefinition;
+  readonly package: import('./r100-package').R100PackageIdentity;
+}
+export type WorldProductionRecipe = WorldProductionRecipeV1 | WorldProductionRecipeV2 | WorldProductionRecipeV3;
 export function validWorldFallbackSeeds(value: unknown): value is readonly number[] {
   return Array.isArray(value) && value.length <= 32 && new Set(value).size === value.length
     && value.every(seed => Number.isSafeInteger(seed) && seed >= 0 && seed <= 0xffffffff);
@@ -32,6 +41,7 @@ const COLOR_ROLES = ['void','shadow','floorDeep','floor','floorLight','materialD
 const named = (value: unknown): value is string => typeof value === 'string' && value.length > 0 && value.length <= 200;
 export function validWorldProductionRecipe(value: unknown): value is WorldProductionRecipe {
   try {
+    if (value && typeof value === 'object' && (value as { version?: unknown }).version === 3) return validR100ProductionRecipe(value);
     if (!value || typeof value !== 'object') return false;
     const recipe = value as WorldProductionRecipe, profile = recipe.profile;
     if ((recipe.version !== 1 && recipe.version !== 2) || (recipe.paintGeometryVersion !== undefined && recipe.paintGeometryVersion !== 1 && recipe.paintGeometryVersion !== 2)

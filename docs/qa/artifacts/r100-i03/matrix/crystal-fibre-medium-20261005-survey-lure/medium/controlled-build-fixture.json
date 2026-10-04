@@ -1,0 +1,105 @@
+{
+  "version": 3,
+  "items": [
+    {
+      "kind": "weapon",
+      "id": "WPN_81d6cb22-2a83-450b-a15a-580d5c9d918f",
+      "weapon": {
+        "id": "WPN_81d6cb22-2a83-450b-a15a-580d5c9d918f",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "impactCharges": 3,
+        "usesRemaining": 60
+      },
+      "location": {
+        "kind": "carried"
+      }
+    },
+    {
+      "kind": "contaminant",
+      "id": "qa-build-blind_needle_compass",
+      "contaminant": {
+        "id": "qa-build-blind_needle_compass",
+        "type": "catalog",
+        "rarity": "common",
+        "quality": "ordinary",
+        "stage": "tool",
+        "impactCharges": 3,
+        "usesRemaining": 3,
+        "catalog": {
+          "catalogVersion": "contaminant-v1",
+          "definitionId": "blind_needle_compass",
+          "appearanceId": "wax_parcel",
+          "offeringProfileId": "resist_35",
+          "acquiredOrdinal": 1,
+          "identification": "revealed",
+          "revealedAt": 1791079183452,
+          "revealReceiptId": "qa-build:blind_needle_compass:qa-build-blind_needle_compass"
+        }
+      },
+      "location": {
+        "kind": "stash"
+      }
+    },
+    {
+      "kind": "contaminant",
+      "id": "qa-build-split_tongue_bell",
+      "contaminant": {
+        "id": "qa-build-split_tongue_bell",
+        "type": "catalog",
+        "rarity": "common",
+        "quality": "ordinary",
+        "stage": "tool",
+        "impactCharges": 3,
+        "usesRemaining": 5,
+        "catalog": {
+          "catalogVersion": "contaminant-v1",
+          "definitionId": "split_tongue_bell",
+          "appearanceId": "wax_parcel",
+          "offeringProfileId": "resist_35",
+          "acquiredOrdinal": 2,
+          "identification": "revealed",
+          "revealedAt": 1791079183452,
+          "revealReceiptId": "qa-build:split_tongue_bell:qa-build-split_tongue_bell"
+        }
+      },
+      "location": {
+        "kind": "stash"
+      }
+    }
+  ],
+  "equipment": {
+    "weaponId": "WPN_81d6cb22-2a83-450b-a15a-580d5c9d918f",
+    "toolIds": [],
+    "defenseIds": [
+      null
+    ]
+  },
+  "run": null,
+  "starterGranted": true,
+  "firstWeaponDiscovered": false,
+  "catalogTutorialRevealed": false,
+  "discoveredCatalogIds": [
+    "blind_needle_compass",
+    "split_tongue_bell"
+  ],
+  "offeringReceipts": {
+    "qa-build:blind_needle_compass": [
+      {
+        "itemId": "qa-build-blind_needle_compass",
+        "kind": "contaminant",
+        "definitionId": "blind_needle_compass",
+        "slotIndex": 0
+      }
+    ],
+    "qa-build:split_tongue_bell": [
+      {
+        "itemId": "qa-build-split_tongue_bell",
+        "kind": "contaminant",
+        "definitionId": "split_tongue_bell",
+        "slotIndex": 0
+      }
+    ]
+  },
+  "nextAcquiredOrdinal": 3
+}

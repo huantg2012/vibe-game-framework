@@ -5357,5 +5357,305 @@
       "COH-F049",
       "COH-F052"
     ]
+  },
+  {
+    "id": "COH-E139",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-working",
+    "scope": "R100 I03工作中证据：正式备行三级、入场与冷恢复受控浏览器已通过；单独指定ash-strata的正式池种子再入/恢复通过。音景实际错误定位后7200逐帧及500ms恢复CPU回归通过。实际源码绑定见浏览器loadedSourceHashes，不是全批最终验收。",
+    "limitations": "备行由场景方法打开，定向样本显式指定出发seed；非36完整趟、90自然供给或人审。新正式入场/冷恢复仍有超50ms长任务，整改中。候选20世界未全通过，新增材料首版被内部否决。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i03/production/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i03/production-world-coverage/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i03/entry-profile/report.json",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-presentation.ts",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F008",
+      "COH-F011",
+      "COH-F012",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E140",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-revision2-working",
+    "scope": "R100修订2：20世界×3档×40种子2400例，独立保留种子480例，真实transfer与冷重构；新60和旧18个浏览器身份等价；依赖真实修改失效/恢复；19表现生命周期、16事务回归。",
+    "limitations": "仅对应冻结样本与逐包SHA-256收据；不是世界人审、自然经济或全部硬件性能。旧跨V8签名风险保留。",
+    "sources": [
+      {
+        "path": "docs/qa/rift-r100-i03-i06-technical.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i05-qualification-rev2/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i05-holdout-rev2/report.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i03-i06/packages-279-frozen/reconstruction-proof.json",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F008",
+      "COH-F011",
+      "COH-F012",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E141",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-revision2-working",
+    "scope": "二十世界三档双种子120组正常视野，20世界连续深处近邻对照；三新增材料及混合实体足缘检查。材料/几何经原作者及根任务限定抽核，替换首版不合格素材。",
+    "limitations": "原实景矩阵是算法修订1；修订2未变材料/几何，新增九格正式实景仅作继承抽核。未代签声音听感、长期体验、人类审美或任意seed。",
+    "sources": [
+      {
+        "path": "docs/art/rift-r100-i03-i06-production.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i04-i06/normal-matrix/index.html",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i04-i06/deep-neighbors/index.html",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F008",
+      "COH-F011",
+      "COH-F012",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E142",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-revision2-working",
+    "scope": "六十组正式选级出发、保存/刷新继续身份与位置精确恢复；最终失败清理版实机注入create中途错误，保留完整departure并经正式继续恢复，真实GPU对象释放、无重复销毁。",
+    "limitations": "60格为受控选择世界、场景方法打开备行；非自然供给。故障注入独立记录，不当作自然失败。GL对象释放不等于GPU驱动物理显存量。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i03-i06/formal-entry-rev2/summary.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i03-i06/create-failure/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i03-i06/frozen-release-candidate/source-snapshot.json",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F008",
+      "COH-F011",
+      "COH-F012",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E143",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-revision2-working",
+    "scope": "根任务正常视野手动搜撤：层片包壳中档20261005、普通撬棍、无工具，52.31秒模拟、实际搜取4处、5薪柴、85HP、73.99混乱撤出；真实接触吞光区并改道绕实体。",
+    "limitations": "看图时暂停，不是实时反应或新手耗时；Gym未走基地经营。只读可见画面，不读隐藏路线或物品；Space是普通攻击，不是闪避。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i06/manual-review-rev2/review.json",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F008",
+      "COH-F011",
+      "COH-F012",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E144",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-final-runtime-3074",
+    "scope": "三存档90趟、独立低档30趟及真实周期7续行12趟全部执行；连续存档和账目逐笔核对，未有实际成长购买。",
+    "limitations": "各固定policy有公开说明和局限，不把现金持平/模块下降当盈利，不以脚本保守回撤代表游戏硬门。冻源3062，非最终补丁重跑。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i06/natural/completion-proof.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i06/natural-defense-baseline/completion-proof.json",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i06/normal-management/review.md",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F008",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E145",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-final-runtime-3074",
+    "scope": "原生v3用同源solid三角形连续20px身体碰撞：四虚占反例、6572 CPU滑动、630实际物理步、贴边保存冷续与实际冲刺中保存冷续通过。",
+    "limitations": "仅所列3072/3073冻结范围。VOID支持不放宽，旧v1/v2不变；穿墙天然正例未取得，CPU薄墙/厚墙/VOID另列；3074旧dash窄迁移单独记。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i03/native-body-fix/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i03/native-body-fix/index.html",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F006",
+      "COH-F011",
+      "COH-F012",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E146",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-final-runtime-3074",
+    "scope": "正式v3建场/零时长首绘拆到实际相邻engine frame，首次checkpoint后交控；提前pause/pagehide、按住输入、新/冷速度/攻击时钟及失败取消定向验证通过。",
+    "limitations": "3072定向样本入场长任务51–61ms、冷续无≥50ms；不扩大到整池/多设备。最终直接DESTROY与旧dash兼容另列。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i06/entry-frame-fence/lifecycle-final/report.json",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F006",
+      "COH-F011",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E147",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-final-runtime-3074",
+    "scope": "根正常画面手玩B灰层重档04，一次43.64秒、40HP/103.14混乱撤离，2薪柴+污染物和武器，Q/铃各1，未取深堆。",
+    "limitations": "正式准备UI但明确受控成熟配装；看图暂停，非自然供给或实时熟练操作。过晚声诱与朝向攻击错误保留，不以有限结果证明所有策略上限；未返家维护。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i03/manual-prepared-final/review.json",
+        "role": "test"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F008",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E148",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-final-runtime-3074",
+    "scope": "最终源3074真实旧active dash正式冷续，仅bodyPosition与bodyGeometryVersion变化，无二次消费；建场/零时长首绘等待阶段直接DESTROY清外部listener、GPU准备和事务，27组恢复通过。284运行依赖收据与2880原执行器字节等价已归档。",
+    "limitations": "旧偏移窄迁移仅精确已付费active catalog dash，其他异常仍拒绝；仅冻结源及所列运行样本。历史60入口/120画面/90+30+12全趟不改标最终源重跑。",
+    "sources": [
+      {
+        "path": "docs/qa/rift-r100-i03-i06-technical.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/dependency-impact.json",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F006",
+      "COH-F011",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E149",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "dfaf9b3f+R100-I03-I06-final-runtime-3074",
+    "scope": "最终冻结3074/284依赖：20世界×3档，60正式选级入场和60冷续全部通过，0失败0补抽；完整身体checkpoint、版本1和冷续位置及身份保持。",
+    "limitations": "受控种子和普通初始库存，仅正式入口与冷续；不证明整趟风险收益、自然经济、美术或听感通过。并行浏览器的长任务数据不替代P01独立基准。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i06/final-runtime/formal-entry/summary.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-r100-i03-i06-technical.md",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F011",
+      "COH-F052"
+    ]
   }
 ]

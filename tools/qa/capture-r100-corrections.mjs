@@ -9,7 +9,7 @@ const out = path.resolve(process.env.QA_OUTPUT_DIR ?? 'docs/qa/artifacts/rift-r1
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ headless: true, executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
 const report = { date: new Date().toISOString(), scope: '18 native DEV fixtures; normal visibility, native 960x640 screenshots, actual keyboard-path patrol. No save access, full-run or art approval claim.', sources: {}, cases: [], errors: [] };
-for (const file of ['src/dev/rift-r100-masters/world.ts', 'src/dev/rift-r100-masters/presentation.ts', 'src/dev/rift-r100-masters/surface-renderer.ts', 'src/dev/rift-r100-masters/surface-fields.ts', 'src/scenes/rift-scene.ts', 'src/systems/chaos-system.ts', 'data/rift-pollution-grades.csv']) report.sources[file] = createHash('sha256').update(await readFile(file)).digest('hex');
+for (const file of ['src/dev/rift-r100-masters/world.ts', 'src/systems/r100-world/presentation.ts', 'src/systems/r100-world/surface-renderer.ts', 'src/systems/r100-world/surface-fields.ts', 'src/scenes/rift-scene.ts', 'src/systems/chaos-system.ts', 'data/rift-pollution-grades.csv']) report.sources[file] = createHash('sha256').update(await readFile(file)).digest('hex');
 const context = await browser.newContext({ viewport: { width: 1340, height: 900 }, deviceScaleFactor: 1 });
 const page = await context.newPage();
 page.on('pageerror', error => report.errors.push(String(error)));

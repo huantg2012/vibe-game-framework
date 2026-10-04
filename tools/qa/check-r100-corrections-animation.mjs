@@ -40,7 +40,7 @@ try {
     await page.waitForTimeout(500);
     const pixels = await page.evaluate(async () => {
       const { audioManager } = await import('/src/managers/audio-manager.ts');
-      const { buildMasterSurfaceFields } = await import('/src/dev/rift-r100-masters/surface-fields.ts');
+      const { buildMasterSurfaceFields } = await import('/src/systems/r100-world/surface-fields.ts');
       const s = audioManager.game.scene.getScene('RiftScene'), w = s.devRuntime.world, fields = buildMasterSurfaceFields(w), c = s.cameras.main;
       const points = new Set();
       for (const index of w.raster.occupiedPixels) {

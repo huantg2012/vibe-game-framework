@@ -103,6 +103,8 @@ export interface FormAttachContext {
   surfaceIntersectsSight?: (bounds: Readonly<{ left: number; top: number; right: number; bottom: number }>) => boolean;
   /** Persisted gameplay footprint/nucleus contract. Presentation is always complete. */
   paintGeometryVersion?: 1 | 2;
+  /** Native v3 supplies its exact off-thread visual bake; legacy attachment is unchanged. */
+  preparedPaintGenome?: import('./d/paint-genome/prepared').PreparedPaintGenome;
   /** 观察院子当前碎片。方案 D 用来推配色。 */
   fragmentTypeId?: string;
   /**

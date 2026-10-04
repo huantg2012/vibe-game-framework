@@ -1,0 +1,105 @@
+{
+  "version": 3,
+  "items": [
+    {
+      "kind": "weapon",
+      "id": "WPN_306ee6a5-1651-42b7-9b50-9c398c283c1e",
+      "weapon": {
+        "id": "WPN_306ee6a5-1651-42b7-9b50-9c398c283c1e",
+        "definitionId": "crowbar_plain",
+        "stage": "tool",
+        "impactCharges": 3,
+        "usesRemaining": 60
+      },
+      "location": {
+        "kind": "carried"
+      }
+    },
+    {
+      "kind": "contaminant",
+      "id": "qa-build-salted_vial",
+      "contaminant": {
+        "id": "qa-build-salted_vial",
+        "type": "catalog",
+        "rarity": "common",
+        "quality": "ordinary",
+        "stage": "tool",
+        "impactCharges": 3,
+        "usesRemaining": 3,
+        "catalog": {
+          "catalogVersion": "contaminant-v1",
+          "definitionId": "salted_vial",
+          "appearanceId": "wax_parcel",
+          "offeringProfileId": "resist_35",
+          "acquiredOrdinal": 1,
+          "identification": "revealed",
+          "revealedAt": 1791079197631,
+          "revealReceiptId": "qa-build:salted_vial:qa-build-salted_vial"
+        }
+      },
+      "location": {
+        "kind": "stash"
+      }
+    },
+    {
+      "kind": "contaminant",
+      "id": "qa-build-cold_ash_pipe",
+      "contaminant": {
+        "id": "qa-build-cold_ash_pipe",
+        "type": "catalog",
+        "rarity": "common",
+        "quality": "ordinary",
+        "stage": "tool",
+        "impactCharges": 3,
+        "usesRemaining": 3,
+        "catalog": {
+          "catalogVersion": "contaminant-v1",
+          "definitionId": "cold_ash_pipe",
+          "appearanceId": "wax_parcel",
+          "offeringProfileId": "resist_35",
+          "acquiredOrdinal": 2,
+          "identification": "revealed",
+          "revealedAt": 1791079197632,
+          "revealReceiptId": "qa-build:cold_ash_pipe:qa-build-cold_ash_pipe"
+        }
+      },
+      "location": {
+        "kind": "stash"
+      }
+    }
+  ],
+  "equipment": {
+    "weaponId": "WPN_306ee6a5-1651-42b7-9b50-9c398c283c1e",
+    "toolIds": [],
+    "defenseIds": [
+      null
+    ]
+  },
+  "run": null,
+  "starterGranted": true,
+  "firstWeaponDiscovered": false,
+  "catalogTutorialRevealed": false,
+  "discoveredCatalogIds": [
+    "salted_vial",
+    "cold_ash_pipe"
+  ],
+  "offeringReceipts": {
+    "qa-build:salted_vial": [
+      {
+        "itemId": "qa-build-salted_vial",
+        "kind": "contaminant",
+        "definitionId": "salted_vial",
+        "slotIndex": 0
+      }
+    ],
+    "qa-build:cold_ash_pipe": [
+      {
+        "itemId": "qa-build-cold_ash_pipe",
+        "kind": "contaminant",
+        "definitionId": "cold_ash_pipe",
+        "slotIndex": 0
+      }
+    ]
+  },
+  "nextAcquiredOrdinal": 3
+}

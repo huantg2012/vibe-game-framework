@@ -8,7 +8,7 @@ import { compileNativeVolumeRaster, NativeVolumeLighting, nativeVolumeHeightAt, 
 
 let checks = 0;
 function check(condition: unknown, message: string): void { assert.ok(condition, message); checks++; }
-const families: readonly NativeVolumeFamily[] = ['folded-slab', 'fibre-knot', 'broken-shell'];
+const families: readonly NativeVolumeFamily[] = ['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'];
 const spec = (family: NativeVolumeFamily, id = 1): NativeVolumeSpec => ({ id, family, seed: 8473, x: 160, y: 160,
   rotation: -.37, length: 220, width: 150, height: 54, thickness: 20, fold: .76, branches: 3, opening: .24, distortion: .65 });
 const profileRows = (await readFile('data/rift-world-profiles.csv', 'utf8')).trim().split(/\r?\n/).map(row => row.split(','));
@@ -27,7 +27,7 @@ const colors = (id: string): NativeVolumeMaterialSet => {
   };
 };
 
-const profileIds = ['ash-strata', 'crystal-fibre', 'ivory-basin'];
+const profileIds = ['ash-strata', 'crystal-fibre', 'ivory-basin', 'ash-strata', 'ivory-basin', 'crystal-fibre'];
 const tiles: Uint8ClampedArray[] = [];
 const metrics: object[] = [];
 for (let f = 0; f < families.length; f++) {
@@ -138,7 +138,7 @@ if (outputIndex >= 0) {
   const output = process.argv[outputIndex + 1];
   if (!output) throw new Error('--output requires a PNG path');
   await mkdir(path.dirname(output), { recursive: true });
-  await sharp({ create: { width: 960, height: 640, channels: 4, background: { r: 19, g: 21, b: 22, alpha: 1 } } })
+  await sharp({ create: { width: 320*families.length, height: 640, channels: 4, background: { r: 19, g: 21, b: 22, alpha: 1 } } })
     .composite(tiles.map((data, i) => ({ input: Buffer.from(data), raw: { width: 320, height: 320, channels: 4 as const }, left: Math.floor(i / 2) * 320, top: (i % 2) * 320 })))
     .png().toFile(output);
   await writeFile(output.replace(/\.png$/, '.json'), JSON.stringify({ status: 'technical-diagnostic-not-art-approval', checks, metrics,

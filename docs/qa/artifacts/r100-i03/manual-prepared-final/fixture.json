@@ -1,0 +1,115 @@
+{
+  "definitions": [
+    "blind_needle_compass",
+    "split_tongue_bell"
+  ],
+  "ids": [
+    "qa-manual-blind_needle_compass",
+    "qa-manual-split_tongue_bell"
+  ],
+  "inventory": {
+    "version": 3,
+    "items": [
+      {
+        "kind": "weapon",
+        "id": "WPN_b2222f11-d2dc-4348-a510-5674939e2e63",
+        "weapon": {
+          "id": "WPN_b2222f11-d2dc-4348-a510-5674939e2e63",
+          "definitionId": "crowbar_plain",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 60
+        },
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "kind": "contaminant",
+        "id": "qa-manual-blind_needle_compass",
+        "contaminant": {
+          "id": "qa-manual-blind_needle_compass",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "ordinary",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 3,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "blind_needle_compass",
+            "appearanceId": "wax_parcel",
+            "offeringProfileId": "resist_35",
+            "acquiredOrdinal": 1,
+            "identification": "revealed",
+            "revealedAt": 1791087508286,
+            "revealReceiptId": "qa-manual:blind_needle_compass:qa-manual-blind_needle_compass"
+          }
+        },
+        "location": {
+          "kind": "stash"
+        }
+      },
+      {
+        "kind": "contaminant",
+        "id": "qa-manual-split_tongue_bell",
+        "contaminant": {
+          "id": "qa-manual-split_tongue_bell",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "ordinary",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 5,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "split_tongue_bell",
+            "appearanceId": "wax_parcel",
+            "offeringProfileId": "resist_35",
+            "acquiredOrdinal": 2,
+            "identification": "revealed",
+            "revealedAt": 1791087508286,
+            "revealReceiptId": "qa-manual:split_tongue_bell:qa-manual-split_tongue_bell"
+          }
+        },
+        "location": {
+          "kind": "stash"
+        }
+      }
+    ],
+    "equipment": {
+      "weaponId": "WPN_b2222f11-d2dc-4348-a510-5674939e2e63",
+      "toolIds": [],
+      "defenseIds": [
+        null
+      ]
+    },
+    "run": null,
+    "starterGranted": true,
+    "firstWeaponDiscovered": false,
+    "catalogTutorialRevealed": false,
+    "discoveredCatalogIds": [
+      "blind_needle_compass",
+      "split_tongue_bell"
+    ],
+    "offeringReceipts": {
+      "qa-manual:blind_needle_compass": [
+        {
+          "itemId": "qa-manual-blind_needle_compass",
+          "kind": "contaminant",
+          "definitionId": "blind_needle_compass",
+          "slotIndex": 0
+        }
+      ],
+      "qa-manual:split_tongue_bell": [
+        {
+          "itemId": "qa-manual-split_tongue_bell",
+          "kind": "contaminant",
+          "definitionId": "split_tongue_bell",
+          "slotIndex": 0
+        }
+      ]
+    },
+    "nextAcquiredOrdinal": 3
+  }
+}

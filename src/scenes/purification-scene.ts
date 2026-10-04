@@ -1,6 +1,11 @@
+import { restoreProceduralWorld } from '@/managers/rift-recovery';
 import { projectItemForPlayer } from '@/systems/contaminant-catalog';
 import { itemIconUrl } from '@/ui/contaminant-presentation';
 import { prepareProceduralDeparture, installProceduralRiftRecovery, withPreparedProceduralRecovery } from '@/managers/rift-recovery';
+import { prepareR100Presentation, discardPreparedR100Presentation } from '@/systems/r100-world-presentation';
+import type { WorldProductionMap } from '@/generation/world-study/production-map';
+import { isPollutionGrade, type PollutionGrade } from '@/generation/world-study/pollution-grade';
+import { R100_EXPEDITION_GRADES } from '@/generated/rift-expedition-grade-data';
 import type { RiftCheckpoint } from '@/types/rift-checkpoint';
 import { mix32 } from '@/generation/seed-fork';
 import { SeededRandom } from '@/utils/random';
@@ -188,6 +193,8 @@ export class PurificationScene extends Phaser.Scene {
   private transitioning = false;
   private devSession: PurificationDevSession | null = null;
   private productionDeparture: RiftCheckpoint['identity'] | null = null;
+  private preparedDepartureWorld: WorldProductionMap | null = null;
+  private departureGrade: PollutionGrade = 'low';
   private departureAbort: AbortController | null = null;
   private devDeparture: PurificationDevDeparture | null = null;
   private menuEntry: MenuEntryTransition | null = null;
@@ -231,6 +238,7 @@ export class PurificationScene extends Phaser.Scene {
     this.devSession = import.meta.env?.DEV ? data?.devSession ?? null : null;
     this.devDeparture = null;
     this.productionDeparture = null;
+    this.preparedDepartureWorld = null;
     this.menuEntry = data?.menuEntry ?? null;
     this.lastOverlapType = null;
     this.integritySelection.reset();
@@ -891,11 +899,24 @@ export class PurificationScene extends Phaser.Scene {
 
   private enterRift(): void {
     if (this.resting || this.restTween || this.isAnyPanelOpen() || this.transitioning || this.menuEntry || this.shuttingDown) return;
+    this.departureGrade = 'low';
     this.focusWorldInteraction(CHAMBER_DEVICE_BASES.rift, 184);
     openInventory({ mode: 'prepare', portrait: this.chamber?.getPortrait(), onClose: () => this.restoreInteractionFocus(),
       onDepart: () => this.transitionToRift(),
+      getDepartureGrades: () => this.devSession ? undefined : this.getDepartureGrades(),
+      onSelectDepartureGrade: id => { if (!this.departureAbort && isPollutionGrade(id)) this.departureGrade = id; },
       onOffering: () => this.openOfferingFromInventory(),
     });
+  }
+
+  private getDepartureGrades() {
+    return {
+      selected: this.departureGrade,
+      options: R100_EXPEDITION_GRADES.map(grade => ({
+        id: grade.grade_id, label: grade.label, risk: grade.public_risk,
+        preparation: grade.public_preparation, reward: grade.public_reward,
+      })),
+    };
   }
 
   private openOfferingFromInventory(): void {
@@ -959,23 +980,29 @@ export class PurificationScene extends Phaser.Scene {
       }
     };
     const preparationState = (): string => JSON.stringify({ inventory: inventoryStore.getState(),
-      cycle: gameState.getCycle(), modifiers: gameState.getSortieModifiers() });
+      cycle: gameState.getCycle(), modifiers: gameState.getSortieModifiers(), pollutionGrade: this.departureGrade });
     const before = preparationState();
     const savedRecord = saveManager.captureLoadSnapshot();
     inventoryPanel.close();
     pauseMenu.open(this, { preparation: { message: '正在辨认裂隙。行装尚未消耗。', cancel } });
     window.addEventListener('blur', cancel, { once: true });
     this.events.once(Phaser.Scenes.Events.DESTROY, destroy);
+    let retainedForDeparture = false;
     try {
       installProceduralRiftRecovery();
-      const identity = await prepareProceduralDeparture({ signal: controller.signal });
+      const identity = await prepareProceduralDeparture({ signal: controller.signal, pollutionGrade: this.departureGrade });
+      if (identity.generation?.version === 3) {
+        const world = restoreProceduralWorld(identity)!;
+        await prepareR100Presentation(identity.generation, { signal: controller.signal, world });
+        this.preparedDepartureWorld = world;
+      }
       if (controller.signal.aborted || this.shuttingDown || this.departureAbort !== controller) return;
       if (!savedRecord || !saveManager.matchesLoadSnapshot(savedRecord) || before !== preparationState() || saveManager.hasPendingSave())
         throw new Error('行装或记录已发生变化，请重新准备。');
       this.productionDeparture = identity;
       // Cancel is no longer offered once the durable departure transaction starts.
       pauseMenu.finishPreparation();
-      withPreparedProceduralRecovery(identity, () => this.commitRiftDeparture());
+      retainedForDeparture = withPreparedProceduralRecovery(identity, () => this.commitRiftDeparture());
     } catch (reason) {
       if (!controller.signal.aborted && !this.shuttingDown) {
         console.error('Rift preparation failed before departure', reason);
@@ -984,6 +1011,12 @@ export class PurificationScene extends Phaser.Scene {
     } finally {
       window.removeEventListener('blur', cancel);
       this.events.off(Phaser.Scenes.Events.DESTROY, destroy);
+      // A failed persistence write retains the exact prepared world for Retry.
+      // All other abandoned preparation paths release their GPU allocation.
+      if (!retainedForDeparture) {
+        controller.abort();
+        this.preparedDepartureWorld = null;
+      }
       if (this.departureAbort === controller) {
         this.departureAbort = null;
         if (!this.shuttingDown) pauseMenu.finishPreparation(!document.hidden && document.hasFocus());
@@ -991,7 +1024,7 @@ export class PurificationScene extends Phaser.Scene {
     }
   }
 
-  private commitRiftDeparture(): void {
+  private commitRiftDeparture(): boolean {
     let error: string | null = null;
     const saved = saveManager.commitWorldTransaction(() => {
       const begun = inventoryStore.beginRun(crypto.randomUUID(), this.productionDeparture ? {
@@ -1003,9 +1036,10 @@ export class PurificationScene extends Phaser.Scene {
       if (identity) saveManager.recordRiftDeparture({ version: 1, runId: inventoryStore.getRun()!.id,
         identity, conditions: { modifiers: gameState.getSortieModifiers(), cycle: gameState.getCycle() } });
     });
-    if (error) { this.devDeparture?.cancel(); this.devDeparture = null; showToastInline(error, {}); return; }
-    if (!saved) { this.requestSaveRetry(() => this.finishRiftDeparture()); return; }
+    if (error) { this.devDeparture?.cancel(); this.devDeparture = null; showToastInline(error, {}); return false; }
+    if (!saved) { this.requestSaveRetry(() => this.finishRiftDeparture()); return true; }
     this.finishRiftDeparture();
+    return true;
   }
 
   private finishRiftDeparture(): void {
@@ -1060,6 +1094,8 @@ export class PurificationScene extends Phaser.Scene {
         this.transitionOverlay = null;
         const departure = this.devDeparture;
         this.devDeparture = null; // A synchronous scene shutdown must not cancel the handed-off run.
+        const preparedWorld = this.preparedDepartureWorld;
+        this.preparedDepartureWorld = null; // Ownership passes to the admitted RiftScene below.
         // Dispose owned callbacks while Phaser's scene plugins are still alive.
         // SHUTDOWN remains a once-only fallback for menu/load transitions.
         try {
@@ -1068,6 +1104,7 @@ export class PurificationScene extends Phaser.Scene {
           if (departure) departure.start({ modifiers, cycle, loadout });
           else this.scene.start('RiftScene', { modifiers, cycle, loadout, recovery: this.productionDeparture ? { identity: this.productionDeparture, externalTargetIds: [] } : undefined });
         } catch (reason) {
+          if (preparedWorld) discardPreparedR100Presentation(preparedWorld);
           console.error(`Purification departure cleanup failed at ${this.cleanupStage}; saved departure retained`, reason);
           this.scene.start('MainMenuScene', { recoveryError: '场景切换未完成，原出行记录已保留。' });
         }
@@ -1262,6 +1299,10 @@ export class PurificationScene extends Phaser.Scene {
       this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
     });
     dispose('departure', () => this.devDeparture?.cancel()); this.devDeparture = null; this.devSession = null;
+    dispose('prepared-world', () => {
+      if (this.preparedDepartureWorld) discardPreparedR100Presentation(this.preparedDepartureWorld);
+      this.preparedDepartureWorld = null;
+    });
     dispose('weapon-observer', () => this.unsubscribeWeapon?.()); this.unsubscribeWeapon = null;
     dispose('offering-observer', () => this.unsubscribeOffering?.()); this.unsubscribeOffering = null;
     dispose('forecast-observer', () => this.unsubscribeForecast?.()); this.unsubscribeForecast = null;

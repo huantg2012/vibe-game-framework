@@ -3,7 +3,7 @@ status: ACTIVE
 created-by: design agent
 created-date: 2026-07-26
 last-modified-by: code / art（I30 R11：Last Light承重步态与踝足滚动）
-last-modified-date: 2026-09-28
+last-modified-date: 2026-10-04
 interface-changed: true
 slice: 1
 interfaces-with:
@@ -29,6 +29,14 @@ exposes:
   - OccluderGrid 接口契约（由地图侧实现）
   - 新增事件：无（本系统对外为同步查询 API + setter，不进事件总线）
 ---
+
+## R100 v3 · 实体足边与完整身体（2026-10-04）
+
+正式原生 Rift 的玩家保持 20×20 身体与 80px/s。`native-body-collision.ts` 将所有 `solid` 的同源 XY 三角形合并用于连续 AABB 扫掠，按首次接触保留自由位移并沿真实斜边滑动；`relief` 不得覆盖或抹去实体。原8px网格继续用于生成、寻路和光学准入，但不能把实体三角形外的空白格角当成玩家障碍。VOID和地图外沿仍按原8px完整地面支持拒绝，不因精细实体边缘变得可穿。未修改旧v1/v2身体查询。
+
+真实WASD、敌人碰撞后的玩家位置修正、短冲/穿墙的落点以及v3存档身体合法性复用同一查询。穿墙仍只豁免已选中的合法8px薄墙段，厚墙、其他实体和VOID不豁免；不能仅检查落点。原生技能重置身体时须同步Phaser的offset、center和前帧位置，避免同帧存档出现角色与身体中心相差6px。旧实际技能帧的兼容范围以恢复合同与限定证据为准，不宽松接受任意身体偏移。
+
+几何4反例、滑动/斜向与敌人推挤、实际技能中保存/续局及旧档兼容证据集中在[身体修复记录](../qa/artifacts/r100-i03/native-body-fix/README.md)。CPU薄墙检查不等于正式随机局实际成功穿墙；仍需找到具有合法薄墙的天然样本。
 
 ## 迭代30 R11 · Last Light 分层行走与外部人物呈现
 

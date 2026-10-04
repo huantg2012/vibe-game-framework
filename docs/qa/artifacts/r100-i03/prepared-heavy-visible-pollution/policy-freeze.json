@@ -1,0 +1,69 @@
+{
+  "frozenAt": "2026-10-04T04:00:33.898578+00:00",
+  "cases": [
+    {
+      "name": "resist-suppress-20261004",
+      "build": "resist-suppress",
+      "seed": 20261004,
+      "world": "ash-strata",
+      "grade": "severe"
+    },
+    {
+      "name": "survey-lure-20261004",
+      "build": "survey-lure",
+      "seed": 20261004,
+      "world": "ash-strata",
+      "grade": "severe"
+    },
+    {
+      "name": "resist-suppress-20261005",
+      "build": "resist-suppress",
+      "seed": 20261005,
+      "world": "ash-strata",
+      "grade": "severe"
+    },
+    {
+      "name": "survey-lure-20261005",
+      "build": "survey-lure",
+      "seed": 20261005,
+      "world": "ash-strata",
+      "grade": "severe"
+    }
+  ],
+  "harness": [
+    {
+      "file": "tools/world-study/r100-real-journeys.mjs",
+      "sha256": "c129fd8f8ef4d71107544a93cb5f6d0850768abf40d98df3f6496f070297ff66"
+    },
+    {
+      "file": "tools/world-study/r100-visible-encounters.mjs",
+      "sha256": "79bcf9bed13b0ecef30d0fd9589a16718ae6bd03086a8f434401ff07d60babf9"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "file": "tools/contam-preview/phaser-stub.ts",
+      "sha256": "3c2cd48b23caf46274ce924d5b36ae161159534ca60aef916c3dcc069fc21be7"
+    },
+    {
+      "file": "package.json",
+      "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+    },
+    {
+      "file": "tsconfig.json",
+      "sha256": "f4ffc0588ba5e2914f15f857206c8bde4dac5d39d4120254a171d1501686361e"
+    }
+  ],
+  "root": "/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-management-bj3xgj8d",
+  "gameSourceSnapshot": "docs/qa/artifacts/r100-i06/production-source-rev2/source-snapshot.json",
+  "method": "Four precommitted fixed-world ordinary-mature two-tool fixtures. Current frozen visible-pollution and observed-facing policy. One attempt per case, no reroll or policy adaptation. Field movement/search/tools/extraction actual input. No resource/health/time/position edits in field. Controlled preparation only; does not count as natural supply, no economic net-profit conclusion from first-impact immunity.",
+  "limits": "One world/two seeds/two builds, not all severe maps or human skill; macro geometry is fully known and policy retreat thresholds retain their original limits.",
+  "orchestratorSha256": "c7ad39f8f5b032061ccbf4117301b9d068051cd1db9f342c8cc4ed61456e7270",
+  "orchestratorNote": "Cases were frozen before start; this field records exact orchestrator bytes, no case or policy edits."
+}

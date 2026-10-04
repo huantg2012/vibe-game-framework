@@ -3,8 +3,8 @@ import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 
 const source = 'data/rift-master-materials.csv';
-const target = 'src/dev/rift-r100-masters/generated-materials.ts';
-const families = ['folded-slab', 'fibre-knot', 'broken-shell'];
+const target = 'src/generated/r100-materials.ts';
+const families = ['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'];
 
 export function compilePaintedMaterialCSV(raw) {
   const lines = raw.trim().split(/\r?\n/);
@@ -37,7 +37,7 @@ export function compilePaintedMaterialCSV(raw) {
   });
   if (rows.length !== families.length || new Set(rows.map(row => row.family)).size !== families.length) throw new Error('Expected one painted material per family');
   if (new Set(rows.map(row => row.source)).size !== rows.length) throw new Error('Each painted material family requires its own source');
-  if(new Set(rows.flatMap(row=>[row.source,row.solid.source])).size!==rows.length*2)throw new Error('Ground and solid require six independent sources');
+  if(new Set(rows.flatMap(row=>[row.source,row.solid.source])).size!==rows.length*2)throw new Error('Ground and solid require independent sources for every family');
   return `// GENERATED from ${source}; edit the CSV, not this file.\nexport const PAINTED_MATERIALS_SOURCE_HASH = '${createHash('sha256').update(raw).digest('hex')}';\nexport const PAINTED_MATERIALS = ${JSON.stringify(rows, null, 2)} as const;\nexport type PaintedMaterialFamily = typeof PAINTED_MATERIALS[number]['family'];\n`;
 }
 
@@ -45,7 +45,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const output = compilePaintedMaterialCSV(readFileSync(source, 'utf8'));
   if (process.argv.includes('--check')) {
     if (readFileSync(target, 'utf8') !== output) throw new Error('Painted material manifest is stale');
-    console.log('3 painted material families: CSV and generated manifest match');
+    console.log(families.length+' painted material families: CSV and generated manifest match');
   } else {
     writeFileSync(target, output);
     console.log(`Generated ${target}`);

@@ -12,8 +12,10 @@ export function generatedRiftIdentity(layout: GeneratedRiftLayout, generation?: 
   if (generation) {
     if (!world || world.layout !== layout) throw new Error('World and layout identity differ');
     signature = checkpointChecksum({ layout: signature, generation, hostTileMap: world.hostTileMap,
-      ...(generation.version === 2 ? { landmarks: layout.landmarks,
-        contaminationAge: layout.contaminationAge, ruinSeverity: layout.ruinSeverity } : {}) });
+      ...(generation.version >= 2 ? { landmarks: layout.landmarks,
+        contaminationAge: layout.contaminationAge, ruinSeverity: layout.ruinSeverity } : {}),
+      ...(generation.version === 3 ? { native: world.native?.diagnostics.geometryFingerprint,
+        metadata: world.metadata.signature } : {}) });
   }
   return { worldId: 'procedural-rift', layoutId: 'procedural-rift', seed: layout.seed,
     recipeId: layout.recipeId, signature, ...(generation ? { generation } : {}) };

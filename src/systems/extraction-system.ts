@@ -1,7 +1,7 @@
 /**
  * ExtractionSystem - the way out of a rift.
  *
- * Places a pulsing white marker at the extraction point and monitors distance.
+ * Places the supplied world visual (or the frozen legacy marker) and monitors distance.
  * When the player is within TRIGGER_RADIUS and requests extraction, it emits
  * `RIFT_EXIT_REACHED`. The RunController handles what happens next.
  *
@@ -23,6 +23,12 @@ import type { Vector2 } from '@/types/game-types';
 export interface ExtractionSystemConfig {
   /** Register a glow source with the visibility system (optional). */
   registerGlowSource?: (id: string, position: Vector2, radius: number) => void;
+  createVisual?: (scene: Phaser.Scene, position: Readonly<Vector2>) => ExtractionVisual;
+}
+
+export interface ExtractionVisual {
+  update(elapsedMs: number): void;
+  destroy(): void;
 }
 
 // ---------------------------------------------------------------------------
@@ -38,7 +44,8 @@ const MARKER_DEPTH = 15; // between surface and player
 
 export class ExtractionSystem {
   private extractionPoint!: ExtractionPointDef;
-  private marker!: Phaser.GameObjects.Arc;
+  private marker: Phaser.GameObjects.Arc | null = null;
+  private visual: ExtractionVisual | null = null;
   private getPlayerPosition!: () => Readonly<Vector2>;
   private isRunEnded!: () => boolean;
   private elapsed = 0;
@@ -55,15 +62,18 @@ export class ExtractionSystem {
     this.isRunEnded = isRunEnded;
     this.elapsed = 0;
 
-    // Pulsing circle marker
-    this.marker = scene.add.circle(
-      extractionPoint.position.x,
-      extractionPoint.position.y,
-      MARKER_SIZE / 2,
-      MARKER_COLOR,
-    );
-    this.marker.setDepth(MARKER_DEPTH);
-    this.marker.setAlpha(PULSE_ALPHA_MIN);
+    if (config?.createVisual) this.visual = config.createVisual(scene, extractionPoint.position);
+    else {
+      // Frozen legacy presentation; native v3 worlds supply their own ground wound.
+      this.marker = scene.add.circle(
+        extractionPoint.position.x,
+        extractionPoint.position.y,
+        MARKER_SIZE / 2,
+        MARKER_COLOR,
+      );
+      this.marker.setDepth(MARKER_DEPTH);
+      this.marker.setAlpha(PULSE_ALPHA_MIN);
+    }
 
     // Register glow source if the callback is provided
     if (config?.registerGlowSource) {
@@ -80,7 +90,8 @@ export class ExtractionSystem {
     this.elapsed += deltaMs;
     const phase = (this.elapsed / 1000) * PULSE_HZ * Math.PI * 2;
     const t = (Math.sin(phase) + 1) / 2; // 0..1
-    this.marker.setAlpha(PULSE_ALPHA_MIN + (PULSE_ALPHA_MAX - PULSE_ALPHA_MIN) * t);
+    this.marker?.setAlpha(PULSE_ALPHA_MIN + (PULSE_ALPHA_MAX - PULSE_ALPHA_MIN) * t);
+    this.visual?.update(this.elapsed);
   }
 
   canExtract(): boolean {
@@ -99,10 +110,13 @@ export class ExtractionSystem {
 
   reset(): void {
     this.elapsed = 0;
-    this.marker.setAlpha(PULSE_ALPHA_MIN);
+    this.marker?.setAlpha(PULSE_ALPHA_MIN);
+    this.visual?.update(0);
   }
 
   destroy(): void {
     this.marker?.destroy();
+    this.visual?.destroy();
+    this.marker = null; this.visual = null;
   }
 }

@@ -10,12 +10,42 @@ import type { RiftGenerationRequest, RiftGenerationResponse } from '../../src/ge
 import type { RiftGenerationWorkerPort } from '../../src/generation/rift-generation-client';
 import type { SaveDataV2 } from '../../src/types/game-types';
 import { checkpointChecksum } from '../../src/types/rift-checkpoint';
+import { executeR100SurfacePreparation, type R100SurfacePreparationRequest, type R100SurfacePreparationResponse } from '../../src/systems/r100-world/surface-preparation';
 
 Object.assign(Phaser, { Scenes: { Events: { SHUTDOWN: 'shutdown', DESTROY: 'destroy' } } });
 Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: { getItem: () => null } });
 const windowTarget = new EventTarget();
 Object.defineProperty(globalThis, 'window', { configurable: true, value: windowTarget });
-Object.defineProperty(globalThis, 'document', { configurable: true, value: { hidden: false, hasFocus: () => true } });
+// The real asynchronous material-preparation path still runs. Only browser image
+// decode/canvas rasterization is adapted; native pixel/GL quality has separate gates.
+class PreparedImage {
+  src = ''; decoding = ''; naturalWidth = 512; naturalHeight = 512;
+  async decode(): Promise<void> {}
+  removeAttribute(): void {}
+}
+Object.defineProperty(globalThis, 'Image', { configurable: true, value: PreparedImage });
+const surfaceHandles = new Set<object>();
+let afterSurfaceAllocation: (() => void) | undefined;
+const allocateSurfaceHandle = (): object => { const handle = {}; surfaceHandles.add(handle); return handle; };
+const freeSurfaceHandle = (handle: object): void => { assert(surfaceHandles.delete(handle), 'prepared GL resource must release exactly once'); };
+const surfaceGl = new Proxy({
+  getShaderParameter: () => true, getProgramParameter: () => true,
+  createShader: allocateSurfaceHandle, createProgram: allocateSurfaceHandle, createBuffer: allocateSurfaceHandle, createTexture: allocateSurfaceHandle,
+  deleteShader: freeSurfaceHandle, deleteProgram: freeSurfaceHandle, deleteBuffer: freeSurfaceHandle, deleteTexture: freeSurfaceHandle,
+  getAttribLocation: () => 0, getUniformLocation: () => ({}), isContextLost: () => false,
+  getExtension: () => ({ loseContext() {} }),
+}, { get(target, name) { return name in target ? Reflect.get(target, name) : /^[A-Z0-9_]+$/.test(String(name)) ? 0 : () => {}; } });
+Object.defineProperty(globalThis, 'document', { configurable: true, value: {
+  hidden: false, hasFocus: () => true,
+  createElement(kind: string) {
+    assert.equal(kind, 'canvas');
+    const canvas = { width: 0, height: 0, getContext: (type: string) => type === 'webgl2' ? (() => {
+      const hook = afterSurfaceAllocation; afterSurfaceAllocation = undefined; if (hook) queueMicrotask(hook); return surfaceGl;
+    })() : ({
+      drawImage() {}, getImageData: () => ({ data: new Uint8ClampedArray(canvas.width * canvas.height * 4) }),
+    }) }; return canvas;
+  },
+} });
 class ControlledWorker implements RiftGenerationWorkerPort {
   static all: ControlledWorker[] = [];
   onmessage: ((event: MessageEvent<RiftGenerationResponse>) => void) | null = null;
@@ -23,7 +53,10 @@ class ControlledWorker implements RiftGenerationWorkerPort {
   onmessageerror: ((event: MessageEvent) => void) | null = null;
   request!: RiftGenerationRequest;
   terminated = false;
-  constructor() { ControlledWorker.all.push(this); }
+  constructor(_url?: string | URL, options?: WorkerOptions) {
+    assert(options?.name !== 'r100-surface-preparation', 'surface requests use their own worker adapter');
+    ControlledWorker.all.push(this);
+  }
   postMessage(request: RiftGenerationRequest): void { this.request = structuredClone(request); }
   terminate(): void { this.terminated = true; }
   complete(): void {
@@ -34,7 +67,32 @@ class ControlledWorker implements RiftGenerationWorkerPort {
   }
   fail(): void { this.onerror?.({ message: 'Injected generation failure' } as ErrorEvent); }
 }
-Object.defineProperty(globalThis, 'Worker', { configurable: true, value: ControlledWorker });
+class SurfaceWorker {
+  static all: SurfaceWorker[] = [];
+  onmessage: ((event: MessageEvent<R100SurfacePreparationResponse>) => void) | null = null;
+  onerror: ((event: ErrorEvent) => void) | null = null;
+  onmessageerror: ((event: MessageEvent) => void) | null = null;
+  terminated = false;
+  constructor() { SurfaceWorker.all.push(this); }
+  postMessage(request: R100SurfacePreparationRequest): void {
+    const copy = structuredClone(request);
+    queueMicrotask(() => {
+      if (this.terminated) return;
+      let response: R100SurfacePreparationResponse;
+      try { response = { id: copy.id, result: executeR100SurfacePreparation(copy.input) }; }
+      catch (error) { response = { id: copy.id, error: error instanceof Error ? error.message : String(error) }; }
+      this.onmessage?.({ data: structuredClone(response) } as MessageEvent<R100SurfacePreparationResponse>);
+    });
+  }
+  terminate(): void { this.terminated = true; }
+}
+// Both worker protocols execute the real pure code. Only generation delivery
+// is held by each transaction scenario; surface messages finish asynchronously.
+Object.defineProperty(globalThis, 'Worker', { configurable: true, value: class {
+  constructor(url: string | URL, options?: WorkerOptions) {
+    return options?.name === 'r100-surface-preparation' ? new SurfaceWorker() : new ControlledWorker(url, options);
+  }
+} });
 const { saveManager } = await import('../../src/managers/save-manager');
 const { inventoryStore } = await import('../../src/systems/inventory-store');
 const { gameState } = await import('../../src/managers/game-state');
@@ -174,6 +232,7 @@ await check('actual departure retains one frozen transaction and identity across
   assert.deepEqual(facts(), departureBefore, 'waiting consumes no gear or cycle');
   failWrites = true; worker.complete(); await pending;
   assert(saveManager.hasPendingSave()); assert(retry); assert.equal(finished, 0);
+  assert(surfaceHandles.size > 0, 'failed write retains the already prepared native scene for exact retry');
   assert.equal(records.get(key), departureBytes, 'failed setItem retains the old record');
   const runId = inventoryStore.getRun()!.id, cycle = gameState.getCycle(), workers = ControlledWorker.all.length;
   gate.transitionToRift(); assert.equal(ControlledWorker.all.length, workers);
@@ -181,9 +240,41 @@ await check('actual departure retains one frozen transaction and identity across
   failWrites = false; retry();
   assert.equal(finished, 1); assert.equal(inventoryStore.getRun()!.id, runId); assert.equal(gameState.getCycle(), cycle);
   assert.equal(saveManager.peekRiftDeparture()?.runId, runId);
+  assert(surfaceHandles.size > 0, 'successful retry retains resources until actual scene handoff');
+});
+
+// Start from an actual v3 departure saved above, rather than a mocked preparation.
+const preparedDepartureBytes = records.get(key)!;
+await check('record replacement after native GPU allocation rejects handoff and releases the abandoned scene', async () => {
+  const atStart = facts(), routeCount = routes.length, replacement = JSON.stringify(base);
+  afterSurfaceAllocation = () => records.set(key, replacement);
+  assert.equal(await loadExpedition(host, undefined, undefined, options), 'failed');
+  assert.deepEqual(facts(), atStart); assert.equal(records.get(key), replacement);
+  assert.equal(routes.length, routeCount); assert.equal(surfaceHandles.size, 0);
+  assert.equal(afterSurfaceAllocation, undefined, 'race occurs after real surface allocation');
+  records.set(key, preparedDepartureBytes);
+});
+
+await check('scene-start failure retains the durable departure but releases its unconsumed GPU resources', async () => {
+  const brokenHost = { events: new EventEmitter(), scene: { start() { throw new Error('Injected scene handoff failure'); } } } as unknown as Phaser.Scene;
+  afterSurfaceAllocation = () => {};
+  assert.equal(await loadExpedition(brokenHost, undefined, undefined, options), 'failed');
+  assert.equal(records.get(key), preparedDepartureBytes); assert.equal(surfaceHandles.size, 0);
+  assert.equal(afterSurfaceAllocation, undefined);
+  assert.equal(brokenHost.events.listenerCount('shutdown'), 0); assert.equal(brokenHost.events.listenerCount('destroy'), 0);
+});
+
+await check('blur after GPU allocation cancels without retaining an unconsumed renderer', async () => {
+  const atStart = facts(), routeCount = routes.length;
+  afterSurfaceAllocation = () => windowTarget.dispatchEvent(new Event('blur'));
+  assert.equal(await loadExpedition(host, undefined, undefined, options), 'cancelled');
+  assert.deepEqual(facts(), atStart); assert.equal(records.get(key), preparedDepartureBytes);
+  assert.equal(routes.length, routeCount); assert.equal(surfaceHandles.size, 0);
+  assert.equal(afterSurfaceAllocation, undefined);
 });
 
 assert.equal(host.events.listenerCount('shutdown'), 0); assert.equal(host.events.listenerCount('destroy'), 0);
 assert(ControlledWorker.all.every(worker => worker.terminated));
+assert(SurfaceWorker.all.length > 0 && SurfaceWorker.all.every(worker => worker.terminated));
 inventoryStore.setPersistence(null);
 console.log(`Async entry: ${count} checks passed; actual persistence/session paths, adapted rendering and controlled delivery.`);

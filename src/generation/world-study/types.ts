@@ -1,7 +1,7 @@
 /** Independent 2D map specimens. No production Rift state or game rules. */
 export type WorldProfileId = 'ash-strata' | 'crystal-fibre' | 'ivory-basin';
 export type WorldTopologyId = 'loops' | 'channels';
-export type WorldMaterial = 'strata' | 'crystal' | 'glaze';
+export type WorldMaterial = 'strata' | 'crystal' | 'glaze' | 'granular' | 'membrane' | 'gel';
 
 export interface WorldPalette {
   readonly void: number;

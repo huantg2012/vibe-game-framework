@@ -1,0 +1,73 @@
+{
+  "frozenAt": "2026-10-04T03:48:34.465665+00:00",
+  "root": "/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-management-bj3xgj8d",
+  "gameUrl": "http://127.0.0.1:3062/",
+  "gameSourceSnapshot": "docs/qa/artifacts/r100-i06/production-source-rev2/source-snapshot.json",
+  "attempts": 12,
+  "grade": "low",
+  "ordinalStart": 8,
+  "branchOrigin": {
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i06/natural-defense-baseline/low/7-after-preparation.save.json",
+    "sha256": "aa39bdc28f4f86336530a4d216a26d0cb4597eb0c07887aafa66068c028e0260",
+    "cycle": 7,
+    "reserve": 7,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 72,
+        "maxHp": 100
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 70,
+        "maxHp": 100
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 70,
+        "maxHp": 100
+      }
+    ],
+    "note": "Exact real end-of-baseline7 state copied into independent localStorage. Original90 and ongoing30 retained. Prior7 not counted as new income; no edited resources/gear/time/seed/world."
+  },
+  "policy": {
+    "route": "Full geometry macro routing is disclosed. Only current visible enemies/facing and rendered paint/air positions affect local avoidance. Green cells query visibility first; paint memory30s/air1.2s, soft cost40. No hidden patrol/hazard phase/future drops read. Short back-facing corridor allowed, reobserve350ms. Same original observed-chaos retreat threshold.",
+    "offer": "Vacant slots: publicly canOffer contaminants sorted by explicit damage-reduction percentage in description, then first legal. No hidden catalog profile used. Existing offerings retained.",
+    "repair": "After return, purifier/core below50 restored toward50, storage below50 toward50; bring storage to100 only if full cost affordable. Actual E/arrow/Enter payment; no free repair.",
+    "growth": "When storage100 and all modules>=50, real next displayed unlocked node only; initial three nodes vitality/affinity/defense slot, no skip. Purchase only with reserve remaining >= max(4, latest actual impact repair bill at4HP/fuel). Actual station and Enter.",
+    "sample": "Fixed12 sequential actual journeys from cycle7; natural worlds, no rerolls. Separate denominator, all failures preserved, may only extend bounded to20 with separately recorded decision."
+  },
+  "hashes": [
+    {
+      "file": "tools/world-study/r100-real-journeys.mjs",
+      "sha256": "c129fd8f8ef4d71107544a93cb5f6d0850768abf40d98df3f6496f070297ff66"
+    },
+    {
+      "file": "tools/world-study/r100-visible-encounters.mjs",
+      "sha256": "79bcf9bed13b0ecef30d0fd9589a16718ae6bd03086a8f434401ff07d60babf9"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "file": "tools/contam-preview/phaser-stub.ts",
+      "sha256": "3c2cd48b23caf46274ce924d5b36ae161159534ca60aef916c3dcc069fc21be7"
+    },
+    {
+      "file": "package.json",
+      "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+    },
+    {
+      "file": "tsconfig.json",
+      "sha256": "f4ffc0588ba5e2914f15f857206c8bde4dac5d39d4120254a171d1501686361e"
+    }
+  ]
+}

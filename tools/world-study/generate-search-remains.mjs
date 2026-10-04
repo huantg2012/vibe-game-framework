@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 
 const source = 'data/rift-search-remains.csv';
 const target = 'src/generated/rift-search-remains.ts';
-const grammars = ['laminated-flakes', 'fractured-fibres', 'glaze-shell', 'mineral-splinters'];
+const grammars = ['laminated-flakes', 'fractured-fibres', 'glaze-shell', 'mineral-splinters', 'packed-granules', 'torn-membrane', 'gel-fragments'];
 
 export function compileSearchRemainsCSV(raw, worldIds) {
   const lines = raw.trim().split(/\r?\n/);
@@ -22,7 +22,7 @@ export function compileSearchRemainsCSV(raw, worldIds) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const worldIds = readFileSync('data/rift-world-profiles.csv', 'utf8').trim().split(/\r?\n/).slice(1).map(line => line.split(',')[0]);
+  const worldIds = [...new Set(['data/rift-world-profiles.csv', 'data/rift-native-worlds.csv'].flatMap(path => readFileSync(path, 'utf8').trim().split(/\r?\n/).slice(1).map(line => line.split(',')[0])))];
   const output = compileSearchRemainsCSV(readFileSync(source, 'utf8'), worldIds);
   if (process.argv.includes('--check')) {
     if (readFileSync(target, 'utf8') !== output) throw new Error('Search remains manifest is stale');

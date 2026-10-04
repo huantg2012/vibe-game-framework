@@ -1,0 +1,26 @@
+/** Load original frozen-source bytes; inspect actual formal Continue and its first commit. */
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
+const {chromium}=await import('/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
+const out=path.resolve(process.env.QA_OUTPUT_DIR??'docs/qa/artifacts/r100-i06/final-runtime/legacy-dash-continue');fs.mkdirSync(out,{recursive:true});
+const bytes=fs.readFileSync('docs/qa/artifacts/r100-i03/native-body-fix/legacy-dash-save/actual-old-save.json','utf8'),old=JSON.parse(bytes),cp=old.riftCheckpoint;
+const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'}),page=await browser.newPage({viewport:{width:1440,height:960}});
+const report={status:'running',base:process.env.GAME_URL??'http://127.0.0.1:3074/',method:'Original old-source active dash save bytes installed once into isolated browser storage. Actual Continue; read-only probes before first commit and after zero-time hydration. No edits to source payload, inventory, identity, positions or clocks.',errors:[]};page.on('pageerror',e=>report.errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')report.errors.push(m.text());});
+try{
+ await page.addInitScript(raw=>{if(!sessionStorage.getItem('legacy-installed')){localStorage.setItem('coh-save-v1',raw);sessionStorage.setItem('legacy-installed','1');}},bytes);
+ await page.goto(report.base);await page.waitForFunction(()=>window.__game?.scene.isActive('MainMenuScene'));
+ assert.equal(await page.evaluate(()=>localStorage.getItem('coh-save-v1')),bytes,'loading title cannot rewrite original bytes');
+ await page.evaluate(async()=>{const{saveManager}=await import('/src/managers/save-manager.ts'),{inventoryStore}=await import('/src/systems/inventory-store.ts'),{RiftScene}=await import('/src/scenes/rift-scene.ts');
+ const original=saveManager.prepareRiftCommit;window.__compatCandidates=[];saveManager.prepareRiftCommit=function(checkpoint,...args){const row={checkpoint:structuredClone(checkpoint),beforeBytes:localStorage.getItem('coh-save-v1'),inventory:structuredClone(inventoryStore.getState())};const result=original.call(this,checkpoint,...args);window.__compatCandidates.push(row);return result;};
+ const init=RiftScene.prototype.initializeRecovery;RiftScene.prototype.initializeRecovery=function(...args){const result=init.apply(this,args);window.__compatHydrated={player:this.player.exportRuntimeState(),elapsed:this.devElapsedMs,tools:this.toolSystem.exportRuntimeState(),bytes:localStorage.getItem('coh-save-v1')};this.openRecoveredPauseMenu();return result;};});
+ await page.getByRole('button',{name:'继续',exact:true}).click();await page.waitForFunction(()=>window.__game?.scene.isPaused('RiftScene')&&window.__compatCandidates?.length,null,{timeout:60000});
+ const sample=await page.evaluate(()=>({hydrated:window.__compatHydrated,candidates:window.__compatCandidates,save:JSON.parse(localStorage.getItem('coh-save-v1'))}));
+ assert.equal(sample.hydrated.bytes,bytes,'hydration cannot rewrite durable original bytes');assert.equal(sample.candidates[0].beforeBytes,bytes);
+ const first=sample.candidates[0].checkpoint,expected=structuredClone(cp.state);expected.player.bodyPosition={x:cp.state.player.position.x-10,y:cp.state.player.position.y-10};expected.world.bodyGeometryVersion=1;
+ assert.deepEqual(first.identity,cp.identity);assert.equal(first.elapsedMs,cp.elapsedMs);assert.deepEqual(first.state,expected,'only body convention and marker may change at first complete picture');
+ assert.deepEqual(sample.candidates[0].inventory,old.inventory,'migration cannot repay or alter source inventory');assert.equal(first.state.world.bodyGeometryVersion,1);
+ fs.writeFileSync(path.join(out,'zero-time-samples.json'),JSON.stringify(sample,null,2));await page.screenshot({path:path.join(out,'01-continued-active-dash.png')});
+ await page.waitForTimeout(260);await page.keyboard.press('Escape',{delay:50});await page.waitForFunction(()=>window.__game.scene.isActive('RiftScene'));await page.waitForTimeout(300);await page.keyboard.press('Escape',{delay:30});await page.waitForFunction(()=>window.__game.scene.isPaused('RiftScene'));
+ const resumed=await page.evaluate(()=>JSON.parse(localStorage.getItem('coh-save-v1')));assert.deepEqual(resumed.inventory.items.find(i=>i.id==='qa-legacy-dash'),old.inventory.items.find(i=>i.id==='qa-legacy-dash'));assert(!resumed.riftCheckpoint.state.tools.catalog.effects.some(e=>e.resolvedParams.familyId==='dash'));
+ fs.writeFileSync(path.join(out,'resumed-save.json'),JSON.stringify(resumed,null,2));assert.deepEqual(report.errors,[]);report.status='pass';report.oldOffset=-6;report.newOffset=0;report.originalBytesPreservedUntilCheckpoint=true;report.firstStateChanges=['player.bodyPosition','world.bodyGeometryVersion'];report.paidUsePreserved=true;
+}catch(e){report.status='failed';report.error=String(e);report.text=await page.locator('body').innerText();await page.screenshot({path:path.join(out,'failure.png')});process.exitCode=1;}
+finally{fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2));await browser.close();}console.log(JSON.stringify(report,null,2));

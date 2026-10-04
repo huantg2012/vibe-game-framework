@@ -39,6 +39,6 @@ const rows = lines.map(line => {
 if (new Set(rows.map(r => r.id)).size !== rows.length || rows.length !== 9) throw new Error('Expected nine unique master cells');
 for (const family of new Set(rows.map(r => r.family))) if (new Set(rows.filter(r=>r.family===family).map(r=>r.grade)).size !== 3) throw new Error(`Missing grade ${family}`);
 const output = `// GENERATED from ${source}; edit the CSV, not this file.\nexport const MASTER_SCENES_SOURCE_HASH = '${createHash('sha256').update(raw).digest('hex')}';\nexport const MASTER_SCENES = ${JSON.stringify(rows,null,2)} as const;\n`;
-const target = 'src/dev/rift-r100-masters/generated-scenes.ts';
+const target = 'src/generation/world-study/r100-generated-scenes.ts';
 if (process.argv.includes('--check')) { if (readFileSync(target,'utf8') !== output) throw new Error('Master scene data is stale'); console.log('9 art-lab scenes / 3 families × 3 grades: CSV and generated data match'); }
 else { writeFileSync(target,output); console.log(`Generated ${target}`); }

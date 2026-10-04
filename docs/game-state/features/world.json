@@ -3,12 +3,12 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "已有5世界×2空间继续作为正式底座；本轮新出击默认v2，将CSV的3类有界过程编译为冻结条件，经共享组织轴、最终遭遇语义与完整地形/Host准入生成世界。v1及无generation旧在途局保留原算法和身份。 冻结执行器已接正式Worker异步准备；DTO恢复walkableMask并核对身份，正式场景只接已准备的精确身份，缓存缺失不会偷偷同步生成。",
+    "summary": "新出击使用r100-native v3修订2，已启用二十世界的低/中/重三档。出发前冻结包、等级、材料依赖、内容和种子；8次有界候选重试不换世界或等级。旧v1/v2和旧v3修订1按原执行器恢复。2400＋480生成/transfer/冷重构和60格正式接入通过；逐世界体验资格与人审另列。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
-      "净化点 → 备行 → 新出击 → v2条件编译与有界准入 → 正式Rift（非DEV页面）",
-      "标题继续 → 按已保存generation版本重建同一地图；无generation旧局走历史生成器"
+      "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机v3世界",
+      "标题继续 → 原存档的v1/v2/v3执行器和冻结数据"
     ],
     "sources": [
       {
@@ -140,6 +140,54 @@
       {
         "path": "tools/recovery/check-generation-worker.ts",
         "role": "test"
+      },
+      {
+        "path": "src/generated/r100-native-worlds.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/r100-package-manifest.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition-v1.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-patrol-windows.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-native-data.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-generated-scenes.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/native-rift-body-recovery.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/rift-entry-frame-fence.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -153,20 +201,30 @@
       "COH-E120",
       "COH-E126",
       "COH-E127",
-      "COH-E129"
+      "COH-E129",
+      "COH-E139",
+      "COH-E140",
+      "COH-E141",
+      "COH-E142",
+      "COH-E143",
+      "COH-E145",
+      "COH-E146",
+      "COH-E148",
+      "COH-E149"
     ],
     "unknowns": [
       "支持范围为已有材料/单层碰撞能力内的有界条件链；完整24维设计、罕见世界供给和历史新奇权重尚未完成。",
-      "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。"
+      "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
+      "20世界/60档已正式接入，2400+480资格、60入口与冷续及末尾补丁依赖继承按各冻结证据记录；完整玩法资格仍0，旧94例不能替代新池范围。"
     ]
   },
   {
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "共享地表、材料形体与光响应继续由CSV供给；v2地貌裂向、材料历史和原生层理/晶面/釉盆地标消费同一组织轴。地标绑定转折、深区与出口地形，局部动效受实际支撑和视野裁剪；不按世界ID补绘。 I02三材料缓存与Renderer重建已作受控GC限定观测，材料背板3MiB实际对象ID复用、旧世界/context回收；不是GPU物理字节验收。",
+    "summary": "正式RiftScene使用获选连续材料、独立实体断面、真实光照与侵蚀；增加颗粒脊、厚缘薄膜和凝胶前沿，与原三族构成二十世界。生成与RGBA/Host预烤在Worker完成，资源一次消费并负责释放，表现和音景随存档恢复。120组正常视野、20世界深处近邻与足缘检查已留证，最终听感及人审未代签。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "正式新世界 Rift 地表；研究页可定向查看"
     ],
@@ -251,6 +309,70 @@
         "path": "docs/qa/rift-conditions-2026-10-02.md",
         "role": "doc",
         "note": "本轮最终实现与限定自动/运行验证；人审和完整24维未完成"
+      },
+      {
+        "path": "src/generated/r100-materials.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-extraction-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/prepared.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/art/rift-r100-i03-i06-production.md",
+        "role": "doc"
+      },
+      {
+        "path": "src/systems/r100-world/surface-preparation-client.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/source-cells.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/surface-bake.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/ground.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/audio.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/surface-renderer.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/surface-preparation-worker.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/presentation-state.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/painted-material.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/surface-preparation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/surface-fields.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -262,18 +384,25 @@
       "COH-E119",
       "COH-E120",
       "COH-E127",
-      "COH-E128"
+      "COH-E128",
+      "COH-E139",
+      "COH-E140",
+      "COH-E141",
+      "COH-E142",
+      "COH-E143",
+      "COH-E145"
     ],
     "unknowns": [
-      "v1与无generation旧局维持旧地面/地标表现；新的material随机支流与地标不改变可走碰撞。未实现多层可行走、高体积阻挡景观或动态改碰撞。",
-      "本轮五份原生地表/动效专项及一趟正式浏览器支持支撑、纯黑空洞、灰度形体、局部运动、暂停与清理检查；不能代签全部正常视野下的场所可记忆性、五世界动态审美或用户认可。"
+      "旧v1/v2保持原地面规则；新v3六类材料/高体量普通solid已实现，仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
+      "本轮五份原生地表/动效专项及一趟正式浏览器支持支撑、纯黑空洞、灰度形体、局部运动、暂停与清理检查；不能代签全部正常视野下的场所可记忆性、五世界动态审美或用户认可。",
+      "本批120正常视野与20近邻深走分源记录；新六材料声音只有程序行为检查，尚未实际审听或用户审美认可。"
     ]
   },
   {
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "v2在最终真实敌人形态与地形上计算路线暴露、额外行程与资源分档；必要时有界迁移非出口敌人并重测。短路与低地面敌人暴露退路形成合同，完整占漆在同轮部署中避开整条身体扫掠和全部资源点；原配额、听觉目标与旧版本投放保持。 R100九组DEV作者地段另接真实Host：低/中/重占漆2/4/6、占空1/2/3，面积随CSV等级变化；完整污染足迹准入并保留入口至翻堆/撤离的非必经污染路线。此接入未替换正式生成投放。 翻找物表现现使用投放地图的真实世界来源；只替换外观，没有借此改变位置、配额或掉落表。",
+    "summary": "v3在真实20px身体支撑、8px碰撞/32px Host语义、合法交互站位和退路验证后，投放真实敌人/翻找/撤离。CSV分档内容预算为低2敌/9薪柴基础总量、中3敌/13、重4敌/17，增量在深入区，入口safe堆同为1。新来源残骸复用相应材料，原收益取整、品质和结算不改。当前正在真实搜撤和自然供给验证。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -402,6 +531,18 @@
       {
         "path": "docs/qa/world-search-remains-2026-10-03.md",
         "role": "doc"
+      },
+      {
+        "path": "data/rift-expedition-grades.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-patrol-windows.ts",
+        "role": "code"
       }
     ],
     "dependsOn": [
@@ -419,7 +560,14 @@
       "COH-E134",
       "COH-E136",
       "COH-E137",
-      "COH-E138"
+      "COH-E138",
+      "COH-E139",
+      "COH-E140",
+      "COH-E141",
+      "COH-E142",
+      "COH-E143",
+      "COH-E144",
+      "COH-E147"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -427,7 +575,8 @@
       "退路合同指低地面敌人潜在感知暴露且无必经占漆；其他环境Host不纳入该威胁指标，不能宣称绝对安全。",
       "本轮18例为九组DEV作者地段×两种子；数量/足迹和保护路线检查不代表任意种子投放成功、正式世界资格或自然搜撤取舍与平衡已验。",
       "E134仅补充来源外观的有限实景证据，不重新证明或改变部署质量、路线合同与资源平衡。",
-      "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。"
+      "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
+      "修订2排除了无巡路退成永续守点，但2.4秒模型空档不保证真实翻找噪声后安全；重度追加堆数的回报兑现仍有待体验整改。"
     ]
   },
   {
@@ -479,14 +628,13 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100目标108世界/324等级；2026-10-04用户基于4ced8905明确验收I01/I02，两个迭代完成，I03未启动。现有三材料×低中重九组DEV母版包含独立实体/地面材料、真实断面和法线、绿色侵蚀及反光、静态吞光表现、占漆/占空数量面积和分级混乱曲线；翻找物按五种现有来源区分形体/材料，并完成显著性精修。明确的人审通过见E138，历史工程与局部复核各保留原适用范围。母版验收不是正式世界资格，合格世界0/108、等级0/324；正式有界v2池保持，R100大版本未完成。",
+    "summary": "R100目标仍108世界/324等级。I01/I02已人审通过；I03—I06连续实现已覆盖二十正式世界/六十等级、选级、v3冻结恢复、六材料能力及资格依赖失效。2880样本技术与六十格正式接入已验，二十世界正常视野与近邻审查已记录；连续经营与重度实际回报仍在审核，完整合格数量以R100台账为准。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 备行 → 正式新出击v2：已落地有界3过程子集（COH-F011/012/013）；完整24维能力未全实现",
-      "离线资格编译 tools/world-study/compile-world-library.ts；有限机器资格不是逐包人审入库",
-      "R100进度 docs/reading/rift-r100.html；I01最小包 npm run check:r100；首组三档母版制作单 docs/art/rift-r100-masters.md",
-      "DEV原生母版 rift-r100-masters.html；本轮实际画面对照 docs/qa/interactive/r100-i02-corrections.html；九组作者地段不属正式生成池"
+      "净化点 → 备行选级 → 正式v3原生世界；完整资格仍待三审",
+      "r100-gym.html：20候选世界×三级，以正式生成器和RiftScene运行",
+      "docs/reading/rift-r100.html：唯一迭代/资格台账；原I01/I02历史证据保留"
     ],
     "sources": [
       {
@@ -866,6 +1014,66 @@
       {
         "path": "tools/qa/render-r100-material-separation.mjs",
         "role": "test"
+      },
+      {
+        "path": "data/rift-native-worlds.csv",
+        "role": "data"
+      },
+      {
+        "path": "data/rift-expedition-grades.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i03-i06-execution.md",
+        "role": "doc"
+      },
+      {
+        "path": "r100-gym.html",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/r100-gym.ts",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/rift-r100-i03-i06.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-r100-i03-i06-technical.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i03-i06-production.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/world-study/r100-qualification-manifests.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-library.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-worlds.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-packages.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-expeditions.mjs",
+        "role": "test"
       }
     ],
     "dependsOn": [
@@ -897,17 +1105,27 @@
       "COH-E135",
       "COH-E136",
       "COH-E137",
-      "COH-E138"
+      "COH-E138",
+      "COH-E139",
+      "COH-E140",
+      "COH-E141",
+      "COH-E142",
+      "COH-E143",
+      "COH-E144",
+      "COH-E145",
+      "COH-E146",
+      "COH-E147",
+      "COH-E148",
+      "COH-E149"
     ],
     "unknowns": [
-      "多区域过程、高体积景观、稀有例外、描述符历史新奇权重及逐包人审入库尚未实现；有界3过程不等于24维全部规则和未来材料能力完成。",
+      "高体量普通solid和六材料生产能力已落地；仍无多层可行走、多区域过程、稀有例外、描述符新奇权重或逐包用户验收入库，20世界不是108目标完成。",
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
-      "I01/I02已于2026-10-04获明确人审验收（E138）；此前六项要求继续作为制作基准，历史局部证据保持原范围。108世界/324等级、正式知情选级与等级回报仍未实现；实际完整搜撤、准备收益、声音审听、任意种子及所有碰撞周边待验。",
-      "正式异步准备已接；历史自然种子生成长尾没有因Worker而消失，实际新/冷入场仍有302/242ms主线程长任务，加载预算保持待修。",
       "e8888655后用户确认折板南侧低斜面在normal中仍像地面。已局部重做阻挡物厚断面及材质坐标，外足占地不变；本轮取得44/48独立方向、50次受控键盘接近和600支撑采样；四方向未覆盖、四次战斗干扰和三次沿边滑动见E133，不算完整自然绕行。此前54帧不证明全部阻挡边缘可读，“这次好多了”当时仅为局部肯定；其后2026-10-04明确整体验收单列E138，未覆盖的运行范围仍不补判。",
       "翻找物来源修复只覆盖现有五来源及九组DEV母版；四种主形不等于新增四个合格世界。E134不外推采集后并行更新的地形材料，I01/I02的后续整体验收单列E138，不能倒改E134的实际证据范围。",
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
-      "I01/I02完成不代表三族正式入库或后续选级机制完成；I03尚未启动。实际审听、性能总预算、跨V8/设备风险及已有未测范围仍待验证，不用人的迭代验收虚构技术或听感测试。 实际审听门、P02与P04已转I03追踪；P06–P11按明确人审关闭，不继续挂为I01/I02阻断。"
+      "60格旧阶段等待中位2.018s/p95 2.397s；后续CPU准备/首帧拆分将同一重档入场长任务157ms降为51–61ms，冷续无≥50ms，但整池预算与GPU物理/多设备未通过。",
+      "90+30+12实际经营未有真实成长购买；固定政策有机械投资与保守回撤局限，不能证明全部玩家必败。两套准备的可重复深处净带回仍待整改；下一轮留在I03/I06体验问题，不扩I07抵消。"
     ]
   }
 ]

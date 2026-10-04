@@ -34,6 +34,44 @@ function channel(col:number,shift:number):number{return(col>>>shift)&255;}
  * Native pixel clusters are kept inside the exposed faces, with loose aggregate
  * reserved for actual fracture products. */
 export function sampleMasterMaterial(material:WorldMaterial,u:number,v:number,seed:number,out:MasterMaterialSample,event:MasterMaterialEvent='compact'):void {
+  if(material==='granular'){
+    const scale=event==='loose'?5.5:event==='cleaved'?10:14;
+    const gx=u/scale,gy=v/(scale*.83),cx=Math.floor(gx),cy=Math.floor(gy);
+    let nearest=10,second=10,identity=0;
+    for(let yy=cy-1;yy<=cy+1;yy++)for(let xx=cx-1;xx<=cx+1;xx++){
+      const px=xx+.18+hash(xx,yy,seed+301)*.64,py=yy+.18+hash(xx,yy,seed+307)*.64;
+      const dx=gx-px,dy=gy-py,d=dx*dx+dy*dy;
+      if(d<nearest){second=nearest;nearest=d;identity=hash(xx,yy,seed+311);}
+      else if(d<second)second=d;
+    }
+    const interior=smooth(clamp((second-nearest)*4.2)),broad=field(u/117,v/63,seed+317);
+    // Coherent compressed pigment, not a highlighted Voronoi paving grid.
+    // The authored source carries visible aggregate; micro-normal differences
+    // must stay below the macro beds and cannot draw a second false structure.
+    out.tone=clamp(.36+interior*.025+(identity-.5)*.055+(broad-.5)*.16);
+    out.roughness=event==='cleaved'?.74:.91;
+    out.relief=interior*(event==='loose'?.045:.025)+(broad-.5)*.13;
+    return;
+  }
+  if(material==='membrane'){
+    const broad=field(u/103,v/81,seed+331),warp=field(u/37,v/71,seed+337);
+    const tension=Math.sin(v*.085+u*.018+warp*2.7),crease=Math.pow(Math.max(0,tension),18);
+    const scuff=field(u/11,v/29,seed+347);
+    out.tone=clamp(.48+(broad-.5)*.15+(scuff-.5)*.055-crease*.12+(event==='cleaved'?.065:0));
+    out.roughness=event==='loose'?.78:event==='cleaved'?.69:.39;
+    out.relief=(broad-.5)*.12-crease*.28;
+    return;
+  }
+  if(material==='gel'){
+    const broad=field(u/121,v/79,seed+359),flow=field(u/91,v/26,seed+367);
+    const curl=Math.sin(v*.047+flow*4+Math.sin(u*.023)*1.3);
+    const inclusion=Math.max(0,field(u/8,v/24,seed+373)-.63)*.6;
+    out.tone=clamp(.38+(broad-.5)*.18+curl*.032-inclusion+(event==='cleaved'?.06:0));
+    out.roughness=event==='loose'?.66:event==='cleaved'?.51:.24;
+    out.relief=curl*.18+(broad-.5)*.09-inclusion*.26;
+    return;
+  }
+
   const warp=field(u/113,v/91,seed+41)-.5;
   const a=u+warp*12,b=v+field(u/89,v/67,seed+47)*7;
   const broad=field(a/103,b/71,seed+59);
@@ -103,10 +141,10 @@ export function bakeMasterGround(options:MasterGroundOptions):MasterGroundSurfac
     const x=cx+caSource*along-saSource*across,y=cy+saSource*along+caSource*across;
     let angle=axis+(rnd()-.5)*.34,pressure=0;
     for(const source of options.sources??[]){const d=Math.hypot((x-source.x)/Math.max(source.length,.01),(y-source.y)/Math.max(source.width*2,.01)),w=Math.exp(-d*d);pressure=Math.max(pressure,w);angle+=(source.rotation-axis)*w*.45;}
-    const length=material==='crystal'?55+rnd()*70:material==='glaze'?32+rnd()*48:38+rnd()*59;
-    const widthBed=material==='crystal'?6+rnd()*11:material==='glaze'?22+rnd()*31:12+rnd()*23;
+    const length=material==='gel'?75+rnd()*65:material==='membrane'?44+rnd()*63:material==='granular'?24+rnd()*30:material==='crystal'?55+rnd()*70:material==='glaze'?32+rnd()*48:38+rnd()*59;
+    const widthBed=material==='gel'?16+rnd()*24:material==='membrane'?28+rnd()*41:material==='granular'?18+rnd()*25:material==='crystal'?6+rnd()*11:material==='glaze'?22+rnd()*31:12+rnd()*23;
     const bevel=rnd()*.16,short=.14+rnd()*.2;
-    const points:Bed['points']=material==='glaze'?[[-.47,-.26],[-.18,-.5],[.34,-.34],[.5,.18],[.06,.47],[-.38,.24]]:material==='crystal'?[[-.5,-.13],[-.29,-.39],[.45,-.28],[.5,.01],[.25,.34],[-.43,.17]]:[[-.5,-.28],[-.5+short,-.48],[.5,-.34],[.33,.05],[.39,.29],[-.19-bevel,.46],[-.39,.18]];
+    const points:Bed['points']=material==='gel'?[[-.5,-.18],[-.26,-.37],[.22,-.41],[.49,-.16],[.41,.32],[.03,.49],[-.28,.23]]:material==='membrane'?[[-.49,-.3],[-.21,-.48],[.34,-.32],[.49,.21],[.12,.4],[-.36,.23]]:material==='granular'?[[-.42,-.25],[-.14,-.49],[.3,-.36],[.49,.14],[.19,.42],[-.34,.35]]:material==='glaze'?[[-.47,-.26],[-.18,-.5],[.34,-.34],[.5,.18],[.06,.47],[-.38,.24]]:material==='crystal'?[[-.5,-.13],[-.29,-.39],[.45,-.28],[.5,.01],[.25,.34],[-.43,.17]]:[[-.5,-.28],[-.5+short,-.48],[.5,-.34],[.33,.05],[.39,.29],[-.19-bevel,.46],[-.39,.18]];
     beds.push({x,y,angle,length,width:widthBed,rise:.16+rnd()*.50+pressure*.18,tone:(rnd()-.5)*.08,seed:Math.floor(rnd()*0xffffffff),kind:0,points});
     // Fines settle beyond the severed end, not uniformly over intact surfaces.
     const tip=length*(.44+rnd()*.1),offset=(rnd()-.5)*widthBed*.3;

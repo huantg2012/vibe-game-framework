@@ -138,7 +138,11 @@ parentPort.on('message', data => globalThis.self.onmessage({ data }));`, resolve
     getRandomValues(values: Uint32Array) { randomCalls++; values[0] = 0; return values; },
   } });
   const departure = await recovery.prepareProceduralDeparture();
-  assert.equal(randomCalls, 1); assert.equal(departure.signature, fixture.records[0].identity.signature);
+  assert.equal(randomCalls, 1); assert.equal(departure.generation?.version, 3);
+  if (departure.generation?.version !== 3) throw new Error('Expected native v3 departure');
+  assert.equal(departure.generation.gradeDefinition.id, 'low');
+  assert(recovery.restoreProceduralWorld(departure)?.native);
+  assert(recovery.hasPreparedProceduralLayout(departure));
   assert.equal(departure.catalogVersion, 'contaminant-v1');
   assert.equal(departure.lootAlgorithmVersion, 1); assert.equal(departure.combatRulesVersion, 2);
   assert.equal(spawned, terminated, 'Every generated/failed/cancelled worker must be terminated');

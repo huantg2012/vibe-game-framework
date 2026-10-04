@@ -159,8 +159,8 @@ else {
   const outputAt = process.argv.indexOf('--output');
   const output = outputAt >= 0 ? process.argv[outputAt + 1] : undefined;
   if (outputAt >= 0 && (!output || existsSync(output))) throw new Error('--output requires a new file path');
-  const sources = ['tools/world-study/check-master-resources.ts', 'src/dev/rift-r100-masters/world.ts', 'src/dev/rift-r100-masters/ground.ts',
-    'src/dev/rift-r100-masters/surface-renderer.ts', 'src/dev/rift-r100-masters/generated-scenes.ts', 'src/dev/rift-r100-masters/generated-materials.ts',
+  const sources = ['tools/world-study/check-master-resources.ts', 'src/dev/rift-r100-masters/world.ts', 'src/systems/r100-world/ground.ts',
+    'src/systems/r100-world/surface-renderer.ts', 'src/dev/rift-r100-masters/generated-scenes.ts', 'src/generated/r100-materials.ts',
     'src/generation/world-study/master-ground-field.ts', 'src/generation/world-study/native-volume-geometry.ts', 'src/generation/world-study/native-volume-raster.ts'];
   const fingerprints = () => Object.fromEntries(sources.map(path => [path, createHash('sha256').update(readFileSync(path)).digest('hex')]));
   const before = fingerprints();

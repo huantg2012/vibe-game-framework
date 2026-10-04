@@ -12,12 +12,19 @@ Object.defineProperty(globalThis, 'window', { value: {
   removeEventListener: (_event: string, listener: unknown) => windowListeners.delete(listener),
 } });
 Object.defineProperty(globalThis, 'document', { value: { removeEventListener() {}, getElementById: () => null } });
-Object.assign(Phaser, { Scenes: { Events: { POST_UPDATE: 'postupdate', PAUSE: 'pause', RESUME: 'resume' } } });
+Object.assign(Phaser, { Scenes: { Events: { POST_UPDATE: 'postupdate', PAUSE: 'pause', RESUME: 'resume', SHUTDOWN: 'shutdown', DESTROY: 'destroy' } } });
 const { RiftScene } = await import('../../src/scenes/rift-scene');
 const haltNonBgm = audioManager.haltNonBgm; audioManager.haltNonBgm = () => {};
 
 class World {
   pauses = 0; resumes = 0;
+  readonly listeners = new Map<string, { listener: unknown; context: unknown }[]>();
+  removed = 0;
+  on(event: string, listener: unknown, context: unknown) { const list = this.listeners.get(event) ?? []; list.push({ listener, context }); this.listeners.set(event, list); return this; }
+  off(event: string, listener: unknown, context: unknown) {
+    const list = this.listeners.get(event) ?? [], retained = list.filter(row => row.listener !== listener || row.context !== context);
+    this.removed += list.length - retained.length; this.listeners.set(event, retained); return this;
+  }
   constructor(public isPaused = false) {}
   pause() { this.pauses++; this.isPaused = true; }
   resume() { this.resumes++; this.isPaused = false; }
@@ -30,6 +37,7 @@ function fixture(freezeAfterEnd = true) {
   let ended = false;
   const dispose = (name: string) => () => calls.disposed.push(name);
   const world = new World();
+  world.on('worldstep', scene.onNativeBodyStep, scene);
   const keyboard = { keys: [], on() {}, off() {}, resetKeys() {}, removeKey() {} };
   Object.assign(scene, { devFixture: freezeAfterEnd ? { freezeAfterEnd: true } : null,
     physics: { world }, input: { keyboard }, events: { off() {} }, scene: { pause() { calls.scenePauses++; } },
@@ -70,6 +78,20 @@ check('entry abandon transfers one pause, cancels entry time and repeated end no
   f.shutdown(); assert.equal(f.world.resumes, 1);
 });
 
+check('shutdown unregisters native physics hook once without removing unrelated world observers', () => {
+  const f = fixture(), observer = () => {};
+  f.world.on('worldstep', observer, null);
+  f.shutdown();
+  assert.equal(f.world.removed, 1);
+  assert.deepEqual(f.world.listeners.get('worldstep'), [{ listener: observer, context: null }]);
+  assert.equal(f.scene.nativeBody, null);
+});
+
+check('shutdown followed by destroy is idempotent', () => {
+  const f = fixture(); f.shutdown(); const disposed = [...f.calls.disposed];
+  f.scene.onShutdown(); assert.deepEqual(f.calls.disposed, disposed);
+});
+
 check('Arcade world already null at terminal shutdown still releases every system and both ownership flags', () => {
   const f = fixture(); f.end();
   assert.equal(f.scene.endOwnsPhysicsPause, true);
@@ -89,7 +111,9 @@ check('Arcade world already null during entry shutdown clears entry without atte
 check('normal active finish pauses once; a later entry on the reused scene can acquire and release a new world', () => {
   const f = fixture(); f.end(); f.scene.onRunEnded();
   assert.equal(f.world.pauses, 1); f.shutdown(); assert.equal(f.world.resumes, 1);
-  const nextWorld = new World(); f.scene.physics.world = nextWorld; f.setEnded(false); f.enter();
+  const nextWorld = new World(); f.scene.physics.world = nextWorld;
+  f.scene.shutdownComplete = false; // createRun resets this for each actual scene restart.
+  f.setEnded(false); f.enter();
   assert(nextWorld.isPaused); assert.equal(nextWorld.pauses, 1); assert.equal(f.scene.endFrozen, false);
   f.scene.finishEntryGate(); assert.equal(nextWorld.isPaused, false); assert.equal(nextWorld.resumes, 1);
   assert.equal(f.calls.input, true);

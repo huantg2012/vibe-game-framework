@@ -1,0 +1,78 @@
+{
+  "status": "pass",
+  "scope": "Actual isolated file changes invalidate exactly their current world dependency receipts. No automatic review or ledger reset.",
+  "outcomes": [
+    {
+      "scenario": "shared slab atom asset",
+      "dependency": "public/assets/r100-materials/slab-solid-source.png",
+      "invalidated": [
+        "ash-strata",
+        "schist-shear",
+        "grain-laminate",
+        "laminate-shell",
+        "film-laminate"
+      ],
+      "unrelatedUnchanged": 15,
+      "staleReviewRejected": true,
+      "restoredSourceRechecked": true
+    },
+    {
+      "scenario": "shared geometry operator",
+      "dependency": "src/generation/world-study/native-volume-geometry.ts",
+      "invalidated": [
+        "ash-strata",
+        "crystal-fibre",
+        "ivory-basin",
+        "cinder-ridge",
+        "pallid-membrane",
+        "silt-gel",
+        "schist-shear",
+        "splayed-fibres",
+        "shell-chain",
+        "grain-laminate",
+        "tension-membrane",
+        "shell-gel-delta",
+        "pressed-dunes",
+        "ruptured-film",
+        "reversed-flow",
+        "laminate-shell",
+        "fibre-silt",
+        "film-laminate",
+        "gel-fibre",
+        "shell-grit"
+      ],
+      "unrelatedUnchanged": 0,
+      "staleReviewRejected": true,
+      "restoredSourceRechecked": true
+    },
+    {
+      "scenario": "pollution rule data",
+      "dependency": "src/generated/rift-pollution-grade-data.ts",
+      "invalidated": [
+        "ash-strata",
+        "crystal-fibre",
+        "ivory-basin",
+        "cinder-ridge",
+        "pallid-membrane",
+        "silt-gel",
+        "schist-shear",
+        "splayed-fibres",
+        "shell-chain",
+        "grain-laminate",
+        "tension-membrane",
+        "shell-gel-delta",
+        "pressed-dunes",
+        "ruptured-film",
+        "reversed-flow",
+        "laminate-shell",
+        "fibre-silt",
+        "film-laminate",
+        "gel-fibre",
+        "shell-grit"
+      ],
+      "unrelatedUnchanged": 0,
+      "staleReviewRejected": true,
+      "restoredSourceRechecked": true
+    }
+  ]
+}
