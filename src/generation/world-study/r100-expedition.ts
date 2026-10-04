@@ -14,7 +14,7 @@ import type { MasterWorld } from './r100-master-world';
 
 export interface R100ExpeditionDefinition {
   readonly grade_id: PollutionGrade;
-  readonly version: 1;
+  readonly version: 1 | 2;
   readonly status: string;
   readonly label: string;
   readonly public_risk: string;

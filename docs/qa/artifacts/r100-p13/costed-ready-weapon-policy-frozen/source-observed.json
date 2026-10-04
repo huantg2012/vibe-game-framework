@@ -1,0 +1,66 @@
+{
+  "recordedAt": "2026-10-04T06:39:09.505038+00:00",
+  "preregistered": "First actual low-growth return with ready weapon>=30",
+  "checkpoint": {
+    "ordinal": 14,
+    "cycle": 14,
+    "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-p13/natural-low-continuation/low-growth/first-ready-weapon-browser-storage.json",
+    "sha256": "cc2810d73993611fe2af7303bcc193b6cc8aad704c6d8e6979ac6e8a080586ea",
+    "weapon": {
+      "id": "WPN_replacement:fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+      "name": "普通撬棍",
+      "uses": 60
+    },
+    "source": "First qualifying actual low-sequence return after resumed run; no checkpoint selection by results"
+  },
+  "receiptSource": "natural-low-continuation/report.json",
+  "actualState": "natural-low-continuation/low-growth/14-after-preparation.save.json",
+  "returnOutcome": "extract",
+  "baseWeaponReplacement": [
+    {
+      "id": "WPN_replacement:fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+      "definitionId": "crowbar_plain",
+      "uses": 60,
+      "source": "Formal base ensureStarter replacement; not field loot or QA grant"
+    }
+  ],
+  "modules": [
+    {
+      "id": "CORE",
+      "type": "CORE",
+      "hp": 50,
+      "maxHp": 115
+    },
+    {
+      "id": "STORAGE",
+      "type": "STORAGE",
+      "hp": 52,
+      "maxHp": 115
+    },
+    {
+      "id": "PURIFIER",
+      "type": "PURIFIER",
+      "hp": 51,
+      "maxHp": 115
+    }
+  ],
+  "growth": {
+    "schemaVersion": 2,
+    "upgrades": {
+      "growth_chaos_resist": 1,
+      "growth_kindling_affinity": 1,
+      "growth_vitality": 2,
+      "growth_sortie_slot": 0,
+      "growth_defense_slot": 1,
+      "growth_forecast_clarity": 1
+    },
+    "progression": {
+      "version": 1,
+      "impactExperienced": true,
+      "offeringCompleted": true,
+      "toolRevealed": true,
+      "crestExperienced": true
+    }
+  },
+  "reserve": 5
+}

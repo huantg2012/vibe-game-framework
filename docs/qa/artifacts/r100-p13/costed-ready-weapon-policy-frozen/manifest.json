@@ -1,0 +1,41 @@
+{
+  "createdAt": "2026-10-04T06:22:46.103327+00:00",
+  "gameUrl": "http://127.0.0.1:3086/",
+  "files": [
+    {
+      "file": "tools/world-study/r100-p13-costed-journeys.mjs",
+      "sha256": "bebc21c161ef58e3c51ba0ddc91c897e1189261edbab81b042f068c26731a4d1"
+    },
+    {
+      "file": "tools/world-study/r100-p13-costed-encounters.mjs",
+      "sha256": "72695394cca17b022f35f56dd3a80cfc5759bc2166ba6b555037dc5b349c1a4e"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "policyAmendment": "Before any of these pending runs: public weapon durability <=18 with no ready backup triggers actual owned reserve-weapon offering through UI, removing at most one weakest public contaminant while retaining progress. Existing production ensureStarter may replace an exhausted weapon, recorded as base replacement not loot. Prepared-natural heavy requires ready weapon>=30, medium>=12. Cash/HP/growth/inventory not reset.",
+  "runtimeHandoff": "final-runtime-handoff/manifest.json",
+  "policyRevision": 5,
+  "supersedesUnrun": "costed-policy-frozen/manifest.json",
+  "world": "ash-strata",
+  "seeds": [
+    20261004,
+    20261005
+  ],
+  "builds": [
+    "resist-suppress",
+    "survey-lure"
+  ],
+  "runsEach": 1,
+  "sourceSelection": "First low-growth resumed actual return whose public ready weapon has >=30 remaining durability. No choice by income, outcome or seed; source storage hash to be appended when this condition first occurs."
+}

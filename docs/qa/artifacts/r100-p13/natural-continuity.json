@@ -1,0 +1,3448 @@
+{
+  "generatedAt": "2026-10-04T07:57:43.833Z",
+  "method": "No gameplay writes. Consecutive real before/after storage, unique run IDs, actual costs and settlements. Three sequences share one disclosed mature origin; this is two independent new saves plus one branch, not three independent new saves. Completion does not assert enjoyment or optimal play.",
+  "expected": 90,
+  "completed": 90,
+  "status": "all-sequences-complete-accounting-valid",
+  "sequences": [
+    {
+      "id": "low-growth",
+      "expected": 30,
+      "sources": [
+        "natural-low/report.json",
+        "natural-low-continuation/report.json",
+        "natural-low-final/report.json"
+      ],
+      "origin": "Independent new save",
+      "completed": 30,
+      "status": "sequence-complete-accounting-valid",
+      "loaded": [
+        {
+          "file": "natural-low/report.json",
+          "sha256": "0adc38487f140abe78c5bd94f7de637dd345eed1021fe4824588502222cf8a68"
+        },
+        {
+          "file": "natural-low-continuation/report.json",
+          "sha256": "817472badcf0b86362fefe79c91a351dc4df19d463131d04da416dbbe7a84544"
+        },
+        {
+          "file": "natural-low-final/report.json",
+          "sha256": "87f283e511dc4ddaccb4083f61d360129371939ff1e325af8aee2bd8e89ccc16"
+        }
+      ],
+      "baselineCycle": 0,
+      "ending": {
+        "cycle": 30,
+        "reserve": 20,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 52,
+            "maxHp": 130
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 102,
+            "maxHp": 130
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 53,
+            "maxHp": 130
+          }
+        ],
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 3,
+            "growth_kindling_affinity": 2,
+            "growth_vitality": 3,
+            "growth_sortie_slot": 1,
+            "growth_defense_slot": 2,
+            "growth_forecast_clarity": 2
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "moduleMaxHpTier": 2
+      },
+      "earned": 408,
+      "repair": 183,
+      "growthSpent": 205,
+      "deaths": 0,
+      "rows": [
+        {
+          "ordinal": 1,
+          "runId": "2e6ede84-8ba3-45f1-840b-a22215fca161",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-crystal-fibre",
+          "revision": 3,
+          "cycle": 0,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 0,
+          "growth": 0,
+          "reserve": 5,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 70,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 2,
+          "runId": "27f9bc4a-3c2f-4678-a76b-cde5c182457a",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-splayed-fibres",
+          "revision": 3,
+          "cycle": 1,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 0,
+          "growth": 10,
+          "reserve": 3,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 65,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 55,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 66,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_vitality",
+              "publicText": "生命强化\nLevel 1\n可刻入\n4 薪柴",
+              "cost": 4,
+              "level": 1,
+              "retainedReserve": 2
+            },
+            {
+              "kind": "growth",
+              "id": "growth_kindling_affinity",
+              "publicText": "薪柴亲和\nLevel 1\n可刻入\n6 薪柴",
+              "cost": 6,
+              "level": 1,
+              "retainedReserve": 2
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 3,
+          "runId": "4a7e878e-0fa5-4ebc-8825-70cee1b4aff9",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-grain-laminate",
+          "revision": 3,
+          "cycle": 2,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 4,
+          "growth": 0,
+          "reserve": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 60,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 61,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 4,
+          "runId": "cacae3b1-506f-4488-8564-7892744fe206",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-fibre-silt",
+          "revision": 3,
+          "cycle": 3,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 10,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 54,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 56,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 5,
+          "runId": "64720c8c-43aa-4fff-b0a5-76f829e10eea",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-gel-fibre",
+          "revision": 3,
+          "cycle": 4,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 13,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 6,
+          "runId": "bc200fa5-a2a4-46f5-9a25-b80ccfe62d34",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-fibre-silt",
+          "revision": 3,
+          "cycle": 5,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 6,
+          "growth": 9,
+          "reserve": 6,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_defense_slot",
+              "publicText": "供奉扩容\nLevel 1\n可刻入\n9 薪柴",
+              "cost": 9,
+              "level": 1,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 7,
+          "runId": "bdfe22dd-b4ae-41b8-9091-2e0958bdf38b",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-silt-gel",
+          "revision": 3,
+          "cycle": 6,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 2,
+          "growth": 10,
+          "reserve": 8,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_chaos_resist",
+              "publicText": "渗透抗性\nLevel 1\n可刻入\n10 薪柴",
+              "cost": 10,
+              "level": 1,
+              "retainedReserve": 4
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 8,
+          "runId": "69bafc8a-7f3f-4c1b-babe-f556a8c8d41f",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-splayed-fibres",
+          "revision": 3,
+          "cycle": 7,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 9,
+          "runId": "c0340f2e-c530-4d11-87a3-a4133c4e064f",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-splayed-fibres",
+          "revision": 3,
+          "cycle": 8,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 4,
+          "growth": 11,
+          "reserve": 10,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_forecast_clarity",
+              "publicText": "预兆洞察\nLevel 1\n可刻入\n11 薪柴",
+              "cost": 11,
+              "level": 1,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 10,
+          "runId": "3838f4a1-9198-4192-a21f-f82922fbd8bb",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-splayed-fibres",
+          "revision": 3,
+          "cycle": 9,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 5,
+          "growth": 12,
+          "reserve": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_vitality",
+              "publicText": "生命强化\nLevel 2\n可刻入\n12 薪柴",
+              "cost": 12,
+              "level": 2,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 11,
+          "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-shell-grit",
+          "revision": 3,
+          "cycle": 10,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 6,
+          "growth": 0,
+          "reserve": 15,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 12,
+          "runId": "9248dc7b-753c-4b6a-ac6d-16956305b181",
+          "source": "natural-low/report.json",
+          "grade": "low",
+          "world": "r100-gel-fibre",
+          "revision": 3,
+          "cycle": 11,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 6,
+          "growth": 12,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "thicken",
+              "publicText": "加厚\nLevel 1\n可刻入\n12 薪柴",
+              "cost": 12,
+              "level": 1,
+              "retainedReserve": 7
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 13,
+          "runId": "40c0b289-37f7-4905-80e5-a4d838360b0c",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-shell-gel-delta",
+          "revision": 3,
+          "cycle": 12,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 10,
+          "growth": 0,
+          "reserve": 6,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 14,
+          "runId": "fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-laminate-shell",
+          "revision": 3,
+          "cycle": 13,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 6,
+          "growth": 0,
+          "reserve": 5,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 15,
+          "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-shell-grit",
+          "revision": 3,
+          "cycle": 14,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 8,
+          "growth": 0,
+          "reserve": 5,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 16,
+          "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-silt-gel",
+          "revision": 3,
+          "cycle": 15,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 3,
+          "growth": 0,
+          "reserve": 16,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 17,
+          "runId": "01f753b0-56e8-4336-933a-6ed35452096a",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-pallid-membrane",
+          "revision": 3,
+          "cycle": 16,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 6,
+          "growth": 13,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_kindling_affinity",
+              "publicText": "薪柴亲和\nLevel 2\n可刻入\n13 薪柴",
+              "cost": 13,
+              "level": 2,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 18,
+          "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-tension-membrane",
+          "revision": 3,
+          "cycle": 17,
+          "outcome": "extract",
+          "earned": 20,
+          "repair": 5,
+          "growth": 14,
+          "reserve": 12,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_forecast_clarity",
+              "publicText": "预兆洞察\nLevel 2\n可刻入\n14 薪柴",
+              "cost": 14,
+              "level": 2,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 19,
+          "runId": "4e999d83-66d8-4467-9676-9893580741b0",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-ivory-basin",
+          "revision": 3,
+          "cycle": 18,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 7,
+          "growth": 0,
+          "reserve": 13,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 20,
+          "runId": "d3e17171-6467-4e02-a4a2-a327ee789067",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-shell-chain",
+          "revision": 3,
+          "cycle": 19,
+          "outcome": "extract",
+          "earned": 15,
+          "repair": 8,
+          "growth": 0,
+          "reserve": 20,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 21,
+          "runId": "bf5f3038-8316-49ab-be7a-5311d560517c",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-schist-shear",
+          "revision": 3,
+          "cycle": 20,
+          "outcome": "extract",
+          "earned": 13,
+          "repair": 8,
+          "growth": 16,
+          "reserve": 9,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_defense_slot",
+              "publicText": "供奉扩容\nLevel 2\n可刻入\n16 薪柴",
+              "cost": 16,
+              "level": 2,
+              "retainedReserve": 9
+            }
+          ],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 22,
+          "runId": "53f7d5c9-fbe2-42cd-a263-d71c567511f6",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-ivory-basin",
+          "revision": 3,
+          "cycle": 21,
+          "outcome": "extract",
+          "earned": 20,
+          "repair": 5,
+          "growth": 17,
+          "reserve": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_chaos_resist",
+              "publicText": "渗透抗性\nLevel 2\n可刻入\n17 薪柴",
+              "cost": 17,
+              "level": 2,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 23,
+          "runId": "11d5a88b-9729-472e-aa23-0d2e871c94b9",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-ash-strata",
+          "revision": 3,
+          "cycle": 22,
+          "outcome": "extract",
+          "earned": 15,
+          "repair": 17,
+          "growth": 0,
+          "reserve": 5,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 101,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 24,
+          "runId": "7e932b8d-fc82-4e89-8264-62abfa8d1aa1",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-reversed-flow",
+          "revision": 3,
+          "cycle": 23,
+          "outcome": "extract",
+          "earned": 19,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 19,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 101,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 25,
+          "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855",
+          "source": "natural-low-continuation/report.json",
+          "grade": "low",
+          "world": "r100-reversed-flow",
+          "revision": 3,
+          "cycle": 24,
+          "outcome": "extract",
+          "earned": 25,
+          "repair": 6,
+          "growth": 18,
+          "reserve": 20,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 101,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_sortie_slot",
+              "publicText": "出击扩容\nLevel 1\n可刻入\n18 薪柴",
+              "cost": 18,
+              "level": 1,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 26,
+          "runId": "87a1ee48-277c-4e0c-9d52-86eae5bc0c8d",
+          "source": "natural-low-final/report.json",
+          "grade": "low",
+          "world": "r100-silt-gel",
+          "revision": 3,
+          "cycle": 25,
+          "outcome": "extract",
+          "earned": 19,
+          "repair": 7,
+          "growth": 19,
+          "reserve": 13,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 100,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_vitality",
+              "publicText": "生命强化\nLevel 3\n可刻入\n19 薪柴",
+              "cost": 19,
+              "level": 3,
+              "retainedReserve": 9
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 27,
+          "runId": "2e038080-3a09-4524-99db-dc30caf23768",
+          "source": "natural-low-final/report.json",
+          "grade": "low",
+          "world": "r100-splayed-fibres",
+          "revision": 3,
+          "cycle": 26,
+          "outcome": "extract",
+          "earned": 25,
+          "repair": 10,
+          "growth": 0,
+          "reserve": 28,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 102,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 28,
+          "runId": "0ff5d0cc-4723-4460-a3ba-bc62b895a03d",
+          "source": "natural-low-final/report.json",
+          "grade": "low",
+          "world": "r100-shell-chain",
+          "revision": 3,
+          "cycle": 27,
+          "outcome": "extract",
+          "earned": 25,
+          "repair": 8,
+          "growth": 21,
+          "reserve": 24,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 100,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "thicken",
+              "publicText": "加厚\nLevel 2\n可刻入\n21 薪柴",
+              "cost": 21,
+              "level": 2,
+              "retainedReserve": 10
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 29,
+          "runId": "f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec",
+          "source": "natural-low-final/report.json",
+          "grade": "low",
+          "world": "r100-silt-gel",
+          "revision": 3,
+          "cycle": 28,
+          "outcome": "extract",
+          "earned": 10,
+          "repair": 8,
+          "growth": 0,
+          "reserve": 26,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 103,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 30,
+          "runId": "4325cd09-97dc-4260-87f2-744ad2c83644",
+          "source": "natural-low-final/report.json",
+          "grade": "low",
+          "world": "r100-cinder-ridge",
+          "revision": 3,
+          "cycle": 29,
+          "outcome": "extract",
+          "earned": 25,
+          "repair": 8,
+          "growth": 23,
+          "reserve": 20,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 102,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_chaos_resist",
+              "publicText": "渗透抗性\nLevel 3\n可刻入\n23 薪柴",
+              "cost": 23,
+              "level": 3,
+              "retainedReserve": 9
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        }
+      ]
+    },
+    {
+      "id": "medium-growth",
+      "expected": 30,
+      "sources": [
+        "natural-medium/report.json",
+        "natural-medium-continuation/report.json"
+      ],
+      "origin": "Independent new save",
+      "completed": 30,
+      "status": "sequence-complete-accounting-valid",
+      "loaded": [
+        {
+          "file": "natural-medium/report.json",
+          "sha256": "b6b3f80e2d9ea38f161911f8ee38d53f0b8bc34e0da55742e571cc72d34f9808"
+        },
+        {
+          "file": "natural-medium-continuation/report.json",
+          "sha256": "071a60fb923f33eb725f13f8480d27ef2028db1bec6d0559408bbef0b338e643"
+        }
+      ],
+      "baselineCycle": 0,
+      "ending": {
+        "cycle": 30,
+        "reserve": 0,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 50,
+            "maxHp": 100
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 44,
+            "maxHp": 100
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 53,
+            "maxHp": 100
+          }
+        ],
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 1,
+            "growth_kindling_affinity": 1,
+            "growth_vitality": 1,
+            "growth_sortie_slot": 0,
+            "growth_defense_slot": 1,
+            "growth_forecast_clarity": 1
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "moduleMaxHpTier": 0
+      },
+      "earned": 208,
+      "repair": 168,
+      "growthSpent": 40,
+      "deaths": 7,
+      "rows": [
+        {
+          "ordinal": 1,
+          "runId": "19fda700-a4fc-4778-a90c-693bfdac8ab9",
+          "source": "natural-medium/report.json",
+          "grade": "low",
+          "world": "r100-ruptured-film",
+          "revision": 3,
+          "cycle": 0,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 0,
+          "growth": 0,
+          "reserve": 5,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 70,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 70,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 2,
+          "runId": "21297909-9f28-41d6-b359-7a8d7cb46e4f",
+          "source": "natural-medium/report.json",
+          "grade": "low",
+          "world": "r100-shell-chain",
+          "revision": 3,
+          "cycle": 1,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 0,
+          "growth": 4,
+          "reserve": 6,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 65,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 66,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 55,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_vitality",
+              "publicText": "生命强化\nLevel 1\n可刻入\n4 薪柴",
+              "cost": 4,
+              "level": 1,
+              "retainedReserve": 2
+            }
+          ],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 3,
+          "runId": "c92b64aa-e08e-4e7a-994b-27498cd82bdb",
+          "source": "natural-medium/report.json",
+          "grade": "low",
+          "world": "r100-pressed-dunes",
+          "revision": 3,
+          "cycle": 2,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 4,
+          "growth": 0,
+          "reserve": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 60,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 61,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 4,
+          "runId": "ac9f0982-9bef-4126-8fdf-bf71fb2bca41",
+          "source": "natural-medium/report.json",
+          "grade": "low",
+          "world": "r100-ruptured-film",
+          "revision": 3,
+          "cycle": 3,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 4,
+          "growth": 6,
+          "reserve": 2,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 55,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_kindling_affinity",
+              "publicText": "薪柴亲和\nLevel 1\n可刻入\n6 薪柴",
+              "cost": 6,
+              "level": 1,
+              "retainedReserve": 2
+            }
+          ],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 5,
+          "runId": "86db4153-86fe-413b-a895-e63b7433bfad",
+          "source": "natural-medium/report.json",
+          "grade": "medium",
+          "world": "r100-reversed-flow",
+          "revision": 3,
+          "cycle": 4,
+          "outcome": "extract",
+          "earned": 11,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 8,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 6,
+          "runId": "9d368744-21e6-4cc0-873a-0f5d55e9958f",
+          "source": "natural-medium/report.json",
+          "grade": "medium",
+          "world": "r100-shell-gel-delta",
+          "revision": 3,
+          "cycle": 5,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 6,
+          "growth": 9,
+          "reserve": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_defense_slot",
+              "publicText": "供奉扩容\nLevel 1\n可刻入\n9 薪柴",
+              "cost": 9,
+              "level": 1,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 7,
+          "runId": "162423fe-329e-44a9-9852-3bb7457a5c71",
+          "source": "natural-medium/report.json",
+          "grade": "medium",
+          "world": "r100-ruptured-film",
+          "revision": 3,
+          "cycle": 6,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 4,
+          "growth": 0,
+          "reserve": 3,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 8,
+          "runId": "9f4eb4b9-1d66-4209-8db0-149af6b442dc",
+          "source": "natural-medium/report.json",
+          "grade": "low",
+          "world": "r100-ivory-basin",
+          "revision": 3,
+          "cycle": 7,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 2,
+          "growth": 0,
+          "reserve": 6,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 9,
+          "runId": "4ef5d510-4b4c-47a0-9738-cf73842d9320",
+          "source": "natural-medium/report.json",
+          "grade": "low",
+          "world": "r100-film-laminate",
+          "revision": 3,
+          "cycle": 8,
+          "outcome": "extract",
+          "earned": 11,
+          "repair": 3,
+          "growth": 0,
+          "reserve": 14,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 10,
+          "runId": "356e32b1-fe75-4e02-b879-58e3db80b772",
+          "source": "natural-medium/report.json",
+          "grade": "medium",
+          "world": "r100-film-laminate",
+          "revision": 3,
+          "cycle": 9,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 4,
+          "growth": 0,
+          "reserve": 10,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 11,
+          "runId": "f4f7ed13-b1d1-4779-ab65-a66ae2636509",
+          "source": "natural-medium/report.json",
+          "grade": "low",
+          "world": "r100-crystal-fibre",
+          "revision": 3,
+          "cycle": 10,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 13,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 12,
+          "runId": "8a885079-3217-4b13-8d12-bd899df95d9e",
+          "source": "natural-medium/report.json",
+          "grade": "medium",
+          "world": "r100-crystal-fibre",
+          "revision": 3,
+          "cycle": 11,
+          "outcome": "extract",
+          "earned": 17,
+          "repair": 6,
+          "growth": 10,
+          "reserve": 14,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_chaos_resist",
+              "publicText": "渗透抗性\nLevel 1\n可刻入\n10 薪柴",
+              "cost": 10,
+              "level": 1,
+              "retainedReserve": 7
+            }
+          ],
+          "actualDeepFuelReturned": 2
+        },
+        {
+          "ordinal": 13,
+          "runId": "c7f15f10-37cb-4fb7-b0f4-e199499cc16c",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-ruptured-film",
+          "revision": 3,
+          "cycle": 12,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 6,
+          "growth": 0,
+          "reserve": 8,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 14,
+          "runId": "4852dfe0-b481-4006-8bf0-26fa15a9ed37",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "low",
+          "world": "r100-pressed-dunes",
+          "revision": 3,
+          "cycle": 13,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 15,
+          "runId": "6138ad48-0399-4dc6-badd-992dd9707450",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-shell-chain",
+          "revision": 3,
+          "cycle": 14,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 4,
+          "growth": 0,
+          "reserve": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 16,
+          "runId": "930171d1-8e2f-48bd-a787-a936f753e271",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "low",
+          "world": "r100-shell-grit",
+          "revision": 3,
+          "cycle": 15,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 10,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 17,
+          "runId": "bbcd4c9a-494d-426d-a470-8c68d1b4c7fa",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "low",
+          "world": "r100-pressed-dunes",
+          "revision": 3,
+          "cycle": 16,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 6,
+          "growth": 0,
+          "reserve": 12,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 18,
+          "runId": "764ea218-240a-4693-b611-661b1ee24964",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-shell-chain",
+          "revision": 3,
+          "cycle": 17,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 19,
+          "runId": "13945e3d-cfb5-4166-8228-fed309023ce3",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "low",
+          "world": "r100-fibre-silt",
+          "revision": 3,
+          "cycle": 18,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 10,
+          "growth": 0,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 20,
+          "runId": "1e1dced3-04d2-464b-a8ed-c10fcf9bc3d0",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-schist-shear",
+          "revision": 3,
+          "cycle": 19,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 7,
+          "growth": 0,
+          "reserve": 9,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 21,
+          "runId": "8f780a31-fcab-47f6-8a10-eb20c02eeb36",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-tension-membrane",
+          "revision": 3,
+          "cycle": 20,
+          "outcome": "extract",
+          "earned": 11,
+          "repair": 6,
+          "growth": 0,
+          "reserve": 14,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 22,
+          "runId": "b998789e-1788-4353-a8ee-b335ff2fa114",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-tension-membrane",
+          "revision": 3,
+          "cycle": 21,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 6,
+          "growth": 0,
+          "reserve": 8,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 23,
+          "runId": "a65f355c-4b57-44ee-9051-6c63d3fa13f9",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "low",
+          "world": "r100-tension-membrane",
+          "revision": 3,
+          "cycle": 22,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 8,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 24,
+          "runId": "02dfb9b4-c187-4cfc-bfc0-03f8a5da7091",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-fibre-silt",
+          "revision": 3,
+          "cycle": 23,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 6,
+          "growth": 0,
+          "reserve": 16,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 25,
+          "runId": "3e384f79-d7ff-422d-992b-e37995359fd4",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-crystal-fibre",
+          "revision": 3,
+          "cycle": 24,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 8,
+          "growth": 0,
+          "reserve": 16,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 26,
+          "runId": "f351e272-6d82-4ecd-a18b-ef4c2b9ed16b",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-grain-laminate",
+          "revision": 3,
+          "cycle": 25,
+          "outcome": "extract",
+          "earned": 11,
+          "repair": 7,
+          "growth": 11,
+          "reserve": 9,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_forecast_clarity",
+              "publicText": "预兆洞察\nLevel 1\n可刻入\n11 薪柴",
+              "cost": 11,
+              "level": 1,
+              "retainedReserve": 9
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 27,
+          "runId": "1e566cab-d3a6-4dc4-80f6-3bb300323f72",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "medium",
+          "world": "r100-shell-chain",
+          "revision": 3,
+          "cycle": 26,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 9,
+          "growth": 0,
+          "reserve": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 28,
+          "runId": "d40fdecf-4058-479c-8a6c-c7f20e1b91d4",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "low",
+          "world": "r100-shell-gel-delta",
+          "revision": 3,
+          "cycle": 27,
+          "outcome": "extract",
+          "earned": 11,
+          "repair": 11,
+          "growth": 0,
+          "reserve": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 49,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 29,
+          "runId": "9b5c480b-60b0-4d1a-bf1f-c4cbb77c71ca",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "low",
+          "world": "r100-film-laminate",
+          "revision": 3,
+          "cycle": 28,
+          "outcome": "extract",
+          "earned": 11,
+          "repair": 11,
+          "growth": 0,
+          "reserve": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 49,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 30,
+          "runId": "1c23bb01-8911-44ef-ac12-edeca4f4784d",
+          "source": "natural-medium-continuation/report.json",
+          "grade": "low",
+          "world": "r100-crystal-fibre",
+          "revision": 3,
+          "cycle": 29,
+          "outcome": "extract",
+          "earned": 8,
+          "repair": 8,
+          "growth": 0,
+          "reserve": 0,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 100
+            },
+            {
+              "id": "STORAGE",
+              "hp": 44,
+              "maxHp": 100
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 100
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        }
+      ]
+    },
+    {
+      "id": "prepared-natural",
+      "expected": 30,
+      "sources": [
+        "prepared-natural/report.json",
+        "prepared-natural-final/report.json"
+      ],
+      "origin": "Disclosed branch of low-growth after its actual return12",
+      "baseline": "natural-low/report.json",
+      "completed": 30,
+      "status": "sequence-complete-accounting-valid",
+      "loaded": [
+        {
+          "file": "prepared-natural/report.json",
+          "sha256": "0b4ed2895c0ddd726dacd4df70208dd4c375acce40a2184415e2d90fb16c2b82"
+        },
+        {
+          "file": "prepared-natural-final/report.json",
+          "sha256": "fdc6bd62a4191cc1a5b15f71ce3a03bc0095f68feae93c1ab4a7c0d07fef4819"
+        }
+      ],
+      "baselineCycle": 12,
+      "ending": {
+        "cycle": 42,
+        "reserve": 13,
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 52,
+            "maxHp": 130
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 100,
+            "maxHp": 130
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 51,
+            "maxHp": 130
+          }
+        ],
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 3,
+            "growth_kindling_affinity": 2,
+            "growth_vitality": 3,
+            "growth_sortie_slot": 1,
+            "growth_defense_slot": 2,
+            "growth_forecast_clarity": 2
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "moduleMaxHpTier": 2
+      },
+      "earned": 386,
+      "repair": 243,
+      "growthSpent": 141,
+      "deaths": 2,
+      "rows": [
+        {
+          "ordinal": 1,
+          "runId": "3a392282-ae66-4b4f-8d32-ce723f6d36ff",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-film-laminate",
+          "revision": 3,
+          "cycle": 12,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 10,
+          "growth": 0,
+          "reserve": 15,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 2,
+          "runId": "c82167f4-e2b7-4947-98f8-bd9a1fafb876",
+          "source": "prepared-natural/report.json",
+          "grade": "severe",
+          "world": "r100-gel-fibre",
+          "revision": 3,
+          "cycle": 13,
+          "outcome": "extract",
+          "earned": 3,
+          "repair": 7,
+          "growth": 0,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 3,
+          "runId": "03b0e61b-73c6-4577-aba1-dfd964cdf049",
+          "source": "prepared-natural/report.json",
+          "grade": "severe",
+          "world": "r100-silt-gel",
+          "revision": 3,
+          "cycle": 14,
+          "outcome": "extract",
+          "earned": 0,
+          "repair": 7,
+          "growth": 0,
+          "reserve": 4,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 4,
+          "runId": "9e57e958-0582-438e-ad15-a7a17cdb14d9",
+          "source": "prepared-natural/report.json",
+          "grade": "medium",
+          "world": "r100-laminate-shell",
+          "revision": 3,
+          "cycle": 15,
+          "outcome": "extract",
+          "earned": 2,
+          "repair": 4,
+          "growth": 0,
+          "reserve": 2,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 5,
+          "runId": "a397879e-3975-4041-b4e7-c2a8958abba9",
+          "source": "prepared-natural/report.json",
+          "grade": "medium",
+          "world": "r100-pallid-membrane",
+          "revision": 3,
+          "cycle": 16,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 6,
+          "runId": "053b0afd-f408-4d2d-b76d-a6dc0f9f2875",
+          "source": "prepared-natural/report.json",
+          "grade": "severe",
+          "world": "r100-silt-gel",
+          "revision": 3,
+          "cycle": 17,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 5,
+          "growth": 0,
+          "reserve": 6,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 51,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 7,
+          "runId": "db2f0e05-b0d6-4c7a-996c-98bfa63d8d1f",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-ash-strata",
+          "revision": 3,
+          "cycle": 18,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 8,
+          "growth": 0,
+          "reserve": 3,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 8,
+          "runId": "b08a3121-77b0-46c9-9611-548b1883fad6",
+          "source": "prepared-natural/report.json",
+          "grade": "medium",
+          "world": "r100-shell-gel-delta",
+          "revision": 3,
+          "cycle": 19,
+          "outcome": "extract",
+          "earned": 17,
+          "repair": 7,
+          "growth": 0,
+          "reserve": 13,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 2
+        },
+        {
+          "ordinal": 9,
+          "runId": "d7ba2449-1c52-4060-93d4-cc4ff4537ec7",
+          "source": "prepared-natural/report.json",
+          "grade": "severe",
+          "world": "r100-grain-laminate",
+          "revision": 3,
+          "cycle": 20,
+          "outcome": "extract",
+          "earned": 19,
+          "repair": 7,
+          "growth": 13,
+          "reserve": 12,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_kindling_affinity",
+              "publicText": "薪柴亲和\nLevel 2\n可刻入\n13 薪柴",
+              "cost": 13,
+              "level": 2,
+              "retainedReserve": 9
+            }
+          ],
+          "actualDeepFuelReturned": 2
+        },
+        {
+          "ordinal": 10,
+          "runId": "e7b90d9f-9980-4e7b-8a48-eeb586b60336",
+          "source": "prepared-natural/report.json",
+          "grade": "severe",
+          "world": "r100-crystal-fibre",
+          "revision": 3,
+          "cycle": 21,
+          "outcome": "extract",
+          "earned": 5,
+          "repair": 6,
+          "growth": 0,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 11,
+          "runId": "b002a3d1-3174-4f83-af71-fb158acfa6c5",
+          "source": "prepared-natural/report.json",
+          "grade": "medium",
+          "world": "r100-laminate-shell",
+          "revision": 3,
+          "cycle": 22,
+          "outcome": "extract",
+          "earned": 22,
+          "repair": 6,
+          "growth": 14,
+          "reserve": 13,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_forecast_clarity",
+              "publicText": "预兆洞察\nLevel 2\n可刻入\n14 薪柴",
+              "cost": 14,
+              "level": 2,
+              "retainedReserve": 8
+            }
+          ],
+          "actualDeepFuelReturned": 2
+        },
+        {
+          "ordinal": 12,
+          "runId": "70a1fdb6-e2a6-4515-991a-746994155965",
+          "source": "prepared-natural/report.json",
+          "grade": "medium",
+          "world": "r100-splayed-fibres",
+          "revision": 3,
+          "cycle": 23,
+          "outcome": "extract",
+          "earned": 17,
+          "repair": 20,
+          "growth": 0,
+          "reserve": 10,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 101,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 2
+        },
+        {
+          "ordinal": 13,
+          "runId": "3c9d4911-d397-446e-8b0a-3ff96e47318f",
+          "source": "prepared-natural/report.json",
+          "grade": "medium",
+          "world": "r100-gel-fibre",
+          "revision": 3,
+          "cycle": 24,
+          "outcome": "extract",
+          "earned": 10,
+          "repair": 11,
+          "growth": 0,
+          "reserve": 9,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 93,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 14,
+          "runId": "42823725-0ab8-4ac2-8935-d0aa8800364a",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-reversed-flow",
+          "revision": 3,
+          "cycle": 25,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 9,
+          "growth": 0,
+          "reserve": 14,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 85,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 15,
+          "runId": "525acf87-88fa-4761-9a3d-00a9302fbf2a",
+          "source": "prepared-natural/report.json",
+          "grade": "medium",
+          "world": "r100-crystal-fibre",
+          "revision": 3,
+          "cycle": 26,
+          "outcome": "extract",
+          "earned": 30,
+          "repair": 14,
+          "growth": 16,
+          "reserve": 14,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 103,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_defense_slot",
+              "publicText": "供奉扩容\nLevel 2\n可刻入\n16 薪柴",
+              "cost": 16,
+              "level": 2,
+              "retainedReserve": 10
+            }
+          ],
+          "actualDeepFuelReturned": 2
+        },
+        {
+          "ordinal": 16,
+          "runId": "37ed9b2a-96a7-4524-953f-090611b7442f",
+          "source": "prepared-natural/report.json",
+          "grade": "severe",
+          "world": "r100-fibre-silt",
+          "revision": 3,
+          "cycle": 27,
+          "outcome": "death",
+          "earned": 0,
+          "repair": 2,
+          "growth": 0,
+          "reserve": 12,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 83,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 17,
+          "runId": "f04cbdc0-cf9a-45e9-9e7f-1584d3df54b9",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-pallid-membrane",
+          "revision": 3,
+          "cycle": 28,
+          "outcome": "extract",
+          "earned": 17,
+          "repair": 15,
+          "growth": 0,
+          "reserve": 14,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 100,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 18,
+          "runId": "ebaae6b1-6454-4b41-ac15-370928fd5ce1",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-fibre-silt",
+          "revision": 3,
+          "cycle": 29,
+          "outcome": "extract",
+          "earned": 19,
+          "repair": 9,
+          "growth": 0,
+          "reserve": 24,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 101,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 19,
+          "runId": "77aaadf9-a8cb-4f64-a7cb-5e82925b625d",
+          "source": "prepared-natural/report.json",
+          "grade": "medium",
+          "world": "r100-shell-grit",
+          "revision": 3,
+          "cycle": 30,
+          "outcome": "extract",
+          "earned": 34,
+          "repair": 9,
+          "growth": 35,
+          "reserve": 14,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 103,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_chaos_resist",
+              "publicText": "渗透抗性\nLevel 2\n可刻入\n17 薪柴",
+              "cost": 17,
+              "level": 2,
+              "retainedReserve": 10
+            },
+            {
+              "kind": "growth",
+              "id": "growth_sortie_slot",
+              "publicText": "出击扩容\nLevel 1\n可刻入\n18 薪柴",
+              "cost": 18,
+              "level": 1,
+              "retainedReserve": 10
+            }
+          ],
+          "actualDeepFuelReturned": 2
+        },
+        {
+          "ordinal": 20,
+          "runId": "f8588d80-effa-498c-a47e-39aca41bc3e5",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-gel-fibre",
+          "revision": 3,
+          "cycle": 31,
+          "outcome": "extract",
+          "earned": 25,
+          "repair": 5,
+          "growth": 19,
+          "reserve": 15,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 115
+            },
+            {
+              "id": "STORAGE",
+              "hp": 103,
+              "maxHp": 115
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 115
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_vitality",
+              "publicText": "生命强化\nLevel 3\n可刻入\n19 薪柴",
+              "cost": 19,
+              "level": 3,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 21,
+          "runId": "9306eb82-57be-48c8-9c81-0c0103a0fa10",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-shell-chain",
+          "revision": 3,
+          "cycle": 32,
+          "outcome": "extract",
+          "earned": 16,
+          "repair": 4,
+          "growth": 21,
+          "reserve": 6,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 99,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "thicken",
+              "publicText": "加厚\nLevel 2\n可刻入\n21 薪柴",
+              "cost": 21,
+              "level": 2,
+              "retainedReserve": 6
+            }
+          ],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 22,
+          "runId": "a816323f-28cb-484c-9c9a-275bbb2d990b",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-tension-membrane",
+          "revision": 3,
+          "cycle": 33,
+          "outcome": "extract",
+          "earned": 22,
+          "repair": 7,
+          "growth": 0,
+          "reserve": 21,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 103,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 23,
+          "runId": "f9dd2a90-468f-4539-ac11-a098ec25da60",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-ivory-basin",
+          "revision": 3,
+          "cycle": 34,
+          "outcome": "extract",
+          "earned": 16,
+          "repair": 6,
+          "growth": 23,
+          "reserve": 8,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 99,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [
+            {
+              "kind": "growth",
+              "id": "growth_chaos_resist",
+              "publicText": "渗透抗性\nLevel 3\n可刻入\n23 薪柴",
+              "cost": 23,
+              "level": 3,
+              "retainedReserve": 8
+            }
+          ],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 24,
+          "runId": "4a379678-7fcc-4ea8-aa6a-acc8b605e3e5",
+          "source": "prepared-natural/report.json",
+          "grade": "low",
+          "world": "r100-fibre-silt",
+          "revision": 3,
+          "cycle": 35,
+          "outcome": "extract",
+          "earned": 17,
+          "repair": 7,
+          "growth": 0,
+          "reserve": 18,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 101,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 25,
+          "runId": "13fa886f-caca-4077-9e94-f79c730c0341",
+          "source": "prepared-natural-final/report.json",
+          "grade": "medium",
+          "world": "r100-gel-fibre",
+          "revision": 3,
+          "cycle": 36,
+          "outcome": "extract",
+          "earned": 10,
+          "repair": 7,
+          "growth": 0,
+          "reserve": 21,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 100,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 26,
+          "runId": "6387aff0-839e-4cd4-9e13-cf224404848f",
+          "source": "prepared-natural-final/report.json",
+          "grade": "severe",
+          "world": "r100-film-laminate",
+          "revision": 3,
+          "cycle": 37,
+          "outcome": "extract",
+          "earned": 0,
+          "repair": 10,
+          "growth": 0,
+          "reserve": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 101,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 27,
+          "runId": "6193376a-6e0c-4a7b-b305-29c3f6c1a5f8",
+          "source": "prepared-natural-final/report.json",
+          "grade": "severe",
+          "world": "r100-shell-grit",
+          "revision": 3,
+          "cycle": 38,
+          "outcome": "extract",
+          "earned": 18,
+          "repair": 9,
+          "growth": 0,
+          "reserve": 20,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 102,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 50,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 1
+        },
+        {
+          "ordinal": 28,
+          "runId": "48768c7e-1aca-4711-a00f-2a41c06c6fc2",
+          "source": "prepared-natural-final/report.json",
+          "grade": "severe",
+          "world": "r100-silt-gel",
+          "revision": 3,
+          "cycle": 39,
+          "outcome": "extract",
+          "earned": 0,
+          "repair": 8,
+          "growth": 0,
+          "reserve": 12,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 50,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 100,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 29,
+          "runId": "b92a00e4-58fd-4f8f-8000-0f6605f1ae51",
+          "source": "prepared-natural-final/report.json",
+          "grade": "severe",
+          "world": "r100-shell-chain",
+          "revision": 3,
+          "cycle": 40,
+          "outcome": "extract",
+          "earned": 6,
+          "repair": 8,
+          "growth": 0,
+          "reserve": 10,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 94,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 52,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        },
+        {
+          "ordinal": 30,
+          "runId": "c7d1f0a3-7c05-4524-9f72-7d53f0371a3b",
+          "source": "prepared-natural-final/report.json",
+          "grade": "medium",
+          "world": "r100-ivory-basin",
+          "revision": 3,
+          "cycle": 41,
+          "outcome": "extract",
+          "earned": 14,
+          "repair": 11,
+          "growth": 0,
+          "reserve": 13,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "hp": 100,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "maxHp": 130
+            }
+          ],
+          "growthPurchases": [],
+          "actualDeepFuelReturned": 0
+        }
+      ]
+    }
+  ]
+}

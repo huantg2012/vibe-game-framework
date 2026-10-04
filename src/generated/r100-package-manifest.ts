@@ -5,7 +5,7 @@ export const R100_PACKAGE_MANIFEST = {
   "dependencies": [
     {
       "path": "data/rift-expedition-grades.csv",
-      "sha256": "137a90a044efe04fa59eae2fb222d0d1e008e5a6519178cf0c635fd94eca6153"
+      "sha256": "e218b81edb14f2206e0f2d35c1f01955cadace5ece2ee262f6dccfb53fded78c"
     },
     {
       "path": "data/rift-master-materials.csv",
@@ -17,7 +17,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-native-worlds.csv",
-      "sha256": "9d105b1af0629fb71a0b80c1c0a5bac4d70cf0b3bbdc93d32e24d9621998ed3f"
+      "sha256": "5ee0c8069f912efbc0425bb90450d94743b2db8e45d00446b2378ea3a73559ff"
     },
     {
       "path": "data/rift-pollution-grades.csv",
@@ -93,7 +93,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-expedition.ts",
-      "sha256": "3e8631325fd684f7cbc13d76b4b120b49ef8baded82a6c999f7959eac08977d1"
+      "sha256": "3d62896b06faccee9e902806a8bb71827c84efa2775d5a2f07d69a05a6d771b1"
     },
     {
       "path": "src/generation/world-study/r100-master-world.ts",
@@ -101,7 +101,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-package.ts",
-      "sha256": "19a7ad9719517cd2fb7a605b19efa212be78a5968341f08a2ee2e7f7da856cc4"
+      "sha256": "16ef3b2d92dfc63dfc83e3749e9ec83b6e6604e10d51b4151a751a0505c6d204"
     },
     {
       "path": "src/generation/world-study/r100-patrol-windows.ts",
@@ -112,7 +112,7 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f"
     }
   ],
-  "hash": "69733825df195d41dc7f30fb52fa2ce0eeec21443026a4f4d5431bb5fb130961"
+  "hash": "3e41356faf2db56a1fd2d3af85deae500dfde47ee32ad0c0b77d513fa74cf5f3"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

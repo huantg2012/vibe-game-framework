@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "base": "http://127.0.0.1:3084/",
+  "method": "Load genuine old save into isolated context. Fault-inject public SceneManager.remove immediately before actual POST_RENDER, once at construction and once after first complete picture/checkpoint. No synthetic game frames or altered gameplay state.",
+  "cases": [
+    {
+      "mode": "construction",
+      "status": "pass",
+      "removedBeforeRelease": true,
+      "savedBytesUnchanged": true
+    },
+    {
+      "mode": "prepared",
+      "status": "pass",
+      "removedBeforeRelease": true,
+      "savedBytesUnchanged": true
+    }
+  ]
+}

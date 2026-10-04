@@ -1,0 +1,59 @@
+{
+  "status": "pass",
+  "sourceManifest": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+  "method": "One isolated Chrome browser, serial cases; other task QA browsers/heavy CPU jobs stopped. Source re-fetch audit deferred until after measurements. No ordinary screenshots or CPU profiler during measurement. Normal pause/reload; no game clock, HP, positions or visual resolution changed.",
+  "completePool": {
+    "cases": 60,
+    "newWaitMs": {
+      "n": 60,
+      "p50": 1816,
+      "p95": 1965,
+      "max": 1990
+    },
+    "newWaitMethod": "Command start to observed ready; includes ordinary transition, preparation, polling latency.",
+    "entryLongTasks": 0,
+    "restoreLongTasks": 0,
+    "thresholdMs": 50,
+    "coldWaitDistributionMeasured": false,
+    "pageBootBeforeContinue": {
+      "longTasks": 120,
+      "maxMs": 117,
+      "scope": "Reload to title/menu, before the Continue action. Preserved separately; not claimed as zero long tasks or attributed without a profile."
+    }
+  },
+  "phaseRiskSample": {
+    "scope": "One severe case for each of six source material families; not a 60-case cold-wait distribution. Read-only timing around actual generator.next, zero-time POST_UPDATE and real POST_RENDER handoff.",
+    "newWaitMs": {
+      "n": 6,
+      "p50": 1765.7000000476837,
+      "p95": 1868,
+      "max": 1868
+    },
+    "coldWaitMs": {
+      "n": 6,
+      "p50": 927.9000000953674,
+      "p95": 1021.9000000953674,
+      "max": 1021.9000000953674
+    },
+    "measuredStageMs": {
+      "n": 108,
+      "p50": 3.200000047683716,
+      "p95": 22,
+      "max": 26.699999809265137
+    },
+    "maximumStage": [
+      "crystal-fibre",
+      "entryTiming",
+      26.699999809265137
+    ],
+    "entryLongTasks": 0,
+    "restoreLongTasks": 0
+  },
+  "limitations": [
+    "Single reference machine/browser; not I14 lower-end hardware approval.",
+    "Long Tasks counts are threshold events, not a claimed zero CPU duration or full-frame GPU timing.",
+    "Only six representative cold-wait measurements; do not infer a whole-pool cold p95.",
+    "The zero Long Task result covers Rift departure and post-Continue restore. Whole-page boot to title/menu still has threshold events, preserved in coldReloadLongTasks."
+  ]
+}

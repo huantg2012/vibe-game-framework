@@ -13,6 +13,7 @@ import { sweepGroundDash } from '@/systems/tool-targeting';
 import { proceduralRiftIdentity, installProceduralRiftRecovery, restoreProceduralLayout, restoreProceduralWorld, withPreparedProceduralRecovery } from '@/managers/rift-recovery';
 import type { RiftRecoveryConditions } from '@/systems/rift-recovery-state';
 import { RiftFrameCommit } from '@/systems/rift-frame-commit';
+import { RiftStagedEntry } from '@/systems/rift-staged-entry';
 import { RiftEntryFrameFence } from '@/systems/rift-entry-frame-fence';
 import { validateRiftRecoveryState, type RiftRecoveryState } from '@/systems/rift-recovery-state';
 import { afterStateCommit, commitEffects } from '@/core/commit-effects';
@@ -310,6 +311,8 @@ export class RiftScene extends Phaser.Scene {
   private formFloorGrid: TileGrid | null = null;
   private nativeBody: NativeBodyCollision | null = null;
   private shutdownComplete = false;
+  private stagedEntry: RiftStagedEntry | null = null;
+  private constructionClockPaused: boolean | null = null;
   private readonly nativeBodyOrigin: Vector2 = { x: 0, y: 0 };
   private readonly nativeBodyMotion: NativeBodyMotion = { x: 0, y: 0, velocityX: 0, velocityY: 0, collided: false };
 
@@ -318,19 +321,29 @@ export class RiftScene extends Phaser.Scene {
   }
 
   create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): void {
-    try { this.createRun(data); }
-    catch (reason) {
-      console.error('Rift entry failed; saved record retained', reason);
-      const fixture = import.meta.env.DEV ? data?.devFixture : undefined;
-      if (fixture) {
-        // DEV hosts do not register a title scene. The host owns cleanup and its error UI.
-        if (fixture.onCreateError) fixture.onCreateError(reason);
-        else { this.scene.stop(); fixture.onReturn(); }
-      } else this.scene.start('MainMenuScene', { recoveryError: '出行暂时无法恢复，原记录已保留。' });
-    }
+    this.createRun(data);
+  }
+
+  private failEntry(reason: unknown, data?: { devFixture?: RiftDevFixture }): void {
+    console.error('Rift entry failed; saved record retained', reason);
+    this.onShutdown();
+    const fixture = import.meta.env.DEV ? data?.devFixture : undefined;
+    if (fixture) {
+      if (fixture.onCreateError) fixture.onCreateError(reason);
+      else { this.scene.stop(); fixture.onReturn(); }
+    } else this.scene.start('MainMenuScene', { recoveryError: '出行暂时无法恢复，原记录已保留。' });
   }
 
   private createRun(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): void {
+    this.stagedEntry?.destroy();
+    this.stagedEntry = new RiftStagedEntry(this.createRunSteps(data), () => {
+      this.nativeEntryFence?.finishConstruction();
+      if (this.constructionClockPaused !== null) { this.time.paused = this.constructionClockPaused; this.constructionClockPaused = null; }
+    }, reason => this.failEntry(reason, data));
+    this.stagedEntry.start();
+  }
+
+  private *createRunSteps(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): Generator<void, void> {
     this.shutdownComplete = false;
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
     // SceneManager.remove/Game.destroy emit DESTROY directly, without SHUTDOWN.
@@ -403,6 +416,14 @@ export class RiftScene extends Phaser.Scene {
       this.devPresentation = createPresentationFrame();
       this.nativeBody = nativeBodyCollision(productionWorld.native, generated);
       if (!this.entryView.active) this.nativeEntryFence = this.createNativeEntryFence();
+    }
+    const stagedNative = !!this.nativeEntryFence;
+    if (stagedNative) {
+      this.constructionClockPaused = this.time.paused; this.time.paused = true;
+      this.cameras.main.setVisible(false);
+      this.bindEntryInputLatch();
+      this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
+      yield;
     }
     const nativePresentation = this.nativeWorldPresentation;
     const createRuntime = nativePresentation?.createRuntime ?? this.devFixture?.createRuntime;
@@ -484,12 +505,14 @@ export class RiftScene extends Phaser.Scene {
     const hearingCount = layout.contaminationDraw.forms.filter(form => form.lexemes.sense === 'sense_hear').length;
     if (hearingCount !== 1) throw new Error(`Rift hearing budget invalid: ${hearingCount}`);
     const floorHearingCount = layout.enemySpawns.filter(spawn => spawn.form?.lexemes.sense === 'sense_hear').length;
+    if (stagedNative) yield;
     this.ai.create(this, layout.enemySpawns, sightGrid, grid, { requireExactlyOneRewriter: floorHearingCount === 1,
       recovery: this.recovery ? { runSeed: seed, signature: this.recovery.identity.signature } : undefined });
     this.ai.setVisibilityProvider(this.visibilityAt);
     this.ai.addWallCollider(layer);
     this.ai.addStaticPlayerCollider(this.player.getSprite());
 
+    if (stagedNative) yield;
     // Combat gets a read-only view of the AI (`getEnemies` / `getEnemyById`) plus one
     // callback. Noise is the only cross-system output that does not go through the bus: a
     // whiffed swing is audible yet emits nothing, so there is no event to carry it.
@@ -582,6 +605,7 @@ export class RiftScene extends Phaser.Scene {
       kindlingAffinity: growthSystem.getModifiers().kindlingAffinity,
     });
 
+    if (stagedNative) yield;
     this.fieldInventory.create(this, () => this.player.getPosition(), this.visibilityAt,
       position => grid.isWalkableAt(position.x, position.y), () => this.openBag(),
       message => afterStateCommit(() => showToastInline(message, { channel: 'field-loot' })));
@@ -718,58 +742,9 @@ export class RiftScene extends Phaser.Scene {
       onRuntimeStateChanged: () => this.frameCommit?.markChanged(),
     });
 
-    this.hud.create({
-      canExtract: () => this.extraction.canExtract(),
-      isRunEnded: () => this.runController.isRunEnded(),
-      suppressExtractPrompt: true,
-      onInventory: () => this.openBag(),
-    });
-    this.encounter.create();
-    this.detectionPulse.create();
-
-    this.sortieKillCount = 0;
-    this.sortieAcquired = [];
-    this.sortiePassiveTriggers = new Map();
-
-    this.applyChaosModulators(getChaosModulators(this.chaos.getValue()));
-
-    // Consume pending side effects from defense engine (Slice 4).
-    // initial_chaos is already folded into openingChaos — do not add it again.
-    if (!restoring) this.applyPendingSideEffects();
-
-    this.minimap.create(
-      tileMap.tiles,
-      tileMap.cols,
-      tileMap.rows,
-      tileMap.tileSize,
-      layout.extractionPoint.position,
-    );
-
-    const updateBurden = (): void => {
-      const id = inventoryStore.getEquipment().weaponId;
-      const equipped = id ? inventoryStore.getItem(id) : undefined;
-      this.combat.configureWeapon(equipped?.kind === 'weapon' ? equipped.weapon.definitionId : null);
-      const attributes = getSurvivalAttributes();
-      this.player.setBurdenSpeedFactor(attributes.burdenSpeedFactor);
-      this.hud.setBurden(attributes.weight, attributes.capacity);
-      const equipment = inventoryStore.getEquipment();
-      const makeSlot = (slotId: string, itemId: string | null | undefined, label: string, isPassive = false): RiftEquipmentSlot => {
-        const item = itemId ? inventoryStore.getItem(itemId) : undefined;
-        const view = item ? projectInventoryItem(item, 'prepare') : undefined;
-        return { slotId, itemId: view?.id, label, name: view?.name ?? '未装配', icon: view?.icon, usesRemaining: view?.usesRemaining, maxDurability: view?.maxDurability, isPassive };
-      };
-      const passive = contaminantSystem.getSortiePassiveSlotIndex();
-      this.hud.setEquipment([makeSlot('weapon', equipment.weaponId, '武器'), ...Array.from({ length: contaminantSystem.getSortieSlotCount() }, (_, index) => makeSlot(String(index), equipment.toolIds[index], index === passive ? '被动' : GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[index] ?? '?', index === passive))]);
-    };
-    updateBurden();
-    this.unsubscribeInventory = inventoryStore.subscribe(updateBurden);
-    this.bindAttackKey();
-    this.bindExtractionKeys();
-    this.bindToolKeys();
-    this.beginEntryGate();
-    if (this.nativeEntryFence?.isActive()) this.bindEntryInputLatch();
-
+    if (stagedNative) yield;
     this.attachSchemeD();
+    if (stagedNative) yield;
     this.syncDevPresentation();
     try {
       this.devRuntime = createRuntime?.({ scene: this, layout,
@@ -819,6 +794,58 @@ export class RiftScene extends Phaser.Scene {
       },
     }, productionWorld.sample) : null;
 
+    if (stagedNative) yield;
+    this.hud.create({
+      canExtract: () => this.extraction.canExtract(),
+      isRunEnded: () => this.runController.isRunEnded(),
+      suppressExtractPrompt: true,
+      onInventory: () => this.openBag(),
+    });
+    this.encounter.create();
+    this.detectionPulse.create();
+
+    this.sortieKillCount = 0;
+    this.sortieAcquired = [];
+    this.sortiePassiveTriggers = new Map();
+
+    this.applyChaosModulators(getChaosModulators(this.chaos.getValue()));
+
+    // Consume pending side effects from defense engine (Slice 4).
+    // initial_chaos is already folded into openingChaos — do not add it again.
+    if (!restoring) this.applyPendingSideEffects();
+
+    this.minimap.create(
+      tileMap.tiles,
+      tileMap.cols,
+      tileMap.rows,
+      tileMap.tileSize,
+      layout.extractionPoint.position,
+    );
+
+    const updateBurden = (): void => {
+      const id = inventoryStore.getEquipment().weaponId;
+      const equipped = id ? inventoryStore.getItem(id) : undefined;
+      this.combat.configureWeapon(equipped?.kind === 'weapon' ? equipped.weapon.definitionId : null);
+      const attributes = getSurvivalAttributes();
+      this.player.setBurdenSpeedFactor(attributes.burdenSpeedFactor);
+      this.hud.setBurden(attributes.weight, attributes.capacity);
+      const equipment = inventoryStore.getEquipment();
+      const makeSlot = (slotId: string, itemId: string | null | undefined, label: string, isPassive = false): RiftEquipmentSlot => {
+        const item = itemId ? inventoryStore.getItem(itemId) : undefined;
+        const view = item ? projectInventoryItem(item, 'prepare') : undefined;
+        return { slotId, itemId: view?.id, label, name: view?.name ?? '未装配', icon: view?.icon, usesRemaining: view?.usesRemaining, maxDurability: view?.maxDurability, isPassive };
+      };
+      const passive = contaminantSystem.getSortiePassiveSlotIndex();
+      this.hud.setEquipment([makeSlot('weapon', equipment.weaponId, '武器'), ...Array.from({ length: contaminantSystem.getSortieSlotCount() }, (_, index) => makeSlot(String(index), equipment.toolIds[index], index === passive ? '被动' : GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[index] ?? '?', index === passive))]);
+    };
+    updateBurden();
+    this.unsubscribeInventory = inventoryStore.subscribe(updateBurden);
+    this.bindAttackKey();
+    this.bindExtractionKeys();
+    this.bindToolKeys();
+    this.beginEntryGate();
+
+
     // Visibility runs after the physics step so the mask and the sprite agree on where
     // the player actually ended up this frame.
     this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
@@ -827,7 +854,7 @@ export class RiftScene extends Phaser.Scene {
 
     this.bindAIStimuli();
     this.ai.setCueListener(this.onAiCue);
-    this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
+    if (!stagedNative) this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
     this.input.keyboard?.on('keydown-TAB', this.openBag, this);
 
     if (this.recovery) this.initializeRecovery(restoring);
@@ -837,7 +864,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number): void {
-    if (this.frameCommit?.isBlocked()) return;
+    if (this.stagedEntry?.isActive() || this.frameCommit?.isBlocked()) return;
     this.resetEntryHeldKeys();
     if (this.nativeEntryFence?.isActive()) return;
     this.frameCommit?.begin();
@@ -968,7 +995,7 @@ export class RiftScene extends Phaser.Scene {
   }
 
   private onPostUpdate(_time: number, delta: number): void {
-    if (this.frameCommit?.isBlocked()) return;
+    if (this.stagedEntry?.isActive() || this.frameCommit?.isBlocked()) return;
     if (this.nativeEntryFence?.isActive()) {
       if (!this.nativeEntryFence.needsPresentation()) return;
       // This frame paints the restored/fresh instant without an AI, physics,
@@ -985,6 +1012,7 @@ export class RiftScene extends Phaser.Scene {
       this.devRuntime?.afterUpdate(this.devElapsedMs);
       this.worldSurface?.afterUpdate(this.devElapsedMs);
       if (!this.commitRuntimeFrame(true)) return;
+      this.cameras.main.setVisible(true);
       this.nativeEntryFence.markPresented();
       return;
     }
@@ -1834,7 +1862,7 @@ export class RiftScene extends Phaser.Scene {
   private createNativeEntryFence(): RiftEntryFrameFence {
     return new RiftEntryFrameFence({
       frame: () => this.game.loop.frame,
-      canPresent: () => this.scene.isActive() && !this.scene.isPaused()
+      canPresent: () => !this.stagedEntry?.isActive() && this.scene.isActive() && !this.scene.isPaused()
         && !document.hidden && !this.frameCommit?.isBlocked(),
       pausePhysics: () => {
         const owned = !this.physics.world.isPaused;
@@ -2326,6 +2354,8 @@ export class RiftScene extends Phaser.Scene {
   private onShutdown(): void {
     if (this.shutdownComplete) return;
     this.shutdownComplete = true;
+    this.stagedEntry?.destroy(); this.stagedEntry = null;
+    if (this.constructionClockPaused !== null) { this.time.paused = this.constructionClockPaused; this.constructionClockPaused = null; }
     this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
     this.events.off(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
     this.nativeEntryFence?.destroy(); this.nativeEntryFence = null;
@@ -2633,7 +2663,7 @@ export class RiftScene extends Phaser.Scene {
 
   /** Read-only recorder sample. No teleport, invulnerability or timing overrides. */
   probeBuildLabState() {
-    if (!import.meta.env.DEV || !this.devFixture) return null;
+    if (!import.meta.env.DEV || !this.devFixture || this.stagedEntry?.isActive() || this.nativeEntryFence?.isActive()) return null;
     return {
       elapsedMs: this.devElapsedMs, ended: this.runController.isRunEnded(),
       player: { ...this.player.getPosition() }, hp: this.combat.getHealth(), chaos: this.chaos.getValue(),

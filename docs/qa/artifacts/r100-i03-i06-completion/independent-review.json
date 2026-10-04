@@ -1,0 +1,42 @@
+{
+  "status": "reviewed-no-new-production-blocker",
+  "scope": "Independent read-only review of root GPU methodology and current P13 implementation/test policies. Not new gameplay evidence or whole-iteration approval.",
+  "sourceManifest": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "gpu": {
+    "timing": "Actual asynchronous EXT GPU queries on separate native WebGL2 and Phaser WebGL1 contexts. Original draw calls run normally; no gl.finish, disjoint samples discarded and query handles deleted. All six severe samples remained alive for over 60 seconds.",
+    "cpuScope": "Phaser Game.js emits POST_STEP before renderer.preRender/render/postRender. The cpu field measures update CPU, excluding Phaser render submission and compositor work.",
+    "gpuScope": "Do not add independent context quantiles as wall-time; one Apple M4 Pro/Chrome154 reference machine, entry-area real movement, not deep-combat or second-hardware approval.",
+    "allocation": "GPU-process root size counted once. Shared-image Gles2 mailbox subtotal is not all private ANGLE allocations or exclusive resident physical VRAM.",
+    "mixedGrowth": "Final mixed-return root growth includes ANGLE +4751360 bytes, Dawn +410588, shared_images +4332800, transfer_memory +13303808, transfer_cache +17376. It is not purely compositor cache. Root is taking bounded repeated mixed-return dumps before final resource interpretation."
+  },
+  "p13": {
+    "sourceChanges": "Only first two authored growth prices 8/9→4/6 and severe deep kindling 3×4→2×6. Later 20 prices unchanged; low/medium numeric budgets unchanged. New definition2/revision3 frozen independently of r1/r2.",
+    "settlement": "LootSearchSystem calls calculateKindlingYield per actual node with frozen affinity/modifier; no global multiplier or clamp to old base4. Already purchased ownership is retained without refund or second charge.",
+    "accounting": "QA uses real before/after saves and actual repair/growth deductions; maintenance planning computes ceil per damaged module. Storage100 remains the fixed-reference effect ceiling even after capacity thickening.",
+    "naturalPolicy": "Prepared natural explicitly rejects controlled world/build/identity fixtures. Equipment/offering uses public presenter facts. Severe targets must have been seen; the distant exploration target reads physical floor geometry, not hidden contents.",
+    "limits": [
+      "Full-map macro terrain routing is disclosed and differs from novice navigation.",
+      "Two independent new saves plus one disclosed mature branch are not three independent origins.",
+      "Two active tools are counted; complementary loadout is a public sorting preference, not a formal guarantee.",
+      "Natural sequences remain incomplete until actual recorded returns finish. Policy revisions and resume boundaries must remain visible.",
+      "UI 1/2/4 loot yields are explicitly examples, not exhaustive grade-specific content previews."
+    ]
+  },
+  "productionChangesMadeByReview": false,
+  "visibleFailureReview": {
+    "report": "docs/qa/artifacts/r100-world-play-coverage/report.json",
+    "ordinal": 1,
+    "log": "docs/qa/artifacts/r100-world-play-coverage/01-cinder-ridge-medium-20261004/journey.jsonl",
+    "outcome": "death at117728.61ms, no collected item",
+    "initialGear": "Ordinary crowbar2/60, amber beetle Q1/F3; owned5-use lure remained in stash; equipmentChanges empty",
+    "observations": 455,
+    "routePlans": 97,
+    "movementInputs": 501,
+    "defensiveSwings": 3,
+    "actualToolConsumptions": 1,
+    "searchKeyAttempts": 0,
+    "chronology": "Far exploration abandoned at42.882s after repeated approach avoidance; still0loot andchaos95.245 at72.480s. Continued northward targets before reserve-triggered retreat, then died far from exit.",
+    "conclusion": "Insufficient preparation and repeatedly yielding automated approach are evidenced. No runtime fault, locked collision or impossible well-prepared search window is established by this case. Retain as actual failed play; do not mark world search/extract qualification passed or change the production map based on this one weak attempt.",
+    "next": "Wait for preregistered genuinely earned mature weapon>=30 and deliberate public loadout. No new browser run or source change performed by this review."
+  }
+}

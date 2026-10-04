@@ -1,0 +1,37 @@
+--- a/tools/world-study/r100-p13-costed-encounters.mjs
++++ b/tools/world-study/r100-p13-costed-encounters.mjs
+@@ -29,15 +29,22 @@
+    }
+    return {visibleSearches:s.search.nodes.filter(n=>!n.collected&&s.visibilityAt(n.position)>.03).map(n=>({id:n.id,pos:{...n.position}})),visibleCells,position:{...s.player.getPosition()},facing:s.player.getFacingAngle(),hp:s.combat.getHealth(),chaos:s.chaos.getValue(),elapsedMs:s.runController.getElapsedMs(),ended:s.runController.isRunEnded(),enemies,hosts};
+   },{visiblePollution,ownSuppressions:[...ownSuppressions].map(([id,until])=>({id,until}))});
+-  clockMs=facts.elapsedMs;for(const node of facts.visibleSearches)knownSearches.set(node.id,node);
++  clockMs=facts.elapsedMs;
++  if(facts.ended){surveyMemory.clear();facts.remembered=[];driver.log({event:'visible-encounter-observation',...facts});return facts;}
++  for(const node of facts.visibleSearches)knownSearches.set(node.id,node);
+   // These are the positions actually displayed by a paid survey, fixed at cast
+   // time. Never refresh them from hidden live subjects or inspect their IDs.
+-  const shown=await page.evaluate(()=>{
++  const surveyRead=await page.evaluate(()=>{
+    const s=window.__game.scene.getScene('RiftScene');
++   // Settlement can happen between the preceding observation and this callback.
++   // Ended runs intentionally no longer own recoverable active tool inventory.
++   if(s.runController.isRunEnded())return {ended:true,shown:null};
+    const effect=s.toolSystem.exportRuntimeState().catalog?.effects.find(e=>e.resolvedParams.familyId==='survey'&&e.remainingTime>0);
+-   return effect?{cast:effect.startTime,remainingMs:effect.remainingTime,snapshot:effect.snapshot}:null;
++   return {ended:false,shown:effect?{cast:effect.startTime,remainingMs:effect.remainingTime,snapshot:effect.snapshot}:null};
+   });
+   surveyMemory.clear();
++  if(surveyRead.ended){facts.ended=true;facts.remembered=[];driver.log({event:'visible-encounter-observation',...facts});return facts;}
++  const shown=surveyRead.shown;
+   if(shown?.snapshot){
+    shown.snapshot.enemyPositions.forEach((position,index)=>surveyMemory.set(`shown-survey:${shown.cast}:${index}`,{id:`shown-survey:${shown.cast}:${index}`,position:{...position},facing:NaN,seen:clockMs,source:'paid-static-survey',expiresMs:clockMs+shown.remainingMs}));
+    facts.displayedSurvey=shown;
+@@ -96,7 +103,7 @@
+   if(!green.length)return;
+   const host=facts.hosts.filter(h=>distance(h.position,facts.position)<115&&green.some(c=>(h.occupancy==='paint'?c.paint:c.air)&&distance(h.position,c)<100)).sort((a,b)=>distance(a.position,facts.position)-distance(b.position,facts.position))[0];
+   if(host&&await useKnown(item=>/压制|烟斗|压住.*污染源/.test(item.name+' '+item.description),'imminent-visible-green-crossing',host.position,3500)){
+-   const actualOwn=await page.evaluate(()=>{const s=window.__game.scene.getScene('RiftScene');return s.toolSystem.exportRuntimeState().catalog?.effects.filter(e=>e.resolvedParams.familyId==='suppress').map(e=>({id:e.targetId,until:e.startTime+e.resolvedParams.durationMs}))??[];});
++   const actualOwn=await page.evaluate(()=>{const s=window.__game.scene.getScene('RiftScene');if(s.runController.isRunEnded())return [];return s.toolSystem.exportRuntimeState().catalog?.effects.filter(e=>e.resolvedParams.familyId==='suppress').map(e=>({id:e.targetId,until:e.startTime+e.resolvedParams.durationMs}))??[];});
+    for(const own of actualOwn)if(facts.hosts.some(h=>h.id===own.id))ownSuppressions.set(own.id,own.until);
+    driver.log({event:'suppression-crossing-commit',host,from:facts.position,to:end,observedGreen:green,ownPaidSuppression:actualOwn});
+    await observe();

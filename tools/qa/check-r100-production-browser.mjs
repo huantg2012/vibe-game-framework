@@ -15,7 +15,32 @@ const grades = (process.env.QA_GRADES ?? 'low,medium,severe').split(',');
 const requestedWorlds = (process.env.QA_WORLDS ?? '').split(',').filter(Boolean);
 const worlds = requestedWorlds.length ? requestedWorlds : [null];
 if (requestedWorlds.length) report.method = 'Controlled coverage: one departure seed per world is selected before any play; the enabled formal pool still selects the world. Real grade/departure/reload controls; preparation opened by its scene method. Fresh ordinary inventory. No outcome, map, health, loot, position or clock overrides. Not a natural expedition/economy sample.';
-const responses = new Map(), pendingResponses = [];
+const responses = new Map(), pendingResponses = [], deferredResponses = new Set();
+const deferAudit = process.env.QA_DEFER_AUDIT === '1', screenshots = process.env.QA_SCREENSHOTS !== '0';
+async function installTimingProbe(page) {
+  if (process.env.QA_STAGE_TIMING !== '1') return;
+  await page.evaluate(async () => {
+    const { RiftScene } = await import('/src/scenes/rift-scene.ts');
+    const stages = [], pictures = []; window.__r100EntryTiming = { stages, pictures, readyAt: null };
+    const create = RiftScene.prototype.createRunSteps, post = RiftScene.prototype.onPostUpdate, fence = RiftScene.prototype.createNativeEntryFence;
+    RiftScene.prototype.createRunSteps = function* (...args) {
+      const original = create.apply(this, args);
+      try { while (true) { const start = performance.now(), result = original.next();
+        stages.push({ start, duration: performance.now() - start, frame: this.game.loop.frame });
+        if (result.done) return; yield;
+      } } finally { original.return(); }
+    };
+    RiftScene.prototype.onPostUpdate = function (...args) {
+      const measure = this.nativeEntryFence?.needsPresentation() && !this.stagedEntry?.isActive();
+      const start = performance.now(), result = post.apply(this, args);
+      if (measure) pictures.push({ start, duration: performance.now() - start }); return result;
+    };
+    RiftScene.prototype.createNativeEntryFence = function (...args) {
+      const result = fence.apply(this, args), released = result.hooks.released;
+      result.hooks.released = () => { released(); window.__r100EntryTiming.readyAt = performance.now(); }; return result;
+    };
+  });
+}
 report.sourceHashMethod = 'Fetch the exact served module/asset URLs independently of worker lifetime. Run only against an immutable source snapshot. Hashes verify served content, not browser cache transfer.';
 try {
   coverage: for (const world of worlds) for (const grade of grades) {
@@ -36,6 +61,7 @@ try {
       // A material worker intentionally terminates after prewarming. Its CDP
       // response body can disappear before Playwright reads it, although the
       // game loaded it successfully. Audit the same frozen URL independently.
+      if (deferAudit) { deferredResponses.add(response.url()); return; }
       pendingResponses.push(fetch(response.url()).then(async source => {
         if (!source.ok) throw new Error(`Source audit HTTP ${source.status}: ${response.url()}`);
         const body = Buffer.from(await source.arrayBuffer());
@@ -72,7 +98,8 @@ try {
           return seed;
         }, { world, grade });
       }
-      await page.screenshot({ path: path.join(out, `${id}-prepare.png`) });
+      if (screenshots) await page.screenshot({ path: path.join(out, `${id}-prepare.png`) });
+      await installTimingProbe(page);
       const timing = Date.now();
       const entryStart = await page.evaluate(() => performance.now());
       const profiler = process.env.QA_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
@@ -80,17 +107,18 @@ try {
       await page.keyboard.press('Shift+Enter', { delay: 100 });
       await page.waitForFunction(() => {
         const s = window.__game?.scene.getScene('RiftScene');
-        return s?.scene.isActive() && s.player && s.nativeWorldPresentation && s.devRuntime;
+        return s?.scene.isActive() && s.player && s.nativeWorldPresentation && s.devRuntime && !s.stagedEntry?.isActive() && !s.nativeEntryFence?.isActive();
       }, null, { timeout: 30000 });
       result.departureMs = Date.now() - timing;
       await page.waitForTimeout(800);
+      if (process.env.QA_STAGE_TIMING === '1') { result.entryTiming = await page.evaluate(() => window.__r100EntryTiming); result.entryWaitMs = result.entryTiming.readyAt - entryStart; }
       result.entryLongTasks = await page.evaluate(start => window.__r100LongTasks.filter(row => row.start >= start), entryStart);
       if (profiler) {
         const profile = await profiler.send('Profiler.stop');
         fs.writeFileSync(path.join(out, `${id}-entry.cpuprofile`), JSON.stringify(profile.profile));
         await profiler.detach();
       }
-      await page.screenshot({ path: path.join(out, `${id}-entry.png`) });
+      if (screenshots) await page.screenshot({ path: path.join(out, `${id}-entry.png`) });
       result.runtime = await page.evaluate(() => {
         const s = window.__game.scene.getScene('RiftScene');
         return { grade: s.chaos.exportRuntimeState(), world: s.nativeWorldPresentation.world.definition,
@@ -120,12 +148,14 @@ try {
       await page.reload();
       await page.waitForFunction(() => window.__game?.scene.isActive('MainMenuScene'));
       await page.waitForTimeout(350);
+      await installTimingProbe(page);
       const restoreStart = await page.evaluate(() => performance.now());
       await page.keyboard.press('Enter', { delay: 100 });
       await page.waitForFunction(() => {
         const s = window.__game?.scene.getScene('RiftScene');
-        return s?.scene.isActive() && s.nativeWorldPresentation && s.devRuntime;
+        return s?.scene.isActive() && s.nativeWorldPresentation && s.devRuntime && !s.stagedEntry?.isActive() && !s.nativeEntryFence?.isActive();
       }, null, { timeout: 30000 });
+      if (process.env.QA_STAGE_TIMING === '1') { result.restoreTiming = await page.evaluate(() => window.__r100EntryTiming); result.restoreWaitMs = result.restoreTiming.readyAt - restoreStart; }
       await page.keyboard.press('Escape', { delay: 100 }); await page.waitForTimeout(150);
       const after = await page.evaluate(() => JSON.parse(localStorage.getItem('coh-save-v1')));
       result.coldReloadLongTasks = await page.evaluate(() => window.__r100LongTasks);
@@ -139,9 +169,16 @@ try {
         result.bodyGeometry = { version: 1, fullBodyCheckpointAdmitted: true, coldBodyPositionPreserved: true };
       }
       result.coldIdentityPreserved = true;
+      result.performanceBudget = { maximumContinuousMs: 50, entryPass: result.entryLongTasks.length === 0,
+        restorePass: result.restoreLongTasks.length === 0, sourceAuditDeferred: deferAudit, serialBrowserCases: true };
+      if (process.env.QA_P01_STRICT === '1') {
+        assert(result.performanceBudget.entryPass, 'entry continuous main-thread task exceeds 50ms');
+        assert(result.performanceBudget.restorePass, 'restore continuous main-thread task exceeds 50ms');
+        if (result.entryTiming) for (const timing of [result.entryTiming, result.restoreTiming]) assert([...timing.stages,...timing.pictures].every(row => row.duration < 50), 'measured native construction/presentation stage must stay below 50ms');
+      }
       assert.deepEqual(result.errors, []);
       result.status = 'passed';
-      await page.screenshot({ path: path.join(out, `${id}-restored.png`) });
+      if (screenshots) await page.screenshot({ path: path.join(out, `${id}-restored.png`) });
       console.log(`${id}: entry and reload passed (${result.departureMs} ms including scene transition)`);
     } catch (error) {
       result.status = 'failed'; result.failure = String(error);
@@ -160,6 +197,7 @@ try {
   report.status = report.cases.every(c => c.status === 'passed') ? 'passed' : 'failed';
 } finally {
   await Promise.all(pendingResponses);
+  for (const url of deferredResponses) { const response = await fetch(url); if (!response.ok) throw new Error(`Deferred source audit ${response.status}: ${url}`); responses.set(new URL(url).pathname, createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex')); }
   report.loadedSourceHashes = Object.fromEntries([...responses.entries()].sort());
   if (report.cases.some(result => result.errors.length)) { report.status = 'failed'; process.exitCode = 1; }
   fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));

@@ -1,0 +1,2086 @@
+{
+  "method": "QA deliberately saturates the actual AudioManager with decoded WebAudio voices. No fake sound implementation. Looping UI is an explicit test fixture; it is not a claim about ordinary play.",
+  "url": "http://127.0.0.1:3083/",
+  "samples": [
+    {
+      "label": "eight-existing-low-voices",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": null,
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-0",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        }
+      ],
+      "ids": [
+        {
+          "id": 2,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-0"
+        },
+        {
+          "id": 3,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1"
+        },
+        {
+          "id": 4,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2"
+        },
+        {
+          "id": 5,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3"
+        },
+        {
+          "id": 6,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4"
+        },
+        {
+          "id": 7,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5"
+        },
+        {
+          "id": 8,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6"
+        },
+        {
+          "id": 9,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7"
+        }
+      ]
+    },
+    {
+      "label": "base-added",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        }
+      ],
+      "ids": [
+        {
+          "id": 3,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1"
+        },
+        {
+          "id": 4,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2"
+        },
+        {
+          "id": 5,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3"
+        },
+        {
+          "id": 6,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4"
+        },
+        {
+          "id": 7,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5"
+        },
+        {
+          "id": 8,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6"
+        },
+        {
+          "id": 9,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7"
+        },
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        }
+      ]
+    },
+    {
+      "label": "ambient-requested",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        }
+      ],
+      "ids": [
+        {
+          "id": 3,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1"
+        },
+        {
+          "id": 4,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2"
+        },
+        {
+          "id": 5,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3"
+        },
+        {
+          "id": 6,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4"
+        },
+        {
+          "id": 7,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5"
+        },
+        {
+          "id": 8,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6"
+        },
+        {
+          "id": 9,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7"
+        },
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        }
+      ]
+    },
+    {
+      "label": "tension-requested",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        }
+      ],
+      "ids": [
+        {
+          "id": 3,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1"
+        },
+        {
+          "id": 4,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2"
+        },
+        {
+          "id": 5,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3"
+        },
+        {
+          "id": 6,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4"
+        },
+        {
+          "id": 7,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5"
+        },
+        {
+          "id": 8,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6"
+        },
+        {
+          "id": 9,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7"
+        },
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        }
+      ]
+    },
+    {
+      "label": "threat-requested",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        }
+      ],
+      "ids": [
+        {
+          "id": 3,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1"
+        },
+        {
+          "id": 4,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2"
+        },
+        {
+          "id": 5,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3"
+        },
+        {
+          "id": 6,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4"
+        },
+        {
+          "id": 7,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5"
+        },
+        {
+          "id": 8,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6"
+        },
+        {
+          "id": 9,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7"
+        },
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        }
+      ]
+    },
+    {
+      "label": "proximity-requested",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        }
+      ],
+      "ids": [
+        {
+          "id": 3,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-1"
+        },
+        {
+          "id": 4,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2"
+        },
+        {
+          "id": 5,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3"
+        },
+        {
+          "id": 6,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4"
+        },
+        {
+          "id": 7,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5"
+        },
+        {
+          "id": 8,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6"
+        },
+        {
+          "id": 9,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7"
+        },
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        }
+      ]
+    },
+    {
+      "label": "alert-admitted",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        },
+        {
+          "key": "sfx-rift-enemy-alert",
+          "instanceId": "sfx-rift-enemy-alert",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 4,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-2"
+        },
+        {
+          "id": 5,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3"
+        },
+        {
+          "id": 6,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4"
+        },
+        {
+          "id": 7,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5"
+        },
+        {
+          "id": 8,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6"
+        },
+        {
+          "id": 9,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7"
+        },
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 11,
+          "key": "sfx-rift-enemy-alert",
+          "instanceId": "sfx-rift-enemy-alert"
+        }
+      ]
+    },
+    {
+      "label": "hurt-admitted",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        },
+        {
+          "key": "sfx-rift-enemy-alert",
+          "instanceId": "sfx-rift-enemy-alert",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-shared-player-hurt",
+          "instanceId": "sfx-shared-player-hurt",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 5,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-3"
+        },
+        {
+          "id": 6,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-4"
+        },
+        {
+          "id": 7,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-5"
+        },
+        {
+          "id": 8,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-6"
+        },
+        {
+          "id": 9,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-fill-7"
+        },
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 11,
+          "key": "sfx-rift-enemy-alert",
+          "instanceId": "sfx-rift-enemy-alert"
+        },
+        {
+          "id": 12,
+          "key": "sfx-shared-player-hurt",
+          "instanceId": "sfx-shared-player-hurt"
+        }
+      ]
+    },
+    {
+      "label": "twelve-same-frame-ui-cues",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 13,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 14,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 15,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 16,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 17,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 18,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 19,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        }
+      ]
+    },
+    {
+      "label": "game-cue-after-ui-flood",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 13,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 14,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 15,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 16,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 17,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 18,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 19,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        }
+      ]
+    },
+    {
+      "label": "paused",
+      "unlocked": true,
+      "paused": true,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": true,
+          "volume": 0.24
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 13,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 14,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 15,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 16,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 17,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 18,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 19,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        }
+      ]
+    },
+    {
+      "label": "pause-held",
+      "unlocked": true,
+      "paused": true,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": true,
+          "volume": 0.24
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": true,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 13,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 14,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 15,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 16,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 17,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 18,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 19,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        }
+      ]
+    },
+    {
+      "label": "resumed",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 10,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 13,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 14,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 15,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 16,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 17,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 18,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        },
+        {
+          "id": 19,
+          "key": "sfx-ui-warning",
+          "instanceId": "sfx-ui-warning"
+        }
+      ]
+    },
+    {
+      "label": "first-disposed",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": null,
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 0,
+      "voices": [],
+      "ids": []
+    },
+    {
+      "label": "full-bed-and-enemy-mix",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [
+        "amb-rift-alien-atmosphere"
+      ],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        },
+        {
+          "key": "amb-rift-alien-atmosphere",
+          "instanceId": "amb:amb-rift-alien-atmosphere",
+          "loop": true,
+          "paused": false,
+          "volume": 0.5
+        },
+        {
+          "key": "bgm-rift-high-chaos",
+          "instanceId": "layer:tension",
+          "loop": true,
+          "paused": false,
+          "volume": 0.012
+        },
+        {
+          "key": "bgm-rift-threat",
+          "instanceId": "layer:threat",
+          "loop": true,
+          "paused": false,
+          "volume": 0.012
+        },
+        {
+          "key": "amb-rift-proximity",
+          "instanceId": "layer:proximity",
+          "loop": true,
+          "paused": false,
+          "volume": 0.01
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-0",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        }
+      ],
+      "ids": [
+        {
+          "id": 20,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 21,
+          "key": "amb-rift-alien-atmosphere",
+          "instanceId": "amb:amb-rift-alien-atmosphere"
+        },
+        {
+          "id": 22,
+          "key": "bgm-rift-high-chaos",
+          "instanceId": "layer:tension"
+        },
+        {
+          "id": 23,
+          "key": "bgm-rift-threat",
+          "instanceId": "layer:threat"
+        },
+        {
+          "id": 24,
+          "key": "amb-rift-proximity",
+          "instanceId": "layer:proximity"
+        },
+        {
+          "id": 25,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-0"
+        },
+        {
+          "id": 26,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-1"
+        },
+        {
+          "id": 27,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-2"
+        }
+      ]
+    },
+    {
+      "label": "ambient-yields-to-hurt",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        },
+        {
+          "key": "bgm-rift-high-chaos",
+          "instanceId": "layer:tension",
+          "loop": true,
+          "paused": false,
+          "volume": 0.012
+        },
+        {
+          "key": "bgm-rift-threat",
+          "instanceId": "layer:threat",
+          "loop": true,
+          "paused": false,
+          "volume": 0.012
+        },
+        {
+          "key": "amb-rift-proximity",
+          "instanceId": "layer:proximity",
+          "loop": true,
+          "paused": false,
+          "volume": 0.01
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-0",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.024
+        },
+        {
+          "key": "sfx-shared-player-hurt",
+          "instanceId": "sfx-shared-player-hurt",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 20,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 22,
+          "key": "bgm-rift-high-chaos",
+          "instanceId": "layer:tension"
+        },
+        {
+          "id": 23,
+          "key": "bgm-rift-threat",
+          "instanceId": "layer:threat"
+        },
+        {
+          "id": 24,
+          "key": "amb-rift-proximity",
+          "instanceId": "layer:proximity"
+        },
+        {
+          "id": 25,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-0"
+        },
+        {
+          "id": 26,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-1"
+        },
+        {
+          "id": 27,
+          "key": "sfx-rift-enemy-idle",
+          "instanceId": "qa-bed-fill-2"
+        },
+        {
+          "id": 28,
+          "key": "sfx-shared-player-hurt",
+          "instanceId": "sfx-shared-player-hurt"
+        }
+      ]
+    },
+    {
+      "label": "ambient-restored",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [
+        "amb-rift-alien-atmosphere"
+      ],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0.3,
+        "threat": 0.3,
+        "proximity": 0.3
+      },
+      "playingCount": 6,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        },
+        {
+          "key": "bgm-rift-high-chaos",
+          "instanceId": "layer:tension",
+          "loop": true,
+          "paused": false,
+          "volume": 0.18
+        },
+        {
+          "key": "bgm-rift-threat",
+          "instanceId": "layer:threat",
+          "loop": true,
+          "paused": false,
+          "volume": 0.18
+        },
+        {
+          "key": "amb-rift-proximity",
+          "instanceId": "layer:proximity",
+          "loop": true,
+          "paused": false,
+          "volume": 0.15
+        },
+        {
+          "key": "sfx-shared-player-hurt",
+          "instanceId": "sfx-shared-player-hurt",
+          "loop": false,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "amb-rift-alien-atmosphere",
+          "instanceId": "amb:amb-rift-alien-atmosphere",
+          "loop": true,
+          "paused": false,
+          "volume": 0.5
+        }
+      ],
+      "ids": [
+        {
+          "id": 20,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        },
+        {
+          "id": 22,
+          "key": "bgm-rift-high-chaos",
+          "instanceId": "layer:tension"
+        },
+        {
+          "id": 23,
+          "key": "bgm-rift-threat",
+          "instanceId": "layer:threat"
+        },
+        {
+          "id": 24,
+          "key": "amb-rift-proximity",
+          "instanceId": "layer:proximity"
+        },
+        {
+          "id": 28,
+          "key": "sfx-shared-player-hurt",
+          "instanceId": "sfx-shared-player-hurt"
+        },
+        {
+          "id": 29,
+          "key": "amb-rift-alien-atmosphere",
+          "instanceId": "amb:amb-rift-alien-atmosphere"
+        }
+      ]
+    },
+    {
+      "label": "base-deferred-by-eight-ui",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": null,
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0.3,
+        "threat": 0.3,
+        "proximity": 0.3
+      },
+      "playingCount": 8,
+      "voices": [
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-0",
+          "loop": true,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-1",
+          "loop": true,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-2",
+          "loop": true,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-3",
+          "loop": true,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-4",
+          "loop": true,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-5",
+          "loop": true,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-6",
+          "loop": true,
+          "paused": false,
+          "volume": 0.8
+        },
+        {
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-7",
+          "loop": true,
+          "paused": false,
+          "volume": 0.8
+        }
+      ],
+      "ids": [
+        {
+          "id": 30,
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-0"
+        },
+        {
+          "id": 31,
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-1"
+        },
+        {
+          "id": 32,
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-2"
+        },
+        {
+          "id": 33,
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-3"
+        },
+        {
+          "id": 34,
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-4"
+        },
+        {
+          "id": 35,
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-5"
+        },
+        {
+          "id": 36,
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-6"
+        },
+        {
+          "id": 37,
+          "key": "sfx-ui-warning",
+          "instanceId": "qa-protected-ui-7"
+        }
+      ]
+    },
+    {
+      "label": "pending-held-during-pause",
+      "unlocked": true,
+      "paused": true,
+      "currentBgmKey": null,
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0.3,
+        "threat": 0.3,
+        "proximity": 0.3
+      },
+      "playingCount": 0,
+      "voices": [],
+      "ids": []
+    },
+    {
+      "label": "pending-base-resumed",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": "bgm-rift-base-drone",
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 1,
+      "voices": [
+        {
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone",
+          "loop": true,
+          "paused": false,
+          "volume": 0.24
+        }
+      ],
+      "ids": [
+        {
+          "id": 38,
+          "key": "bgm-rift-base-drone",
+          "instanceId": "bgm:bgm-rift-base-drone"
+        }
+      ]
+    },
+    {
+      "label": "cancelled-targets-stay-silent",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": null,
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 0,
+      "voices": [],
+      "ids": []
+    },
+    {
+      "label": "disposed",
+      "unlocked": true,
+      "paused": false,
+      "currentBgmKey": null,
+      "activeAmbients": [],
+      "layerVolume": {
+        "base": 0.4,
+        "tension": 0,
+        "threat": 0,
+        "proximity": 0
+      },
+      "playingCount": 0,
+      "voices": [],
+      "ids": []
+    }
+  ],
+  "checks": [
+    {
+      "name": "critical enemy cue admitted over saturated low loops",
+      "passed": true
+    },
+    {
+      "name": "hurt cue admitted over saturated low loops",
+      "passed": true
+    },
+    {
+      "name": "current base retained under UI flood",
+      "passed": true
+    },
+    {
+      "name": "playing UI ids survive subsequent request",
+      "passed": true
+    },
+    {
+      "name": "paused voices and ownership stable",
+      "passed": true
+    },
+    {
+      "name": "resume does not duplicate voices",
+      "passed": true
+    },
+    {
+      "name": "ambient yields, base and hurt remain",
+      "passed": true
+    },
+    {
+      "name": "ambient returns once with request ownership",
+      "passed": true
+    },
+    {
+      "name": "base request does not overbook or interrupt UI",
+      "passed": true
+    },
+    {
+      "name": "pending base not created during pause",
+      "passed": true
+    },
+    {
+      "name": "pending base starts once after resume",
+      "passed": true
+    },
+    {
+      "name": "explicit stop cancels unadmitted base and ambient",
+      "passed": true
+    }
+  ],
+  "maximum": 8,
+  "last": {
+    "label": "disposed",
+    "unlocked": true,
+    "paused": false,
+    "currentBgmKey": null,
+    "activeAmbients": [],
+    "layerVolume": {
+      "base": 0.4,
+      "tension": 0,
+      "threat": 0,
+      "proximity": 0
+    },
+    "playingCount": 0,
+    "voices": [],
+    "ids": []
+  },
+  "errors": []
+}

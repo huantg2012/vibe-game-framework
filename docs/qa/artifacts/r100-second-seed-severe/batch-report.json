@@ -1,0 +1,757 @@
+{
+  "version": 1,
+  "status": "completed-bounded-attempts-pending-process-review",
+  "policy": "policy-freeze.json",
+  "startedAt": "2026-10-04T08:51:47.263Z",
+  "attempts": [
+    {
+      "world": "ivory-basin",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        20261005
+      ],
+      "existingR3Evidence": [],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 1,
+      "dir": "01-ivory-basin-severe-20261004",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T08:51:47.264Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T08:54:36.190Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "ivory-basin",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 3,
+          "elapsedMs": 71463.83999999985,
+          "entryPosition": {
+            "x": 260,
+            "y": 380
+          },
+          "lastPosition": {
+            "x": 228.30978787413832,
+            "y": 460.5790219398119
+          },
+          "hp": 115,
+          "chaos": 139.03755235925493,
+          "kindling": 12,
+          "baseSettled": true,
+          "runId": "f5225bcf-ec79-472b-8ab4-92b885448f25",
+          "returnedIds": [
+            "CAT_f5225bcf-ec79-472b-8ab4-92b885448f25_r100-contaminant-contested-1"
+          ],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        20261005
+      ],
+      "existingR3Evidence": [
+        "r100-world-play-coverage/prepared/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 2,
+      "dir": "02-cinder-ridge-severe-20261004",
+      "status": "failed-script",
+      "startedAt": "2026-10-04T08:51:47.266Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-04T08:53:49.272Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "identity": {
+            "world": "cinder-ridge",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 5,
+          "elapsedMs": 16865.99999999998,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": null,
+          "hp": null,
+          "chaos": null,
+          "kindling": null,
+          "baseSettled": false,
+          "runId": null,
+          "returnedIds": [],
+          "failure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        20261005
+      ],
+      "existingR3Evidence": [
+        "r100-world-play-coverage/prepared/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 3,
+      "dir": "03-pallid-membrane-severe-20261004",
+      "status": "failed-script",
+      "startedAt": "2026-10-04T08:53:49.278Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-04T08:55:27.870Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "identity": {
+            "world": "pallid-membrane",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 1,
+          "elapsedMs": 14766.049999999988,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": null,
+          "hp": null,
+          "chaos": null,
+          "kindling": null,
+          "baseSettled": false,
+          "runId": null,
+          "returnedIds": [],
+          "failure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "schist-shear",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        20261005
+      ],
+      "existingR3Evidence": [
+        "r100-world-play-coverage/prepared/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 4,
+      "dir": "04-schist-shear-severe-20261004",
+      "status": "failed-script",
+      "startedAt": "2026-10-04T08:54:36.194Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-04T08:56:34.222Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "identity": {
+            "world": "schist-shear",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 1,
+          "elapsedMs": 13399.47999999999,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": null,
+          "hp": null,
+          "chaos": null,
+          "kindling": null,
+          "baseSettled": false,
+          "runId": null,
+          "returnedIds": [],
+          "failure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "severe",
+      "seed": 20261005,
+      "existingSeeds": [
+        20261004
+      ],
+      "existingR3Evidence": [
+        "r100-grade-closure/04-splayed-fibres-severe/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 5,
+      "dir": "05-splayed-fibres-severe-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T08:55:27.874Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T08:59:16.021Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "splayed-fibres",
+            "grade": "severe",
+            "seed": 20261005,
+            "revision": 3
+          },
+          "collected": 1,
+          "elapsedMs": 143710.89000000435,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 171.8288416710349,
+            "y": 635.8528658168217
+          },
+          "hp": 70,
+          "chaos": 150,
+          "kindling": 6,
+          "baseSettled": true,
+          "runId": "368a8a18-5e1c-4ad2-a7af-3727d55eb877",
+          "returnedIds": [],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "shell-chain",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        2182309384
+      ],
+      "existingR3Evidence": [
+        "r100-p13/prepared-natural-final/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 6,
+      "dir": "06-shell-chain-severe-20261004",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T08:56:34.225Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T08:59:55.642Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "shell-chain",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 2,
+          "elapsedMs": 116628.64000000122,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 164.1358397004045,
+            "y": 627.9786463191803
+          },
+          "hp": 100,
+          "chaos": 131.589970972736,
+          "kindling": 6,
+          "baseSettled": true,
+          "runId": "b8bc3070-47ea-43c9-ba77-7da89b8ad02a",
+          "returnedIds": [
+            "CAT_b8bc3070-47ea-43c9-ba77-7da89b8ad02a_r100-contaminant-contested-1"
+          ],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "grain-laminate",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        1913868541
+      ],
+      "existingR3Evidence": [
+        "r100-p13/prepared-natural/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 7,
+      "dir": "07-grain-laminate-severe-20261004",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T08:59:16.024Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T09:02:40.244Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "grain-laminate",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 2,
+          "elapsedMs": 126428.27000000146,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 180.25965227326125,
+            "y": 644.660576161135
+          },
+          "hp": 55,
+          "chaos": 147.5071266949548,
+          "kindling": 12,
+          "baseSettled": true,
+          "runId": "60de5b7e-215f-4201-9f88-fa85d172a18e",
+          "returnedIds": [
+            "CAT_60de5b7e-215f-4201-9f88-fa85d172a18e_r100-contaminant-deep-1"
+          ],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "tension-membrane",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        20261005
+      ],
+      "existingR3Evidence": [
+        "r100-world-play-coverage/prepared/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 8,
+      "dir": "08-tension-membrane-severe-20261004",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T08:59:55.646Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T09:03:02.865Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "tension-membrane",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 4,
+          "elapsedMs": 102945.88000000059,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 181.36177449553162,
+            "y": 644.2741880326836
+          },
+          "hp": 55,
+          "chaos": 132.00519650034624,
+          "kindling": 18,
+          "baseSettled": true,
+          "runId": "85aa0179-71c5-4fa1-8f4b-92c5f9c6f252",
+          "returnedIds": [
+            "CAT_85aa0179-71c5-4fa1-8f4b-92c5f9c6f252_r100-contaminant-contested-1",
+            "CAT_85aa0179-71c5-4fa1-8f4b-92c5f9c6f252_r100-contaminant-deep-1"
+          ],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "shell-gel-delta",
+      "grade": "severe",
+      "seed": 20261005,
+      "existingSeeds": [
+        20261004
+      ],
+      "existingR3Evidence": [
+        "r100-grade-closure/06-shell-gel-delta-severe/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 9,
+      "dir": "09-shell-gel-delta-severe-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T09:02:40.248Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T09:05:45.536Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "shell-gel-delta",
+            "grade": "severe",
+            "seed": 20261005,
+            "revision": 3
+          },
+          "collected": 2,
+          "elapsedMs": 108345.65000000097,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 171.05286028400837,
+            "y": 634.6539239585605
+          },
+          "hp": 100,
+          "chaos": 150,
+          "kindling": 12,
+          "baseSettled": true,
+          "runId": "5bf04a56-6a42-4735-8a6e-799b14df44ce",
+          "returnedIds": [
+            "CAT_5bf04a56-6a42-4735-8a6e-799b14df44ce_r100-contaminant-contested-1"
+          ],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261005,
+      "existingSeeds": [
+        20261004
+      ],
+      "existingR3Evidence": [
+        "r100-grade-closure/08-pressed-dunes-severe/report.json"
+      ],
+      "r2Seeds": [
+        4106518112
+      ],
+      "historicalNormalWalkOnly": true,
+      "index": 10,
+      "dir": "10-pressed-dunes-severe-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T09:03:02.869Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T09:06:28.171Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "pressed-dunes",
+            "grade": "severe",
+            "seed": 20261005,
+            "revision": 3
+          },
+          "collected": 4,
+          "elapsedMs": 118645.21000000124,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 172.004957605075,
+            "y": 636.2102091543909
+          },
+          "hp": 115,
+          "chaos": 147.52958028825947,
+          "kindling": 30,
+          "baseSettled": true,
+          "runId": "e2851afc-443e-4374-83f1-c4e2ceef1d37",
+          "returnedIds": [
+            "CAT_e2851afc-443e-4374-83f1-c4e2ceef1d37_r100-contaminant-contested-1"
+          ],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "severe",
+      "seed": 20261005,
+      "existingSeeds": [
+        20261004
+      ],
+      "existingR3Evidence": [
+        "r100-grade-closure/10-ruptured-film-severe/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 11,
+      "dir": "11-ruptured-film-severe-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T09:05:45.540Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T09:08:06.607Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "ruptured-film",
+            "grade": "severe",
+            "seed": 20261005,
+            "revision": 3
+          },
+          "collected": 0,
+          "elapsedMs": 58964.32999999987,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 131.19537466860086,
+            "y": 641.3544768918451
+          },
+          "hp": 10,
+          "chaos": 125.24926780355864,
+          "kindling": 0,
+          "baseSettled": true,
+          "runId": "9cce900e-c8ec-49e3-92c7-b5c8dc7419b8",
+          "returnedIds": [],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "reversed-flow",
+      "grade": "severe",
+      "seed": 20261005,
+      "existingSeeds": [
+        20261004
+      ],
+      "existingR3Evidence": [
+        "r100-grade-closure/11-reversed-flow-severe/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 12,
+      "dir": "12-reversed-flow-severe-20261005",
+      "status": "failed-script",
+      "startedAt": "2026-10-04T09:06:28.174Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-04T09:08:00.357Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "identity": {
+            "world": "reversed-flow",
+            "grade": "severe",
+            "seed": 20261005,
+            "revision": 3
+          },
+          "collected": 3,
+          "elapsedMs": 19049.239999999918,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": null,
+          "hp": null,
+          "chaos": null,
+          "kindling": null,
+          "baseSettled": false,
+          "runId": null,
+          "returnedIds": [],
+          "failure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "film-laminate",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        3651860364
+      ],
+      "existingR3Evidence": [
+        "r100-p13/prepared-natural-final/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 13,
+      "dir": "13-film-laminate-severe-20261004",
+      "status": "failed-script",
+      "startedAt": "2026-10-04T09:08:00.360Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-04T09:09:35.408Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "identity": {
+            "world": "film-laminate",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 2,
+          "elapsedMs": 10482.939999999991,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": null,
+          "hp": null,
+          "chaos": null,
+          "kindling": null,
+          "baseSettled": false,
+          "runId": null,
+          "returnedIds": [],
+          "failure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "gel-fibre",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        3923808871
+      ],
+      "existingR3Evidence": [
+        "r100-p13/prepared-natural/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 14,
+      "dir": "14-gel-fibre-severe-20261004",
+      "status": "completed-script",
+      "startedAt": "2026-10-04T09:08:06.610Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-04T09:10:47.917Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "identity": {
+            "world": "gel-fibre",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 4,
+          "elapsedMs": 75980.30000000008,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 163.1991587992137,
+            "y": 630.0245354467863
+          },
+          "hp": 130,
+          "chaos": 97.47293873953187,
+          "kindling": 30,
+          "baseSettled": true,
+          "runId": "98cd51a4-8ad8-47d1-b1c5-6408ae1c12f5",
+          "returnedIds": [
+            "CAT_98cd51a4-8ad8-47d1-b1c5-6408ae1c12f5_r100-contaminant-contested-1",
+            "WPN_a3af9b51-8864-4448-b72f-63e84b599f81"
+          ],
+          "failure": null,
+          "navigationWarning": null
+        }
+      ]
+    },
+    {
+      "world": "shell-grit",
+      "grade": "severe",
+      "seed": 20261004,
+      "existingSeeds": [
+        887511405
+      ],
+      "existingR3Evidence": [
+        "r100-p13/prepared-natural-final/report.json"
+      ],
+      "r2Seeds": [],
+      "historicalNormalWalkOnly": true,
+      "index": 15,
+      "dir": "15-shell-grit-severe-20261004",
+      "status": "failed-script",
+      "startedAt": "2026-10-04T09:09:35.411Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-04T09:10:55.007Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "identity": {
+            "world": "shell-grit",
+            "grade": "severe",
+            "seed": 20261004,
+            "revision": 3
+          },
+          "collected": 1,
+          "elapsedMs": 16282.679999999986,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": null,
+          "hp": null,
+          "chaos": null,
+          "kindling": null,
+          "baseSettled": false,
+          "runId": null,
+          "returnedIds": [],
+          "failure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+          "navigationWarning": null
+        }
+      ]
+    }
+  ],
+  "endedAt": "2026-10-04T09:10:55.009Z"
+}

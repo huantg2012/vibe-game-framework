@@ -5657,5 +5657,177 @@
       "COH-F011",
       "COH-F052"
     ]
+  },
+  {
+    "id": "COH-E150",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "a089bf78+R100-revision3-final-3086",
+    "scope": "60新出击+60冷续通过，Rift阶段120次无≥50ms长任务；新等候p95 1965ms。六重档补测108构造段最大26.7ms，六冷等候最大1021.9ms。",
+    "limitations": "单M4 Pro/Chrome；六冷等待不能外推60分布。页面reload到菜单基础启动仍100–117ms，非整页无长任务。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i03-i06-completion/entry-performance-summary.json",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F005",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E151",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "a089bf78+R100-revision3-final-3086",
+    "scope": "显式历史V8算术配置只在完整精确身份匹配时用于旧v2恢复；3份历史Node身份在Chrome Worker通过，受控完整v2 runtime正式Continue保持，篡改拒绝。",
+    "limitations": "原identity为真实历史，runtime为公开控制夹具。一个未入签名的材料角度末位差1.11e-16保留；不代表任意未来引擎或真实旧玩家整档全测。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-p05/controlled-continue-final/report.json",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F011",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E152",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "a089bf78+R100-revision3-final-3086",
+    "scope": "12声部饱和场景、7条循环双格式接缝、18组最终六族三级真实混音通过；声部上限8、关键声音准入、pending背景乐及暂停/清理均复验。",
+    "limitations": "实际听感未签。PCM接缝/无削波/提示入声不等于人耳满意；首页与净化点旧循环接缝仍为本轮范围外发现，未改其资产。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/README.md",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F041",
+      "COH-F012",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E153",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "a089bf78+R100-revision3-final-3086",
+    "scope": "修订3全20世界×3档×40种子2400生成、真实Host、身体路线、transfer及CPU冷重构通过，另480保留种子0失败。重度深薪为2×6，旧r1/r2独立执行器保留。",
+    "limitations": "CPU资格不代替真实完整搜撤、美术/听感与长期经济。性能数据含验证负载，不当玩家等待统计。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-i03-i06-completion/revision3/qualification/report.json",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F011",
+      "COH-F013",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E154",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "a089bf78+R100-revision3-final-3086",
+    "scope": "参考机M4 Pro真实Metal：六材料重档各65.6秒，frame p95 18.2–18.4ms；两个WebGL上下文实际GPU查询通过。GC后10同世界/12混合JS+backing增1.275MiB，另三轮混合allocator无持续增长。",
+    "limitations": "入口短程非深处战斗；allocator不是独占物理显存。GPU与CPU及帧间隔各自统计，其他硬件留I14。",
+    "sources": [
+      {
+        "path": "docs/qa/rift-r100-i03-i06-technical.md",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-r100-gpu-allocations.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-r100-gpu-timing.mjs",
+        "role": "code"
+      }
+    ],
+    "features": [
+      "COH-F011",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E155",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "a089bf78+R100-revision3-final-3086",
+    "scope": "90个唯一真实出行与结算完成，30+30+30周期、库存、资源与成长连续；两份独立新档成长投入205/40，真实低档12趟来源的分支投入141。实际搜得、供奉、装备消耗、维修、成长与死亡恢复均有逐笔记录。",
+    "limitations": "两新档加一共享祖先分支，非三独立新档；低中读取全图静态几何/残骸位置，重档仅选择已见残骸，不是同信息盲玩。9次死亡保留；准备分支10次重档薪柴51、维修69，不能据完成90宣称所有等级经济或主观体验通过。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-p13/natural-continuity.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-p13/natural-outcomes.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-p13/review.md",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F028",
+      "COH-F029",
+      "COH-F052"
+    ]
+  },
+  {
+    "id": "COH-E156",
+    "kind": "runtime",
+    "result": "pass",
+    "date": "2026-10-04",
+    "revision": "r100-native-v3-revision-3",
+    "scope": "I03—I06按授权完成内部验收：20世界/60等级当前包资格；每格真实搜返及不同种子路线/受压记录。三母版不同准备实际有效，90趟连续成长与供给已验证。",
+    "limitations": "有限种子、公开披露的诊断几何路线/截图暂停，不是初见胜率。内部结案不代签用户审美，声音实际听感R10、较弱设备I14、长期相对效率R07/I13保留。",
+    "sources": [
+      {
+        "path": "docs/qa/artifacts/r100-grade-closure/experience-review.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i03-i06-completion/internal-completion.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-p13/final-design-review.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/progress/rift-r100.json",
+        "role": "doc"
+      }
+    ],
+    "features": [
+      "COH-F003",
+      "COH-F011",
+      "COH-F012",
+      "COH-F013",
+      "COH-F028",
+      "COH-F029",
+      "COH-F052"
+    ]
   }
 ]

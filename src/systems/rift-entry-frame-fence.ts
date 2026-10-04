@@ -10,7 +10,7 @@ export interface RiftEntryFrameFenceHooks {
 }
 
 export class RiftEntryFrameFence {
-  private readonly constructionFrame: number;
+  private constructionFrame: number;
   private preparedFrame: number | null = null;
   private active = true;
   private readonly ownsPhysicsPause: boolean;
@@ -23,6 +23,13 @@ export class RiftEntryFrameFence {
   }
 
   isActive(): boolean { return this.active; }
+
+  /** A staged owner finishes on a later frame than Scene.create. The first
+   * complete picture must follow the LAST construction stage, not the first. */
+  finishConstruction(): void {
+    if (!this.active || this.preparedFrame !== null) throw new Error('Cannot change a completed entry boundary');
+    this.constructionFrame = this.hooks.frame();
+  }
 
   /** The caller must finish all zero-time visual work and its durable checkpoint
    * before markPresented. A failed save keeps the preparation fence closed. */

@@ -1,0 +1,2128 @@
+{
+  "feature": "COH-F052",
+  "method": "Current r3 run IDs from coverage-after.json, corresponding raw completed-input report, actual settled action receipts and outcomes. Original incomplete/old-revision records are not promoted. No new runs.",
+  "snapshotTotal": 65,
+  "worlds": [
+    {
+      "world": "ash-strata",
+      "label": "无彩层原",
+      "r3SuccessfulSearchReturns": 11,
+      "successfulGrades": [
+        "severe"
+      ],
+      "deaths": 2,
+      "emptyReturns": 1,
+      "maximumObservedHpLost": 105,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "salted_vial",
+          "name": "盐封药瓶",
+          "description": "30秒内抗污增加20",
+          "count": 16
+        },
+        {
+          "definition": "cold_ash_pipe",
+          "name": "冷灰烟斗",
+          "description": "压住一处污染源3秒",
+          "count": 20
+        },
+        {
+          "definition": "blind_needle_compass",
+          "name": "盲针罗盘",
+          "description": "探查4格内目标位置",
+          "count": 13
+        },
+        {
+          "definition": "split_tongue_bell",
+          "name": "裂舌铜铃",
+          "description": "抛出声诱饵持续4秒",
+          "count": 13
+        }
+      ],
+      "runs": [
+        {
+          "runId": "ba20e67b-664e-4a83-8190-3e5d4c280ed0",
+          "grade": "severe",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-p13/costed-mature/resist-suppress-20261004/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 1,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 1,
+          "seconds": 79.76,
+          "hpLost": 105,
+          "finalChaos": 144.3057276760846,
+          "toolsActuallyUsed": [
+            {
+              "definition": "salted_vial",
+              "name": "盐封药瓶",
+              "description": "30秒内抗污增加20",
+              "count": 2
+            },
+            {
+              "definition": "cold_ash_pipe",
+              "name": "冷灰烟斗",
+              "description": "压住一处污染源3秒",
+              "count": 3
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "e1895f0c-38f6-48ab-8c90-b71622646b70",
+          "grade": "severe",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-p13/costed-mature/survey-lure-20261004/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 0,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 69.83,
+          "hpLost": 45,
+          "finalChaos": 128.3656140747094,
+          "toolsActuallyUsed": [
+            {
+              "definition": "blind_needle_compass",
+              "name": "盲针罗盘",
+              "description": "探查4格内目标位置",
+              "count": 3
+            },
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "249c70ba-2689-40b7-b44c-b508f277f3e2",
+          "grade": "severe",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-p13/direct-deep/resist-suppress-20261004/report.json",
+          "ordinal": 1,
+          "outcome": "death",
+          "searches": 3,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 110.36,
+          "hpLost": 100,
+          "finalChaos": 144.3788304324841,
+          "toolsActuallyUsed": [
+            {
+              "definition": "salted_vial",
+              "name": "盐封药瓶",
+              "description": "30秒内抗污增加20",
+              "count": 3
+            },
+            {
+              "definition": "cold_ash_pipe",
+              "name": "冷灰烟斗",
+              "description": "压住一处污染源3秒",
+              "count": 3
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "51fb250a-4035-4907-a593-92855fe64cbb",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-p13/direct-deep/resist-suppress-20261005/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 3,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 2,
+          "newItemsBroughtHome": 3,
+          "seconds": 87.81,
+          "hpLost": 0,
+          "finalChaos": 79.80689838596251,
+          "toolsActuallyUsed": [
+            {
+              "definition": "salted_vial",
+              "name": "盐封药瓶",
+              "description": "30秒内抗污增加20",
+              "count": 2
+            },
+            {
+              "definition": "cold_ash_pipe",
+              "name": "冷灰烟斗",
+              "description": "压住一处污染源3秒",
+              "count": 2
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "90c4500c-6f4d-44b8-a465-6c630cb33bba",
+          "grade": "severe",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-p13/direct-deep/survey-lure-20261004/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 3,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 2,
+          "newItemsBroughtHome": 3,
+          "seconds": 116.19,
+          "hpLost": 30,
+          "finalChaos": 150,
+          "toolsActuallyUsed": [
+            {
+              "definition": "blind_needle_compass",
+              "name": "盲针罗盘",
+              "description": "探查4格内目标位置",
+              "count": 3
+            },
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 2
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "ca599d30-8944-449c-84c7-ee1411535c6a",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-p13/direct-deep/survey-lure-20261005/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 1,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 2,
+          "newItemsBroughtHome": 1,
+          "seconds": 70.33,
+          "hpLost": 30,
+          "finalChaos": 123.54377478853354,
+          "toolsActuallyUsed": [
+            {
+              "definition": "blind_needle_compass",
+              "name": "盲针罗盘",
+              "description": "探查4格内目标位置",
+              "count": 3
+            },
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "bb9f764c-e7fd-4abb-8107-c909790e6484",
+          "grade": "severe",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-p13/prepared/resist-suppress-20261004/report.json",
+          "ordinal": 1,
+          "outcome": "death",
+          "searches": 3,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 82.93,
+          "hpLost": 100,
+          "finalChaos": 123.3414143637739,
+          "toolsActuallyUsed": [
+            {
+              "definition": "salted_vial",
+              "name": "盐封药瓶",
+              "description": "30秒内抗污增加20",
+              "count": 3
+            },
+            {
+              "definition": "cold_ash_pipe",
+              "name": "冷灰烟斗",
+              "description": "压住一处污染源3秒",
+              "count": 3
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "c8805498-a5a5-4d59-8a2d-c7e0ab01f61b",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-p13/prepared/resist-suppress-20261005/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 3,
+          "seconds": 113.91,
+          "hpLost": 45,
+          "finalChaos": 135.5966522669162,
+          "toolsActuallyUsed": [
+            {
+              "definition": "salted_vial",
+              "name": "盐封药瓶",
+              "description": "30秒内抗污增加20",
+              "count": 2
+            },
+            {
+              "definition": "cold_ash_pipe",
+              "name": "冷灰烟斗",
+              "description": "压住一处污染源3秒",
+              "count": 3
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "be2ed932-f5a6-4a51-8c34-ca9734a5a8a2",
+          "grade": "severe",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-p13/prepared/survey-lure-20261004/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 3,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 1,
+          "newItemsBroughtHome": 2,
+          "seconds": 91.71,
+          "hpLost": 45,
+          "finalChaos": 132.22621660935226,
+          "toolsActuallyUsed": [
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "aa752b88-3a94-447f-a227-ee9c5c147f6b",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-p13/prepared/survey-lure-20261005/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 4,
+          "seconds": 96.19,
+          "hpLost": 45,
+          "finalChaos": 134.39904918714802,
+          "toolsActuallyUsed": [
+            {
+              "definition": "blind_needle_compass",
+              "name": "盲针罗盘",
+              "description": "探查4格内目标位置",
+              "count": 1
+            },
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 2
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "410f441e-2877-4b68-8d44-7ced478c4091",
+          "grade": "severe",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-p13/tactical/resist-suppress-20261004/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 119.83,
+          "hpLost": 90,
+          "finalChaos": 150,
+          "toolsActuallyUsed": [
+            {
+              "definition": "salted_vial",
+              "name": "盐封药瓶",
+              "description": "30秒内抗污增加20",
+              "count": 3
+            },
+            {
+              "definition": "cold_ash_pipe",
+              "name": "冷灰烟斗",
+              "description": "压住一处污染源3秒",
+              "count": 3
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "84353f5b-3fc1-4e2e-bd24-7cfc42dd7ba3",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-p13/tactical/resist-suppress-20261005/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 3,
+          "seconds": 70.65,
+          "hpLost": 75,
+          "finalChaos": 101.53761394197262,
+          "toolsActuallyUsed": [
+            {
+              "definition": "salted_vial",
+              "name": "盐封药瓶",
+              "description": "30秒内抗污增加20",
+              "count": 1
+            },
+            {
+              "definition": "cold_ash_pipe",
+              "name": "冷灰烟斗",
+              "description": "压住一处污染源3秒",
+              "count": 3
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "27164eb9-6921-462c-91ed-75f7f9bea87c",
+          "grade": "severe",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-p13/tactical/survey-lure-20261004/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 82.73,
+          "hpLost": 90,
+          "finalChaos": 132.17550174548057,
+          "toolsActuallyUsed": [
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 3
+            },
+            {
+              "definition": "blind_needle_compass",
+              "name": "盲针罗盘",
+              "description": "探查4格内目标位置",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "10cbb129-3f7c-4b50-a1af-57eca6844608",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-p13/tactical/survey-lure-20261005/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 4,
+          "seconds": 90.99,
+          "hpLost": 75,
+          "finalChaos": 136.92106076845758,
+          "toolsActuallyUsed": [
+            {
+              "definition": "blind_needle_compass",
+              "name": "盲针罗盘",
+              "description": "探查4格内目标位置",
+              "count": 2
+            },
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 3
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "crystal-fibre",
+      "label": "晶化林床",
+      "r3SuccessfulSearchReturns": 3,
+      "successfulGrades": [
+        "low",
+        "medium"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 60,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "gray_felt_glove",
+          "name": "灰毡手套",
+          "description": "5秒内自身行动消声",
+          "count": 7
+        }
+      ],
+      "runs": [
+        {
+          "runId": "2e6ede84-8ba3-45f1-840b-a22215fca161",
+          "grade": "low",
+          "seed": 139291024,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 47.58,
+          "hpLost": 15,
+          "finalChaos": 61.67265263200038,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "f4f7ed13-b1d1-4779-ab65-a66ae2636509",
+          "grade": "low",
+          "seed": 1355301196,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 11,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 2,
+          "seconds": 71.15,
+          "hpLost": 60,
+          "finalChaos": 82.88014051600548,
+          "toolsActuallyUsed": [
+            {
+              "definition": "gray_felt_glove",
+              "name": "灰毡手套",
+              "description": "5秒内自身行动消声",
+              "count": 4
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "8a885079-3217-4b13-8d12-bd899df95d9e",
+          "grade": "medium",
+          "seed": 3079307068,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 12,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 17,
+          "newItemsBroughtHome": 1,
+          "seconds": 102.2,
+          "hpLost": 15,
+          "finalChaos": 97.19939548236884,
+          "toolsActuallyUsed": [
+            {
+              "definition": "gray_felt_glove",
+              "name": "灰毡手套",
+              "description": "5秒内自身行动消声",
+              "count": 3
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "ivory-basin",
+      "label": "吸光釉原",
+      "r3SuccessfulSearchReturns": 1,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 75,
+      "actuallyUsedAbilities": [],
+      "runs": [
+        {
+          "runId": "9f4eb4b9-1d66-4209-8db0-149af6b442dc",
+          "grade": "low",
+          "seed": 3768608258,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 8,
+          "outcome": "extract",
+          "searches": 3,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 57.96,
+          "hpLost": 75,
+          "finalChaos": 68.85596976480177,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "cinder-ridge",
+      "label": "余烬脊",
+      "r3SuccessfulSearchReturns": 1,
+      "successfulGrades": [
+        "severe"
+      ],
+      "deaths": 1,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 130,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 2
+        }
+      ],
+      "runs": [
+        {
+          "runId": "ea8ec353-1291-4970-b3a8-267a9d9deb76",
+          "grade": "medium",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/report.json",
+          "ordinal": 1,
+          "outcome": "death",
+          "searches": 0,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 117.73,
+          "hpLost": 130,
+          "finalChaos": 133.88864131868866,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "4b84562d-e403-452b-811e-34e202e97ddb",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 2,
+          "outcome": "extract",
+          "searches": 1,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 0,
+          "seconds": 36.33,
+          "hpLost": 15,
+          "finalChaos": 58.01890877439797,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "pallid-membrane",
+      "label": "苍膜洼",
+      "r3SuccessfulSearchReturns": 4,
+      "successfulGrades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 60,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "hollow_reed_joint",
+          "name": "空节苇管",
+          "description": "抛出声诱饵持续2秒",
+          "count": 5
+        },
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 2
+        }
+      ],
+      "runs": [
+        {
+          "runId": "01f753b0-56e8-4336-933a-6ed35452096a",
+          "grade": "low",
+          "seed": 795410158,
+          "report": "docs/qa/artifacts/r100-p13/natural-low-continuation/report.json",
+          "ordinal": 17,
+          "outcome": "extract",
+          "searches": 6,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 2,
+          "seconds": 80.35,
+          "hpLost": 60,
+          "finalChaos": 83.63464607078447,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 2
+            },
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "a397879e-3975-4041-b4e7-c2a8958abba9",
+          "grade": "medium",
+          "seed": 1391847297,
+          "report": "docs/qa/artifacts/r100-p13/prepared-natural/report.json",
+          "ordinal": 5,
+          "outcome": "extract",
+          "searches": 7,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 3,
+          "seconds": 102.56,
+          "hpLost": 15,
+          "finalChaos": 103.83904720695948,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "d4bc84c7-810f-47da-802d-25a9e4645f5f",
+          "grade": "medium",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 3,
+          "outcome": "extract",
+          "searches": 2,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 1,
+          "seconds": 47.85,
+          "hpLost": 45,
+          "finalChaos": 85.92573641279748,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 2
+            },
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "87d69ee9-180c-4571-b1f1-bf3284db4b2b",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 4,
+          "outcome": "extract",
+          "searches": 1,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 1,
+          "seconds": 33.75,
+          "hpLost": 0,
+          "finalChaos": 50.62490542079772,
+          "toolsActuallyUsed": [],
+          "controlled": true,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "silt-gel",
+      "label": "淤流前沿",
+      "r3SuccessfulSearchReturns": 3,
+      "successfulGrades": [
+        "low",
+        "severe"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 75,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 2
+        },
+        {
+          "definition": "hollow_reed_joint",
+          "name": "空节苇管",
+          "description": "抛出声诱饵持续2秒",
+          "count": 1
+        },
+        {
+          "definition": "split_tongue_bell",
+          "name": "裂舌铜铃",
+          "description": "抛出声诱饵持续4秒",
+          "count": 2
+        }
+      ],
+      "runs": [
+        {
+          "runId": "bdfe22dd-b4ae-41b8-9091-2e0958bdf38b",
+          "grade": "low",
+          "seed": 1184064323,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 7,
+          "outcome": "extract",
+          "searches": 6,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 3,
+          "seconds": 75.25,
+          "hpLost": 45,
+          "finalChaos": 80.76908760399932,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e",
+          "grade": "low",
+          "seed": 2822870216,
+          "report": "docs/qa/artifacts/r100-p13/natural-low-continuation/report.json",
+          "ordinal": 16,
+          "outcome": "extract",
+          "searches": 6,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 3,
+          "seconds": 82.46,
+          "hpLost": 30,
+          "finalChaos": 59.285754778456045,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "03b0e61b-73c6-4577-aba1-dfd964cdf049",
+          "grade": "severe",
+          "seed": 4231264927,
+          "report": "docs/qa/artifacts/r100-p13/prepared-natural/report.json",
+          "ordinal": 3,
+          "outcome": "extract",
+          "searches": 1,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 1,
+          "seconds": 82.65,
+          "hpLost": 75,
+          "finalChaos": 138.40100027678753,
+          "toolsActuallyUsed": [
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 2
+            },
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "schist-shear",
+      "label": "层片剪切带",
+      "r3SuccessfulSearchReturns": 2,
+      "successfulGrades": [
+        "medium",
+        "severe"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 0,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "hollow_reed_joint",
+          "name": "空节苇管",
+          "description": "抛出声诱饵持续2秒",
+          "count": 2
+        },
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 1
+        }
+      ],
+      "runs": [
+        {
+          "runId": "7591a2ae-4351-48d3-86c8-46e5f3c01f40",
+          "grade": "medium",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 5,
+          "outcome": "extract",
+          "searches": 1,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 0,
+          "seconds": 57.93,
+          "hpLost": 0,
+          "finalChaos": 75.37255809279722,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "e8a96578-0d87-42a5-bd63-da4d55ce9ef6",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 6,
+          "outcome": "extract",
+          "searches": 2,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 1,
+          "seconds": 41.48,
+          "hpLost": 0,
+          "finalChaos": 61.16359778611762,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 1
+            },
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "splayed-fibres",
+      "label": "纤维扇流",
+      "r3SuccessfulSearchReturns": 4,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 30,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 2
+        }
+      ],
+      "runs": [
+        {
+          "runId": "27f9bc4a-3c2f-4678-a76b-cde5c182457a",
+          "grade": "low",
+          "seed": 1047684980,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 2,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 2,
+          "seconds": 90.04,
+          "hpLost": 30,
+          "finalChaos": 97.42362703430142,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "69bafc8a-7f3f-4c1b-babe-f556a8c8d41f",
+          "grade": "low",
+          "seed": 265191991,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 8,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 2,
+          "seconds": 72.55,
+          "hpLost": 30,
+          "finalChaos": 79.31682315519923,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "c0340f2e-c530-4d11-87a3-a4133c4e064f",
+          "grade": "low",
+          "seed": 3820905670,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 9,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 1,
+          "seconds": 86.73,
+          "hpLost": 30,
+          "finalChaos": 67.33044001049865,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "3838f4a1-9198-4192-a21f-f82922fbd8bb",
+          "grade": "low",
+          "seed": 3539305309,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 10,
+          "outcome": "extract",
+          "searches": 6,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 3,
+          "seconds": 63.1,
+          "hpLost": 15,
+          "finalChaos": 58.775808561662785,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 2
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "shell-chain",
+      "label": "壳缘阶串",
+      "r3SuccessfulSearchReturns": 1,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 2,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 115,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "silver_back_hand_mirror",
+          "name": "银背袖镜",
+          "description": "原地留下假身5秒",
+          "count": 5
+        },
+        {
+          "definition": "blind_needle_compass",
+          "name": "盲针罗盘",
+          "description": "探查4格内目标位置",
+          "count": 2
+        },
+        {
+          "definition": "inverted_face_mask",
+          "name": "倒脸面具",
+          "description": "原地留下假身11秒",
+          "count": 1
+        }
+      ],
+      "runs": [
+        {
+          "runId": "21297909-9f28-41d6-b359-7a8d7cb46e4f",
+          "grade": "low",
+          "seed": 3758517731,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 2,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 76.75,
+          "hpLost": 30,
+          "finalChaos": 56.82041018399965,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "6138ad48-0399-4dc6-badd-992dd9707450",
+          "grade": "medium",
+          "seed": 873677198,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium-continuation/report.json",
+          "ordinal": 15,
+          "outcome": "death",
+          "searches": 5,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 100.56,
+          "hpLost": 115,
+          "finalChaos": 135.48954201297605,
+          "toolsActuallyUsed": [
+            {
+              "definition": "silver_back_hand_mirror",
+              "name": "银背袖镜",
+              "description": "原地留下假身5秒",
+              "count": 5
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "764ea218-240a-4693-b611-661b1ee24964",
+          "grade": "medium",
+          "seed": 1478596558,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium-continuation/report.json",
+          "ordinal": 18,
+          "outcome": "death",
+          "searches": 6,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 69.83,
+          "hpLost": 115,
+          "finalChaos": 103.07610712011643,
+          "toolsActuallyUsed": [
+            {
+              "definition": "blind_needle_compass",
+              "name": "盲针罗盘",
+              "description": "探查4格内目标位置",
+              "count": 2
+            },
+            {
+              "definition": "inverted_face_mask",
+              "name": "倒脸面具",
+              "description": "原地留下假身11秒",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "grain-laminate",
+      "label": "颗粒层片冲积",
+      "r3SuccessfulSearchReturns": 1,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 0,
+      "actuallyUsedAbilities": [],
+      "runs": [
+        {
+          "runId": "4a7e878e-0fa5-4ebc-8825-70cee1b4aff9",
+          "grade": "low",
+          "seed": 2284058738,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 3,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 2,
+          "seconds": 68.26,
+          "hpLost": 0,
+          "finalChaos": 82.30143221199728,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "tension-membrane",
+      "label": "纤维牵膜",
+      "r3SuccessfulSearchReturns": 3,
+      "successfulGrades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 45,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "hollow_reed_joint",
+          "name": "空节苇管",
+          "description": "抛出声诱饵持续2秒",
+          "count": 1
+        }
+      ],
+      "runs": [
+        {
+          "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73",
+          "grade": "low",
+          "seed": 2773722003,
+          "report": "docs/qa/artifacts/r100-p13/natural-low-continuation/report.json",
+          "ordinal": 18,
+          "outcome": "extract",
+          "searches": 6,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 20,
+          "newItemsBroughtHome": 4,
+          "seconds": 83.71,
+          "hpLost": 45,
+          "finalChaos": 83.02699965628608,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "6e31144b-e442-4b04-92f5-5d6a720fadfc",
+          "grade": "medium",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 7,
+          "outcome": "extract",
+          "searches": 1,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 0,
+          "seconds": 22.12,
+          "hpLost": 0,
+          "finalChaos": 32.57950641279965,
+          "toolsActuallyUsed": [],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "18e0b183-70ba-4768-acae-bb6594479d56",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 8,
+          "outcome": "extract",
+          "searches": 2,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 1,
+          "seconds": 30.43,
+          "hpLost": 0,
+          "finalChaos": 40.89285990399839,
+          "toolsActuallyUsed": [],
+          "controlled": true,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "shell-gel-delta",
+      "label": "壳挡凝胶",
+      "r3SuccessfulSearchReturns": 2,
+      "successfulGrades": [
+        "low",
+        "medium"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 60,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 3
+        }
+      ],
+      "runs": [
+        {
+          "runId": "40c0b289-37f7-4905-80e5-a4d838360b0c",
+          "grade": "low",
+          "seed": 2107593247,
+          "report": "docs/qa/artifacts/r100-p13/natural-low-continuation/report.json",
+          "ordinal": 13,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 90.28,
+          "hpLost": 30,
+          "finalChaos": 81.16287256886955,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 2
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "9d368744-21e6-4cc0-873a-0f5d55e9958f",
+          "grade": "medium",
+          "seed": 2051016189,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 6,
+          "outcome": "extract",
+          "searches": 7,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 4,
+          "seconds": 99.95,
+          "hpLost": 60,
+          "finalChaos": 115.97486411554452,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "pressed-dunes",
+      "label": "压实脊廊",
+      "r3SuccessfulSearchReturns": 3,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 60,
+      "actuallyUsedAbilities": [],
+      "runs": [
+        {
+          "runId": "c92b64aa-e08e-4e7a-994b-27498cd82bdb",
+          "grade": "low",
+          "seed": 959456006,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 3,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 75.93,
+          "hpLost": 60,
+          "finalChaos": 78.64626716399646,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "4852dfe0-b481-4006-8bf0-26fa15a9ed37",
+          "grade": "low",
+          "seed": 1152826573,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium-continuation/report.json",
+          "ordinal": 14,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 2,
+          "seconds": 80.4,
+          "hpLost": 45,
+          "finalChaos": 74.59466472550191,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "bbcd4c9a-494d-426d-a470-8c68d1b4c7fa",
+          "grade": "low",
+          "seed": 1519217261,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium-continuation/report.json",
+          "ordinal": 17,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 3,
+          "seconds": 96.85,
+          "hpLost": 15,
+          "finalChaos": 82.5818755202555,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "ruptured-film",
+      "label": "破膜盆地",
+      "r3SuccessfulSearchReturns": 2,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 2,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 115,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "gray_felt_glove",
+          "name": "灰毡手套",
+          "description": "5秒内自身行动消声",
+          "count": 2
+        },
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 2
+        }
+      ],
+      "runs": [
+        {
+          "runId": "19fda700-a4fc-4778-a90c-693bfdac8ab9",
+          "grade": "low",
+          "seed": 728979412,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 3,
+          "seconds": 72.23,
+          "hpLost": 30,
+          "finalChaos": 77.00168325599978,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "ac9f0982-9bef-4126-8fdf-bf71fb2bca41",
+          "grade": "low",
+          "seed": 1192860939,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 4,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 85.7,
+          "hpLost": 30,
+          "finalChaos": 97.52978585600167,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "162423fe-329e-44a9-9852-3bb7457a5c71",
+          "grade": "medium",
+          "seed": 2966022939,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 7,
+          "outcome": "death",
+          "searches": 6,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 104.96,
+          "hpLost": 115,
+          "finalChaos": 127.52055203716311,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "c7f15f10-37cb-4fb7-b0f4-e199499cc16c",
+          "grade": "medium",
+          "seed": 2848556036,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium-continuation/report.json",
+          "ordinal": 13,
+          "outcome": "death",
+          "searches": 4,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 99.88,
+          "hpLost": 115,
+          "finalChaos": 119.71908363191409,
+          "toolsActuallyUsed": [
+            {
+              "definition": "gray_felt_glove",
+              "name": "灰毡手套",
+              "description": "5秒内自身行动消声",
+              "count": 2
+            },
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 2
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "reversed-flow",
+      "label": "凝胶逆卷",
+      "r3SuccessfulSearchReturns": 1,
+      "successfulGrades": [
+        "medium"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 15,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 1
+        }
+      ],
+      "runs": [
+        {
+          "runId": "86db4153-86fe-413b-a895-e63b7433bfad",
+          "grade": "medium",
+          "seed": 1972744262,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 5,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 11,
+          "newItemsBroughtHome": 2,
+          "seconds": 98.84,
+          "hpLost": 15,
+          "finalChaos": 137.71625845363224,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "laminate-shell",
+      "label": "层片包壳",
+      "r3SuccessfulSearchReturns": 3,
+      "successfulGrades": [
+        "low",
+        "medium"
+      ],
+      "deaths": 0,
+      "emptyReturns": 1,
+      "maximumObservedHpLost": 120,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "sunken_inkstone",
+          "name": "凹心砚台",
+          "description": "脚下重区使敌移速减10%",
+          "count": 8
+        },
+        {
+          "definition": "split_tongue_bell",
+          "name": "裂舌铜铃",
+          "description": "抛出声诱饵持续4秒",
+          "count": 3
+        },
+        {
+          "definition": "hollow_reed_joint",
+          "name": "空节苇管",
+          "description": "抛出声诱饵持续2秒",
+          "count": 1
+        }
+      ],
+      "runs": [
+        {
+          "runId": "fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+          "grade": "low",
+          "seed": 776201803,
+          "report": "docs/qa/artifacts/r100-p13/natural-low-continuation/report.json",
+          "ordinal": 14,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 5,
+          "newItemsBroughtHome": 2,
+          "seconds": 108.45,
+          "hpLost": 15,
+          "finalChaos": 79.78471794975059,
+          "toolsActuallyUsed": [
+            {
+              "definition": "sunken_inkstone",
+              "name": "凹心砚台",
+              "description": "脚下重区使敌移速减10%",
+              "count": 4
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "9e57e958-0582-438e-ad15-a7a17cdb14d9",
+          "grade": "medium",
+          "seed": 2268373189,
+          "report": "docs/qa/artifacts/r100-p13/prepared-natural/report.json",
+          "ordinal": 4,
+          "outcome": "extract",
+          "searches": 3,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 2,
+          "newItemsBroughtHome": 2,
+          "seconds": 104.43,
+          "hpLost": 15,
+          "finalChaos": 132.48863138539195,
+          "toolsActuallyUsed": [
+            {
+              "definition": "split_tongue_bell",
+              "name": "裂舌铜铃",
+              "description": "抛出声诱饵持续4秒",
+              "count": 3
+            },
+            {
+              "definition": "sunken_inkstone",
+              "name": "凹心砚台",
+              "description": "脚下重区使敌移速减10%",
+              "count": 4
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "3402c9a4-5736-43f4-8f91-0393ba7d0d4d",
+          "grade": "medium",
+          "seed": 20261004,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 9,
+          "outcome": "extract",
+          "searches": 2,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 1,
+          "seconds": 41.55,
+          "hpLost": 0,
+          "finalChaos": 43.239447084798115,
+          "toolsActuallyUsed": [],
+          "controlled": true,
+          "navigationWarning": null
+        },
+        {
+          "runId": "17a3b07d-9b1e-4b9f-8fb5-570338dfbd16",
+          "grade": "severe",
+          "seed": 20261005,
+          "report": "docs/qa/artifacts/r100-world-play-coverage/prepared/report.json",
+          "ordinal": 10,
+          "outcome": "extract",
+          "searches": 0,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 82.4,
+          "hpLost": 120,
+          "finalChaos": 138.09109457245543,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 1
+            }
+          ],
+          "controlled": true,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "fibre-silt",
+      "label": "纤维积沙槽",
+      "r3SuccessfulSearchReturns": 2,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 45,
+      "actuallyUsedAbilities": [],
+      "runs": [
+        {
+          "runId": "cacae3b1-506f-4488-8564-7892744fe206",
+          "grade": "low",
+          "seed": 2305927942,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 4,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 2,
+          "seconds": 76.6,
+          "hpLost": 15,
+          "finalChaos": 62.273227856002414,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "bc200fa5-a2a4-46f5-9a25-b80ccfe62d34",
+          "grade": "low",
+          "seed": 2632758341,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 6,
+          "outcome": "extract",
+          "searches": 4,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 1,
+          "seconds": 87.73,
+          "hpLost": 45,
+          "finalChaos": 106.21553210880685,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "film-laminate",
+      "label": "膜覆层片",
+      "r3SuccessfulSearchReturns": 2,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 1,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 115,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "hollow_reed_joint",
+          "name": "空节苇管",
+          "description": "抛出声诱饵持续2秒",
+          "count": 1
+        },
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 1
+        },
+        {
+          "definition": "salted_vial",
+          "name": "盐封药瓶",
+          "description": "30秒内抗污增加20",
+          "count": 2
+        }
+      ],
+      "runs": [
+        {
+          "runId": "4ef5d510-4b4c-47a0-9738-cf73842d9320",
+          "grade": "low",
+          "seed": 389826636,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 9,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 11,
+          "newItemsBroughtHome": 3,
+          "seconds": 79.43,
+          "hpLost": 15,
+          "finalChaos": 89.72383736000347,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "3a392282-ae66-4b4f-8d32-ce723f6d36ff",
+          "grade": "low",
+          "seed": 1455318052,
+          "report": "docs/qa/artifacts/r100-p13/prepared-natural/report.json",
+          "ordinal": 1,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 2,
+          "seconds": 61.61,
+          "hpLost": 45,
+          "finalChaos": 59.28151706930999,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 1
+            },
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "356e32b1-fe75-4e02-b879-58e3db80b772",
+          "grade": "medium",
+          "seed": 3223625892,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "ordinal": 10,
+          "outcome": "death",
+          "searches": 3,
+          "actualSearchAndExtract": false,
+          "kindlingBroughtHome": 0,
+          "newItemsBroughtHome": 0,
+          "seconds": 72.71,
+          "hpLost": 115,
+          "finalChaos": 108.31328802072947,
+          "toolsActuallyUsed": [
+            {
+              "definition": "salted_vial",
+              "name": "盐封药瓶",
+              "description": "30秒内抗污增加20",
+              "count": 2
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "gel-fibre",
+      "label": "凝胶裹纤维",
+      "r3SuccessfulSearchReturns": 3,
+      "successfulGrades": [
+        "low",
+        "severe"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 120,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 4
+        },
+        {
+          "definition": "hollow_reed_joint",
+          "name": "空节苇管",
+          "description": "抛出声诱饵持续2秒",
+          "count": 2
+        }
+      ],
+      "runs": [
+        {
+          "runId": "64720c8c-43aa-4fff-b0a5-76f829e10eea",
+          "grade": "low",
+          "seed": 490208274,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 5,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 3,
+          "seconds": 98.38,
+          "hpLost": 60,
+          "finalChaos": 99.13996008593999,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "9248dc7b-753c-4b6a-ac6d-16956305b181",
+          "grade": "low",
+          "seed": 3807181630,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 12,
+          "outcome": "extract",
+          "searches": 6,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 3,
+          "seconds": 94.16,
+          "hpLost": 45,
+          "finalChaos": 111.18368533211289,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 2
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "c82167f4-e2b7-4947-98f8-bd9a1fafb876",
+          "grade": "severe",
+          "seed": 3923808871,
+          "report": "docs/qa/artifacts/r100-p13/prepared-natural/report.json",
+          "ordinal": 2,
+          "outcome": "extract",
+          "searches": 2,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 3,
+          "newItemsBroughtHome": 1,
+          "seconds": 97.2,
+          "hpLost": 120,
+          "finalChaos": 150,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 2
+            },
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 2
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    },
+    {
+      "world": "shell-grit",
+      "label": "断壳颗粒堤",
+      "r3SuccessfulSearchReturns": 3,
+      "successfulGrades": [
+        "low"
+      ],
+      "deaths": 0,
+      "emptyReturns": 0,
+      "maximumObservedHpLost": 60,
+      "actuallyUsedAbilities": [
+        {
+          "definition": "amber_beetle",
+          "name": "琥珀甲虫",
+          "description": "停住一敌2.5秒；受伤解除",
+          "count": 1
+        },
+        {
+          "definition": "hollow_reed_joint",
+          "name": "空节苇管",
+          "description": "抛出声诱饵持续2秒",
+          "count": 1
+        }
+      ],
+      "runs": [
+        {
+          "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76",
+          "grade": "low",
+          "seed": 4219141812,
+          "report": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "ordinal": 11,
+          "outcome": "extract",
+          "searches": 6,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 14,
+          "newItemsBroughtHome": 4,
+          "seconds": 67.18,
+          "hpLost": 15,
+          "finalChaos": 75.60344143257774,
+          "toolsActuallyUsed": [
+            {
+              "definition": "amber_beetle",
+              "name": "琥珀甲虫",
+              "description": "停住一敌2.5秒；受伤解除",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94",
+          "grade": "low",
+          "seed": 3850102187,
+          "report": "docs/qa/artifacts/r100-p13/natural-low-continuation/report.json",
+          "ordinal": 15,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 3,
+          "seconds": 89.53,
+          "hpLost": 45,
+          "finalChaos": 69.06250028799772,
+          "toolsActuallyUsed": [
+            {
+              "definition": "hollow_reed_joint",
+              "name": "空节苇管",
+              "description": "抛出声诱饵持续2秒",
+              "count": 1
+            }
+          ],
+          "controlled": false,
+          "navigationWarning": null
+        },
+        {
+          "runId": "930171d1-8e2f-48bd-a787-a936f753e271",
+          "grade": "low",
+          "seed": 320850764,
+          "report": "docs/qa/artifacts/r100-p13/natural-medium-continuation/report.json",
+          "ordinal": 16,
+          "outcome": "extract",
+          "searches": 5,
+          "actualSearchAndExtract": true,
+          "kindlingBroughtHome": 8,
+          "newItemsBroughtHome": 2,
+          "seconds": 87.2,
+          "hpLost": 60,
+          "finalChaos": 84.21227882829251,
+          "toolsActuallyUsed": [],
+          "controlled": false,
+          "navigationWarning": null
+        }
+      ],
+      "scope": "Listed actual routes only. Ability receipts prove consumption, not causal advantage. Risk is observed damage/death/empty return, not all hazards or tactical options."
+    }
+  ]
+}

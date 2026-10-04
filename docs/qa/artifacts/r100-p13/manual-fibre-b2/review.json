@@ -1,0 +1,57 @@
+{
+  "worldId": "crystal-fibre",
+  "grade": "severe",
+  "seed": 20261005,
+  "build": "freeze-image",
+  "runId": "9d55a1a0-6ae3-42fe-b2ca-7073df28f38a",
+  "outcome": "extract",
+  "baseSettled": true,
+  "elapsedMs": 28898.739999999623,
+  "hp": 145,
+  "maxHp": 145,
+  "chaos": 72.41891907571603,
+  "kindlingReturned": 12,
+  "deepReturn": true,
+  "deepProof": "Single successful search in frame012 adds12: floor((deep base6 + actual affinity2) × actual storage1.5). No other search performed. Fuel-only search does not populate item revealedNodes.",
+  "weaponBefore": 40,
+  "weaponAfter": 40,
+  "qUses": 1,
+  "fUses": 1,
+  "gUses": 0,
+  "freezeProof": {
+    "targetId": "ENM_INF_03",
+    "frames": [
+      10,
+      11,
+      12
+    ],
+    "position": [
+      767.2420567062267,
+      206.1360780816973
+    ],
+    "remainingMsAtSearchEnd": 433.4199999999978
+  },
+  "decoyProof": {
+    "frame": 13,
+    "targetingDecoy": true,
+    "investigatingLure": true,
+    "target": [
+      640.9094304992815,
+      107.78642013730139
+    ]
+  },
+  "limitations": [
+    "same earned low30 source, two ordinary controlled tools only",
+    "known route and screenshot-paused input; not first-sight/reactive real-time proof",
+    "one same-seed attempt, no no-tool counterfactual or inferred win rate",
+    "other guards chased; not blanket invisibility or universal setup",
+    "audit read only after completed E/R and process exit"
+  ],
+  "sha256": {
+    "fixture.json": "ebeda6f582242b568f57522d3002922221c80e7bad57a85aeaf64565f914cbf6",
+    "controlled-identity.json": "d2a961f7a7cc8eb39941358589f381e09192644805c1a7790504b841538c79f1",
+    "inputs.jsonl": "4b23fcb119b5f11fa71dd903f0863f83d9d7e1fbc56ae1b2b656f8eddd0579d0",
+    "after-play-audit.jsonl": "26e1764bada4bde62bcc723c0d74dc8320ae6f28fb75b635f7dcce6b4d0e1a01",
+    "returned-save.json": "95d3823cc9eaba247e3b5cb6845cc484e79008ca3f8f8f308a2864e054dbbdf0"
+  }
+}

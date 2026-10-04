@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "checkedAt": "2026-10-04T09:12:39.472Z",
+  "frozenInputsMatch": true,
+  "sourceAndHarness": [
+    {
+      "file": "docs/qa/artifacts/r100-p13/natural-low-final/low-growth/browser-storage.json",
+      "sha256": "aeae24a71449f19d7e3278b553db7f261056ccef05a7b618fd7f1f4b1840524b",
+      "expected": "aeae24a71449f19d7e3278b553db7f261056ccef05a7b618fd7f1f4b1840524b"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+      "sha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "expected": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec"
+    },
+    {
+      "file": "tools/world-study/r100-p13-continuous-exploration.mjs",
+      "sha256": "fd36b09c950819fd8681638720e196cc01332912f04d73c6f0901bdf71afcc7c",
+      "expected": "fd36b09c950819fd8681638720e196cc01332912f04d73c6f0901bdf71afcc7c"
+    },
+    {
+      "file": "tools/qa/r100-second-seed-coverage.mjs",
+      "sha256": "9a89193389cbcecb4329dddd7f8d0d9fd167e7c44444fc105142a6368afd7eeb",
+      "expected": "9a89193389cbcecb4329dddd7f8d0d9fd167e7c44444fc105142a6368afd7eeb"
+    },
+    {
+      "file": "tools/world-study/r100-p13-costed-encounters.mjs",
+      "sha256": "72695394cca17b022f35f56dd3a80cfc5759bc2166ba6b555037dc5b349c1a4e",
+      "expected": "72695394cca17b022f35f56dd3a80cfc5759bc2166ba6b555037dc5b349c1a4e"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914",
+      "expected": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2",
+      "expected": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd",
+      "expected": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "normalActionFramesReviewed": 15,
+  "uniqueRunIds": 15,
+  "counts": {
+    "registered": 15,
+    "finished": 15,
+    "reviewedMeaningful": 15,
+    "extracts": 9,
+    "deaths": 6,
+    "completeBaseReturns": 9,
+    "qaTerminalOverreads": 6
+  },
+  "evidence": [
+    {
+      "file": "policy-freeze.json",
+      "sha256": "df2ae41b9557ab9f98367f683610718a814e92fb49c1af364d2ddd9b9b055afe"
+    },
+    {
+      "file": "batch-report.json",
+      "sha256": "9967a953ff9422396849895205f7d2d317911413fac7d2825995ae519082186a"
+    },
+    {
+      "file": "normal-frame-review.json",
+      "sha256": "52adbd59e6474b0d06ff544585eac82b597812560e30b5e95f0950c934b6e384"
+    },
+    {
+      "file": "process-review.json",
+      "sha256": "bff489b21f437c7fc6a5eb266ca25628fb0964afca25fa6b2db5c0c7e97f852a"
+    },
+    {
+      "file": "README.md",
+      "sha256": "2a8812256c87d064000e20dc0ecaa5b33f914fd72cdb670c5b6e324d4412bf49"
+    },
+    {
+      "file": "review-process.mjs",
+      "sha256": "5a5692024676fd0b023d62c5a2f91d5ab9f526a136331211a3e3fecb7c219088"
+    }
+  ]
+}

@@ -42,7 +42,7 @@ function snapshot() {
     forecast: impactSystem.getForecastState(), stability: stabilityTracker.getState() };
 }
 
-check('CSV covers every level exactly once and retains the authored 22-step order and gently exponential 426-kindling total', () => {
+check('CSV covers every level exactly once and retains the authored 22-step order and P13 4/6 introduction with unchanged later prices, 419 total', () => {
   assert.deepEqual(GROWTH_ROUTE_DATA.map(step => `${step.unit}:${step.level}`), [
     'growth_vitality:1', 'growth_kindling_affinity:1', 'growth_defense_slot:1', 'growth_chaos_resist:1',
     'growth_forecast_clarity:1', 'growth_vitality:2', 'thicken:1', 'growth_kindling_affinity:2',
@@ -52,15 +52,15 @@ check('CSV covers every level exactly once and retains the authored 22-step orde
     'thicken:3', 'growth_chaos_resist:5',
   ]);
   const total = GROWTH_ROUTE_DATA.reduce((sum, step) => sum + step.cost, 0);
-  assert.equal(total, 426);
+  assert.equal(total, 419);
   for (const [index, step] of GROWTH_ROUTE_DATA.entries()) {
-    assert.equal(step.cost, Math.round(8 * 1.077 ** index));
+    assert.equal(step.cost, index === 0 ? 4 : index === 1 ? 6 : Math.round(8 * 1.077 ** index));
     if (index > 0) {
       const previous = GROWTH_ROUTE_DATA[index - 1]!.cost;
       assert(step.cost >= previous, 'route price never falls');
       // Integer rounding can turn 14→16 into 14.3% although the underlying
       // authored curve grows 7.7%; the permitted rounded jump remains <=15%.
-      assert(step.cost / previous <= 1.15, 'rounded adjacent increase stays modest');
+      if (index > 2) assert(step.cost / previous <= 1.15, 'unchanged later rounded increase stays modest');
     }
     if (step.unit !== 'thicken') assert.equal(UPGRADE_DATA[step.unit].costs[step.level - 1], step.cost);
   }
@@ -105,7 +105,7 @@ check('all 22 real purchases reject skipped nodes, persist once, reload identica
     assert.equal(growthSystem.getState().progression?.offeringCompleted, false);
     assert.equal(growthSystem.getState().progression?.toolRevealed, false);
   }
-  assert.equal(spent, 426); assert.equal(gameState.getKindlingReserve(), 574);
+  assert.equal(spent, 419); assert.equal(gameState.getKindlingReserve(), 581);
   assert.equal(stabilityTracker.getProgress(), 19);
   assert.equal(growthSystem.getNextStep(), null);
   assert.deepEqual(growthSystem.getRouteProgress(), { completed: 22, total: 22 });
@@ -153,6 +153,31 @@ check('legacy purchases keep effects and skip already-owned nodes without making
   assert.equal(growthSystem.getDefenseSlotBonus(), 2);
   assert.equal(growthSystem.getState().schemaVersion, 2);
   growthSystem.reset(); assert.equal(growthSystem.getDefenseSlotBonus(), 0);
+});
+
+check('P13 changes only unpaid prices: an already-owned first step survives reload without refund or repeated charge', () => {
+  reset();
+  const priorGrowth = growthSystem.getState();
+  priorGrowth.upgrades.growth_vitality = 1;
+  growthSystem.loadState(priorGrowth);
+  gameState.spendKindling(993);
+  assert.equal(gameState.getKindlingReserve(), 7);
+  assert(saveManager.trySave());
+  const before = snapshot();
+  assert(saveManager.load());
+  assert.deepEqual(snapshot(), before, 'reading the old ownership must not refund the changed 8→4 price');
+  assert.equal(growthSystem.getModifiers().vitalityBonus, 15);
+  assert.equal(growthSystem.getNextStep()?.cost, 6);
+  assert.equal(growthSystem.getNextStep()?.id, 'growth_kindling_affinity');
+  assert.deepEqual(purchaseGrowth('growth_vitality'), { ok: false, reason: 'unavailable' });
+  const result = purchaseGrowth('growth_kindling_affinity');
+  assert(result.ok);
+  assert.equal(result.spent, 6);
+  assert.equal(gameState.getKindlingReserve(), 1);
+  assert.equal(growthSystem.getModifiers().kindlingAffinity, 1);
+  const after = snapshot();
+  assert(saveManager.load());
+  assert.deepEqual(snapshot(), after);
 });
 
 const out = process.argv[2] ?? 'docs/qa/artifacts/iteration-29-r2/linear-growth.json';

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "status": "all-14-missing-grade-cells-have-search-return-evidence",
+  "originalAttempts": {
+    "path": "docs/qa/artifacts/r100-grade-closure/summary.json",
+    "sha256": "80c9b751759054b35168166f3938bbad2b96ee16f4319bbd3bf1c557c8ddaca8",
+    "attempts": 14,
+    "passed": 13,
+    "failed": 1
+  },
+  "supplementalAttempts": [
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/review.json",
+      "sha256": "947eccb11171711462b7fef53f103bbb8bb56b9ee9e4f7b9e6ff24c282876315",
+      "world": "fibre-silt",
+      "grade": "severe",
+      "seed": 20261004,
+      "status": "pass-actual-search-extract-return",
+      "runId": "0e26ec36-650e-4047-b839-5dd0e5f4908d"
+    }
+  ],
+  "totalActualAttempts": 15,
+  "cellsClosed": 14,
+  "originalFailedSamplesPreserved": 1,
+  "sourceManifest": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+  "notClaimed": [
+    "All attempts passed",
+    "Second seed covered by this batch",
+    "Natural world selection",
+    "Fresh100HP success",
+    "Human approval",
+    "Subjective listening approval"
+  ]
+}

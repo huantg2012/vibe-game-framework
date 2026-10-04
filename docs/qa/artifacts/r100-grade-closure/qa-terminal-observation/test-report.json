@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "scope": "Applied shared QA helper; no production gameplay change",
+  "target": "file:///Users/yilungao/coh/tools/world-study/r100-p13-costed-encounters.mjs",
+  "results": [
+    {
+      "case": "already-settled-observation-skips-active-tool-export",
+      "pass": true
+    },
+    {
+      "case": "settlement-between-evaluations-skips-active-tool-export",
+      "pass": true
+    },
+    {
+      "case": "genuine-active-runtime-export-failure-still-propagates",
+      "pass": true
+    },
+    {
+      "case": "active-paid-survey-still-exports-original-static-snapshot",
+      "pass": true
+    },
+    {
+      "case": "death-after-paid-suppression-input-skips-followup-active-export",
+      "pass": true
+    }
+  ]
+}

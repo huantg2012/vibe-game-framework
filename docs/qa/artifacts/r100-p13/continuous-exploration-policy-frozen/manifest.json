@@ -1,0 +1,133 @@
+{
+  "createdAt": "2026-10-04T07:07:13.301734+00:00",
+  "revision": 10,
+  "gameUrl": "http://127.0.0.1:3086/",
+  "files": [
+    {
+      "file": "tools/world-study/r100-p13-continuous-exploration.mjs",
+      "sha256": "fd36b09c950819fd8681638720e196cc01332912f04d73c6f0901bdf71afcc7c"
+    },
+    {
+      "file": "tools/world-study/r100-p13-costed-encounters.mjs",
+      "sha256": "72695394cca17b022f35f56dd3a80cfc5759bc2166ba6b555037dc5b349c1a4e"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "source": {
+    "recordedAt": "2026-10-04T06:39:09.505038+00:00",
+    "preregistered": "First actual low-growth return with ready weapon>=30",
+    "checkpoint": {
+      "ordinal": 14,
+      "cycle": 14,
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-p13/natural-low-continuation/low-growth/first-ready-weapon-browser-storage.json",
+      "sha256": "cc2810d73993611fe2af7303bcc193b6cc8aad704c6d8e6979ac6e8a080586ea",
+      "weapon": {
+        "id": "WPN_replacement:fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+        "name": "普通撬棍",
+        "uses": 60
+      },
+      "source": "First qualifying actual low-sequence return after resumed run; no checkpoint selection by results"
+    },
+    "receiptSource": "natural-low-continuation/report.json",
+    "actualState": "natural-low-continuation/low-growth/14-after-preparation.save.json",
+    "returnOutcome": "extract",
+    "baseWeaponReplacement": [
+      {
+        "id": "WPN_replacement:fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+        "definitionId": "crowbar_plain",
+        "uses": 60,
+        "source": "Formal base ensureStarter replacement; not field loot or QA grant"
+      }
+    ],
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 50,
+        "maxHp": 115
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 52,
+        "maxHp": 115
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 51,
+        "maxHp": 115
+      }
+    ],
+    "growth": {
+      "schemaVersion": 2,
+      "upgrades": {
+        "growth_chaos_resist": 1,
+        "growth_kindling_affinity": 1,
+        "growth_vitality": 2,
+        "growth_sortie_slot": 0,
+        "growth_defense_slot": 1,
+        "growth_forecast_clarity": 1
+      },
+      "progression": {
+        "version": 1,
+        "impactExperienced": true,
+        "offeringCompleted": true,
+        "toolRevealed": true,
+        "crestExperienced": true
+      }
+    },
+    "reserve": 5
+  },
+  "fixedCases": [
+    {
+      "build": "resist-suppress",
+      "seed": 20261004,
+      "world": "ash-strata",
+      "grade": "severe"
+    },
+    {
+      "build": "survey-lure",
+      "seed": 20261004,
+      "world": "ash-strata",
+      "grade": "severe"
+    },
+    {
+      "build": "resist-suppress",
+      "seed": 20261005,
+      "world": "ash-strata",
+      "grade": "severe"
+    },
+    {
+      "build": "survey-lure",
+      "seed": 20261005,
+      "world": "ash-strata",
+      "grade": "severe"
+    }
+  ],
+  "reason": "Complete one-direction exploration/search/resume/return state machine; no production edits or new seed selection.",
+  "priorResults": "Policy5 and9 each ran04A/04B only; all four results retained. Their unstarted05 plans are cancellations with zero gameframes, not failed or replaced attempts.",
+  "independentReview": "world_loot_pixels read-only state-machine review before four fixed cases; endpoint observation, deferred targets, current-speed budget and return input coverage. Requested inner-loop wall-time check also applied before freeze. No broader gameplay approval.",
+  "stops": {
+    "searchChaos": 120,
+    "searchHealth": 30,
+    "estimatedReturnChaos": 145,
+    "decisionLimit": 18,
+    "approachWallMs": 25000,
+    "explorationLegWallMs": 42000,
+    "returnVisibleAvoidanceWallMs": 60000,
+    "returnBudgetRecomputeMs": 750,
+    "returnFallback": "After bounded visible avoidance, commit a real body-supported exit path; full real outcome retained."
+  }
+}

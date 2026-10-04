@@ -1,5 +1,6 @@
 /** A departure freezes the exact native geometry/rules. Adding catalog rows does
  * not invalidate previously frozen v3 departures. Existing asset paths are immutable. */
+import { validR100ProductionRecipe as validFrozenR100ProductionRecipe } from '../legacy-r100-v2/executor.js';
 import { R100_MATERIAL_DEPENDENCIES } from '@/generated/r100-package-manifest';
 import { R100_NATIVE_WORLDS } from '@/generated/r100-native-worlds';
 import { R100_EXPEDITION_GRADES } from '@/generated/rift-expedition-grade-data';
@@ -15,7 +16,7 @@ export interface R100PackageIdentity {
   readonly algorithm: 'r100-native';
   readonly version: 3;
   /** Increment/freeze the executor before changing existing algorithm semantics. */
-  readonly algorithmRevision: 1 | 2;
+  readonly algorithmRevision: 1 | 2 | 3;
   readonly dependencyHash: string;
   readonly materials: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>>;
   readonly grade: PollutionGrade;
@@ -35,7 +36,7 @@ function materialDependencies(definition: MasterDefinition): R100PackageIdentity
     return [name, dependency];
   }));
 }
-function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materials: R100PackageIdentity['materials'], revision: 1 | 2 = 2): string {
+function dependencyHash(recipe: Omit<WorldProductionRecipeV3, 'package'>, materials: R100PackageIdentity['materials'], revision: 3 = 3): string {
   // Public copy is frozen for display, but does not redefine the map/loot algorithm.
   return fingerprint({ algorithm: `r100-native@3.${revision}`, native: recipe.nativeDefinition, profile: recipe.profile, space: recipe.space,
     contentFragmentTypeId: recipe.contentFragmentTypeId, grade: recipe.gradeDefinition, contents: recipe.contentDefinition, materials });
@@ -51,8 +52,9 @@ export function createR100ProductionRecipe(worldId: string, seed: number, grade:
   const contentDefinition = R100_EXPEDITION_GRADES.find(row => row.grade_id === grade)!;
   const frozen = { version: 3 as const, requestedSeed: seed, paintGeometryVersion: 2 as const,
     profile: world.profile, space: SPACE_PROFILES[0]!, contentFragmentTypeId: 'frag-outdoor', nativeDefinition, gradeDefinition, contentDefinition };
+  if (contentDefinition.version !== 2) throw new Error('Revision 3 requires expedition definition version 2');
   const materials = materialDependencies(nativeDefinition);
-  return structuredClone({ ...frozen, package: { id: `r100-${worldId}`, algorithm: 'r100-native', version: 3, algorithmRevision: 2,
+  return structuredClone({ ...frozen, package: { id: `r100-${worldId}`, algorithm: 'r100-native', version: 3, algorithmRevision: 3,
     materials, dependencyHash: dependencyHash(frozen, materials), grade } });
 }
 export function selectR100ProductionRecipe(seed: number, grade: PollutionGrade): WorldProductionRecipeV3 {
@@ -67,15 +69,17 @@ export function validR100ProductionRecipe(value: unknown): value is WorldProduct
   try {
     if (!value || typeof value !== 'object') return false;
     const recipe = value as WorldProductionRecipeV3, native = recipe.nativeDefinition, pack = recipe.package;
+    // Old saved packages are validated against their immutable catalog, rules and assets.
+    if (pack?.algorithmRevision === 1 || pack?.algorithmRevision === 2) return validFrozenR100ProductionRecipe(value);
     if (recipe.version !== 3 || recipe.paintGeometryVersion !== 2 || !Number.isSafeInteger(recipe.requestedSeed)
       || recipe.requestedSeed < 0 || recipe.requestedSeed > 0xffffffff || !native || !isPollutionGrade(native.grade)
       || recipe.contentFragmentTypeId !== 'frag-outdoor' || !pack || pack.algorithm !== 'r100-native' || pack.version !== 3
-      || (pack.algorithmRevision !== 1 && pack.algorithmRevision !== 2) || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
+      || pack.algorithmRevision !== 3 || pack.grade !== native.grade || !/^r100-[a-z][a-z0-9-]+$/.test(pack.id)
       || !R100_NATIVE_WORLDS.some(world => `r100-${world.id}` === pack.id)
       || !Array.isArray(native.instances) || native.instances.length < 1 || native.instances.length > 32
       || !Number.isSafeInteger(native.cols) || !Number.isSafeInteger(native.rows) || native.cols < 24 || native.cols > 40 || native.rows < 18 || native.rows > 32
       || !isPollutionGradeDefinition(recipe.gradeDefinition) || recipe.gradeDefinition.id !== native.grade
-      || recipe.contentDefinition?.grade_id !== native.grade || recipe.contentDefinition.version !== 1
+      || recipe.contentDefinition?.grade_id !== native.grade || recipe.contentDefinition.version !== 2
       || recipe.profile?.id !== native.profile || JSON.stringify(recipe).length > 60000) return false;
     const materials = materialDependencies(native), { package: _package, ...frozen } = recipe;
     return equal(pack.materials, materials) && pack.dependencyHash === dependencyHash(frozen, materials, pack.algorithmRevision);

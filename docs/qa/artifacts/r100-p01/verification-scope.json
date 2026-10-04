@@ -1,0 +1,7 @@
+{
+  "typescript": "npx tsc --noEmit passed",
+  "build": "npm run build passed",
+  "recoverySuite": "30 groups passed plus separate new strict legacy-arithmetic-recovery group passed",
+  "dev": "npm run dev -- --host 127.0.0.1 --port 3087 --strictPort; HTTP index 200; owned server stopped afterward",
+  "lint": "No lint script/tool configured. git diff --check and node --check on edited JS tools passed; not claimed as ESLint."
+}

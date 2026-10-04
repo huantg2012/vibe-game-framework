@@ -1,0 +1,56 @@
+{
+  "createdAt": "2026-10-04T06:10:34.656725+00:00",
+  "method": "Pre-execution source migration. No game state is changed: only Playwright origin entry 3076 to3086. Every localStorage name/value remains exact. Initial browser state must still pass real previous-ending continuity assertion. Existing initial24 remain from3076; future batches use final3086.",
+  "oldSource": "docs/qa/artifacts/r100-p13/frozen/source-snapshot.json",
+  "newSource": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "differentFiles": [
+    "data/rift-native-worlds.csv",
+    "public/assets/audio/ambient/amb-rift-alien-atmosphere.mp3",
+    "public/assets/audio/ambient/amb-rift-alien-atmosphere.ogg",
+    "public/assets/audio/ambient/amb-rift-proximity.mp3",
+    "public/assets/audio/ambient/amb-rift-proximity.ogg",
+    "public/assets/audio/bgm/bgm-rift-base-drone.mp3",
+    "public/assets/audio/bgm/bgm-rift-base-drone.ogg",
+    "public/assets/audio/bgm/bgm-rift-high-chaos.mp3",
+    "public/assets/audio/bgm/bgm-rift-high-chaos.ogg",
+    "public/assets/audio/bgm/bgm-rift-threat.mp3",
+    "public/assets/audio/bgm/bgm-rift-threat.ogg",
+    "public/assets/audio/sfx/enemy/sfx-rift-enemy-idle.mp3",
+    "public/assets/audio/sfx/enemy/sfx-rift-enemy-idle.ogg",
+    "public/assets/audio/sfx/enemy/sfx-rift-enemy-overwriter-hum.mp3",
+    "public/assets/audio/sfx/enemy/sfx-rift-enemy-overwriter-hum.ogg",
+    "src/dev/rift-gym-runtime.ts",
+    "src/generated/r100-native-worlds.ts",
+    "src/generated/r100-package-manifest.ts",
+    "src/generation/legacy-rift-generation.ts",
+    "src/generation/legacy-rift-v2/ARITHMETIC-LICENSE",
+    "src/generation/legacy-rift-v2/arithmetic-executor.d.ts",
+    "src/generation/legacy-rift-v2/arithmetic-executor.js",
+    "src/generation/legacy-rift-v2/binary64-fma.ts",
+    "src/generation/legacy-rift-v2/fdlibm-atan2.ts",
+    "src/generation/rift-generation-execute.ts",
+    "src/managers/audio-manager.ts",
+    "src/managers/rift-recovery.ts",
+    "src/scenes/rift-scene.ts",
+    "src/systems/rift-entry-frame-fence.ts",
+    "src/systems/rift-staged-entry.ts"
+  ],
+  "worldScope": "pressed-dunes instances changed; other19 authored world rows identical. Economic CSV/generated, expedition, reward, growth, AI and Host implementations are identical. Rendering/entry/audio/v2 changes are outside this economic result inheritance.",
+  "storage": [
+    {
+      "source": "docs/qa/artifacts/r100-p13/natural-low/low-growth/browser-storage.json",
+      "sourceSha256": "5b3e4a5bc1d875776ea720d8b2eabc82d17a7dd516876960970f17d06d7c634d",
+      "target": "docs/qa/artifacts/r100-p13/final-runtime-handoff/low-growth-storage-3086.json",
+      "targetSha256": "5e12b656dda81234e6edcff4fd11bfcbcbe62181ece0243eab7eadbabdcdedcd",
+      "localStorageValuesUnchanged": true
+    },
+    {
+      "source": "docs/qa/artifacts/r100-p13/natural-medium/medium-growth/browser-storage.json",
+      "sourceSha256": "1cb11da42dcfb1fbbc0bfc9cc85b6c5d284532f9822544d08895edda86d691d3",
+      "target": "docs/qa/artifacts/r100-p13/final-runtime-handoff/medium-growth-storage-3086.json",
+      "targetSha256": "e6f8b828f0cfdf288608cd0822686e22624bc799fcde41bc085ac293ff91468b",
+      "localStorageValuesUnchanged": true
+    }
+  ],
+  "executionStarted": false
+}

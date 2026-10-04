@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-04",
+  "scope": "I03-I06 internal closure, no human approval or major-version release",
+  "ledgerCheck": {
+    "qualifiedWorlds": 20,
+    "qualifiedGradeCases": 60,
+    "productionWorlds": 20,
+    "productionGradeCases": 60,
+    "humanApproved": 0,
+    "warnings": []
+  },
+  "progressSelfTests": 77,
+  "runtimeDependencyCheck": {
+    "worlds": 20,
+    "dependenciesEach": 288,
+    "changedSinceFinalSnapshot": 0
+  },
+  "experienceReportSha256": "d7141ad20cfefc7a7637f78f55faf30cec771198074c76b1ecae7753612a79b3",
+  "qaTerminalGuardTests": 5,
+  "typescript": "pass (code agent final tsc)",
+  "stagedWhitespaceCheck": "pass",
+  "gameState": {
+    "errors": 0,
+    "unowned": 0,
+    "historicalStale": 275,
+    "otherWarnings": 2,
+    "taskChangedStaleExceptIndependentClaude": 0,
+    "cliExitCode": 2,
+    "reason": "Existing historical source drift and independent CLAUDE.md intentionally not globally rebaselined."
+  },
+  "http": {
+    "/": 200,
+    "/r100-gym.html": 200,
+    "/docs/reading/rift-r100.html": 200
+  },
+  "audioMirrors": "assets/audio and public/assets/audio equal",
+  "remainingReleaseReview": [
+    "Actual audio listening R100-R10",
+    "Weaker physical hardware I14",
+    "Matched long-term grade efficiency R07/I13",
+    "User visual approval remains pending"
+  ],
+  "gitPolicy": "Task changes only; independent CLAUDE.md excluded. Local commit, no push."
+}

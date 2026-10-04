@@ -5,7 +5,7 @@ const [header, ...lines] = text.trim().split(/\r?\n/).map(line => line.split(','
 const rows = lines.map(values => {
   if (values.length !== header.length) throw new Error('Invalid expedition row width');
   const row = Object.fromEntries(header.map((key, index) => [key, ['grade_id', 'status', 'label', 'public_risk', 'public_preparation', 'public_reward'].includes(key) ? values[index] : Number(values[index])]));
-  if (!['low', 'medium', 'severe'].includes(row.grade_id) || row.version !== 1
+  if (!['low', 'medium', 'severe'].includes(row.grade_id) || row.version !== 2
     || header.filter(key => !['grade_id', 'status', 'label', 'public_risk', 'public_preparation', 'public_reward'].includes(key)).some(key => !Number.isSafeInteger(row[key]) || row[key] < 0 || row[key] > 32))
     throw new Error('Invalid expedition grade values');
   return row;

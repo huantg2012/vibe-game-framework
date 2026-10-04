@@ -17,17 +17,24 @@ async function install(){await page.evaluate(async()=>{
   player:s.player.exportRuntimeState(),combat:s.combat.exportRuntimeState(),ai:s.ai.exportRuntimeState(),
   chaos:s.chaos.exportRuntimeState(),tools:s.toolSystem.exportRuntimeState(),search:s.search.exportRuntimeState(),
   gate:s.nativeEntryFence?.isActive()??false,paused:s.physics.world.isPaused,saved:localStorage.getItem('coh-save-v1')});
- const create=RiftScene.prototype.createRun,post=RiftScene.prototype.onPostUpdate;
- RiftScene.prototype.createRun=function(...args){
-  const result=create.apply(this,args);if(!this.nativeEntryFence?.isActive())return result;
-  const row={constructed:read(this),phases:[],mode:window.__entryFenceQA.mode};rows.push(row);this.__entryQARow=row;
+ const create=RiftScene.prototype.createRunSteps,post=RiftScene.prototype.onPostUpdate;
+ RiftScene.prototype.createRunSteps=function*(...args){
+  const partial=[];const iterator=create.apply(this,args);let result;
+  while(!(result=iterator.next()).done){
+   const before=localStorage.getItem('coh-save-v1');
+   window.dispatchEvent(new Event('pagehide'));
+   partial.push({frame:this.game.loop.frame,elapsed:this.devElapsedMs,paused:this.physics.world.isPaused,
+    clockPaused:this.time.paused,visible:this.cameras.main.visible,saved:before,
+    afterPagehide:localStorage.getItem('coh-save-v1')});
+   if(partial.length===1){
+    if(window.__entryFenceQA.mode==='early-pause')this.openRecoveredPauseMenu();
+    if(!this.recovery?.checkpoint)window.dispatchEvent(new KeyboardEvent('keydown',{key:'d',code:'KeyD',keyCode:68,bubbles:true}));
+   }
+   yield;
+  }
+  if(!this.nativeEntryFence?.isActive())return;
+  const row={constructed:read(this),partial,phases:[],mode:window.__entryFenceQA.mode};rows.push(row);this.__entryQARow=row;
   window.dispatchEvent(new Event('pagehide'));row.afterEarlyPagehide=localStorage.getItem('coh-save-v1');
-  // Exercise the real pause route while the scene has no complete native frame.
-  if(row.mode==='early-pause')this.openRecoveredPauseMenu();
-  if(!this.recovery?.checkpoint)window.dispatchEvent(new KeyboardEvent('keydown',{key:'d',code:'KeyD',keyCode:68,bubbles:true}));
-  const scene=this;
-  this.game.events.once('postrender',()=>{row.firstRender=read(scene);});
-  return result;
  };
  RiftScene.prototype.onPostUpdate=function(...args){
   const active=this.nativeEntryFence?.isActive(),result=post.apply(this,args);
@@ -50,7 +57,9 @@ function compareFrozen(row){
   for(const field of ['elapsed','physicsElapsed','player','combat','ai','chaos','tools','search'])
    assert.deepEqual(s[field],row.constructed[field],`${field} advanced before first full render`);
  }
- assert(row.firstRender.gate,'construction render must remain fenced');
+ assert(row.partial.length>=5,'native construction must actually yield bounded stages');
+ for(const stage of row.partial){assert(stage.paused&&stage.clockPaused&&!stage.visible);assert.equal(stage.elapsed,0);assert.equal(stage.afterPagehide,stage.saved);}
+ assert(new Set(row.partial.map(s=>s.frame)).size===row.partial.length,'stages must span real rendering opportunities');
  assert(row.pausedSceneResolved,'queued early pause must land before another gameplay frame');
  const checkpoint=JSON.parse(row.released.saved).riftCheckpoint;
  assert(checkpoint&&checkpoint.elapsedMs===row.constructed.elapsed,'first zero-time checkpoint must be durable');

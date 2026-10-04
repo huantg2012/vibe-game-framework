@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-10-04T08:27:35.991Z",
+  "world": "ivory-basin",
+  "family": "suture-shell",
+  "grade": "severe",
+  "seed": 20261005,
+  "gameUrl": "http://127.0.0.1:3086",
+  "label": "Initial fresh A",
+  "maxHp": 100,
+  "build": "resist-suppress",
+  "result": "deep search completed but died before return",
+  "gate": false,
+  "observation": "Northern outer shell route was a closed dead end. Two pursuers cost health. Later deep-2 was searched at10HP, then death while starting retreat. Original failure retained; setup-failure was an invalid world ID before any expedition.",
+  "finalPublicState": {
+    "hp": 0,
+    "chaos": 70.77283851519971,
+    "kindling": 3,
+    "elapsedMs": 34265.2699999997,
+    "ended": true,
+    "paused": false,
+    "prompt": null,
+    "tools": [
+      {
+        "slot": 0,
+        "empty": true
+      },
+      {
+        "slot": 1,
+        "empty": true
+      }
+    ]
+  },
+  "outcome": "death",
+  "kindlingReturned": 0,
+  "revealedNodes": {
+    "r100-contaminant-safe-1": [
+      "CAT_b462af1d-a339-4066-b3e4-c4363d5f4fc9_r100-contaminant-safe-1"
+    ],
+    "r100-kindling-contested-1": [
+      "WPN_8a4b5c3d-5258-4805-9d4b-6a0ba0be3d02"
+    ],
+    "r100-contaminant-deep-2": [
+      "CAT_b462af1d-a339-4066-b3e4-c4363d5f4fc9_r100-contaminant-deep-2"
+    ]
+  },
+  "returnedIds": [],
+  "deepReturnedIds": [],
+  "sourceManifest": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "returnedSaveSha256": "b79857e8dc4aea011b0c645b4cc229ada8fd24b968bc6dac8e1a672ff8111c0b",
+  "limits": [
+    "Single fixed-seed attempt with normal Escape screenshot decision pauses, not continuous reflex play.",
+    "Only normal screenshots/HUD/explored minimap and prior observed route drove actions; depth classification read only after actual return.",
+    "Two ordinary mature tools are explicit fixture preparation. Earned variants preserve real30-expedition original save growth/weapon/defenses; no extra passive or G action.",
+    "No stable success rate, natural economy, human art approval or actual listening conclusion."
+  ]
+}

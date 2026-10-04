@@ -1,0 +1,53 @@
+{
+  "createdAt": "2026-10-04T05:42:06.339410+00:00",
+  "reason": "Explicit prepared expedition: skip near-entry sweep, commit once to far full-body-support terrain region; search only actually seen remains beyond 240px from spawn. Geometry route is disclosed, hidden loot/tiers/AI not used.",
+  "cases": [
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "build": "resist-suppress"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261005,
+      "build": "resist-suppress"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "build": "survey-lure"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261005,
+      "build": "survey-lure"
+    }
+  ],
+  "sources": [
+    {
+      "file": "tools/world-study/r100-p13-deep-journeys.mjs",
+      "sha256": "83ba98a1fd2f83855c7a53d7c84e6017d19f8ce5e67bc3c244dd5599f5784f7a"
+    },
+    {
+      "file": "tools/world-study/r100-p13-deep-encounters.mjs",
+      "sha256": "491a2637445ca6b475292f6e65fe88e185a903d8fc0de064416258555211fa04"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "gameUrl": "http://127.0.0.1:3076/"
+}

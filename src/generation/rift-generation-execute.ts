@@ -14,7 +14,7 @@ export function executeRiftGeneration(input: RiftGenerationInput): RiftGeneratio
     || input.identity.seed < 0 || input.identity.seed > 0xffffffff)) throw new Error('Unsupported procedural world');
   if ((input.kind === 'departure' || generation !== undefined) && !(validLegacyWorldRecipe(generation) || validR100ProductionRecipe(generation)))
     throw new Error('Invalid historical world recipe');
-  const world = generation ? generation.version === 3 ? createR100ProductionMap(generation) : restoreLegacyProductionWorld(generation) : null;
+  const world = generation ? generation.version === 3 ? createR100ProductionMap(generation) : restoreLegacyProductionWorld(generation, input.kind === 'recovery' ? input.identity : undefined) : null;
   const layout = world?.layout ?? restoreLegacyProceduralLayout(input.kind === 'recovery' ? input.identity.seed : -1);
   const identity = generatedRiftIdentity(layout, generation, world);
   if (input.kind === 'recovery') assertMatchingRiftIdentity(identity, input.identity);

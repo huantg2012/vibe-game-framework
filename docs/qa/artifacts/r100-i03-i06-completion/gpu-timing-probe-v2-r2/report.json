@@ -1,0 +1,825 @@
+{
+  "status": "measured-real-gpu",
+  "base": "http://127.0.0.1:3074",
+  "environment": {
+    "platform": "darwin",
+    "cpu": "Apple M4 Pro",
+    "browser": "154.0.8037.93"
+  },
+  "method": "Real held-key motion in six native severe families. EXT_disjoint_timer_query_webgl2 wraps the original draw methods; samples are read asynchronously, never gl.finish. Disjoint intervals are discarded, query handles deleted. Production damage, clocks, visibility, enemies and shader unchanged.",
+  "limitations": "Two independent GPU contexts; their distributions are not added as if synchronous wall time. Excludes browser composition/scanout, shader compilation and entry. Instrumented frame times are diagnostic, not the uninstrumented P01 acceptance. One physical reference machine. Timer-query overhead is present.",
+  "cases": [
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "support": [
+        {
+          "name": "native-material",
+          "supported": true,
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)"
+        },
+        {
+          "name": "phaser",
+          "supported": true,
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)"
+        }
+      ],
+      "duration": 7266.119999999998,
+      "ended": false,
+      "frames": {
+        "count": 435,
+        "p50": 16.700000047683716,
+        "p95": 18.09999990463257,
+        "p99": 18.59999990463257,
+        "max": 18.600000143051147
+      },
+      "cpu": {
+        "count": 436,
+        "p50": 5.1000001430511475,
+        "p95": 6.300000190734863,
+        "p99": 7.299999952316284,
+        "max": 10.799999952316284
+      },
+      "gpu": [
+        {
+          "name": "native-material",
+          "supported": true,
+          "api": "WebGL2",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "discarded": 0,
+          "skipped": 0,
+          "pendingAtEnd": 0,
+          "milliseconds": {
+            "count": 436,
+            "p50": 0.346208,
+            "p95": 0.421083,
+            "p99": 0.63875,
+            "max": 1.197
+          }
+        },
+        {
+          "name": "phaser",
+          "supported": true,
+          "api": "WebGL1",
+          "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+          "discarded": 0,
+          "skipped": 0,
+          "pendingAtEnd": 0,
+          "milliseconds": {
+            "count": 436,
+            "p50": 0.18125,
+            "p95": 0.31375,
+            "p99": 0.83475,
+            "max": 2.079833
+          }
+        }
+      ],
+      "start": {
+        "elapsedMs": 798.6866666666682,
+        "ended": false,
+        "player": {
+          "x": 260,
+          "y": 380
+        },
+        "hp": 100,
+        "chaos": 15.403815978666673,
+        "chaosRate": 0.5056,
+        "pollutionGrade": "severe",
+        "volumeSightMultiplier": 1,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 10
+        },
+        "enemies": [
+          {
+            "id": "ENM_INF_01",
+            "state": "patrol",
+            "position": {
+              "x": 676.4500000000011,
+              "y": 100
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "ENM_INF_02",
+            "state": "patrol",
+            "position": {
+              "x": 787.5499999999989,
+              "y": 276
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "ENM_INF_03",
+            "state": "patrol",
+            "position": {
+              "x": 580.4500000000011,
+              "y": 52
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "ENM_RWR_01",
+            "state": "patrol",
+            "position": {
+              "x": 728.3680934494804,
+              "y": 488.3680934494804
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_BING_01",
+            "substrate": "oil_film",
+            "position": {
+              "x": 80,
+              "y": 208
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_02",
+            "substrate": "oil_film",
+            "position": {
+              "x": 112,
+              "y": 432
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_03",
+            "substrate": "oil_film",
+            "position": {
+              "x": 560,
+              "y": 528
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_04",
+            "substrate": "oil_film",
+            "position": {
+              "x": 400,
+              "y": 112
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_05",
+            "substrate": "oil_film",
+            "position": {
+              "x": 784,
+              "y": 112
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_06",
+            "substrate": "oil_film",
+            "position": {
+              "x": 816,
+              "y": 496
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 122.73981236363636,
+              "y": 528
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "rest",
+              "elapsedMs": 798.6866666666682,
+              "hazardActive": false
+            }
+          },
+          {
+            "id": "ENM_DING_02",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 794.7398123636364,
+              "y": 80
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "rest",
+              "elapsedMs": 798.6866666666682,
+              "hazardActive": false
+            }
+          },
+          {
+            "id": "ENM_DING_03",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 634.7398123636364,
+              "y": 560
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "rest",
+              "elapsedMs": 798.6866666666682,
+              "hazardActive": false
+            }
+          }
+        ]
+      },
+      "end": {
+        "elapsedMs": 8064.806666666666,
+        "ended": false,
+        "player": {
+          "x": 259.29847004139407,
+          "y": 383.0181096915076
+        },
+        "hp": 100,
+        "chaos": 19.077566250666536,
+        "chaosRate": 0.5056,
+        "pollutionGrade": "severe",
+        "volumeSightMultiplier": 1,
+        "attack": {
+          "phase": "idle",
+          "cooldownRemainingMs": 0
+        },
+        "kindling": 0,
+        "search": {
+          "prompt": null,
+          "progress": null,
+          "remaining": 10
+        },
+        "enemies": [
+          {
+            "id": "ENM_INF_01",
+            "state": "patrol",
+            "position": {
+              "x": 704.8036038645873,
+              "y": 117.99999999999999
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "ENM_INF_02",
+            "state": "patrol",
+            "position": {
+              "x": 728.6746050436144,
+              "y": 230.5257619074825
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "ENM_INF_03",
+            "state": "patrol",
+            "position": {
+              "x": 639.3253949563865,
+              "y": 97.47423809251835
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          },
+          {
+            "id": "ENM_RWR_01",
+            "state": "patrol",
+            "position": {
+              "x": 723.9133207280048,
+              "y": 483.9133207280048
+            },
+            "hp": 75,
+            "detection": 0,
+            "engaged": false,
+            "visible": false
+          }
+        ],
+        "hosts": [
+          {
+            "id": "ENM_BING_01",
+            "substrate": "oil_film",
+            "position": {
+              "x": 80,
+              "y": 208
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_02",
+            "substrate": "oil_film",
+            "position": {
+              "x": 112,
+              "y": 432
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_03",
+            "substrate": "oil_film",
+            "position": {
+              "x": 560,
+              "y": 528
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_04",
+            "substrate": "oil_film",
+            "position": {
+              "x": 400,
+              "y": 112
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_05",
+            "substrate": "oil_film",
+            "position": {
+              "x": 784,
+              "y": 112
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_BING_06",
+            "substrate": "oil_film",
+            "position": {
+              "x": 816,
+              "y": 496
+            },
+            "hazardReleased": true,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false
+          },
+          {
+            "id": "ENM_DING_01",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 122.93830870588235,
+              "y": 528
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "disperse",
+              "elapsedMs": 8064.806666666666,
+              "hazardActive": false
+            }
+          },
+          {
+            "id": "ENM_DING_02",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 794.9383087058824,
+              "y": 80
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "disperse",
+              "elapsedMs": 8064.806666666666,
+              "hazardActive": false
+            }
+          },
+          {
+            "id": "ENM_DING_03",
+            "substrate": "gas_mass",
+            "position": {
+              "x": 634.9383087058824,
+              "y": 560
+            },
+            "hazardReleased": false,
+            "suppressionRemainingMs": 0,
+            "delayRemainingMs": 0,
+            "recoveryWarning": false,
+            "volume": {
+              "phase": "disperse",
+              "elapsedMs": 8064.806666666666,
+              "hazardActive": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "sourceHashes": {
+    "/src/dev/rift-gym.css": "40272f3bd6ea6ec2e364c254262649f9c1cb578e5da066e23604c1748cfe1d88",
+    "/src/dev/r100-gym.ts": "73e9026991c96693c96ed4fd3196ffa340cfa6b8502619483d256e1b2b64a76e",
+    "/src/generated/build-lab-data.ts": "0b4f52f44f412638dfbf243aec37ca1734463b26c00760b4f863715f44814c80",
+    "/src/generation/rift-generation-protocol.ts": "3d0a7c4a870aea79a16ee1492246bc04505e873e29469027a34638995373438c",
+    "/src/core/event-bus.ts": "5ffb89d2a3d98b7b47aa2ac5360741131e7862519f793b0429795b5420958f59",
+    "/src/managers/audio-manager.ts": "b5bcaf57b5828a4f1a3a4d3cbcacb26776608cb64780b11e340c62a12ef4c8f1",
+    "/src/generation/world-study/r100-package.ts": "74eed1e1fe60a50004f21be1082b9013184ca152ccfb654488abbd24f36d74b5",
+    "/src/managers/save-manager.ts": "e0783db29ce949611b1774a3e583f768cdb8ee4508f40d85e79c5f26b5f50128",
+    "/src/generated/r100-native-worlds.ts": "3dd6bbf20789114b9a448bbcf3a7c361d8002744fa0337a92d653c8076b4875d",
+    "/src/systems/contaminant-system.ts": "8667632176214d9749962473b718863f59c90082a5cd775858bdfc4c9fb3247f",
+    "/src/config/game-config.ts": "40dca4da13f8e45c2a38c73a115bf9daa5d87ebe6e7465e400fcf7d5e446ec4e",
+    "/src/scenes/boot-scene.ts": "d9e7f494a95cca390679ccb5675a106e21f691cb54f41a19a538f4ba9c2f3b27",
+    "/src/scenes/placeholder-textures.ts": "f4da4bfc63a65d975f4e4019d0f26459fbe23008ea011c46c5aff2bc5c263ff8",
+    "/src/types/events.ts": "c50deb5865f12b7e76a7c991870c6fcf6fe5d92496aaf98b47b9e23e655c2f9d",
+    "/src/dev/rift-gym-runtime.ts": "94e7da291cf8166cbf8e39f64a34a10aba15fc2bbd9a88b5e31a3033db338fed",
+    "/src/systems/r100-world-presentation.ts": "aeb7689ca634b4eb155b46c7264664c0acbee357f99a49b1b2b106b9290e3496",
+    "/src/types/game-types.ts": "0dd212d4f07387071a5f63b555839056fafc8fdba95ffee219fe103bfe91dff6",
+    "/src/generation/world-study/pollution-grade.ts": "e08d3357004085f8fa21de66382366ace7754ea8e3926276bce7427f3cc025c5",
+    "/src/dev/build-lab-session.ts": "4759fa1f7607b920e05333c73f058e70b9efc1a10d025f00d9af5d8493911e8d",
+    "/src/ui/dom/panel-styles.ts": "47e758df42cb7b7f25a0fde16e08db3e37f844f831af828a928cca868d679f87",
+    "/src/systems/r100-world/prepared-gameplay.ts": "c7a503b9bbd8d041a97cafe42c9bef06990c0e290bb373504578c4d6c9197052",
+    "/src/generation/world-study/r100-native-data.ts": "8dc28ced3842e85891aac58583ccb8fc85e18233eac8c1a16189a835b020b60d",
+    "/src/generated/r100-package-manifest.ts": "92be98990e12b2f064c987f2ae5a4c4c7e6805fbb05e9747477c947995d6b52c",
+    "/src/generated/r100-materials.ts": "a90c4f4db1f61f59ab2a32b6878fed98ad025f5beeb6d4729eb18c7ac7e81b82",
+    "/src/systems/r100-world/painted-material.ts": "3c7d2828cdc6e45f1e90d25c9103c6eb30ae4dd3963948319dc2760a187fd500",
+    "/src/systems/r100-world/presentation.ts": "ad5a61a21734e1c3b9a8fe4cf19a6779adace2d644d6993e290b6b1170915bbf",
+    "/src/systems/r100-world/surface-renderer.ts": "c4e5fd5cd9b1ea4d47a59efc0430da6d20007d1cee536a559bf1cc497e5cfcf7",
+    "/src/systems/r100-world/surface-preparation-client.ts": "f2012946505196dbfb8a7d2125e2b7fadbddeba9033e03e97178541182cdad5e",
+    "/src/systems/r100-world/surface-preparation.ts": "1df2bfa4b3a56c73bc9438058822ab2eea0741b7dd1978198394eda95d0746a6",
+    "/src/generated/rift-expedition-grade-data.ts": "e931b0e1cfb068aec932f8457f79cf07f0a40d23821ae2b1346c2206a2d3cd56",
+    "/src/systems/tile-grid.ts": "fc5f4caef21a7729ff5333ce95e22e87995d9a41cd429e3f9c05ea8c4f26468f",
+    "/src/generation/rift-generation-client.ts": "a50733f182823d1f3cdae06ed4b7e47595d7d260f71d8ee8398d0f83585a4c1c",
+    "/src/generation/world-study/space-profile.ts": "602429a99888a3459152e8f7742b035f835ece3913b4e25376126c0fe11697fa",
+    "/src/generated/rift-world-space-data.ts": "4c114712bbe9225bfd1bfc2a967e192e26ffcfbe70e72277e874fb13b51ee8f0",
+    "/src/entities/form-renderers/d/paint-genome/topology.ts": "a292e5c574bc7e4a66c10839201f30d3898e3900d2c6d86df6670cea1755518e",
+    "/src/core/commit-effects.ts": "0027c7b29e3adead4350a20e4ea6ae5789e8aae00505ae0093bc2dd7aa58f1b4",
+    "/src/config/constants.ts": "f63e426245d0ea168108195bf738facd8ab6aed62cd27f647a458f49e04d3c0d",
+    "/src/generated/growth-route-data.ts": "4d01539f1b5a5423bc9c96bdd7a37a45594820bead364686a6220a90409a5553",
+    "/src/dev/rift-gym-performance.ts": "fcdb20c74802c7b5f550068cf913e07a86cafc052418a822e164793ad48e6ce6",
+    "/src/managers/audio-catalog.ts": "8cbb22f0951606083b9af8dac4880eabc8b147d0c05184e72c631af4b101e0db",
+    "/src/utils/random.ts": "853f490e75d1fde06d8a8a6e0604992e84a940a4b1e41effbbadca78d13a3875",
+    "/src/generated/upgrade-data.ts": "a0ec3b7a7c8870f88a6ca3876d407bd0a790d41be84d469d38722a5313579fc7",
+    "/src/systems/defense-engine.ts": "446e0abcf61afdd9e7255801e1420572f80cdcb5c187b29fceba5cee6c9223c3",
+    "/src/systems/growth-system.ts": "ef937206fbf884e6a6b41396472a6cd56fe1c9cc283d0c3a0f639f1e88e48620",
+    "/src/systems/stability-tracker.ts": "0264a763160fe63cebe42549175cfd6fce8e7af18f7ca546af08eadb0d436ca1",
+    "/src/generated/rift-pollution-grade-data.ts": "1527bfd537ea207103cb77eb0a78f3d54b73fe87b89b3d40026fe48ba1185b31",
+    "/src/systems/tide-system.ts": "cc1bdbd948a8daf45ef3e6d5317e4c291b5a08f6c367e562404ab2533f3b8e3e",
+    "/src/systems/kindling-yield.ts": "71eaa6cd1440dd5d5db218b1c9c907c0d0d25c47f3efd510a38e4c76a39904dd",
+    "/src/systems/inventory-store.ts": "07f003a1c55b48e5d6d77bc2d5ed4fa05df7d28f2bc3513722a14c1f01886439",
+    "/src/systems/impact-system.ts": "99fe29a7a8b0da2aae8272f4c3ccea9868c242410561616ffc3756e0f1950732",
+    "/src/types/rift-checkpoint.ts": "f3d94e4363e712cd12a99e63008eab571bcc53f0491139dfca2683b720b21335",
+    "/src/systems/ai/runtime-validation.ts": "0bffc10558dec0952c7d2d7e451c6e6ef822b28c7834b7e401b794948bffaca9",
+    "/src/generation/seed-fork.ts": "2220463711a676a684a6fdf26ae102739efdca39e6e6355b9d41b4b040b0511d",
+    "/src/scenes/main-menu-scene.ts": "d0bca51dcc53cf05f274d7bcd9111846015b58d029379e4434d709519fd34b17",
+    "/src/scenes/last-light-visual.ts": "9dac672f3d11138f0796317dc69397be5d2f64b6e926888f65ec25cf12d976b4",
+    "/src/scenes/purification-scene.ts": "0d0850c8a731b9aa2b192e06846bb156cd606d60a53af82866b09ed0ae6d288d",
+    "/src/managers/game-state.ts": "f166bae7fcc9788c58bb1ae21faec1dfaf411e78339b3221146bcc55a0ad4d41",
+    "/src/scenes/rift-entrance-visual.ts": "d668e7df205ebe4092837af2a70e7d605900540a3cde1419f46d030dcb204c5d",
+    "/src/entities/purification-module.ts": "e6da1625ad0db74747221826e9d5abdffe391d0da88a840143573dbf73e8fe6b",
+    "/src/scenes/growth-console-visual.ts": "e087c85b3920ea150938432ce24b1b9aaf9d9d23f09ba57dac3ace8c7814c40e",
+    "/src/scenes/offering-stand-visual.ts": "2108a391b13d99995fe640df2b5b4470a168b82e9fc6f9f7bba0c4fe99fe56e9",
+    "/src/entities/infiltrator-sprite.ts": "927415f50a6bf29584b2db726c18890dc4259815c732d24df149ba48d82c2185",
+    "/src/entities/player-lamp-aura.ts": "67894bde60ec13f6d8ad03388efab61df65577b92f174e50c30c0d52b4df73e6",
+    "/src/systems/world-space-surface.ts": "13328b034bb3ea2a20b1ea080d23a08e9126e24ea07494252dd47a85551e5f4e",
+    "/src/generation/contaminant-source-regions.ts": "df3c33cf3f8bb1106a426f974ed3bedb5ca940bb51e11c235184d3a2a780f794",
+    "/src/entities/contam-flakes.ts": "624f4b9d304f379b6214ee366a403005a25fbb899b50464b12d92fd6b6c2d2a0",
+    "/src/entities/player-sprite-dense.ts": "5bf01719fac0cf306cad713d4003a230dc4d731371b9739a8ae6837e843625db",
+    "/src/systems/contaminant-catalog.ts": "b062af434ae2b015513fce7d47eb864e34d97bc43a5e1c640b4eb9fe3c498830",
+    "/src/generated/weapon-data.ts": "a1a8e15e7585e5207027a13081483137a83a692ee323a5e377161803179a7e86",
+    "/src/systems/contaminant-quality.ts": "6c97ae1fa432b936acc6b02f2557ac24f6e57bdec17f05052ed0a2b214c1c727",
+    "/src/systems/native-rift-body-recovery.ts": "71e4a8a07afc5f3e9666d5fd61859d1424c3f801a6c3e781e21a5799fd327e3d",
+    "/src/entities/player-sprite.ts": "3a43c222453bcc464f1330328b7ad1c532e1c6b4b5850de9f5c6940bd47c80c2",
+    "/src/entities/rewriter-sprite.ts": "6931e1a3a8eb0ad68197906584fb6bf98ff838c62c4a5fc73c0794f7504dd208",
+    "/src/generation/world-study/native-body-collision.ts": "43243b9d9a1c17a4542e694bcb0be152b7e5e8b771afa801b2257c3d9857faf1",
+    "/src/systems/world-search-presentation.ts": "e2b00e073bbc7c3c32fa2f456c24a700ec9580c93f1c7c7dc02530b07443e637",
+    "/src/systems/r100-extraction-presentation.ts": "8800c3f30ab1a6fd431845665dc8d3ca90c8ca635420baf3181f278e704cbc45",
+    "/src/systems/contaminant-drop-plan.ts": "f810ea95cdb76a74d15b428115fa9d0adab271e3a86aa1eff757bf158966c8d7",
+    "/src/systems/run-passive-receipt.ts": "7dfef8465404cfe9af01542f46b38388fc06b951659861e36b2e4c4541ce8b53",
+    "/src/entities/form-renderers/d/paint-genome/prepared.ts": "5db1d8225ae61902de986babde6e7bc883a22d02ad16818473c877ddf4890e4f",
+    "/src/scenes/rift-scene.ts": "a62957f4bb6f20cdc079052af8c85f27fe9902ccbda6c4f81d46be50e41dc65d",
+    "/src/systems/tool-targeting.ts": "4f5c1c5a5af384ad5cec2080be3f605886c6d733cf03da03ed51cd370787029c",
+    "/src/managers/rift-recovery.ts": "ba250ec8990c895547ecdb037fad62fbcde4add84770968a8314e42a89dd80d5",
+    "/src/systems/rift-entry-frame-fence.ts": "023bd4137d80d97a023eb768053b76e20aa03983c7fe5c4358d30242855a593d",
+    "/src/systems/r100-world/presentation-state.ts": "1726e1cbc862f80eadb15f032ef2be1c35fdf3a20d25c8d1a3443cc16fa8036a",
+    "/src/systems/rift-frame-commit.ts": "1ec916c14de3ec06f82455187900feba456e89b105adce7b1128070dad1c9c14",
+    "/src/generated/contaminant-catalog-data.ts": "7632c6b5b5064dd2c22f86464c0edf70ac0968a5487face5dee3c134c8d781b7",
+    "/src/systems/rift-recovery-state.ts": "ac3c738649e9933c3c88f44c7cac9608bada207174974f87657d1e6c61b1d41a",
+    "/src/utils/grid-raycast.ts": "741e17c788cf3b6d0039dd89f5e6cafe85bb9ebb0fd80541f1d6319a0c7ea6ac",
+    "/src/systems/survival-attributes.ts": "a8c71eab0e9721c7e39a2b59752ea1382f10fce0a620e3728d07f4257a07c846",
+    "/src/systems/field-loot-inventory.ts": "6c88706f19b0acaed6230188dcc3a9eaf679d66f5b054c964799fca9da2f04cf",
+    "/src/systems/ground-depth.ts": "6cd6a02278978b8c3f0d939d57b0c5a13e7765c6d911547df49e5ce08e1b3a4e",
+    "/src/entities/form-renderers/d/production-models.ts": "158f4ea2e8389902dbb30ecaea6bc8e1d836000631107a5cd1479a65577b6c10",
+    "/src/dev/spatial-study/stage/bridge.ts": "d0e62b92f09457bf4ca482deef83999a1d4d6db11e6b867f3bf6a1211dbf3455",
+    "/src/ui/inventory-presenter.ts": "8822e6d20403ee2a0fe22b0b2155ecaa2c3ed6dcefb2779d31c321b06cb86ff5",
+    "/src/generation/rift-layout.ts": "483f7b4b6adf85f678df6ffb687e721c6f21ac36322cb70cd8b882037c041d78",
+    "/src/entities/actor-motion.ts": "a651c699b0f6f9acf17099a86719968103090932aabd06fbc8a87ba7ba695a1c",
+    "/src/ui/dom/inventory-panel.ts": "8ddea761dbe4ca5da096571185783d8a4bcb96b32b6694e26dcec69430a7a3a3",
+    "/src/entities/form-renderers/registry.ts": "9cb5b07b7077021c40b5ed7125e1186a9384c4cee46dbfb56b17b0bcb7cb576d",
+    "/src/entities/enemy-factory.ts": "f88db7b6ac82264e2872d248f087564c0a988808d52a47f6447b6471940d080a",
+    "/src/systems/ai/index.ts": "34893dc4ebf722c017a9a51e1d5a231ab14a30cd024f4067374e8455cf3f6d90",
+    "/src/entities/player.ts": "e799b02ec9a1ab1c5007671cbf2ccc5d0ccb5e26493d841d0a72107f0fd8b5e0",
+    "/src/systems/combat-system.ts": "3116d8e5155940d75b5f220457084e4c884320aaef67faec136b1578ce8014cc",
+    "/src/systems/extraction-system.ts": "45e19b884b7f6d44c722ef3d1b3483a66172342e2ec8a8c20ad2ea222fd32d2d",
+    "/src/systems/contamination-host-system.ts": "beda569b5d58a76a5cf5fef994eaea4f8218f6737efe8c9d8ec546c1db21d4c4",
+    "/src/systems/loot-search-system.ts": "de53db3f2ba509a06cbe0c88f0be1e37ed3ad0f8e4c73086e7917fc524b9d68c",
+    "/src/systems/run-controller.ts": "9d8864351741d7f3b5c4ccd01a32c7686eb93d74c0df7e2f780a7418e221a5bf",
+    "/src/systems/chaos-system.ts": "5a40db9a2572c7cf9873d1880322adcb7cc8c3c3073587b738501188df6a20eb",
+    "/src/systems/tilemap-renderer.ts": "0308f1730e4f694ce1084b42b5e605be81aa67918d4e3127552cf0e7ea4fa242",
+    "/src/systems/visibility-system.ts": "744636bbd7e3afce8f828b430c8782b182c69d5ab070c188e4611bc45e625070",
+    "/src/narrative/atmosphere.ts": "cf50dfadd7eca17be0696611ce91b00c233d58f1ff162e888b73410227886d16",
+    "/src/ui/dom/encounter-narration.ts": "27e06e725fd617521da1fc70b480899c21ea7d8f3d6e3472c43a9786580e87ba",
+    "/src/ui/dom/rift-hud.ts": "1365a5552d8874ea0e4ce5a521cb7b18f0838df47de13a418601ee496a46781d",
+    "/src/ui/minimap.ts": "c25ea8c25032ebe614792cf5bc096bf00a2aefb075ace7e8f92efb812f0b35a9",
+    "/src/systems/trail-system.ts": "371ac45a2b2570783be33fbed190e857fe231f59af3718e54630b39887d55271",
+    "/src/systems/procedural-surface.ts": "1d0f9c366e8e614a40077f885985e26c405b8f44f3e7d78248206b1ba5599267",
+    "/src/systems/tool-system.ts": "5f7b8b0633e13ae6e6f425f6472d8abc311719864d95a2fd41f7c7331f9fc262",
+    "/src/ui/dom/detection-pulse.ts": "217ebd8b6aa388eafb8badc7b387842ab373f4648cf55f566a63071f13e69e3c",
+    "/src/systems/r100-world/source-cells.ts": "5685ea48f9886b96b1bf19b6a08326ebf1cb04ab0f0919ec7f14b061cbb04800",
+    "/src/entities/form-renderers/d/fragment-ramp.ts": "22f4a79aea942a861f77d14d6db6ce6c0b3a6f999ef1b930dfc1ab4d0cbb6a12",
+    "/src/generation/world-study/native-volume-raster.ts": "65a5076c0fb9e755625227345586dbd96044c3997871f565bf94c8de08010e1f",
+    "/src/ui/contaminant-names.ts": "517e1a0b43e61ea3503b25e6b12616a82d2fb0ef4c005225b611e42f43671a23",
+    "/src/ui/side-effect-labels.ts": "d7feb75cfe0a0984616a80e2587ee059afdd855fefa5e8b5538250fccf591e53",
+    "/src/ui/dom/rift-result-panel.ts": "0113ccdeceb91551f7f0f4d05e022624221cc70b805bc373a84dc91979712c6a",
+    "/src/ui/dom/pause-menu.ts": "faa08af7a29ac945407082ce04bc8b339f2e71a8fe32a689d36f72b9bbefe1c8",
+    "/src/generated/contaminant-data.ts": "7b83fcac8482a7ecaf569ca842cc86064fd11506440001edf9f28afc08e382d2",
+    "/src/generated/rift-fragment-data.ts": "bc0bfb43ce943f8937623d2bfeb9a86175230a1fdcfebbcf54dec5d588f43c3a",
+    "/src/utils/math.ts": "aff7b66d52da9acc90ad68bfd9a9a3ca3698206893af726de58a4081c8b20943",
+    "/src/systems/r100-world/surface-bake.ts": "a94c57568d83cc6cac37143a970a7d5d733be63f03991a412e1141b47b3b8455",
+    "/src/systems/r100-world/audio.ts": "cfbf3ccbe1db61e4e1cbeaa89b92a105904f472065535b08ffe9f521d45ac7ee",
+    "/src/systems/rift-host-manifest.ts": "32dde08ed88b9abfaf7ecb4e22532937880f386a1841b61eeae962b095361b8f",
+    "/src/entities/form-renderers/d/paint-genome/bake.ts": "a83367dc9d37ffb2d52e976cfd8c61488a6e5db8d8710703eaf586cea7369ab3",
+    "/src/systems/contaminant-migration.ts": "9deb1810a52cc63a7279f2d635c29a0578764312a93bac4489619812383acf54",
+    "/src/systems/equipment-lifecycle.ts": "ac6e4460ee03c7813460807597e296210cfa149f8bdfd3f8b15d5c6d1cc65c76",
+    "/src/types/inventory-types.ts": "17b9781fac49faa79666e237781383462373ec38591d2a7b82b5d46618542481",
+    "/src/generation/legacy-rift-generation.ts": "938fe7eef9d02cdd7985ec701b631f3f9013303f44e0f5afe8f4bbcf0416a413",
+    "/src/art/title-motion.ts": "84b2f1bfb55a63b8c3136d33ba38133a230375da4618f189a4bb48603090930a",
+    "/src/scenes/menu-entry-transition.ts": "4bc4f710fe4c401837ba362ddfbe321ddaa99723546d015e9430dbcbed709cbb",
+    "/src/managers/session.ts": "a85bad44e5234ddded242f2f32d2b9636145adc4fae62c9b87bfc87976b172a7",
+    "/src/i18n/index.ts": "12c425a6d67210390d8ef5f789b68a178a4bd5b8a684c1176d6751afae5dba4c",
+    "/src/ui/dom/main-menu.css": "06b83f9a6d536621d9ca47bba8d7d069aa59b2454a56a1162d6396a8acedb701",
+    "/src/art/last-light-renderer.ts": "e17f771ba3d72cefa3a4c376681c48fd0d3a00f0331a190bf5aa01e61ad1e35e",
+    "/src/entities/purification-chamber-module.ts": "a2232a687618dbbe9bbfacdd0494487a7a719ffa57f9e2cc3e7a849fa42be926",
+    "/src/art/last-light-fallback.ts": "968ea6d88a7a07b386649c3157b43a1df451f113e8bff02da23da38c11b20e4d",
+    "/src/ui/contaminant-presentation.ts": "193008f11c40c186404db7baa01abb95ec200e96094874e9b379e785d377e923",
+    "/src/systems/last-light-layout.ts": "a645680f0fbdb7ca3da499ba2109d47a1e3ba023811677580febf2894c5c4d9a",
+    "/src/ui/chamber-integrity-lifecycle.ts": "37e404b40c8c1c97dcbf466673e876e86603eb342fe32b2fa5b2995e18cbfa5f",
+    "/src/systems/last-light-locomotion.ts": "90a58ac2af0cfdd4a05c1c685d5bd7c255b170d24e3ef37d4b87b4e407d7e01e",
+    "/src/art/last-light-gait.ts": "5ca03fb20397cc10a979b3c90b31d06cbd1efd50e8c26113dab3d90c6d81263f",
+    "/src/ui/dom/haven-narration.ts": "4115e0a6557d04899110675613efceb53ba2b107466e8320c8a79f39bc1b461d",
+    "/src/systems/purification-collision.ts": "83ce662baaba6f6318f82df1e4ee7e68ef348cee7f3ec9698868b24bc896f546",
+    "/src/systems/growth-evidence.ts": "57acc54b72a8189a7922647f0f0bbb7d0cc63ebc39e7d067beaebb6e3da35e4a",
+    "/src/systems/boundary-shape.ts": "567cfa090d336a38f8dd920b0da984f02b9b229eed1413d369a1fa7c2685e8a5",
+    "/src/systems/procedural-purification-surface.ts": "05421156a5e3e03681745068d68bef93fdd39a3ea629ea3aaf49719d7508e556",
+    "/src/ui/dom/allocation-panel.ts": "ce7cfbe944e43b942eff55e8e77f2e5dd8d99c28b15a9c88ca10c2cd72c45bc7",
+    "/src/ui/dom/defense-panel.ts": "c06ec35d9e4eaad00064684615edc0664cb5bf53bd1c52bc0fc64662d21a52c0",
+    "/src/ui/dom/growth-panel.ts": "0ba24bfce079bf08e8de21fa6be3523256a45baed430bf2f24e281cd20a6d3fc",
+    "/src/ui/dom/loadout-panel.ts": "cd3ca73e351ffe72afac05ae8710a980bfe111080a0cfdc04c825e0020abd1e3",
+    "/src/ui/dom/status-panel.ts": "d9e80e878a21b9a09a5f8a947a226534aebb9f2094a7eaeff7db229453d23add",
+    "/src/scenes/offering-charge.ts": "4b7f91d79546be6d1e2886d11967fa8071c25c4df36688b18bce01dcf2b877bb",
+    "/src/scenes/purification-renewal-visual.ts": "9a0f1f11b8bf1f4f68e173192e2d2f465e708fb944279a6f1ce9368b5c0232c3",
+    "/src/generated/contaminant-economy-data.ts": "4405c012b925bb06069d9796c85fae6cfbe4443d81501dc9a49b5c340f040ca6",
+    "/src/ui/dom/purification-hud.ts": "e5cee731cf07efa422f47524bc52a58d3bc9fb95c87bcf73771787ac88bc9486",
+    "/src/ui/dom/impact-result-panel.ts": "4c8ad53ae62704a13110bff0663a1e2c4960fbe9ae6a7b776b18a59f582c4688",
+    "/src/generation/world-study/material-light.ts": "42ffb51c2e8feafd5a0b2ca0bcb8269c8cd66299b743895fa4fe3178a5c5f918",
+    "/src/generated/contaminant-quality-data.ts": "49004c6661757d3e28b7fb6034e8ab7d69e6930e348e0cf5200392bba7f2ca9c",
+    "/src/art/last-light-spatial.ts": "4e457a53d4d6eef6854435b2db2d1729cae0a02f7d68664d0cfd95fc25789299",
+    "/src/art/last-light-shadows.ts": "f1e2d33fac2dd90dfe8efd5fec174162d0f2a507c4b29cfc2bd56f5b02bc08a5",
+    "/src/art/title-exterior.ts": "223b0acb9c41983cf44da8ddce3155b03bc5dee57522515b489571449399da46",
+    "/src/i18n/locales/zh-CN.ts": "fbcbcd3822be155f6b300669a75d101dcc01a934c6f7f69597940d4c9116a845",
+    "/src/generation/world-study/surface.ts": "0401b883e50835b01bb10d29cf4c5ebe2f695c11301fbd3557b0b8e151a1990f",
+    "/src/art/last-light-exterior.ts": "1da7ebcdfaf828a855e0398a7f9288f9c0e583eca6717a91dad972c3168b8262",
+    "/src/art/contaminant-icons.ts": "7f7d4097f849889dd07af0b3e7f205f60013e0076a2adf17c16fc9a7d01e24e5",
+    "/src/generation/world-study/support.ts": "a95a0850b44fabb0297bbe4016261065e1776a9e00b753792aa851875a3e75b6",
+    "/src/ui/dom/world-interaction.ts": "e1ee57cbe72c059cd4209b6163aae5d1f5bc90713d8cb82467b020e6a083468c",
+    "/src/ui/dom/panel-render-state.ts": "d73a3d814bccbfc83c0116c15ec7ea4e76ff0d0aa1c1ac4463d4ed64f7eaa281",
+    "/src/systems/purification-chamber-layout.ts": "8d95a21fb9c8b3f101eb45c72b0d75aad071b6aaecf9b2dd3da6923dcc8c6eee",
+    "/src/ui/chamber-integrity-placement.ts": "11b9df3a4a616865bee81d2abc86acc66e1bbd8297a3a257ab71be210ff2415f",
+    "/src/ui/dom/module-identity-strip.ts": "b08f47885b9706a0ed49213a12555abfa63839f2064270890f8c434d65d82d64",
+    "/src/ui/dom/inspect-dock.ts": "eab4af27c5868c151de60713696b1f1804e87e234cfc7677da3708309fd4ed67",
+    "/src/systems/last-light-interaction.ts": "46d87ceb0a631fcb1438605619be2bb7610f27a6a98044c9855ee8dc6ca15b92",
+    "/src/generation/world-study/world-scenery.ts": "a4044be7771b09fc91bd5d8a9061abb0b8e4640fbf027f5a19fb2330060a947f",
+    "/src/generation/legacy-rift-v2/executor.js": "362b563404fc65ae32184f71071e0d1bdd112b4b81530963a2baf7f9c5fd9a12",
+    "/src/generated/contaminant-sources-data.ts": "ae87204e6dfdf4c8605c035a4f206ed41c8e601caaa2adfb90b3bbaa0f132086",
+    "/src/generation/world-study/search-remains.ts": "789795cb9c8a85d1531cc2f2095abb8597ff4843da93bac1dad41cc3fe062d47",
+    "/src/ui/dom/offering-panel-styles.ts": "62ec35a5f3b36f81612e359a3893e1b857ea99a6820b561335cb96fd91baf10b",
+    "/src/config/growth-upgrade-display.ts": "75eff192026ac09899a0a5b93e13e95ca92eb71303ed4dcbdde7f5ff97fbfdf7",
+    "/src/ui/growth-presentation.ts": "7d261f35662feb8c1ea525ed91990fbb6add18007044fd34a258c2b4fa48bf24",
+    "/src/managers/growth-purchases.ts": "3e808674bfa6077417ed81b744c9b9937a321efc80b624bf553be5a1f593def6",
+    "/src/systems/loot-search-presentation.ts": "281d69e43d2aa84b57b07a8f121799852fe4bf409dcb3ae55ec66743b10c9ce8",
+    "/src/generation/world-study/material-response.ts": "086fe355469d9629a3a80e2a6a50656dbb3a3f47058ea525cadd8a381181f228",
+    "/src/generation/world-study/raster.ts": "cae1b73243afd1e031c7b035fc6dd15106c2433cfbc9febe67abd89eefb385c3",
+    "/src/generation/world-study/ground-material.ts": "2f4982173bf38aab6725904e42ba1fae4163c4e6a6e47c247f8b3be5f39b2854",
+    "/src/generation/world-study/shape.ts": "5be09fb55b7d477a5c9f4978385298109caf5a327170d81c700da8290a4290fa",
+    "/src/generation/world-study/material-noise.ts": "3d1a3c2c03ed7166ffaa0975d0acc3b3d3ec3063a7ac40c9b8cac4381bc5559c",
+    "/src/generation/world-study/material-forms.ts": "887d916f19439ff8811f1899f42261820b43994df1a819fa4991ba97a141e704",
+    "/src/generation/world-study/r100-master-world.ts": "faffe7966236f54f01830ceba960e1b5fc29d907117ee9d5b951d8d51bff9920",
+    "/src/systems/search-remains-ambient.ts": "b2459cd4252b4eb237817b11add29bf7fea0ff76f6cfe0e1efbf7f88c08b15d2",
+    "/src/generation/world-study/r100-expedition.ts": "59299a6af9432289b9fd0aa6b1376909b78dda9cb6b3beac369a122f4fd40837",
+    "/src/generation/world-study/r100-expedition-v1.ts": "255b2859960d2e84aae5293df0774aa003200e2fcb4d8fa7623de5a64a8351a5",
+    "/src/systems/pathfinding.ts": "6a8195be745cdb296ed2814f6574eaecd8168a44e9e0eec9c64ec8cf40213547",
+    "/src/generation/world-study/r100-production-map.ts": "eb1c882b38acfa75e1c41ef06bd25723a069be33b22f685bdd443bed5742d8a9",
+    "/src/generated/rift-search-remains.ts": "dd5ea47a354ad43ec981b8c8322b8c81735adbc0e5ccd967ffda2bd0b29aeb23",
+    "/src/generation/rift-generation-identity.ts": "07c2933e3fcd15fd763a185fe815a5214c2fdec3b276e0fdde0bb634601019e1",
+    "/src/systems/ai/behaviors.ts": "b27f6ba402b75d2588babf0475caf3c695ffe4bc90d9f148bfa119494a64d1b7",
+    "/src/systems/ai/contact-separation.ts": "f25e87b79c45bbf0ce19d33fe3ea7e092ccbdb102ab8e7935660ed4cac3d5673",
+    "/src/systems/ai/state-machine.ts": "962883a8e5aea88cc1c84cd16e56638300408ae540f278f6072bdac5d6f9b1bc",
+    "/src/systems/ai/physical-grid.ts": "f92332c6523c73871b7b2e009fe28ecebd5e579ca3a7ac0e0c247d4eedb0a0c9",
+    "/src/entities/form-renderers/d/model-raster.ts": "8cf89a5edbe545f53c96ccfd66d0879036b157d1b9312d19511b6cf52777aa36",
+    "/src/systems/ai/context.ts": "bd8795bfa584a967b2b6580738dd596f85acabaf519df634bf2e26d5e8802638",
+    "/src/entities/form-renderers/d/genome/buffer.ts": "d37e03e8bc22526fa73f4ad2b89d97b5e480e93c7647b57da104f8b7e417cf91",
+    "/src/entities/form-renderers/d/body-pixel-material.ts": "9ef0c98c06a1a34cbe721504b101a874625dbf9f578ba829ace961f4f0665b2b",
+    "/src/art/contaminant-catalog-icons-objects.ts": "064602938e10019b82b91496f20514de73fd8c3beab81607d2691b75e1bb7ad5",
+    "/src/art/contaminant-catalog-icons-secondary.ts": "ba563467b68cc8a856236e06a6cdd9eae759a45eb66204d5db766e1dde925748",
+    "/src/art/contaminant-catalog-icons-shells.ts": "0433e7a0928004b0dd54118a9381976eae68ed7f6e6016e22fdba03a43ad1fb2",
+    "/src/art/contaminant-catalog-icons-pixels.ts": "3365ad5103fd7c36412c11a8f7d2d3fdccfcdf5fb4bef0ad20022fe4713e9db8",
+    "/src/art/contaminant-catalog-icons-ground.ts": "f318ebf3330018ccffaded72015de989d8e6086ab820efe3a9e0f4e460d8b189",
+    "/src/art/contaminant-catalog-icons-world-faces.ts": "783ea7ca736b151b44bb9e35c5ecac6ba04740d32a7622519f7625f79c177870",
+    "/src/generation/connectivity.ts": "22f649986538b8b3e0bd5e849de2b0777bb8dcaed73b6b1ebbf5085271f0247c",
+    "/src/generation/cover.ts": "83d62f20bf89c69fb0f1c2ad167a23cc9c0b34bf6a215938287516ad92bd17ad",
+    "/src/generation/masses.ts": "81ae9bd14a293494c7234c1b850815e1228ebd771d0ba4759026cdc498a1b434",
+    "/src/generation/outline-mask.ts": "71d688375942c4dafce782691122066560424764b6bceb23c84a6f038f042efe",
+    "/src/generation/silhouette.ts": "cd6070d2efa25dec51b7ac2191fd83a3f8a0dbb3d711719cfc9f30e8447094f9",
+    "/src/generation/structure-grammars.ts": "aacb453764a16403d1f1bca02a7cbaeeeba063fb77f5455df80bc919ebfc40f2",
+    "/src/generation/stealth-density.ts": "365877c190467ed8c280aed54ea9148f382530de77b7399bf80749a54dcfaa93",
+    "/src/generated/contamination-lexicon-data.ts": "72735bdf3f733bfd866208cb7e7d2b73d905563523d897a86e0cbfd5ffc2846c",
+    "/src/generated/contamination-family-data.ts": "cf5de11af7d29c9de980398825da4c5aec8c857c8309465d23ee07c5fdca5786",
+    "/src/entities/form-renderers/d/bing.ts": "39665c2dbf00184d037877739daa4fbae6ca70835d6d09e9eaf5d5b861ef58c9",
+    "/src/systems/ai/ai-system.ts": "243d242a61609b1bc825b329ce1cac1b52390fb9b154d5c4f59cec0e987e7b3d",
+    "/src/generated/last-light-layout.ts": "fb7cebbb3cb5f648a6ca951ab2be0adefb3399d5bc0435d18dff1183c7637dfe",
+    "/src/entities/form-renderers/d/ding.ts": "9f0ed9f8d79c6ebfe11fd8de32ed72f2a24dfd004ed6da5357cafefe309cc930",
+    "/src/entities/form-renderers/d/genome/attach.ts": "28109bdfcf87072813f0cb5a9d9082a395246aeda0ec991b118182e9568a8403",
+    "/src/generated/survival-data.ts": "489f23edf265f1ec9dc0c70b09514cd8acf5411973b1598cb476cdcc590f525e",
+    "/src/systems/ai/runtime-state.ts": "b02b458c580825b9fdb0e2e7ec72fec6ff5f2c371a5957f477335e7d757e945a",
+    "/src/entities/form-renderers/d/paint-genome/attach.ts": "9d9c730f54958a5a95b2fb0fa7db73bf5208b9c5ffab6ff234a4ca3c3ad4fb8a",
+    "/src/entities/form-renderers/d/yi.ts": "fce67b7e5c253040253856e40d1c0768ce457bbac0af5591500a48819f2d4417",
+    "/src/art/crowbar-pixels.ts": "54ee354253d4cb5aca10767a7db0c6abb61a0f9a18291d5c9db74ac38eda934c",
+    "/src/entities/form-renderers/d/human-model.ts": "c4ea8a83a32836623d5e3e2375372644d90f6ff705427529276b0e361998e388",
+    "/src/entities/form-renderers/d/beast-model.ts": "12883e3482f2bb671077cabba66a316e3f540d45db54015aedcf2cd122b17b14",
+    "/src/entities/form-renderers/d/insect-model.ts": "e99b2c6befb65fd65a31f1a9b0e98fe14b5789c44bbaf3a85a3d772b17617eee",
+    "/src/systems/dust-flow.ts": "a7a75fa3dfdd173d4d7fea753e88268c94df7f48c30b45c0ec057c9ed1164131",
+    "/src/entities/form-renderers/d/worm-model.ts": "136543e7b75fe6566187174c93d8e14f04dd530aa5119d2fc98d67c27775d45e",
+    "/src/generated/contamination-volume-data.ts": "cf17059d801dc593fc7a662b6f611babf56bf1a6368786e07aa4fdb7cda433f5",
+    "/src/entities/form-renderers/d/environment-pixels.ts": "f5c84cde5fedf738768dad02331b1c924090f5c60a2961afa0feb7a1e5cb5c7c",
+    "/src/art/last-light-joint-exterior.ts": "df16d3ff831cfa6faf1f2f7082d60bdbe2f2e7b86498e9607b4beff1fa30a029",
+    "/src/entities/form-renderers/d/remnant-model.ts": "309fce0ea2859a2720af1199713c586a51726a12d7f727b109f1d7b8990c86d8",
+    "/src/generation/world-study/surface-field.ts": "9ee39342fa6996d32c9c3960b5b9a6f2edd1b78c645d35a30b1abb7635ce1132",
+    "/src/systems/tool-presentation.ts": "cadce02603bffa5ec5fb282005fcc802818521d608da8c85b7e73015747af5f8",
+    "/src/entities/form-renderers/d/growth-model.ts": "b35ba29a198b241713e8ad1ee1fe3de38ed4bb78ebb52a93518d6579f330c092",
+    "/src/generation/world-study/profiles.ts": "31e2612240540d1597238c9ccaffa6b376c8361a6e1a659071011d4831e2b57c",
+    "/src/art/contaminant-catalog-icons.ts": "ed97490e60b2fb89b68cf6c5812fb5526633282d3de79dd0915c845ea1706a22",
+    "/src/generation/world-study/region-field.ts": "31043e32ec81ae8e19dd20d783b4cc79e8f009b86b90804eb5e2f9f0d21b940a",
+    "/src/generation/world-study/r100-pollution.ts": "c28e7caa916eb7950cc4613528944f5b45964e76fc807ff3c74dc71332e03d6b",
+    "/src/generation/terrain-safe-volume-seat.ts": "d90f9894b558a6fcc48c9264cf31f1f51f96890d507d48c88df909a59ad85b7d",
+    "/src/generated/enemy-data.ts": "73c23419c05ecea647933e8b12238dc77fb486fe1fe050544d86314e6c5ec785",
+    "/src/generation/wall-host-placement.ts": "19d3453558e1d4adaf00881ac5f2a81071588af7cd6c36dd395813ed70bebe10",
+    "/src/generation/dual-path.ts": "e95a0b4f7214a311ae0c93172a889093d308bd74a4735243e3aba97fb69f65ae",
+    "/src/generation/fragment-roll.ts": "9dfddf60989671b4f53514f1efa852daeceb734443edd25ff973736f73a7680d",
+    "/src/generation/draft-pipeline.ts": "32b2095b7301fe61bee1f2b407abc6eabd9bf2c7ba86ac448c635fe3b7d0004e",
+    "/src/generation/recipes.ts": "5c8fc11084998925e5e23d163a13f70dffc7bdc4fbaaf848def92963c4515e4c",
+    "/src/generation/static-body-access.ts": "691f3d3cf662a9cf14dcb713ff041158fef902f8fe21ba8eccae10c754739139",
+    "/src/generation/contamination-draw.ts": "eba45af6efa34007a6a1afb9b0ac62df381ba1ec7e67dce4d66acc53b89344ac",
+    "/src/generation/contamination-pins.ts": "263d24cf4db038580a703799aa7a3c57b011c906be808e14914c6afd97dbe4d3",
+    "/src/ui/dom/inventory-panel-styles.ts": "d39967ba8bbd37bfffe28b31145772f0a4fa512c03bcc8f920119bc90f36746c",
+    "/src/scenes/rift-map-data.ts": "1ef93eb2525703f70302b71095d6c9524c3fe8712d321467be42d0dd7371e793",
+    "/src/entities/form-renderers/scheme-d-mixed.ts": "31fa69cf157406d18fce913a707c506eb69c5330b41ba4d7380c9cb71bd02fab",
+    "/src/entities/form-renderers/form-renderer.ts": "f051f178fac727770012021dc45c152f187820fc393d9cb5002d6ef7f2f88ce6",
+    "/src/generated/contamination-capability-data.ts": "26680ef0fff66fe16f95602ba9262e20aebe70652d3d763aa882954b25136776",
+    "/src/generated/contamination-body-data.ts": "cdeb82878ad37e0e6b4711d4ebfb1a739dce1b4e2548b069e57476624178e76e",
+    "/src/systems/ai/activity-state.ts": "5c6864ed732792f026d3b186f28106479695f63ebcc9c7583b235037d47aa902",
+    "/src/systems/enemy-control-state.ts": "14bbe409b942182b39d443b397e5225e0fadc8de9d50ac8ce2d98be881dab0ca",
+    "/src/generation/world-study/r100-generated-scenes.ts": "564ea37bf6a74bce90a6e947514bdfb8af6b86475e8e2047f39269d2d70740d7",
+    "/src/entities/player-weapon-rig.ts": "9814f5aae116d1bd29aa31d50ee00c537e3ba6b13b35ba4781e33045f031793d",
+    "/src/generation/world-study/r100-patrol-windows.ts": "91ef343d3ced9ea08cf65f4a00c5089df6b7b4231d4ab9635b1644a8daa59cef",
+    "/src/entities/hit-reaction.ts": "ba86af00ba84a2f217c44a73750d0538dea8568a6671b400347d6413acea212a",
+    "/src/systems/weapon-swing.ts": "e88ba7bdefeb5a3092f55c997d78fe1bb69f8423564884662c8fbfbf4dbde4bc",
+    "/src/systems/volume-presence.ts": "2f803f445b8aad388ca9a5e49324f2d8de1b68cba38b857272ef39fee2ca916f",
+    "/src/systems/environment-hazard-control.ts": "8934514714720cccf427ddf6d2eda3790171bce9f137a38356328cdba513904d",
+    "/src/entities/player-movement-input.ts": "915aa59548e2900af13ad83437ade1165f94b4ffeeffb7d25913b07c40aa26bc",
+    "/src/entities/form-renderers/d/paint-genome/live.ts": "b92080e22f357cef2c20f8b9a822f0e50359e4071eee1f682f2f6b876a659bc6",
+    "/src/generation/wall-edge-path.ts": "19bd0ce252107207190007d56c667458873f4a3f5aa7a26941d05e0e20c5af9d",
+    "/src/systems/weapon-loot.ts": "dbd19b6c35944f55bc75a61f39d1105e8b3b3834b0b2037d02d718064278657e",
+    "/src/systems/contamination-host-live.ts": "25d4106b6a845145a600a3289e8c005bf249994bb83807f75f82b5c8e046b707",
+    "/src/ui/dom/loot-search-hud.ts": "505cb17fb3e0706402be68b826ac4ae5119de8e97dc28fbe1bfb91c1d9b23951",
+    "/src/systems/catalog-ability-runtime.ts": "cbed20244097dc83d6ed30264ad042587d2c940d7e90eee02352f236a29d5bc2",
+    "/src/entities/form-renderers/d/volume-paint.ts": "a91736536875f40435ee5545b665ecdd48f36964d1d0bedff5aeef6bcb7c59b6",
+    "/src/entities/form-renderers/d/ding-recipe.ts": "463b984de9cc53cfda7821e642257905d4d757ee4f9a42b57e5a071973f9b929",
+    "/src/systems/tool-body-echo.ts": "1e9263036a60abfc7c81b38ed091b3169b49fe347cfd97b1491cee284dc91893",
+    "/src/generation/preview-paint.ts": "ddfeb31ca1e2f3054b9c6a104ab47aa38368ff2e3a2a775257c6eabf98559fa0",
+    "/src/systems/tool-ground-vfx.ts": "e6e70c018bb7dd91208de71b2e3e3c1e4a411696053f6549877aa399c4cab657",
+    "/src/entities/form-renderers/d/model-visual.ts": "9682cbc984b82fdb473203d8384645e7dabe7e9073408f7360080a43f227293e",
+    "/src/systems/tool-runtime-extended.ts": "506c899701800c41c782f5377a98e43ecb53228d99a9a482dc164a79d49d1c1f",
+    "/src/generation/atmosphere.ts": "95ec27635ed8af2fff0ea34fff3768e4ee85fefd997b63ec17f3ce29892a0407",
+    "/src/systems/tool-vfx.ts": "4ea93ad1ae25b5008d02bae190cadf8d890d454102480a93a0dc9f09a98339ba",
+    "/src/systems/vision-textures.ts": "03bdc1a234d7bbd9f8c96ae17dc5400db79e380f286d91aa6e6ea1a55366ece6",
+    "/src/generated/atmosphere-copy-data.ts": "a0d7de3ce983c9574b8efabb5885e3e9ec59f07baf4a978847b418c14ced8a15",
+    "/src/narrative/narration-memory.ts": "b4757f2d8d2f840dc6b769747e185fb1a0bd7786dd07263f0eff7aeca2fee7cb",
+    "/src/generation/palette-quantize.ts": "18cd392a312905c35103ddebb556c879e456cc58ddff339b0a19bafe40cf8e02",
+    "/src/systems/r100-world/ground.ts": "3b1687e24b4bc34c51c7ec27f2c9bdaa80be1a3e5289d13a151b611438e8478a",
+    "/src/generation/world-study/master-ground-field.ts": "c1e172373e6af7528808715abb6b579e0b78fd1f7f32e962530c252cbb4ead13",
+    "/src/entities/form-renderers/d/ding-paint.ts": "fb109cacaca2b50170c547aad7599ce6777b6b820b5d18c3cdb4f85b4d4e63f9",
+    "/src/entities/form-renderers/d/jia-pixels.ts": "a04bd83160209fdd3ca82d72f91c9c9f710a58e2bf70ac0d60fbb138e9d0f933",
+    "/src/systems/r100-world/surface-fields.ts": "74b0877dc325ef3b99c19939d695cc64871ee44f77af426de0a4a316af5c7800",
+    "/src/generation/world-study/native-volume-geometry.ts": "43316561791ddf4c2c47438f18310ad3a0d508fc9c30ef1840d2095638f521f2",
+    "/src/entities/form-renderers/d/paint-genome/material.ts": "bb4a1e750ddd1f573d2c5373e78292c6aaa153b2eb3f98b85189c21a4d0065bc",
+    "/src/i18n/locales/en.ts": "ae8a2e3eca5f3503d88deb0303661504b00267cbe6d3a3aa155ae0af48a36b03",
+    "/src/entities/form-renderers/d/genome/bake.ts": "754aa632967a4b7ec9a25131fa78bba8bd62c82d1648785065a84f5710020528",
+    "/src/entities/form-renderers/d/genome/doorframe.ts": "bf767ca3e5749ef2403b4f62be0684df311fcca3cb74fb90fc6ed1113af728fc",
+    "/src/entities/form-renderers/d/genome/gait.ts": "64c3864ad40a4b392714b270990390df2296aa8c7adc018bf032040dfb9cb9bd",
+    "/src/entities/form-renderers/d/paint-genome/legacy-presentation.ts": "8fa4a43ede1b59a333e785c7fd8d391f5b12d462286631b463b97fc1bf4978f5",
+    "/src/entities/form-renderers/d/yi-paint.ts": "c47a1e19464f3f3189a27b6d56681cc5eb7350a37fa7bb86a5df212c801a250e",
+    "/src/entities/form-renderers/d/yi-recipe.ts": "8220c226a6fa5d7d2f85b2b43cb75960ebb7042d97542f09c5d4093845164d24",
+    "/src/generation/world-study/material-field.ts": "4b3d12867981c6e441619846ac0ad63c7dd3fe22f5585e0e7e1edfddb27b76d8",
+    "/src/entities/form-renderers/d/genome/street-wreckage.ts": "371801dab3b55aa3544e21f6f08b3fd28d8a683eaa7d2e34a8902c0d99d483bb",
+    "/src/entities/form-renderers/d/paint-genome/visibility.ts": "b7d70f2f05e792e31eb6af5fc1d81c4dfa7db82169eef91029c05c0a3d118595",
+    "/src/generated/rift-world-profile-data.ts": "58853103a2f8cb028bb0740f11b1f99fef1e2fbfb52a4bd2485259f50038f1d4",
+    "/src/entities/form-renderers/d/volume-material.ts": "a23fc05484db09cb8570f42218c25630cc3a3513ee5a1e996af8fe97667fd264",
+    "/src/entities/restraint-reaction.ts": "3adbcaa4e939d6387efc3c702e9a75d457d5d87ceea52e8bf9f3eaf46cfda9e7",
+    "/src/entities/form-renderers/d/model-animation.ts": "039e138ff7e2abca3ce1ffe950c793e107b795950ed14f7390664992f53e4868",
+    "/src/entities/form-renderers/d/jia-cluster-mode.ts": "6ef6d348fdeba845b0dda8ed01076fc982fd9184ff9f2144bc959993faeb8068",
+    "/src/entities/form-renderers/d/genome/fixture.ts": "ba26d7daa0ad7c25a6afb2bf728e5dc25636b216273d938d702373dc2995b9c2",
+    "/src/entities/form-renderers/d/genome/mammal-remnant.ts": "ccacace7c149f56b499fac5e2940fe01ae5c6b64467328787be5e7f58e62d215",
+    "/src/entities/form-renderers/d/genome/organic-remnant.ts": "6e8c49b56dac8c89e3aebad466d80de18bb637a08863597f2fc3b7e408d4ae07",
+    "/src/entities/form-renderers/d/genome/stalk-clump.ts": "ea1e491cb227873bc2867dd2208b099d839160b277d2077960c5539a877c497f",
+    "/src/entities/form-renderers/d/genome/worm-remnant.ts": "b455e036885c590069f0ff41e72aab5a09fc2c446020a6b9b96f448ec5946ba8",
+    "/src/entities/form-renderers/d/genome/operators.ts": "e43af3b0717dc5725bba4ba6bab4b18009c861e94bac2b202f7acf3cce47d747",
+    "/src/entities/form-renderers/d/genome/parts.ts": "6f13e53407ffd4a56a521cb8010d2e380334136b30ff5096aa87064bbec4ceb8",
+    "/src/entities/form-renderers/d/genome/canvas.ts": "8af6449913a6e84ac91a2353ec82c405bec6bbbf029696bf1991bd43c1b7fb13",
+    "/src/entities/form-renderers/d/genome/weld.ts": "12a2f39169dcb502d71b90923e45eeef76354938e1d205a23a0e68c7b837f447",
+    "/src/entities/form-renderers/d/genome/insect-remnant.ts": "287e194a721378a73c3bd6322a229ed78a1dbcc92e452f7b2050adcf38cf2f23",
+    "/src/generation/rift-generation-worker.ts": "5ba06ed116b670776b8d64c8b6a36f01260d865700a6ed2118127d2fb2aa051c",
+    "/src/generation/rift-generation-execute.ts": "47b28ede40e51ca166571e1e6d3cd0d1cf825f90ffd12953c7291e2eccc7f429",
+    "/assets/r100-materials/slab-solid-source.png": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454",
+    "/assets/r100-materials/ash-strata-source.png": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+    "/src/systems/r100-world/surface-preparation-worker.ts": "c6f382b3d5b9fe1ef311e73223537146679ff23de618825c05963d75a6f80da8"
+  },
+  "currentSupport": [
+    {
+      "name": "native-material",
+      "supported": true,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)"
+    },
+    {
+      "name": "phaser",
+      "supported": true,
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)"
+    }
+  ]
+}

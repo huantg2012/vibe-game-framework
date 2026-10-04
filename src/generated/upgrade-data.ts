@@ -36,7 +36,7 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     maxLevel: 3,
     effectPerLevel: 1,
     effectUnit: '每次拾取额外薪柴',
-    costs: [9, 13, 24],
+    costs: [6, 13, 24],
     description: '辨识和提取残渣的能力增强',
   },
   'growth_vitality': {
@@ -47,7 +47,7 @@ export const UPGRADE_DATA: Record<GrowthUpgradeId, UpgradeDef> = {
     maxLevel: 4,
     effectPerLevel: 15,
     effectUnit: '最大生命值增加',
-    costs: [8, 12, 19, 30],
+    costs: [4, 12, 19, 30],
     description: '厌恶污染覆盖，身体逐渐变得坚韧。',
   },
   'growth_sortie_slot': {

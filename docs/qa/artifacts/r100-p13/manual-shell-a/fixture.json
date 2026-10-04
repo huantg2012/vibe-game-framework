@@ -1,0 +1,115 @@
+{
+  "definitions": [
+    "salted_vial",
+    "cold_ash_pipe"
+  ],
+  "ids": [
+    "qa-manual-salted_vial",
+    "qa-manual-cold_ash_pipe"
+  ],
+  "inventory": {
+    "version": 3,
+    "items": [
+      {
+        "kind": "weapon",
+        "id": "WPN_3c34162e-cc32-43cb-bbc2-5d0da27a844a",
+        "weapon": {
+          "id": "WPN_3c34162e-cc32-43cb-bbc2-5d0da27a844a",
+          "definitionId": "crowbar_plain",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 60
+        },
+        "location": {
+          "kind": "carried"
+        }
+      },
+      {
+        "kind": "contaminant",
+        "id": "qa-manual-salted_vial",
+        "contaminant": {
+          "id": "qa-manual-salted_vial",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "ordinary",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 3,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "salted_vial",
+            "appearanceId": "wax_parcel",
+            "offeringProfileId": "resist_35",
+            "acquiredOrdinal": 1,
+            "identification": "revealed",
+            "revealedAt": 1791098142169,
+            "revealReceiptId": "qa-manual:salted_vial:qa-manual-salted_vial"
+          }
+        },
+        "location": {
+          "kind": "stash"
+        }
+      },
+      {
+        "kind": "contaminant",
+        "id": "qa-manual-cold_ash_pipe",
+        "contaminant": {
+          "id": "qa-manual-cold_ash_pipe",
+          "type": "catalog",
+          "rarity": "common",
+          "quality": "ordinary",
+          "stage": "tool",
+          "impactCharges": 3,
+          "usesRemaining": 3,
+          "catalog": {
+            "catalogVersion": "contaminant-v1",
+            "definitionId": "cold_ash_pipe",
+            "appearanceId": "wax_parcel",
+            "offeringProfileId": "resist_35",
+            "acquiredOrdinal": 2,
+            "identification": "revealed",
+            "revealedAt": 1791098142170,
+            "revealReceiptId": "qa-manual:cold_ash_pipe:qa-manual-cold_ash_pipe"
+          }
+        },
+        "location": {
+          "kind": "stash"
+        }
+      }
+    ],
+    "equipment": {
+      "weaponId": "WPN_3c34162e-cc32-43cb-bbc2-5d0da27a844a",
+      "toolIds": [],
+      "defenseIds": [
+        null
+      ]
+    },
+    "run": null,
+    "starterGranted": true,
+    "firstWeaponDiscovered": false,
+    "catalogTutorialRevealed": false,
+    "discoveredCatalogIds": [
+      "salted_vial",
+      "cold_ash_pipe"
+    ],
+    "offeringReceipts": {
+      "qa-manual:salted_vial": [
+        {
+          "itemId": "qa-manual-salted_vial",
+          "kind": "contaminant",
+          "definitionId": "salted_vial",
+          "slotIndex": 0
+        }
+      ],
+      "qa-manual:cold_ash_pipe": [
+        {
+          "itemId": "qa-manual-cold_ash_pipe",
+          "kind": "contaminant",
+          "definitionId": "cold_ash_pipe",
+          "slotIndex": 0
+        }
+      ]
+    },
+    "nextAcquiredOrdinal": 3
+  }
+}

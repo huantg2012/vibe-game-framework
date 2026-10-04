@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "status": "pass-actual-search-extract-return",
+  "world": "fibre-silt",
+  "grade": "severe",
+  "seed": 20261004,
+  "runId": "0e26ec36-650e-4047-b839-5dd0e5f4908d",
+  "algorithmRevision": 3,
+  "sourceManifest": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+  "sourceStorage": "docs/qa/artifacts/r100-p13/natural-low-final/low-growth/browser-storage.json",
+  "sourceStorageSha256": "aeae24a71449f19d7e3278b553db7f261056ccef05a7b618fd7f1f4b1840524b",
+  "productionEdited": false,
+  "grantedItems": [],
+  "preparation": "Real 30-trip growth and original owned gear, no equipment changes or grants. 145 HP, fine crowbar40/90; gray-glazed tooth2, blind-needle compass1, empty-photo-frame4.",
+  "priorFailure": "docs/qa/artifacts/r100-grade-closure/13-fibre-silt-severe/report.json",
+  "learnedAttempt": true,
+  "attemptLimit": 1,
+  "observations": "Normal screenshots/HUD/explored minimap, ordinary Escape pauses. Prior ended report including node positions was read and disclosed before starting; not blind. after-play audit read only after actual E extraction and R settlement.",
+  "outcome": "extract",
+  "baseSettled": true,
+  "kindlingReturned": 6,
+  "returnedIds": [],
+  "field": {
+    "hp": 145,
+    "chaos": 53.72734192791461,
+    "kindling": 6,
+    "elapsedMs": 27965.61000000018,
+    "ended": true,
+    "paused": false,
+    "prompt": null,
+    "tools": [
+      {
+        "slot": 0,
+        "name": "灰釉齿",
+        "description": "压住一处污染源1秒",
+        "usesRemaining": 2
+      },
+      {
+        "slot": 1,
+        "name": "盲针罗盘",
+        "description": "探查4格内目标位置",
+        "usesRemaining": 1
+      },
+      {
+        "slot": 2,
+        "name": "空白相框",
+        "description": "原地留下假身8秒",
+        "usesRemaining": 3
+      },
+      {
+        "slot": 3,
+        "empty": true
+      }
+    ]
+  },
+  "collected": [
+    {
+      "id": "r100-kindling-contested-2",
+      "tier": "contested",
+      "baseValue": 2,
+      "kindlingObserved": 6,
+      "elapsedMs": 15682.840000000157,
+      "classification": "Post-play match of actual search seat with exact same identity original report; material yield includes real owned preparation, not baseValue6 or deep loot."
+    }
+  ],
+  "weaponDurability": 40,
+  "successfulToolUses": {
+    "q": 0,
+    "f": 0,
+    "g": 1,
+    "h": 0
+  },
+  "combat": "No Space input, no damage, no weapon durability consumption.",
+  "tacticalConclusion": "Approached northern eastern remains around the east tip of the bank; visible distant guard left an actual search window. A decoy was placed, but post-play audit showed targetingDecoy=false for all enemies at deployment, approach and search. No causal decoy benefit claimed. Return followed known bank tips and avoided most of the green patch.",
+  "limits": [
+    "One learned sample with earned permanent growth, not fresh-player balance, continuous reflex play, natural economy or stable success rate.",
+    "Contested remains, not deep-tier return.",
+    "Original automatic empty return remains a failed sample and is not overwritten."
+  ],
+  "evidence": [
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/policy-freeze.json",
+      "sha256": "40d9d1a5f3ce71e73c28107c0cea3dc3b3076d79588345f9614b2139b5450f41"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/manual-owned.mjs",
+      "sha256": "b4b944b7f1111e71e79367cc9e342ac5206122f09558c047f9f8fc7af277edaf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/owned-preparation.json",
+      "sha256": "c771a2aaad258f1beb5eda15187ce5725f2de9b76d6163b77fb04996c39786c3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/earned-before-tools.save.json",
+      "sha256": "a1fa28ddb6eaf9f042c22fd62ffa2f4b144d55936dc3c8b07bc0e3f98201d88e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/controlled-identity.json",
+      "sha256": "e26ad1937c573b37222682cf3877b21bee7b509f20b345ddac31eff6aa635db7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/inputs.jsonl",
+      "sha256": "6b561bcd6050e8a6e37fc09c044ddc7a1768eb8b63b922ed1fd4c32ce337327f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/after-play-audit.jsonl",
+      "sha256": "e9ca5ab8daafd02fb9c0e9e2ff23b6a087437a4e6d8db65f5eb2881ed66d3411"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/returned-save.json",
+      "sha256": "77f216862b07210aeff1fafe028be3f94f2c1cb5f715d5c530a4138b286d7999"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/browser-storage.json",
+      "sha256": "97aef750d966fad1c3793148b2072a4fcd4ccb26155af3fb0578b2fddec5b2fd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/011-approach-visible-east-remains-outside-green.png",
+      "sha256": "6cd93d915a97a7a9cb39d7b2d183cf61018a205a8b40c3b81a3fe4700ba52d5e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/012-search-visible-remains-with-distant-guard.png",
+      "sha256": "e5f4946382bdf87e1ac228fbeee66ae21f961ebc2d0c7451bc18357663e7eb1b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/022-actual-extract-with-six-kindling.png",
+      "sha256": "7b8a1a3a7008f41edd9f5c3e6b0d8bfead302a0219decf8d935b8cd69c107ab8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-grade-closure/fibre-silt-manual-owned/returned.png",
+      "sha256": "d088aa38b10fbb9999ea9d9f05e5e823e0d9b66663a538dab42d2c925725555e"
+    }
+  ]
+}

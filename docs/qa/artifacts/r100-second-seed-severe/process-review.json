@@ -1,0 +1,1279 @@
+{
+  "version": 1,
+  "status": "complete-bounded-process-review",
+  "reviewer": "/root/world_loot_pixels",
+  "frozenPolicySha256": "df2ae41b9557ab9f98367f683610718a814e92fb49c1af364d2ddd9b9b055afe",
+  "cases": [
+    {
+      "worldId": "ivory-basin",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        20261005
+      ],
+      "identity": {
+        "signature": "cfda6c14",
+        "recipeId": "r100-native-v3:broken-shell-severe",
+        "revision": 3,
+        "packageHash": "b49e6a64"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "f5225bcf-ec79-472b-8ab4-92b885448f25",
+      "elapsedMs": 71463.83999999985,
+      "finalHp": 115,
+      "finalChaos": 139.03755235925493,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 12,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "elapsedMs": 21549.139999999825,
+          "hp": 145,
+          "chaos": 37.95832173797348
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "elapsedMs": 36565.21999999969,
+          "hp": 130,
+          "chaos": 76.37006473588693
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "elapsedMs": 39215.09999999972,
+          "hp": 130,
+          "chaos": 84.17541715017694
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 273,
+      "holdInputCount": 481,
+      "maxDistanceFromEntry": 607.43,
+      "observedPolylineDistance": 2517.84,
+      "visibleEnemyObservations": 94,
+      "visibleHostObservations": 157,
+      "normalFrameReview": {
+        "frame": "severe/1-search-3.png",
+        "description": "East-side shell passage; player beside thick rim, +6 normal HUD after third real search,130HP/84chaos."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/01-ivory-basin-severe-20261004/report.json",
+        "reportSha256": "07e977dbd16fe35a0287c7b088fc862331bdb26563af546ca155357e975026ea",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/01-ivory-basin-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "449a5f19620922ef6b4781f3762c8c5c82f5a46a5f95b762c9772c8c7963645f",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/01-ivory-basin-severe-20261004/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        20261005
+      ],
+      "identity": {
+        "signature": "9fc1957d",
+        "recipeId": "r100-native-v3:cinder-ridge-severe",
+        "revision": 3,
+        "packageHash": "d57e69f1"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "failed",
+      "rawFailure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "gameOutcome": "death",
+      "completeReturnToBase": false,
+      "deathSavedBeforeQaFailure": true,
+      "runId": "47f46d3b-3e04-4b4c-8ac5-3e3fd6c0d668",
+      "elapsedMs": 112512.15000000074,
+      "finalHp": 0,
+      "finalChaos": 150,
+      "finalChaosBasis": "last-live-observation-before-terminal-QA-error",
+      "kindlingActuallyBroughtBack": 0,
+      "kindlingCarriedBeforeDeath": 30,
+      "completedSearches": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "elapsedMs": 47864.74999999994,
+          "hp": 130,
+          "chaos": 84.40598684658724
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "elapsedMs": 50064.65000000001,
+          "hp": 130,
+          "chaos": 85.48181346471004
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "elapsedMs": 62164.159999999974,
+          "hp": 130,
+          "chaos": 95.5427688306078
+        },
+        {
+          "id": "r100-contaminant-deep-2",
+          "elapsedMs": 65097.4099999999,
+          "hp": 130,
+          "chaos": 97.08856126777641
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "elapsedMs": 71830.44999999998,
+          "hp": 130,
+          "chaos": 100.72102075077149
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 426,
+      "holdInputCount": 476,
+      "maxDistanceFromEntry": 860.49,
+      "observedPolylineDistance": 4109.32,
+      "visibleEnemyObservations": 186,
+      "visibleHostObservations": 194,
+      "normalFrameReview": {
+        "frame": "severe/1-search-6.png",
+        "description": "Far northern pocket, normal +12 after later deep search;30 carried,130HP/101chaos; later return death retained."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": "QA-only tool export after settled death; no R return performed; active errors are not suppressed. Independently reviewed by /root/r100_v3_pipeline.",
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/02-cinder-ridge-severe-20261004/report.json",
+        "reportSha256": "4c7ce51a0241f97a9c6fe09da4397cf44cffccd6c862bfc982770c6cb818bbc2",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/02-cinder-ridge-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "32f83292cf40ef0c976c8f610ea05021d6ba9e840be5ccb63c644c1a6121aba8",
+        "rejectedState": "docs/qa/artifacts/r100-second-seed-severe/02-cinder-ridge-severe-20261004/severe/1-rejected-state.json",
+        "rejectedStateSha256": "80b86b46a2e5cce7b1ffcf1b98bfa5400ad9cefd3ce39aa44ab0cf51af3a19c1",
+        "returnedSave": null
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "pallid-membrane",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        20261005
+      ],
+      "identity": {
+        "signature": "f3f263e6",
+        "recipeId": "r100-native-v3:pallid-membrane-severe",
+        "revision": 3,
+        "packageHash": "38d4ea8d"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "failed",
+      "rawFailure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "gameOutcome": "death",
+      "completeReturnToBase": false,
+      "deathSavedBeforeQaFailure": true,
+      "runId": "3c399308-d08d-48d2-8a08-9d2953d419c4",
+      "elapsedMs": 89079.76000000042,
+      "finalHp": 0,
+      "finalChaos": 132.89371777880976,
+      "finalChaosBasis": "last-live-observation-before-terminal-QA-error",
+      "kindlingActuallyBroughtBack": 0,
+      "kindlingCarriedBeforeDeath": 6,
+      "completedSearches": [
+        {
+          "id": "r100-kindling-contested-2",
+          "elapsedMs": 21349.129999999823,
+          "hp": 145,
+          "chaos": 39.505060021248
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 324,
+      "holdInputCount": 348,
+      "maxDistanceFromEntry": 913.87,
+      "observedPolylineDistance": 3382.46,
+      "visibleEnemyObservations": 181,
+      "visibleHostObservations": 217,
+      "normalFrameReview": {
+        "frame": "severe/1-search-1.png",
+        "description": "Player passes membrane lower edge with visible enemy/green occupancy nearby; +6,145HP/39chaos before later pressure death."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": "QA-only tool export after settled death; no R return performed; active errors are not suppressed. Independently reviewed by /root/r100_v3_pipeline.",
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/03-pallid-membrane-severe-20261004/report.json",
+        "reportSha256": "6f459ddfc41272f5b2fec94c6058c4d6602b949c8535f4906ea37a8d1bbf5970",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/03-pallid-membrane-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "0c94fd2148086eefb6fa87019bb2a590246e9f320b1c288e42332cd21e75aeb0",
+        "rejectedState": "docs/qa/artifacts/r100-second-seed-severe/03-pallid-membrane-severe-20261004/severe/1-rejected-state.json",
+        "rejectedStateSha256": "2e486acaabd8aa1544827a05148cd9fba3814fd57ef1d54c27647e87026048e5",
+        "returnedSave": null
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "schist-shear",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        20261005
+      ],
+      "identity": {
+        "signature": "687f0d3b",
+        "recipeId": "r100-native-v3:schist-shear-severe",
+        "revision": 3,
+        "packageHash": "1e4330aa"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "failed",
+      "rawFailure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "gameOutcome": "death",
+      "completeReturnToBase": false,
+      "deathSavedBeforeQaFailure": true,
+      "runId": "9572588c-2222-4543-bc2e-8798eaee85c4",
+      "elapsedMs": 108878.98000000071,
+      "finalHp": 0,
+      "finalChaos": 146.7293691454225,
+      "finalChaosBasis": "last-live-observation-before-terminal-QA-error",
+      "kindlingActuallyBroughtBack": 0,
+      "kindlingCarriedBeforeDeath": 6,
+      "completedSearches": [
+        {
+          "id": "r100-kindling-contested-2",
+          "elapsedMs": 19799.209999999868,
+          "hp": 145,
+          "chaos": 36.326168135392614
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 419,
+      "holdInputCount": 463,
+      "maxDistanceFromEntry": 684.82,
+      "observedPolylineDistance": 4095.32,
+      "visibleEnemyObservations": 195,
+      "visibleHostObservations": 171,
+      "normalFrameReview": {
+        "frame": "severe/1-continued-exploration-4.png",
+        "description": "Extended northern exploration with field of view heavily reduced by chaos;55HP/113chaos and6 carried. Earlier search and later death retained."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": "QA-only tool export after settled death; no R return performed; active errors are not suppressed. Independently reviewed by /root/r100_v3_pipeline.",
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/04-schist-shear-severe-20261004/report.json",
+        "reportSha256": "525c4ff73f7a1909fd81db7da425ef245a7f41b8d585ec7fbbe67d25eb41c942",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/04-schist-shear-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "2b691e66e514740c7cca3ebc17646a6628a1891251b5f17f5afab7da80ba6f72",
+        "rejectedState": "docs/qa/artifacts/r100-second-seed-severe/04-schist-shear-severe-20261004/severe/1-rejected-state.json",
+        "rejectedStateSha256": "160559ce36eae37c5fcf33ef7cccad3a1def5f52e26e56a3d7495b3e2825d626",
+        "returnedSave": null
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "splayed-fibres",
+      "grade": "severe",
+      "seed": 20261005,
+      "priorDistinctSeeds": [
+        20261004
+      ],
+      "identity": {
+        "signature": "e4153017",
+        "recipeId": "r100-native-v3:splayed-fibres-severe",
+        "revision": 3,
+        "packageHash": "3bba2820"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "368a8a18-5e1c-4ad2-a7af-3727d55eb877",
+      "elapsedMs": 143710.89000000435,
+      "finalHp": 70,
+      "finalChaos": 150,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 6,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [
+        {
+          "id": "r100-kindling-contested-1",
+          "elapsedMs": 49914.65999999999,
+          "hp": 145,
+          "chaos": 62.906275419657796
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 617,
+      "holdInputCount": 884,
+      "maxDistanceFromEntry": 891.28,
+      "observedPolylineDistance": 5564.52,
+      "visibleEnemyObservations": 180,
+      "visibleHostObservations": 177,
+      "normalFrameReview": {
+        "frame": "severe/1-search-1.png",
+        "description": "Player north of a branching fibre obstruction, visible enemy to east and green occupancy below; real attempted search, later6 collected and retreat."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/05-splayed-fibres-severe-20261005/report.json",
+        "reportSha256": "e1f4743f8b58bdf2c5e1f3212337fdf426aaa1081cb1b054b33696a0e0e75796",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/05-splayed-fibres-severe-20261005/severe/journey.jsonl",
+        "inputsSha256": "a3420b7a7700e5838e8bcc841f99caa3534e2b6d69bf80193881d0e38672d85f",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/05-splayed-fibres-severe-20261005/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "shell-chain",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        2182309384
+      ],
+      "identity": {
+        "signature": "30dc9ed3",
+        "recipeId": "r100-native-v3:shell-chain-severe",
+        "revision": 3,
+        "packageHash": "74fb26de"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "b8bc3070-47ea-43c9-ba77-7da89b8ad02a",
+      "elapsedMs": 116628.64000000122,
+      "finalHp": 100,
+      "finalChaos": 131.589970972736,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 6,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [
+        {
+          "id": "r100-kindling-contested-2",
+          "elapsedMs": 19715.8699999999,
+          "hp": 145,
+          "chaos": 33.18432227012546
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "elapsedMs": 54914.470000000045,
+          "hp": 100,
+          "chaos": 73.55848647808106
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 397,
+      "holdInputCount": 763,
+      "maxDistanceFromEntry": 673.18,
+      "observedPolylineDistance": 4684.12,
+      "visibleEnemyObservations": 115,
+      "visibleHostObservations": 218,
+      "normalFrameReview": {
+        "frame": "severe/1-search-3.png",
+        "description": "North-bound beyond shell segments, contamination on left; actual residue toast at100HP/73chaos,6 carried."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/06-shell-chain-severe-20261004/report.json",
+        "reportSha256": "e0442d1182543c36914e4e7881d9e98c5c290ea8c1f514c7a4827b9f27e147c8",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/06-shell-chain-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "78c95d41d2e8b4cf9b83a10a5ced489639b7914f534fdd85bd2ff4fffa35454f",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/06-shell-chain-severe-20261004/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "grain-laminate",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        1913868541
+      ],
+      "identity": {
+        "signature": "72024e2f",
+        "recipeId": "r100-native-v3:grain-laminate-severe",
+        "revision": 3,
+        "packageHash": "2ed21d62"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "60de5b7e-215f-4201-9f88-fa85d172a18e",
+      "elapsedMs": 126428.27000000146,
+      "finalHp": 55,
+      "finalChaos": 147.5071266949548,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 12,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [
+        {
+          "id": "r100-kindling-deep-1",
+          "elapsedMs": 25932.28999999979,
+          "hp": 145,
+          "chaos": 39.866380638616995
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "elapsedMs": 62464.14999999998,
+          "hp": 100,
+          "chaos": 86.28802705173786
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 531,
+      "holdInputCount": 752,
+      "maxDistanceFromEntry": 806.6,
+      "observedPolylineDistance": 4855.96,
+      "visibleEnemyObservations": 167,
+      "visibleHostObservations": 189,
+      "normalFrameReview": {
+        "frame": "severe/1-search-3.png",
+        "description": "Northern plateau search beside visible green floor patch, residue toast;100HP/86chaos/12carried. Completed deep residue after earlier12-kindling search; no spawn-only claim."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/07-grain-laminate-severe-20261004/report.json",
+        "reportSha256": "ac17a27fc97bce9ccc993e8d4c9c6e71fc1da52262d54e6d663f50121d53959c",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/07-grain-laminate-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "f67c1e8a13058bea087e288d7e839ca8fde5cfbbba2b444a91b524a82d486243",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/07-grain-laminate-severe-20261004/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "tension-membrane",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        20261005
+      ],
+      "identity": {
+        "signature": "47fc9a16",
+        "recipeId": "r100-native-v3:tension-membrane-severe",
+        "revision": 3,
+        "packageHash": "e98cb8fd"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "85aa0179-71c5-4fa1-8f4b-92c5f9c6f252",
+      "elapsedMs": 102945.88000000059,
+      "finalHp": 55,
+      "finalChaos": 132.00519650034624,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 18,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "elapsedMs": 37048.49999999974,
+          "hp": 130,
+          "chaos": 59.417427216997055
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "elapsedMs": 39581.73999999977,
+          "hp": 130,
+          "chaos": 60.59749649862523
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "elapsedMs": 47998.06999999986,
+          "hp": 130,
+          "chaos": 64.6008840102889
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "elapsedMs": 50614.649999999914,
+          "hp": 130,
+          "chaos": 65.88279504442608
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 401,
+      "holdInputCount": 656,
+      "maxDistanceFromEntry": 793.08,
+      "observedPolylineDistance": 3769.35,
+      "visibleEnemyObservations": 133,
+      "visibleHostObservations": 200,
+      "normalFrameReview": {
+        "frame": "severe/1-search-4.png",
+        "description": "Player crosses slanted membrane/ground channels beside green patch and source shell remains, +12HUD at130HP/64chaos/18carried; later actual return."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/08-tension-membrane-severe-20261004/report.json",
+        "reportSha256": "3143cc65bae64afb35821fe2c4f7154ffd62032f6562a7c0fdee352d6c9eeb1e",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/08-tension-membrane-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "5f5826f9afca5e6ae4c125b7c9a6068b7b9a3197a2357c86c7c52b595d7773fe",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/08-tension-membrane-severe-20261004/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "shell-gel-delta",
+      "grade": "severe",
+      "seed": 20261005,
+      "priorDistinctSeeds": [
+        20261004
+      ],
+      "identity": {
+        "signature": "51455a38",
+        "recipeId": "r100-native-v3:shell-gel-delta-severe",
+        "revision": 3,
+        "packageHash": "85d4fa94"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "5bf04a56-6a42-4735-8a6e-799b14df44ce",
+      "elapsedMs": 108345.65000000097,
+      "finalHp": 100,
+      "finalChaos": 150,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 12,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "elapsedMs": 47431.41999999984,
+          "hp": 130,
+          "chaos": 64.68273269691812
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "elapsedMs": 65980.6699999997,
+          "hp": 115,
+          "chaos": 100.2760907284094
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 380,
+      "holdInputCount": 678,
+      "maxDistanceFromEntry": 913.95,
+      "observedPolylineDistance": 4041.08,
+      "visibleEnemyObservations": 120,
+      "visibleHostObservations": 195,
+      "normalFrameReview": {
+        "frame": "severe/1-search-5.png",
+        "description": "Far-side shell/gel channel with white source-remains and visible nearby enemy; normal +12 at115HP/100chaos, then actual retreat. No debug outline or hidden-reward display."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/09-shell-gel-delta-severe-20261005/report.json",
+        "reportSha256": "680cc5cd40cfc0af65ae975c4e7a9c293c6ce89325393109ed5eea268031cf86",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/09-shell-gel-delta-severe-20261005/severe/journey.jsonl",
+        "inputsSha256": "eb2f6b86c33bac741b4f34f0807f320dcf4f6011335d52a6a3cf58667c3b5482",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/09-shell-gel-delta-severe-20261005/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261005,
+      "priorDistinctSeeds": [
+        20261004
+      ],
+      "identity": {
+        "signature": "560939ae",
+        "recipeId": "r100-native-v3:pressed-dunes-severe",
+        "revision": 3,
+        "packageHash": "9a5e137d"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "e2851afc-443e-4374-83f1-c4e2ceef1d37",
+      "elapsedMs": 118645.21000000124,
+      "finalHp": 115,
+      "finalChaos": 147.52958028825947,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 30,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "elapsedMs": 29098.819999999654,
+          "hp": 145,
+          "chaos": 37.55521925029837
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "elapsedMs": 36315.18999999967,
+          "hp": 145,
+          "chaos": 40.916849637416455
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "elapsedMs": 71963.77999999994,
+          "hp": 130,
+          "chaos": 89.0877764782948
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "elapsedMs": 74330.35000000002,
+          "hp": 130,
+          "chaos": 90.39321785881745
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 446,
+      "holdInputCount": 781,
+      "maxDistanceFromEntry": 855.87,
+      "observedPolylineDistance": 4316.91,
+      "visibleEnemyObservations": 104,
+      "visibleHostObservations": 265,
+      "normalFrameReview": {
+        "frame": "severe/1-search-4.png",
+        "description": "Upper northern pocket next to coherent granular ridge and green patch; source rubble lower-right, normal +12 and18carried at130HP/88chaos. Later retreat retains high-pressure tail."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/10-pressed-dunes-severe-20261005/report.json",
+        "reportSha256": "c573bb3da2d1ada66a2d6fa3f8c46d3482ba606d36a7f50d052ec3005a42b16a",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/10-pressed-dunes-severe-20261005/severe/journey.jsonl",
+        "inputsSha256": "2816393ee8de7cd484628368e08906198bbded05ae31aeb6d8312e17262b1f8c",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/10-pressed-dunes-severe-20261005/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "ruptured-film",
+      "grade": "severe",
+      "seed": 20261005,
+      "priorDistinctSeeds": [
+        20261004
+      ],
+      "identity": {
+        "signature": "837b0afa",
+        "recipeId": "r100-native-v3:ruptured-film-severe",
+        "revision": 3,
+        "packageHash": "40e68421"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "9cce900e-c8ec-49e3-92c7-b5c8dc7419b8",
+      "elapsedMs": 58964.32999999987,
+      "finalHp": 10,
+      "finalChaos": 125.24926780355864,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 0,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 242,
+      "holdInputCount": 424,
+      "maxDistanceFromEntry": 680.13,
+      "observedPolylineDistance": 2260.4,
+      "visibleEnemyObservations": 178,
+      "visibleHostObservations": 136,
+      "normalFrameReview": {
+        "frame": "severe/1-far-exploration.png",
+        "additionalFrames": [
+          "severe/1-field-result.png"
+        ],
+        "description": "Reached inner membrane choke above green occupancy, actual return result59s/10HP/125chaos/3kills/0reward. No completed search; this is a real pressured failed-search/empty-retreat process, not successful scavenging.",
+        "pressureProcessConfirmed": true
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/11-ruptured-film-severe-20261005/report.json",
+        "reportSha256": "5e1eb02bd63d388c00ebbdce916f54e1820bcbe865b8d60debc8095fe22be879",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/11-ruptured-film-severe-20261005/severe/journey.jsonl",
+        "inputsSha256": "aca3066656265b27f8382753005e2c7c76656c1445d070deba73e3bfdbdecdb4",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/11-ruptured-film-severe-20261005/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "reversed-flow",
+      "grade": "severe",
+      "seed": 20261005,
+      "priorDistinctSeeds": [
+        20261004
+      ],
+      "identity": {
+        "signature": "5e425349",
+        "recipeId": "r100-native-v3:reversed-flow-severe",
+        "revision": 3,
+        "packageHash": "74e12449"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "failed",
+      "rawFailure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "gameOutcome": "death",
+      "completeReturnToBase": false,
+      "deathSavedBeforeQaFailure": true,
+      "runId": "206512fd-55e5-46b3-8d45-27b8600e03d0",
+      "elapsedMs": 84179.95000000036,
+      "finalHp": 0,
+      "finalChaos": 130.41657949466992,
+      "finalChaosBasis": "last-live-observation-before-terminal-QA-error",
+      "kindlingActuallyBroughtBack": 0,
+      "kindlingCarriedBeforeDeath": 6,
+      "completedSearches": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "elapsedMs": 25948.959999999694,
+          "hp": 145,
+          "chaos": 43.32117316419432
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "elapsedMs": 31448.719999999616,
+          "hp": 145,
+          "chaos": 45.95302337363814
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "elapsedMs": 58181.01000000001,
+          "hp": 130,
+          "chaos": 74.1264285360405
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 385,
+      "holdInputCount": 371,
+      "maxDistanceFromEntry": 902.15,
+      "observedPolylineDistance": 3380.3,
+      "visibleEnemyObservations": 137,
+      "visibleHostObservations": 170,
+      "normalFrameReview": {
+        "frame": "severe/1-search-4.png",
+        "description": "Northern gel channel bounded by thick curling fronts, source shell remains and green patch; actual deep residue toast at130HP/74chaos and6carried before later death. Preserves unsuccessful return."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": "QA-only tool export after settled death; no R return performed; active errors are not suppressed. Independently reviewed by /root/r100_v3_pipeline.",
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/12-reversed-flow-severe-20261005/report.json",
+        "reportSha256": "8ec64ebc4985af6ea02a42868a7956f92b9482dc74c90f970cdeff85f0a36e4b",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/12-reversed-flow-severe-20261005/severe/journey.jsonl",
+        "inputsSha256": "c92304aec0ff5bdedb940949822efafc08cd056feace710a93273e3b87408307",
+        "rejectedState": "docs/qa/artifacts/r100-second-seed-severe/12-reversed-flow-severe-20261005/severe/1-rejected-state.json",
+        "rejectedStateSha256": "51b0bcfc132969ca42c6f26c935d5acd5d486ae36552d04250fdc56fd2e21503",
+        "returnedSave": null
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "film-laminate",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        3651860364
+      ],
+      "identity": {
+        "signature": "0266f09a",
+        "recipeId": "r100-native-v3:film-laminate-severe",
+        "revision": 3,
+        "packageHash": "9ef2d5e7"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "failed",
+      "rawFailure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "gameOutcome": "death",
+      "completeReturnToBase": false,
+      "deathSavedBeforeQaFailure": true,
+      "runId": "35c02058-92a5-48e1-ab25-204a31f6d28a",
+      "elapsedMs": 87146.54000000028,
+      "finalHp": 0,
+      "finalChaos": 130.56423497643448,
+      "finalChaosBasis": "last-live-observation-before-terminal-QA-error",
+      "kindlingActuallyBroughtBack": 0,
+      "kindlingCarriedBeforeDeath": 18,
+      "completedSearches": [
+        {
+          "id": "r100-kindling-contested-1",
+          "elapsedMs": 17532.629999999965,
+          "hp": 145,
+          "chaos": 32.1672948828972
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "elapsedMs": 34931.93999999971,
+          "hp": 145,
+          "chaos": 43.71711341723599
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 394,
+      "holdInputCount": 352,
+      "maxDistanceFromEntry": 872.86,
+      "observedPolylineDistance": 3378.5,
+      "visibleEnemyObservations": 251,
+      "visibleHostObservations": 189,
+      "normalFrameReview": {
+        "frame": "severe/1-search-4.png",
+        "description": "Player reaches northern residue approach with one enemy directly beside and another across the open floor; search prompt still present,115HP/56chaos/18carried. This search attempt did not complete; earlier contested and deep fuel were collected before return death."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": "QA-only tool export after settled death; no R return performed; active errors are not suppressed. Independently reviewed by /root/r100_v3_pipeline.",
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/13-film-laminate-severe-20261004/report.json",
+        "reportSha256": "d7912ee0ed7240a2ffd6929c6693dd03721f3a5b819841c5cdd222394f9889bb",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/13-film-laminate-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "ef92825a93e3939d68aa7a64fd2b5ac1bdf5dd4d4a859334e276cc2ac3df7fec",
+        "rejectedState": "docs/qa/artifacts/r100-second-seed-severe/13-film-laminate-severe-20261004/severe/1-rejected-state.json",
+        "rejectedStateSha256": "2401b20532d276f6cb50699ff924574a1ea4d9856fc6ee275a36d6aeb93f55c1",
+        "returnedSave": null
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "gel-fibre",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        3923808871
+      ],
+      "identity": {
+        "signature": "8dd3eb80",
+        "recipeId": "r100-native-v3:gel-fibre-severe",
+        "revision": 3,
+        "packageHash": "d2bb2ebb"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "completed-real-input",
+      "rawFailure": null,
+      "gameOutcome": "extract",
+      "completeReturnToBase": true,
+      "deathSavedBeforeQaFailure": false,
+      "runId": "98cd51a4-8ad8-47d1-b1c5-6408ae1c12f5",
+      "elapsedMs": 75980.30000000008,
+      "finalHp": 130,
+      "finalChaos": 97.47293873953187,
+      "finalChaosBasis": "final-public-field-result",
+      "kindlingActuallyBroughtBack": 30,
+      "kindlingCarriedBeforeDeath": null,
+      "completedSearches": [
+        {
+          "id": "r100-kindling-contested-2",
+          "elapsedMs": 17082.649999999965,
+          "hp": 145,
+          "chaos": 32.02299590677686
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "elapsedMs": 23365.719999999816,
+          "hp": 145,
+          "chaos": 34.94986343662798
+        },
+        {
+          "id": "r100-kindling-deep-2",
+          "elapsedMs": 45631.49999999977,
+          "hp": 130,
+          "chaos": 75.8213059844263
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "elapsedMs": 50098.009999999806,
+          "hp": 130,
+          "chaos": 77.99286823998702
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        },
+        {
+          "name": "灰釉齿",
+          "used": 1,
+          "label": "imminent-visible-green-crossing"
+        }
+      ],
+      "observations": 277,
+      "holdInputCount": 553,
+      "maxDistanceFromEntry": 821.04,
+      "observedPolylineDistance": 3365.87,
+      "visibleEnemyObservations": 63,
+      "visibleHostObservations": 194,
+      "normalFrameReview": {
+        "frame": "severe/1-search-5.png",
+        "description": "At northern gel/fibre convergence, thick sweeping ridge remains visible under normal light; +12 after fourth search,30carried/130HP/77chaos with enemy entering from southeast. Actual return retains30fuel."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": null,
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/14-gel-fibre-severe-20261004/report.json",
+        "reportSha256": "b22ed152671a10cc6d70301d732d760b0c60bc51ccbb5365e49be69b512089ca",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/14-gel-fibre-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "5f31c54004f4da8a987059fc7a84ff0e3c97d41b30373ac4e1b88e00c5355d9f",
+        "rejectedState": null,
+        "rejectedStateSha256": null,
+        "returnedSave": "docs/qa/artifacts/r100-second-seed-severe/14-gel-fibre-severe-20261004/severe/1-returned.save.json"
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    },
+    {
+      "worldId": "shell-grit",
+      "grade": "severe",
+      "seed": 20261004,
+      "priorDistinctSeeds": [
+        887511405
+      ],
+      "identity": {
+        "signature": "14cd70a9",
+        "recipeId": "r100-native-v3:shell-grit-severe",
+        "revision": 3,
+        "packageHash": "e096ddd8"
+      },
+      "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+      "rawStatus": "failed",
+      "rawFailure": "Error: page.evaluate: Error: Tool state does not match its recoverable inventory\n    at ToolSystem.exportRuntimeState (http://127.0.0.1:3086/src/systems/tool-system.ts:272:50)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:30)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+      "gameOutcome": "death",
+      "completeReturnToBase": false,
+      "deathSavedBeforeQaFailure": true,
+      "runId": "770c39f2-c0b8-449b-be96-7dea39a00f87",
+      "elapsedMs": 71547.1699999999,
+      "finalHp": 0,
+      "finalChaos": 133.64017598130687,
+      "finalChaosBasis": "last-live-observation-before-terminal-QA-error",
+      "kindlingActuallyBroughtBack": 0,
+      "kindlingCarriedBeforeDeath": 0,
+      "completedSearches": [
+        {
+          "id": "r100-contaminant-deep-2",
+          "elapsedMs": 21849.129999999834,
+          "hp": 145,
+          "chaos": 34.178067274833325
+        }
+      ],
+      "toolsConsumed": [
+        {
+          "name": "盲针罗盘",
+          "used": 1,
+          "label": "unknown-corner-before-search"
+        }
+      ],
+      "observations": 313,
+      "holdInputCount": 293,
+      "maxDistanceFromEntry": 886.05,
+      "observedPolylineDistance": 2825.17,
+      "visibleEnemyObservations": 182,
+      "visibleHostObservations": 92,
+      "normalFrameReview": {
+        "frame": "severe/1-search-3.png",
+        "description": "Far northern shell/grit pocket, source shell remains and green occupied ground;100HP/86chaos, active search prompt but this attempted fuel search did not complete. Earlier deep residue search completed; later death lost it."
+      },
+      "processJudgment": "meaningful-second-seed-process-observed",
+      "processScope": "Actual normal sight, traversal, searches and encounters/pressure. Not full map completion, natural repeated economy, full human first-sight play, or a required victory.",
+      "qaTerminalFailureClassification": "QA-only tool export after settled death; no R return performed; active errors are not suppressed. Independently reviewed by /root/r100_v3_pipeline.",
+      "evidence": {
+        "report": "docs/qa/artifacts/r100-second-seed-severe/15-shell-grit-severe-20261004/report.json",
+        "reportSha256": "22cc934ff42d9661a844ce186373347aa61aa7729f470be1ceae7bae5575d2c7",
+        "inputs": "docs/qa/artifacts/r100-second-seed-severe/15-shell-grit-severe-20261004/severe/journey.jsonl",
+        "inputsSha256": "afb108c7cea4e4ceba1ac7ca53ab46cce8d083334eadb5e0cf5fa862ac25f682",
+        "rejectedState": "docs/qa/artifacts/r100-second-seed-severe/15-shell-grit-severe-20261004/severe/1-rejected-state.json",
+        "rejectedStateSha256": "9804fa8f25cce08924ab00e44a729e7b61f88ae1583d53692a2e822b34e208d2",
+        "returnedSave": null
+      },
+      "consoleErrors": [],
+      "pageErrors": []
+    }
+  ],
+  "counts": {
+    "registered": 15,
+    "finished": 15,
+    "reviewedMeaningful": 15,
+    "extracts": 9,
+    "deaths": 6,
+    "completeBaseReturns": 9,
+    "qaTerminalOverreads": 6
+  },
+  "limits": [
+    "Each exact predeclared missing seed run once; no retry/reroll.",
+    "Each run branches from same genuine low30 inventory,145HP and fine weapon40; no tools granted. Owned Q/F chosen through public UI; G remains unused by driver.",
+    "Policy10 predeclared 2 search target but continuous exploration allows at most8 approach iterations; failures and overlong retreat retained.",
+    "Full static geometry is disclosed to macro-navigation. Enemy/Host/search selection uses observed records and paid survey display, not hidden rewards/enemy forecasts. Raw after-action state contains diagnostic loot information but was not selection input.",
+    "Concurrent behavioral runs; no timing/performance qualification derived.",
+    "Script success is distinct from game outcome. Deaths terminate QA during post-death export; frozen raw reports remain failed, production death checkpoint valid.",
+    "Normal frame review is one listed non-spawn action frame per run plus recorded actual inputs; not a claim that every frame or full world has been professionally playtested."
+  ]
+}

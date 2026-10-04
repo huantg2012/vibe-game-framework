@@ -1,9 +1,9 @@
 // GENERATED from data/rift-expedition-grades.csv; edit the CSV.
-export const R100_EXPEDITION_SOURCE_HASH = '137a90a044efe04fa59eae2fb222d0d1e008e5a6519178cf0c635fd94eca6153';
+export const R100_EXPEDITION_SOURCE_HASH = 'e218b81edb14f2206e0f2d35c1f01955cadace5ece2ee262f6dccfb53fded78c';
 export const R100_EXPEDITION_GRADES = [
   {
     "grade_id": "low",
-    "version": 1,
+    "version": 2,
     "status": "production-candidate",
     "label": "低污染",
     "public_risk": "污染较少，混乱增长较慢",
@@ -22,7 +22,7 @@ export const R100_EXPEDITION_GRADES = [
   },
   {
     "grade_id": "medium",
-    "version": 1,
+    "version": 2,
     "status": "production-candidate",
     "label": "中污染",
     "public_risk": "侵蚀更广，久留代价更高",
@@ -41,7 +41,7 @@ export const R100_EXPEDITION_GRADES = [
   },
   {
     "grade_id": "severe",
-    "version": 1,
+    "version": 2,
     "status": "production-candidate",
     "label": "重度污染",
     "public_risk": "地面与空气受侵占，混乱增长快",
@@ -50,10 +50,10 @@ export const R100_EXPEDITION_GRADES = [
     "enemy_count": 4,
     "kindling_safe_count": 1,
     "kindling_contested_count": 2,
-    "kindling_deep_count": 3,
+    "kindling_deep_count": 2,
     "kindling_safe_value": 1,
     "kindling_contested_value": 2,
-    "kindling_deep_value": 4,
+    "kindling_deep_value": 6,
     "contaminant_safe_count": 1,
     "contaminant_contested_count": 1,
     "contaminant_deep_count": 2

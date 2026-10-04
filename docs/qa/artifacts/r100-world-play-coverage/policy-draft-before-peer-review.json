@@ -1,0 +1,94 @@
+{
+  "feature": "COH-F052",
+  "frozenAt": "2026-10-04T06:12:27.428Z",
+  "cases": [
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "seed": 20261004
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "severe",
+      "seed": 20261005
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "medium",
+      "seed": 20261004
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "severe",
+      "seed": 20261005
+    },
+    {
+      "world": "schist-shear",
+      "grade": "medium",
+      "seed": 20261004
+    },
+    {
+      "world": "schist-shear",
+      "grade": "severe",
+      "seed": 20261005
+    },
+    {
+      "world": "tension-membrane",
+      "grade": "medium",
+      "seed": 20261004
+    },
+    {
+      "world": "tension-membrane",
+      "grade": "severe",
+      "seed": 20261005
+    },
+    {
+      "world": "laminate-shell",
+      "grade": "medium",
+      "seed": 20261004
+    },
+    {
+      "world": "laminate-shell",
+      "grade": "severe",
+      "seed": 20261005
+    }
+  ],
+  "scope": "Five worlds missing current r3 search-and-return, 10 fixed attempts. Not a new 120-journey acceptance gate; not a novice navigation or continuous economy test.",
+  "storage": {
+    "path": "docs/qa/artifacts/r100-p13/natural-low/low-growth/browser-storage.json",
+    "sha256": "5b3e4a5bc1d875776ea720d8b2eabc82d17a7dd516876960970f17d06d7c634d",
+    "cycle": 12,
+    "kindlingReserve": 11,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 52,
+        "maxHp": 115
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 51,
+        "maxHp": 115
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 50,
+        "maxHp": 115
+      }
+    ]
+  },
+  "routing": "Full static conservative terrain geometry for body-supported macro routes. Actual WASD; opponents/hosts sampled only if currently visible, with bounded last-seen memory. Seek a far terrain region, then actually observed remains >240px from departure; no hidden loot value/type, enemy state/patrol, teleport, health, time or immunity edits.",
+  "preparation": "Copy actual stored localStorage bytes to the final test origin; use known inventory and real UI equipment. Only selected world/grade/seed is a controlled departure fixture. Each case independently forks the identical original mature save; all outcomes retained.",
+  "success": "Real E search collects at least one observed non-entry remains; actual E extraction and R base return; real saved inventory.run.baseSettled. Empty exits, deaths, routing/runtime failures retained and do not count as successful world evidence.",
+  "limits": "No new skill/equipment grants. Not every grade or seed exhausted. Hidden identity/departure/save snapshots retained only as postmortem evidence, not route/loot decisions. No subjective art or hearing approval inferred.",
+  "harnessSha256": "e132afa101ad684aeea90ebe9611a85504cfd54b2954cc989bc2893ef9283f52",
+  "dependencies": [
+    {
+      "file": "tools/world-study/r100-p13-costed-encounters.mjs",
+      "sha256": "72695394cca17b022f35f56dd3a80cfc5759bc2166ba6b555037dc5b349c1a4e"
+    }
+  ]
+}

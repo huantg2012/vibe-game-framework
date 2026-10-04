@@ -43,3 +43,7 @@ const borrowed = harness(true);
 borrowed.tick(); borrowed.fence.markPresented(); borrowed.render();
 assert.deepEqual(borrowed.state(), { paused: true, releases: 1, resumes: 0 });
 console.log('Rift entry frame fence: actual-frame, checkpoint, pause/hidden, cancel, stale listener and physics ownership checks passed');
+
+const staged = harness();staged.tick();assert(staged.fence.needsPresentation());
+staged.fence.finishConstruction();assert(!staged.fence.needsPresentation());staged.render();assert(staged.fence.isActive());
+staged.tick();staged.fence.markPresented();assert.throws(()=>staged.fence.finishConstruction());staged.render();assert(!staged.fence.isActive());

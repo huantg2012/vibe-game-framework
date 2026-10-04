@@ -71,15 +71,15 @@ export function proceduralRiftIdentity(layout: GeneratedRiftLayout): RiftCheckpo
   return { worldId: 'procedural-rift', layoutId: 'procedural-rift', seed: layout.seed, recipeId: layout.recipeId,
     signature, ...(generationRecipes.has(layout) ? { generation: generationRecipes.get(layout)! } : {}) };
 }
-function rememberWorld(generation: WorldProductionRecipe): GeneratedRiftLayout {
+function rememberWorld(generation: WorldProductionRecipe, expected?: RiftCheckpoint['identity']): GeneratedRiftLayout {
   // Creation and recovery dispatch by the same contract version. A later live
   // generator cannot accidentally create a v2 departure that v2 cannot restore.
-  const world = generation.version === 3 ? createR100ProductionMap(generation) : restoreLegacyProductionWorld(generation);
+  const world = generation.version === 3 ? createR100ProductionMap(generation) : restoreLegacyProductionWorld(generation, expected);
   worlds.set(world.layout, world); generationRecipes.set(world.layout, generation);
   return world.layout;
 }
 function layoutKey(identity: RiftCheckpoint['identity']): string {
-  return `${identity.seed}:${identity.recipeId}:${identity.generation ? JSON.stringify(identity.generation) : 'legacy'}`;
+  return `${identity.seed}:${identity.recipeId}:${identity.signature}:${identity.generation ? JSON.stringify(identity.generation) : 'legacy'}`;
 }
 function validProceduralIdentity(identity: RiftCheckpoint['identity']): boolean {
   return identity.worldId === 'procedural-rift' && identity.layoutId === 'procedural-rift'
@@ -163,7 +163,7 @@ export function restoreProceduralLayout(identity: RiftCheckpoint['identity']): G
   if (requiredPreparedKey !== null && (key !== requiredPreparedKey || !layout))
     throw new Error('Prepared recovery cannot synchronously generate a world');
   if (!layout) {
-    layout = identity.generation ? rememberWorld(identity.generation) : restoreLegacyProceduralLayout(identity.seed);
+    layout = identity.generation ? rememberWorld(identity.generation, identity) : restoreLegacyProceduralLayout(identity.seed);
     if (layouts.size >= 4) layouts.clear(); layouts.set(key, layout);
   }
   const actual = proceduralRiftIdentity(layout);

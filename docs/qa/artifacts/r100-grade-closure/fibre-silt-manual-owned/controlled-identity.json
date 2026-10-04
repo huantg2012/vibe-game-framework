@@ -1,0 +1,330 @@
+{
+  "worldId": "procedural-rift",
+  "layoutId": "procedural-rift",
+  "seed": 20261004,
+  "recipeId": "r100-native-v3:fibre-silt-severe",
+  "signature": "e66196e3",
+  "generation": {
+    "version": 3,
+    "requestedSeed": 20261004,
+    "paintGeometryVersion": 2,
+    "profile": {
+      "id": "fibre-silt",
+      "label": "纤维积沙槽",
+      "description": "纤维积沙槽的原生材料与完整搜撤地段",
+      "material": "crystal",
+      "surface": {
+        "substrate": "crystal",
+        "coating": "crystal",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "space": {
+      "id": "open-scars",
+      "label": "疏落蚀坑",
+      "voidFraction": 0.09,
+      "crackFraction": 0.2,
+      "holeScale": 1,
+      "directionality": 0.2,
+      "clustering": 0.25
+    },
+    "contentFragmentTypeId": "frag-outdoor",
+    "nativeDefinition": {
+      "id": "fibre-silt-severe",
+      "family": "fibre-knot",
+      "grade": "severe",
+      "label": "纤维积沙槽",
+      "profile": "fibre-silt",
+      "cols": 32,
+      "rows": 24,
+      "seed": 20261002,
+      "spawn_x": 196,
+      "spawn_y": 588,
+      "exit_x": 148,
+      "exit_y": 664,
+      "search_x": 516,
+      "search_y": 580,
+      "enemy_x": 840,
+      "enemy_y": 172,
+      "axis": 0.42,
+      "light_radius": 154,
+      "emission": 0.72,
+      "motion_period": 16,
+      "ground_quietness": 0.84,
+      "ground_contrast": 0.5,
+      "ground_coverage": 0.26,
+      "ground_material_blend": 0.32,
+      "instances": [
+        {
+          "id": 1,
+          "family": "fibre-knot",
+          "role": "relief",
+          "x": 490,
+          "y": 384,
+          "rotation": -0.52,
+          "length": 374,
+          "width": 269,
+          "height": 6,
+          "thickness": 2,
+          "fold": 0.41800000000000004,
+          "branches": 4,
+          "opening": 0.3,
+          "distortion": 0.17600000000000002
+        },
+        {
+          "id": 2,
+          "family": "fibre-knot",
+          "role": "solid",
+          "x": 365,
+          "y": 235,
+          "rotation": -0.22,
+          "length": 249,
+          "width": 123,
+          "height": 34,
+          "thickness": 9,
+          "fold": 0.41800000000000004,
+          "branches": 4,
+          "opening": 0.3,
+          "distortion": 0.17600000000000002
+        },
+        {
+          "id": 3,
+          "family": "granular-ridge",
+          "role": "solid",
+          "x": 572,
+          "y": 354,
+          "rotation": 0.38,
+          "length": 244,
+          "width": 113,
+          "height": 34,
+          "thickness": 9,
+          "fold": 0.41800000000000004,
+          "branches": 4,
+          "opening": 0.3,
+          "distortion": 0.17600000000000002
+        },
+        {
+          "id": 4,
+          "family": "fibre-knot",
+          "role": "solid",
+          "x": 797,
+          "y": 436,
+          "rotation": -0.75,
+          "length": 200,
+          "width": 130,
+          "height": 31,
+          "thickness": 9,
+          "fold": 0.41800000000000004,
+          "branches": 4,
+          "opening": 0.3,
+          "distortion": 0.17600000000000002
+        },
+        {
+          "id": 5,
+          "family": "granular-ridge",
+          "role": "relief",
+          "x": 678,
+          "y": 552,
+          "rotation": -0.44,
+          "length": 273,
+          "width": 106,
+          "height": 6,
+          "thickness": 2,
+          "fold": 0.41800000000000004,
+          "branches": 4,
+          "opening": 0.3,
+          "distortion": 0.17600000000000002
+        }
+      ],
+      "erosion": [
+        [
+          {
+            "x": 632,
+            "y": 424
+          },
+          {
+            "x": 712,
+            "y": 392
+          },
+          {
+            "x": 824,
+            "y": 424
+          },
+          {
+            "x": 864,
+            "y": 480
+          },
+          {
+            "x": 800,
+            "y": 520
+          },
+          {
+            "x": 712,
+            "y": 480
+          },
+          {
+            "x": 664,
+            "y": 504
+          },
+          {
+            "x": 616,
+            "y": 472
+          }
+        ],
+        [
+          {
+            "x": 176,
+            "y": 176
+          },
+          {
+            "x": 256,
+            "y": 152
+          },
+          {
+            "x": 344,
+            "y": 184
+          },
+          {
+            "x": 352,
+            "y": 224
+          },
+          {
+            "x": 288,
+            "y": 248
+          },
+          {
+            "x": 224,
+            "y": 232
+          },
+          {
+            "x": 160,
+            "y": 216
+          }
+        ],
+        [
+          {
+            "x": 384,
+            "y": 560
+          },
+          {
+            "x": 456,
+            "y": 544
+          },
+          {
+            "x": 528,
+            "y": 576
+          },
+          {
+            "x": 520,
+            "y": 612
+          },
+          {
+            "x": 448,
+            "y": 620
+          },
+          {
+            "x": 392,
+            "y": 592
+          }
+        ]
+      ]
+    },
+    "gradeDefinition": {
+      "id": "severe",
+      "version": 1,
+      "label": "重度污染",
+      "status": "dev-masters",
+      "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+      "paintCount": 6,
+      "paintSubstrate": "oil_film",
+      "paintContinuity": "monolith",
+      "paintCoverage": "overwrite",
+      "volumeCount": 3,
+      "volumeSubstrate": "gas_mass",
+      "volumeCoverage": "overwrite",
+      "volumeCols": 5,
+      "volumeRows": 3,
+      "chaosStartRate": 0.64,
+      "chaosEndRate": 0.96,
+      "chaosRampStartSeconds": 40,
+      "chaosRampEndSeconds": 130
+    },
+    "contentDefinition": {
+      "grade_id": "severe",
+      "version": 2,
+      "status": "production-candidate",
+      "label": "重度污染",
+      "public_risk": "地面与空气受侵占，混乱增长快",
+      "public_preparation": "备好脱身工具，留出归途",
+      "public_reward": "更多收获在深处，入口无加成",
+      "enemy_count": 4,
+      "kindling_safe_count": 1,
+      "kindling_contested_count": 2,
+      "kindling_deep_count": 2,
+      "kindling_safe_value": 1,
+      "kindling_contested_value": 2,
+      "kindling_deep_value": 6,
+      "contaminant_safe_count": 1,
+      "contaminant_contested_count": 1,
+      "contaminant_deep_count": 2
+    },
+    "package": {
+      "id": "r100-fibre-silt",
+      "algorithm": "r100-native",
+      "version": 3,
+      "algorithmRevision": 3,
+      "materials": {
+        "fibre-knot": {
+          "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+          "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+          "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+        },
+        "granular-ridge": {
+          "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+          "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+          "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+        }
+      },
+      "dependencyHash": "cc1dc635",
+      "grade": "severe"
+    }
+  },
+  "catalogVersion": "contaminant-v1",
+  "lootAlgorithmVersion": 1,
+  "combatRulesVersion": 2
+}

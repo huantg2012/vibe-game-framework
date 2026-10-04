@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-10-04T08:27:35.996Z",
+  "world": "ivory-basin",
+  "family": "suture-shell",
+  "grade": "severe",
+  "seed": 20261005,
+  "gameUrl": "http://127.0.0.1:3086",
+  "label": "Earned30 learned B1",
+  "maxHp": 145,
+  "build": "silence-lure",
+  "result": "deep-2 returned after one defensive kill",
+  "gate": true,
+  "weapon": {
+    "start": 40,
+    "end": 38,
+    "observedHits": 2,
+    "observedKills": 1
+  },
+  "toolUses": {
+    "qSuccessful": 4,
+    "qRejectedRefresh": 1,
+    "f": 2,
+    "g": 0
+  },
+  "observation": "First south-side bell009 with silence006: two visible southern opponents moved toward lower landing side; crossed north010 with no damage. Far bell014: close guard still approached; search016 interrupted by15 damage. Early Q refresh016 rejected with no cost because prior silence remained. Defensive hits018/020 killed only this guard; successful Q/E021 collected deep remains, while one further enemy was visibly approaching. Retreated without further damage. Not a pure-stealth clear; not proof that either bell cancels confirmed chase. Post-play audit delegated independently after actual return.",
+  "finalPublicState": {
+    "hp": 130,
+    "chaos": 96.68988645474117,
+    "kindling": 0,
+    "elapsedMs": 38815.27999999954,
+    "ended": true,
+    "paused": false,
+    "prompt": null,
+    "tools": [
+      {
+        "slot": 0,
+        "name": "灰毡手套",
+        "description": "5秒内自身行动消声",
+        "usesRemaining": 1
+      },
+      {
+        "slot": 1,
+        "name": "裂舌铜铃",
+        "description": "抛出声诱饵持续4秒",
+        "usesRemaining": 3
+      },
+      {
+        "slot": 2,
+        "name": "空白相框",
+        "description": "原地留下假身8秒",
+        "usesRemaining": 4
+      },
+      {
+        "slot": 3,
+        "empty": true
+      }
+    ]
+  },
+  "outcome": "extract",
+  "kindlingReturned": 0,
+  "revealedNodes": {
+    "r100-contaminant-deep-2": [
+      "CAT_a70e7fe9-80b7-45eb-88cd-e6199ee0d5ef_r100-contaminant-deep-2"
+    ]
+  },
+  "returnedIds": [
+    "CAT_a70e7fe9-80b7-45eb-88cd-e6199ee0d5ef_r100-contaminant-deep-2"
+  ],
+  "deepReturnedIds": [
+    "CAT_a70e7fe9-80b7-45eb-88cd-e6199ee0d5ef_r100-contaminant-deep-2"
+  ],
+  "sourceManifest": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "returnedSaveSha256": "1918dfbb800797e31dcf4885ea51cb5b32e7f9111bb2d6d2219b9e717363cccb",
+  "limits": [
+    "Single fixed-seed attempt with normal Escape screenshot decision pauses, not continuous reflex play.",
+    "Only normal screenshots/HUD/explored minimap and prior observed route drove actions; depth classification read only after actual return.",
+    "Two ordinary mature tools are explicit fixture preparation. Earned variants preserve real30-expedition original save growth/weapon/defenses; no extra passive or G action.",
+    "No stable success rate, natural economy, human art approval or actual listening conclusion."
+  ],
+  "postPlayAudit": {
+    "reviewer": "/root/r100_feedback_record",
+    "readAfterActualReturn": true,
+    "source": "after-play-audit.jsonl",
+    "result": "First lateral diversion plus silent approach verified; far bell does not cancel chase; not whole-run stealth.",
+    "frames": [
+      {
+        "frame": "006",
+        "timeMs": 7750,
+        "fact": "silenced=true"
+      },
+      {
+        "frame": "007-008",
+        "fact": "Rewriter still patrol; detection0"
+      },
+      {
+        "frame": "009",
+        "timeMs": 9670,
+        "fact": "Rewriter suspicious, investigatingLure=true, investigation near lateral bell point"
+      },
+      {
+        "frame": "010",
+        "fact": "Player crossed away while rewriter moved toward bell side; detection0 and investigatingLure=true"
+      },
+      {
+        "frame": "011-012",
+        "fact": "Rewriter continued investigating bell as player departed"
+      },
+      {
+        "frame": "013",
+        "fact": "Rewriter returned"
+      },
+      {
+        "frame": "014-015",
+        "fact": "Northern INF02 already chase/detection1/investigatingLure=false; label behind-lured-guard is an intention, not successful effect"
+      },
+      {
+        "frame": "021",
+        "fact": "INF01 also chase during successful search, so silence did not prevent every alert"
+      }
+    ]
+  }
+}

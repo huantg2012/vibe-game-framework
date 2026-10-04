@@ -3,8 +3,8 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-10-03
-last-modified-by: code（R100异步准备、快照复核与恢复生命周期）
+last-modified-date: 2026-10-04
+last-modified-by: design（R100 P13成长价格与既购兼容边界；原异步恢复合同保留）
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes, system-map-generation]
 exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, inventoryStore.reconcileExpandedToolSlots(previousSlotCount), SaveLoadSnapshot, saveManager.captureLoadSnapshot(), saveManager.matchesLoadSnapshot(snapshot), loadExpedition]
 interface-changed: true
@@ -22,7 +22,7 @@ note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入�
 
 容量规则由`GrowthState.schemaVersion`区分，和库存schema不是同一个版本。新成长写2；缺版本的合法旧成长0/1级投影为新2/3级，保留原3/4格权益及全部实例、槽序、积累。不得截短槽数组丢物，重复读新版本不再补级。原成长更后等级和加厚仍生效；最早未达目标步骤继续，已满足步骤不重复收费。
 
-R3全22步（含加厚）以`round(8 * 1.077^(order - 1))`逐项取整，合计426；两处短取整平台允许，全程不下降、同类等级递增。费用唯一来源为`growth-route.csv.cost`；`upgrades.csv`只维护六轴效果定义等内容，生成的`UPGRADE_DATA.costs`按路线派生，库存/UI不另存价格。加厚第7/14/21步12/21/35，机制归净化点spec。旧已购不自动补扣、不追溯退款；新购买按对应原路线`unit/level`节点现价，不能用累计已购数重排旧非前缀等级的后续费用。
+R100 P13当前22步（含加厚）费用以`growth-route.csv.cost`为唯一权威：首两项生命/亲和为4/6，后20项保留原价，总419；后段原价来自`round(8 * 1.077^(order - 1))`逐项取整，运行时不按公式重算。短取整平台允许，全程不下降、同类等级递增。`upgrades.csv`只维护六轴效果定义等内容，生成的`UPGRADE_DATA.costs`按路线派生，库存/UI不另存价格。加厚第7/14/21步12/21/35，机制归净化点spec。旧已购不自动补扣、不追溯退款；新购买按对应原路线`unit/level`节点现价，不能用累计已购数重排旧非前缀等级的后续费用。
 
 ## 迭代28 · 鉴定目录与整趟被动（DEC-174）
 

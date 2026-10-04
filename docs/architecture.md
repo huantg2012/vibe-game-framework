@@ -40,13 +40,15 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-body-collision.ts` 为正式v3角色提供独立于保守导航格的20×20身体查询：所有solid同源XY三角形参与连续扫掠，VOID仍用原8px支撑，浮雕不擦除实体。WASD、敌人推挤后的校正、工具扫掠与存档准入共用该查询；不改变旧v1/v2、生成器保守寻路或Host的32px投放。斜面接触保留切向运动；技能Body.reset后同步offset与前帧坐标，不能留下同帧身体偏移。详细契约归[移动规格](specs/system-movement-vision.md#r100-v3--实体足边与完整身体2026-10-04)。
 
-新出发使用 v3 `algorithmRevision: 2`；`r100-expedition-v1.ts` 保留早期正式 v3 的原部署，恢复严格按保存的修订分派。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
+新出发使用 v3 `algorithmRevision: 3` 与内容定义 version 2。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
 
 `systems/r100-world-presentation.ts` 持有正式表现准备，DEV 母版只保留兼容导出。`surface-preparation-client.ts` / `surface-preparation-worker.ts` 是专用可终止准备 Worker：接收已准入的原生数据及共享解码像素，执行地表、材质光照、侵蚀字段和 `surface-bake.ts` 的四张 RGBA 烘焙，以 transferable 返回。等待期间提前创建并上传 WebGL 材质接收器；`MasterPresentation` 建场消费一次，正式路径缺准备时抛错，绝不临时同步补烤。异步取消、迟到响应、替换与两份上限的 LRU 均释放未消费的 GPU 资源；已消费资源由场景销毁。准备身份包含包身份、实际种子、构造 ID 和尺寸，源图片像素缓存与一次性 GPU 资源分离。
 
 同一表面 Worker 还输出 `prepared-gameplay.ts` 的小型派生事实：真实 Host 目标顺序／核数、发光源像素位置、搜取来源区域。`rift-host-manifest.ts` 抽取原准入纯函数，复用该 Worker 已烤的占漆场，不再在首帧保存时完整重烤。返回端核对 Host 清单与发光源选择；事实按实际 layout 弱引用和包／种子身份注册。正式异步 v3 一旦缺少准备或身份不符必须拒绝，旧版本和离线同步准入保留原计算。未消费 GPU 与 CPU 事实共同取消／释放，已消费运行时保留准入事实；旧所有者不能清掉后来的同键准备。RiftScene 使用已准备来源区域，MasterPresentation 使用已准备 sourceCells，原掉落和画面算法均不变。
 
-`systems/rift-entry-frame-fence.ts` 管理正式原生场景的真实帧边界：建场帧仅保持 Arcade 暂停，下一实际 engine frame 绘制完整的零时长画面并提交首个完整 checkpoint，收到该帧 `POST_RENDER` 后才交还玩法。它不使用固定毫秒假装渲染完成，不修改冷续的速度、输入向量、攻击进度或物理余量。准备期间的 pagehide 保留已持久化的出发／旧 checkpoint；提前请求暂停排到首次完整存档之后。绘制失败、保存失败、隐藏、取消、shutdown 和直接 destroy 不得放行；所拥有的暂停及渲染 listener 必须成对释放。显式 DEV 入场演出沿用其原时长合同。
+`systems/rift-staged-entry.ts` 将原生建场依赖顺序保留在单个 generator 中，以 requestAnimationFrame 后的新任务逐段推进。场景构造期间 camera 不显示半成品、Scene Time 与 Arcade 暂停；update/postUpdate 不执行玩法。取消和直接销毁清理待执行回调与部分资源，迟到回调不能再推进。Gym 不再把 CREATE 事件当成可玩就绪，而等完整画面和交控之后才启用操作。
+
+`systems/rift-entry-frame-fence.ts` 管理正式原生场景的真实帧边界：最后建场段标记 finishConstruction 后，下一实际 engine frame 绘制完整的零时长画面并提交首个完整 checkpoint，收到该帧 `POST_RENDER` 后才交还玩法。它不使用固定毫秒假装渲染完成，不修改冷续的速度、输入向量、攻击进度或物理余量。准备期间的 pagehide 保留已持久化的出发／旧 checkpoint；提前请求暂停排到首次完整存档之后。绘制失败、保存失败、隐藏、取消、shutdown 和直接 destroy 不得放行；所拥有的暂停及渲染 listener 必须成对释放。显式 DEV 入场演出沿用其原时长合同。
 
 `systems/native-rift-body-recovery.ts` 是原生 v3 保存的身体坐标兼容边界。manager 在完整状态与库存校验后、Scene 在真正恢复玩家前调用同一纯函数。新世界状态写 `bodyGeometryVersion=1`；缺标记时仅允许已实测的旧 active paid catalog dash 省略 6px offset，且必须满足技能插值、锁输入和实际完整身体支持。它只返回身体位置副本，不重写保存或重放技能；v1/v2 沿原恢复分支。
 
@@ -77,6 +79,8 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 ## R100 I01：持久生成版本与DEV资格底座
 
 `managers/rift-recovery.ts` → `generation/legacy-rift-generation.ts` → `legacy-rift-v2/executor.js`：正式v1/v2新局及续局、无generation旧图均使用固定ac9ddd7闭包；新局选池仍由当前CSV解析。`types/rift-checkpoint.ts`用封存recipe validator读取旧身份，避免live能力校验变动拒绝合法旧局。归档manifest、固定基线重建工具、跨进程完整世界金样共同保护；新算法必须注册新版本。恢复协议本身不新增字段。
+
+旧 v2 的跨 V8 恢复在原生完整执行结果不匹配时，才运行两个显式历史 atan2 算术配置：V8 12.4 fdlibm 的普通二进制运算与 ARM64 FMA。`legacy-rift-v2/arithmetic-executor.js` 是原封存执行器的确定性适配，仅 14 个 atan2 调用点改为词法参数；原文件 SHA 不变，没有全局 Math 替换。每个候选都执行完整生成并要求原 identity 全部字段精确匹配；不接受近似签名。`binary64-fma.ts` 用有界误差区间快路与整数 ties-to-even 兜底表达历史机器运算。恢复缓存键包含完整配方和原签名，不能混用不同算术结果。V1 不增加候选规则；未来未知算法不自动接受。许可与来源随 ARITHMETIC-LICENSE 保留。
 
 `data/rift-world-packages.csv` 与 `rift-pollution-grades.csv` → `tools/world-study/codegen-world-packages.ts` → generated模块与依赖manifest。`world-package.ts`拥有DEV包合同校验；`pollution-grade.ts`提供等级合同与纯数值积分供九格母版的ChaosSystem消费，不替代正式选级或资格判定；五份旧demo、十五个未实施级别不自动进R100已验收台账。哈希范围明确为生成依赖与合同，最终资产发布清单尚未实现。
 

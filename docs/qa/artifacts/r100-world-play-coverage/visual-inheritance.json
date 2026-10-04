@@ -1,0 +1,311 @@
+{
+  "reviewedAt": "2026-10-04T06:15:10.755Z",
+  "oldManifest": "docs/qa/artifacts/r100-i04-i06/normal-matrix/frozen-visual-source.json",
+  "finalManifest": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "scope": "Material images, hard-edge geometry/raster, surface shading, local structural identity and normal foot-edge readability only. Original evidence stays rev1. Old dynamic enemy/patrol, loot economics, sound, current-frame gameplay and human approval are NOT inherited.",
+  "comparisons": [
+    {
+      "file": "src/generation/world-study/native-volume-geometry.ts",
+      "oldSha256": "748173973ad74577792c66dd10078f0423208ac457b62901a002302eb771664f",
+      "finalSha256": "748173973ad74577792c66dd10078f0423208ac457b62901a002302eb771664f",
+      "same": true
+    },
+    {
+      "file": "src/generation/world-study/native-volume-raster.ts",
+      "oldSha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0",
+      "finalSha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0",
+      "same": true
+    },
+    {
+      "file": "src/generation/world-study/master-ground-field.ts",
+      "oldSha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783",
+      "finalSha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783",
+      "same": true
+    },
+    {
+      "file": "src/generation/world-study/r100-master-world.ts",
+      "oldSha256": "f72c4df9550598328c8dfcc4f70b79855b9090cd2bd7b33045cda5d7a94ee317",
+      "finalSha256": "f72c4df9550598328c8dfcc4f70b79855b9090cd2bd7b33045cda5d7a94ee317",
+      "same": true
+    },
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "oldSha256": "9f0f3aa32f2466d0686bf039301cf2f091188e456d7deea8eeaef5302ab14cdf",
+      "finalSha256": "d8ee46eaaedd5cd78b7ac8b91bf61b4e71b0602cccfb1afe10223f65bf368129",
+      "same": false
+    },
+    {
+      "file": "src/generated/r100-materials.ts",
+      "oldSha256": "defd1c289824cc9a4c7a3ee3870f289e72175d401931a5e3da09ca5a46876968",
+      "finalSha256": "defd1c289824cc9a4c7a3ee3870f289e72175d401931a5e3da09ca5a46876968",
+      "same": true
+    },
+    {
+      "file": "src/systems/r100-world/ground.ts",
+      "oldSha256": "36fc10eb24d9d111619c968367e937b82693d31d775a8d07800831794aa57f0d",
+      "finalSha256": "36fc10eb24d9d111619c968367e937b82693d31d775a8d07800831794aa57f0d",
+      "same": true
+    },
+    {
+      "file": "src/systems/r100-world/surface-fields.ts",
+      "oldSha256": "7668ee50463c178e51c26047639932b53c8faf79bb9a9c926ec8cf91434d60b1",
+      "finalSha256": "7668ee50463c178e51c26047639932b53c8faf79bb9a9c926ec8cf91434d60b1",
+      "same": true
+    },
+    {
+      "file": "src/systems/r100-world/surface-renderer.ts",
+      "oldSha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd",
+      "finalSha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd",
+      "same": true
+    },
+    {
+      "file": "src/systems/r100-world/presentation.ts",
+      "oldSha256": "e2ed7df5c2c93b6e5b6cbd6ddd702abc5086a141173c4c728cc6f25ea80ac411",
+      "finalSha256": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750",
+      "same": false
+    },
+    {
+      "file": "src/systems/r100-extraction-presentation.ts",
+      "oldSha256": "eb5c39aec12baf449407945fa4e9786f1595b60cd5ff9984b916c8c59abfc0dd",
+      "finalSha256": "eb5c39aec12baf449407945fa4e9786f1595b60cd5ff9984b916c8c59abfc0dd",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/ash-strata-source.png",
+      "oldSha256": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+      "finalSha256": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/crystal-fibre-source.png",
+      "oldSha256": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+      "finalSha256": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/fibre-solid-source.png",
+      "oldSha256": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089",
+      "finalSha256": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/gel-flow-solid-source.png",
+      "oldSha256": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612",
+      "finalSha256": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/gel-flow-source.png",
+      "oldSha256": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+      "finalSha256": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/granular-ridge-solid-source.png",
+      "oldSha256": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d",
+      "finalSha256": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/granular-ridge-source.png",
+      "oldSha256": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+      "finalSha256": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/ivory-basin-source.png",
+      "oldSha256": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+      "finalSha256": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/membrane-rim-solid-source.png",
+      "oldSha256": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23",
+      "finalSha256": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/membrane-rim-source.png",
+      "oldSha256": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+      "finalSha256": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/shell-solid-source.png",
+      "oldSha256": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220",
+      "finalSha256": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220",
+      "same": true
+    },
+    {
+      "file": "public/assets/r100-materials/slab-solid-source.png",
+      "oldSha256": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454",
+      "finalSha256": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454",
+      "same": true
+    }
+  ],
+  "extra": [
+    {
+      "file": "src/systems/r100-world/source-cells.ts",
+      "oldSha256": "bd0fcaa3e93a6e9a06916e068249d5853de519cd960a5a0ce44b001bd62735a3",
+      "finalSha256": "bd0fcaa3e93a6e9a06916e068249d5853de519cd960a5a0ce44b001bd62735a3",
+      "same": true
+    },
+    {
+      "file": "src/systems/r100-world/surface-bake.ts",
+      "oldSha256": "b399a2e9e7b922fff45cb1f1aa339df821946352d7b867d35b26795c7b8ac31a",
+      "finalSha256": "b399a2e9e7b922fff45cb1f1aa339df821946352d7b867d35b26795c7b8ac31a",
+      "same": true
+    }
+  ],
+  "worlds": [
+    {
+      "id": "ash-strata",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": true,
+      "currentEnabled": true
+    },
+    {
+      "id": "crystal-fibre",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": true,
+      "currentEnabled": true
+    },
+    {
+      "id": "ivory-basin",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": true,
+      "currentEnabled": true
+    },
+    {
+      "id": "cinder-ridge",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "pallid-membrane",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "silt-gel",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "schist-shear",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "splayed-fibres",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "shell-chain",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "grain-laminate",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "tension-membrane",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "shell-gel-delta",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "pressed-dunes",
+      "profileUnchanged": true,
+      "definitionsUnchanged": false,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "ruptured-film",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "reversed-flow",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "laminate-shell",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "fibre-silt",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "film-laminate",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "gel-fibre",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    },
+    {
+      "id": "shell-grit",
+      "profileUnchanged": true,
+      "definitionsUnchanged": true,
+      "oldEnabled": false,
+      "currentEnabled": true
+    }
+  ],
+  "presentationDifference": "Only optional precomputed source-cell array argument and same selection call fallback. No draw/color/lighting values changed. source-cells actual file separately compared.",
+  "normalMatrix": "docs/qa/artifacts/r100-i04-i06/normal-matrix/matrix.json",
+  "oldVisualReview": "docs/art/rift-r100-i03-i06-production.md",
+  "currentReplacement": {
+    "world": "pressed-dunes",
+    "scope": "New actual geometric corridor placement, three grades and two seeds; source material/shading unchanged.",
+    "evidence": "docs/qa/artifacts/r100-i03-i06/visual-entry-r3/index.html"
+  },
+  "decision": "19 worlds can inherit the explicitly bounded static visual checks at their two seeds and three grades. pressed-dunes uses 6 current-r3 captures. cinder-ridge additionally has 6 current comparator captures. This is 120 combinations of visual evidence, not 120 new journeys or current patrol experience."
+}

@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "scope": "QA candidate only; production helper not patched yet",
+  "results": [
+    {
+      "case": "already-settled-observation-skips-active-tool-export",
+      "pass": true
+    },
+    {
+      "case": "settlement-between-evaluations-skips-active-tool-export",
+      "pass": true
+    },
+    {
+      "case": "genuine-active-runtime-export-failure-still-propagates",
+      "pass": true
+    },
+    {
+      "case": "active-paid-survey-still-exports-original-static-snapshot",
+      "pass": true
+    },
+    {
+      "case": "death-after-paid-suppression-input-skips-followup-active-export",
+      "pass": true
+    }
+  ]
+}

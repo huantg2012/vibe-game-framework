@@ -215,8 +215,11 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
       starting = true;
       publish();
       const onCreated = (): void => {
-        detachCreate = null;
         if (disposed || runEpoch !== epoch || !starting) return;
+        // Phaser CREATE means the first construction stage returned. The real
+        // playable picture may complete over later frames behind the entry fence.
+        if (!scene().probeBuildLabState()) return;
+        detachCreate?.(); detachCreate = null;
         starting = false; running = true; created = true;
         frameProbe.reset();
         if (game.input.keyboard) game.input.keyboard.enabled = true;
@@ -226,7 +229,8 @@ export function createRiftGymRuntime(options: RiftGymRuntimeOptions): RiftGymRun
         publish();
       };
       scene().events.once(Phaser.Scenes.Events.CREATE, onCreated);
-      detachCreate = () => scene().events.off(Phaser.Scenes.Events.CREATE, onCreated);
+      game.events.on(Phaser.Core.Events.POST_RENDER, onCreated);
+      detachCreate = () => { scene().events.off(Phaser.Scenes.Events.CREATE, onCreated); game.events.off(Phaser.Core.Events.POST_RENDER, onCreated); };
       const fixture: RiftDevFixture = {
         ...fixtureOverrides,
         createLayout: () => 'sample' in map ? map.layout : map,

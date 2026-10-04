@@ -121,6 +121,8 @@ export class AudioManager {
   private unlockInstalled = false;
   private paused = false;
   private currentBgmKey: string | null = null;
+  private pendingBgm: { key: string; fade: number; loop: boolean } | null = null;
+  private readonly requestedAmbients = new Map<string, number>();
   private readonly activeAmbients = new Set<string>();
   private readonly layerVolume: Record<RiftLayer, number> = {
     base: 0.4,
@@ -166,6 +168,7 @@ export class AudioManager {
       if (import.meta.env.DEV) console.warn(`[audio] missing ${key}`);
       return;
     }
+    this.pendingBgm = null;
     if (this.currentBgmKey === key && this.voices.some((v) => v.key === key && v.group === 'BGM' && !v.layer && isActiveSound(v.sound))) {
       return;
     }
@@ -173,6 +176,7 @@ export class AudioManager {
     const loop = opts?.loop ?? true;
     for (const voice of this.voices) {
       if (voice.group === 'BGM' && !voice.layer) {
+        voice.kickable = true; // An outgoing bed may yield under saturation.
         this.startFade(voice, voice.fadeGain, 0, fade, true);
       }
     }
@@ -181,6 +185,14 @@ export class AudioManager {
       this.layerTarget.base = 0.4;
       this.layerVolume.base = 0.4;
     }
+    this.pendingBgm = { key, fade, loop };
+    this.tryPendingBgm();
+  }
+
+  private tryPendingBgm(): void {
+    if (!this.pendingBgm) return;
+    const { key, fade, loop } = this.pendingBgm;
+    const isRiftBase = key === LAYER_ASSET_KEY.base;
     const voice = this.spawn({
       key,
       instanceId: `bgm:${key}`,
@@ -196,11 +208,13 @@ export class AudioManager {
     });
     if (!voice) return;
     this.currentBgmKey = key;
+    this.pendingBgm = null;
     if (fade > 0) this.startFade(voice, 0, 1, fade, false);
     this.applyVolume(voice);
   }
 
   stopBGM(fadeOut?: number): void {
+    this.pendingBgm = null;
     const fade = fadeOut ?? DEFAULT_FADE;
     for (const voice of this.voices) {
       if (voice.group === 'BGM' && !voice.layer) {
@@ -248,7 +262,6 @@ export class AudioManager {
         return;
       }
     }
-    if (!this.acquireSlot(priority, loop && this.isBedKey(key))) return;
     const asset = findAudioAsset(key);
     const group = asset?.group ?? 'SFX';
     const voice = this.spawn({
@@ -270,7 +283,8 @@ export class AudioManager {
   }
 
   playAmbient(key: string, fadeIn?: number): void {
-    if (this.paused) return;
+    if (this.paused || !this.game?.cache.audio.exists(key)) return;
+    this.requestedAmbients.set(key, fadeIn ?? DEFAULT_FADE);
     const existing = this.voices.find((v) => v.key === key && v.group === 'Ambient' && !v.layer);
     if (existing) {
       // A fast scene re-entry can reclaim a bed that is still fading out.
@@ -286,8 +300,8 @@ export class AudioManager {
       key,
       instanceId: `amb:${key}`,
       group: 'Ambient',
-      priority: 'game',
-      kickable: false,
+      priority: 'low',
+      kickable: true,
       duckable: true,
       loop: true,
       extraVolume: 1,
@@ -304,6 +318,7 @@ export class AudioManager {
   stopAmbient(key: string, fadeOut?: number): void {
     const fade = fadeOut ?? DEFAULT_FADE;
     this.activeAmbients.delete(key);
+    this.requestedAmbients.delete(key);
     for (const voice of this.voices) {
       if (voice.key === key && (voice.group === 'Ambient' || voice.instanceId.startsWith('amb:'))) {
         this.startFade(voice, voice.fadeGain, 0, fade, true);
@@ -382,6 +397,7 @@ export class AudioManager {
 
   haltNonBgm(fadeOut = 0.35): void {
     this.activeAmbients.clear();
+    this.requestedAmbients.clear();
     this.layerTarget.tension = 0;
     this.layerTarget.threat = 0;
     this.layerTarget.proximity = 0;
@@ -472,6 +488,18 @@ export class AudioManager {
     this.tickLayers(dt);
     this.tickFades(dt);
     this.reap();
+    // A single current BGM request survives protected-UI saturation. Ambient
+    // and tension beds yield to cues, then resume when a real slot is free.
+    // Stops remove the request, so scene disposal cannot resurrect a bed.
+    this.tryPendingBgm();
+    if (this.voices.length < MAX_VOICES) {
+      for (const [key, fade] of this.requestedAmbients) {
+        if (!this.activeAmbients.has(key)) this.playAmbient(key, fade);
+      }
+      for (const layer of ['tension', 'threat', 'proximity'] as const) {
+        if (this.layerTarget[layer] > LAYER_STOP) this.ensureLayerVoice(layer);
+      }
+    }
   }
 
   private tickDuck(dt: number): void {
@@ -563,8 +591,8 @@ export class AudioManager {
       key,
       instanceId: `layer:${layer}`,
       group,
-      priority: 'game',
-      kickable: false,
+      priority: 'low',
+      kickable: true,
       duckable: group === 'Ambient',
       loop: true,
       extraVolume: 1,
@@ -582,10 +610,10 @@ export class AudioManager {
     return asset.group === 'BGM' || asset.group === 'Ambient';
   }
 
-  private acquireSlot(priority: 'ui' | 'game' | 'low', isBed: boolean): boolean {
+  private acquireSlot(priority: 'ui' | 'game' | 'low'): boolean {
     this.reap();
     const playing = this.voices.filter((v) => isActiveSound(v.sound) || v.fade);
-    if (playing.length < MAX_VOICES || isBed) return true;
+    if (playing.length < MAX_VOICES) return true;
     if (priority === 'low') return false;
     const candidates = playing
       .filter((v) => v.kickable && v.priority !== 'ui')
@@ -595,8 +623,10 @@ export class AudioManager {
         if (d !== 0) return d;
         return a.startedAt - b.startedAt;
       });
+    // Already playing UI is never interrupted. When every slot is protected,
+    // discard an additional request rather than exceed the shared budget.
     const victim = candidates[0];
-    if (!victim) return priority === 'ui';
+    if (!victim) return false;
     this.release(victim);
     return true;
   }
@@ -607,6 +637,9 @@ export class AudioManager {
       if (import.meta.env.DEV) console.warn(`[audio] missing ${init.key}`);
       return null;
     }
+    // All entry paths share the limit, including beds and dynamic Rift layers.
+    // Testing only playSFX left five protected layers outside the eight voices.
+    if (!this.acquireSlot(init.priority)) return null;
     const sound = this.game.sound.add(init.key, {
       loop: init.loop,
       volume: 0,

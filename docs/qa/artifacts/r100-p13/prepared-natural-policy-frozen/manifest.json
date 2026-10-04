@@ -1,0 +1,37 @@
+{
+  "createdAt": "2026-10-04T06:02:42.921292+00:00",
+  "gameUrl": "http://127.0.0.1:3076/",
+  "files": [
+    {
+      "file": "tools/world-study/r100-p13-prepared-natural.mjs",
+      "sha256": "0245c07597fcc338f3890ce200e3630dcf4e0359a542a2572657f005041689f8"
+    },
+    {
+      "file": "tools/world-study/r100-p13-costed-encounters.mjs",
+      "sha256": "72695394cca17b022f35f56dd3a80cfc5759bc2166ba6b555037dc5b349c1a4e"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "sources": [
+    {
+      "file": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+      "sha256": "0adc38487f140abe78c5bd94f7de637dd345eed1021fe4824588502222cf8a68"
+    }
+  ],
+  "policies": [
+    "prepared-natural"
+  ],
+  "runsEach": 30,
+  "meaning": "Explicit shared-origin branch from actual low12 mature state. No fixed world/seed, item fixture or state boost. Public owned gear selected through UI."
+}

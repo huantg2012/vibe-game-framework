@@ -21,7 +21,7 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "requirement": "none",
     "requirementText": "",
     "phase": "立足",
-    "cost": 8
+    "cost": 4
   },
   {
     "order": 2,
@@ -30,7 +30,7 @@ export const GROWTH_ROUTE_DATA: readonly GrowthRouteStep[] = [
     "requirement": "none",
     "requirementText": "",
     "phase": "立足",
-    "cost": 9
+    "cost": 6
   },
   {
     "order": 3,

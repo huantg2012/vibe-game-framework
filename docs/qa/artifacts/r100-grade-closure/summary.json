@@ -1,0 +1,667 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-04T08:46:02.954Z",
+  "status": "bounded-attempts-with-unclosed-cells",
+  "sourceManifest": "docs/qa/artifacts/r100-i03-i06-completion/final-source/source-snapshot.json",
+  "sourceManifestSha256": "5ab4935e92e4f8ce702c17e2706200fff541846bfe54d8ad17eebf48f52853ec",
+  "policy": "policy-freeze.json",
+  "sourceStorage": "docs/qa/artifacts/r100-p13/natural-low-final/low-growth/browser-storage.json",
+  "sourceStorageSha256": "aeae24a71449f19d7e3278b553db7f261056ccef05a7b618fd7f1f4b1840524b",
+  "attempts": 14,
+  "passed": 13,
+  "failed": 1,
+  "rows": [
+    {
+      "world": "ash-strata",
+      "grade": "medium",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-ash-strata",
+      "actualGrade": "medium",
+      "packageIntegrityHash8": "a797d079",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/01-ash-strata-medium/report.json",
+      "reportSha256": "9d47f80a286ddf8635f591470bdbd8d333f2161908e37f0c21e4e39178a92eb9",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "elapsedMs": 11016.229999999994,
+          "hp": 145,
+          "chaos": 27.367700640648987
+        }
+      ],
+      "kindlingReturned": 6,
+      "returnedIds": [],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 145,
+        "chaos": 29.242611095420287,
+        "elapsedMs": 17149.329999999958
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-cinder-ridge",
+      "actualGrade": "medium",
+      "packageIntegrityHash8": "58e063af",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/02-cinder-ridge-medium/report.json",
+      "reportSha256": "f2c9a9f6ca28ddad219163bff2ea318257104b9a0a40c36c3ed1a54fa182c3f3",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "elapsedMs": 40115.0699999997,
+          "hp": 100,
+          "chaos": 105.31953601857786
+        }
+      ],
+      "kindlingReturned": 9,
+      "returnedIds": [
+        "WPN_5e2c4b33-6aed-4834-8329-b921dd66d27a"
+      ],
+      "deepReturnedIds": [
+        "WPN_5e2c4b33-6aed-4834-8329-b921dd66d27a"
+      ],
+      "field": {
+        "hp": 100,
+        "chaos": 113.83338326856556,
+        "elapsedMs": 67230.6399999998
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "silt-gel",
+      "grade": "medium",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-silt-gel",
+      "actualGrade": "medium",
+      "packageIntegrityHash8": "05de9859",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/03-silt-gel-medium/report.json",
+      "reportSha256": "a0efb118c43a0481d7be8d2521092bad149076867492cff5eaa444febca58cd3",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "elapsedMs": 23049.069999999858,
+          "hp": 145,
+          "chaos": 31.046182569296516
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "elapsedMs": 25165.639999999796,
+          "hp": 145,
+          "chaos": 34.887953021057044
+        }
+      ],
+      "kindlingReturned": 18,
+      "returnedIds": [
+        "WPN_1131d097-264c-4df7-afb2-fa01aa214873"
+      ],
+      "deepReturnedIds": [
+        "WPN_1131d097-264c-4df7-afb2-fa01aa214873"
+      ],
+      "field": {
+        "hp": 130,
+        "chaos": 67.98217243860574,
+        "elapsedMs": 53647.83999999997
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "severe",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-splayed-fibres",
+      "actualGrade": "severe",
+      "packageIntegrityHash8": "3bba2820",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/04-splayed-fibres-severe/report.json",
+      "reportSha256": "a1ec2bc6a1b49ef3476ce80f1d06a0b9fa1b5328a138472eb9e7550e7e5df367",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "elapsedMs": 43481.57999999981,
+          "hp": 145,
+          "chaos": 75.7384068662077
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "elapsedMs": 45331.49999999987,
+          "hp": 145,
+          "chaos": 76.6212589173215
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "elapsedMs": 48814.739999999925,
+          "hp": 145,
+          "chaos": 78.30763118554275
+        }
+      ],
+      "kindlingReturned": 12,
+      "returnedIds": [
+        "CAT_9ea59d7c-a12f-47b0-828e-9cd847a9e66a_r100-contaminant-contested-1"
+      ],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 145,
+        "chaos": 94.73946638869069,
+        "elapsedMs": 65647.36999999988
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "shell-chain",
+      "grade": "medium",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-shell-chain",
+      "actualGrade": "medium",
+      "packageIntegrityHash8": "7dd7240a",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/05-shell-chain-medium/report.json",
+      "reportSha256": "058ea3b2a496947134ba25689627255a11289e6c621f2457c1fae7b28d29f2cf",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "elapsedMs": 17565.96999999993,
+          "hp": 145,
+          "chaos": 29.36997942332555
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "elapsedMs": 20749.149999999838,
+          "hp": 145,
+          "chaos": 30.343088855980845
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "elapsedMs": 24232.37999999981,
+          "hp": 145,
+          "chaos": 34.83193895922421
+        }
+      ],
+      "kindlingReturned": 12,
+      "returnedIds": [
+        "CAT_8634f543-52d3-420d-9712-7ca5d7f62a98_r100-contaminant-contested-1"
+      ],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 130,
+        "chaos": 46.97502212004576,
+        "elapsedMs": 37681.819999999774
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "shell-gel-delta",
+      "grade": "severe",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-shell-gel-delta",
+      "actualGrade": "severe",
+      "packageIntegrityHash8": "85d4fa94",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/06-shell-gel-delta-severe/report.json",
+      "reportSha256": "7fe35aeaaac68fea1714fc119ea4c4a42f549820729a5d4f8eab3c576ba8bae4",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "elapsedMs": 27298.88999999976,
+          "hp": 145,
+          "chaos": 36.716750687477315
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "elapsedMs": 33981.97999999971,
+          "hp": 145,
+          "chaos": 43.7499611276079
+        }
+      ],
+      "kindlingReturned": 6,
+      "returnedIds": [
+        "CAT_54e745e7-3795-4962-bf33-82a317cf67b4_r100-contaminant-contested-1"
+      ],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 145,
+        "chaos": 60.61163840151471,
+        "elapsedMs": 49198.029999999984
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "medium",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-pressed-dunes",
+      "actualGrade": "medium",
+      "packageIntegrityHash8": "2d70749d",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/07-pressed-dunes-medium/report.json",
+      "reportSha256": "d2c8a7cc9d0a34b29aab4ce190a458d872a35463fee91d285ba9c90273323642",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-2",
+          "tier": "deep",
+          "elapsedMs": 31265.399999999707,
+          "hp": 115,
+          "chaos": 48.92689655676404
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "elapsedMs": 33815.29999999968,
+          "hp": 115,
+          "chaos": 49.706410044008884
+        }
+      ],
+      "kindlingReturned": 18,
+      "returnedIds": [
+        "WPN_bc909e0c-457b-47b3-ae0e-4f733dedfddf"
+      ],
+      "deepReturnedIds": [
+        "WPN_bc909e0c-457b-47b3-ae0e-4f733dedfddf"
+      ],
+      "field": {
+        "hp": 115,
+        "chaos": 83.76780023536071,
+        "elapsedMs": 77096.91000000009
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-pressed-dunes",
+      "actualGrade": "severe",
+      "packageIntegrityHash8": "9a5e137d",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/08-pressed-dunes-severe/report.json",
+      "reportSha256": "fe37cc076a839f8a7b4058d285e632f968ff8849663d38cf54434bc321458d45",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "elapsedMs": 16399.349999999988,
+          "hp": 145,
+          "chaos": 31.63937454550971
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "elapsedMs": 22465.789999999786,
+          "hp": 145,
+          "chaos": 39.75350791827395
+        }
+      ],
+      "kindlingReturned": 12,
+      "returnedIds": [],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 145,
+        "chaos": 51.52310631612271,
+        "elapsedMs": 35498.59999999963
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "medium",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-ruptured-film",
+      "actualGrade": "medium",
+      "packageIntegrityHash8": "10e5c516",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/09-ruptured-film-medium/report.json",
+      "reportSha256": "92b7869569338985801661a579e5ff5d5a4c94a83abdac077532716eac1eadab",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "elapsedMs": 17265.96999999995,
+          "hp": 145,
+          "chaos": 29.278268357725555
+        }
+      ],
+      "kindlingReturned": 6,
+      "returnedIds": [],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 145,
+        "chaos": 32.47783510180982,
+        "elapsedMs": 27732.20999999965
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "severe",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-ruptured-film",
+      "actualGrade": "severe",
+      "packageIntegrityHash8": "40e68421",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/10-ruptured-film-severe/report.json",
+      "reportSha256": "66a2d35813298245bac04b88d37359af6f9749fecb4ee6b2ce6a4f5d1b24bb1a",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "elapsedMs": 30432.099999999675,
+          "hp": 130,
+          "chaos": 52.857208337161374
+        }
+      ],
+      "kindlingReturned": 6,
+      "returnedIds": [],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 130,
+        "chaos": 64.6221274066469,
+        "elapsedMs": 47131.41999999988
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "reversed-flow",
+      "grade": "severe",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-reversed-flow",
+      "actualGrade": "severe",
+      "packageIntegrityHash8": "74e12449",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/11-reversed-flow-severe/report.json",
+      "reportSha256": "19ffd176d0876e699971c69db847ad4c0826b9cd627a6b9666f15da0fea6c6ab",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "elapsedMs": 20215.829999999907,
+          "hp": 145,
+          "chaos": 37.33722062876611
+        }
+      ],
+      "kindlingReturned": 6,
+      "returnedIds": [],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 145,
+        "chaos": 52.12920474312664,
+        "elapsedMs": 30932.05999999969
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "laminate-shell",
+      "grade": "severe",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-laminate-shell",
+      "actualGrade": "severe",
+      "packageIntegrityHash8": "78c96ea1",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/12-laminate-shell-severe/report.json",
+      "reportSha256": "e471689d10e3e60f3e9d2a4df4de599f36d29e09dae0ceabc29f3d869a48cfce",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "elapsedMs": 18732.5799999999,
+          "hp": 145,
+          "chaos": 32.72627237199802
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "elapsedMs": 22532.429999999815,
+          "hp": 145,
+          "chaos": 37.475189581987294
+        }
+      ],
+      "kindlingReturned": 6,
+      "returnedIds": [
+        "CAT_a2b98948-8085-4209-8279-9c7e1b795107_r100-contaminant-contested-1"
+      ],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 145,
+        "chaos": 69.26047142313848,
+        "elapsedMs": 37715.17999999976
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "fibre-silt",
+      "grade": "severe",
+      "seed": 20261004,
+      "status": "not-passed",
+      "actualWorld": "r100-fibre-silt",
+      "actualGrade": "severe",
+      "packageIntegrityHash8": "cc1dc635",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/13-fibre-silt-severe/report.json",
+      "reportSha256": "f6b2b97e437b212896f28c9021d1c613a207d1245a20ba5b9d7634855c3678a0",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [],
+      "kindlingReturned": 0,
+      "returnedIds": [],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 70,
+        "chaos": 96.498451868981,
+        "elapsedMs": 55864.42000000006
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    },
+    {
+      "world": "film-laminate",
+      "grade": "medium",
+      "seed": 20261004,
+      "status": "pass",
+      "actualWorld": "r100-film-laminate",
+      "actualGrade": "medium",
+      "packageIntegrityHash8": "27e927bb",
+      "algorithmRevision": 3,
+      "report": "docs/qa/artifacts/r100-grade-closure/14-film-laminate-medium/report.json",
+      "reportSha256": "7a758f3d44fef32d39c01c23ac261633134072a236873a6db95044587ec1c5c8",
+      "journeyStatus": "completed-real-input",
+      "outcome": "extract",
+      "baseSettled": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "elapsedMs": 31832.059999999594,
+          "hp": 130,
+          "chaos": 49.52809010509261
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "elapsedMs": 36315.19999999965,
+          "hp": 130,
+          "chaos": 50.89860192720589
+        }
+      ],
+      "kindlingReturned": 6,
+      "returnedIds": [
+        "CAT_36de184c-4ce1-4f44-8d76-a00f607fd1b2_r100-contaminant-contested-1"
+      ],
+      "deepReturnedIds": [],
+      "field": {
+        "hp": 130,
+        "chaos": 53.46131786065786,
+        "elapsedMs": 44698.20999999975
+      },
+      "exploration": {
+        "abandoned": false,
+        "reason": null
+      },
+      "failure": null,
+      "navigationWarning": null,
+      "consoleErrors": [],
+      "errors": []
+    }
+  ],
+  "limits": [
+    "One fixed20261004 per previously missing world/grade; no rerolls or overwrite.",
+    "Same naturally earned30-trip save forked independently; no tool fixtures. Public owned-gear UI.",
+    "Full static terrain used for macro routing. Current visible opponents/hosts plus bounded5s memory; unknown reward kind/tier/value not used to choose. This is not first-sight navigational usability.",
+    "Actual searched non-entry remains>320px, actual E exit and R base return. Not whole-map completion or mandatory deep reward guarantee.",
+    "Parallel browsers; performance samples not performance-budget evidence.",
+    "Not continuous natural economy, human subjective review, stable success rate, or user acceptance."
+  ]
+}

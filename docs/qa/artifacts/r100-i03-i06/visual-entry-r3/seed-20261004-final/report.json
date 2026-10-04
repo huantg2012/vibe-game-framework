@@ -1,0 +1,5787 @@
+{
+  "scope": "Production v3 generator and renderer; isolated memory training loadout. Fixed normal camera, real timed keyboard, no god mode. These brief captures do not certify whole expeditions.",
+  "cases": [
+    {
+      "id": "cinder-ridge-low",
+      "before": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 0,
+            "sampleCapacity": 12001,
+            "frames": null,
+            "cpuSubmission": null,
+            "heapStartBytes": 131030987,
+            "heapEndBytes": 131030987,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 287,
+            "registeredTextureCanvases": 274,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 274,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 161,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 161
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 33.27999999999993,
+            "ended": false,
+            "player": {
+              "x": 196,
+              "y": 588
+            },
+            "hp": 100,
+            "chaos": 15.006309888,
+            "chaosRate": 0.1896,
+            "pollutionGrade": "low",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 6
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 835.65,
+                  "y": 100
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 692,
+                  "y": 260.35
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 944,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 240,
+                  "y": 432
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 341.74249658181816,
+                  "y": 432
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 33.27999999999993,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "cinder-ridge",
+            "label": "余烬脊",
+            "description": "余烬脊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "cinder-ridge-low",
+            "family": "granular-ridge",
+            "grade": "low",
+            "label": "余烬脊",
+            "profile": "cinder-ridge",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 112,
+            "emission": 0.35,
+            "motion_period": 19,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 470,
+                "y": 400,
+                "rotation": -0.25,
+                "length": 370,
+                "width": 165,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.33440000000000003,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 450,
+                "y": 250,
+                "rotation": -0.3,
+                "length": 290,
+                "width": 95,
+                "height": 35,
+                "thickness": 9,
+                "fold": 0.33440000000000003,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 724,
+                "y": 478,
+                "rotation": 0.45,
+                "length": 240,
+                "width": 112,
+                "height": 31,
+                "thickness": 9,
+                "fold": 0.33440000000000003,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 668,
+                  "y": 424
+                },
+                {
+                  "x": 704,
+                  "y": 416
+                },
+                {
+                  "x": 752,
+                  "y": 440
+                },
+                {
+                  "x": 744,
+                  "y": 464
+                },
+                {
+                  "x": 692,
+                  "y": 454
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-cinder-ridge",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "518d008d",
+            "grade": "low"
+          }
+        },
+        "metadata": {
+          "world": "r100-cinder-ridge",
+          "space": "cinder-ridge-low",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "2f911186",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 9000,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "after": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 1551.6,
+            "sampleCapacity": 12001,
+            "frames": {
+              "count": 93,
+              "p50Ms": 16.6,
+              "p95Ms": 18.4,
+              "p99Ms": 18.6,
+              "maxMs": 18.6,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "cpuSubmission": {
+              "count": 94,
+              "p50Ms": 3.7,
+              "p95Ms": 4.1,
+              "p99Ms": 4.5,
+              "maxMs": 4.5,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "heapStartBytes": 131030987,
+            "heapEndBytes": 134120444,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 287,
+            "registeredTextureCanvases": 274,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 274,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 161,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 161
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 3915.326666666666,
+            "ended": false,
+            "player": {
+              "x": 315.4576514857341,
+              "y": 466.6809848190666
+            },
+            "hp": 100,
+            "chaos": 23.742345936,
+            "chaosRate": 0.1896,
+            "pollutionGrade": "low",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 6
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 792.110961733787,
+                  "y": 131.72204537761758
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 672.5049930865935,
+                  "y": 302.07781117158277
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 944,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 240,
+                  "y": 432
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 342.2069121882353,
+                  "y": 432
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3915.326666666666,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "cinder-ridge",
+            "label": "余烬脊",
+            "description": "余烬脊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "cinder-ridge-low",
+            "family": "granular-ridge",
+            "grade": "low",
+            "label": "余烬脊",
+            "profile": "cinder-ridge",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 112,
+            "emission": 0.35,
+            "motion_period": 19,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 470,
+                "y": 400,
+                "rotation": -0.25,
+                "length": 370,
+                "width": 165,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.33440000000000003,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 450,
+                "y": 250,
+                "rotation": -0.3,
+                "length": 290,
+                "width": 95,
+                "height": 35,
+                "thickness": 9,
+                "fold": 0.33440000000000003,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 724,
+                "y": 478,
+                "rotation": 0.45,
+                "length": 240,
+                "width": 112,
+                "height": 31,
+                "thickness": 9,
+                "fold": 0.33440000000000003,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 668,
+                  "y": 424
+                },
+                {
+                  "x": 704,
+                  "y": 416
+                },
+                {
+                  "x": 752,
+                  "y": 440
+                },
+                {
+                  "x": 744,
+                  "y": 464
+                },
+                {
+                  "x": 692,
+                  "y": 454
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-cinder-ridge",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "518d008d",
+            "grade": "low"
+          }
+        },
+        "metadata": {
+          "world": "r100-cinder-ridge",
+          "space": "cinder-ridge-low",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "2f911186",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 9000,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "pauseHeld": true
+    },
+    {
+      "id": "cinder-ridge-medium",
+      "before": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 0,
+            "sampleCapacity": 12001,
+            "frames": null,
+            "cpuSubmission": null,
+            "heapStartBytes": 200830438,
+            "heapEndBytes": 200830438,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 295,
+            "registeredTextureCanvases": 282,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 282,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 213,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 213
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 16.63333333333329,
+            "ended": false,
+            "player": {
+              "x": 196,
+              "y": 588
+            },
+            "hp": 100,
+            "chaos": 15.00551894,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 8
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 932,
+                  "y": 196
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_02",
+                "state": "patrol",
+                "position": {
+                  "x": 756,
+                  "y": 68
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 724,
+                  "y": 564
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 464,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 240,
+                  "y": 432
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 912,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 816,
+                  "y": 688
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 295.6363229090909,
+                  "y": 400
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 16.63333333333329,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 935.636322909091,
+                  "y": 624
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 16.63333333333329,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "cinder-ridge",
+            "label": "余烬脊",
+            "description": "余烬脊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "cinder-ridge-medium",
+            "family": "granular-ridge",
+            "grade": "medium",
+            "label": "余烬脊",
+            "profile": "cinder-ridge",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 132,
+            "emission": 0.55,
+            "motion_period": 16,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 470,
+                "y": 400,
+                "rotation": -0.25,
+                "length": 370,
+                "width": 165,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.38,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 450,
+                "y": 250,
+                "rotation": -0.3,
+                "length": 290,
+                "width": 95,
+                "height": 35,
+                "thickness": 9,
+                "fold": 0.38,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 724,
+                "y": 478,
+                "rotation": 0.45,
+                "length": 240,
+                "width": 112,
+                "height": 31,
+                "thickness": 9,
+                "fold": 0.38,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 632,
+                  "y": 424
+                },
+                {
+                  "x": 696,
+                  "y": 400
+                },
+                {
+                  "x": 776,
+                  "y": 424
+                },
+                {
+                  "x": 804,
+                  "y": 464
+                },
+                {
+                  "x": 764,
+                  "y": 488
+                },
+                {
+                  "x": 700,
+                  "y": 460
+                },
+                {
+                  "x": 656,
+                  "y": 464
+                }
+              ],
+              [
+                {
+                  "x": 216,
+                  "y": 200
+                },
+                {
+                  "x": 288,
+                  "y": 176
+                },
+                {
+                  "x": 332,
+                  "y": 200
+                },
+                {
+                  "x": 316,
+                  "y": 232
+                },
+                {
+                  "x": 248,
+                  "y": 240
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-cinder-ridge",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "58e063af",
+            "grade": "medium"
+          }
+        },
+        "metadata": {
+          "world": "r100-cinder-ridge",
+          "space": "cinder-ridge-medium",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "304b8c13",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 8858,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "after": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 1633.3,
+            "sampleCapacity": 12001,
+            "frames": {
+              "count": 98,
+              "p50Ms": 16.6,
+              "p95Ms": 18.2,
+              "p99Ms": 18.7,
+              "maxMs": 18.7,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "cpuSubmission": {
+              "count": 99,
+              "p50Ms": 4.4,
+              "p95Ms": 6.2,
+              "p99Ms": 10.6,
+              "maxMs": 10.6,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "heapStartBytes": 200830438,
+            "heapEndBytes": 204320730,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 295,
+            "registeredTextureCanvases": 282,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 282,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 213,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 213
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 3898.590000000002,
+            "ended": false,
+            "player": {
+              "x": 316.79047644364545,
+              "y": 466.68519866586684
+            },
+            "hp": 100,
+            "chaos": 24.29355216199991,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 8
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 932,
+                  "y": 277.5500000000004
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_02",
+                "state": "patrol",
+                "position": {
+                  "x": 698.3354419942326,
+                  "y": 125.66455800576374
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 670.9765217987144,
+                  "y": 572.4946859495954
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 464,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 240,
+                  "y": 432
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 912,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 816,
+                  "y": 688
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 296.2891147294118,
+                  "y": 400
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3898.590000000002,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 936.2891147294117,
+                  "y": 624
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3898.590000000002,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "cinder-ridge",
+            "label": "余烬脊",
+            "description": "余烬脊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "cinder-ridge-medium",
+            "family": "granular-ridge",
+            "grade": "medium",
+            "label": "余烬脊",
+            "profile": "cinder-ridge",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 132,
+            "emission": 0.55,
+            "motion_period": 16,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 470,
+                "y": 400,
+                "rotation": -0.25,
+                "length": 370,
+                "width": 165,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.38,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 450,
+                "y": 250,
+                "rotation": -0.3,
+                "length": 290,
+                "width": 95,
+                "height": 35,
+                "thickness": 9,
+                "fold": 0.38,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 724,
+                "y": 478,
+                "rotation": 0.45,
+                "length": 240,
+                "width": 112,
+                "height": 31,
+                "thickness": 9,
+                "fold": 0.38,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 632,
+                  "y": 424
+                },
+                {
+                  "x": 696,
+                  "y": 400
+                },
+                {
+                  "x": 776,
+                  "y": 424
+                },
+                {
+                  "x": 804,
+                  "y": 464
+                },
+                {
+                  "x": 764,
+                  "y": 488
+                },
+                {
+                  "x": 700,
+                  "y": 460
+                },
+                {
+                  "x": 656,
+                  "y": 464
+                }
+              ],
+              [
+                {
+                  "x": 216,
+                  "y": 200
+                },
+                {
+                  "x": 288,
+                  "y": 176
+                },
+                {
+                  "x": 332,
+                  "y": 200
+                },
+                {
+                  "x": 316,
+                  "y": 232
+                },
+                {
+                  "x": 248,
+                  "y": 240
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-cinder-ridge",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "58e063af",
+            "grade": "medium"
+          }
+        },
+        "metadata": {
+          "world": "r100-cinder-ridge",
+          "space": "cinder-ridge-medium",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "304b8c13",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 8858,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "pauseHeld": true
+    },
+    {
+      "id": "cinder-ridge-severe",
+      "before": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 0,
+            "sampleCapacity": 12001,
+            "frames": null,
+            "cpuSubmission": null,
+            "heapStartBytes": 144442647,
+            "heapEndBytes": 144442647,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 301,
+            "registeredTextureCanvases": 288,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 288,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 253,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 253
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 16.64666666666664,
+            "ended": false,
+            "player": {
+              "x": 196,
+              "y": 588
+            },
+            "hp": 100,
+            "chaos": 15.008416554666667,
+            "chaosRate": 0.5056,
+            "pollutionGrade": "severe",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 9
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 836,
+                  "y": 228
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_02",
+                "state": "patrol",
+                "position": {
+                  "x": 868,
+                  "y": 324
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_03",
+                "state": "patrol",
+                "position": {
+                  "x": 788,
+                  "y": 84
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 692,
+                  "y": 580
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 688
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 240,
+                  "y": 432
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 752,
+                  "y": 656
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 496,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_05",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 912,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_06",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 345.545424,
+                  "y": 432
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 16.64666666666664,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 921.545424,
+                  "y": 624
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 16.64666666666664,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_03",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 409.545424,
+                  "y": 688
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 16.64666666666664,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "cinder-ridge",
+            "label": "余烬脊",
+            "description": "余烬脊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "cinder-ridge-severe",
+            "family": "granular-ridge",
+            "grade": "severe",
+            "label": "余烬脊",
+            "profile": "cinder-ridge",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 154,
+            "emission": 0.72,
+            "motion_period": 14,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 470,
+                "y": 400,
+                "rotation": -0.25,
+                "length": 370,
+                "width": 165,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.41800000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 450,
+                "y": 250,
+                "rotation": -0.3,
+                "length": 290,
+                "width": 95,
+                "height": 35,
+                "thickness": 9,
+                "fold": 0.41800000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 724,
+                "y": 478,
+                "rotation": 0.45,
+                "length": 240,
+                "width": 112,
+                "height": 31,
+                "thickness": 9,
+                "fold": 0.41800000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 632,
+                  "y": 424
+                },
+                {
+                  "x": 712,
+                  "y": 392
+                },
+                {
+                  "x": 824,
+                  "y": 424
+                },
+                {
+                  "x": 864,
+                  "y": 480
+                },
+                {
+                  "x": 800,
+                  "y": 520
+                },
+                {
+                  "x": 712,
+                  "y": 480
+                },
+                {
+                  "x": 664,
+                  "y": 504
+                },
+                {
+                  "x": 616,
+                  "y": 472
+                }
+              ],
+              [
+                {
+                  "x": 176,
+                  "y": 176
+                },
+                {
+                  "x": 256,
+                  "y": 152
+                },
+                {
+                  "x": 344,
+                  "y": 184
+                },
+                {
+                  "x": 352,
+                  "y": 224
+                },
+                {
+                  "x": 288,
+                  "y": 248
+                },
+                {
+                  "x": 224,
+                  "y": 232
+                },
+                {
+                  "x": 160,
+                  "y": 216
+                }
+              ],
+              [
+                {
+                  "x": 384,
+                  "y": 560
+                },
+                {
+                  "x": 456,
+                  "y": 544
+                },
+                {
+                  "x": 528,
+                  "y": 576
+                },
+                {
+                  "x": 520,
+                  "y": 612
+                },
+                {
+                  "x": 448,
+                  "y": 620
+                },
+                {
+                  "x": 392,
+                  "y": 592
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 6,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-cinder-ridge",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "d57e69f1",
+            "grade": "severe"
+          }
+        },
+        "metadata": {
+          "world": "r100-cinder-ridge",
+          "space": "cinder-ridge-severe",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "2cf6347f",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 8484,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "after": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 1567,
+            "sampleCapacity": 12001,
+            "frames": {
+              "count": 94,
+              "p50Ms": 16.5,
+              "p95Ms": 18,
+              "p99Ms": 18.6,
+              "maxMs": 18.6,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "cpuSubmission": {
+              "count": 95,
+              "p50Ms": 5.1,
+              "p95Ms": 11,
+              "p99Ms": 12.5,
+              "maxMs": 12.5,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "heapStartBytes": 144442647,
+            "heapEndBytes": 148634303,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 301,
+            "registeredTextureCanvases": 288,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 288,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 253,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 253
+              }
+            ],
+            "soundsRegistered": 4,
+            "soundsPlaying": 4,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 4032.7533333333326,
+            "ended": false,
+            "player": {
+              "x": 315.4590312656768,
+              "y": 466.680631265676
+            },
+            "hp": 100,
+            "chaos": 25.038960085333255,
+            "chaosRate": 0.5056,
+            "pollutionGrade": "severe",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 9
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 855.4950069134065,
+                  "y": 270.0778111715823
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_02",
+                "state": "patrol",
+                "position": {
+                  "x": 825.9221888284152,
+                  "y": 304.5049930865929
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_03",
+                "state": "patrol",
+                "position": {
+                  "x": 788,
+                  "y": 168.34999999999863
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 747.3348229829196,
+                  "y": 569.9249073621075
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 688
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 240,
+                  "y": 432
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 752,
+                  "y": 656
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 496,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_05",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 912,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_06",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 346.22880847058826,
+                  "y": 432
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 4032.7533333333326,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 922.2288084705882,
+                  "y": 624
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 4032.7533333333326,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_03",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 410.22880847058826,
+                  "y": 688
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 4032.7533333333326,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "cinder-ridge",
+            "label": "余烬脊",
+            "description": "余烬脊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "cinder-ridge-severe",
+            "family": "granular-ridge",
+            "grade": "severe",
+            "label": "余烬脊",
+            "profile": "cinder-ridge",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 154,
+            "emission": 0.72,
+            "motion_period": 14,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 470,
+                "y": 400,
+                "rotation": -0.25,
+                "length": 370,
+                "width": 165,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.41800000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 450,
+                "y": 250,
+                "rotation": -0.3,
+                "length": 290,
+                "width": 95,
+                "height": 35,
+                "thickness": 9,
+                "fold": 0.41800000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 724,
+                "y": 478,
+                "rotation": 0.45,
+                "length": 240,
+                "width": 112,
+                "height": 31,
+                "thickness": 9,
+                "fold": 0.41800000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 632,
+                  "y": 424
+                },
+                {
+                  "x": 712,
+                  "y": 392
+                },
+                {
+                  "x": 824,
+                  "y": 424
+                },
+                {
+                  "x": 864,
+                  "y": 480
+                },
+                {
+                  "x": 800,
+                  "y": 520
+                },
+                {
+                  "x": 712,
+                  "y": 480
+                },
+                {
+                  "x": 664,
+                  "y": 504
+                },
+                {
+                  "x": 616,
+                  "y": 472
+                }
+              ],
+              [
+                {
+                  "x": 176,
+                  "y": 176
+                },
+                {
+                  "x": 256,
+                  "y": 152
+                },
+                {
+                  "x": 344,
+                  "y": 184
+                },
+                {
+                  "x": 352,
+                  "y": 224
+                },
+                {
+                  "x": 288,
+                  "y": 248
+                },
+                {
+                  "x": 224,
+                  "y": 232
+                },
+                {
+                  "x": 160,
+                  "y": 216
+                }
+              ],
+              [
+                {
+                  "x": 384,
+                  "y": 560
+                },
+                {
+                  "x": 456,
+                  "y": 544
+                },
+                {
+                  "x": 528,
+                  "y": 576
+                },
+                {
+                  "x": 520,
+                  "y": 612
+                },
+                {
+                  "x": 448,
+                  "y": 620
+                },
+                {
+                  "x": 392,
+                  "y": 592
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 6,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-cinder-ridge",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "d57e69f1",
+            "grade": "severe"
+          }
+        },
+        "metadata": {
+          "world": "r100-cinder-ridge",
+          "space": "cinder-ridge-severe",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "2cf6347f",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 8484,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "pauseHeld": true
+    },
+    {
+      "id": "pressed-dunes-low",
+      "before": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 0,
+            "sampleCapacity": 12001,
+            "frames": null,
+            "cpuSubmission": null,
+            "heapStartBytes": 142663238,
+            "heapEndBytes": 142663238,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 287,
+            "registeredTextureCanvases": 274,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 274,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 161,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 161
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 55.00000000000001,
+            "ended": false,
+            "player": {
+              "x": 196,
+              "y": 588
+            },
+            "hp": 100,
+            "chaos": 15.010428000000001,
+            "chaosRate": 0.1896,
+            "pollutionGrade": "low",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 6
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 835.3,
+                  "y": 100
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 787.3,
+                  "y": 532
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 944,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 432
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 373.7624,
+                  "y": 464
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 55.00000000000001,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "pressed-dunes",
+            "label": "压实脊廊",
+            "description": "压实脊廊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "pressed-dunes-low",
+            "family": "granular-ridge",
+            "grade": "low",
+            "label": "压实脊廊",
+            "profile": "pressed-dunes",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 112,
+            "emission": 0.35,
+            "motion_period": 19,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 490,
+                "y": 448,
+                "rotation": -0.12,
+                "length": 450,
+                "width": 180,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.33440000000000003,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 440,
+                "y": 344,
+                "rotation": -0.12,
+                "length": 440,
+                "width": 82,
+                "height": 33,
+                "thickness": 9,
+                "fold": 0.3872,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 500,
+                "y": 548,
+                "rotation": -0.12,
+                "length": 455,
+                "width": 88,
+                "height": 38,
+                "thickness": 9,
+                "fold": 0.2728,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 4,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 790,
+                "y": 422,
+                "rotation": 1.18,
+                "length": 214,
+                "width": 98,
+                "height": 30,
+                "thickness": 9,
+                "fold": 0.44,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 668,
+                  "y": 424
+                },
+                {
+                  "x": 704,
+                  "y": 416
+                },
+                {
+                  "x": 752,
+                  "y": 440
+                },
+                {
+                  "x": 744,
+                  "y": 464
+                },
+                {
+                  "x": 692,
+                  "y": 454
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-pressed-dunes",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "442ee879",
+            "grade": "low"
+          }
+        },
+        "metadata": {
+          "world": "r100-pressed-dunes",
+          "space": "pressed-dunes-low",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "24bd4dad",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 8132,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "after": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 1482.9,
+            "sampleCapacity": 12001,
+            "frames": {
+              "count": 89,
+              "p50Ms": 16.6,
+              "p95Ms": 18.2,
+              "p99Ms": 18.7,
+              "maxMs": 18.7,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "cpuSubmission": {
+              "count": 90,
+              "p50Ms": 4.5,
+              "p95Ms": 7.4,
+              "p99Ms": 8.9,
+              "maxMs": 8.9,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "heapStartBytes": 142663238,
+            "heapEndBytes": 120648197,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 287,
+            "registeredTextureCanvases": 274,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 274,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 161,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 161
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 4033.18,
+            "ended": false,
+            "player": {
+              "x": 315.45733837245797,
+              "y": 466.68017170579054
+            },
+            "hp": 100,
+            "chaos": 15.764690927999997,
+            "chaosRate": 0.1896,
+            "pollutionGrade": "low",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 6
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 790.5452688691012,
+                  "y": 133.12154737957133
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 743.3230885659757,
+                  "y": 565.9716896372163
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 944,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 144,
+                  "y": 432
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 374.13703209411767,
+                  "y": 464
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 4033.18,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "pressed-dunes",
+            "label": "压实脊廊",
+            "description": "压实脊廊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "pressed-dunes-low",
+            "family": "granular-ridge",
+            "grade": "low",
+            "label": "压实脊廊",
+            "profile": "pressed-dunes",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 112,
+            "emission": 0.35,
+            "motion_period": 19,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 490,
+                "y": 448,
+                "rotation": -0.12,
+                "length": 450,
+                "width": 180,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.33440000000000003,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 440,
+                "y": 344,
+                "rotation": -0.12,
+                "length": 440,
+                "width": 82,
+                "height": 33,
+                "thickness": 9,
+                "fold": 0.3872,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 500,
+                "y": 548,
+                "rotation": -0.12,
+                "length": 455,
+                "width": 88,
+                "height": 38,
+                "thickness": 9,
+                "fold": 0.2728,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              },
+              {
+                "id": 4,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 790,
+                "y": 422,
+                "rotation": 1.18,
+                "length": 214,
+                "width": 98,
+                "height": 30,
+                "thickness": 9,
+                "fold": 0.44,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.1408
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 668,
+                  "y": 424
+                },
+                {
+                  "x": 704,
+                  "y": 416
+                },
+                {
+                  "x": 752,
+                  "y": 440
+                },
+                {
+                  "x": 744,
+                  "y": 464
+                },
+                {
+                  "x": 692,
+                  "y": 454
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-pressed-dunes",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "442ee879",
+            "grade": "low"
+          }
+        },
+        "metadata": {
+          "world": "r100-pressed-dunes",
+          "space": "pressed-dunes-low",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "24bd4dad",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 8132,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "pauseHeld": true
+    },
+    {
+      "id": "pressed-dunes-medium",
+      "before": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 0,
+            "sampleCapacity": 12001,
+            "frames": null,
+            "cpuSubmission": null,
+            "heapStartBytes": 136938674,
+            "heapEndBytes": 136938674,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 295,
+            "registeredTextureCanvases": 282,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 282,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 213,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 213
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 33.28666666666665,
+            "ended": false,
+            "player": {
+              "x": 196,
+              "y": 588
+            },
+            "hp": 100,
+            "chaos": 15.011044516,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 8
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 675.65,
+                  "y": 84
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_02",
+                "state": "patrol",
+                "position": {
+                  "x": 740,
+                  "y": 164.35
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 788,
+                  "y": 532
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 400,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 112,
+                  "y": 464
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 912,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 720,
+                  "y": 688
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 103.65667025454546,
+                  "y": 400
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 33.28666666666665,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 935.6566702545455,
+                  "y": 624
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 33.28666666666665,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "pressed-dunes",
+            "label": "压实脊廊",
+            "description": "压实脊廊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "pressed-dunes-medium",
+            "family": "granular-ridge",
+            "grade": "medium",
+            "label": "压实脊廊",
+            "profile": "pressed-dunes",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 132,
+            "emission": 0.55,
+            "motion_period": 16,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 490,
+                "y": 448,
+                "rotation": -0.12,
+                "length": 450,
+                "width": 180,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.38,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 440,
+                "y": 344,
+                "rotation": -0.12,
+                "length": 440,
+                "width": 82,
+                "height": 33,
+                "thickness": 9,
+                "fold": 0.44,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 500,
+                "y": 548,
+                "rotation": -0.12,
+                "length": 455,
+                "width": 88,
+                "height": 38,
+                "thickness": 9,
+                "fold": 0.31,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 4,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 790,
+                "y": 422,
+                "rotation": 1.18,
+                "length": 214,
+                "width": 98,
+                "height": 30,
+                "thickness": 9,
+                "fold": 0.5,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 632,
+                  "y": 424
+                },
+                {
+                  "x": 696,
+                  "y": 400
+                },
+                {
+                  "x": 776,
+                  "y": 424
+                },
+                {
+                  "x": 804,
+                  "y": 464
+                },
+                {
+                  "x": 764,
+                  "y": 488
+                },
+                {
+                  "x": 700,
+                  "y": 460
+                },
+                {
+                  "x": 656,
+                  "y": 464
+                }
+              ],
+              [
+                {
+                  "x": 216,
+                  "y": 200
+                },
+                {
+                  "x": 288,
+                  "y": 176
+                },
+                {
+                  "x": 332,
+                  "y": 200
+                },
+                {
+                  "x": 316,
+                  "y": 232
+                },
+                {
+                  "x": 248,
+                  "y": 240
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-pressed-dunes",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "2d70749d",
+            "grade": "medium"
+          }
+        },
+        "metadata": {
+          "world": "r100-pressed-dunes",
+          "space": "pressed-dunes-medium",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "71de4594",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 7944,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "after": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 1532.5,
+            "sampleCapacity": 12001,
+            "frames": {
+              "count": 92,
+              "p50Ms": 16.7,
+              "p95Ms": 18,
+              "p99Ms": 18.6,
+              "maxMs": 18.6,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "cpuSubmission": {
+              "count": 93,
+              "p50Ms": 3.4,
+              "p95Ms": 4.7,
+              "p99Ms": 4.8,
+              "maxMs": 4.8,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "heapStartBytes": 136938674,
+            "heapEndBytes": 132768966,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 295,
+            "registeredTextureCanvases": 282,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 282,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 213,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 213
+              }
+            ],
+            "soundsRegistered": 2,
+            "soundsPlaying": 2,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 3966.326666666667,
+            "ended": false,
+            "player": {
+              "x": 316.7913228902548,
+              "y": 465.34662289025425
+            },
+            "hp": 100,
+            "chaos": 16.316027187999893,
+            "chaosRate": 0.3318,
+            "pollutionGrade": "medium",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 8
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 633.9221888284152,
+                  "y": 103.4950069134073
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_02",
+                "state": "patrol",
+                "position": {
+                  "x": 749.2848892937421,
+                  "y": 218.1791505920993
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 807.0485227406774,
+                  "y": 538.0440624459922
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 400,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 112,
+                  "y": 464
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 912,
+                  "y": 80
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 720,
+                  "y": 688
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 104.23556291764706,
+                  "y": 400
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3966.326666666667,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 936.235562917647,
+                  "y": 624
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3966.326666666667,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "pressed-dunes",
+            "label": "压实脊廊",
+            "description": "压实脊廊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "pressed-dunes-medium",
+            "family": "granular-ridge",
+            "grade": "medium",
+            "label": "压实脊廊",
+            "profile": "pressed-dunes",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 132,
+            "emission": 0.55,
+            "motion_period": 16,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 490,
+                "y": 448,
+                "rotation": -0.12,
+                "length": 450,
+                "width": 180,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.38,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 440,
+                "y": 344,
+                "rotation": -0.12,
+                "length": 440,
+                "width": 82,
+                "height": 33,
+                "thickness": 9,
+                "fold": 0.44,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 500,
+                "y": 548,
+                "rotation": -0.12,
+                "length": 455,
+                "width": 88,
+                "height": 38,
+                "thickness": 9,
+                "fold": 0.31,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              },
+              {
+                "id": 4,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 790,
+                "y": 422,
+                "rotation": 1.18,
+                "length": 214,
+                "width": 98,
+                "height": 30,
+                "thickness": 9,
+                "fold": 0.5,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.16
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 632,
+                  "y": 424
+                },
+                {
+                  "x": 696,
+                  "y": 400
+                },
+                {
+                  "x": 776,
+                  "y": 424
+                },
+                {
+                  "x": 804,
+                  "y": 464
+                },
+                {
+                  "x": 764,
+                  "y": 488
+                },
+                {
+                  "x": 700,
+                  "y": 460
+                },
+                {
+                  "x": 656,
+                  "y": 464
+                }
+              ],
+              [
+                {
+                  "x": 216,
+                  "y": 200
+                },
+                {
+                  "x": 288,
+                  "y": 176
+                },
+                {
+                  "x": 332,
+                  "y": 200
+                },
+                {
+                  "x": 316,
+                  "y": 232
+                },
+                {
+                  "x": 248,
+                  "y": 240
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-pressed-dunes",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "2d70749d",
+            "grade": "medium"
+          }
+        },
+        "metadata": {
+          "world": "r100-pressed-dunes",
+          "space": "pressed-dunes-medium",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "71de4594",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 7944,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "pauseHeld": true
+    },
+    {
+      "id": "pressed-dunes-severe",
+      "before": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 0,
+            "sampleCapacity": 12001,
+            "frames": null,
+            "cpuSubmission": null,
+            "heapStartBytes": 149485296,
+            "heapEndBytes": 149485296,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 301,
+            "registeredTextureCanvases": 288,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 288,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 253,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 253
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 33.27999999999993,
+            "ended": false,
+            "player": {
+              "x": 196,
+              "y": 588
+            },
+            "hp": 100,
+            "chaos": 15.016826368,
+            "chaosRate": 0.5056,
+            "pollutionGrade": "severe",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 9
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 675.65,
+                  "y": 84
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_02",
+                "state": "patrol",
+                "position": {
+                  "x": 980,
+                  "y": 196.35
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_03",
+                "state": "patrol",
+                "position": {
+                  "x": 804.35,
+                  "y": 196
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 276,
+                  "y": 52.35
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 80,
+                  "y": 144
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 112,
+                  "y": 464
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 912,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_05",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 688,
+                  "y": 656
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_06",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 400,
+                  "y": 464
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 377.5708276363636,
+                  "y": 464
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 33.27999999999993,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 921.5708276363637,
+                  "y": 80
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 33.27999999999993,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_03",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 121.57082763636363,
+                  "y": 400
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "rest",
+                  "elapsedMs": 33.27999999999993,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "pressed-dunes",
+            "label": "压实脊廊",
+            "description": "压实脊廊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "pressed-dunes-severe",
+            "family": "granular-ridge",
+            "grade": "severe",
+            "label": "压实脊廊",
+            "profile": "pressed-dunes",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 154,
+            "emission": 0.72,
+            "motion_period": 14,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 490,
+                "y": 448,
+                "rotation": -0.12,
+                "length": 450,
+                "width": 180,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.41800000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 440,
+                "y": 344,
+                "rotation": -0.12,
+                "length": 440,
+                "width": 82,
+                "height": 33,
+                "thickness": 9,
+                "fold": 0.48400000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 500,
+                "y": 548,
+                "rotation": -0.12,
+                "length": 455,
+                "width": 88,
+                "height": 38,
+                "thickness": 9,
+                "fold": 0.341,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 4,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 790,
+                "y": 422,
+                "rotation": 1.18,
+                "length": 214,
+                "width": 98,
+                "height": 30,
+                "thickness": 9,
+                "fold": 0.55,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 632,
+                  "y": 424
+                },
+                {
+                  "x": 712,
+                  "y": 392
+                },
+                {
+                  "x": 824,
+                  "y": 424
+                },
+                {
+                  "x": 864,
+                  "y": 480
+                },
+                {
+                  "x": 800,
+                  "y": 520
+                },
+                {
+                  "x": 712,
+                  "y": 480
+                },
+                {
+                  "x": 664,
+                  "y": 504
+                },
+                {
+                  "x": 616,
+                  "y": 472
+                }
+              ],
+              [
+                {
+                  "x": 176,
+                  "y": 176
+                },
+                {
+                  "x": 256,
+                  "y": 152
+                },
+                {
+                  "x": 344,
+                  "y": 184
+                },
+                {
+                  "x": 352,
+                  "y": 224
+                },
+                {
+                  "x": 288,
+                  "y": 248
+                },
+                {
+                  "x": 224,
+                  "y": 232
+                },
+                {
+                  "x": 160,
+                  "y": 216
+                }
+              ],
+              [
+                {
+                  "x": 384,
+                  "y": 560
+                },
+                {
+                  "x": 456,
+                  "y": 544
+                },
+                {
+                  "x": 528,
+                  "y": 576
+                },
+                {
+                  "x": 520,
+                  "y": 612
+                },
+                {
+                  "x": 448,
+                  "y": 620
+                },
+                {
+                  "x": 392,
+                  "y": 592
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 6,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-pressed-dunes",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "9a5e137d",
+            "grade": "severe"
+          }
+        },
+        "metadata": {
+          "world": "r100-pressed-dunes",
+          "space": "pressed-dunes-severe",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "b380a43d",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 7753,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "after": {
+        "runtime": {
+          "ready": true,
+          "running": true,
+          "starting": false,
+          "performance": {
+            "method": "Phaser PRE_STEP intervals; PRE_STEP→POST_RENDER CPU submission, not GPU time",
+            "state": "sampling",
+            "warmupMs": 2000,
+            "requestedMs": 12000,
+            "sampledMs": 1482.2,
+            "sampleCapacity": 12001,
+            "frames": {
+              "count": 89,
+              "p50Ms": 16.7,
+              "p95Ms": 18.3,
+              "p99Ms": 18.7,
+              "maxMs": 18.7,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "cpuSubmission": {
+              "count": 90,
+              "p50Ms": 6.6,
+              "p95Ms": 7,
+              "p99Ms": 7.1,
+              "maxMs": 7.1,
+              "over33ms": 0,
+              "over50ms": 0
+            },
+            "heapStartBytes": 149485296,
+            "heapEndBytes": 136840269,
+            "pauseSegmentsExcluded": 0,
+            "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+            "viewport": [
+              1440,
+              1000
+            ],
+            "dpr": 1,
+            "limitations": "Single 12s active sample after 2s warmup; inactive/hidden intervals excluded; no GPU or retained-resource measurement; browser heap may be unavailable/coarse; movement must be documented separately."
+          },
+          "resources": {
+            "method": "Phaser public texture/scene/sound registries and CanvasPool; current document canvas elements; sampled on getState",
+            "textureKeys": 301,
+            "registeredTextureCanvases": 288,
+            "domCanvases": 4,
+            "sharedCanvasPoolUsed": 288,
+            "sharedCanvasPoolFree": 0,
+            "displayListEntries": 253,
+            "scenes": [
+              {
+                "key": "BootScene",
+                "active": false,
+                "paused": false,
+                "displayListEntries": 0
+              },
+              {
+                "key": "RiftScene",
+                "active": true,
+                "paused": false,
+                "displayListEntries": 253
+              }
+            ],
+            "soundsRegistered": 3,
+            "soundsPlaying": 3,
+            "soundsPaused": 0,
+            "soundsPendingRemoval": 0,
+            "limitations": "Counts, not bytes, GPU allocation, decoded audio memory, or GC/leak proof. Texture keys exclude Phaser built-ins; texture canvases are unique registered HTMLCanvasElements, not all detached/offscreen canvases. DOM/CanvasPool counts cover the page, and the pool covers 2D canvases only; free entries remain pooled. Display lists include inactive scenes but count top-level entries, not nested Container children or arbitrary retained objects. Sound counts include pending removal until the manager next updates."
+          },
+          "paused": false,
+          "probe": {
+            "elapsedMs": 3949.6299999999997,
+            "ended": false,
+            "player": {
+              "x": 316.7915336346039,
+              "y": 466.681533634603
+            },
+            "hp": 100,
+            "chaos": 16.996932927999914,
+            "chaosRate": 0.5056,
+            "pollutionGrade": "severe",
+            "volumeSightMultiplier": 1,
+            "attack": {
+              "phase": "idle",
+              "cooldownRemainingMs": 0
+            },
+            "kindling": 0,
+            "search": {
+              "prompt": null,
+              "progress": null,
+              "remaining": 9
+            },
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "state": "patrol",
+                "position": {
+                  "x": 633.9221888284152,
+                  "y": 103.4950069134073
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_02",
+                "state": "patrol",
+                "position": {
+                  "x": 946.985259366649,
+                  "y": 239.65502660490242
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_INF_03",
+                "state": "patrol",
+                "position": {
+                  "x": 847.5233540565782,
+                  "y": 229.15478848998941
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              },
+              {
+                "id": "ENM_RWR_01",
+                "state": "patrol",
+                "position": {
+                  "x": 276,
+                  "y": 134.59999999999891
+                },
+                "hp": 75,
+                "detection": 0,
+                "engaged": false,
+                "visible": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 80,
+                  "y": 144
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_02",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 112,
+                  "y": 464
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_03",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 912,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_04",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 432,
+                  "y": 112
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_05",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 688,
+                  "y": 656
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_BING_06",
+                "substrate": "oil_film",
+                "position": {
+                  "x": 400,
+                  "y": 464
+                },
+                "hazardReleased": true,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false
+              },
+              {
+                "id": "ENM_DING_01",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 378.3109538823529,
+                  "y": 464
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3949.6299999999997,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_02",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 922.3109538823529,
+                  "y": 80
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3949.6299999999997,
+                  "hazardActive": false
+                }
+              },
+              {
+                "id": "ENM_DING_03",
+                "substrate": "gas_mass",
+                "position": {
+                  "x": 122.31095388235295,
+                  "y": 400
+                },
+                "hazardReleased": false,
+                "suppressionRemainingMs": 0,
+                "delayRemainingMs": 0,
+                "recoveryWarning": false,
+                "volume": {
+                  "phase": "disperse",
+                  "elapsedMs": 3949.6299999999997,
+                  "hazardActive": false
+                }
+              }
+            ]
+          }
+        },
+        "recipe": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "pressed-dunes",
+            "label": "压实脊廊",
+            "description": "压实脊廊的原生材料与完整搜撤地段",
+            "material": "granular",
+            "surface": {
+              "substrate": "granular",
+              "coating": "granular",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "pressed-dunes-severe",
+            "family": "granular-ridge",
+            "grade": "severe",
+            "label": "压实脊廊",
+            "profile": "pressed-dunes",
+            "cols": 32,
+            "rows": 24,
+            "seed": 20261002,
+            "spawn_x": 196,
+            "spawn_y": 588,
+            "exit_x": 148,
+            "exit_y": 664,
+            "search_x": 516,
+            "search_y": 580,
+            "enemy_x": 840,
+            "enemy_y": 172,
+            "axis": -0.28,
+            "light_radius": 154,
+            "emission": 0.72,
+            "motion_period": 14,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "family": "granular-ridge",
+                "role": "relief",
+                "x": 490,
+                "y": 448,
+                "rotation": -0.12,
+                "length": 450,
+                "width": 180,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.41800000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 2,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 440,
+                "y": 344,
+                "rotation": -0.12,
+                "length": 440,
+                "width": 82,
+                "height": 33,
+                "thickness": 9,
+                "fold": 0.48400000000000004,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 3,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 500,
+                "y": 548,
+                "rotation": -0.12,
+                "length": 455,
+                "width": 88,
+                "height": 38,
+                "thickness": 9,
+                "fold": 0.341,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              },
+              {
+                "id": 4,
+                "family": "granular-ridge",
+                "role": "solid",
+                "x": 790,
+                "y": 422,
+                "rotation": 1.18,
+                "length": 214,
+                "width": 98,
+                "height": 30,
+                "thickness": 9,
+                "fold": 0.55,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.17600000000000002
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 632,
+                  "y": 424
+                },
+                {
+                  "x": 712,
+                  "y": 392
+                },
+                {
+                  "x": 824,
+                  "y": 424
+                },
+                {
+                  "x": 864,
+                  "y": 480
+                },
+                {
+                  "x": 800,
+                  "y": 520
+                },
+                {
+                  "x": 712,
+                  "y": 480
+                },
+                {
+                  "x": 664,
+                  "y": 504
+                },
+                {
+                  "x": 616,
+                  "y": 472
+                }
+              ],
+              [
+                {
+                  "x": 176,
+                  "y": 176
+                },
+                {
+                  "x": 256,
+                  "y": 152
+                },
+                {
+                  "x": 344,
+                  "y": 184
+                },
+                {
+                  "x": 352,
+                  "y": 224
+                },
+                {
+                  "x": 288,
+                  "y": 248
+                },
+                {
+                  "x": 224,
+                  "y": 232
+                },
+                {
+                  "x": 160,
+                  "y": 216
+                }
+              ],
+              [
+                {
+                  "x": 384,
+                  "y": 560
+                },
+                {
+                  "x": 456,
+                  "y": 544
+                },
+                {
+                  "x": 528,
+                  "y": 576
+                },
+                {
+                  "x": 520,
+                  "y": 612
+                },
+                {
+                  "x": 448,
+                  "y": 620
+                },
+                {
+                  "x": 392,
+                  "y": 592
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 2,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 6,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-pressed-dunes",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 3,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "9a5e137d",
+            "grade": "severe"
+          }
+        },
+        "metadata": {
+          "world": "r100-pressed-dunes",
+          "space": "pressed-dunes-severe",
+          "contentFragmentTypeId": "frag-outdoor",
+          "requestedSeed": 20261004,
+          "effectiveSeed": 20261004,
+          "attempt": 0,
+          "rejected": [],
+          "signature": "b380a43d",
+          "bodySize": 20,
+          "supportTileSize": 8,
+          "hostTileSize": 32,
+          "reachableBodySeats": 7753,
+          "extractionRoutePx": 91.88225099390857
+        }
+      },
+      "pauseHeld": true
+    }
+  ],
+  "errors": [],
+  "status": "captured"
+}

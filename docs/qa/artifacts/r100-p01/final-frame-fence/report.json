@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "method": "Real Chrome, normal departure and cold load. Probes read complete runtime state without advancing it. Early pause/pagehide/key events are deliberate lifecycle fault injection; no clocks, positions, inventories, or save payloads are modified.",
+  "errors": [],
+  "cases": [
+    {
+      "name": "fresh/pagehide/early-pause",
+      "result": "pass",
+      "frames": [
+        304,
+        305
+      ]
+    },
+    {
+      "name": "cold/velocity/input/combat/physics/early-pause",
+      "result": "pass",
+      "frames": [
+        92,
+        93
+      ]
+    }
+  ],
+  "stage": "cold-continue"
+}

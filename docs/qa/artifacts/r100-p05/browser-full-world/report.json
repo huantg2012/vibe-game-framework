@@ -1,0 +1,155 @@
+{
+  "status": "failed",
+  "base": "http://127.0.0.1:3084/",
+  "browser": "154.0.8037.93",
+  "cases": [
+    {
+      "id": "v2-0",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 4240457136,
+        "recipeId": "world-space:fracture-fields",
+        "signature": "23e24a0c",
+        "generation": {
+          "version": 2,
+          "requestedSeed": 0,
+          "profile": {
+            "id": "ivory-basin",
+            "label": "吸光釉原",
+            "description": "厚釉沉积与吸光结节",
+            "material": "glaze",
+            "surface": {
+              "substrate": "strata",
+              "coating": "glaze",
+              "organization": "patches",
+              "coverage": 0.54,
+              "wear": 0.57,
+              "deposits": 0.55,
+              "scale": 1.2,
+              "relief": 0.5,
+              "contrast": 0.72,
+              "regionScale": 1.4,
+              "quietness": 0.55,
+              "formScale": 1.6,
+              "fragmentation": 0.42,
+              "accentCoverage": 0.11
+            },
+            "palette": {
+              "void": 1448997,
+              "shadow": 2699322,
+              "floorDeep": 7367527,
+              "floor": 11182476,
+              "floorLight": 12564125,
+              "materialDark": 4868945,
+              "materialMid": 7695973,
+              "materialLight": 9799795,
+              "faceLight": 13813675,
+              "accentDim": 6443617,
+              "accent": 8809848,
+              "accentLight": 11639443,
+              "peak": 15590084,
+              "actorDark": 2369326,
+              "actorMid": 4936539,
+              "actorLight": 12750939,
+              "ground": 11182476,
+              "groundLight": 12564125,
+              "groundDark": 7367527,
+              "wall": 7695973,
+              "wallLight": 13813675,
+              "wallDark": 4868945
+            }
+          },
+          "space": {
+            "id": "fracture-fields",
+            "label": "断裂荒野",
+            "voidFraction": 0.115,
+            "crackFraction": 0.7,
+            "holeScale": 1.1,
+            "directionality": 0.65,
+            "clustering": 0.65
+          },
+          "contentFragmentTypeId": "frag-library",
+          "paintGeometryVersion": 2,
+          "conditions": {
+            "version": 1,
+            "programId": "layered-deposition",
+            "programVersion": 1,
+            "sourceHash": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d",
+            "seed": 0,
+            "rule": "deposition",
+            "requiredCapabilities": [
+              "surface:strata",
+              "field:direction",
+              "support:single-plane"
+            ],
+            "excludedCapabilities": [
+              "collision:dynamic",
+              "space:multilevel"
+            ],
+            "parameters": {
+              "strength": 0.31226624693954363,
+              "coherence": 0.5730853610346094,
+              "scale": 1.0265764685464092
+            },
+            "streams": {
+              "world": 129499820,
+              "layout": 4240352407,
+              "material": 1120537548,
+              "placement": 3343936257,
+              "encounters": 2879156964,
+              "motion": 413437041
+            },
+            "semantic": {
+              "minimumDeepDetourPx": 377.03975071012974,
+              "safeMaxThreat": 0.08,
+              "routeThreatPenalty": 6,
+              "bodySizePx": 20,
+              "supportStepPx": 8,
+              "voidBlocksSight": true,
+              "sceneryBlocksMovement": false
+            },
+            "scenery": {
+              "kind": "glaze-basin",
+              "scale": 1.0265764685464092,
+              "radiusPx": 86.11600493013393,
+              "density": 0.43269168858605556,
+              "motion": {
+                "kind": "settle",
+                "amplitude": 0.59230449735187,
+                "periodSeconds": 11.040039334446192
+              }
+            },
+            "fallbackSeeds": [
+              70421,
+              175150,
+              1000
+            ]
+          }
+        }
+      },
+      "gold": {
+        "layoutSha256": "fab328cd5e515257f37aeb40e63e7187944c6e6ae88627f2484a3fb476b2563e",
+        "tileMapSha256": "b3b25d19e731b9fc6bdeb34342982717a730d9983adcfd32554cb107c85c31c8",
+        "hostMapSha256": "e3f5e33f3d7f0b0c6d030782a0a1b41805ad7dc4e6638230b7df9de0f1ec0a93",
+        "sampleSha256": "f3a0ebab689688112410f41a7fc0140a64c4a3e5b3ff2c9fe66eaf090d86f905",
+        "metadataSha256": "0d29adb56ec797a1b2ee8888d5645b6a6ddc752303a43f2f042fb405d6a4e8f9"
+      },
+      "generationMs": 6482.799999952316,
+      "elapsedMs": 6636.200000047684,
+      "facing": [
+        -45,
+        23.19859051364819,
+        -8.130102354155978,
+        90
+      ]
+    }
+  ],
+  "errors": [],
+  "atan2": {
+    "native": -0.14189705460416394,
+    "historicalSse2": -0.1418970546041639,
+    "historicalArm64": -0.1418970546041639
+  },
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n    hostMapSha256: '25a000a05a9a5ffa9906c8f3f684e128924528cbf234f516216f81c73fe2e651',\n    layoutSha256: '7b7cd148c960d6354cafcdb0079b88e72deb38ccf005b17b4cd9915e9d82c296',\n    metadataSha256: '0434abf209c9afffb9112d9234810ae286bc72b37e485d7042d36cc9089d21aa',\n+   sampleSha256: 'c8ff4c2d2b468af7fe5c5a210db91e603e111429b4193fa4f90d1113674fb702',\n-   sampleSha256: '4cb1158df5a43c244eb16b3934d2658058215844c81451f6e470ab9b78ada735',\n    tileMapSha256: '2a5e7732e4f1c80023870154c6133f17cca9ecfa4aadac0f46c65ddbd1616b9b'\n  }\n"
+}
