@@ -39,13 +39,13 @@
     "releaseManifest": null
   },
   "resume": {
-    "iteration": "R100-I02",
-    "batch": "I02 impassable solid boundary repair",
-    "nextAction": "查看不可通行边界修前／修后及原生试玩，按本版本继续复审；不将44方向受控接近外推成全周边、全种子或人审通过。",
-    "lastCompleted": "用户指出的折板南侧低面已增加真实断面、分离实体纹理；原占地与可走区域保持。50次真实按键接近覆盖44个独立方向；4方向缺测试站位已注明。类型、构建和几何／材料／视野回归通过。",
-    "headline": "实体边界已复修，正常画面可在碰撞前辨认断面",
-    "updatedDate": "2026-10-03",
-    "evidenceRevision": "r100-solid-boundaries-20261003"
+    "iteration": "R100-I03",
+    "batch": "I03 planning — not started",
+    "nextAction": "制定I03完整纵切片的目标、技术与美术方案及执行批次；实现主动选级、准备、真实危险、净回报与完整搜撤，完成3构造×3等级的首批完整世界资格。同步处理P01/P02/P04/P05。",
+    "lastCompleted": "用户于2026-10-04明确验收I01/I02：基础合同、三构造三级母版及后续污染/实体边界/材质/翻找物修正完成，2/14轮结单。I03依赖已满足，但尚未开始开发。",
+    "headline": "I01 / I02 已完成 · 下一轮 I03 重度远征",
+    "updatedDate": "2026-10-04",
+    "evidenceRevision": "4ced8905"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -117,8 +117,8 @@
       "targetWorlds": 0,
       "phase": "foundation",
       "dependencies": [],
-      "state": "changes-required",
-      "stage": "implementation",
+      "state": "closed",
+      "stage": "close",
       "goal": "先保护旧局，明确108世界×三级、知情选级与非常态重度远征的制作及发布合同。",
       "technical": "冻结旧算法恢复路径；定义WorldPackage最小身份/能力版本、统一实体几何及数据来源合同；测量生成、恢复、帧时、内存与离线成本。 建立可扩展到新几何的最小CSV包编译、依赖版本/哈希、正式硬准入与可重复资格入口；不等I05规模化才开始验证。 独立pollutionGrade在候选生成前冻结；设计等级暴露选择、周期危险、遭遇/奖励预算、抗性及暂停/恢复合同，旧age不重命名。明确等级经济必要验证范围。",
       "visual": "记录现五样本的正常视野与已知局限；设计地面/实体/虚空的视觉区分和前三构造的母版任务，明确画法假设，不凭灰盒验美术。 按R100美术七项标准锁三档同源母版任务与成品基准；先做折叠板的低/中/重，再跨材料验证。",
@@ -137,7 +137,7 @@
         "pollutionGrade不等于age/实体覆盖/玩家混乱；重试不能换级，品质和功能级不可混淆"
       ],
       "exit": "没有新世界计数；包版本与旧局保护在新几何启用前通过。",
-      "actualRevision": "302d529",
+      "actualRevision": "4ced8905",
       "gateResults": [
         {
           "id": "frozen-generation",
@@ -168,12 +168,13 @@
         },
         {
           "id": "i02-production-brief",
-          "status": "changes-required",
-          "revision": "ba3ea28e",
+          "status": "pass",
+          "revision": "4ced8905",
           "evidenceIds": [
-            "R100-H-I01-I02-REJECT-20261003"
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-H-I01-I02-ACCEPT-20261004"
           ],
-          "label": "母版制作与三级污染要求按人审重做"
+          "label": "母版制作与三级污染要求：整改后用户验收"
         },
         {
           "id": "independent-contract-review",
@@ -200,28 +201,33 @@
         "R100-E-I01",
         "R100-E-I02-REBUILD",
         "R100-H-I01-I02-REJECT-20261003",
-        "R100-E-I02-POLLUTION-CORRECTIONS"
+        "R100-E-I02-POLLUTION-CORRECTIONS",
+        "R100-H-I01-I02-ACCEPT-20261004",
+        "R100-H-I01-CLOSED-20261004"
       ],
       "targetGradeCases": 0,
       "achievement": {
-        "revision": "302d529",
+        "revision": "4ced8905",
         "qualifiedWorldIds": [],
         "gradeCases": [],
         "evidenceIds": [
-          "R100-E-I01"
+          "R100-H-I01-CLOSED-20261004"
         ]
       },
       "rework": {
-        "state": "open",
+        "state": "closed",
         "reason": "2026-10-03当前两轮被用户明确否决：六项污染表现/实体边界/玩家增长要求必须整改。",
         "task": "docs/tasks/rift-r100-i01.md",
-        "revision": "r100-corrections-20261003",
+        "revision": "4ced8905",
         "evidenceIds": [
           "R100-H-I01-I02-REJECT-20261003",
-          "R100-E-I02-POLLUTION-CORRECTIONS"
+          "R100-E-I02-POLLUTION-CORRECTIONS",
+          "R100-H-I01-I02-ACCEPT-20261004"
         ],
-        "note": "六项已有新实现及限定证据，见I02 QA顶部；人审未重新认可，rework保持open。直接描述行为和数值。"
-      }
+        "note": "2026-10-04用户在最新实现基础上明确验收I01/I02；六项整改关闭。历史样本覆盖不扩大，实际审听与工程未决项转I03，完整世界资格仍为0。",
+        "closedDate": "2026-10-04"
+      },
+      "completedDate": "2026-10-04"
     },
     {
       "id": "R100-I02",
@@ -231,9 +237,9 @@
       "dependencies": [
         "R100-I01"
       ],
-      "state": "changes-required",
-      "stage": "implementation",
-      "goal": "按用户六项反馈重做三构造三级母版，真实污染体与玩家污染增长必须可感知、可验证；0合格世界，完整选级/准备/收益仍在I03。",
+      "state": "closed",
+      "stage": "close",
+      "goal": "完成三构造三级母版与六项人审整改：污染体数量面积、明确绿色侵蚀、可见实体边界和三级玩家污染增长已验收；完整选级/准备/收益进入I03。",
       "technical": "统一几何进入通行/视线/内容准入；实现高体量排序与受光、束/板/壳三个共享形体算子及对应空间组织。 三种新包同步接入最小编译/冻结恢复与多种子、混合边界资格，此轮不给完整世界资格；I03补齐压力/准备/回报闭环再审。 最新授权要求本轮补真实占漆/占空数量面积及三级混乱增长；不以I03尚未开工推迟这两项核心缺失，仍不启用正式新池/等级奖励/新保存。",
       "visual": "逐个完成真实角色尺度的材料与光影母版，再扩为整张原生地图；转折/断面/内腔必须成立，角色和敌人融入。 折叠板先做低/中/重同源样板，纤维和壳腔再迁移；三档都达到成品质量，重度有静帧压力和峰后可读间隙。",
       "batches": [
@@ -252,18 +258,19 @@
         "高体量占地、可见投影、前后排序与受光分别验，不能仅把高物体烘入地面层",
         "三档母版、受控动态与现有搜撤承载关系可审；新增压力/准备/回报完整体验保持pending，转I03验证。"
       ],
-      "exit": "六项人审整改有新版本实图、连续实际游玩和数值证据；再次独立检查后供用户审查。未通过前不扩产，合格世界及等级仍0。",
-      "actualRevision": "r100-solid-boundaries-20261003",
+      "exit": "2026-10-04用户明确验收，两轮完成；实际审听移交I03，其余证据保持原覆盖范围。完整世界及等级资格仍0，先通过I03完整纵切片再扩产。",
+      "actualRevision": "4ced8905",
       "gateResults": [
         {
           "id": "terrain-erosion-semantics",
-          "status": "changes-required",
-          "revision": "ba3ea28e",
+          "status": "pass",
+          "revision": "4ced8905",
           "evidenceIds": [
             "R100-H-I01-I02-REJECT-20261003",
-            "R100-E-I02-POLLUTION-CORRECTIONS"
+            "R100-E-I02-POLLUTION-CORRECTIONS",
+            "R100-H-I01-I02-ACCEPT-20261004"
           ],
-          "label": "普通景观与吞光侵蚀分离"
+          "label": "普通景观与吞光侵蚀分离：整改后用户验收"
         },
         {
           "id": "eighteen-native-material-cases",
@@ -276,13 +283,14 @@
         },
         {
           "id": "independent-image-review",
-          "status": "changes-required",
-          "revision": "ba3ea28e",
+          "status": "pass",
+          "revision": "4ced8905",
           "evidenceIds": [
             "R100-H-I01-I02-REJECT-20261003",
-            "R100-E-I02-POLLUTION-CORRECTIONS"
+            "R100-E-I02-POLLUTION-CORRECTIONS",
+            "R100-H-I01-I02-ACCEPT-20261004"
           ],
-          "label": "新版本独立实图复审：旧128帧判断已不足以通过"
+          "label": "独立实图复核与后续限定修正已归档，用户最终验收"
         },
         {
           "id": "native-60s-sample-cpu-frame-budget",
@@ -312,11 +320,6 @@
           "label": "受击、恢复与死亡显示修复"
         },
         {
-          "id": "actual-material-audio-listening",
-          "status": "pending",
-          "label": "材料声景实际审听"
-        },
-        {
           "id": "controlled-retained-memory",
           "status": "pass",
           "label": "受控GC后保留内存验证（限定同页重建）",
@@ -327,44 +330,48 @@
         },
         {
           "id": "human-art-review",
-          "status": "changes-required",
-          "label": "用户审美与等级体验：明确未通过",
-          "evidenceIds": [
-            "R100-H-I01-I02-REJECT-20261003",
-            "R100-E-I02-POLLUTION-CORRECTIONS"
-          ],
-          "revision": "ba3ea28e"
-        },
-        {
-          "id": "visible-green-motion",
-          "status": "changes-required",
-          "label": "绿色侵蚀动效正常游玩时清楚可见",
-          "evidenceIds": [
-            "R100-H-I01-I02-REJECT-20261003",
-            "R100-E-I02-POLLUTION-CORRECTIONS"
-          ],
-          "revision": "ba3ea28e"
-        },
-        {
-          "id": "visible-solid-boundaries",
-          "status": "changes-required",
-          "label": "实体边界复修并完成44方向局部实走；待本版本人审",
+          "status": "pass",
+          "label": "用户明确验收I01/I02（2026-10-04）",
           "evidenceIds": [
             "R100-H-I01-I02-REJECT-20261003",
             "R100-E-I02-POLLUTION-CORRECTIONS",
-            "R100-E-I02-SOLID-BOUNDARY-REPAIR"
+            "R100-H-I01-I02-ACCEPT-20261004"
           ],
-          "revision": "r100-solid-boundaries-20261003"
+          "revision": "4ced8905"
+        },
+        {
+          "id": "visible-green-motion",
+          "status": "pass",
+          "label": "绿色侵蚀动效可见度：整改后用户验收",
+          "evidenceIds": [
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS",
+            "R100-H-I01-I02-ACCEPT-20261004"
+          ],
+          "revision": "4ced8905"
+        },
+        {
+          "id": "visible-solid-boundaries",
+          "status": "pass",
+          "label": "实体边界及材质复修：局部实走证据与用户验收",
+          "evidenceIds": [
+            "R100-H-I01-I02-REJECT-20261003",
+            "R100-E-I02-POLLUTION-CORRECTIONS",
+            "R100-E-I02-SOLID-BOUNDARY-REPAIR",
+            "R100-H-I01-I02-ACCEPT-20261004"
+          ],
+          "revision": "4ced8905"
         },
         {
           "id": "visible-light-consumption",
-          "status": "changes-required",
-          "label": "真实污染对象的吞光直接可感知",
+          "status": "pass",
+          "label": "真实污染对象吞光表现：整改后用户验收",
           "evidenceIds": [
             "R100-H-I01-I02-REJECT-20261003",
-            "R100-E-I02-POLLUTION-CORRECTIONS"
+            "R100-E-I02-POLLUTION-CORRECTIONS",
+            "R100-H-I01-I02-ACCEPT-20261004"
           ],
-          "revision": "ba3ea28e"
+          "revision": "4ced8905"
         },
         {
           "id": "paint-volume-grade-population",
@@ -377,13 +384,14 @@
         },
         {
           "id": "green-pollution-identity",
-          "status": "changes-required",
-          "label": "绿色侵蚀成为明确直接的污染表现",
+          "status": "pass",
+          "label": "绿色侵蚀直接表达污染：整改后用户验收",
           "evidenceIds": [
             "R100-H-I01-I02-REJECT-20261003",
-            "R100-E-I02-POLLUTION-CORRECTIONS"
+            "R100-E-I02-POLLUTION-CORRECTIONS",
+            "R100-H-I01-I02-ACCEPT-20261004"
           ],
-          "revision": "ba3ea28e"
+          "revision": "4ced8905"
         },
         {
           "id": "grade-chaos-curve",
@@ -424,20 +432,33 @@
         "R100-E-ASYNC-ENTRY",
         "R100-H-I01-I02-REJECT-20261003",
         "R100-E-I02-POLLUTION-CORRECTIONS",
-        "R100-E-I02-SOLID-BOUNDARY-REPAIR"
+        "R100-E-I02-SOLID-BOUNDARY-REPAIR",
+        "R100-H-I01-I02-ACCEPT-20261004",
+        "R100-H-I02-CLOSED-20261004"
       ],
       "targetGradeCases": 0,
       "rework": {
-        "state": "open",
+        "state": "closed",
         "reason": "2026-10-03当前两轮被用户明确否决：六项污染表现/实体边界/玩家增长要求必须整改。",
         "task": "docs/tasks/rift-r100-i02.md",
-        "revision": "r100-solid-boundaries-20261003",
+        "revision": "4ced8905",
         "evidenceIds": [
           "R100-H-I01-I02-REJECT-20261003",
           "R100-E-I02-POLLUTION-CORRECTIONS",
-          "R100-E-I02-SOLID-BOUNDARY-REPAIR"
+          "R100-E-I02-SOLID-BOUNDARY-REPAIR",
+          "R100-H-I01-I02-ACCEPT-20261004"
         ],
-        "note": "六项整改之后，用户继续指出折板南侧不可通行下沿不清；已修真实厚度、材质并多向实走，保留人审未通过和4个测试站位缺失，不扩产。"
+        "note": "2026-10-04用户在最新实现基础上明确验收I01/I02；六项整改关闭。历史样本覆盖不扩大，实际审听与工程未决项转I03，完整世界资格仍为0。",
+        "closedDate": "2026-10-04"
+      },
+      "completedDate": "2026-10-04",
+      "achievement": {
+        "revision": "4ced8905",
+        "qualifiedWorldIds": [],
+        "gradeCases": [],
+        "evidenceIds": [
+          "R100-H-I02-CLOSED-20261004"
+        ]
       }
     },
     {
@@ -455,6 +476,7 @@
       "technical": "实现备行选级/等级内随机世界，先冻结选择再生成；共享压力控制器的预兆—侵蚀—回落，作用于真实区域与现有混乱/抗性；等级风险和节点收益预算CSV化；相位、奖励、选择及存档事务一致。",
       "visual": "三构造各交三级可玩实景；重度的巨大形体、材料受力、声景传播和危险预兆同源，保持正常角色与可行退路。",
       "batches": [
+        "承接未决项：材料声景实际审听、入场与完整负载预算、旧v2跨V8恢复风险；分别补证，不用母版验收代替",
         "入口知情选择与冻结恢复",
         "周期危险及材料化预兆/声景",
         "至少两套功能准备与真实消耗/收益闭环",
@@ -469,8 +491,20 @@
       ],
       "exit": "前三世界及9格技术/美术/体验全部通过才计3；完整重度未成立，后续扩产依赖不放行。",
       "actualRevision": null,
-      "gateResults": [],
-      "issueIds": [],
+      "gateResults": [
+        {
+          "id": "actual-material-audio-listening",
+          "status": "pending",
+          "label": "承接I02：材料声景实际审听与混音确认",
+          "carriedFrom": "R100-I02"
+        }
+      ],
+      "issueIds": [
+        "R100-P01",
+        "R100-P02",
+        "R100-P04",
+        "R100-P05"
+      ],
       "evidenceIds": []
     },
     {
@@ -932,6 +966,37 @@
       "limitations": "4方向在64/40px受控直线起点缺合法站位；4初批样本有战斗干扰。只证明列明局部样本，非自然全程搜撤、所有边界、任意种子或用户验收；I01/I02资格仍不通过。",
       "iterationId": "R100-I02",
       "revision": "r100-solid-boundaries-20261003"
+    },
+    {
+      "id": "R100-H-I01-I02-ACCEPT-20261004",
+      "kind": "human",
+      "purpose": "iteration-acceptance",
+      "revision": "4ced8905",
+      "path": "docs/tasks/rift-r100-i02.md",
+      "scope": "用户明确确认“很好，I01/02都标记为完成，更新迭代看板”；接受I01基础和I02母版及六项整改、后续实体材质与世界翻找物优化，两轮正式结单。",
+      "limitations": "本证据是用户迭代验收，不补签未实际审听、完整性能或任意种子验证；不代表I03完整选级/准备/净收益已实现，不计完整世界资格。"
+    },
+    {
+      "id": "R100-H-I01-CLOSED-20261004",
+      "kind": "human",
+      "purpose": "iteration-achievement",
+      "iterationId": "R100-I01",
+      "revision": "4ced8905",
+      "achievementHash": "188dd8b92a9d2da4c91afd3492091df74ffb81e30037f193d6e00249130c82aa",
+      "path": "docs/tasks/rift-r100-i01.md",
+      "scope": "2026-10-04用户明确要求R100-I01标记完成；基础/母版阶段目标0完整世界、0等级格达成，结单与人审已记录。",
+      "limitations": "本轮达成不等于完整世界资格或R100终验；后续未决项不补签为通过。"
+    },
+    {
+      "id": "R100-H-I02-CLOSED-20261004",
+      "kind": "human",
+      "purpose": "iteration-achievement",
+      "iterationId": "R100-I02",
+      "revision": "4ced8905",
+      "achievementHash": "749c625979d898de5b64333d349b7e2582577aaa0539336648e7cf7bb1ec456d",
+      "path": "docs/tasks/rift-r100-i02.md",
+      "scope": "2026-10-04用户明确要求R100-I02标记完成；基础/母版阶段目标0完整世界、0等级格达成，结单与人审已记录。",
+      "limitations": "本轮达成不等于完整世界资格或R100终验；后续未决项不补签为通过。"
     }
   ],
   "risks": [
@@ -1018,14 +1083,15 @@
       "title": "单样本帧时与受控GC已通过；完整负载和GPU物理占用未验",
       "severity": "P2",
       "status": "open",
-      "iteration": "R100-I02",
+      "iteration": "R100-I03",
       "owner": "code/art",
       "evidenceIds": [
         "R100-E-I01",
         "R100-E-I02-REBUILD",
         "R100-E-I02-V1-MEMORY"
       ],
-      "note": "I01并行负载下三固定视口12s样本p95为18.6/16.7/13.0ms；不是GPU或长路线资格。 I02低折板R4移动12秒段：frame p95 20.1ms，CPU p95 18.9ms；24秒巡查完成但不是60秒/GPU/回收资格。 03d4e4c：原生壳重档安全往返60s frame p95 8.7ms/p99 10.2ms、CPU p95 1.9ms通过本样本；18格显式CPU驻留上界24.381MiB、十次重建计数稳定。不能外推整池/战斗/GPU/GC后保留量，通过部分不覆盖未测部分。 V1另补受控GC：10同配置+12混合，最大同配置观察包络0.569MiB，实际对象图回收通过；该项已关闭，GPU驱动物理占用、完整战斗和多设备范围仍open。"
+      "note": "I01并行负载下三固定视口12s样本p95为18.6/16.7/13.0ms；不是GPU或长路线资格。 I02低折板R4移动12秒段：frame p95 20.1ms，CPU p95 18.9ms；24秒巡查完成但不是60秒/GPU/回收资格。 03d4e4c：原生壳重档安全往返60s frame p95 8.7ms/p99 10.2ms、CPU p95 1.9ms通过本样本；18格显式CPU驻留上界24.381MiB、十次重建计数稳定。不能外推整池/战斗/GPU/GC后保留量，通过部分不覆盖未测部分。 V1另补受控GC：10同配置+12混合，最大同配置观察包络0.569MiB，实际对象图回收通过；该项已关闭，GPU驱动物理占用、完整战斗和多设备范围仍open。 2026-10-04用户验收I01/I02；本未验事项移交I03继续跟踪，不随母版结单关闭。",
+      "carriedFrom": "R100-I02"
     },
     {
       "id": "R100-P03",
@@ -1045,13 +1111,14 @@
       "title": "材料音画实录已提供，听感与混音实际审听仍待验",
       "severity": "P2",
       "status": "open",
-      "iteration": "R100-I02",
+      "iteration": "R100-I03",
       "owner": "art/audio",
       "evidenceIds": [
         "R100-E-I02-REBUILD",
         "R100-E-I02-V1-AUDIO"
       ],
-      "note": "真实原生资源和最多两声部播放已接，47项行为与音源检查通过；未实际听到，不以文件/波形/测试代签最终混音与听感。 V1三材料重档各38.4秒同步实录及诊断可播放；非零/无削波/暂停核查不能代替审听。"
+      "note": "真实原生资源和最多两声部播放已接，47项行为与音源检查通过；未实际听到，不以文件/波形/测试代签最终混音与听感。 V1三材料重档各38.4秒同步实录及诊断可播放；非零/无削波/暂停核查不能代替审听。 2026-10-04用户验收I01/I02；本未验事项移交I03继续跟踪，不随母版结单关闭。",
+      "carriedFrom": "R100-I02"
     },
     {
       "id": "R100-P05",
@@ -1069,80 +1136,98 @@
       "id": "R100-P06",
       "title": "绿色侵蚀动效低档几乎不可见、重档也易被忽略",
       "severity": "P1",
-      "status": "open",
-      "iteration": "R100-I02",
-      "owner": "art/code",
-      "evidenceIds": [
-        "R100-H-I01-I02-REJECT-20261003",
-        "R100-E-I02-POLLUTION-CORRECTIONS"
-      ],
-      "note": "原生尺寸和正常肩灯下重做可见范围、形状及变化；低档减少数量不压低单处辨识度，不能靠诊断与说明才看见。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
-    },
-    {
-      "id": "R100-P07",
-      "title": "变异结构部分边缘看不见却发生碰撞",
-      "severity": "P1",
-      "status": "open",
+      "status": "resolved",
       "iteration": "R100-I02",
       "owner": "art/code",
       "evidenceIds": [
         "R100-H-I01-I02-REJECT-20261003",
         "R100-E-I02-POLLUTION-CORRECTIONS",
-        "R100-E-I02-SOLID-BOUNDARY-REPAIR"
+        "R100-H-I01-I02-ACCEPT-20261004"
       ],
-      "note": "最新用户两图反例证明前批正照结论不足：不可走低斜面像地板。现以真实短陡断面、对象局部纹理及撤除错误沿边提亮修正，保持原占地。50次真实接近覆盖44个独立方向，600采样均身体有支持；4方向无测试站位，4初批有战斗干扰。正常南／东南／西南实图复核有改善，待本版本用户复审，不标全周边已通过。"
+      "note": "原生尺寸和正常肩灯下重做可见范围、形状及变化；低档减少数量不压低单处辨识度，不能靠诊断与说明才看见。 整改运行/图像/数值证据已提供，2026-10-04用户明确验收I01/I02，按该范围关闭。",
+      "revision": "4ced8905",
+      "resolvedDate": "2026-10-04"
+    },
+    {
+      "id": "R100-P07",
+      "title": "变异结构部分边缘看不见却发生碰撞",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I02",
+      "owner": "art/code",
+      "evidenceIds": [
+        "R100-H-I01-I02-REJECT-20261003",
+        "R100-E-I02-POLLUTION-CORRECTIONS",
+        "R100-E-I02-SOLID-BOUNDARY-REPAIR",
+        "R100-H-I01-I02-ACCEPT-20261004"
+      ],
+      "note": "最新用户两图反例证明前批正照结论不足：不可走低斜面像地板。现以真实短陡断面、对象局部纹理及撤除错误沿边提亮修正，保持原占地。50次真实接近覆盖44个独立方向，600采样均身体有支持；4方向无测试站位，4初批有战斗干扰。后续实体皮层／断面材质亦完成修正；2026-10-04用户明确验收I01/I02，本项关闭，保留实测范围，不标所有方向与任意种子已测。",
+      "revision": "4ced8905",
+      "resolvedDate": "2026-10-04"
     },
     {
       "id": "R100-P08",
       "title": "吞光作用几乎无法感知",
       "severity": "P1",
-      "status": "open",
+      "status": "resolved",
       "iteration": "R100-I02",
       "owner": "art/code",
       "evidenceIds": [
         "R100-H-I01-I02-REJECT-20261003",
-        "R100-E-I02-POLLUTION-CORRECTIONS"
+        "R100-E-I02-POLLUTION-CORRECTIONS",
+        "R100-H-I01-I02-ACCEPT-20261004"
       ],
-      "note": "使用真实污染对象和显隐规则，让正常灯照出现明确被吞掉的区域；区别普通背光和地图外虚空，不以黑色涂片或地形洞代替。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+      "note": "使用真实污染对象和显隐规则，让正常灯照出现明确被吞掉的区域；区别普通背光和地图外虚空，不以黑色涂片或地形洞代替。 整改运行/图像/数值证据已提供，2026-10-04用户明确验收I01/I02，按该范围关闭。",
+      "revision": "4ced8905",
+      "resolvedDate": "2026-10-04"
     },
     {
       "id": "R100-P09",
       "title": "等级未体现占漆/占空污染体数量与面积",
       "severity": "P1",
-      "status": "open",
+      "status": "resolved",
       "iteration": "R100-I02",
       "owner": "design/code",
       "evidenceIds": [
         "R100-H-I01-I02-REJECT-20261003",
-        "R100-E-I02-POLLUTION-CORRECTIONS"
+        "R100-E-I02-POLLUTION-CORRECTIONS",
+        "R100-H-I01-I02-ACCEPT-20261004"
       ],
-      "note": "三级必须有真实占漆和占空，记录数量、覆盖面积、通路改变与退路，不只改变单模型尺寸或孔洞。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+      "note": "三级必须有真实占漆和占空，记录数量、覆盖面积、通路改变与退路，不只改变单模型尺寸或孔洞。 整改运行/图像/数值证据已提供，2026-10-04用户明确验收I01/I02，按该范围关闭。",
+      "revision": "4ced8905",
+      "resolvedDate": "2026-10-04"
     },
     {
       "id": "R100-P10",
       "title": "绿色侵蚀未承担污染的直接表达",
       "severity": "P1",
-      "status": "open",
+      "status": "resolved",
       "iteration": "R100-I02",
       "owner": "art/code",
       "evidenceIds": [
         "R100-H-I01-I02-REJECT-20261003",
-        "R100-E-I02-POLLUTION-CORRECTIONS"
+        "R100-E-I02-POLLUTION-CORRECTIONS",
+        "R100-H-I01-I02-ACCEPT-20261004"
       ],
-      "note": "以明确来源的病态污染绿表现侵蚀及其局部光，结构/声音作为补充；保持材料身份和正常通路，不把全图染绿。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+      "note": "以明确来源的病态污染绿表现侵蚀及其局部光，结构/声音作为补充；保持材料身份和正常通路，不把全图染绿。 整改运行/图像/数值证据已提供，2026-10-04用户明确验收I01/I02，按该范围关闭。",
+      "revision": "4ced8905",
+      "resolvedDate": "2026-10-04"
     },
     {
       "id": "R100-P11",
       "title": "地图等级未改变玩家污染增长曲线",
       "severity": "P1",
-      "status": "open",
+      "status": "resolved",
       "iteration": "R100-I02",
       "owner": "design/code",
       "evidenceIds": [
         "R100-H-I01-I02-REJECT-20261003",
-        "R100-E-I02-POLLUTION-CORRECTIONS"
+        "R100-E-I02-POLLUTION-CORRECTIONS",
+        "R100-H-I01-I02-ACCEPT-20261004"
       ],
-      "note": "在既有混乱系统内落实三级时间增长和接触代价，记录同起始状态/路线的曲线和阈值时间、装备抗性及暂停；不重复计费。 本轮已实施修正并提供新运行/图像/数值证据；保留open等待具体体验复核，不沿用旧人审通过。"
+      "note": "在既有混乱系统内落实三级时间增长和接触代价，记录同起始状态/路线的曲线和阈值时间、装备抗性及暂停；不重复计费。 整改运行/图像/数值证据已提供，2026-10-04用户明确验收I01/I02，按该范围关闭。",
+      "revision": "4ced8905",
+      "resolvedDate": "2026-10-04"
     }
   ],
   "changeLog": [
@@ -1195,6 +1280,11 @@
       "date": "2026-10-03",
       "kind": "solid-boundary-repair",
       "note": "将不可通行边界清晰记录为硬性游戏体验要求；修正折板低端真实断面和实体纹理，补同站位对照及44方向局部真实接近。4未测方向明示，I01/I02仍changes-required，0世界0等级。"
+    },
+    {
+      "date": "2026-10-04",
+      "kind": "human-iteration-acceptance",
+      "note": "用户明确“很好，I01/02都标记为完成，更新迭代看板”。I01/I02转closed并绑定4ced8905与各自达成快照；六项整改关闭。实际审听门、P02/P04移交I03，P01/P05继续open；I03仍planned/not-started。完成2/14轮，世界0/108、等级0/324不变。"
     }
   ],
   "qualityPlan": {
