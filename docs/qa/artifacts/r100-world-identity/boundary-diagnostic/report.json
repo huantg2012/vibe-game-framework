@@ -1,0 +1,132 @@
+{
+  "scope": "Legal controlled full-body starts; normal finite FOV; actual keyboard into native collision; no exposure/zoom changes. Not whole-run play.",
+  "cases": [
+    {
+      "id": "schist-shear-low-20261006",
+      "seat": {
+        "point": {
+          "x": 716,
+          "y": 698
+        },
+        "edge": {
+          "x": 716,
+          "y": 644
+        },
+        "objectId": 3,
+        "family": "folded-slab",
+        "score": 8.901672580479328,
+        "fraction": 0.5555541805555555
+      },
+      "after": {
+        "point": {
+          "x": 718.58106659022,
+          "y": 656.9787938183316
+        },
+        "support": false,
+        "nativeSupport": true,
+        "actualBody": {
+          "x": 718.58106659022,
+          "y": 656.9787938183316,
+          "halfWidth": 10,
+          "halfHeight": 10
+        },
+        "nativeBodySupport": true,
+        "state": {
+          "elapsedMs": 3718.190000000002,
+          "ended": false,
+          "player": {
+            "x": 718.58106659022,
+            "y": 656.9787938183316
+          },
+          "hp": 100,
+          "chaos": 15.704968823999993,
+          "chaosRate": 0.1896,
+          "pollutionGrade": "low",
+          "volumeSightMultiplier": 1,
+          "attack": {
+            "phase": "idle",
+            "cooldownRemainingMs": 0
+          },
+          "kindling": 0,
+          "search": {
+            "prompt": null,
+            "progress": null,
+            "remaining": 6
+          },
+          "enemies": [
+            {
+              "id": "ENM_INF_01",
+              "state": "patrol",
+              "position": {
+                "x": 786.1546208734612,
+                "y": 58.3216267531876
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            },
+            {
+              "id": "ENM_RWR_01",
+              "state": "patrol",
+              "position": {
+                "x": 929.700000000005,
+                "y": 644
+              },
+              "hp": 75,
+              "detection": 0,
+              "engaged": false,
+              "visible": false
+            }
+          ],
+          "hosts": [
+            {
+              "id": "ENM_BING_01",
+              "substrate": "oil_film",
+              "position": {
+                "x": 176,
+                "y": 432
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_BING_02",
+              "substrate": "oil_film",
+              "position": {
+                "x": 912,
+                "y": 80
+              },
+              "hazardReleased": true,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false
+            },
+            {
+              "id": "ENM_DING_01",
+              "substrate": "gas_mass",
+              "position": {
+                "x": 374.3238026352941,
+                "y": 464
+              },
+              "hazardReleased": false,
+              "suppressionRemainingMs": 0,
+              "delayRemainingMs": 0,
+              "recoveryWarning": false,
+              "volume": {
+                "phase": "disperse",
+                "elapsedMs": 3718.190000000002,
+                "hazardActive": false
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "status": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: contact cannot put a body inside impassable terrain"
+}

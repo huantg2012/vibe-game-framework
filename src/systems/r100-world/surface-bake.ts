@@ -1,4 +1,7 @@
 /** Pure immutable texture bake. Runs in the preparation Worker, never in a frame. */
+import { bakeMasterWorldSurface as bakeRevision3Surface } from '@/generation/legacy-r100-v3/executor.js';
+import { mapWorldPigment, paintedToneRange, sampleWorldAppearance, type WorldAppearanceField, type PaintedToneRange } from '@/generation/world-study/world-material-pigment';
+import type { PaintedSurface } from './painted-material';
 import type { MasterGroundSurface } from '@/generation/world-study/master-ground-field';
 import { NativeVolumeLighting, type NativeVolumeMaterialSet } from '@/generation/world-study/native-volume-raster';
 import type { MasterWorld } from '@/generation/world-study/r100-master-world';
@@ -32,6 +35,12 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
   const diagnostics={structuralEmissionPixels:fields.infection.reduce((n,v)=>n+(v>.15?1:0),0),erosionEdgePixels:fields.erosion.reduce((n,v)=>n+(v>.1?1:0),0),blockingSurfaceMaterial:painting?.solid?'dedicated compact skin/fracture atlas and finish; geometric face normals':'object-local UV; no perimeter brightening',greenOwnership:'actual fractured object or authored light-eaten edge; never the whole floor'};
   const albedo=new Uint8Array(size*4),normal=new Uint8Array(size*4),response=new Uint8Array(size*4),emission=new Uint8Array(size*4);
   const axis=painting?world.definition.axis:0,ca=Math.cos(axis),sa=Math.sin(axis),seed=painting?world.sample.seed:0;
+  const appearance=world.appearance;
+  const identityField:WorldAppearanceField={secondary:0,tone:0,detail:1};
+  const mapped=new Float32Array(3),mappedGround=new Float32Array(3),transmitted=new Float32Array(3);
+  const ranges=new Map<PaintedSurface,PaintedToneRange>();
+  const getRange=(surface:PaintedSurface):PaintedToneRange=>{let range=ranges.get(surface);if(!range){range=paintedToneRange(surface);ranges.set(surface,range);}return range;};
+  const primaryFamilyIndex=NATIVE_VOLUME_FAMILY_SEQUENCE.indexOf(world.definition.family)+1;
   const familyPaints=[undefined,...NATIVE_VOLUME_FAMILY_SEQUENCE.map(family=>painting?.families?.[family]??painting)];
   const mirror=(v:number,extent:number):number=>{const period=extent*2,n=((Math.floor(v)%period)+period)%period;return n<extent?n:period-n-1;};
   for(let i=0;i<size;i++){
@@ -82,6 +91,30 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
      paintingIndex=(sy*receiverPaint.width+sx)*4;
     }else paintingIndex=worldPaintingIndex;
    }
+   if(appearance){
+    sampleWorldAppearance(appearance,x*ca+y*sa,-x*sa+y*ca,seed,identityField);
+    if(receiverPaint){
+     const primaryFamily=!hasSurface||r.family[i]===primaryFamilyIndex;
+     const role=hasSurface?(paintRegion==='cleaved'?'cleaved':'solid'):'ground';
+     const secondary=hasSurface?(primaryFamily?0:1):identityField.secondary;
+     const patchWeight=solidPaint?1:.92,worldWeight=1-patchWeight;
+     mapWorldPigment(appearance,role,
+      receiverPaint.pixels[paintingIndex]!*patchWeight+receiverPaint.pixels[worldPaintingIndex]!*worldWeight,
+      receiverPaint.pixels[paintingIndex+1]!*patchWeight+receiverPaint.pixels[worldPaintingIndex+1]!*worldWeight,
+      receiverPaint.pixels[paintingIndex+2]!*patchWeight+receiverPaint.pixels[worldPaintingIndex+2]!*worldWeight,
+      getRange(receiverPaint),identityField,secondary,mapped);
+     if(hasSurface&&!fields.solid[i]){
+      // A non-blocking exposed fibre, skin or flow keeps its parent material.
+      // Only its actually buried foot blends into the local loose substrate.
+      const exposure=Math.min(1,Math.max(0,height-ground.heightField[i]!)/6);
+      if(exposure<1){
+       mapWorldPigment(appearance,'ground',receiverPaint.pixels[paintingIndex]!,receiverPaint.pixels[paintingIndex+1]!,receiverPaint.pixels[paintingIndex+2]!,getRange(receiverPaint),identityField,identityField.secondary,mappedGround);
+       for(let c=0;c<3;c++)mapped[c]=mappedGround[c]!*(1-exposure)+mapped[c]!*exposure;
+      }
+     }
+    }
+    if(transmission&&painting)mapWorldPigment(appearance,'ground',painting.pixels[transmittedIndex]!,painting.pixels[transmittedIndex+1]!,painting.pixels[transmittedIndex+2]!,getRange(painting),identityField,identityField.secondary,transmitted);
+   }
    let ao=hasSurface?r.ambientOcclusion[i]!:ground.ambientOcclusion[i]!;
    if(!hasSurface){
     let enclosure=0;
@@ -101,10 +134,10 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
      // Use the authored tonal range directly, not a second narrow palette ramp.
      // Native geometry, shallow relief and lights continue to own illumination.
      const gain=solidPaint?(paintRegion==='skin'?solidPaint.gain:solidPaint.cutGain):cut?1.12:fields.solid[i]?(r.material[i]===2?.64:.73):hasSurface?.87+.13*exposure:.87;
-     albedo[q+c]=Math.min(255,pigment*gain*.94+albedo[q+c]!*.06);
+     albedo[q+c]=appearance?mapped[c]!:Math.min(255,pigment*gain*.94+albedo[q+c]!*.06);
     }
     if(transmission){
-     const substrate=painting?painting.pixels[transmittedIndex+c]!*.87:ground.albedo[q+c]!;
+     const substrate=painting?(appearance?transmitted[c]!:painting.pixels[transmittedIndex+c]!*.87):ground.albedo[q+c]!;
      albedo[q+c]=albedo[q+c]!*(1-transmission)+substrate*transmission;
     }
     // The old ground-grain normal field belongs to loose substrate. Compact
@@ -140,5 +173,6 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
  return {width:w,height:h,albedo,normal,response,emission,diagnostics};
 }
 export function bakeMasterWorldSurface(world:MasterWorld,painting?:PaintedMaterial):MasterSurfaceBake {
+ if(!world.appearance)return bakeRevision3Surface(world,painting);
  return bakeMasterSurface(world,paintMasterGround(world),new NativeVolumeLighting(world.raster,masterVolumePalette(world),{seed:world.sample.seed,axis:world.definition.axis}),painting);
 }

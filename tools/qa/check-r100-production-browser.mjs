@@ -74,8 +74,10 @@ try {
     page.on('response', recordResponse);
     try {
       await page.goto(process.env.GAME_URL ?? 'http://127.0.0.1:3043/');
-      await page.waitForFunction(() => window.__game?.scene.isActive('MainMenuScene'));
-      await page.waitForTimeout(350); await page.keyboard.press('Enter', { delay: 100 });
+      // Scene activation precedes asynchronous title decoding. Inputs are
+      // deliberately ignored until the menu's actual interaction gate opens.
+      await page.waitForFunction(() => window.__game?.scene.getScene('MainMenuScene')?.interactive());
+      await page.keyboard.press('Enter', { delay: 100 });
       await page.waitForFunction(() => window.__game?.scene.isActive('PurificationScene'));
       await page.waitForTimeout(2200);
       await page.evaluate(() => window.__game.scene.getScene('PurificationScene').enterRift());
@@ -146,8 +148,7 @@ try {
         assert(Math.abs(player.bodyPosition.y + 10 - player.position.y) < 1e-6);
       }
       await page.reload();
-      await page.waitForFunction(() => window.__game?.scene.isActive('MainMenuScene'));
-      await page.waitForTimeout(350);
+      await page.waitForFunction(() => window.__game?.scene.getScene('MainMenuScene')?.interactive());
       await installTimingProbe(page);
       const restoreStart = await page.evaluate(() => performance.now());
       await page.keyboard.press('Enter', { delay: 100 });

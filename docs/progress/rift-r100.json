@@ -39,13 +39,13 @@
     "releaseManifest": null
   },
   "resume": {
-    "iteration": "R100-I06",
-    "batch": "I03–I06 completed; next planned I07",
-    "nextAction": "下一轮I07先按当前20世界近邻缺口安排16个新世界；保留R07长期效率、R10实际审听与I14弱设备复核。此次不擅自启动额外迭代。",
-    "lastCompleted": "四轮阻断问题均已解决，逐世界三档搜返与另一种子过程、90趟连续经营、三母版针对性准备及最终生成/恢复/参考机预算已复核。失败保留，用户认可和实际听感未代签。",
-    "headline": "I03— I06内部结案：20世界、60个污染等级资格",
-    "updatedDate": "2026-10-04",
-    "evidenceRevision": "r100-native-v3-revision-3"
+    "iteration": "R100-I07",
+    "batch": "Existing 20-world identity correction before expansion",
+    "nextAction": "先复看修订4世界身份并补新几何完整搜撤与双种子玩法资格，再按现有差异缺口扩到I07目标36世界；不把本次20世界整改计成新增。",
+    "lastCompleted": "20世界独立材料色与17派生构造深化；修订3封存，修订4有限生成、正常实图与正式进入/冷续已复核。",
+    "headline": "20世界视觉重构已接入；I03–I06历史完成保留，I07扩产未完成",
+    "updatedDate": "2026-10-05",
+    "evidenceRevision": "r100-native-v3-revision-4"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -1335,9 +1335,9 @@
       "dependencies": [
         "R100-I06"
       ],
-      "state": "planned",
-      "stage": "not-started",
-      "goal": "扩大世界分布，优先生产现有库没有覆盖的关系。",
+      "state": "active",
+      "stage": "experience-review",
+      "goal": "先修正当前20世界区分度并补新几何玩法资格，再扩到累计36世界。",
       "technical": "按库内聚类决定新算子或组合；每批最多4份，持续增量资格、保存和正式池回归。",
       "visual": "新增16份完整世界；优先补非矿物、大片静区与巨构、明亮受压环境等缺口，不强求平均配色。",
       "batches": [
@@ -1353,7 +1353,7 @@
         "逐世界核对低/中/重三档：身份连续、局势有差异、证据不跨级冒用；重度峰值下真实搜撤可读。"
       ],
       "exit": "三十六份合格包，淘汰和合并不计数。",
-      "actualRevision": null,
+      "actualRevision": "r100-native-v3-revision-4",
       "gateResults": [],
       "issueIds": [],
       "evidenceIds": [],
@@ -1596,43 +1596,39 @@
         "folded-slab"
       ],
       "iterationId": "R100-I03",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "连续折板、锐角切面与宽硬地床构成基准；和独立错板、板旁弧壳区别有材料与几何依据。",
-      "knownVisualLimitations": "未照到主板前的普通地床辨识较弱。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "schist-shear",
         "laminate-shell"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/ash-strata.json",
-        "hash": "8c8c4b7847dc439d5ad446c3ff8ac883b565cace0f675177a861fce5463b6a60"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/ash-strata.json",
+        "hash": "f3491df961676c077b0cbdb370aaade92afb5d43457463787d26557804e69f9d"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-ASH-STRATA-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-ash-strata"
+          "R100-R4-TECHNICAL-ash-strata"
         ],
         "visual": [
-          "R100-E-ASH-STRATA-VISUAL-FINAL",
-          "R100-R3-VISUAL-ash-strata"
+          "R100-R4-VISUAL-ash-strata"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-ash-strata"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -1648,14 +1644,17 @@
         "R100-R3-TECHNICAL-ash-strata",
         "R100-R3-PRODUCTION-ash-strata",
         "R100-R3-VISUAL-ash-strata",
-        "R100-R3-EXPERIENCE-ash-strata"
+        "R100-R3-EXPERIENCE-ash-strata",
+        "R100-R4-TECHNICAL-ash-strata",
+        "R100-R4-VISUAL-ash-strata",
+        "R100-R4-PRODUCTION-ash-strata"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -1664,26 +1663,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-ASH-STRATA-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ash-strata"
+              "R100-R4-TECHNICAL-ash-strata"
             ],
             "visual": [
-              "R100-E-ASH-STRATA-VISUAL-FINAL",
-              "R100-R3-VISUAL-ash-strata"
+              "R100-R4-VISUAL-ash-strata"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ash-strata"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-ASH-STRATA-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ash-strata"
+            "R100-R4-PRODUCTION-ash-strata"
           ]
         },
         "medium": {
@@ -1692,26 +1686,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-ASH-STRATA-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ash-strata"
+              "R100-R4-TECHNICAL-ash-strata"
             ],
             "visual": [
-              "R100-E-ASH-STRATA-VISUAL-FINAL",
-              "R100-R3-VISUAL-ash-strata"
+              "R100-R4-VISUAL-ash-strata"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ash-strata"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-ASH-STRATA-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ash-strata"
+            "R100-R4-PRODUCTION-ash-strata"
           ]
         },
         "severe": {
@@ -1720,26 +1709,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-ASH-STRATA-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ash-strata"
+              "R100-R4-TECHNICAL-ash-strata"
             ],
             "visual": [
-              "R100-E-ASH-STRATA-VISUAL-FINAL",
-              "R100-R3-VISUAL-ash-strata"
+              "R100-R4-VISUAL-ash-strata"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ash-strata"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-ASH-STRATA-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ash-strata"
+            "R100-R4-PRODUCTION-ash-strata"
           ]
         }
       }
@@ -1752,43 +1736,39 @@
         "fibre-knot"
       ],
       "iterationId": "R100-I03",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "交叉粗束、纵向纤维与连续足边构成基准；区别于展开扇形空口和被团粒填塞的束隙。",
-      "knownVisualLimitations": "部分束交点需接近才能读清。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "splayed-fibres",
         "fibre-silt"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/crystal-fibre.json",
-        "hash": "797b93af2cadbb4bc4b6e7552b9896a282eb79683a0ebd0abc1ab76c43539dd4"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/crystal-fibre.json",
+        "hash": "392e43f8ae6e3ace3d3f70b358e5e84df997c86ff02464c64e5f6aa943f049bd"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-CRYSTAL-FIBRE-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-crystal-fibre"
+          "R100-R4-TECHNICAL-crystal-fibre"
         ],
         "visual": [
-          "R100-E-CRYSTAL-FIBRE-VISUAL-FINAL",
-          "R100-R3-VISUAL-crystal-fibre"
+          "R100-R4-VISUAL-crystal-fibre"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-crystal-fibre"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -1804,14 +1784,17 @@
         "R100-R3-TECHNICAL-crystal-fibre",
         "R100-R3-PRODUCTION-crystal-fibre",
         "R100-R3-VISUAL-crystal-fibre",
-        "R100-R3-EXPERIENCE-crystal-fibre"
+        "R100-R3-EXPERIENCE-crystal-fibre",
+        "R100-R4-TECHNICAL-crystal-fibre",
+        "R100-R4-VISUAL-crystal-fibre",
+        "R100-R4-PRODUCTION-crystal-fibre"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -1820,26 +1803,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-CRYSTAL-FIBRE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-crystal-fibre"
+              "R100-R4-TECHNICAL-crystal-fibre"
             ],
             "visual": [
-              "R100-E-CRYSTAL-FIBRE-VISUAL-FINAL",
-              "R100-R3-VISUAL-crystal-fibre"
+              "R100-R4-VISUAL-crystal-fibre"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-crystal-fibre"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-CRYSTAL-FIBRE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-crystal-fibre"
+            "R100-R4-PRODUCTION-crystal-fibre"
           ]
         },
         "medium": {
@@ -1848,26 +1826,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-CRYSTAL-FIBRE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-crystal-fibre"
+              "R100-R4-TECHNICAL-crystal-fibre"
             ],
             "visual": [
-              "R100-E-CRYSTAL-FIBRE-VISUAL-FINAL",
-              "R100-R3-VISUAL-crystal-fibre"
+              "R100-R4-VISUAL-crystal-fibre"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-crystal-fibre"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-CRYSTAL-FIBRE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-crystal-fibre"
+            "R100-R4-PRODUCTION-crystal-fibre"
           ]
         },
         "severe": {
@@ -1876,26 +1849,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-CRYSTAL-FIBRE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-crystal-fibre"
+              "R100-R4-TECHNICAL-crystal-fibre"
             ],
             "visual": [
-              "R100-E-CRYSTAL-FIBRE-VISUAL-FINAL",
-              "R100-R3-VISUAL-crystal-fibre"
+              "R100-R4-VISUAL-crystal-fibre"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-crystal-fibre"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-CRYSTAL-FIBRE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-crystal-fibre"
+            "R100-R4-PRODUCTION-crystal-fibre"
           ]
         }
       }
@@ -1908,43 +1876,39 @@
         "broken-shell"
       ],
       "iterationId": "R100-I03",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "厚釉壳的亮外沿、内凹面和开口共同成立；普通壳凹面不冒充吞光污染。",
-      "knownVisualLimitations": "单独第一壳不承载全部空间身份。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "shell-chain",
         "shell-grit"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/ivory-basin.json",
-        "hash": "70dc14e2cdff6c52a64542b83f44d41bfe1938125f7dd90c41a792ddb091298c"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/ivory-basin.json",
+        "hash": "f3371fa20afcb37792e1119953817faa57c80e5bdbdf636f7263887cbab009bb"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-IVORY-BASIN-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-ivory-basin"
+          "R100-R4-TECHNICAL-ivory-basin"
         ],
         "visual": [
-          "R100-E-IVORY-BASIN-VISUAL-FINAL",
-          "R100-R3-VISUAL-ivory-basin"
+          "R100-R4-VISUAL-ivory-basin"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-ivory-basin"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -1960,14 +1924,17 @@
         "R100-R3-TECHNICAL-ivory-basin",
         "R100-R3-PRODUCTION-ivory-basin",
         "R100-R3-VISUAL-ivory-basin",
-        "R100-R3-EXPERIENCE-ivory-basin"
+        "R100-R3-EXPERIENCE-ivory-basin",
+        "R100-R4-TECHNICAL-ivory-basin",
+        "R100-R4-VISUAL-ivory-basin",
+        "R100-R4-PRODUCTION-ivory-basin"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -1976,26 +1943,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-IVORY-BASIN-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ivory-basin"
+              "R100-R4-TECHNICAL-ivory-basin"
             ],
             "visual": [
-              "R100-E-IVORY-BASIN-VISUAL-FINAL",
-              "R100-R3-VISUAL-ivory-basin"
+              "R100-R4-VISUAL-ivory-basin"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ivory-basin"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-IVORY-BASIN-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ivory-basin"
+            "R100-R4-PRODUCTION-ivory-basin"
           ]
         },
         "medium": {
@@ -2004,26 +1966,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-IVORY-BASIN-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ivory-basin"
+              "R100-R4-TECHNICAL-ivory-basin"
             ],
             "visual": [
-              "R100-E-IVORY-BASIN-VISUAL-FINAL",
-              "R100-R3-VISUAL-ivory-basin"
+              "R100-R4-VISUAL-ivory-basin"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ivory-basin"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-IVORY-BASIN-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ivory-basin"
+            "R100-R4-PRODUCTION-ivory-basin"
           ]
         },
         "severe": {
@@ -2032,26 +1989,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-IVORY-BASIN-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ivory-basin"
+              "R100-R4-TECHNICAL-ivory-basin"
             ],
             "visual": [
-              "R100-E-IVORY-BASIN-VISUAL-FINAL",
-              "R100-R3-VISUAL-ivory-basin"
+              "R100-R4-VISUAL-ivory-basin"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ivory-basin"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-IVORY-BASIN-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ivory-basin"
+            "R100-R4-PRODUCTION-ivory-basin"
           ]
         }
       }
@@ -2064,43 +2016,39 @@
         "granular-ridge"
       ],
       "iterationId": "R100-I04",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "非平行颗粒体之间保留连接面；相对压实脊廊的第二道长脊，此处更开敞。",
-      "knownVisualLimitations": "与压实脊廊起步构图相似，是本批最弱的首次辨识对；差异主要在深处。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "pressed-dunes",
         "grain-laminate"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/cinder-ridge.json",
-        "hash": "2200a9fe412fc8fcfacda1ce941b8fe9b9e1a9de025244fa60d32b7bb0b77882"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/cinder-ridge.json",
+        "hash": "d503035bdfadf0ddfbf244bb803fc3c042743c19ba586c0ab7060b932bad07c3"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-CINDER-RIDGE-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-cinder-ridge"
+          "R100-R4-TECHNICAL-cinder-ridge"
         ],
         "visual": [
-          "R100-E-CINDER-RIDGE-VISUAL-FINAL",
-          "R100-R3-VISUAL-cinder-ridge"
+          "R100-R4-VISUAL-cinder-ridge"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-cinder-ridge"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -2116,14 +2064,17 @@
         "R100-R3-TECHNICAL-cinder-ridge",
         "R100-R3-PRODUCTION-cinder-ridge",
         "R100-R3-VISUAL-cinder-ridge",
-        "R100-R3-EXPERIENCE-cinder-ridge"
+        "R100-R3-EXPERIENCE-cinder-ridge",
+        "R100-R4-TECHNICAL-cinder-ridge",
+        "R100-R4-VISUAL-cinder-ridge",
+        "R100-R4-PRODUCTION-cinder-ridge"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。另有当前修订3三档两种子的余烬脊对照图。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -2132,26 +2083,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-CINDER-RIDGE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-cinder-ridge"
+              "R100-R4-TECHNICAL-cinder-ridge"
             ],
             "visual": [
-              "R100-E-CINDER-RIDGE-VISUAL-FINAL",
-              "R100-R3-VISUAL-cinder-ridge"
+              "R100-R4-VISUAL-cinder-ridge"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-cinder-ridge"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-CINDER-RIDGE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-cinder-ridge"
+            "R100-R4-PRODUCTION-cinder-ridge"
           ]
         },
         "medium": {
@@ -2160,26 +2106,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-CINDER-RIDGE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-cinder-ridge"
+              "R100-R4-TECHNICAL-cinder-ridge"
             ],
             "visual": [
-              "R100-E-CINDER-RIDGE-VISUAL-FINAL",
-              "R100-R3-VISUAL-cinder-ridge"
+              "R100-R4-VISUAL-cinder-ridge"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-cinder-ridge"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-CINDER-RIDGE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-cinder-ridge"
+            "R100-R4-PRODUCTION-cinder-ridge"
           ]
         },
         "severe": {
@@ -2188,26 +2129,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-CINDER-RIDGE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-cinder-ridge"
+              "R100-R4-TECHNICAL-cinder-ridge"
             ],
             "visual": [
-              "R100-E-CINDER-RIDGE-VISUAL-FINAL",
-              "R100-R3-VISUAL-cinder-ridge"
+              "R100-R4-VISUAL-cinder-ridge"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-cinder-ridge"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-CINDER-RIDGE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-cinder-ridge"
+            "R100-R4-PRODUCTION-cinder-ridge"
           ]
         }
       }
@@ -2220,43 +2156,39 @@
         "membrane-rim"
       ],
       "iterationId": "R100-I04",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "中央连续厚膜缘、内褶和偏心凹处构成整体，区别于外围破片与被硬束牵住的薄膜。",
-      "knownVisualLimitations": "薄面单独出现时辨识不及厚缘；半透明外观不改变实体足部阻挡。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "ruptured-film",
         "tension-membrane"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/pallid-membrane.json",
-        "hash": "2f3cbaa2103c56aca3f9e7f30fc6b8b0e3a80e902fb784eece2ef45017a63320"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/pallid-membrane.json",
+        "hash": "df490d3ae374c4a18214edf596f0142b822b11fc26cd35204f2d02cbbf0ab608"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-PALLID-MEMBRANE-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-pallid-membrane"
+          "R100-R4-TECHNICAL-pallid-membrane"
         ],
         "visual": [
-          "R100-E-PALLID-MEMBRANE-VISUAL-FINAL",
-          "R100-R3-VISUAL-pallid-membrane"
+          "R100-R4-VISUAL-pallid-membrane"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-pallid-membrane"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -2272,14 +2204,17 @@
         "R100-R3-TECHNICAL-pallid-membrane",
         "R100-R3-PRODUCTION-pallid-membrane",
         "R100-R3-VISUAL-pallid-membrane",
-        "R100-R3-EXPERIENCE-pallid-membrane"
+        "R100-R3-EXPERIENCE-pallid-membrane",
+        "R100-R4-TECHNICAL-pallid-membrane",
+        "R100-R4-VISUAL-pallid-membrane",
+        "R100-R4-PRODUCTION-pallid-membrane"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -2288,26 +2223,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-PALLID-MEMBRANE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-pallid-membrane"
+              "R100-R4-TECHNICAL-pallid-membrane"
             ],
             "visual": [
-              "R100-E-PALLID-MEMBRANE-VISUAL-FINAL",
-              "R100-R3-VISUAL-pallid-membrane"
+              "R100-R4-VISUAL-pallid-membrane"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-pallid-membrane"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-PALLID-MEMBRANE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-pallid-membrane"
+            "R100-R4-PRODUCTION-pallid-membrane"
           ]
         },
         "medium": {
@@ -2316,26 +2246,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-PALLID-MEMBRANE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-pallid-membrane"
+              "R100-R4-TECHNICAL-pallid-membrane"
             ],
             "visual": [
-              "R100-E-PALLID-MEMBRANE-VISUAL-FINAL",
-              "R100-R3-VISUAL-pallid-membrane"
+              "R100-R4-VISUAL-pallid-membrane"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-pallid-membrane"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-PALLID-MEMBRANE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-pallid-membrane"
+            "R100-R4-PRODUCTION-pallid-membrane"
           ]
         },
         "severe": {
@@ -2344,26 +2269,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-PALLID-MEMBRANE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-pallid-membrane"
+              "R100-R4-TECHNICAL-pallid-membrane"
             ],
             "visual": [
-              "R100-E-PALLID-MEMBRANE-VISUAL-FINAL",
-              "R100-R3-VISUAL-pallid-membrane"
+              "R100-R4-VISUAL-pallid-membrane"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-pallid-membrane"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-PALLID-MEMBRANE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-pallid-membrane"
+            "R100-R4-PRODUCTION-pallid-membrane"
           ]
         }
       }
@@ -2376,43 +2296,39 @@
         "gel-flow"
       ],
       "iterationId": "R100-I04",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "顺向薄尾与卷起厚头分工明确，上方绕厚头、南部出现不同朝向流前缘。",
-      "knownVisualLimitations": "安静薄床与其他胶世界共享，不能单独证明身份。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "reversed-flow",
         "shell-gel-delta"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/silt-gel.json",
-        "hash": "64b9f8a6af953c2742c6ec36ff88e821fb66cd0ea5276c2476a7ebe6ad9f23a6"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/silt-gel.json",
+        "hash": "b9df84204091f933da1648278886d3ebfebce4d1fb40966735adef8618fc2f4b"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-SILT-GEL-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-silt-gel"
+          "R100-R4-TECHNICAL-silt-gel"
         ],
         "visual": [
-          "R100-E-SILT-GEL-VISUAL-FINAL",
-          "R100-R3-VISUAL-silt-gel"
+          "R100-R4-VISUAL-silt-gel"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-silt-gel"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -2428,14 +2344,17 @@
         "R100-R3-TECHNICAL-silt-gel",
         "R100-R3-PRODUCTION-silt-gel",
         "R100-R3-VISUAL-silt-gel",
-        "R100-R3-EXPERIENCE-silt-gel"
+        "R100-R3-EXPERIENCE-silt-gel",
+        "R100-R4-TECHNICAL-silt-gel",
+        "R100-R4-VISUAL-silt-gel",
+        "R100-R4-PRODUCTION-silt-gel"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -2444,26 +2363,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SILT-GEL-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-silt-gel"
+              "R100-R4-TECHNICAL-silt-gel"
             ],
             "visual": [
-              "R100-E-SILT-GEL-VISUAL-FINAL",
-              "R100-R3-VISUAL-silt-gel"
+              "R100-R4-VISUAL-silt-gel"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-silt-gel"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SILT-GEL-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-silt-gel"
+            "R100-R4-PRODUCTION-silt-gel"
           ]
         },
         "medium": {
@@ -2472,26 +2386,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SILT-GEL-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-silt-gel"
+              "R100-R4-TECHNICAL-silt-gel"
             ],
             "visual": [
-              "R100-E-SILT-GEL-VISUAL-FINAL",
-              "R100-R3-VISUAL-silt-gel"
+              "R100-R4-VISUAL-silt-gel"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-silt-gel"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SILT-GEL-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-silt-gel"
+            "R100-R4-PRODUCTION-silt-gel"
           ]
         },
         "severe": {
@@ -2500,26 +2409,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SILT-GEL-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-silt-gel"
+              "R100-R4-TECHNICAL-silt-gel"
             ],
             "visual": [
-              "R100-E-SILT-GEL-VISUAL-FINAL",
-              "R100-R3-VISUAL-silt-gel"
+              "R100-R4-VISUAL-silt-gel"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-silt-gel"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SILT-GEL-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-silt-gel"
+            "R100-R4-PRODUCTION-silt-gel"
           ]
         }
       }
@@ -2532,43 +2436,39 @@
         "folded-slab"
       ],
       "iterationId": "R100-I05",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "独立斜板在中、东、南部反复错开；与连续折面和板夹连续壳弧不同。",
-      "knownVisualLimitations": "入口没有展示全部三段，需要移动识别。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "ash-strata",
         "laminate-shell"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/schist-shear.json",
-        "hash": "1bb32d6ed9b39f418a4b502b859dae747589b4c690a82d03776140f0b108efe5"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/schist-shear.json",
+        "hash": "a269d97008864b59b6c8f65d2f51bf7194572f4e8ba9e6ae211058d640edd86d"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-SCHIST-SHEAR-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-schist-shear"
+          "R100-R4-TECHNICAL-schist-shear"
         ],
         "visual": [
-          "R100-E-SCHIST-SHEAR-VISUAL-FINAL",
-          "R100-R3-VISUAL-schist-shear"
+          "R100-R4-VISUAL-schist-shear"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-schist-shear"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -2584,14 +2484,17 @@
         "R100-R3-TECHNICAL-schist-shear",
         "R100-R3-PRODUCTION-schist-shear",
         "R100-R3-VISUAL-schist-shear",
-        "R100-R3-EXPERIENCE-schist-shear"
+        "R100-R3-EXPERIENCE-schist-shear",
+        "R100-R4-TECHNICAL-schist-shear",
+        "R100-R4-VISUAL-schist-shear",
+        "R100-R4-PRODUCTION-schist-shear"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -2600,26 +2503,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SCHIST-SHEAR-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-schist-shear"
+              "R100-R4-TECHNICAL-schist-shear"
             ],
             "visual": [
-              "R100-E-SCHIST-SHEAR-VISUAL-FINAL",
-              "R100-R3-VISUAL-schist-shear"
+              "R100-R4-VISUAL-schist-shear"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-schist-shear"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SCHIST-SHEAR-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-schist-shear"
+            "R100-R4-PRODUCTION-schist-shear"
           ]
         },
         "medium": {
@@ -2628,26 +2526,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SCHIST-SHEAR-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-schist-shear"
+              "R100-R4-TECHNICAL-schist-shear"
             ],
             "visual": [
-              "R100-E-SCHIST-SHEAR-VISUAL-FINAL",
-              "R100-R3-VISUAL-schist-shear"
+              "R100-R4-VISUAL-schist-shear"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-schist-shear"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SCHIST-SHEAR-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-schist-shear"
+            "R100-R4-PRODUCTION-schist-shear"
           ]
         },
         "severe": {
@@ -2656,26 +2549,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SCHIST-SHEAR-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-schist-shear"
+              "R100-R4-TECHNICAL-schist-shear"
             ],
             "visual": [
-              "R100-E-SCHIST-SHEAR-VISUAL-FINAL",
-              "R100-R3-VISUAL-schist-shear"
+              "R100-R4-VISUAL-schist-shear"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-schist-shear"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SCHIST-SHEAR-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-schist-shear"
+            "R100-R4-PRODUCTION-schist-shear"
           ]
         }
       }
@@ -2688,43 +2576,39 @@
         "fibre-knot"
       ],
       "iterationId": "R100-I05",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "多向展开束保留扇形空口，区别于交叉结和被颗粒实体填入的束隙。",
-      "knownVisualLimitations": "与积沙槽的关键差异在中段，不能只看第一束。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "crystal-fibre",
         "fibre-silt"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/splayed-fibres.json",
-        "hash": "27acfc809fc22dc503dab0042af91534c6cb6cdf6066b13184feae85bcb8c1b1"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/splayed-fibres.json",
+        "hash": "16e88c8f7ad17f9c2157b7df837f92968deb96ea47e55913d758d3f4c58a406c"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-SPLAYED-FIBRES-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-splayed-fibres"
+          "R100-R4-TECHNICAL-splayed-fibres"
         ],
         "visual": [
-          "R100-E-SPLAYED-FIBRES-VISUAL-FINAL",
-          "R100-R3-VISUAL-splayed-fibres"
+          "R100-R4-VISUAL-splayed-fibres"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-splayed-fibres"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -2740,14 +2624,17 @@
         "R100-R3-TECHNICAL-splayed-fibres",
         "R100-R3-PRODUCTION-splayed-fibres",
         "R100-R3-VISUAL-splayed-fibres",
-        "R100-R3-EXPERIENCE-splayed-fibres"
+        "R100-R3-EXPERIENCE-splayed-fibres",
+        "R100-R4-TECHNICAL-splayed-fibres",
+        "R100-R4-VISUAL-splayed-fibres",
+        "R100-R4-PRODUCTION-splayed-fibres"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -2756,26 +2643,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SPLAYED-FIBRES-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-splayed-fibres"
+              "R100-R4-TECHNICAL-splayed-fibres"
             ],
             "visual": [
-              "R100-E-SPLAYED-FIBRES-VISUAL-FINAL",
-              "R100-R3-VISUAL-splayed-fibres"
+              "R100-R4-VISUAL-splayed-fibres"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-splayed-fibres"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SPLAYED-FIBRES-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-splayed-fibres"
+            "R100-R4-PRODUCTION-splayed-fibres"
           ]
         },
         "medium": {
@@ -2784,26 +2666,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SPLAYED-FIBRES-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-splayed-fibres"
+              "R100-R4-TECHNICAL-splayed-fibres"
             ],
             "visual": [
-              "R100-E-SPLAYED-FIBRES-VISUAL-FINAL",
-              "R100-R3-VISUAL-splayed-fibres"
+              "R100-R4-VISUAL-splayed-fibres"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-splayed-fibres"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SPLAYED-FIBRES-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-splayed-fibres"
+            "R100-R4-PRODUCTION-splayed-fibres"
           ]
         },
         "severe": {
@@ -2812,26 +2689,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SPLAYED-FIBRES-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-splayed-fibres"
+              "R100-R4-TECHNICAL-splayed-fibres"
             ],
             "visual": [
-              "R100-E-SPLAYED-FIBRES-VISUAL-FINAL",
-              "R100-R3-VISUAL-splayed-fibres"
+              "R100-R4-VISUAL-splayed-fibres"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-splayed-fibres"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SPLAYED-FIBRES-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-splayed-fibres"
+            "R100-R4-PRODUCTION-splayed-fibres"
           ]
         }
       }
@@ -2844,43 +2716,39 @@
         "broken-shell"
       ],
       "iterationId": "R100-I05",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "多个开口错位的独立厚壳形成可穿行或绕开的连续开口；颗粒堤对应区域被厚积体堵住。",
-      "knownVisualLimitations": "首壳与颗粒堤相近，中段才显示空间差异。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "ivory-basin",
         "shell-grit"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/shell-chain.json",
-        "hash": "cb0111b1713dbb674e18e80ff02800f3dc82dccff8bffe17d608fc522d6f9db5"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/shell-chain.json",
+        "hash": "79a2218172404ee4262bebae5379106ecd1708d334925de71333eacdb7927274"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-SHELL-CHAIN-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-shell-chain"
+          "R100-R4-TECHNICAL-shell-chain"
         ],
         "visual": [
-          "R100-E-SHELL-CHAIN-VISUAL-FINAL",
-          "R100-R3-VISUAL-shell-chain"
+          "R100-R4-VISUAL-shell-chain"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-shell-chain"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -2896,14 +2764,17 @@
         "R100-R3-TECHNICAL-shell-chain",
         "R100-R3-PRODUCTION-shell-chain",
         "R100-R3-VISUAL-shell-chain",
-        "R100-R3-EXPERIENCE-shell-chain"
+        "R100-R3-EXPERIENCE-shell-chain",
+        "R100-R4-TECHNICAL-shell-chain",
+        "R100-R4-VISUAL-shell-chain",
+        "R100-R4-PRODUCTION-shell-chain"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -2912,26 +2783,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-CHAIN-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-chain"
+              "R100-R4-TECHNICAL-shell-chain"
             ],
             "visual": [
-              "R100-E-SHELL-CHAIN-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-chain"
+              "R100-R4-VISUAL-shell-chain"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-chain"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-CHAIN-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-chain"
+            "R100-R4-PRODUCTION-shell-chain"
           ]
         },
         "medium": {
@@ -2940,26 +2806,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-CHAIN-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-chain"
+              "R100-R4-TECHNICAL-shell-chain"
             ],
             "visual": [
-              "R100-E-SHELL-CHAIN-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-chain"
+              "R100-R4-VISUAL-shell-chain"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-chain"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-CHAIN-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-chain"
+            "R100-R4-PRODUCTION-shell-chain"
           ]
         },
         "severe": {
@@ -2968,26 +2829,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-CHAIN-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-chain"
+              "R100-R4-TECHNICAL-shell-chain"
             ],
             "visual": [
-              "R100-E-SHELL-CHAIN-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-chain"
+              "R100-R4-VISUAL-shell-chain"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-chain"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-CHAIN-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-chain"
+            "R100-R4-PRODUCTION-shell-chain"
           ]
         }
       }
@@ -3001,43 +2857,39 @@
         "granular-ridge"
       ],
       "iterationId": "R100-I05",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "压实颗粒靠锐角板面，两种材料在同一视野实际相接；主断面与普通粗地床可区分。",
-      "knownVisualLimitations": "入口单看颗粒会低估后面的混合关系。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "cinder-ridge",
         "schist-shear"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/grain-laminate.json",
-        "hash": "920a9802d9c1647cb23002bef7fc1f6d650443185e0b5135a656d3f91d5798b8"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/grain-laminate.json",
+        "hash": "7ef73df9d57a15869858dcbb758fb8e886fb57ca97ddcc3fd5dae136268b2453"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-GRAIN-LAMINATE-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-grain-laminate"
+          "R100-R4-TECHNICAL-grain-laminate"
         ],
         "visual": [
-          "R100-E-GRAIN-LAMINATE-VISUAL-FINAL",
-          "R100-R3-VISUAL-grain-laminate"
+          "R100-R4-VISUAL-grain-laminate"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-grain-laminate"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -3053,14 +2905,17 @@
         "R100-R3-TECHNICAL-grain-laminate",
         "R100-R3-PRODUCTION-grain-laminate",
         "R100-R3-VISUAL-grain-laminate",
-        "R100-R3-EXPERIENCE-grain-laminate"
+        "R100-R3-EXPERIENCE-grain-laminate",
+        "R100-R4-TECHNICAL-grain-laminate",
+        "R100-R4-VISUAL-grain-laminate",
+        "R100-R4-PRODUCTION-grain-laminate"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -3069,26 +2924,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-GRAIN-LAMINATE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-grain-laminate"
+              "R100-R4-TECHNICAL-grain-laminate"
             ],
             "visual": [
-              "R100-E-GRAIN-LAMINATE-VISUAL-FINAL",
-              "R100-R3-VISUAL-grain-laminate"
+              "R100-R4-VISUAL-grain-laminate"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-grain-laminate"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-GRAIN-LAMINATE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-grain-laminate"
+            "R100-R4-PRODUCTION-grain-laminate"
           ]
         },
         "medium": {
@@ -3097,26 +2947,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-GRAIN-LAMINATE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-grain-laminate"
+              "R100-R4-TECHNICAL-grain-laminate"
             ],
             "visual": [
-              "R100-E-GRAIN-LAMINATE-VISUAL-FINAL",
-              "R100-R3-VISUAL-grain-laminate"
+              "R100-R4-VISUAL-grain-laminate"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-grain-laminate"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-GRAIN-LAMINATE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-grain-laminate"
+            "R100-R4-PRODUCTION-grain-laminate"
           ]
         },
         "severe": {
@@ -3125,26 +2970,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-GRAIN-LAMINATE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-grain-laminate"
+              "R100-R4-TECHNICAL-grain-laminate"
             ],
             "visual": [
-              "R100-E-GRAIN-LAMINATE-VISUAL-FINAL",
-              "R100-R3-VISUAL-grain-laminate"
+              "R100-R4-VISUAL-grain-laminate"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-grain-laminate"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-GRAIN-LAMINATE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-grain-laminate"
+            "R100-R4-PRODUCTION-grain-laminate"
           ]
         }
       }
@@ -3158,43 +2998,39 @@
         "membrane-rim"
       ],
       "iterationId": "R100-I05",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "横向硬纤维牵住不对称厚膜缘，薄褶与硬束保持不同面结构，中央可读出两者关系。",
-      "knownVisualLimitations": "局部视点不代表所有束膜接点均经非作者审核。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "pallid-membrane",
         "crystal-fibre"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/tension-membrane.json",
-        "hash": "8c4043de5703f07080784ba3c73b8461b098c7753bd357acde7bde458cb53784"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/tension-membrane.json",
+        "hash": "ba0341b80ac3e1c4d50b1fb3e5d8c42986708dec24bd02b2eed60659643eedd5"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-TENSION-MEMBRANE-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-tension-membrane"
+          "R100-R4-TECHNICAL-tension-membrane"
         ],
         "visual": [
-          "R100-E-TENSION-MEMBRANE-VISUAL-FINAL",
-          "R100-R3-VISUAL-tension-membrane"
+          "R100-R4-VISUAL-tension-membrane"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-tension-membrane"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -3210,14 +3046,17 @@
         "R100-R3-TECHNICAL-tension-membrane",
         "R100-R3-PRODUCTION-tension-membrane",
         "R100-R3-VISUAL-tension-membrane",
-        "R100-R3-EXPERIENCE-tension-membrane"
+        "R100-R3-EXPERIENCE-tension-membrane",
+        "R100-R4-TECHNICAL-tension-membrane",
+        "R100-R4-VISUAL-tension-membrane",
+        "R100-R4-PRODUCTION-tension-membrane"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -3226,26 +3065,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-TENSION-MEMBRANE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-tension-membrane"
+              "R100-R4-TECHNICAL-tension-membrane"
             ],
             "visual": [
-              "R100-E-TENSION-MEMBRANE-VISUAL-FINAL",
-              "R100-R3-VISUAL-tension-membrane"
+              "R100-R4-VISUAL-tension-membrane"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-tension-membrane"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-TENSION-MEMBRANE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-tension-membrane"
+            "R100-R4-PRODUCTION-tension-membrane"
           ]
         },
         "medium": {
@@ -3254,26 +3088,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-TENSION-MEMBRANE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-tension-membrane"
+              "R100-R4-TECHNICAL-tension-membrane"
             ],
             "visual": [
-              "R100-E-TENSION-MEMBRANE-VISUAL-FINAL",
-              "R100-R3-VISUAL-tension-membrane"
+              "R100-R4-VISUAL-tension-membrane"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-tension-membrane"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-TENSION-MEMBRANE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-tension-membrane"
+            "R100-R4-PRODUCTION-tension-membrane"
           ]
         },
         "severe": {
@@ -3282,26 +3111,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-TENSION-MEMBRANE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-tension-membrane"
+              "R100-R4-TECHNICAL-tension-membrane"
             ],
             "visual": [
-              "R100-E-TENSION-MEMBRANE-VISUAL-FINAL",
-              "R100-R3-VISUAL-tension-membrane"
+              "R100-R4-VISUAL-tension-membrane"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-tension-membrane"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-TENSION-MEMBRANE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-tension-membrane"
+            "R100-R4-PRODUCTION-tension-membrane"
           ]
         }
       }
@@ -3315,43 +3139,39 @@
         "gel-flow"
       ],
       "iterationId": "R100-I05",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "厚壳弧把流前沿与东行路线分开，绕行来自实际连续弧面；区别于横跨硬束。",
-      "knownVisualLimitations": "东侧绕行后有共享安静胶地床段。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "silt-gel",
         "gel-fibre"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/shell-gel-delta.json",
-        "hash": "b996d5209bf06a35cc44f848405a05ded6402b33a6a11fd2a10ad37817cb7342"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/shell-gel-delta.json",
+        "hash": "06365be4511ff192b4c8bc3b997dd9d7609c464cd6242b533e126fdc33df34c6"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-SHELL-GEL-DELTA-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-shell-gel-delta"
+          "R100-R4-TECHNICAL-shell-gel-delta"
         ],
         "visual": [
-          "R100-E-SHELL-GEL-DELTA-VISUAL-FINAL",
-          "R100-R3-VISUAL-shell-gel-delta"
+          "R100-R4-VISUAL-shell-gel-delta"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-shell-gel-delta"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -3367,14 +3187,17 @@
         "R100-R3-TECHNICAL-shell-gel-delta",
         "R100-R3-PRODUCTION-shell-gel-delta",
         "R100-R3-VISUAL-shell-gel-delta",
-        "R100-R3-EXPERIENCE-shell-gel-delta"
+        "R100-R3-EXPERIENCE-shell-gel-delta",
+        "R100-R4-TECHNICAL-shell-gel-delta",
+        "R100-R4-VISUAL-shell-gel-delta",
+        "R100-R4-PRODUCTION-shell-gel-delta"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -3383,26 +3206,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-GEL-DELTA-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-gel-delta"
+              "R100-R4-TECHNICAL-shell-gel-delta"
             ],
             "visual": [
-              "R100-E-SHELL-GEL-DELTA-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-gel-delta"
+              "R100-R4-VISUAL-shell-gel-delta"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-gel-delta"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-GEL-DELTA-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-gel-delta"
+            "R100-R4-PRODUCTION-shell-gel-delta"
           ]
         },
         "medium": {
@@ -3411,26 +3229,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-GEL-DELTA-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-gel-delta"
+              "R100-R4-TECHNICAL-shell-gel-delta"
             ],
             "visual": [
-              "R100-E-SHELL-GEL-DELTA-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-gel-delta"
+              "R100-R4-VISUAL-shell-gel-delta"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-gel-delta"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-GEL-DELTA-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-gel-delta"
+            "R100-R4-PRODUCTION-shell-gel-delta"
           ]
         },
         "severe": {
@@ -3439,26 +3252,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-GEL-DELTA-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-gel-delta"
+              "R100-R4-TECHNICAL-shell-gel-delta"
             ],
             "visual": [
-              "R100-E-SHELL-GEL-DELTA-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-gel-delta"
+              "R100-R4-VISUAL-shell-gel-delta"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-gel-delta"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-GEL-DELTA-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-gel-delta"
+            "R100-R4-PRODUCTION-shell-gel-delta"
           ]
         }
       }
@@ -3471,43 +3279,39 @@
         "granular-ridge"
       ],
       "iterationId": "R100-I06",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "深走可见第二道长脊持续阻挡东行并形成侧向通道；颗粒脊对应位置保留开敞连接。",
-      "knownVisualLimitations": "起步辨识仍弱；局部独立复核不等于全程一眼即认。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "cinder-ridge",
         "grain-laminate"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/pressed-dunes.json",
-        "hash": "8c994c2f431283fb709130d06c56ff9d489e708f5729536e6a92e32a34b56783"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/pressed-dunes.json",
+        "hash": "72b11a8169e0fbc2f39a6f0ddf56d9d97a2e2db36ca99eb87e6c8795f9e8da9f"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-PRESSED-DUNES-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-pressed-dunes"
+          "R100-R4-TECHNICAL-pressed-dunes"
         ],
         "visual": [
-          "R100-E-PRESSED-DUNES-VISUAL-FINAL",
-          "R100-R3-VISUAL-pressed-dunes"
+          "R100-R4-VISUAL-pressed-dunes"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-pressed-dunes"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -3523,14 +3327,17 @@
         "R100-R3-TECHNICAL-pressed-dunes",
         "R100-R3-PRODUCTION-pressed-dunes",
         "R100-R3-VISUAL-pressed-dunes",
-        "R100-R3-EXPERIENCE-pressed-dunes"
+        "R100-R3-EXPERIENCE-pressed-dunes",
+        "R100-R4-TECHNICAL-pressed-dunes",
+        "R100-R4-VISUAL-pressed-dunes",
+        "R100-R4-PRODUCTION-pressed-dunes"
       ],
       "reviewScope": {
-        "visual": "当前修订3压实脊廊新实体布局：三档、两个固定种子的正常镜头入口及短走图，经美术审查确认材料、实体几何、局部空间区别和足边；不继承原布局图。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -3539,26 +3346,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-PRESSED-DUNES-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-pressed-dunes"
+              "R100-R4-TECHNICAL-pressed-dunes"
             ],
             "visual": [
-              "R100-E-PRESSED-DUNES-VISUAL-FINAL",
-              "R100-R3-VISUAL-pressed-dunes"
+              "R100-R4-VISUAL-pressed-dunes"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-pressed-dunes"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-PRESSED-DUNES-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-pressed-dunes"
+            "R100-R4-PRODUCTION-pressed-dunes"
           ]
         },
         "medium": {
@@ -3567,26 +3369,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-PRESSED-DUNES-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-pressed-dunes"
+              "R100-R4-TECHNICAL-pressed-dunes"
             ],
             "visual": [
-              "R100-E-PRESSED-DUNES-VISUAL-FINAL",
-              "R100-R3-VISUAL-pressed-dunes"
+              "R100-R4-VISUAL-pressed-dunes"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-pressed-dunes"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-PRESSED-DUNES-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-pressed-dunes"
+            "R100-R4-PRODUCTION-pressed-dunes"
           ]
         },
         "severe": {
@@ -3595,26 +3392,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-PRESSED-DUNES-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-pressed-dunes"
+              "R100-R4-TECHNICAL-pressed-dunes"
             ],
             "visual": [
-              "R100-E-PRESSED-DUNES-VISUAL-FINAL",
-              "R100-R3-VISUAL-pressed-dunes"
+              "R100-R4-VISUAL-pressed-dunes"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-pressed-dunes"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-PRESSED-DUNES-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-pressed-dunes"
+            "R100-R4-PRODUCTION-pressed-dunes"
           ]
         }
       }
@@ -3627,43 +3419,39 @@
         "membrane-rim"
       ],
       "iterationId": "R100-I06",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "中央开敞、主要厚膜片分散外围，与苍膜的中央连续缘不同。",
-      "knownVisualLimitations": "纯薄面视点容易与苍膜地床相似。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "pallid-membrane",
         "tension-membrane"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/ruptured-film.json",
-        "hash": "5e3daa345afe8b842d99aa88e9381f8e7ef1c2b271cd9af502b5a4d35293cd72"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/ruptured-film.json",
+        "hash": "aa6c36d6d438e766f912da8ecaf181af95b5e4b71a3f00f0b100bfd0e2afe917"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-RUPTURED-FILM-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-ruptured-film"
+          "R100-R4-TECHNICAL-ruptured-film"
         ],
         "visual": [
-          "R100-E-RUPTURED-FILM-VISUAL-FINAL",
-          "R100-R3-VISUAL-ruptured-film"
+          "R100-R4-VISUAL-ruptured-film"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-ruptured-film"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -3679,14 +3467,17 @@
         "R100-R3-TECHNICAL-ruptured-film",
         "R100-R3-PRODUCTION-ruptured-film",
         "R100-R3-VISUAL-ruptured-film",
-        "R100-R3-EXPERIENCE-ruptured-film"
+        "R100-R3-EXPERIENCE-ruptured-film",
+        "R100-R4-TECHNICAL-ruptured-film",
+        "R100-R4-VISUAL-ruptured-film",
+        "R100-R4-PRODUCTION-ruptured-film"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -3695,26 +3486,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-RUPTURED-FILM-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ruptured-film"
+              "R100-R4-TECHNICAL-ruptured-film"
             ],
             "visual": [
-              "R100-E-RUPTURED-FILM-VISUAL-FINAL",
-              "R100-R3-VISUAL-ruptured-film"
+              "R100-R4-VISUAL-ruptured-film"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ruptured-film"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-RUPTURED-FILM-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ruptured-film"
+            "R100-R4-PRODUCTION-ruptured-film"
           ]
         },
         "medium": {
@@ -3723,26 +3509,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-RUPTURED-FILM-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ruptured-film"
+              "R100-R4-TECHNICAL-ruptured-film"
             ],
             "visual": [
-              "R100-E-RUPTURED-FILM-VISUAL-FINAL",
-              "R100-R3-VISUAL-ruptured-film"
+              "R100-R4-VISUAL-ruptured-film"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ruptured-film"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-RUPTURED-FILM-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ruptured-film"
+            "R100-R4-PRODUCTION-ruptured-film"
           ]
         },
         "severe": {
@@ -3751,26 +3532,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-RUPTURED-FILM-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-ruptured-film"
+              "R100-R4-TECHNICAL-ruptured-film"
             ],
             "visual": [
-              "R100-E-RUPTURED-FILM-VISUAL-FINAL",
-              "R100-R3-VISUAL-ruptured-film"
+              "R100-R4-VISUAL-ruptured-film"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-ruptured-film"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-RUPTURED-FILM-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-ruptured-film"
+            "R100-R4-PRODUCTION-ruptured-film"
           ]
         }
       }
@@ -3783,43 +3559,39 @@
         "gel-flow"
       ],
       "iterationId": "R100-I06",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "中央和上方出现相向卷头及间隙，南部露出横截流面，区别于顺向厚头。",
-      "knownVisualLimitations": "东侧安静段与顺流共享地床。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "silt-gel",
         "shell-gel-delta"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/reversed-flow.json",
-        "hash": "3358816c7643008a1214b268b842ca73ae617836a1b680368ecefe50a5f3bfc5"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/reversed-flow.json",
+        "hash": "4b3d332a92bd64fb91017afa784aa9cd885dfb5b8d88566278676d382c0d65fa"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-REVERSED-FLOW-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-reversed-flow"
+          "R100-R4-TECHNICAL-reversed-flow"
         ],
         "visual": [
-          "R100-E-REVERSED-FLOW-VISUAL-FINAL",
-          "R100-R3-VISUAL-reversed-flow"
+          "R100-R4-VISUAL-reversed-flow"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-reversed-flow"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -3835,14 +3607,17 @@
         "R100-R3-TECHNICAL-reversed-flow",
         "R100-R3-PRODUCTION-reversed-flow",
         "R100-R3-VISUAL-reversed-flow",
-        "R100-R3-EXPERIENCE-reversed-flow"
+        "R100-R3-EXPERIENCE-reversed-flow",
+        "R100-R4-TECHNICAL-reversed-flow",
+        "R100-R4-VISUAL-reversed-flow",
+        "R100-R4-PRODUCTION-reversed-flow"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -3851,26 +3626,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-REVERSED-FLOW-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-reversed-flow"
+              "R100-R4-TECHNICAL-reversed-flow"
             ],
             "visual": [
-              "R100-E-REVERSED-FLOW-VISUAL-FINAL",
-              "R100-R3-VISUAL-reversed-flow"
+              "R100-R4-VISUAL-reversed-flow"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-reversed-flow"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-REVERSED-FLOW-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-reversed-flow"
+            "R100-R4-PRODUCTION-reversed-flow"
           ]
         },
         "medium": {
@@ -3879,26 +3649,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-REVERSED-FLOW-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-reversed-flow"
+              "R100-R4-TECHNICAL-reversed-flow"
             ],
             "visual": [
-              "R100-E-REVERSED-FLOW-VISUAL-FINAL",
-              "R100-R3-VISUAL-reversed-flow"
+              "R100-R4-VISUAL-reversed-flow"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-reversed-flow"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-REVERSED-FLOW-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-reversed-flow"
+            "R100-R4-PRODUCTION-reversed-flow"
           ]
         },
         "severe": {
@@ -3907,26 +3672,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-REVERSED-FLOW-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-reversed-flow"
+              "R100-R4-TECHNICAL-reversed-flow"
             ],
             "visual": [
-              "R100-E-REVERSED-FLOW-VISUAL-FINAL",
-              "R100-R3-VISUAL-reversed-flow"
+              "R100-R4-VISUAL-reversed-flow"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-reversed-flow"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-REVERSED-FLOW-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-reversed-flow"
+            "R100-R4-PRODUCTION-reversed-flow"
           ]
         }
       }
@@ -3940,43 +3700,39 @@
         "folded-slab"
       ],
       "iterationId": "R100-I06",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "板面夹住大弧壳，东侧因连续壳弧需要绕行，区别于独立错板与板上覆膜。",
-      "knownVisualLimitations": "到达交接前的起步仍相似。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "schist-shear",
         "film-laminate"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/laminate-shell.json",
-        "hash": "c44212d9df581626d102f77473781b51e3c790341afd47546a6ca547b8431a3e"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/laminate-shell.json",
+        "hash": "773fed76038f11c3a92c26b0721281eae75d94a3f59a4f63fbad5f818058aea5"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-LAMINATE-SHELL-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-laminate-shell"
+          "R100-R4-TECHNICAL-laminate-shell"
         ],
         "visual": [
-          "R100-E-LAMINATE-SHELL-VISUAL-FINAL",
-          "R100-R3-VISUAL-laminate-shell"
+          "R100-R4-VISUAL-laminate-shell"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-laminate-shell"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -3992,14 +3748,17 @@
         "R100-R3-TECHNICAL-laminate-shell",
         "R100-R3-PRODUCTION-laminate-shell",
         "R100-R3-VISUAL-laminate-shell",
-        "R100-R3-EXPERIENCE-laminate-shell"
+        "R100-R3-EXPERIENCE-laminate-shell",
+        "R100-R4-TECHNICAL-laminate-shell",
+        "R100-R4-VISUAL-laminate-shell",
+        "R100-R4-PRODUCTION-laminate-shell"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -4008,26 +3767,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-LAMINATE-SHELL-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-laminate-shell"
+              "R100-R4-TECHNICAL-laminate-shell"
             ],
             "visual": [
-              "R100-E-LAMINATE-SHELL-VISUAL-FINAL",
-              "R100-R3-VISUAL-laminate-shell"
+              "R100-R4-VISUAL-laminate-shell"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-laminate-shell"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-LAMINATE-SHELL-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-laminate-shell"
+            "R100-R4-PRODUCTION-laminate-shell"
           ]
         },
         "medium": {
@@ -4036,26 +3790,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-LAMINATE-SHELL-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-laminate-shell"
+              "R100-R4-TECHNICAL-laminate-shell"
             ],
             "visual": [
-              "R100-E-LAMINATE-SHELL-VISUAL-FINAL",
-              "R100-R3-VISUAL-laminate-shell"
+              "R100-R4-VISUAL-laminate-shell"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-laminate-shell"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-LAMINATE-SHELL-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-laminate-shell"
+            "R100-R4-PRODUCTION-laminate-shell"
           ]
         },
         "severe": {
@@ -4064,26 +3813,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-LAMINATE-SHELL-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-laminate-shell"
+              "R100-R4-TECHNICAL-laminate-shell"
             ],
             "visual": [
-              "R100-E-LAMINATE-SHELL-VISUAL-FINAL",
-              "R100-R3-VISUAL-laminate-shell"
+              "R100-R4-VISUAL-laminate-shell"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-laminate-shell"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-LAMINATE-SHELL-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-laminate-shell"
+            "R100-R4-PRODUCTION-laminate-shell"
           ]
         }
       }
@@ -4097,43 +3841,39 @@
         "granular-ridge"
       ],
       "iterationId": "R100-I06",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "颗粒实体填入束间，原可直走的束隙被占据而需侧绕；足边与纤维本体独立可读。",
-      "knownVisualLimitations": "南部单独地床不代表混合身份。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "splayed-fibres",
         "crystal-fibre"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/fibre-silt.json",
-        "hash": "67161da518984b6c97333932c520e262a8070c9fc8abc3a1312dad5e1b25f80c"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/fibre-silt.json",
+        "hash": "920cb9e7ce15ee33ea3580a3e4417c287adaf58b873a209db0152bf6f4b061ac"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-FIBRE-SILT-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-fibre-silt"
+          "R100-R4-TECHNICAL-fibre-silt"
         ],
         "visual": [
-          "R100-E-FIBRE-SILT-VISUAL-FINAL",
-          "R100-R3-VISUAL-fibre-silt"
+          "R100-R4-VISUAL-fibre-silt"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-fibre-silt"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -4149,14 +3889,17 @@
         "R100-R3-TECHNICAL-fibre-silt",
         "R100-R3-PRODUCTION-fibre-silt",
         "R100-R3-VISUAL-fibre-silt",
-        "R100-R3-EXPERIENCE-fibre-silt"
+        "R100-R3-EXPERIENCE-fibre-silt",
+        "R100-R4-TECHNICAL-fibre-silt",
+        "R100-R4-VISUAL-fibre-silt",
+        "R100-R4-PRODUCTION-fibre-silt"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -4165,26 +3908,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-FIBRE-SILT-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-fibre-silt"
+              "R100-R4-TECHNICAL-fibre-silt"
             ],
             "visual": [
-              "R100-E-FIBRE-SILT-VISUAL-FINAL",
-              "R100-R3-VISUAL-fibre-silt"
+              "R100-R4-VISUAL-fibre-silt"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-fibre-silt"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-FIBRE-SILT-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-fibre-silt"
+            "R100-R4-PRODUCTION-fibre-silt"
           ]
         },
         "medium": {
@@ -4193,26 +3931,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-FIBRE-SILT-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-fibre-silt"
+              "R100-R4-TECHNICAL-fibre-silt"
             ],
             "visual": [
-              "R100-E-FIBRE-SILT-VISUAL-FINAL",
-              "R100-R3-VISUAL-fibre-silt"
+              "R100-R4-VISUAL-fibre-silt"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-fibre-silt"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-FIBRE-SILT-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-fibre-silt"
+            "R100-R4-PRODUCTION-fibre-silt"
           ]
         },
         "severe": {
@@ -4221,26 +3954,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-FIBRE-SILT-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-fibre-silt"
+              "R100-R4-TECHNICAL-fibre-silt"
             ],
             "visual": [
-              "R100-E-FIBRE-SILT-VISUAL-FINAL",
-              "R100-R3-VISUAL-fibre-silt"
+              "R100-R4-VISUAL-fibre-silt"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-fibre-silt"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-FIBRE-SILT-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-fibre-silt"
+            "R100-R4-PRODUCTION-fibre-silt"
           ]
         }
       }
@@ -4254,43 +3982,39 @@
         "membrane-rim"
       ],
       "iterationId": "R100-I06",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "硬板上覆盖薄面但断面仍由板承担，南部另有独立厚膜缘；不是板面整体改色。",
-      "knownVisualLimitations": "入口与其他层片世界共享部分地床组织。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "laminate-shell",
         "schist-shear"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/film-laminate.json",
-        "hash": "86380a3bacc7c70c8541714dcaf9ad74d9fd24972345c5ae76d817db63e6dd8c"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/film-laminate.json",
+        "hash": "89e1ff02abbdd13eeb432ece0664cb27943574da6b1b5544e524ca846de7dc39"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-FILM-LAMINATE-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-film-laminate"
+          "R100-R4-TECHNICAL-film-laminate"
         ],
         "visual": [
-          "R100-E-FILM-LAMINATE-VISUAL-FINAL",
-          "R100-R3-VISUAL-film-laminate"
+          "R100-R4-VISUAL-film-laminate"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-film-laminate"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -4306,14 +4030,17 @@
         "R100-R3-TECHNICAL-film-laminate",
         "R100-R3-PRODUCTION-film-laminate",
         "R100-R3-VISUAL-film-laminate",
-        "R100-R3-EXPERIENCE-film-laminate"
+        "R100-R3-EXPERIENCE-film-laminate",
+        "R100-R4-TECHNICAL-film-laminate",
+        "R100-R4-VISUAL-film-laminate",
+        "R100-R4-PRODUCTION-film-laminate"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -4322,26 +4049,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-FILM-LAMINATE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-film-laminate"
+              "R100-R4-TECHNICAL-film-laminate"
             ],
             "visual": [
-              "R100-E-FILM-LAMINATE-VISUAL-FINAL",
-              "R100-R3-VISUAL-film-laminate"
+              "R100-R4-VISUAL-film-laminate"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-film-laminate"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-FILM-LAMINATE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-film-laminate"
+            "R100-R4-PRODUCTION-film-laminate"
           ]
         },
         "medium": {
@@ -4350,26 +4072,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-FILM-LAMINATE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-film-laminate"
+              "R100-R4-TECHNICAL-film-laminate"
             ],
             "visual": [
-              "R100-E-FILM-LAMINATE-VISUAL-FINAL",
-              "R100-R3-VISUAL-film-laminate"
+              "R100-R4-VISUAL-film-laminate"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-film-laminate"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-FILM-LAMINATE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-film-laminate"
+            "R100-R4-PRODUCTION-film-laminate"
           ]
         },
         "severe": {
@@ -4378,26 +4095,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-FILM-LAMINATE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-film-laminate"
+              "R100-R4-TECHNICAL-film-laminate"
             ],
             "visual": [
-              "R100-E-FILM-LAMINATE-VISUAL-FINAL",
-              "R100-R3-VISUAL-film-laminate"
+              "R100-R4-VISUAL-film-laminate"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-film-laminate"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-FILM-LAMINATE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-film-laminate"
+            "R100-R4-PRODUCTION-film-laminate"
           ]
         }
       }
@@ -4411,43 +4123,39 @@
         "gel-flow"
       ],
       "iterationId": "R100-I06",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "硬束横跨流前沿、与厚流并置，向上路线要转到侧面；区别于壳挡版本的连续弧缘。",
-      "knownVisualLimitations": "离开交接段后仍共享胶地床。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "shell-gel-delta",
         "silt-gel"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/gel-fibre.json",
-        "hash": "f21742238888cbed3bb61cfbc35607a4b34a3d7a8fd634d570c8a13269d3916d"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/gel-fibre.json",
+        "hash": "b848ca5cd352b870b948445d7c4d0ffa184c718fc323848b617c0bd191b73999"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-GEL-FIBRE-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-gel-fibre"
+          "R100-R4-TECHNICAL-gel-fibre"
         ],
         "visual": [
-          "R100-E-GEL-FIBRE-VISUAL-FINAL",
-          "R100-R3-VISUAL-gel-fibre"
+          "R100-R4-VISUAL-gel-fibre"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-gel-fibre"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -4463,14 +4171,17 @@
         "R100-R3-TECHNICAL-gel-fibre",
         "R100-R3-PRODUCTION-gel-fibre",
         "R100-R3-VISUAL-gel-fibre",
-        "R100-R3-EXPERIENCE-gel-fibre"
+        "R100-R3-EXPERIENCE-gel-fibre",
+        "R100-R4-TECHNICAL-gel-fibre",
+        "R100-R4-VISUAL-gel-fibre",
+        "R100-R4-PRODUCTION-gel-fibre"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -4479,26 +4190,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-GEL-FIBRE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-gel-fibre"
+              "R100-R4-TECHNICAL-gel-fibre"
             ],
             "visual": [
-              "R100-E-GEL-FIBRE-VISUAL-FINAL",
-              "R100-R3-VISUAL-gel-fibre"
+              "R100-R4-VISUAL-gel-fibre"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-gel-fibre"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-GEL-FIBRE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-gel-fibre"
+            "R100-R4-PRODUCTION-gel-fibre"
           ]
         },
         "medium": {
@@ -4507,26 +4213,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-GEL-FIBRE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-gel-fibre"
+              "R100-R4-TECHNICAL-gel-fibre"
             ],
             "visual": [
-              "R100-E-GEL-FIBRE-VISUAL-FINAL",
-              "R100-R3-VISUAL-gel-fibre"
+              "R100-R4-VISUAL-gel-fibre"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-gel-fibre"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-GEL-FIBRE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-gel-fibre"
+            "R100-R4-PRODUCTION-gel-fibre"
           ]
         },
         "severe": {
@@ -4535,26 +4236,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-GEL-FIBRE-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-gel-fibre"
+              "R100-R4-TECHNICAL-gel-fibre"
             ],
             "visual": [
-              "R100-E-GEL-FIBRE-VISUAL-FINAL",
-              "R100-R3-VISUAL-gel-fibre"
+              "R100-R4-VISUAL-gel-fibre"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-gel-fibre"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-GEL-FIBRE-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-gel-fibre"
+            "R100-R4-PRODUCTION-gel-fibre"
           ]
         }
       }
@@ -4568,43 +4264,39 @@
         "granular-ridge"
       ],
       "iterationId": "R100-I06",
-      "revision": "r100-native-v3-revision-3",
+      "revision": "r100-native-v3-revision-4",
       "generation": {
         "id": "r100-native",
         "version": 3,
-        "revision": 3
+        "revision": 4
       },
       "implementation": "implemented",
       "integration": "production",
       "invalidated": false,
       "distinctness": "壳旁颗粒厚积形成实质阻挡，填塞壳串对应开口，正常视野下可读到两种不同断面。",
-      "knownVisualLimitations": "首壳单体不是独立新模型，局部关系承担区别。",
+      "knownVisualLimitations": "当前有限正常镜头内部复核通过；未代签用户审美，全部路线/种子与长程体验继续独立验证。",
       "nearestWorldIds": [
         "shell-chain",
         "ivory-basin"
       ],
       "dependencyManifest": {
-        "path": "docs/qa/artifacts/r100-i03-i06-completion/final-packages/shell-grit.json",
-        "hash": "d1d2c947ba74a251d43f23c08b9277c4927ab52cab2fe7620d5d49cbe815c89b"
+        "path": "docs/qa/artifacts/r100-world-identity/packages/shell-grit.json",
+        "hash": "ceecc6283f071896a8705eb6888a03573773ed11a89c292d08d76262b5b7d7e0"
       },
       "review": {
         "technical": "pass",
         "visual": "pass",
-        "experience": "pass",
+        "experience": "pending",
         "human": "pending"
       },
       "reviewEvidence": {
         "technical": [
-          "R100-E-SHELL-GRIT-TECHNICAL-FINAL",
-          "R100-R3-TECHNICAL-shell-grit"
+          "R100-R4-TECHNICAL-shell-grit"
         ],
         "visual": [
-          "R100-E-SHELL-GRIT-VISUAL-FINAL",
-          "R100-R3-VISUAL-shell-grit"
+          "R100-R4-VISUAL-shell-grit"
         ],
-        "experience": [
-          "R100-R3-EXPERIENCE-shell-grit"
-        ],
+        "experience": [],
         "human": []
       },
       "evidenceIds": [
@@ -4620,14 +4312,17 @@
         "R100-R3-TECHNICAL-shell-grit",
         "R100-R3-PRODUCTION-shell-grit",
         "R100-R3-VISUAL-shell-grit",
-        "R100-R3-EXPERIENCE-shell-grit"
+        "R100-R3-EXPERIENCE-shell-grit",
+        "R100-R4-TECHNICAL-shell-grit",
+        "R100-R4-VISUAL-shell-grit",
+        "R100-R4-PRODUCTION-shell-grit"
       ],
       "reviewScope": {
-        "visual": "根据逐文件及逐世界定义比对，继承原修订1两种子三档的材料、实体几何、表面画法、局部空间区别与正常足边审查。",
-        "experience": "独立审查当前世界三级：每级真实搜取、E撤离、R结算；不同种子的实际路线或受压/失败过程另列。三母版针对性准备与90趟经营补充玩法可行性。",
-        "human": "未记录这20世界的用户终审。",
+        "visual": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+        "experience": "几何已改变，旧修订3完整搜返及双种子过程不能直接继承；本批壳链一条短搜返只归限定QA，其余长程玩法资格待I07补验。",
+        "human": "本批修订4尚未获用户终审。",
         "audio": "工程已验；实际听感未验证，R100-R10发布前复核。",
-        "technical": "当前修订3每档40个生成/完整CPU恢复样本及8个独立保留种子；60个当前Node→Chrome身份逐字一致，旧身份18项另列；当前正式入口及冷续覆盖全部三档。预烤、身体、取消和事务等定向技术证据及历史影响边界见集中正文。"
+        "technical": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。"
       },
       "grades": {
         "low": {
@@ -4636,26 +4331,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-GRIT-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-grit"
+              "R100-R4-TECHNICAL-shell-grit"
             ],
             "visual": [
-              "R100-E-SHELL-GRIT-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-grit"
+              "R100-R4-VISUAL-shell-grit"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-grit"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-GRIT-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-grit"
+            "R100-R4-PRODUCTION-shell-grit"
           ]
         },
         "medium": {
@@ -4664,26 +4354,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-GRIT-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-grit"
+              "R100-R4-TECHNICAL-shell-grit"
             ],
             "visual": [
-              "R100-E-SHELL-GRIT-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-grit"
+              "R100-R4-VISUAL-shell-grit"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-grit"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-GRIT-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-grit"
+            "R100-R4-PRODUCTION-shell-grit"
           ]
         },
         "severe": {
@@ -4692,26 +4377,21 @@
           "review": {
             "technical": "pass",
             "visual": "pass",
-            "experience": "pass",
+            "experience": "pending",
             "human": "pending"
           },
           "reviewEvidence": {
             "technical": [
-              "R100-E-SHELL-GRIT-TECHNICAL-FINAL",
-              "R100-R3-TECHNICAL-shell-grit"
+              "R100-R4-TECHNICAL-shell-grit"
             ],
             "visual": [
-              "R100-E-SHELL-GRIT-VISUAL-FINAL",
-              "R100-R3-VISUAL-shell-grit"
+              "R100-R4-VISUAL-shell-grit"
             ],
-            "experience": [
-              "R100-R3-EXPERIENCE-shell-grit"
-            ],
+            "experience": [],
             "human": []
           },
           "integrationEvidence": [
-            "R100-E-SHELL-GRIT-PRODUCTION-FINAL",
-            "R100-R3-PRODUCTION-shell-grit"
+            "R100-R4-PRODUCTION-shell-grit"
           ]
         }
       }
@@ -10315,6 +9995,1166 @@
       "path": "docs/qa/artifacts/r100-i03-i06-completion/internal-completion.json",
       "scope": "累计20世界/60等级的内部技术、美术与有限实际玩法审核完成，当前依赖绑定；按追加授权结案。",
       "limitations": "内部实施结案，非用户美术终审。实际听感、较弱设备和长期配对效率按已登记发布/后续风险继续；108世界大版本尚未完成。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ash-strata",
+      "dependencyHash": "f3491df961676c077b0cbdb370aaade92afb5d43457463787d26557804e69f9d",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-ash-strata",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ash-strata",
+      "dependencyHash": "f3491df961676c077b0cbdb370aaade92afb5d43457463787d26557804e69f9d",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-ash-strata",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ash-strata",
+      "dependencyHash": "f3491df961676c077b0cbdb370aaade92afb5d43457463787d26557804e69f9d",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-ash-strata",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "crystal-fibre",
+      "dependencyHash": "392e43f8ae6e3ace3d3f70b358e5e84df997c86ff02464c64e5f6aa943f049bd",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-crystal-fibre",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "crystal-fibre",
+      "dependencyHash": "392e43f8ae6e3ace3d3f70b358e5e84df997c86ff02464c64e5f6aa943f049bd",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-crystal-fibre",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "crystal-fibre",
+      "dependencyHash": "392e43f8ae6e3ace3d3f70b358e5e84df997c86ff02464c64e5f6aa943f049bd",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-crystal-fibre",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ivory-basin",
+      "dependencyHash": "f3371fa20afcb37792e1119953817faa57c80e5bdbdf636f7263887cbab009bb",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-ivory-basin",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ivory-basin",
+      "dependencyHash": "f3371fa20afcb37792e1119953817faa57c80e5bdbdf636f7263887cbab009bb",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-ivory-basin",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ivory-basin",
+      "dependencyHash": "f3371fa20afcb37792e1119953817faa57c80e5bdbdf636f7263887cbab009bb",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-ivory-basin",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "cinder-ridge",
+      "dependencyHash": "d503035bdfadf0ddfbf244bb803fc3c042743c19ba586c0ab7060b932bad07c3",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-cinder-ridge",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "cinder-ridge",
+      "dependencyHash": "d503035bdfadf0ddfbf244bb803fc3c042743c19ba586c0ab7060b932bad07c3",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-cinder-ridge",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "cinder-ridge",
+      "dependencyHash": "d503035bdfadf0ddfbf244bb803fc3c042743c19ba586c0ab7060b932bad07c3",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-cinder-ridge",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "pallid-membrane",
+      "dependencyHash": "df490d3ae374c4a18214edf596f0142b822b11fc26cd35204f2d02cbbf0ab608",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-pallid-membrane",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "pallid-membrane",
+      "dependencyHash": "df490d3ae374c4a18214edf596f0142b822b11fc26cd35204f2d02cbbf0ab608",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-pallid-membrane",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "pallid-membrane",
+      "dependencyHash": "df490d3ae374c4a18214edf596f0142b822b11fc26cd35204f2d02cbbf0ab608",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-pallid-membrane",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "silt-gel",
+      "dependencyHash": "b9df84204091f933da1648278886d3ebfebce4d1fb40966735adef8618fc2f4b",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-silt-gel",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "silt-gel",
+      "dependencyHash": "b9df84204091f933da1648278886d3ebfebce4d1fb40966735adef8618fc2f4b",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-silt-gel",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "silt-gel",
+      "dependencyHash": "b9df84204091f933da1648278886d3ebfebce4d1fb40966735adef8618fc2f4b",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-silt-gel",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "schist-shear",
+      "dependencyHash": "a269d97008864b59b6c8f65d2f51bf7194572f4e8ba9e6ae211058d640edd86d",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-schist-shear",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "schist-shear",
+      "dependencyHash": "a269d97008864b59b6c8f65d2f51bf7194572f4e8ba9e6ae211058d640edd86d",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-schist-shear",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "schist-shear",
+      "dependencyHash": "a269d97008864b59b6c8f65d2f51bf7194572f4e8ba9e6ae211058d640edd86d",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-schist-shear",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "splayed-fibres",
+      "dependencyHash": "16e88c8f7ad17f9c2157b7df837f92968deb96ea47e55913d758d3f4c58a406c",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-splayed-fibres",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "splayed-fibres",
+      "dependencyHash": "16e88c8f7ad17f9c2157b7df837f92968deb96ea47e55913d758d3f4c58a406c",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-splayed-fibres",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "splayed-fibres",
+      "dependencyHash": "16e88c8f7ad17f9c2157b7df837f92968deb96ea47e55913d758d3f4c58a406c",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-splayed-fibres",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-chain",
+      "dependencyHash": "79a2218172404ee4262bebae5379106ecd1708d334925de71333eacdb7927274",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-shell-chain",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-chain",
+      "dependencyHash": "79a2218172404ee4262bebae5379106ecd1708d334925de71333eacdb7927274",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-shell-chain",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-chain",
+      "dependencyHash": "79a2218172404ee4262bebae5379106ecd1708d334925de71333eacdb7927274",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-shell-chain",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "grain-laminate",
+      "dependencyHash": "7ef73df9d57a15869858dcbb758fb8e886fb57ca97ddcc3fd5dae136268b2453",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-grain-laminate",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "grain-laminate",
+      "dependencyHash": "7ef73df9d57a15869858dcbb758fb8e886fb57ca97ddcc3fd5dae136268b2453",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-grain-laminate",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "grain-laminate",
+      "dependencyHash": "7ef73df9d57a15869858dcbb758fb8e886fb57ca97ddcc3fd5dae136268b2453",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-grain-laminate",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "tension-membrane",
+      "dependencyHash": "ba0341b80ac3e1c4d50b1fb3e5d8c42986708dec24bd02b2eed60659643eedd5",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-tension-membrane",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "tension-membrane",
+      "dependencyHash": "ba0341b80ac3e1c4d50b1fb3e5d8c42986708dec24bd02b2eed60659643eedd5",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-tension-membrane",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "tension-membrane",
+      "dependencyHash": "ba0341b80ac3e1c4d50b1fb3e5d8c42986708dec24bd02b2eed60659643eedd5",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-tension-membrane",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-gel-delta",
+      "dependencyHash": "06365be4511ff192b4c8bc3b997dd9d7609c464cd6242b533e126fdc33df34c6",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-shell-gel-delta",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-gel-delta",
+      "dependencyHash": "06365be4511ff192b4c8bc3b997dd9d7609c464cd6242b533e126fdc33df34c6",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-shell-gel-delta",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-gel-delta",
+      "dependencyHash": "06365be4511ff192b4c8bc3b997dd9d7609c464cd6242b533e126fdc33df34c6",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-shell-gel-delta",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "pressed-dunes",
+      "dependencyHash": "72b11a8169e0fbc2f39a6f0ddf56d9d97a2e2db36ca99eb87e6c8795f9e8da9f",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-pressed-dunes",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "pressed-dunes",
+      "dependencyHash": "72b11a8169e0fbc2f39a6f0ddf56d9d97a2e2db36ca99eb87e6c8795f9e8da9f",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-pressed-dunes",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "pressed-dunes",
+      "dependencyHash": "72b11a8169e0fbc2f39a6f0ddf56d9d97a2e2db36ca99eb87e6c8795f9e8da9f",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-pressed-dunes",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ruptured-film",
+      "dependencyHash": "aa6c36d6d438e766f912da8ecaf181af95b5e4b71a3f00f0b100bfd0e2afe917",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-ruptured-film",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ruptured-film",
+      "dependencyHash": "aa6c36d6d438e766f912da8ecaf181af95b5e4b71a3f00f0b100bfd0e2afe917",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-ruptured-film",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "ruptured-film",
+      "dependencyHash": "aa6c36d6d438e766f912da8ecaf181af95b5e4b71a3f00f0b100bfd0e2afe917",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-ruptured-film",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "reversed-flow",
+      "dependencyHash": "4b3d332a92bd64fb91017afa784aa9cd885dfb5b8d88566278676d382c0d65fa",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-reversed-flow",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "reversed-flow",
+      "dependencyHash": "4b3d332a92bd64fb91017afa784aa9cd885dfb5b8d88566278676d382c0d65fa",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-reversed-flow",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "reversed-flow",
+      "dependencyHash": "4b3d332a92bd64fb91017afa784aa9cd885dfb5b8d88566278676d382c0d65fa",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-reversed-flow",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "laminate-shell",
+      "dependencyHash": "773fed76038f11c3a92c26b0721281eae75d94a3f59a4f63fbad5f818058aea5",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-laminate-shell",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "laminate-shell",
+      "dependencyHash": "773fed76038f11c3a92c26b0721281eae75d94a3f59a4f63fbad5f818058aea5",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-laminate-shell",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "laminate-shell",
+      "dependencyHash": "773fed76038f11c3a92c26b0721281eae75d94a3f59a4f63fbad5f818058aea5",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-laminate-shell",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "fibre-silt",
+      "dependencyHash": "920cb9e7ce15ee33ea3580a3e4417c287adaf58b873a209db0152bf6f4b061ac",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-fibre-silt",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "fibre-silt",
+      "dependencyHash": "920cb9e7ce15ee33ea3580a3e4417c287adaf58b873a209db0152bf6f4b061ac",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-fibre-silt",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "fibre-silt",
+      "dependencyHash": "920cb9e7ce15ee33ea3580a3e4417c287adaf58b873a209db0152bf6f4b061ac",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-fibre-silt",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "film-laminate",
+      "dependencyHash": "89e1ff02abbdd13eeb432ece0664cb27943574da6b1b5544e524ca846de7dc39",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-film-laminate",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "film-laminate",
+      "dependencyHash": "89e1ff02abbdd13eeb432ece0664cb27943574da6b1b5544e524ca846de7dc39",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-film-laminate",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "film-laminate",
+      "dependencyHash": "89e1ff02abbdd13eeb432ece0664cb27943574da6b1b5544e524ca846de7dc39",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-film-laminate",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "gel-fibre",
+      "dependencyHash": "b848ca5cd352b870b948445d7c4d0ffa184c718fc323848b617c0bd191b73999",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-gel-fibre",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "gel-fibre",
+      "dependencyHash": "b848ca5cd352b870b948445d7c4d0ffa184c718fc323848b617c0bd191b73999",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-gel-fibre",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "gel-fibre",
+      "dependencyHash": "b848ca5cd352b870b948445d7c4d0ffa184c718fc323848b617c0bd191b73999",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-gel-fibre",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-grit",
+      "dependencyHash": "ceecc6283f071896a8705eb6888a03573773ed11a89c292d08d76262b5b7d7e0",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-TECHNICAL-shell-grit",
+      "kind": "automated",
+      "purpose": "technical-review",
+      "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+      "scope": "当前20世界×3档×2固定种子120生成、Host、全身体路径、transfer与冷重构；兼容、材质与有限边界专项另列。",
+      "limitations": "两固定种子的有限技术验证，不沿用旧2400+480数量，不是所有种子、弱设备或完整体验。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-grit",
+      "dependencyHash": "ceecc6283f071896a8705eb6888a03573773ed11a89c292d08d76262b5b7d7e0",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-VISUAL-shell-grit",
+      "kind": "runtime",
+      "purpose": "bounded-visual-review",
+      "path": "docs/art/rift-r100-world-identity.md",
+      "scope": "20世界中档正常入场/前进，以及另一种子的低/重档实帧；集中记录逐世界近邻与混合实体补图。",
+      "limitations": "内部知情美术审查，不是用户终审或新玩家盲测；短镜头不证明整个地图或全路线边界。"
+    },
+    {
+      "revision": "r100-native-v3-revision-4",
+      "worldId": "shell-grit",
+      "dependencyHash": "ceecc6283f071896a8705eb6888a03573773ed11a89c292d08d76262b5b7d7e0",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "sourceManifest": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+      "sourceManifestSha256": "1f01dbda76b0e2fcc1f974edd5bf630550e92615312fc6b155539e10506e1587",
+      "id": "R100-R4-PRODUCTION-shell-grit",
+      "kind": "runtime",
+      "purpose": "production-integration",
+      "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+      "coverage": [
+        "production-entry",
+        "recovery"
+      ],
+      "scope": "三档实际标题/备行/正式出发和检查点冷续；逐world固定第一次种子选择、独立新存档。",
+      "limitations": "准备页由正常scene方法打开以隔离基地寻路；控制world覆盖不是自然世界选择或完整搜撤。原菜单等待失败与定向复验单列，不删除。"
     }
   ],
   "risks": [
@@ -10330,7 +11170,7 @@
       "title": "100个ID但只有少数体验",
       "owner": "design / art",
       "iteration": "R100-I06",
-      "response": "2026-10-05用户反馈及当前实帧/源码复核确认同质化已发生。I07先补现有世界本色、巨构/空间关系和中尺度材质，再扩产；正常视野审最近邻，不能用20个配置或几何参数差异代替20个鲜明世界。历史内部结案与人审范围保持；诊断见docs/reviews/2026-10-05-r100-world-identity.md。"
+      "response": "2026-10-05按用户反馈完成当前20世界材料本色、非周期地表组织和17派生实体构造深化；正常视野最近邻及三档有限图审通过，用户终审与新几何长程过程待补。先验证场所差异再扩数量；历史修订3资格与当前修订4分账。"
     },
     {
       "id": "R100-R03",
@@ -10712,6 +11552,10 @@
     {
       "date": "2026-10-05",
       "summary": "接受用户关于纹理、巨构、配色区分不足的反馈；R02实帧与源码复核，I07先改善现有世界身份再扩数量。本轮仅记录与诊断，未改游戏和既有资格计数。"
+    },
+    {
+      "date": "2026-10-05",
+      "summary": "当前20世界视觉身份修订4已接入；120生成、120正常实帧及60正式出发/冷续完成。旧修订3完整资格保留为历史，修订4新几何完整玩法资格待补；I07前置整改完成但扩产尚未完成。"
     }
   ],
   "qualityPlan": {

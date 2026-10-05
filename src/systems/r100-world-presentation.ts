@@ -93,7 +93,9 @@ export async function prepareR100Presentation(recipe:WorldProductionRecipeV3,
  try {
   const families=materialFamilies(recipe);
   const sources=await observeAbort(Promise.all(families.map(family=>loadPaintedMaterial(family))),options.signal);
-  const material:PaintedMaterial=families.length===1?sources[0]!:Object.freeze({...sources[0]!,families:Object.freeze(Object.fromEntries(families.map((family,index)=>[family,sources[index]!])))});
+  const material:PaintedMaterial=Object.freeze({...sources[0]!,
+   ...(native.appearance?{appearance:native.appearance}:{}),
+   ...(families.length>1?{families:Object.freeze(Object.fromEntries(families.map((family,index)=>[family,sources[index]!])))}:{})});
   const result=await surfaceClient.prepare({native,layout:options.world.layout,painting:material},options.signal);
   await yieldPreparation(options.signal);
   if(preparations.get(surfaceKey)!==ticket)throw abortError();

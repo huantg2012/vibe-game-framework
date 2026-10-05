@@ -32,6 +32,7 @@ export interface MasterDefinition {
   readonly erosion:readonly (readonly Readonly<Vector2>[])[];
 }
 export interface MasterWorld {
+  readonly appearance?: import('./r100-world-appearance').R100WorldAppearance;
   /** Production-only frozen dependency identity; DEV masters omit it. */
   readonly packageHash?: string;
   readonly definition: MasterDefinition;

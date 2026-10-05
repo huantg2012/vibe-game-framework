@@ -12,6 +12,8 @@ const profiles = JSON.parse(rawProfiles.slice(rawProfiles.indexOf('WorldProfile[
 const records = lines.map((values, index) => {
   if (values.length !== headers.length) throw new Error(`Invalid native world row ${index + 2}`);
   const row = Object.fromEntries(headers.map((key, at) => [key, values[at]]));
+  const constructionVersion = Number(row.construction_version ?? 1);
+  if (![1, 2].includes(constructionVersion)) throw new Error('Invalid native construction version');
   const familyIndex = families.indexOf(row.family);
   if (!/^[a-z][a-z0-9-]+$/.test(row.world_id) || !row.label || familyIndex < 0 || !['3', '4', '5', '6'].includes(row.iteration)
     || !['true', 'false'].includes(row.enabled) || !['bands', 'clusters', 'patches'].includes(row.organization)) throw new Error('Invalid world identity/organization');
@@ -36,7 +38,7 @@ const records = lines.map((values, index) => {
     return { ...master, id: `${row.world_id}-${grade}`, family: row.family, profile: row.world_id, label: row.label,
       cols: 32, rows: 24, spawn_x: 196, spawn_y: 588, exit_x: 148, exit_y: 664, search_x: 516, search_y: 580, enemy_x: 840, enemy_y: 172,
       axis: row.organization === 'bands' ? -.28 : row.organization === 'clusters' ? .42 : .1,
-      instances: instances.map(instance => ({ ...instance, distortion: Math.min(.5, instance.distortion * amplitude),
+      instances: instances.map(instance => ({ ...instance, ...(constructionVersion === 2 ? { constructionVersion: 2 } : {}), distortion: Math.min(constructionVersion === 2 ? 1 : .5, instance.distortion * amplitude),
         fold: Math.min(.88, instance.fold * amplitude) })),
       erosion: master.erosion.map(polygon => polygon.map(point => ({ x: point.x + 48, y: point.y + 72 }))) };
   });

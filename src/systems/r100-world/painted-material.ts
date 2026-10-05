@@ -14,6 +14,8 @@ export interface PaintedSurface {
 }
 
 export interface PaintedMaterial extends PaintedSurface {
+  /** Frozen world identity, attached only to prepared revision 4 material. */
+  readonly appearance?: import('@/generation/world-study/r100-world-appearance').R100WorldAppearance;
   /** A separate compact skin/fracture atlas. Never used for walkable ground. */
   readonly solid?: PaintedSurface & {readonly skinRoughness:number;readonly cutRoughness:number;readonly gain:number;readonly cutGain:number};
   /** Mixed formations retain their own source. This is a finite dependency set

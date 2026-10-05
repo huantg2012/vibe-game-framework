@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import sharp from 'sharp';
-import { createR100ProductionRecipe } from '../../src/generation/world-study/r100-package';
+import { createR100ProductionRecipe } from '../../src/generation/legacy-r100-v3/executor.js';
 import { createR100ProductionMap } from '../../src/generation/world-study/r100-production-map';
 import { hydrateR100MasterWorld } from '../../src/generation/world-study/r100-native-data';
 import { PAINTED_MATERIALS } from '../../src/generated/r100-materials';

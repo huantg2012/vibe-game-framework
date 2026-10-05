@@ -48,7 +48,7 @@ export function writeR100QualificationManifests({ check = false, outputDirectory
   // Exact per-world data is embedded below. Including whole catalogs would make
   // an unrelated new row revoke every previously reviewed world.
   const projected = new Set([
-    'src/generated/r100-native-worlds.ts', 'src/generated/r100-package-manifest.ts',
+    'src/generated/r100-native-worlds.ts', 'src/generated/r100-package-manifest.ts', 'src/generated/r100-world-appearance.ts',
     'src/generated/r100-materials.ts', 'src/generated/rift-expedition-grade-data.ts',
     'src/generated/rift-pollution-grade-data.ts', 'src/generated/rift-search-remains.ts',
     'src/generated/rift-world-profile-data.ts', 'src/generation/world-study/r100-generated-scenes.ts',
@@ -76,6 +76,7 @@ export function writeR100QualificationManifests({ check = false, outputDirectory
     'src/systems/chaos-system.ts', 'src/scenes/rift-scene.ts', 'package-lock.json']) visit(path);
   const runtime = [...files].sort().map(path => ({ path, sha256: sha256(readFileSync(path)) }));
   const worlds = initializer('src/generated/r100-native-worlds.ts', 'R100_NATIVE_WORLDS');
+  const appearances = initializer('src/generated/r100-world-appearance.ts', 'R100_WORLD_APPEARANCES');
   const grades = initializer('src/generated/rift-pollution-grade-data.ts', 'POLLUTION_GRADE_DEFINITIONS');
   const contents = initializer('src/generated/rift-expedition-grade-data.ts', 'R100_EXPEDITION_GRADES');
   const materials = initializer('src/generated/r100-materials.ts', 'PAINTED_MATERIALS');
@@ -101,7 +102,7 @@ export function writeR100QualificationManifests({ check = false, outputDirectory
       }) };
     });
     const payload = { schemaVersion: 1, purpose: 'r100-world-review-dependencies', worldId: world.id,
-      algorithm, profile: world.profile,
+      algorithm, profile: world.profile, appearance: appearances.find(row => row.worldId === world.id),
       grades: world.definitions.map(definition => ({ grade: definition.grade, nativeDefinition: definition,
         pollution: grades.find(row => row.id === definition.grade), content: contents.find(row => row.grade_id === definition.grade) })),
       materials: selectedMaterials, remains: remains.find(row => row.worldId === world.id), dependencies: runtime };

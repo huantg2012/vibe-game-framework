@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-04
+last-modified: 2026-10-05
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -40,7 +40,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-body-collision.ts` 为正式v3角色提供独立于保守导航格的20×20身体查询：所有solid同源XY三角形参与连续扫掠，VOID仍用原8px支撑，浮雕不擦除实体。WASD、敌人推挤后的校正、工具扫掠与存档准入共用该查询；不改变旧v1/v2、生成器保守寻路或Host的32px投放。斜面接触保留切向运动；技能Body.reset后同步offset与前帧坐标，不能留下同帧身体偏移。详细契约归[移动规格](specs/system-movement-vision.md#r100-v3--实体足边与完整身体2026-10-04)。
 
-新出发使用 v3 `algorithmRevision: 3` 与内容定义 version 2。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
+当前新出发使用 v3 `algorithmRevision: 4` 与内容定义 version 2，新增材料与构造合同见下方“R100 世界区分度 · 修订4”；以下保留早期修订的巡路与恢复合同。`legacy-r100-v2/executor.js` 从 a089bf7 封存完整 50 项依赖闭包（无可变 import），统一保护原修订 1／2 的几何、部署和校验；`freeze-native-r100-revision2.mjs` 可从固定提交逐字重建，旧记录按保存修订分派，不使用当前世界 CSV。修订 2 不把选不到巡路的敌人降成原地守点，而是在出生候选阶段核验完整往返路线。`r100-patrol-windows.ts` 以生产速度、到点距离、停顿与转向合同检查未警觉巡路，在每个非安全区节点保留至少 2.4 秒的干燥全身体站位观察窗口。它是生成准入筛选，不模拟真实玩家接近、96px 翻找噪声、追踪或战斗；实际搜撤另验。新修订初始朝向保留六位小数，避免 `atan2` 末位差异进入恢复身份；旧修订不改数据或签名。原 v3 的跨运行时差异继续单独记录，不能用放宽比较修补。
 
 `systems/r100-world-presentation.ts` 持有正式表现准备，DEV 母版只保留兼容导出。`surface-preparation-client.ts` / `surface-preparation-worker.ts` 是专用可终止准备 Worker：接收已准入的原生数据及共享解码像素，执行地表、材质光照、侵蚀字段和 `surface-bake.ts` 的四张 RGBA 烘焙，以 transferable 返回。等待期间提前创建并上传 WebGL 材质接收器；`MasterPresentation` 建场消费一次，正式路径缺准备时抛错，绝不临时同步补烤。异步取消、迟到响应、替换与两份上限的 LRU 均释放未消费的 GPU 资源；已消费资源由场景销毁。准备身份包含包身份、实际种子、构造 ID 和尺寸，源图片像素缓存与一次性 GPU 资源分离。
 
@@ -75,6 +75,14 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 所有像素放回原生fog之下；本入口不调用 `revealProjectedTerrain`、不以高度场自阴影修改有限可见性。`materialLighting` 仅停用旧ADD平光贴图，肩灯由新材质接收，不影响范围、朝向、混乱或AI观察。player与enemies按实际显示包围盒及solid角色裁前景，可走浮雕不裁人物，武器不再被旧48px固定遮罩截断。
 
 `PlayerConfig.readMovementInput` 只接受DEV巡查意图，真实键盘优先；`MasterPatrol` 在最终身体网格找路线，移动、加速、碰撞、动画仍归Player。作者小场景不计入108世界或324等级资格；I02实际美术和运行证据归[任务](tasks/rift-r100-i02.md)、[独立美术记录](art/rift-r100-i02-review.md)及[QA](qa/rift-r100-i02.md)。
+
+## R100 世界区分度 · 修订4（2026-10-05）
+
+`data/rift-world-appearance.csv` → `tools/world-study/codegen-r100-appearance.ts` → `generated/r100-world-appearance.ts`；`r100-world-appearance.ts`拥有合同、严格校验和实际profile投射，`world-material-pigment.ts`提供共享连续色阶及非周期材料组织。生产包冻结逐世界外观，Worker的`surface-bake.ts`在源图笔触、几何法线与污染mask之外处理材料色。`painted-material.ts`把已冻结配方交给翻找残骸，`search-remains.ts`复用同一映色函数；不另造全屏色调或逐帧读取CSV。
+
+`native-volume-geometry.ts`按显式`constructionVersion`执行两套兼容构造；默认版本1保留，版本2提供六族深化形状。数据编译器校验CSV字段并写入各实例，碰撞、可走破口、面与材质坐标均来自同一网格。新角色色、HUD和污染数值不属于本次变更。
+
+`legacy-r100-v3/executor.js`从固定`5788ef07`封存生成、配方校验、表面预烤闭包；`freeze-native-r100-revision3.mjs --check`核对摘要，旧修订3不导入当前材料与几何实现。`r100-production-map.ts`和`r100-world-presentation.ts`按revision路由。新出击为revision4，revision1/2与更早封存继续保留。验证与未覆盖范围见[本轮QA](qa/rift-r100-world-identity.md)。
 
 ## R100 I01：持久生成版本与DEV资格底座
 

@@ -3,7 +3,7 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "新出击使用r100-native v3修订3，二十世界各低/中/重档在等级内随机。包、污染曲线、材料、内容与种子在出发前冻结；8次有界候选不换世界/等级。旧v3修订1/2、旧v1/v2保留封存执行器；修订3已完成2400+480生成/transfer/冷重构。正式入口与体验当前专项证据另列。",
+    "summary": "新出击使用r100-native v3修订4，保留20世界各低/中/重档的选池；逐世界材料外观、显式实体构造、污染与内容和种子在出发前一起冻结。8次有界候选不换世界/等级。旧v3修订1/2/3及旧v1/v2走封存执行器，修订3另封存表面预烤和原材料资产依据。当前有限生成、确定性与恢复证据见E158，历史修订3资格保留原范围。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -192,7 +192,83 @@
       {
         "path": "docs/reviews/2026-10-05-r100-world-identity.md",
         "role": "doc",
-        "note": "2026-10-05世界区分度专项：用户反馈、正常实帧与源码诊断；未实施整改。"
+        "note": "重构前用户反馈与专项诊断；实施及新证据另列E158，原诊断不追改。"
+      },
+      {
+        "path": "docs/tasks/r100-world-identity.md",
+        "role": "doc",
+        "note": "当前20世界身份重构的授权、职责和边界；不增加世界数。"
+      },
+      {
+        "path": "docs/qa/rift-r100-world-identity.md",
+        "role": "doc",
+        "note": "修订4独立验证；不继承修订3完整搜撤资格。"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-world-appearance.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/r100-world-appearance.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-world-appearance.csv",
+        "role": "data",
+        "note": "20世界地面/皮层/断面/次材连续色阶及地表组织；原始作者数据。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v3/assets.json",
+        "role": "data",
+        "note": "固定5788ef07的修订3生成/校验/预烤闭包与来源、资产依据；供旧身份恢复。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v3/executor.d.ts",
+        "role": "code",
+        "note": "固定5788ef07的修订3生成/校验/预烤闭包与来源、资产依据；供旧身份恢复。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v3/executor.js",
+        "role": "code",
+        "note": "固定5788ef07的修订3生成/校验/预烤闭包与来源、资产依据；供旧身份恢复。"
+      },
+      {
+        "path": "src/generation/legacy-r100-v3/manifest.json",
+        "role": "data",
+        "note": "固定5788ef07的修订3生成/校验/预烤闭包与来源、资产依据；供旧身份恢复。"
+      },
+      {
+        "path": "tools/recovery/freeze-native-r100-revision3.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/recovery/check-native-generation-revision.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-frozen-recipe.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-patrol-revision.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/compatibility/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/recovery-input-diagnostic/README.md",
+        "role": "doc",
+        "note": "原350ms菜单输入失败保留；独立原存档复放和受控慢响应区分QA前提与恢复算法。"
       }
     ],
     "dependsOn": [
@@ -220,20 +296,21 @@
       "COH-E153",
       "COH-E154",
       "COH-E156",
-      "COH-E157"
+      "COH-E157",
+      "COH-E158"
     ],
     "unknowns": [
       "支持范围为已有材料/单层碰撞能力内的有界条件链；完整24维设计、罕见世界供给和历史新奇权重尚未完成。",
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
-      "20世界/60档已正式接入，2400+480资格、60入口与冷续及末尾补丁依赖继承按各冻结证据记录；完整玩法资格仍0，旧94例不能替代新池范围。",
-      "2026-10-05用户指出跨世界纹理/巨构/配色相近，专项复核确认世界身份不足；I07先修现有世界表现再扩数量。此前内部完成不代表此项已获用户认可。"
+      "修订3的2400+480生成、60正式新出发/冷续与I03—I06有限完整搜撤是历史证据（E156）；修订4重做几何后，须独立验证完整自然搜取与撤离，不能继承旧资格或把有限准入当作全种子通过。",
+      "2026-10-05世界身份重构已正式接入当前20世界，用户尚未终审新画面；I07扩至36世界未完成，未增加世界数。"
     ]
   },
   {
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "正式RiftScene使用获选连续材料、独立实体断面、真实光照与侵蚀；增加颗粒脊、厚缘薄膜和凝胶前沿，与原三族构成二十世界。生成与RGBA/Host预烤在Worker完成，资源一次消费并负责释放，表现和音景随存档恢复。120组正常视野、20世界深处近邻与足缘检查已留证，最终听感及人审未代签。",
+    "summary": "正式修订4以20世界CSV材料色阶连续映射源图笔触，分别表达地面、完整表皮、断面和次材料；地表组织由非周期空间区域与源图细节共同形成。真实表面拥有材料身份，可走浅浮雕不再因非阻挡而被染成底床。六材料几何、法线、粗糙度、灯照、遮挡和污染绿继续独立；生成及RGBA/Host预烤仍在Worker完成。旧修订3使用原预烤闭包，新画面和历史审查分开记证。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -388,7 +465,66 @@
       {
         "path": "docs/reviews/2026-10-05-r100-world-identity.md",
         "role": "doc",
-        "note": "2026-10-05世界区分度专项：用户反馈、正常实帧与源码诊断；未实施整改。"
+        "note": "重构前用户反馈与专项诊断；实施及新证据另列E158，原诊断不追改。"
+      },
+      {
+        "path": "docs/tasks/r100-world-identity.md",
+        "role": "doc",
+        "note": "当前20世界身份重构的授权、职责和边界；不增加世界数。"
+      },
+      {
+        "path": "docs/qa/rift-r100-world-identity.md",
+        "role": "doc",
+        "note": "修订4独立验证；不继承修订3完整搜撤资格。"
+      },
+      {
+        "path": "src/generation/world-study/r100-world-appearance.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/world-material-pigment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generated/r100-world-appearance.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world-presentation.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-geometry.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-world-appearance.csv",
+        "role": "data"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-appearance.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-world-appearance.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-surface-prewarm.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-native-world-identity.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-r100-native-boundaries.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/rift-r100-world-identity.md",
+        "role": "art",
+        "note": "逐世界材料意图、首轮缺陷、修正和冻结后实际审图范围；不代签用户。"
       }
     ],
     "dependsOn": [
@@ -409,20 +545,21 @@
       "COH-E145",
       "COH-E152",
       "COH-E156",
-      "COH-E157"
+      "COH-E157",
+      "COH-E158"
     ],
     "unknowns": [
-      "旧v1/v2保持原地面规则；新v3六类材料/高体量普通solid已实现，仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
-      "本轮五份原生地表/动效专项及一趟正式浏览器支持支撑、纯黑空洞、灰度形体、局部运动、暂停与清理检查；不能代签全部正常视野下的场所可记忆性、五世界动态审美或用户认可。",
-      "本批120正常视野与20近邻深走分源记录；新六材料声音只有程序行为检查，尚未实际审听或用户审美认可。",
-      "2026-10-05用户指出跨世界纹理/巨构/配色相近，专项复核确认世界身份不足；I07先修现有世界表现再扩数量。此前内部完成不代表此项已获用户认可。"
+      "旧v1/v2及v3修订1/2/3按各自封存身份恢复；当前修订4仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
+      "历史地表动效、支撑与暂停/清理检查保留原版本；新世界身份的正常帧、定点补图与边界操作只证明各自可见/实际采样范围，不能代签整图可记忆性或完整自然绕行。",
+      "修订3的120正常视野与20近邻深走为历史记录，不自动覆盖修订4新构造；实际声音听感、用户审美和较弱设备预算仍未通过本批代验。",
+      "20个作者配方和代理实图审查不等于20世界全种子、连续动效或用户最终认可；低光、污染绿和可走/阻挡语义须继续在正常实玩中复核。"
     ]
   },
   {
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "v3投放先验证20px身体、8px支撑、32px Host、实际交互站位和返程。低/中/重基础预算9/13/17，敌人2/3/4，入口安全堆均1；修订3将重度深薪3堆各4集中为2堆各6，减少兑现同额奖励所需搜索次数。翻找前不揭晓类别/品质/数额，旧修订保留原内容。残骸外观与世界材料来源一致；完整风险回报见P13实际旅程。",
+    "summary": "v3投放继续验证完整身体、支撑、Host占地、实际交互站位及返程；当前修订4保留修订3污染/敌人/资源合同，重度深薪仍为2堆各6。翻找前不揭晓类别、品质或数额。残骸在保留来源形制、透明轮廓和行为的同时，读取冻结世界外观并复用表面连续映色，令断屑与原物材料一致；旧修订原内容及外观保持。新几何完整风险回报须另验。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -563,6 +700,37 @@
       {
         "path": "src/generation/world-study/r100-patrol-windows.ts",
         "role": "code"
+      },
+      {
+        "path": "docs/tasks/r100-world-identity.md",
+        "role": "doc",
+        "note": "当前20世界身份重构的授权、职责和边界；不增加世界数。"
+      },
+      {
+        "path": "docs/qa/rift-r100-world-identity.md",
+        "role": "doc",
+        "note": "修订4独立验证；不继承修订3完整搜撤资格。"
+      },
+      {
+        "path": "src/generation/world-study/r100-world-appearance.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/world-material-pigment.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/painted-material.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-r100-world-appearance.ts",
+        "role": "test",
+        "note": "世界映色、残骸透明轮廓与旧修订原像素合同。"
+      },
+      {
+        "path": "docs/art/rift-r100-world-identity.md",
+        "role": "art"
       }
     ],
     "dependsOn": [
@@ -589,7 +757,8 @@
       "COH-E144",
       "COH-E147",
       "COH-E153",
-      "COH-E156"
+      "COH-E156",
+      "COH-E158"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -598,7 +767,7 @@
       "本轮18例为九组DEV作者地段×两种子；数量/足迹和保护路线检查不代表任意种子投放成功、正式世界资格或自然搜撤取舍与平衡已验。",
       "E134仅补充来源外观的有限实景证据，不重新证明或改变部署质量、路线合同与资源平衡。",
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
-      "修订2排除了无巡路退成永续守点，但2.4秒模型空档不保证真实翻找噪声后安全；旧修订2重度追加堆数；当前修订3集中为2×6深薪的回报兑现仍有待体验整改。"
+      "修订3集中2×6深薪、旧90趟经营及三母版针对性准备的有限证据保留；修订4未改收益和巡逻合同，但几何影响实际搜索/撤离路径，完整自然流程及长期相对效率不能继承。"
     ]
   },
   {
@@ -650,11 +819,11 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100目标108世界/324等级；I01/I02人审完成，I03—I06内部结案，现20世界/60等级具备当前依赖绑定的技术、美术及有限实际体验资格。六材料、知情选级、v3冻结恢复、资格失效与真实搜返已正式接入。后续I07—I14仍待推进，听感、用户认可及发布风险另列。",
+    "summary": "R100目标108世界/324等级；I01/I02人审和I03—I06修订3内部结案、6/14历史进度保留。当前20世界/60等级已以修订4重构材料身份、非周期地表组织与17派生世界实体构造，没有增加数量。本批单列有限技术、实帧与入口/恢复证据；新几何完整自然搜撤资格不得继承历史。I07扩至36世界及后续轮次未完成，用户审美、实际听感与发布风险仍独立待验。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 备行选级 → 正式v3原生世界；20世界三级当前内部资格完成",
+      "净化点 → 备行选级 → 正式v3修订4原生世界；当前20世界三级，证据范围见E158",
       "r100-gym.html：20候选世界×三级，以正式生成器和RiftScene运行",
       "docs/reading/rift-r100.html：唯一迭代/资格台账；原I01/I02历史证据保留"
     ],
@@ -1105,7 +1274,160 @@
       {
         "path": "docs/reviews/2026-10-05-r100-world-identity.md",
         "role": "doc",
-        "note": "2026-10-05世界区分度专项：用户反馈、正常实帧与源码诊断；未实施整改。"
+        "note": "重构前用户反馈与专项诊断；实施及新证据另列E158，原诊断不追改。"
+      },
+      {
+        "path": "docs/tasks/r100-world-identity.md",
+        "role": "doc",
+        "note": "当前20世界身份重构的授权、职责和边界；不增加世界数。"
+      },
+      {
+        "path": "docs/qa/rift-r100-world-identity.md",
+        "role": "doc",
+        "note": "修订4独立验证；不继承修订3完整搜撤资格。"
+      },
+      {
+        "path": "data/rift-world-appearance.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-world-appearance.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/r100-world-appearance.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/world-material-pigment.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-appearance.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-native-world-identity.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-world-appearance.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/bind-r100-world-identity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/check-r100-production-browser.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/diagnose-r100-menu-recovery.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/art/rift-r100-world-identity.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/interactive/r100-world-identity.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/before-source/source-snapshot.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/before/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/final-source/source-snapshot.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/after/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/after-grades/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/qualification/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/qualification/source-snapshot.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/compatibility/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/compatibility/browser-equivalence.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/compatibility/surface-prewarm-report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/recovery-input-diagnostic/README.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/recovery-input-diagnostic/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/recovery-input-diagnostic/original-failed-case.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/production/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/production-recheck/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/boundaries-final/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/deep/report.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/deep/receipt.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/packages/index.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/production-recheck/ruptured-film-low/report.json",
+        "role": "doc",
+        "note": "原矩阵第二个菜单等待失败的独立定向复验；原失败保持。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/boundary-diagnostic/report.json",
+        "role": "doc",
+        "note": "旧栅格支撑诊断不适用于新原生三角面；保留假阴性，不修改运行几何。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/play-shell-chain/review.md",
+        "role": "doc",
+        "note": "一条正常有限视野、实际按键绕壳搜1薪撤离；观察暂停，非完整自然长程。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/completion.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -1156,7 +1478,8 @@
       "COH-E154",
       "COH-E155",
       "COH-E156",
-      "COH-E157"
+      "COH-E157",
+      "COH-E158"
     ],
     "unknowns": [
       "高体量普通solid和六材料生产能力已落地；仍无多层可行走、多区域过程、稀有例外、描述符新奇权重或逐包用户验收入库，20世界不是108目标完成。",
@@ -1164,9 +1487,9 @@
       "e8888655后用户确认折板南侧低斜面在normal中仍像地面。已局部重做阻挡物厚断面及材质坐标，外足占地不变；本轮取得44/48独立方向、50次受控键盘接近和600支撑采样；四方向未覆盖、四次战斗干扰和三次沿边滑动见E133，不算完整自然绕行。此前54帧不证明全部阻挡边缘可读，“这次好多了”当时仅为局部肯定；其后2026-10-04明确整体验收单列E138，未覆盖的运行范围仍不补判。",
       "翻找物来源修复只覆盖现有五来源及九组DEV母版；四种主形不等于新增四个合格世界。E134不外推采集后并行更新的地形材料，I01/I02的后续整体验收单列E138，不能倒改E134的实际证据范围。",
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
-      "当前r3的60正式新出发与60冷续无Rift阶段≥50ms任务、参考机GPU有界回收与活跃预算通过；网页本身启动仍有100–117ms事件。较弱真实硬件和整体发布长尾留I14。",
-      "旧132趟失败保留；当前90趟成长与三母版针对性准备已验。用户认可仍待实际反馈；实际听感R10、弱设备I14及中重相对低档的长期效率R07/I13不由内部结案代签。",
-      "2026-10-05用户指出跨世界纹理/巨构/配色相近，专项复核确认世界身份不足；I07先修现有世界表现再扩数量。此前内部完成不代表此项已获用户认可。"
+      "历史修订3的60正式新出发与60冷续、参考机GPU预算有界回收通过；其无Rift阶段≥50ms任务结论不外推修订4。新批仅记录自身实际性能采样，较弱真实硬件与整体发布长尾仍留I14。",
+      "旧132趟失败与修订3的90趟成长、三母版准备验证均保留原记录；不把历史有限完整体验视作修订4新几何自然搜撤通过。实际听感R10、弱设备I14及中重相对低档长期效率R07/I13保持。",
+      "2026-10-05用户指出的世界身份问题已实施重构，首轮材料图案化与浅浮雕角色错误已修正并留原失败证据；当前内部实图审查不代表用户终审，I07数量扩产仍未完成。"
     ]
   }
 ]

@@ -1,9 +1,12 @@
 /** Source-world fracture products. This module knows nothing about hidden loot. */
 import { SEARCH_REMAINS, type SearchRemainsGrammar } from '../../generated/rift-search-remains';
+import { mapWorldPigment, paintedToneRange } from './world-material-pigment';
+import type { R100WorldAppearance } from './r100-world-appearance';
 import type { WorldProfile } from './types';
 
 type PatchName = 'skin' | 'cleaved' | 'loose';
 export interface SearchRemainsMaterial {
+  readonly appearance?: R100WorldAppearance;
   readonly width: number;
   readonly height: number;
   /** Shared material pixels are read-only to this generator. */
@@ -50,6 +53,8 @@ export function createSearchRemainsPixels(profile: WorldProfile, seed: number, p
   if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('Search remains: expected an unsigned integer seed');
   if (painting) validateMaterial(painting);
   const pixels = new Uint8ClampedArray(WIDTH * HEIGHT * 4);
+  const appearance=painting?.appearance,range=appearance&&painting?paintedToneRange(painting):undefined;
+  const mapped=new Float32Array(3),identityField={secondary:0,tone:0,detail:1};
   const palette = profile.palette;
   const dark = rgb(palette.materialDark), mid = rgb(palette.materialMid), light = rgb(palette.materialLight), fresh = rgb(palette.faceLight);
   const flip = (hash(1, 1, seed) & 1) === 1;
@@ -84,6 +89,14 @@ export function createSearchRemainsPixels(profile: WorldProfile, seed: number, p
       }
       const grain = face === 'cut' ? .22 : face === 'top' ? .38 : .45;
       const gain = face === 'top' ? 1.39 : face === 'cut' ? 1.43 : face === 'side' ? .40 : face === 'contact' ? .23 : .56;
+      if(appearance&&range){
+        const filtered=[0,1,2].map(c=>{
+          const plane=offsets.reduce((sum,i)=>sum+painting.pixels[i+c]!,0)/offsets.length;
+          return painting.pixels[offset+c]!*grain+plane*(1-grain);
+        });
+        mapWorldPigment(appearance,face==='cut'?'cleaved':'solid',filtered[0]!,filtered[1]!,filtered[2]!,range,identityField,0,mapped);
+        return [0,1,2].map(c=>Math.min(255,mapped[c]!*gain*tone));
+      }
       return [0, 1, 2].map(c => {
         const plane = offsets.reduce((sum, i) => sum + painting.pixels[i + c]!, 0) / offsets.length;
         const pigment = painting.pixels[offset + c]! * grain + plane * (1 - grain);

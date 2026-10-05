@@ -16,6 +16,8 @@ export interface NativeVolumeSpec {
   fold: number; branches: number; opening: number; distortion: number;
   /** Explicit physical role from the author. Omitted/0 preserves relief geometry. */
   blocking?: number;
+  /** Explicit authored construction schema. Omitted retains the approved masters. */
+  constructionVersion?: 1 | 2;
 }
 export interface NativeVolumePoint { x: number; y: number; z: number }
 export interface NativeVolumeJoint extends NativeVolumePoint { readonly index: number }
@@ -49,7 +51,7 @@ function phase(seed: number, salt: number): number {
 
 function validateSpec(spec: Readonly<NativeVolumeSpec>): void {
   for (const [key, value] of Object.entries(spec)) {
-    if (key !== 'family' && !(key === 'blocking' && value === undefined)
+    if (key !== 'family' && !((key === 'blocking' || key === 'constructionVersion') && value === undefined)
       && (typeof value !== 'number' || !Number.isFinite(value))) {
       throw new Error(`Native volume ${key} must be finite`);
     }
@@ -57,6 +59,7 @@ function validateSpec(spec: Readonly<NativeVolumeSpec>): void {
   if (!['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'].includes(spec.family)) throw new Error('Unknown native volume family');
   if (!Number.isInteger(spec.id) || spec.id < 1 || spec.id > 0x7fffffff) throw new Error('Volume id must be a positive Int32');
   if (!Number.isInteger(spec.seed)) throw new Error('Volume seed must be an integer');
+  if (spec.constructionVersion !== undefined && spec.constructionVersion !== 1 && spec.constructionVersion !== 2) throw new Error('Native volume constructionVersion must be 1 or 2');
   if (spec.blocking !== undefined && spec.blocking !== 0 && spec.blocking !== 1) throw new Error('Native volume blocking must be 0 or 1');
   if (spec.length < 16 || spec.width < 12 || spec.height < 2 || spec.thickness < 1
     || spec.length > 2048 || spec.width > 2048 || spec.height > 512
@@ -300,7 +303,7 @@ function sweptBundle(b: MeshBuilder, spine: readonly Point[], radius: number, sa
     const clampWidth = 1 - Math.exp(-Math.pow((along - .50) / .16, 2)) * (salt === 0 ? .30 : .12);
     const rootTaper = .28 + Math.pow(Math.sin(along * Math.PI),.7) * .75;
     const r = radius * rootTaper * clampWidth;
-    const cx=curve(0,t),cy=curve(1,t),cz=Math.max(r*.62,curve(2,t));
+    const cx=curve(0,t),cy=curve(1,t),cz=Math.max(r*(s.constructionVersion===2?.78:.62),curve(2,t));
     const ring: Point[] = [];
     for (let j = 0; j < cross; j++) {
       const angle = j / cross * TAU;
@@ -319,6 +322,12 @@ function sweptBundle(b: MeshBuilder, spine: readonly Point[], radius: number, sa
     b.quad(a[j]!, c[j]!, c[k]!, a[k]!, slot,
       [[i * s.length / steps, j * radius * TAU / cross], [(i + 1) * s.length / steps, j * radius * TAU / cross],
         [(i + 1) * s.length / steps, (j + 1) * radius * TAU / cross], [i * s.length / steps, (j + 1) * radius * TAU / cross]]);
+    if(s.constructionVersion===2&&salt===1&&i===Math.floor(steps*.5)&&j===3){
+      // Source coordinates belong to the exposed strand triangle, never the
+      // empty space between its authored fork and the old knot-centre guess.
+      b.joint([(a[j]![0]+c[j]![0]+c[k]![0])/3,(a[j]![1]+c[j]![1]+c[k]![1])/3,
+        (a[j]![2]+c[j]![2]+c[k]![2])/3+.055]);
+    }
   }
   for (const end of [0, steps]) {
     const r = rings[end]!;
@@ -394,22 +403,23 @@ function shellPetal(b: MeshBuilder, ox: number, oy: number, rx: number, ry: numb
  * The granular faces are geometry, not disconnected circles or surface dots. */
 function granularRidge(b: MeshBuilder): void {
   const s=b.spec, along=30, across=14, rows:Point[][]=[];
+  const authored=s.constructionVersion===2;
   const clusters=Array.from({length:s.branches+3},(_,i)=>({
     x:(i+.25+phase(s.seed,910+i)*.5)/(s.branches+3),
     y:.24+phase(s.seed,950+i)*.5, span:.09+phase(s.seed,980+i)*.08,
     rise:.10+phase(s.seed,1010+i)*.20,
   }));
   for(let i=0;i<=along;i++){
-    const u=i/along,taper=.25+.75*Math.pow(Math.sin(Math.PI*u),.48),row:Point[]=[];
-    const spine=Math.sin(u*4.5+phase(s.seed,897)*2)*s.width*.11;
+    const u=i/along,taper=.25+.75*Math.pow(Math.sin(Math.PI*u),authored?.25+s.opening*.90:.48),row:Point[]=[];
+    const spine=Math.sin(u*(authored?2.2+s.fold*3:4.5)+phase(s.seed,897)*2)*s.width*(authored?.025+s.distortion*.13:.11);
     for(let j=0;j<=across;j++){
       const v=j/across,edge=Math.min(u*along,(1-u)*along,v*across,(1-v)*across);
-      const foot=Math.min(1,edge),peak=.43+.08*Math.sin(u*5.4);
+      const foot=Math.min(1,edge),peak=(authored?.28+s.fold*.30:.43)+.08*Math.sin(u*5.4);
       const side=v<peak?v/peak:(1-v)/(1-peak);
-      let rise=Math.pow(Math.max(0,side),.86)*(.51+.16*Math.sin(u*4+1));
+      let rise=Math.pow(Math.max(0,side),authored?.48+s.fold*1.20:.86)*(.51+.16*Math.sin(u*4+1));
       for(const c of clusters){
         const distance=Math.abs(u-c.x)/c.span+Math.abs(v-c.y)/.26;
-        rise+=Math.max(0,1-distance)*c.rise;
+        rise+=Math.max(0,1-distance)*c.rise*(authored?.45+s.distortion*2:1);
       }
       const z=(s.blocking===1?Math.min(8,s.height*.26)*foot:0)+s.height*rise*foot*Math.pow(Math.sin(Math.PI*u),.34);
       row.push([(u-.5)*s.length,(v-.5)*s.width*taper+spine,z]);
@@ -494,6 +504,160 @@ function gelFlow(b: MeshBuilder): void {
   surfaceFracture(b,rows,[[10.2,17.4],[11.5,17.1],[12.1,17.7],[13.8,17.8],[14.4,18.3],[16.5,18.1]],.09);
 }
 
+/** Two broad beds are displaced across a through-going shear lane. The lane
+ * is omitted from the mesh, so rendering, movement and attacks share its air. */
+function shearedBeds(b: MeshBuilder): void {
+  const s=b.spec,l=s.length,w=s.width,h=s.height;
+  const gap=Math.min(w*.40,Math.max(30,w*(.12+s.opening*.15)));
+  const shear=l*(.025+s.distortion*.10),skew=(phase(s.seed,1301)-.5)*w*.05;
+  const upper:Point[]=[[-l*.5,-w*.27,0],[-l*.36,-w*.50,0],[l*.36-shear,-w*.44,0],
+    [l*.50-shear,-gap*.56+skew,0],[l*.12-shear,-gap*.5+skew,0],[-l*.42,-gap*.60,0]];
+  const lower:Point[]=[[-l*.43+shear,gap*.62,0],[-l*.04+shear,gap*.5+skew,0],[l*.48,gap*.60,0],
+    [l*.44,w*.43,0],[l*.16,w*.5,0],[-l*.5+shear,w*.36,0]];
+  const incline=(outline:Point[],peak:number,dx:number,dy:number):Point=>{
+    let min=Infinity,max=-Infinity;
+    for(const p of outline){const q=p[0]*dx+p[1]*dy;min=Math.min(min,q);max=Math.max(max,q);}
+    let x=0,y=0;
+    for(let i=0;i<outline.length;i++){
+      const p=outline[i]!;x+=p[0];y+=p[1];outline[i]=[p[0],p[1],(p[0]*dx+p[1]*dy-min)/(max-min)*peak];
+    }
+    x/=outline.length;y/=outline.length;
+    return [x,y,(x*dx+y*dy-min)/(max-min)*peak];
+  };
+  // The two large planes tilt in opposition; the low front remains a section,
+  // not a surface which invites walking onto an invisible blocking footprint.
+  bedMass(b,upper,incline(upper,h,.12,-1),0,[3,4],Math.min(6,w*.024));
+  bedMass(b,lower,incline(lower,h*(.32+s.fold*.50),-.10,1),1,[0,1],Math.min(5,w*.022));
+  if(s.branches>=5){
+    const toe:Point[]=[[-l*.42,w*.39,0],[-l*.14,w*.42,0],[-l*.05,w*.57,0],[-l*.36,w*.59,0]];
+    bedMass(b,toe,incline(toe,h*.17,.2,-1),2,[0,1],Math.min(8,w*.03));
+  }
+}
+
+/** A pulled mother strand and authored fork count replace the same three-way
+ * knot everywhere. Branches rejoin the load-bearing axis; gaps remain ground. */
+function tensileBranches(b:MeshBuilder):void {
+  const s=b.spec,l=s.length,w=s.width,h=s.height;
+  const pull=s.fold,joinX=l*(-.18+.18*s.opening),joinY=w*(phase(s.seed,1321)-.5)*.10;
+  const radius=Math.max(s.thickness*.65,w*(.068+.028*(1-pull)));
+  const main:Point[]=[[-l*.52,-w*.08,s.thickness*.65],[-l*.28,-w*.04,h*.43],
+    [joinX,joinY,h*.72],[l*.25,w*(.03+.10*s.distortion),h*.48],[l*.52,w*.14,s.thickness*.72]];
+  sweptBundle(b,main,radius,0);
+  for(let arm=1;arm<s.branches;arm++){
+    const side=arm%2===1?-1:1,rank=Math.floor((arm-1)/2),spread=.27+rank*.12;
+    const attachX=joinX+l*(rank*.07-.025),attachY=joinY+w*rank*.018;
+    const endX=l*(.46-rank*.11)*(arm%3===0?-1:1);
+    const endY=side*w*Math.min(.50,spread+s.opening*.18);
+    const branch:Point[]=[[attachX-l*.10,attachY,h*.55],[attachX,attachY,h*(.74-rank*.06)],
+      [attachX+(endX-attachX)*.55,endY*(.37+.30*(1-pull)),h*(.40-rank*.03)],
+      [endX,endY,s.thickness*(.46+.06*rank)]];
+    sweptBundle(b,branch,radius*(.70-rank*.085),arm);
+  }
+}
+
+/** An exposed horseshoe wall has an actual floor opening. Radial sections stop
+ * at the inner foot instead of triangulating across the cavity. */
+function openShellWall(b:MeshBuilder):void {
+  const s=b.spec,around=56,radial=8,rows:Point[][]=[];
+  const gap=.76+s.opening*2.40,begin=gap*.5,sweep=TAU-gap;
+  const inner=.43+s.opening*.19,phaseOffset=phase(s.seed,1351)*TAU;
+  for(let i=0;i<=around;i++){
+    const u=i/around,angle=begin+u*sweep,ca=Math.cos(angle),sa=Math.sin(angle);
+    const uneven=1+s.distortion*(.075*Math.sin(angle*2+phaseOffset)+.035*Math.sin(angle*5));
+    const crown=s.height*(.66+.23*Math.sin(angle+.7)+.09*Math.cos(angle*2+phaseOffset));
+    const foot=s.blocking===1?Math.min(9,s.height*.3):s.height*.05;
+    const lip=.82-s.fold*.07;
+    const profile:readonly (readonly[number,number])[]=[[1,0],[.97,foot],[.91,crown*.58],[lip,crown],
+      [lip-.045,crown*.97],[inner+.075,crown*.72],[inner+.025,foot],[inner,0],[inner,0]];
+    rows.push(profile.map(([r,z])=>[ca*s.length*.5*r*uneven+(1-r)*s.length*s.distortion*.07,
+      sa*s.width*.5*r*uneven,z] as Point));
+  }
+  for(let i=0;i<around;i++)for(let j=0;j<radial;j++){
+    const a=rows[i]!,c=rows[i+1]!,joint=i===Math.floor(around*.69)&&j===4;
+    const slot=joint?3:j<3?0:j<5?1:2;
+    b.quad(a[j]!,c[j]!,c[j+1]!,a[j+1]!,slot,[[i*s.length/around,j*s.width/radial],[(i+1)*s.length/around,j*s.width/radial],
+      [(i+1)*s.length/around,(j+1)*s.width/radial],[i*s.length/around,(j+1)*s.width/radial]],[0,0,1],j<3?NATIVE_VOLUME_REGIONS.intact:j<5?NATIVE_VOLUME_REGIONS.fractured:NATIVE_VOLUME_REGIONS.glazed);
+    if(joint)b.joint([(a[j]![0]+c[j+1]![0])*.5,(a[j]![1]+c[j+1]![1])*.5,(a[j]![2]+c[j+1]![2])*.5]);
+  }
+  // Open end faces terminate each wall in a thick visible section. They never
+  // fan toward the cavity centre, which would create an invisible blocking lid.
+  for(const end of [0,around]){
+    const row=rows[end]!,angle=begin+end/around*sweep,sign=end===0?-1:1;
+    for(let j=0;j<radial-1;j++){
+      const a=row[j]!,c=row[j+1]!,dx=-Math.sin(angle)*s.thickness*.40*sign,dy=Math.cos(angle)*s.thickness*.40*sign;
+      b.quad(a,c,[c[0]+dx,c[1]+dy,0],[a[0]+dx,a[1]+dy,0],1,
+        [[j*s.width/radial,a[2]],[(j+1)*s.width/radial,c[2]],[(j+1)*s.width/radial,0],[j*s.width/radial,0]],[0,0,1],NATIVE_VOLUME_REGIONS.fractured);
+    }
+  }
+}
+
+/** A stretched sheet curls along its back and tears inward from the free edge.
+ * The V-shaped missing strips are real negative space, not dark paint on a bowl. */
+function tornMembrane(b:MeshBuilder):void {
+  const s=b.spec,along=36,across=12,rows:Point[][]=[];
+  const tearAt=.36+phase(s.seed,1381)*.17,tearDepth=.30+s.opening*.58;
+  for(let i=0;i<=along;i++){
+    const u=i/along,edgeTaper=.63+.37*Math.sin(Math.PI*u),row:Point[]=[];
+    const tear=tearDepth*Math.pow(Math.max(0,1-Math.abs(u-tearAt)/(.11+s.distortion*.045)),.72);
+    const second=s.branches>=5?tearDepth*.68*Math.pow(Math.max(0,1-Math.abs(u-.79)/.08),.8):0;
+    const front=1-Math.max(tear,second);
+    for(let j=0;j<=across;j++){
+      const v=j/across,local=v*front;
+      const taut=Math.pow(Math.sin(Math.PI*u),.45),curl=Math.exp(-Math.pow((local-(.16+s.fold*.09))/.18,2));
+      const fold=Math.pow(Math.max(0,Math.sin(u*Math.PI*(s.branches-1)+local*2)),3)*s.distortion*.15;
+      const foot=s.blocking===1?Math.min(8,s.height*.30):0;
+      const z=foot+s.height*taut*(curl*(.50+s.fold*.30)+.075+fold)*(.55+.45*Math.sin(Math.PI*v));
+      row.push([(u-.5)*s.length,(local-.5)*s.width*edgeTaper,z]);
+    }rows.push(row);
+  }
+  for(let i=0;i<along;i++)for(let j=0;j<across;j++){
+    const a=rows[i]!,c=rows[i+1]!,slot=j<3?0:j>9?1:2;
+    b.quad(a[j]!,c[j]!,c[j+1]!,a[j+1]!,slot,[[i*s.length/along,j*s.width/across],[(i+1)*s.length/along,j*s.width/across],
+      [(i+1)*s.length/along,(j+1)*s.width/across],[i*s.length/along,(j+1)*s.width/across]],[0,0,1],j<3?NATIVE_VOLUME_REGIONS.compressed:NATIVE_VOLUME_REGIONS.tension);
+  }
+  // Give the entire torn boundary actual 3–6px section width in the XY view.
+  const outline:Point[]=[];
+  for(let i=0;i<=along;i++)outline.push(rows[i]![0]!);
+  for(let j=1;j<=across;j++)outline.push(rows[along]![j]!);
+  for(let i=along-1;i>=0;i--)outline.push(rows[i]![across]!);
+  for(let j=across-1;j>0;j--)outline.push(rows[0]![j]!);
+  for(let i=0;i<outline.length;i++){
+    const a=outline[i]!,c=outline[(i+1)%outline.length]!,dx=c[0]-a[0],dy=c[1]-a[1],length=Math.hypot(dx,dy)||1;
+    const width=s.blocking===1?Math.min(6,s.thickness*.55):1.5,ox=dy/length*width,oy=-dx/length*width;
+    b.quad(a,[a[0]+ox,a[1]+oy,0],[c[0]+ox,c[1]+oy,0],c,1,[[0,a[2]],[0,0],[length,0],[length,c[2]]],[0,0,1],NATIVE_VOLUME_REGIONS.fractured);
+  }
+  surfaceFracture(b,rows,[[8.2,3.4],[9.7,4.0],[10.3,4.5],[11.8,4.8],[12.3,5.4]],.085);
+}
+
+/** A broad low pool piles into unequal rounded fronts. Fold is accumulation;
+ * opening releases a longer shallow wake. The perimeter remains a physical lip. */
+function pooledGel(b:MeshBuilder):void {
+  const s=b.spec,along=38,across=22,rows:Point[][]=[];
+  const lobeCount=Math.max(2,s.branches-1),offset=phase(s.seed,1411)*1.7;
+  for(let i=0;i<=along;i++){
+    const u=i/along,side=Math.pow(Math.sin(Math.PI*u),.28),row:Point[]=[];
+    const lobes=Math.pow(.5+.5*Math.sin(u*Math.PI*2*lobeCount+offset),2);
+    const irregular=.045*Math.sin(u*19+offset);
+    for(let j=0;j<=across;j++){
+      const v=j/across,edge=Math.min(u*along,(1-u)*along,v*across,(1-v)*across);
+      const frontAt=.74+s.opening*.13,front=Math.exp(-Math.pow((v-frontAt)/(.09+s.fold*.09),2));
+      const pool=.065+Math.sin(Math.PI*v)*(.09+s.opening*.04);
+      const ridge=front*(.42+s.fold*.39)*(.60+.40*lobes);
+      const foot=s.blocking===1?Math.min(8,s.height*.28)*Math.min(1,edge):0;
+      row.push([(u-.5)*s.length+(v-.5)*s.length*s.distortion*.10,
+        (v-.5)*s.width*(.50+side*.50)+Math.pow(v,4)*s.width*(lobes*(.09+s.distortion*.12)+irregular),
+        foot+(pool+ridge)*s.height*side*Math.min(1,edge)]);
+    }rows.push(row);
+  }
+  for(let i=0;i<along;i++)for(let j=0;j<across;j++){
+    const a=rows[i]!,c=rows[i+1]!,front=j>=across-2,thin=j<across*.48;
+    b.quad(a[j]!,c[j]!,c[j+1]!,a[j+1]!,front?1:thin?2:0,[[i*s.length/along,j*s.width/across],[(i+1)*s.length/along,j*s.width/across],
+      [(i+1)*s.length/along,(j+1)*s.width/across],[i*s.length/along,(j+1)*s.width/across]],[0,0,1],
+      front?NATIVE_VOLUME_REGIONS.compressed:thin?NATIVE_VOLUME_REGIONS.peeled:NATIVE_VOLUME_REGIONS.glazed);
+  }
+  surfaceFracture(b,rows,[[12.1,17.4],[13.2,17.8],[14.1,17.7],[15.2,18.1],[16.4,18.0]],.09);
+}
+
 /** A fracture follows a material failure across the actual triangular skin;
  * never make entire regular tessellation cells luminous. All ribbon corners
  * sample the same plane as the opaque construction below them. */
@@ -517,7 +681,15 @@ function surfaceFracture(b:MeshBuilder,rows:readonly (readonly Point[])[],path:r
 export function buildNativeVolume(spec: Readonly<NativeVolumeSpec>): NativeVolumeMesh {
   validateSpec(spec);
   const builder = new MeshBuilder(spec);
-  if (spec.family === 'folded-slab') foldedSlab(builder);
+  if (spec.constructionVersion === 2) {
+    if (spec.family === 'folded-slab') shearedBeds(builder);
+    else if (spec.family === 'fibre-knot') tensileBranches(builder);
+    else if (spec.family === 'broken-shell') openShellWall(builder);
+    else if (spec.family === 'membrane-rim') tornMembrane(builder);
+    else if (spec.family === 'gel-flow') pooledGel(builder);
+    else granularRidge(builder);
+  }
+  else if (spec.family === 'folded-slab') foldedSlab(builder);
   else if (spec.family === 'fibre-knot') fibreKnot(builder);
   else if (spec.family === 'broken-shell') brokenShell(builder);
   else if (spec.family === 'granular-ridge') granularRidge(builder);

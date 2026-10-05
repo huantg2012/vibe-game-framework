@@ -57,16 +57,18 @@
     "id": "COH-F049",
     "title": "世界方向查看与隔离搜撤体验",
     "domain": "development",
-    "summary": "Rift v2地图巡览gym枚举正式启用池的30组合，支持种子巡检、部署/路线注解与同一productionWorld原生试玩；Boot前内存存储隔离。R100九组DEV母版已接原生角色/视野、三族独立材料、真实污染体和绿色侵蚀、分级混乱曲线、来源翻找物及显著性精修。2026-10-04用户基于4ced8905验收I01/I02；本轮制作已收口，I03未启动。母版继续DEV，0/108世界、0/324等级；旧Worker/GC及录制证据不因此扩大为性能或声音全验。",
+    "summary": "Rift v2巡览gym的30组合及旧研究入口继续隔离保留。当前r100-gym使用正式修订4生成器和RiftScene，可定向查看20世界×三级并运行原生角色/视野；Boot前内存存储隔离。新增正常画面的修订3/4对照页，披露同请求种子、键盘路线与不同几何落点。I01/I02人审仅保持原版本范围，开发查看、受控补图和机器验证不等于完整自然搜撤或用户美术终审。",
     "delivery": "dev",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "rift-worlds.html",
       "rift-world-play.html",
       "world-study.html",
       "rift-gym.html",
       "gym.html?lesson=rift-world → rift-gym.html",
-      "rift-r100-masters.html（I02在制试验，不属正式出击池）"
+      "rift-r100-masters.html（I01/I02历史DEV母版入口）",
+      "r100-gym.html（当前20世界×三级，正式生成器与原生RiftScene，内存存储）",
+      "docs/qa/interactive/r100-world-identity.html（修订3/4正常实帧对照及验证范围）"
     ],
     "sources": [
       {
@@ -208,7 +210,7 @@
       {
         "path": "data/rift-master-materials.csv",
         "role": "data",
-        "note": "三族绘画源、逻辑像素和世界取样尺度；仅DEV母版，不是世界资格目录。"
+        "note": "六材料共享绘画源、逻辑像素和取样尺度；原I01/I02的三族DEV证据保留，正式接入另见F012。"
       },
       {
         "path": "tools/world-study/check-master-semantics.ts",
@@ -347,6 +349,48 @@
       {
         "path": "tools/qa/capture-search-remains-readability.mjs",
         "role": "test"
+      },
+      {
+        "path": "docs/tasks/r100-world-identity.md",
+        "role": "doc",
+        "note": "当前20世界身份重构的授权、职责和边界；不增加世界数。"
+      },
+      {
+        "path": "docs/qa/rift-r100-world-identity.md",
+        "role": "doc",
+        "note": "修订4独立验证；不继承修订3完整搜撤资格。"
+      },
+      {
+        "path": "r100-gym.html",
+        "role": "code"
+      },
+      {
+        "path": "src/dev/r100-gym.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/render-r100-world-identity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-r100-native-boundaries.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/diagnose-r100-menu-recovery.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/interactive/r100-world-identity.html",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-world-identity.md",
+        "role": "art"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-world-identity/comparison-page.json",
+        "role": "doc"
       }
     ],
     "dependsOn": [
@@ -369,12 +413,13 @@
       "COH-E134",
       "COH-E135",
       "COH-E137",
-      "COH-E138"
+      "COH-E138",
+      "COH-E158"
     ],
     "unknowns": [
-      "当前目录30组合及固定种子巡检不是穷举uint32种子或连续条件；预览仅原生地表与只读部署注解，模型/实时光照在试玩查看。",
+      "v2的30组合、当前修订4的20世界×三级及固定种子巡检均非穷举uint32种子或连续条件；正常短走和定点补图只覆盖实际取景，不能当作完整自然旅程。",
       "训练库存、内存存档与开发检查不代表正式自然资源供给、长期体验或用户美术认可；旧研究页/缩减试玩的边界保持。",
-      "R100-I02本轮为DEV接入与限定技术复核；CPU上传/资源回滚、文件解码或巡查输入检查不能替代实际GLSL、GPU性能、连续操作、美术和声音审查。后续绘画映射修改必须重跑对应合同。",
+      "I01/I02历史DEV技术复核保持原适用范围；修订4新增绘画映射已独立检查确定性、材料角色与原图细节，但静帧、CPU合同和输入诊断不替代实际声音、弱设备性能、连续审美或完整玩家体验。",
       "54帧静态独立意见不能证明连续动效、全周边碰撞、接触代价、声音混音或自然整局体验；该批提出的暗面/等级次序/局部过亮意见后来进入修复与人审，当前I01/I02已验收，原采样未测范围仍保留。",
       "e8888655后用户确认折板南侧低斜面在normal中仍像地面。已局部重做阻挡物厚断面及材质坐标，外足占地不变；本轮取得44/48独立方向、50次受控键盘接近和600支撑采样；四方向未覆盖、四次战斗干扰和三次沿边滑动见E133，不算完整自然绕行。此前54帧不证明全部阻挡边缘可读，“这次好多了”当时仅为局部肯定；其后2026-10-04明确整体验收单列E138，未覆盖的运行范围仍不补判。",
       "E134来源外观的14图与三组行为采集是不同批次；额外材料依赖的事后指纹未冒充起点基线，不覆盖之后并行地形材料变更。",

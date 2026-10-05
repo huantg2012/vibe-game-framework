@@ -4,7 +4,9 @@ import { createHash } from 'node:crypto';
 import { writeR100QualificationManifests } from './r100-qualification-manifests.mjs';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const paths = ['data/rift-master-scenes.csv', 'data/rift-pollution-grades.csv', 'data/rift-expedition-grades.csv',
-  'data/rift-master-materials.csv', 'data/rift-search-remains.csv', 'data/rift-native-worlds.csv',
+  'data/rift-world-appearance.csv', 'data/rift-master-materials.csv', 'data/rift-search-remains.csv', 'data/rift-native-worlds.csv',
+  'src/generation/world-study/r100-world-appearance.ts', 'src/generation/world-study/world-material-pigment.ts',
+  'src/systems/r100-world/surface-bake.ts', 'src/systems/r100-world/ground.ts',
   'src/generation/world-study/r100-master-world.ts', 'src/generation/world-study/r100-pollution.ts',
   'src/generation/world-study/r100-expedition.ts', 'src/generation/world-study/r100-expedition-v1.ts',
   'src/generation/world-study/r100-patrol-windows.ts', 'src/generation/world-study/r100-package.ts', 'src/generation/world-study/native-volume-geometry.ts',

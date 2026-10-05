@@ -16,7 +16,7 @@ for (const { identity, nodeSignature } of gold.records) {
 }
 for (const [worldId, seed] of [['ash-strata', 20261004], ['ash-strata', 20261005], ['crystal-fibre', 20261005]] as const) {
   const recipe = createR100ProductionRecipe(worldId, seed, 'severe');
-  assert.equal(recipe.package.algorithmRevision, 3);
+  assert.equal(recipe.package.algorithmRevision, 4);
   const world = createR100ProductionMap(recipe), layout = world.layout;
   assert(layout.enemySpawns.every(enemy => enemy.patrol.mode === 'pingpong' && enemy.patrol.waypoints.length > 1));
   const native = hydrateR100MasterWorld(world.native!, layout), nodes = [...layout.kindlingNodes, ...layout.contaminantNodes].filter(node => node.tier !== 'safe');

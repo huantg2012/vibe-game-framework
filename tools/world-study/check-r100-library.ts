@@ -39,7 +39,7 @@ function qualify(input: QualificationCase) {
     const a = enemy.patrol.waypoints[index - 1]!, b = enemy.patrol.waypoints[index]!;
     assert.equal(bodyDisplacementFraction(grid, { x: (a.col + .5) * 8, y: (a.row + .5) * 8 }, 10, 10, (b.col - a.col) * 8, (b.row - a.row) * 8), 1);
   }
-  assert.equal(requested.package.algorithmRevision, 3);
+  assert.equal(requested.package.algorithmRevision, 4);
   assert(layout.enemySpawns.every(enemy => enemy.patrol.mode === 'pingpong' && enemy.patrol.waypoints.length >= 2), 'new worlds cannot silently fall back to a permanent guard');
   const patrolWindows = (native.diagnostics.expedition as { patrolWindows: { id: string; durationMs: number }[] }).patrolWindows;
   const searchNodes = [...layout.kindlingNodes, ...layout.contaminantNodes].filter(node => node.tier !== 'safe');
