@@ -187,7 +187,7 @@
     "docs/game-state/features/world.json": "69b6d6ec96246f4d101b2aac4f9ca3dc7e8581248b1b159a32adf59fbfad0bd7",
     "docs/gdd-core.md": "266aaf4b4dfecff5367c7d15b8a0908fb3ca07ca35e1fcfaacf874583248c5c9",
     "docs/progress/content-expansion-plan.md": "df3b993741999b2bbde91d95f65983352507d21df3431e9e6857d6ee1fadc3fa",
-    "docs/progress/current-iteration.md": "b3cee801b41f4f569b72c0ef9493c4161f2325aef8e26c39a5d7b2c4df297414",
+    "docs/progress/current-iteration.md": "f1a3d7d4d878259ddab4aca192341891a978decc8cf255bd39fe6c9ec0144d5c",
     "docs/progress/decisions-log.md": "0754829ba7458138b47fb232ee7bf1cd4e18460c81d59ac5fe2056983ff8d3ac",
     "docs/qa/2026-09-30-opening-master.md": "6842f7dc4f4a79d9bf7558eb0c9e3644f4e628282f49b7beb86e095ba8d9d8cd",
     "docs/qa/artifacts/growth-resource-states-2026-09-21/manifest.json": "a35af6ca204ec944ff222bdef922cdd1773463034fa2fc76f9ed31b4a6fd6bd4",
@@ -690,8 +690,8 @@
     "data/rift-master-materials.csv": "191fbd4099d23a0c16596bdd7bd1af11fc8d6ed3684060c61e4b54573cfdac33",
     "data/rift-native-worlds.csv": "5ee0c8069f912efbc0425bb90450d94743b2db8e45d00446b2378ea3a73559ff",
     "data/rift-search-remains.csv": "81d6ddb73e874035a9a88021558729c268054530dbef6363d3878629729ba777",
-    "docs/art/rift-r100-i03-i06-production.md": "b822e0e0adc4952a627b8833a539e5def0a8f8c439326fc4cbe4310173ca4639",
-    "docs/progress/rift-r100.json": "a8970914f83f75f78a0d6952710f67b489889a9384fd4a49904bd503a5080b57",
+    "docs/art/rift-r100-i03-i06-production.md": "274e6ed293fecc5be8ac85d7bcfeee9529705e8c106aa0b6e8b1c788a86b2d2e",
+    "docs/progress/rift-r100.json": "191197711bba4627ec83dcc4443efb2043f4d63d2752176ea089fd229ae80b22",
     "docs/qa/artifacts/r100-i03-i06/create-failure/README.md": "23120960872bdeadde3bc78dd1b32e22cdf22d7cf38362e2a2f66ed9c0d8c4c8",
     "docs/qa/artifacts/r100-i03-i06/formal-entry-rev2/summary.json": "82af7074e7b76367580083702f796647763d5e370f503630faa556bafc6a5b0f",
     "docs/qa/artifacts/r100-i03-i06/frozen-release-candidate/source-snapshot.json": "4988a1b74aece28f0892a81c7673b56cf83d8ab2e7425d86149ae9bf0dbb62ae",
@@ -831,7 +831,8 @@
     "docs/qa/artifacts/r100-p13/review.md": "1c022d5347b6cfae5f293e592cf831ffc632b9c1b1b8c1391b9fd0a9a0eee5b1",
     "tools/qa/check-r100-gpu-allocations.mjs": "f4a3097886973a79958b37b98e24da9b7eb79c3f71433b4593e0248e2fbb2ce0",
     "tools/qa/check-r100-gpu-timing.mjs": "4680bb13f260b5d798298134c82081e81959ab119b29a0f823f78a686113f458",
-    "tools/qa/close-r100-i03-i06.mjs": "311adf7e629a0da303d75ca9def990bd9b777dac3cc213e403a85d084e9b3d82"
+    "tools/qa/close-r100-i03-i06.mjs": "311adf7e629a0da303d75ca9def990bd9b777dac3cc213e403a85d084e9b3d82",
+    "docs/reviews/2026-10-05-r100-world-identity.md": "5fc4cfe3310a84094faf5465fee87ac47e463ae00c946327b4fb4ae99b1e7e4d"
   },
   "inventory": {
     "scenes": [
@@ -1257,6 +1258,17 @@
         "tools/qa/check-r100-gpu-allocations.mjs",
         "tools/qa/check-r100-gpu-timing.mjs",
         "tools/qa/close-r100-i03-i06.mjs"
+      ]
+    },
+    {
+      "at": "2026-10-05",
+      "revision": "5910465f+world-identity-review",
+      "scope": "Reviewed documentation and new bounded visual review only. Runtime code and historical evidence unchanged; unrelated drift and CLAUDE.md remain unreviewed.",
+      "files": [
+        "docs/art/rift-r100-i03-i06-production.md",
+        "docs/progress/current-iteration.md",
+        "docs/progress/rift-r100.json",
+        "docs/reviews/2026-10-05-r100-world-identity.md"
       ]
     }
   ]
