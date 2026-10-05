@@ -1,5 +1,5 @@
 ---
-status: COMPLETE / BOUNDED-VERIFIED
+status: COMPLETE / HUMAN-PASS
 created: 2026-10-05
 features: [COH-F011, COH-F012, COH-F013, COH-F049, COH-F052]
 ---
@@ -39,5 +39,5 @@ features: [COH-F011, COH-F012, COH-F013, COH-F049, COH-F052]
 
 - 当前20世界正式新包revision4已完成；17派生构造、逐世界材料与残骸一起生效。旧revision3完整封存，旧局保持原样。
 - 120生成/冷重构、120正常实帧、68帧独立美术复核、18完整身体接触、60正式出发/冷续覆盖、1条正常短搜撤，以及类型/构建/旧身份专项通过。两次QA输入等待与一次保守格假阴性均保留原失败及根因证据，未修改产品规则来迎合测试。
-- [完成回执](../qa/artifacts/r100-world-identity/completion.json)绑定当前依赖；[完整范围](../qa/rift-r100-world-identity.md)。当前完整玩法资格待补与用户终审待定，不把任务完成当作I07扩产或大版本完成。
+- [完成回执](../qa/artifacts/r100-world-identity/completion.json)绑定当前依赖；[完整范围](../qa/rift-r100-world-identity.md)。2026-10-05用户以“pass”验收本轮区分度重构（交付`5ba918a5`）；[人审记录](../art/rift-r100-world-identity.md#human-acceptance-2026-10-05)。当前完整玩法资格仍待补，不把任务完成当作I07扩产或大版本完成。
 - 收尾更新spec、架构、美术集中记录、看板、现状索引；按持续授权本地提交，独立CLAUDE.md不纳入，不推送。
