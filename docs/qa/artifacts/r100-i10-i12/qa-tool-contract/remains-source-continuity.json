@@ -1,0 +1,126 @@
+{
+  "status": "pass",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "sha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+  },
+  "oldRenderer": {
+    "path": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-xPVcgx/src/generation/world-study/search-remains.ts",
+    "sha256": "d44aec31cd09e10d00ccca5b9a45f72ea420d8655ebe1b6f999601ae056fb872"
+  },
+  "currentRenderer": {
+    "path": "src/generation/world-study/search-remains.ts",
+    "sha256": "03d1ba13b81af3a9a6ec8c548bc03542deb226994eed42bd96660aab7177713c"
+  },
+  "currentRows": {
+    "path": "src/generated/rift-search-remains.ts",
+    "sha256": "38b6095f976105bb930f8d385ed25abee88ece5c15c74d872f8ddcb86e3c8f50"
+  },
+  "worlds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "carmine-lacquer",
+    "cobalt-gold",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway",
+    "cleft-tableland",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir"
+  ],
+  "acceptedGrammars": [
+    "laminated-flakes",
+    "fractured-fibres",
+    "glaze-shell",
+    "mineral-splinters",
+    "packed-granules",
+    "torn-membrane",
+    "gel-fragments"
+  ],
+  "unusedGrammars": [
+    "compressed-fibre-fragments",
+    "porous-core-chips"
+  ],
+  "selectedGrammars": [
+    "fractured-fibres",
+    "gel-fragments",
+    "glaze-shell",
+    "laminated-flakes",
+    "mineral-splinters",
+    "packed-granules",
+    "torn-membrane"
+  ],
+  "rule": "Only pure grammar extraction, equivalent delegation and two unselected literal drawing branches; all accepted statements and external code exact.",
+  "positiveCases": 1,
+  "negativeCases": 11,
+  "checks": [
+    "changed existing pixels",
+    "changed delegated seed",
+    "added global execution",
+    "new branch hoisted variable",
+    "new branch nonliteral argument",
+    "missing explicit unknown rejection",
+    "wrong grammar parameter type",
+    "missing old row guard",
+    "additional renderer statement",
+    "new grammar cannot inherit",
+    "empty selection rejected"
+  ],
+  "harness": {
+    "path": "tools/qa/check-r100-remains-source-continuity.mjs",
+    "sha256": "216aa4daff57ac52e7cff67a9b013b5e2b46f659469170219044669484879f41"
+  },
+  "helper": {
+    "path": "tools/qa/r100-remains-source-continuity.mjs",
+    "sha256": "0a9b64c3bec9bd9ffe1df610bc1e640147edd26dd560624e4dda43e8a17537df"
+  },
+  "scope": "All old drawing statements, wrapper arguments, global state and helpers are AST-exact after the narrowly specified extraction. No new grammar visual approval or new pixel bake is claimed."
+}

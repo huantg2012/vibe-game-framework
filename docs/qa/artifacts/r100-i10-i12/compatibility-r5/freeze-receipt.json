@@ -1,0 +1,18 @@
+{
+  "status": "pass",
+  "sourceRevision": "d194be4cb8f89f37d4ba7f05d17e16f9bed055ee",
+  "manifest": {
+    "path": "src/generation/legacy-r100-v5/manifest.json",
+    "sha256": "46407d131262582a68bc4c6445790156987882f7d8bd60d1e320457739ea2262"
+  },
+  "executorSha256": "599feff96a7d61cadb59ccc8baa4fa7512128acab9b7cbf4e46a88f18b1b1098",
+  "executorBytes": 6075655,
+  "dependencyCount": 68,
+  "imports": [],
+  "commands": [
+    "node tools/recovery/freeze-native-r100-revision5.mjs --write",
+    "node tools/recovery/freeze-native-r100-revision5.mjs --check"
+  ],
+  "bothExitCode": 0,
+  "scope": "Exact git-object rebuild and immutable asset receipts. Runtime recovery/surface smoke is separate."
+}

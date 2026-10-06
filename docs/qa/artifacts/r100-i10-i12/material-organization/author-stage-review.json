@@ -1,0 +1,50 @@
+{
+  "status": "candidate-abilities-not-world-pass",
+  "reviewer": "art",
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/material-organization/source-v3/short-fibre-native128.png",
+      "sha256": "0a3204186a494683ad7e271ec0b9685fb9460f16a7deddf2fe85ec4957e6bcfc",
+      "scope": "Source pigment only; compressed tuft and torn-face direction distinguishable from old continuous skin; no lighting or geometry approval."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/material-organization/source-v3/porous-marrow-native128.png",
+      "sha256": "5c611f4f5873718dfe3d9f664d488ab190bfbe720b6615cb847a2acb75265319",
+      "scope": "Source pigment only; unequal pore groups and connecting walls visible, not uniform black noise."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/i11-geometry-preparation/eight-directions-v2/short-fibre-eight-directions.png",
+      "sha256": "e02aa312c09152b7da10ddf8574a22c76560989fa54e6eb94ba2182f5b23ab8a",
+      "scope": "Isolated actual geometry lighting, not normal FOV. Wide quiet faces and shear exist; compressed bulk still reads close to folded slabs, requires normal-size source/plane review before world approval."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/i11-geometry-preparation/eight-directions-v2/porous-marrow-eight-directions.png",
+      "sha256": "cfd39e7fb2fc39658afdaedc3c705c5f91c09123125a287a6778867649d74ecc",
+      "scope": "Isolated actual geometry lighting. Quiet skin and porous cut distinguishable; dark pore floors are opaque geometry, not gameplay void. Normal FOV distinction still unverified."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/material-organization/remains-v3/short-fibre-native.png",
+      "sha256": "48a6d81a064afdf52a118d7e52adf4f8883866d367aabb5ab152c294ff4f4653",
+      "scope": "34x26 unlit candidate, broad compressed clump and unequal torn front. Existing pale comparison ramp only; not future-world palette approval."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/material-organization/remains-v3/porous-marrow-native.png",
+      "sha256": "47a1059fc1ad21cef63bf6c9db88130aedeaa4546f6ed25f4e7f62832c7d50fb",
+      "scope": "34x26 unlit candidate, unequal closed pores in exposed thick chip; no alpha hole. Existing rust comparison ramp only."
+    }
+  ],
+  "rootSourceAcceptance": "Root directly reviewed the two source-v3 native128 images and accepted only source direction/native physical texture, permitting a real-geometry master. No world or sound approval.",
+  "limitations": [
+    "I11 worlds not authored or selected.",
+    "Eight-angle isolation is not normal game finite sight or collision qualification.",
+    "Short-fibre compressed bulk must be verified in normal scale before accepting the new world form.",
+    "No actual audio listening occurred."
+  ],
+  "checks": [
+    "Two new material source definitions and four independent assets; old six atoms unchanged.",
+    "504 prior-world seed RGBA outputs exact after pure grammar entry extraction.",
+    "200 candidate remains samples CPU checks passed; existing source grammar tests and TypeScript passed.",
+    "npm run dev started; root and generation modules HTTP200; own temporary process stopped.",
+    "No lint script is configured."
+  ]
+}

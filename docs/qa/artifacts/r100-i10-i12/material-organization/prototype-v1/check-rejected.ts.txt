@@ -1,0 +1,70 @@
+/** Static material preparation checks. This does not approve lit-world art. */
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import sharp from 'sharp';
+import { PAINTED_MATERIALS } from '../../src/generated/r100-materials';
+import { R100_WORLD_APPEARANCES } from '../../src/generated/r100-world-appearance';
+import { sampleMaterialOrganization, type MaterialOrganizationSample } from '../../src/generation/world-study/world-material-organization';
+import { validR100WorldAppearance, type WorldMaterialOrganization } from '../../src/generation/world-study/r100-world-appearance';
+import { mapWorldPigment, paintedToneRange } from '../../src/generation/world-study/world-material-pigment';
+
+const outDir = process.argv[2] ?? 'docs/qa/artifacts/r100-i10-i12/material-organization/prototype-v1';
+mkdirSync(outDir, { recursive: true });
+const sample = (): MaterialOrganizationSample => ({ u: 0, v: 0, blend: 0, tone: 0, roughness: 0 });
+const hash = (bytes: Uint8Array): string => createHash('sha256').update(bytes).digest('hex');
+const results: Record<string, unknown>[] = [];
+for (const appearance of R100_WORLD_APPEARANCES) {
+  assert(!Object.hasOwn(appearance, 'materialOrganization'), 'No existing world may implicitly opt in');
+  assert(validR100WorldAppearance(appearance));
+  assert(!validR100WorldAppearance({ ...appearance, materialOrganization: 'unknown-material' }));
+}
+for (const [kind, family, worldId] of [
+  ['short-fibre', 'membrane-rim', 'pallid-membrane'],
+  ['porous-marrow', 'granular-ridge', 'cinder-ridge'],
+] as const) {
+  const appearance = { ...R100_WORLD_APPEARANCES.find(row => row.worldId === worldId)!, materialOrganization: kind };
+  assert(validR100WorldAppearance(appearance));
+  const a = sample(), b = sample();
+  let changed = 0;
+  for (let y = -16; y < 112; y += 2) for (let x = -16; x < 112; x += 2) {
+    sampleMaterialOrganization(kind, x, y, x < 32 ? 0 : x < 64 ? 1 : 2, 0, 20261005, a);
+    sampleMaterialOrganization(kind, x, y, x < 32 ? 0 : x < 64 ? 1 : 2, 0, 20261005, b);
+    assert.deepEqual(a, b);
+    for (const value of Object.values(a)) assert(Number.isFinite(value));
+    assert(a.blend >= 0 && a.blend <= 1 && Math.abs(a.tone) <= .08 && a.roughness >= .7 && a.roughness <= 1);
+    if (a.blend > .1) changed++;
+  }
+  assert(changed > 400, 'A material organization must have coherent occupied area');
+  sampleMaterialOrganization(kind, 53, 27, 3, 3, 20261005, a);
+  assert.deepEqual(a, { u: 53, v: 27, blend: 0, tone: 0, roughness: 0 }, 'Pollution joints do not receive the material treatment');
+  const material = PAINTED_MATERIALS.find(row => row.family === family)!.solid;
+  const width = 512;
+  const pixels = new Uint8ClampedArray(await sharp(`public${material.source}`).resize(width, width).ensureAlpha().raw().toBuffer());
+  const before = hash(pixels);
+  const range = paintedToneRange({ pixels }), rgb = new Float32Array(3), field = { secondary: 0, tone: 0, detail: 1 };
+  const output = new Uint8Array(256 * 384 * 4);
+  const mirror = (v: number, extent: number): number => { const q = (Math.floor(v) % (extent * 2) + extent * 2) % (extent * 2); return q < extent ? q : extent * 2 - q - 1; };
+  for (let slot = 0; slot < 3; slot++) for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) {
+    const patch = slot === 0 ? material.regions.skin : material.regions.cleaved;
+    const left = Math.round(patch.x * width), top = Math.round(patch.y * width), pw = Math.round(patch.width * width), ph = Math.round(patch.height * width);
+    const offset = (u: number, v: number): number => ((top + mirror(v * width / material.world_size + 11, ph)) * width + left + mirror(u * width / material.world_size + 7, pw)) * 4;
+    const base = offset(x, y);
+    sampleMaterialOrganization(kind as WorldMaterialOrganization, x, y, slot, slot === 1 ? 3 : 0, 20261005, a);
+    const detail = offset(a.u, a.v);
+    for (let treatment = 0; treatment < 2; treatment++) {
+      const colors = [0, 1, 2].map(c => treatment ? Math.max(0, Math.min(255, pixels[base + c]! * (1 - a.blend) + pixels[detail + c]! * a.blend + a.tone * 255)) : pixels[base + c]!);
+      mapWorldPigment(appearance, slot === 0 ? 'solid' : 'cleaved', colors[0]!, colors[1]!, colors[2]!, range, field, 0, rgb);
+      const q = ((y + slot * 128) * 256 + x + treatment * 128) * 4;
+      output[q] = rgb[0]!; output[q + 1] = rgb[1]!; output[q + 2] = rgb[2]!; output[q + 3] = 255;
+    }
+  }
+  assert.equal(hash(pixels), before, 'Immutable source pixels remain untouched');
+  const path = `${outDir}/${kind}.png`;
+  await sharp(output, { raw: { width: 256, height: 384, channels: 4 } }).png().toFile(path);
+  results.push({ kind, family, source: material.source, nativePanelPixels: 128, image: path, rgbaSha256: hash(output), changedSamples: changed,
+    columns: ['accepted source sampling', 'candidate organization'], rows: ['outer skin', 'cut face', 'inner wall material'],
+    limitation: 'Unlit pigment only. No physical pores are drawn by this sampler; pore walls require the separately authored geometry. This is not a game screenshot or art approval.' });
+}
+writeFileSync(`${outDir}/report.json`, JSON.stringify({ status: 'pass-pure-material-checks-not-art-approval', existingWorldsDoNotOptIn: R100_WORLD_APPEARANCES.length, results }, null, 2) + '\n');
+console.log(`PASS material organization deterministic sampling, bounded pigment/finish, pollution-joint isolation, unchanged ${R100_WORLD_APPEARANCES.length} existing opt-ins; static candidates written to ${outDir}`);

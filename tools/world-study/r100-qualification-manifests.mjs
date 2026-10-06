@@ -43,13 +43,14 @@ function currentAlgorithm() {
   return values;
 }
 
-export function writeR100QualificationManifests({ check = false, outputDirectory = 'docs/qa/artifacts/r100-i03-i06/packages', immutable = false } = {}) {
+export function writeR100QualificationManifests({ check = false, outputDirectory = 'docs/qa/artifacts/r100-i03-i06/packages', immutable = false, worldIds } = {}) {
   const root = process.cwd(), folder = outputDirectory;
   // Exact per-world data is embedded below. Including whole catalogs would make
   // an unrelated new row revoke every previously reviewed world.
   const projected = new Set([
     'src/generated/r100-native-worlds.ts', 'src/generated/r100-package-manifest.ts', 'src/generated/r100-world-appearance.ts',
     'src/generated/r100-materials.ts', 'src/generated/rift-expedition-grade-data.ts',
+    'src/generated/r100-material-organizations.ts',
     'src/generated/rift-pollution-grade-data.ts', 'src/generated/rift-search-remains.ts',
     'src/generated/rift-world-profile-data.ts', 'src/generation/world-study/r100-generated-scenes.ts',
   ]);
@@ -76,10 +77,15 @@ export function writeR100QualificationManifests({ check = false, outputDirectory
     'src/systems/chaos-system.ts', 'src/scenes/rift-scene.ts', 'package-lock.json']) visit(path);
   const runtime = [...files].sort().map(path => ({ path, sha256: sha256(readFileSync(path)) }));
   const worlds = initializer('src/generated/r100-native-worlds.ts', 'R100_NATIVE_WORLDS');
+  if (worldIds !== undefined && (!Array.isArray(worldIds) || !worldIds.length
+    || new Set(worldIds).size !== worldIds.length || worldIds.some(id => !worlds.some(world => world.id === id))))
+    throw new Error('Qualification receipt scope must contain unique existing world IDs');
   const appearances = initializer('src/generated/r100-world-appearance.ts', 'R100_WORLD_APPEARANCES');
   const grades = initializer('src/generated/rift-pollution-grade-data.ts', 'POLLUTION_GRADE_DEFINITIONS');
   const contents = initializer('src/generated/rift-expedition-grade-data.ts', 'R100_EXPEDITION_GRADES');
   const materials = initializer('src/generated/r100-materials.ts', 'PAINTED_MATERIALS');
+  const organizations = existsSync('src/generated/r100-material-organizations.ts')
+    ? initializer('src/generated/r100-material-organizations.ts', 'ORGANIZATION_MATERIALS') : [];
   const remains = initializer('src/generated/rift-search-remains.ts', 'SEARCH_REMAINS');
   const algorithm = currentAlgorithm();
   const index = [];
@@ -91,7 +97,8 @@ export function writeR100QualificationManifests({ check = false, outputDirectory
       mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, content);
     }
   };
-  for (const world of worlds) {
+  for (const world of worlds.filter(world => worldIds === undefined || worldIds.includes(world.id))) {
+    const appearance = appearances.find(row => row.worldId === world.id);
     const families = [...new Set(world.definitions.flatMap(definition => [definition.family,
       ...definition.instances.map(instance => instance.family ?? definition.family)]))].sort();
     const selectedMaterials = families.map(family => {
@@ -101,8 +108,15 @@ export function writeR100QualificationManifests({ check = false, outputDirectory
         const path = `public${source}`; return { path, sha256: sha256(readFileSync(path)) };
       }) };
     });
+    if (appearance?.materialOrganization) {
+      const definition = organizations.find(row => row.organization === appearance.materialOrganization);
+      if (!definition) throw new Error(`Missing organization atoms: ${appearance.materialOrganization}`);
+      selectedMaterials.push({ definition, assets: [definition.source, definition.solid.source].map(source => {
+        const path = `public${source}`; return { path, sha256: sha256(readFileSync(path)) };
+      }) });
+    }
     const payload = { schemaVersion: 1, purpose: 'r100-world-review-dependencies', worldId: world.id,
-      algorithm, profile: world.profile, appearance: appearances.find(row => row.worldId === world.id),
+      algorithm, profile: world.profile, appearance,
       grades: world.definitions.map(definition => ({ grade: definition.grade, nativeDefinition: definition,
         pollution: grades.find(row => row.id === definition.grade), content: contents.find(row => row.grade_id === definition.grade) })),
       materials: selectedMaterials, remains: remains.find(row => row.worldId === world.id), dependencies: runtime };

@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-06T15:57:32.774623+00:00",
+  "status": "exact-compatibility-pass-build-size-recorded",
+  "compatibility": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projection-exact-156.json",
+    "sha256": "173cdebbe0126ee2ec4d389f26a05d78f00b07d6684e2ef1d8c23122b5299c18",
+    "cases": 156,
+    "originalRgbaPlanesPerCase": 4,
+    "oldRevisionsRejectedByInnerExecutor": true
+  },
+  "checks": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projected-check-execution.json",
+    "sha256": "6c150008ca6be393bb137151f2b0b2513848bb1930774d32af0c02ddf573bf87",
+    "status": "pass"
+  },
+  "builds": [
+    {
+      "stage": "baseline",
+      "log": {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/02-build.log",
+        "sha256": "76d076b56f7757878c0b4156060b991d9658cdbb2652f37718458f890478e231"
+      },
+      "chunkBytesReportedKB": 7102.34,
+      "gzipReportedKB": 1944.64
+    },
+    {
+      "stage": "initialFullFreeze",
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/build.log",
+        "sha256": "8e78d5a9395db09e14d9fdf72851ac2bafba97632323ebe5094abccb4e49e7b2"
+      },
+      "chunkBytesReportedKB": 9650.96,
+      "gzipReportedKB": 2620.6
+    },
+    {
+      "stage": "revision5Only",
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/build.log",
+        "sha256": "f0489297b5686870c5aca937f605ab485256a4e661abcfda31ce031c68a30234"
+      },
+      "chunkBytesReportedKB": 7683.98,
+      "gzipReportedKB": 2083.86
+    },
+    {
+      "stage": "projectedRecovery",
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projected-build.log",
+        "sha256": "60db06521fbe636ae9b59b8684006202f21bb0b1609fb4fe6ced5bfe911d90b0"
+      },
+      "chunkBytesReportedKB": 7467.5,
+      "gzipReportedKB": 2069.18
+    }
+  ],
+  "deltaGzipKB": {
+    "versusInitialFullFreeze": -551.42,
+    "versusFirstDerivative": -14.68,
+    "versusBaseline": 124.54
+  },
+  "retainedArtifacts": [
+    {
+      "path": "src/generation/legacy-r100-v5/executor.js",
+      "sha256": "599feff96a7d61cadb59ccc8baa4fa7512128acab9b7cbf4e46a88f18b1b1098",
+      "bytes": 6075655,
+      "standaloneGzipBytes": 1143363
+    },
+    {
+      "path": "src/generation/legacy-r100-v5/executor-revision5.js",
+      "sha256": "9129bd82ad367edb6271de5563a5f004a5b2065101f198b7df233e87f29ab8ac",
+      "bytes": 1339531,
+      "standaloneGzipBytes": 222480
+    },
+    {
+      "path": "src/generation/legacy-r100-v5/executor-recovery.js",
+      "sha256": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6",
+      "bytes": 729909,
+      "standaloneGzipBytes": 189349
+    }
+  ],
+  "scope": "Whole original archive and first derivative retained. Live synchronous r5 restore uses the projected recovery closure; outer r1-r4 routers unchanged. Individual gzip sizes are descriptive and not additive after bundling. Current build contains current source including new v4 geometry and optional material-organization code.",
+  "limitation": "The game-config chunk remains above the previous baseline. This is not a full initial-network, low-device or less-than-2MB total initial asset approval; P19 final disposition belongs to root."
+}

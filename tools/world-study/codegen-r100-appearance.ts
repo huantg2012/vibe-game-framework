@@ -1,14 +1,15 @@
 /** Compile artist-authored identities, with exact catalog coverage and no fallbacks. */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { validR100WorldAppearance, type R100WorldAppearance, type WorldMaterialRamp, type WorldGroundPattern } from '../../src/generation/world-study/r100-world-appearance';
+import { validR100WorldAppearance, type R100WorldAppearance, type WorldMaterialRamp, type WorldGroundPattern, type WorldMaterialOrganization } from '../../src/generation/world-study/r100-world-appearance';
 const source = 'data/rift-world-appearance.csv', sourceText = readFileSync(source, 'utf8');
 const lines = sourceText.trim().split(/\r?\n/).map(line => line.split(','));
 const columns = lines.shift()!;
 const ramps = ['ground', 'solid', 'cleaved', 'secondary'] as const;
 const expected = ['world_id', ...ramps.flatMap(role => ['dark', 'mid', 'light'].map(tone => `${role}_${tone}`)),
   'ground_pattern', 'pattern_scale', 'pattern_strength', 'secondary_coverage', 'texture_contrast', 'quiet_coverage'];
-if (JSON.stringify(columns) !== JSON.stringify(expected)) throw new Error('Appearance CSV columns differ from the material identity contract');
+if (JSON.stringify(columns) !== JSON.stringify(expected)
+  && JSON.stringify(columns) !== JSON.stringify([...expected, 'material_organization'])) throw new Error('Appearance CSV columns differ from the material identity contract');
 const records = lines.map((values, index): R100WorldAppearance => {
   if (values.length !== columns.length) throw new Error(`Appearance row ${index + 2}: invalid column count`);
   const row = Object.fromEntries(columns.map((column, at) => [column, values[at]!]));
@@ -21,7 +22,8 @@ const records = lines.map((values, index): R100WorldAppearance => {
   }))])) as Record<typeof ramps[number], WorldMaterialRamp>;
   const result: R100WorldAppearance = { version: 1, worldId: row.world_id!, ...palette,
     groundPattern: row.ground_pattern as WorldGroundPattern, patternScale: Number(row.pattern_scale), patternStrength: Number(row.pattern_strength),
-    secondaryCoverage: Number(row.secondary_coverage), textureContrast: Number(row.texture_contrast), quietCoverage: Number(row.quiet_coverage) };
+    secondaryCoverage: Number(row.secondary_coverage), textureContrast: Number(row.texture_contrast), quietCoverage: Number(row.quiet_coverage),
+    ...(row.material_organization ? { materialOrganization: row.material_organization as WorldMaterialOrganization } : {}) };
   if (!validR100WorldAppearance(result)) throw new Error(`Invalid appearance contract ${row.world_id}`);
   return result;
 });

@@ -1,0 +1,206 @@
+{
+  "status": "first-batch-not-approved",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-source/source-snapshot.json",
+    "sha256": "7a54d7fcac183cc7c14cffa1f217331ce6b879881a8e1dc786953957bfa178ca"
+  },
+  "captureReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-medium/report.json",
+    "sha256": "946f67c533e3095b9c4c1edeaa261f78b9c07ce5ef7c838b1ee4a8251331cdf7"
+  },
+  "worlds": [
+    {
+      "worldId": "cleft-tableland",
+      "status": "rejected",
+      "finding": "三块规则拼板、等宽高亮倒角，共享内接缝各自封闭至地面；无法读成连续受力母面。需改真实母面、断肩与外沿厚薄，不能调色掩盖。",
+      "authorReview": "world_loot_pixels",
+      "independentReviewer": "root",
+      "independentReviewBasis": "root message confirms personally viewed original PNG, limited to visible frame",
+      "evidence": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b01-medium/cleft-tableland-medium/01-approach-north.png",
+        "sha256": "f3af2671b44273cbfa8af7e2508de97187e02a15424bc74f15853a81ca00dfbf",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 378.7823636623176,
+            "y": 280.02188741230606
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.37779824799978,
+          "elapsedMs": 7249.7
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 378.7823636623176,
+            "y": 280.02188741230606
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.410974929999778,
+          "elapsedMs": 7349.599999999999
+        }
+      },
+      "limitations": [
+        "正常有限FOV、单中档/单seed；非完整地图、正式搜撤或用户人审。"
+      ]
+    },
+    {
+      "worldId": "fallen-spines",
+      "status": "pending-additional-view",
+      "finding": "当前帧两件中尺度错束、粗纤及间隙可辨；尚不足证明五段组织。",
+      "authorReview": "world_loot_pixels",
+      "independentReviewer": "root",
+      "independentReviewBasis": "root message confirms personally viewed original PNG, limited to visible frame",
+      "evidence": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b01-medium/fallen-spines-medium/01-approach-east.png",
+        "sha256": "959306e72b4af5bd2d1ef5005eb6994e1076f08b1b7e591c2c8a62978927634d",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": -0.00025132741228911515,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 326.1100799681431,
+            "y": 376.3716568480098
+          },
+          "facingAngle": -0.00025132741228911515,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.835889215999835,
+          "elapsedMs": 5616.500000000001
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 326.1100799681431,
+            "y": 376.3716568480098
+          },
+          "facingAngle": -0.00025132741228911515,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.88012810999983,
+          "elapsedMs": 5749.8
+        }
+      },
+      "limitations": [
+        "正常有限FOV、单中档/单seed；非完整地图、正式搜撤或用户人审。"
+      ]
+    },
+    {
+      "worldId": "clamped-shore",
+      "status": "pending-additional-view",
+      "finding": "当前只见厚壳前墙，夹胶接触未入画；污染线偏齐，需近角核实际结构关联。",
+      "authorReview": "world_loot_pixels",
+      "independentReviewer": "root",
+      "independentReviewBasis": "root message confirms personally viewed original PNG, limited to visible frame",
+      "evidence": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b01-medium/clamped-shore-medium/01-approach-north.png",
+        "sha256": "65f65b5500332ac16e73333a95bfbac256345531b57e9dd68976eb1f8e91125f",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 349.19656555288543,
+            "y": 472.14817462238966
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 16.354795805999895,
+          "elapsedMs": 4166.5
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 349.19656555288543,
+            "y": 472.14817462238966
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 16.404555851999884,
+          "elapsedMs": 4316.5
+        }
+      },
+      "limitations": [
+        "正常有限FOV、单中档/单seed；非完整地图、正式搜撤或用户人审。"
+      ]
+    },
+    {
+      "worldId": "torn-reservoir",
+      "status": "pending-additional-view",
+      "finding": "可见低皮与卷端但左侧被实际敌人吞光遮挡；需从已授权路径看稀密关系。",
+      "authorReview": "world_loot_pixels",
+      "independentReviewer": "root",
+      "independentReviewBasis": "root message confirms personally viewed original PNG, limited to visible frame",
+      "evidence": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b01-medium/torn-reservoir-medium/01-approach-east.png",
+        "sha256": "077d4593e464c85cff578cdc3a885a05da2d94854932b1bd714a8393eb127d3f",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 280.61415949497854,
+            "y": 453.9784949611669
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 26.255259123999906,
+          "elapsedMs": 3866.5999999999995
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 280.61415949497854,
+            "y": 453.9784949611669
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 26.2995013359999,
+          "elapsedMs": 3999.8
+        }
+      },
+      "limitations": [
+        "正常有限FOV、单中档/单seed；非完整地图、正式搜撤或用户人审。"
+      ]
+    }
+  ],
+  "followupCaptureFailure": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-contact-angles/report.json",
+    "sha256": "8f3cef678c04ed8b7575c9c2c9bf967a1d22515f3269da9218355dfb615bd52f",
+    "scope": "page.goto load timeout before runtime identity/capture. Browser closed, no game pass. HTTP200 afterward; 14:51:24 UTC navigation vs 15:46:20 UTC host response is an environment timing observation, not proved sleep/root cause."
+  }
+}

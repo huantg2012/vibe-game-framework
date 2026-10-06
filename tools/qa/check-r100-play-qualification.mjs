@@ -95,6 +95,46 @@ try {
   }, (run, summary) => { assert.equal(run.status, 1); assert.equal(summary, null); });
   check('duplicate-world-plan-is-rejected', ({ plan }) => { plan.worlds.push('ash-strata'); },
     (run, summary) => { assert.equal(run.status, 1); assert.equal(summary, null); });
+  check('settled-outcome-must-match-field-outcome', ({ reports }) => {
+    for (const row of lowReports(reports)) row.afterReturn.state.inventory.run.outcome = 'death';
+  }, (run, summary) => {
+    assert.equal(run.status, 1); assert.equal(summary.qualifiedGradePairs, 2);
+    assert.equal(summary.invalidOrIncompleteProcesses, 2);
+  });
+  check('undeclared-revision-rejected', ({ reports }) => {
+    lowReports(reports)[0].identity.generation.package.algorithmRevision = 6;
+  }, (run, summary) => { assert.equal(run.status, 1); assert.equal(summary, null); });
+  const revision6Fixture = ({ policy, reports, plan, folder }) => {
+    // Synthetic namespace/accounting fixture only. It is never preserved as a
+    // gameplay result or used to claim the old journey ran revision6.
+    plan.algorithmRevisions = [6]; policy.algorithmRevision = 6; policy.controllerPolicyRevision = 15;
+    const derivation = 'docs/qa/artifacts/r100-i10-i12/controller-revision6/derivation.json', derived = read(derivation);
+    policy.controllerDerivation = { path: derivation, sha256: sha(derivation) };
+    policy.harnessSha256 = derived.executor.sha256;
+    fs.copyFileSync(derived.executor.path, path.join(folder, 'journey-source.mjs'));
+    for (const report of reports.values()) {
+      report.policyRevision = 15; report.harnessSha256 = policy.harnessSha256;
+      for (const row of report.realJourneyAttempts) row.identity.generation.package.algorithmRevision = 6;
+    }
+  };
+  check('explicit-revision6-controller15-fixture', revision6Fixture, (run, summary) => {
+    assert.equal(run.status, 0, run.stderr); assert.equal(summary.qualifiedGradePairs, 3);
+    assert.deepEqual(summary.algorithmRevisions, [6]);
+  });
+  check('near-entry-pickup-is-process-not-search-qualification', context => {
+    revision6Fixture(context);
+    for (const row of lowReports(context.reports)) {
+      for (const terminal of row.fieldResult.nodes.filter(node => node.collected)) {
+        const start = row.entryState.nodes.find(node => node.id === terminal.id);
+        terminal.pos = { x: row.entryState.pos.x + 100, y: row.entryState.pos.y };
+        start.pos = structuredClone(terminal.pos);
+      }
+    }
+  }, (run, summary) => {
+    assert.equal(run.status, 1, run.stderr); assert.equal(summary.qualifiedGradePairs, 2);
+    assert.equal(summary.completedSeedProcesses, 6);
+    assert(summary.attempts.filter(row => row.grade === 'low').every(row => row.nearEntryPickups > 0 && row.collected.length === 0));
+  });
   console.log(JSON.stringify({ status: 'pass', checks: results.length,
     scope: 'Qualification-accounting negative tests only; no new browser or game outcomes.', results }, null, 2));
 } finally { fs.rmSync(temporary, { recursive: true, force: true }); }

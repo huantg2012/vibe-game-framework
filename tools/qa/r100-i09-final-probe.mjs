@@ -29,7 +29,8 @@ const receipt = file => ({ path: relative(file), sha256: sha(file) });
 const sorted = values => [...values].sort();
 const grades = ['low', 'medium', 'severe'];
 
-export function validateFinalReport(kind, report, ids, gold) {
+export function validateFinalReport(kind, report, ids, gold, revision = 5) {
+  assert([5, 6].includes(revision), 'Unsupported expected revision');
   const expected = sorted(ids.flatMap(world => grades.map(grade => `${world}/${grade}`)));
   if (kind === 'production') {
     assert.equal(report.status, 'passed');
@@ -42,18 +43,18 @@ export function validateFinalReport(kind, report, ids, gold) {
       assert.deepEqual(row.bodyGeometry, { version: 1, fullBodyCheckpointAdmitted: true, coldBodyPositionPreserved: true });
       assert.equal(row.identity.generation.package.id, `r100-${row.world}`);
       assert.equal(row.identity.generation.package.grade, row.grade);
-      assert.equal(row.identity.generation.package.algorithmRevision, 5);
+      assert.equal(row.identity.generation.package.algorithmRevision, revision);
       assert.equal(row.identity.generation.requestedSeed, row.controlledSeed);
     }
   } else if (kind === 'equivalence') {
     assert.equal(report.status, 'pass'); assert.equal(report.results.length, ids.length * 3 + gold.length);
-    const current = report.results.filter(row => row.revision === 5), old = report.results.filter(row => row.revision === 1);
+    const current = report.results.filter(row => row.revision === revision), old = report.results.filter(row => row.revision === 1);
     assert.deepEqual(sorted(current.map(row => `${row.world.replace(/^r100-/, '')}/${row.grade}`)), expected);
     assert.deepEqual(sorted(old.map(row => `${row.world}/${row.grade}/${row.seed}/${row.expected}`)),
       sorted(gold.map(row => `${row.generation.package.id}/${row.generation.package.grade}/${row.seed}/${row.signature}`)));
     for (const row of report.results) {
       assert.equal(row.exactIdentity, true); assert.equal(row.actual, row.expected);
-      if (row.revision === 5) assert.equal(row.requestedSeed, 20261004);
+      if (row.revision === revision) assert.equal(row.requestedSeed, 20261004);
     }
   } else if (kind === 'budget') {
     assert.equal(report.status, 'passed-reference-samples'); assert.equal(report.exclusiveWindow, true);
@@ -159,6 +160,15 @@ async function selfCheck() {
   const equivalent = { status: 'pass', loadedSourceHashes: { source: 'hash' }, results: grades.map(grade => ({ world: 'r100-one', grade, revision: 5,
     seed: 20261004, requestedSeed: 20261004, exactIdentity: true, expected: 'signature', actual: 'signature' })) };
   validateFinalReport('equivalence', equivalent, ids, []);
+  const revision6Production = structuredClone(production);
+  for (const row of revision6Production.cases) row.identity.generation.package.algorithmRevision = 6;
+  validateFinalReport('production', revision6Production, ids, [], 6);
+  assert.throws(() => validateFinalReport('production', revision6Production, ids, [], 5));
+  const revision6Equivalent = structuredClone(equivalent);
+  for (const row of revision6Equivalent.results) row.revision = 6;
+  validateFinalReport('equivalence', revision6Equivalent, ids, [], 6);
+  assert.throws(() => validateFinalReport('equivalence', revision6Equivalent, ids, [], 5));
+  assert.throws(() => validateFinalReport('production', revision6Production, ids, [], 7));
   for (const mutate of [x => x.results[1] = x.results[0], x => x.results[0].requestedSeed++, x => x.results[0].actual = 'changed']) {
     const value = structuredClone(equivalent); mutate(value); assert.throws(() => validateFinalReport('equivalence', value, ids, []));
   }
@@ -210,6 +220,10 @@ async function selfCheck() {
 async function main() {
   if (process.argv.includes('--self-check')) { await selfCheck(); return; }
   const arg = name => { const at = process.argv.indexOf(name); assert(at >= 0 && process.argv[at + 1], `${name} required`); return process.argv[at + 1]; };
+  const optional = (name, fallback) => process.argv.includes(name) ? arg(name) : fallback;
+  const expectedWorlds = Number(optional('--expected-worlds', '52'));
+  const revision = Number(optional('--expected-revision', '5'));
+  assert([52, 72, 92, 108].includes(expectedWorlds) && [5, 6].includes(revision), 'Unsupported final scope');
   const kind = arg('--probe'), config = PROBES[kind]; assert(config, 'Known probe required');
   const manifest = arg('--source'), out = path.resolve(ROOT, arg('--output')), gameUrl = process.env.GAME_URL;
   assert(gameUrl, 'GAME_URL required'); assert(!fs.existsSync(out), 'Keep original attempts; choose a new output folder');
@@ -218,10 +232,10 @@ async function main() {
   const catalogSource = fs.readFileSync(path.resolve(ROOT, 'src/generated/r100-native-worlds.ts'), 'utf8');
   const catalog = JSON.parse(catalogSource.split('R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = ')[1].trim().replace(/;$/, ''));
   const ids = catalog.filter(row => row.enabled).map(row => row.id);
-  assert.equal(ids.length, 52); assert.equal(new Set(ids).size, 52); assert.equal(catalog.length, 52);
+  assert.equal(ids.length, expectedWorlds); assert.equal(new Set(ids).size, expectedWorlds); assert.equal(catalog.length, expectedWorlds);
   if (kind === 'budget') assert.equal(process.env.QA_EXCLUSIVE_WINDOW, '1', 'Only measure in the agreed exclusive window');
   fs.mkdirSync(out, { recursive: true });
-  const binding = { version: 1, kind, status: 'running', startedAt: new Date().toISOString(), gameUrl,
+  const binding = { version: 1, kind, expectedWorlds, expectedRevision: revision, status: 'running', startedAt: new Date().toISOString(), gameUrl,
     finalSource: receipt(manifest), harness: receipt(config.harness), wrapper: receipt(fileURLToPath(import.meta.url)),
     dependencies: [GOLD, 'tools/contam-preview/tsconfig.json', 'package-lock.json'].map(receipt), worldIds: ids, beforeRuntimeVerified: false,
     afterRuntimeVerified: false, servedSourceVerified: false };
@@ -233,7 +247,7 @@ async function main() {
   try {
     binding.beforeFiles = verifyFiles(source); binding.beforeServedHashes = await verifyServed(source, gameUrl, path.join(out, 'source-audit-failures', 'before')); binding.beforeRuntimeVerified = true; save();
     const env = { ...process.env, GAME_URL: gameUrl, QA_OUTPUT_DIR: out, QA_WORLDS: ids.join(','), QA_GRADES: grades.join(','),
-      QA_REQUIRE_BODY_VERSION: '1', QA_REBUILDS: '10', QA_MIXED_REBUILDS: String(ids.length * 3), QA_SCREENSHOTS: '0', QA_DEFER_AUDIT: '1' };
+      QA_EXPECTED_ALGORITHM_REVISION: String(revision), QA_REQUIRE_BODY_VERSION: '1', QA_REBUILDS: '10', QA_MIXED_REBUILDS: String(ids.length * 3), QA_SCREENSHOTS: '0', QA_DEFER_AUDIT: '1' };
     for (const key of ['QA_STOP_ON_FAILURE', 'QA_CPU_PROFILE', 'QA_STAGE_TIMING', 'QA_P01_STRICT', 'QA_WORLD_ID', 'QA_SEED', 'QA_CONTROLLED_BUILD', 'QA_REPRO_IDENTITY_FILE']) delete env[key];
     const fd = fs.openSync(path.join(out, 'runner.log'), 'wx');
     await new Promise(resolve => {
@@ -246,7 +260,7 @@ async function main() {
     assert.deepEqual(binding.afterServedHashes, binding.beforeServedHashes); binding.servedSourceVerified = true;
     for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) assert.equal(sha(item.path), item.sha256, `Probe input changed: ${item.path}`);
     binding.report = receipt(path.join(out, config.report)); assert.equal(binding.exitCode, 0, 'Original probe failed; preserve it before any diagnosis');
-    validateFinalReport(kind, read(binding.report.path), ids, read(GOLD).records.map(row => row.identity));
+    validateFinalReport(kind, read(binding.report.path), ids, read(GOLD).records.map(row => row.identity), revision);
     binding.status = 'pass';
   } catch (error) { binding.status = 'failed'; binding.failure = String(error); process.exitCode = 1; }
   finally { binding.endedAt = new Date().toISOString(); save(); }

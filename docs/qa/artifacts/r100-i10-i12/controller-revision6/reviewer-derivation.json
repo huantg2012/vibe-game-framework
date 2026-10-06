@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "algorithmRevision": 6,
+  "expectedWorlds": 108,
+  "inputPolicyRevision": 15,
+  "original": {
+    "path": "tools/qa/r100-i09-review-continuous-death-loss.mjs",
+    "sha256": "ecdeb748031d5ba0fe31a8240831271ce9b63e79170b01db5498ebf595c00707"
+  },
+  "executor": {
+    "path": "tools/qa/r100-revision6-review-continuous.mjs",
+    "sha256": "28db9ca4224f48e06ea9fadf50521fbff80d58b45d01512c8a29a2fc5b0b57b5"
+  },
+  "transformations": [
+    {
+      "before": "  assert.equal(sha(path.resolve(ROOT, policy.review.tool)), policy.review.toolSha256, 'Original frozen reviewer must remain unchanged');\n  const originalReviewFile = path.join(folder, 'review.json'), originalReview = read(originalReviewFile);\n  assert.equal(originalReview.status, 'incomplete-or-invalid-data');\n  assert.equal(originalReview.reviewTool.sha256, policy.review.toolSha256);\n  assert(originalReview.inputs.some(row => path.resolve(row.path) === summaryFile && row.sha256 === sha(summaryFile)));\n  for (const row of originalReview.inputs) assert.equal(sha(row.path), row.sha256, `Original failed-review input changed: ${row.path}`);",
+      "after": "  assert.equal(path.resolve(ROOT, policy.review.tool), fileURLToPath(import.meta.url), 'Use the reviewer frozen before the continuous run');\n  assert.equal(sha(fileURLToPath(import.meta.url)), policy.review.toolSha256);\n  assert.equal(policy.algorithmRevision, 6); assert.equal(policy.review.predeclared, true);\n  assert.equal(policy.worldIds.length, 108); assert.equal(new Set(policy.worldIds).size, 108);\n  const derivation = read(policy.review.derivation.path);\n  assert.equal(sha(policy.review.derivation.path), policy.review.derivation.sha256);\n  assert.equal(derivation.original.path, 'tools/qa/r100-i09-review-continuous-death-loss.mjs');\n  assert.equal(derivation.original.sha256, 'ecdeb748031d5ba0fe31a8240831271ce9b63e79170b01db5498ebf595c00707');\n  assert.equal(sha(path.resolve(ROOT, derivation.original.path)), derivation.original.sha256);\n  assert.equal(derivation.executor.sha256, policy.review.toolSha256);"
+    },
+    {
+      "before": "assert.equal(generation.package.algorithmRevision, 5);",
+      "after": "assert.equal(generation.package.algorithmRevision, 6);"
+    },
+    {
+      "before": "  const descriptors = new Map(R100_NATIVE_WORLDS.map(row => [row.id, describeR100World(row)]));",
+      "after": "  assert.deepEqual(R100_NATIVE_WORLDS.filter(row => row.enabled).map(row => row.id).sort(), [...policy.worldIds].sort(), 'Review the exact final enabled pool');\n  const descriptors = new Map(R100_NATIVE_WORLDS.map(row => [row.id, describeR100World(row)]));"
+    },
+    {
+      "before": "    assert.equal(data.policyRevision, 15);",
+      "after": "    assert.equal(data.policyRevision, 15);\n    assert.equal(data.harnessSha256, policy.fixedFiles.find(row => row.file === policy.harness)?.sha256);\n    for (const dependency of data.harnessDependencies) assert.equal(dependency.sha256, policy.fixedFiles.find(row => row.file === dependency.file)?.sha256);"
+    },
+    {
+      "before": "      derivedFrom: { path: policy.review.tool, sha256: policy.review.toolSha256 }, author: 'identity_pipeline',",
+      "after": "      derivedFrom: derivation.original, author: 'identity_pipeline',"
+    },
+    {
+      "before": "      change: 'Recognize verified carried active-tool loss on same-run settled death; retain original use and destruction counts.' },\n    supersedes: { path: originalReviewFile, sha256: sha(originalReviewFile), reason: 'Frozen reviewer omitted the existing death carried-item loss rule.' }, inputs,",
+      "after": "      change: 'Predeclared revision6/final108 admission; all accepted death-loss, costs, pickups, tools, history and diagnosis calculations retained.' },\n    derivation: policy.review.derivation, inputs,"
+    }
+  ],
+  "allOtherSourceBytesExact": true,
+  "tool": {
+    "path": "tools/qa/derive-r100-revision6-reviewer.mjs",
+    "sha256": "49f1597abd5c337abd82d7194ea7ababd1edb11d5f620707b9edbded0afd9b30"
+  },
+  "limitation": "Metadata admission only. No input, pickup, tool consumption/death-loss, economy, history, branch length, severity, pressure-streak or experience-approval changes."
+}

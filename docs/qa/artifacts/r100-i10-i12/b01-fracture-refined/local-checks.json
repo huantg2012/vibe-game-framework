@@ -1,0 +1,203 @@
+{
+  "status": "local-technical-pass-pending-normal-visual",
+  "createdAt": "2026-10-06T15:58:45.122Z",
+  "sources": {
+    "src/generation/world-study/native-volume-ground.ts": {
+      "sha256": "378d09d4c8345b9c575d6a8e296b6e2202ac7343dd388c81a04eb286a8900720",
+      "previousSha256": "29bba73c996622ce2307cc9d5571d232dd953081a7a1fdf65318935a43b69bed",
+      "changed": true
+    },
+    "src/generation/world-study/native-volume-geometry.ts": {
+      "sha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916",
+      "previousSha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916",
+      "changed": false
+    },
+    "src/generation/world-study/native-volume-ground-edge.ts": {
+      "sha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d",
+      "previousSha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d",
+      "changed": false
+    },
+    "src/generation/world-study/native-volume-erosion.ts": {
+      "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992",
+      "previousSha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992",
+      "changed": false
+    },
+    "src/generation/world-study/native-volume-expansion.ts": {
+      "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6",
+      "previousSha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6",
+      "changed": false
+    },
+    "src/generation/world-study/native-volume-cellular.ts": {
+      "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5",
+      "previousSha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5",
+      "changed": false
+    },
+    "src/generation/world-study/r100-master-world.ts": {
+      "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e",
+      "previousSha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e",
+      "changed": false
+    },
+    "data/rift-native-worlds.csv": {
+      "sha256": "523bbe50df5735c309d4766dd357127e89c725a677e055f0613f3f45dff7e8b4",
+      "previousSha256": "523bbe50df5735c309d4766dd357127e89c725a677e055f0613f3f45dff7e8b4",
+      "changed": false
+    },
+    "src/generated/r100-native-worlds.ts": {
+      "sha256": "5ceae20a89297bb9ef035a57258c6dc197ea1c5708c8ed0336d20e77d82eb885",
+      "previousSha256": "5ceae20a89297bb9ef035a57258c6dc197ea1c5708c8ed0336d20e77d82eb885",
+      "changed": false
+    }
+  },
+  "checks": [
+    {
+      "log": "contract.log",
+      "exitCode": 0,
+      "sha256": "f86d9bd20a7c3d2245df42ddb45a87c51823d35b5e69ad93616633f13f355ca9"
+    },
+    {
+      "log": "connection-attempt1.log",
+      "exitCode": 0,
+      "sha256": "5662e68d96716306c30a4ca2a6dc3d20afea5f6ee9d38a055a629663a5d525ff"
+    },
+    {
+      "log": "edge-width8.log",
+      "exitCode": 0,
+      "sha256": "46d0cec73248930ffe754a234c6337c75895a084d61e0af22dc998760ce2e972"
+    },
+    {
+      "log": "worlds.log",
+      "exitCode": 0,
+      "sha256": "33b058ba1bb4d8ef2dd2bc3b6e29157f7823bbdc099de9a1221eb04f9dbdc8bb"
+    },
+    {
+      "log": "typecheck.log",
+      "exitCode": 0,
+      "sha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    },
+    {
+      "log": "codegen.log",
+      "exitCode": 0,
+      "sha256": "68d444155859a73c4393e8e7d23880acd1a0f4e85087d058571b78c2d51cb0c4"
+    },
+    {
+      "log": "diff-check.log",
+      "exitCode": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "dev": {
+    "path": "dev-smoke.json",
+    "sha256": "b4947cfae58cf643ccb7ddb4528e1c4c7041198969b2743ae869ecbf4d92b0be",
+    "server": "stopped after successful source compilation"
+  },
+  "lint": "No dedicated lint script is configured. Strict/noUnused TypeScript and whitespace checks passed; no separate linter result is claimed.",
+  "authorMaps": {
+    "passed": 12,
+    "seed": 20261005,
+    "body": "20x20",
+    "cleftTrajectories": "Each grade: y276/284/292 and552/560/568, x360→760 and back.",
+    "minVisibleSolidCutPixels": 467,
+    "minVisibleMaterial3Pixels": 21,
+    "maxJointDistancePx": 0.5868476466622261
+  },
+  "affected": [
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "instance": 1,
+      "role": "relief"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "instance": 2,
+      "role": "relief"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "instance": 3,
+      "role": "solid"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "instance": 4,
+      "role": "solid"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "instance": 1,
+      "role": "relief"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "instance": 2,
+      "role": "relief"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "instance": 3,
+      "role": "solid"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "instance": 4,
+      "role": "solid"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "instance": 1,
+      "role": "relief"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "instance": 2,
+      "role": "relief"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "instance": 3,
+      "role": "solid"
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "instance": 4,
+      "role": "solid"
+    },
+    {
+      "world": "clamped-shore",
+      "grade": "low",
+      "instance": 4,
+      "role": "relief"
+    },
+    {
+      "world": "clamped-shore",
+      "grade": "medium",
+      "instance": 4,
+      "role": "relief"
+    },
+    {
+      "world": "clamped-shore",
+      "grade": "severe",
+      "instance": 4,
+      "role": "relief"
+    }
+  ],
+  "protected": {
+    "oldWorlds": 52,
+    "oldMeshes": 465,
+    "otherV4Meshes": 36,
+    "canonicalExteriorFootprintPixelsExact": 49749
+  },
+  "preservedFailure": "3101 source and b01-medium photographs remain unchanged. New report does not supersede the failed art decision until normal-view review.",
+  "scope": "Only fracture-fan geometry changed. No CSV/VOID/body-grid/material/pollution semantics changed. P20 was absent real fractured material/activity, not observed floating lights. Normal material/shape pass still pending."
+}

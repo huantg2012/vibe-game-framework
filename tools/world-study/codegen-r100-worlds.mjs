@@ -1,10 +1,13 @@
 /** Authored complete-world arrangements, separate from the nine immutable art masters. */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { tsImport } from 'tsx/esm/api';
+const { parseNativeErosionCell, validateNativeErosion, validateNativeGroundEdgeOwnership } = await tsImport('../../src/generation/world-study/native-volume-erosion.ts', import.meta.url);
+const { NATIVE_VOLUME_SHAPE_PROFILES, NATIVE_VOLUME_V4_PROFILES, validateNativeVolumeSpec } = await tsImport('../../src/generation/world-study/native-volume-geometry.ts', import.meta.url);
 const source = 'data/rift-native-worlds.csv', text = readFileSync(source, 'utf8');
 const [headers, ...lines] = text.trim().split(/\r?\n/).map(line => line.split(','));
 const families = ['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'];
-const shapeProfiles = ['rib-vault', 'pleated-sheet', 'cellular-shell', 'lobed-cushion', 'monolith-buttress', 'terrace-shelf'];
+if (headers.join(',') !== 'world_id,label,iteration,enabled,family,base_profile,organization,construction_version,instances,shape_profiles,erosion_polygons,ground_edge_width') throw new Error('Unknown or missing native world CSV columns');
 const materials = ['strata', 'crystal', 'glaze', 'granular', 'membrane', 'gel'];
 const rawMasters = readFileSync('src/generation/world-study/r100-generated-scenes.ts', 'utf8');
 const masters = JSON.parse(rawMasters.slice(rawMasters.indexOf('export const MASTER_SCENES = ') + 'export const MASTER_SCENES = '.length).replace(/ as const;\s*$/, ''));
@@ -14,9 +17,10 @@ const records = lines.map((values, index) => {
   if (values.length !== headers.length) throw new Error(`Invalid native world row ${index + 2}`);
   const row = Object.fromEntries(headers.map((key, at) => [key, values[at]]));
   const constructionVersion = Number(row.construction_version ?? 1);
-  if (![1, 2, 3].includes(constructionVersion)) throw new Error('Invalid native construction version');
+  if (![1, 2, 3, 4].includes(constructionVersion)) throw new Error('Invalid native construction version');
+  const authoredErosion = parseNativeErosionCell(row.erosion_polygons, constructionVersion);
   const familyIndex = families.indexOf(row.family);
-  if (!/^[a-z][a-z0-9-]+$/.test(row.world_id) || !row.label || familyIndex < 0 || !['3', '4', '5', '6', '7', '8'].includes(row.iteration)
+  if (!/^[a-z][a-z0-9-]+$/.test(row.world_id) || !row.label || familyIndex < 0 || !['3', '4', '5', '6', '7', '8', '10', '11', '12'].includes(row.iteration)
     || !['true', 'false'].includes(row.enabled) || !['bands', 'clusters', 'patches'].includes(row.organization)) throw new Error('Invalid world identity/organization');
   const base = profiles.find(profile => profile.id === row.base_profile);
   if (!base) throw new Error(`Missing base palette ${row.base_profile}`);
@@ -32,20 +36,30 @@ const records = lines.map((values, index) => {
     return { id: at + 1, family, role, ...Object.fromEntries(keys.map((key, i) => [key, Number(numbers[i])])) };
   }) : null;
   const shapes = row.shape_profiles ? row.shape_profiles.split('|') : [];
-  if (constructionVersion === 3 ? !instances || shapes.length !== instances.length || shapes.some(profile => !shapeProfiles.includes(profile)) : shapes.length !== 0)
+  const groundEdgeWidth = row.ground_edge_width === '' ? undefined : Number(row.ground_edge_width);
+  const groundEdgeHolder = instances?.findIndex(instance => instance.role === 'relief' && instance.family === row.family) ?? -1;
+  if (groundEdgeWidth !== undefined && (!Number.isFinite(groundEdgeWidth) || groundEdgeWidth < 8 || groundEdgeWidth > 24
+    || !authoredErosion || constructionVersion !== 4 || groundEdgeHolder < 0)) throw new Error('Invalid authored ground edge owner/width');
+  const shapeProfiles = constructionVersion === 4 ? NATIVE_VOLUME_V4_PROFILES : NATIVE_VOLUME_SHAPE_PROFILES;
+  if (constructionVersion >= 3 ? !instances || shapes.length !== instances.length || shapes.some(profile => !shapeProfiles.includes(profile)) : shapes.length !== 0)
     throw new Error(`Invalid shape profiles for native world ${row.world_id}`);
   const definitions = ['low','medium','severe'].map(grade => {
     const master = masters.find(definition => definition.family === (familyIndex < 3 ? row.family : ['folded-slab', 'broken-shell', 'fibre-knot'][familyIndex - 3]) && definition.grade === grade);
     if (!master) throw new Error('Missing approved geometry grammar');
     if (!instances) return { ...master };
     const amplitude = grade === 'low' ? .88 : grade === 'medium' ? 1 : 1.1;
-    return { ...master, id: `${row.world_id}-${grade}`, family: row.family, profile: row.world_id, label: row.label,
+    const definition = { ...master, id: `${row.world_id}-${grade}`, family: row.family, profile: row.world_id, label: row.label,
       cols: 32, rows: 24, spawn_x: 196, spawn_y: 588, exit_x: 148, exit_y: 664, search_x: 516, search_y: 580, enemy_x: 840, enemy_y: 172,
       axis: row.organization === 'bands' ? -.28 : row.organization === 'clusters' ? .42 : .1,
       instances: instances.map((instance, at) => ({ ...instance, ...(constructionVersion > 1 ? { constructionVersion } : {}),
-        ...(constructionVersion === 3 ? { shapeProfile: shapes[at] } : {}), distortion: Math.min(constructionVersion > 1 ? 1 : .5, instance.distortion * amplitude),
-        fold: Math.min(.88, instance.fold * amplitude) })),
-      erosion: master.erosion.map(polygon => polygon.map(point => ({ x: point.x + 48, y: point.y + 72 }))) };
+        ...(constructionVersion >= 3 ? { shapeProfile: shapes[at] } : {}), distortion: Math.min(constructionVersion > 1 ? 1 : .5, instance.distortion * amplitude),
+        fold: Math.min(.88, instance.fold * amplitude), ...(groundEdgeWidth !== undefined && at === groundEdgeHolder ? { groundEdgeWidth } : {}) })),
+      ...(authoredErosion ? { authoredErosion: true } : {}),
+      erosion: authoredErosion ?? master.erosion.map(polygon => polygon.map(point => ({ x: point.x + 48, y: point.y + 72 }))) };
+    for (const { role, ...geometry } of definition.instances) validateNativeVolumeSpec({ ...geometry, seed: definition.seed, blocking: role === 'solid' ? 1 : 0 });
+    validateNativeErosion(definition.erosion, definition.cols * 32, definition.rows * 32);
+    validateNativeGroundEdgeOwnership(definition);
+    return definition;
   });
   return { id: row.world_id, label: row.label, iteration: Number(row.iteration), enabled: row.enabled === 'true', profile: resolvedProfile, definitions };
 });

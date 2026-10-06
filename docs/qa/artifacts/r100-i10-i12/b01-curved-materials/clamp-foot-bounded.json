@@ -1,0 +1,124 @@
+{
+  "status": "pass",
+  "scope": "v4 clamp only, nine B01 instance/grade footprints exact against 3102; no visual qualification",
+  "sourceSha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60",
+  "cases": [
+    {
+      "grade": "low",
+      "id": 1,
+      "role": "solid",
+      "oldFoot": 71597,
+      "newFoot": 71597,
+      "mismatch": 0,
+      "oldTriangles": 110,
+      "newTriangles": 574,
+      "cutPixels": 2847,
+      "fracturePixels": 50
+    },
+    {
+      "grade": "low",
+      "id": 2,
+      "role": "solid",
+      "oldFoot": 35550,
+      "newFoot": 35550,
+      "mismatch": 0,
+      "oldTriangles": 110,
+      "newTriangles": 574,
+      "cutPixels": 1776,
+      "fracturePixels": 27
+    },
+    {
+      "grade": "low",
+      "id": 3,
+      "role": "relief",
+      "oldFoot": 92419,
+      "newFoot": 92419,
+      "mismatch": 0,
+      "oldTriangles": 100,
+      "newTriangles": 572,
+      "cutPixels": 3648,
+      "fracturePixels": 0
+    },
+    {
+      "grade": "medium",
+      "id": 1,
+      "role": "solid",
+      "oldFoot": 71597,
+      "newFoot": 71597,
+      "mismatch": 0,
+      "oldTriangles": 110,
+      "newTriangles": 574,
+      "cutPixels": 2847,
+      "fracturePixels": 54
+    },
+    {
+      "grade": "medium",
+      "id": 2,
+      "role": "solid",
+      "oldFoot": 35550,
+      "newFoot": 35550,
+      "mismatch": 0,
+      "oldTriangles": 110,
+      "newTriangles": 574,
+      "cutPixels": 1776,
+      "fracturePixels": 24
+    },
+    {
+      "grade": "medium",
+      "id": 3,
+      "role": "relief",
+      "oldFoot": 92419,
+      "newFoot": 92419,
+      "mismatch": 0,
+      "oldTriangles": 100,
+      "newTriangles": 572,
+      "cutPixels": 3648,
+      "fracturePixels": 0
+    },
+    {
+      "grade": "severe",
+      "id": 1,
+      "role": "solid",
+      "oldFoot": 71597,
+      "newFoot": 71597,
+      "mismatch": 0,
+      "oldTriangles": 110,
+      "newTriangles": 574,
+      "cutPixels": 2847,
+      "fracturePixels": 53
+    },
+    {
+      "grade": "severe",
+      "id": 2,
+      "role": "solid",
+      "oldFoot": 35550,
+      "newFoot": 35550,
+      "mismatch": 0,
+      "oldTriangles": 110,
+      "newTriangles": 574,
+      "cutPixels": 1776,
+      "fracturePixels": 22
+    },
+    {
+      "grade": "severe",
+      "id": 3,
+      "role": "relief",
+      "oldFoot": 92419,
+      "newFoot": 92419,
+      "mismatch": 0,
+      "oldTriangles": 100,
+      "newTriangles": 572,
+      "cutPixels": 3648,
+      "fracturePixels": 0
+    }
+  ],
+  "baselineSourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-refined-source/source-snapshot.json",
+    "sha256": "46640b22f7144949248ef056204fb085d99db6c13fecbc7d2154a14703a3a213"
+  },
+  "executedHarness": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-curved-materials/coh-clamp-refinement-bounded.ts",
+    "sha256": "699504d97473aa991f0e5e9767d5dccb173b885e4da31dbbddb3aa0a9ac15e1a"
+  },
+  "harnessContext": "Executed via node --import tsx with TSX_TSCONFIG_PATH tools/contam-preview/tsconfig.json; baseline import is the immutable 3102 temporary checkout identified by baselineSourceManifest. Scope is local geometry, not visual qualification."
+}

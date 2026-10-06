@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "inputPolicyRevision": 15,
+  "algorithmRevision": 6,
+  "original": {
+    "path": "tools/qa/r100-i09-journey.mjs",
+    "sha256": "dfde2f7429261bb81008e1f341c7e862ee6d0f71bc8c629f553b948066022bb3"
+  },
+  "executor": {
+    "path": "tools/qa/r100-revision6-journey.mjs",
+    "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+  },
+  "transformation": {
+    "kind": "result-version-assertion-only",
+    "before": "assert.equal(receipt.identity.generation.package.algorithmRevision,5,'I07-I09 real journeys require frozen revision5')",
+    "after": "assert.equal(receipt.identity.generation.package.algorithmRevision,6,'I10-I12 real journeys require frozen revision6')",
+    "originalStart": 47231,
+    "originalEnd": 47349,
+    "allOtherSourceBytesExact": true
+  },
+  "tool": {
+    "path": "tools/qa/derive-r100-revision6-journey.mjs",
+    "sha256": "6888fb951c94118883e3d7df531192f48770c248a4ea5a6e6400d82bb4e9da93"
+  },
+  "limitation": "Metadata admission only. No input, navigation, observation, threat, duration, tool, pickup or outcome rule changes."
+}

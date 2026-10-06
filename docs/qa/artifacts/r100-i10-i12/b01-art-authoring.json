@@ -1,0 +1,48 @@
+{
+  "status": "pass",
+  "reviewer": "root independent handoff",
+  "baseRevision": "d194be4c",
+  "scope": "First four author-data additions preserve all previous appearance/remains rows and CSV prefixes exactly; no raster, visual or sound verdict.",
+  "rows": [
+    {
+      "path": "src/generated/r100-world-appearance.ts",
+      "export": "R100_WORLD_APPEARANCES",
+      "baselineCount": 52,
+      "currentCount": 56,
+      "oldRowsExact": true,
+      "newWorlds": [
+        "cleft-tableland",
+        "fallen-spines",
+        "clamped-shore",
+        "torn-reservoir"
+      ],
+      "sourceSha256": "1edd78ba0cd94ca090c902d1a2173255508f88f795f914baf411cf0f2560cdc0"
+    },
+    {
+      "path": "src/generated/rift-search-remains.ts",
+      "export": "SEARCH_REMAINS",
+      "baselineCount": 54,
+      "currentCount": 58,
+      "oldRowsExact": true,
+      "newWorlds": [
+        "cleft-tableland",
+        "fallen-spines",
+        "clamped-shore",
+        "torn-reservoir"
+      ],
+      "sourceSha256": "41c7fea785280cf72c728b9caf7d321fccd6324e6cd926dd9774430f44c5af44"
+    },
+    {
+      "path": "data/rift-world-appearance.csv",
+      "baselinePrefixExact": true,
+      "baselineSha256": "0cb840245bf2fd0e5878aa18ee2a8dc1ffe5907640bbbb21b39983becc20fefa",
+      "sourceSha256": "efd9d2867988e1da349b4cf4becf569db388eebfb411c67a6f4b5331353cc9a6"
+    },
+    {
+      "path": "data/rift-search-remains.csv",
+      "baselinePrefixExact": true,
+      "baselineSha256": "15cffbdf6f219c5105bd97480437ba36b6deb9f2d9471b293b60f6daf934b8d3",
+      "sourceSha256": "f5a20d1a97064da75392a917c77b11a52ef9988cee33c343689f37d5e5ad8ebb"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "status": "proposed-not-captured",
+  "seed": 20261005,
+  "viewport": { "width": 1440, "height": 1000 },
+  "preservePrevious": "docs/qa/artifacts/r100-i10-i12/b01-medium/plan.json",
+  "scope": "Same normal view before/after plus joined bed, real missing-ground bank, and the affected low gel. Use real input; report actual positions and facing. Proposed additional stations inherit author-local full-body support, not an assertion of actual arrival.",
+  "cases": [
+    { "world": "cleft-tableland", "grade": "medium", "goals": [
+      { "label": "01-approach", "x": 380, "y": 284, "faces": ["north"] },
+      { "label": "02-east-neck", "x": 720, "y": 284, "faces": ["west", "south"] },
+      { "label": "03-south-neck", "x": 380, "y": 560, "faces": ["east", "north"] }
+    ] },
+    { "world": "clamped-shore", "grade": "medium", "goals": [
+      { "label": "01-approach", "x": 348, "y": 476, "faces": ["north"] },
+      { "label": "02-low-gel", "x": 860, "y": 545, "faces": ["west"] }
+    ] }
+  ],
+  "remainingGrades": "After medium morphology passes, repeat affected actual material boundaries at low/severe; this proposal does not claim the other two grades visually passed."
+}

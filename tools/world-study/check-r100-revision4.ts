@@ -1,5 +1,5 @@
 /** Exact old-trip recovery plus unchanged approved twenty-world rendering under
- * revision 5. Identity receipts may change, geometry and rendered bytes may not. */
+ * revision 6. Identity receipts may change, geometry and rendered bytes may not. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
@@ -26,7 +26,7 @@ const comparable=(world:WorldProductionMap)=>({...world,native:{...world.native,
 const cases=[];
 for(const worldId of worlds)for(const grade of ['low','medium','severe'] as const){
  const seed=20261005,previous=oldRecipe(worldId,seed,grade),current=createR100ProductionRecipe(worldId,seed,grade);
- assert.equal(previous.package.algorithmRevision,4);assert.equal(current.package.algorithmRevision,5);
+ assert.equal(previous.package.algorithmRevision,4);assert.equal(current.package.algorithmRevision,6);
  assert(validR100ProductionRecipe(previous));assert(validR100ProductionRecipe(current));
  const {package:oldPackage,...oldFields}=previous,{package:currentPackage,...currentFields}=current;
  assert.deepEqual(currentFields,oldFields,`${worldId}/${grade}: approved authored recipe unchanged`);
@@ -41,4 +41,4 @@ for(const worldId of worlds)for(const grade of ['low','medium','severe'] as cons
  cases.push({worldId,grade,seed,oldPackage:oldPackage.dependencyHash,newPackage:currentPackage.dependencyHash,payloadExact:true,newGeometryAndContentExact:true,surface:hashes});
  console.log(`PASS ${worldId}/${grade}: old payload, current approved geometry, four RGBA maps`);
 }
-const flag=process.argv.indexOf('--report');if(flag>=0){const out=process.argv[flag+1]!;fs.mkdirSync(out.slice(0,out.lastIndexOf('/')),{recursive:true});fs.writeFileSync(out,JSON.stringify({status:'pass',scope:'20 approved worlds, one fixed seed per grade; old revision4 full transfer and four surfaces exact, revision5 geometry/material/content equivalent except identity receipts. Not full-seed gameplay approval.',cases},null,2)+'\n');}
+const flag=process.argv.indexOf('--report');if(flag>=0){const out=process.argv[flag+1]!;fs.mkdirSync(out.slice(0,out.lastIndexOf('/')),{recursive:true});fs.writeFileSync(out,JSON.stringify({status:'pass',scope:'20 approved worlds, one fixed seed per grade; old revision4 full transfer and four surfaces exact, revision6 geometry/material/content equivalent except identity receipts. Not full-seed gameplay approval.',cases},null,2)+'\n');}

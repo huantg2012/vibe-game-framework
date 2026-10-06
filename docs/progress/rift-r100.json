@@ -40,12 +40,12 @@
   },
   "resume": {
     "iteration": "R100-I10",
-    "batch": "I07/I08/I09已内部结案；52世界待用户审阅",
-    "nextAction": "审阅52世界实图与正式游戏；I10尚未启动，原定扩至72世界，先检验新的地面分隔和中等尺度结构成品样板。",
-    "lastCompleted": "I07/I08扩至52世界156等级；7488固定生成、312实际过程、156正式进入/冷续、174身份一致、48自然连续出征、52独占性能及10+156生命周期通过。",
-    "headline": "I07–I09内部完成 · 52世界正式启用",
-    "updatedDate": "2026-10-06",
-    "evidenceRevision": "r100-native-v3-revision-5"
+    "batch": "B01 双种子搜撤验证；B02 四世界实际画面审核准备",
+    "nextAction": "B01 576生成已过、24实际过程持续执行；B02 60候选源冻结后审核三档正常图。旧52已有3103源码/RGBA严格继承批准，正式r6进入/恢复仍待验证。",
+    "lastCompleted": "修订5基线52世界156等级已结案；新修订6开始后暂不把旧资格算成当前通过，等待精确连续性和接入证明。",
+    "headline": "I10–I12推进中 · 目标108世界",
+    "updatedDate": "2026-10-07",
+    "evidenceRevision": "r100-native-v3-revision-6-in-progress"
   },
   "countPolicy": "108个独立世界，每个低/中/重三档均须通过当前技术、美术、体验审核，合计324资格格。世界总体身份审核与各级证据分别绑定版本/依赖；等级不增加世界数。正式三级可达与用户认可另列；缺任何一级不计完整世界，最终需正式108/324及版本总验收。",
   "workflow": [
@@ -3517,8 +3517,8 @@
       "dependencies": [
         "R100-I09"
       ],
-      "state": "planned",
-      "stage": "not-started",
+      "state": "active",
+      "stage": "implementation",
       "goal": "补充被长期游玩证明缺少的情境和表现。",
       "technical": "根据I09缺口扩充共享能力与兼容配方；持续审核罕见组合、困难几何、装备与Host适配。",
       "visual": "新增20份，明确尺度、形体组织、色光、运动和安静片段的组合；陌生感和规则可学习性共同成立。",
@@ -3537,8 +3537,18 @@
       "exit": "七十二份合格包。",
       "actualRevision": null,
       "gateResults": [],
-      "issueIds": [],
-      "evidenceIds": [],
+      "issueIds": [
+        "R100-P19",
+        "R100-P20",
+        "R100-P21",
+        "R100-P22",
+        "R100-P23",
+        "R100-P24"
+      ],
+      "evidenceIds": [
+        "R100-R6-P19-RECOVERY",
+        "R100-R6-B01-ART-REPAIR"
+      ],
       "targetGradeCases": 216
     },
     {
@@ -3689,7 +3699,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "连续折板、锐角切面与宽硬地床构成基准；和独立错板、板旁弧壳区别有材料与几何依据。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -3755,7 +3765,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -3785,7 +3795,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -3815,7 +3825,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -3874,7 +3884,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "crystal-fibre",
@@ -3892,7 +3903,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "交叉粗束、纵向纤维与连续足边构成基准；区别于展开扇形空口和被团粒填塞的束隙。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -3958,7 +3969,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -3988,7 +3999,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4018,7 +4029,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4077,7 +4088,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "ivory-basin",
@@ -4095,7 +4107,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "厚釉壳的亮外沿、内凹面和开口共同成立；普通壳凹面不冒充吞光污染。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -4161,7 +4173,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4191,7 +4203,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4221,7 +4233,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4280,7 +4292,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "cinder-ridge",
@@ -4298,7 +4311,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "非平行颗粒体之间保留连接面；相对压实脊廊的第二道长脊，此处更开敞。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -4364,7 +4377,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4394,7 +4407,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4424,7 +4437,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4483,7 +4496,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "pallid-membrane",
@@ -4501,7 +4515,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "中央连续厚膜缘、内褶和偏心凹处构成整体，区别于外围破片与被硬束牵住的薄膜。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -4567,7 +4581,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4597,7 +4611,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4627,7 +4641,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4686,7 +4700,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "silt-gel",
@@ -4704,7 +4719,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "顺向薄尾与卷起厚头分工明确，上方绕厚头、南部出现不同朝向流前缘。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -4770,7 +4785,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4800,7 +4815,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4830,7 +4845,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -4889,7 +4904,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "schist-shear",
@@ -4907,7 +4923,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "独立斜板在中、东、南部反复错开；与连续折面和板夹连续壳弧不同。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -4973,7 +4989,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5003,7 +5019,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5033,7 +5049,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5092,7 +5108,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "splayed-fibres",
@@ -5110,7 +5127,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "多向展开束保留扇形空口，区别于交叉结和被颗粒实体填入的束隙。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -5176,7 +5193,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5206,7 +5223,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5236,7 +5253,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5295,7 +5312,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "shell-chain",
@@ -5313,7 +5331,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "多个开口错位的独立厚壳形成可穿行或绕开的连续开口；颗粒堤对应区域被厚积体堵住。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -5379,7 +5397,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5409,7 +5427,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5439,7 +5457,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5498,7 +5516,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "grain-laminate",
@@ -5517,7 +5536,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "压实颗粒靠锐角板面，两种材料在同一视野实际相接；主断面与普通粗地床可区分。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -5583,7 +5602,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5613,7 +5632,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5643,7 +5662,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5702,7 +5721,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "tension-membrane",
@@ -5721,7 +5741,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "横向硬纤维牵住不对称厚膜缘，薄褶与硬束保持不同面结构，中央可读出两者关系。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -5787,7 +5807,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5817,7 +5837,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5847,7 +5867,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -5906,7 +5926,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "shell-gel-delta",
@@ -5925,7 +5946,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "厚壳弧把流前沿与东行路线分开，绕行来自实际连续弧面；区别于横跨硬束。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -5991,7 +6012,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6021,7 +6042,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6051,7 +6072,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6110,7 +6131,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "pressed-dunes",
@@ -6128,7 +6150,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "深走可见第二道长脊持续阻挡东行并形成侧向通道；颗粒脊对应位置保留开敞连接。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -6194,7 +6216,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6224,7 +6246,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6254,7 +6276,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6313,7 +6335,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "ruptured-film",
@@ -6331,7 +6354,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "中央开敞、主要厚膜片分散外围，与苍膜的中央连续缘不同。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -6397,7 +6420,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6427,7 +6450,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6457,7 +6480,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6516,7 +6539,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "reversed-flow",
@@ -6534,7 +6558,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "中央和上方出现相向卷头及间隙，南部露出横截流面，区别于顺向厚头。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -6600,7 +6624,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6630,7 +6654,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6660,7 +6684,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6719,7 +6743,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "laminate-shell",
@@ -6738,7 +6763,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "板面夹住大弧壳，东侧因连续壳弧需要绕行，区别于独立错板与板上覆膜。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -6804,7 +6829,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6834,7 +6859,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6864,7 +6889,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -6923,7 +6948,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "fibre-silt",
@@ -6942,7 +6968,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "颗粒实体填入束间，原可直走的束隙被占据而需侧绕；足边与纤维本体独立可读。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -7008,7 +7034,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7038,7 +7064,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7068,7 +7094,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7127,7 +7153,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "film-laminate",
@@ -7146,7 +7173,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "硬板上覆盖薄面但断面仍由板承担，南部另有独立厚膜缘；不是板面整体改色。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -7212,7 +7239,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7242,7 +7269,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7272,7 +7299,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7331,7 +7358,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "gel-fibre",
@@ -7350,7 +7378,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "硬束横跨流前沿、与厚流并置，向上路线要转到侧面；区别于壳挡版本的连续弧缘。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -7416,7 +7444,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7446,7 +7474,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7476,7 +7504,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7535,7 +7563,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "shell-grit",
@@ -7554,7 +7583,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "壳旁颗粒厚积形成实质阻挡，填塞壳串对应开口，正常视野下可读到两种不同断面。",
       "knownVisualLimitations": "本批修订4世界视觉已获用户“pass”；有限正常镜头与既有操作证据不因此扩张为全部路线/种子、完整搜撤或长程体验。",
       "nearestWorldIds": [
@@ -7620,7 +7649,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7650,7 +7679,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7680,7 +7709,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7739,7 +7768,8 @@
           }
         },
         "note": "原有用户视觉通过保留；这不等于对当前整体修订或新增世界的重新审批。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "rib-vault",
@@ -7757,7 +7787,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "高背脊与不等粗肋形成内庭和外侧绕行，不能仅增加纤维数量。。",
       "knownVisualLimitations": "首批有限正常深走及三级短镜头内部复核通过（b01-deep-final/evidence.json）；待完整玩法/技术依赖统一绑定，不计完整世界资格，不代签用户终审。",
       "nearestWorldIds": [
@@ -7794,7 +7824,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7820,7 +7850,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7846,7 +7876,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7879,7 +7909,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Primary high fibrous back with unequal ribs and separate lower group leaves wide quiet connecting court; physical layer/cut edge visible.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "pleated-hide",
@@ -7897,7 +7928,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "展开大面与错位折谷形成交错观察口。",
       "knownVisualLimitations": "首批有限正常深走及三级短镜头内部复核通过（b01-deep-final/evidence.json）；待完整玩法/技术依赖统一绑定，不计完整世界资格，不代签用户终审。",
       "nearestWorldIds": [
@@ -7934,7 +7965,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7960,7 +7991,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -7986,7 +8017,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8019,7 +8050,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Broad non-periodic mother-sheet folds with irregular torn edge, unified outer skin and actual cut-only darker inner face.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "blister-field",
@@ -8037,7 +8069,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "偏心不等囊腔与错侧撕口组织进出。",
       "knownVisualLimitations": "首批有限正常深走及三级短镜头内部复核通过（b01-deep-final/evidence.json）；待完整玩法/技术依赖统一绑定，不计完整世界资格，不代签用户终审。",
       "nearestWorldIds": [
@@ -8074,7 +8106,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8100,7 +8132,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8126,7 +8158,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8159,7 +8191,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "One dominant concavity with lower collapsed arc and smaller split opening, replacing repeated equal U cavities.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "wax-tongues",
@@ -8177,7 +8210,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "厚宽分叶、偏心卷尖及斜向裸床。",
       "knownVisualLimitations": "首批有限正常深走及三级短镜头内部复核通过（b01-deep-final/evidence.json）；待完整玩法/技术依赖统一绑定，不计完整世界资格，不代签用户终审。",
       "nearestWorldIds": [
@@ -8214,7 +8247,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8240,7 +8273,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8266,7 +8299,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8299,7 +8332,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Unequal tapered thick lobes have offset shoulders and one raised curled tip, replacing equal-ended parallel bands.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "monolith-sill",
@@ -8317,7 +8351,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "偏东单巨体的前足、侧向出口和宽外绕，区别于横贯剪切带。",
       "nearestWorldIds": [
         "schist-shear"
@@ -8350,7 +8384,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8375,7 +8409,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8400,7 +8434,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8432,7 +8466,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Single laminated high body beside broad quiet bed; front notch and side opening read as connected L passage, with exposed cut face differentiated from bed.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "bleached-court",
@@ -8450,7 +8485,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "单侧长厚岸与开阔前庭、东端宽豁口，区别于闭合盆口。",
       "nearestWorldIds": [
         "ivory-basin"
@@ -8483,7 +8518,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8508,7 +8543,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8533,7 +8568,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8566,7 +8601,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Reworked asymmetric thick bank with large recess, offset fragment and upper ledge ending mid-body; normal south/west views resolve original concentric display-plinth failure.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "split-rib-causeway",
@@ -8584,7 +8620,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "两组错位肋形成换侧中路与外绕，区别于单个内庭。",
       "nearestWorldIds": [
         "rib-vault"
@@ -8617,7 +8653,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8642,7 +8678,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8667,7 +8703,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8699,7 +8735,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Opposing backed ribs stagger the interior passage while retaining broad outside bypass; visible dark fibrous body and cut ends separate from blue quiet bed.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "satin-fan",
@@ -8717,7 +8754,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "两片可走低膜与一处东北高折，区别于围碗实体。",
       "nearestWorldIds": [
         "pallid-membrane"
@@ -8750,7 +8787,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8775,7 +8812,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8800,7 +8837,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8832,7 +8869,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Broad low membrane fan remains traversable and distinct from localized raised fold; normal actual routes and high/low edges distinguish it from blocking thick banks.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "chalk-steps",
@@ -8850,7 +8888,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`granular-ridge`，大台缘。粉白压实颗粒、暗赤赭粗断面、深紫灰床；两道高厚岸的开口相错。最近邻 `pressed-dunes`；高断台不是两条平行窄脊，绕过厚端才见下一段。台阶仅为实体剖面，不新增登阶玩法。",
       "nearestWorldIds": [
         "pressed-dunes"
@@ -8883,7 +8921,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8908,7 +8946,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8933,7 +8971,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -8965,7 +9003,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Two thick offset banks create actual bare-floor gap; exact captured body seat separately verified as ground rather than projected upper shelf.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "porcelain-maw",
@@ -8983,7 +9022,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`broken-shell`，两件不等 `cellular-shell`。冷白表皮、暗蓝内壁与暖粉断面；两个向内的壳颌从宽入口向后收窄，各留侧口。最近邻 `ivory-basin`；宽敞变窄的过程和相对壁的厚度应在连续行走中出现，不是另一只白碗。",
       "nearestWorldIds": [
         "ivory-basin"
@@ -9016,7 +9055,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9041,7 +9080,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9066,7 +9105,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9098,7 +9137,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Opposed major shell mouths and subordinate outer remnants form inner/outer paths of different width; true concave thickness remains readable.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "amber-ribs",
@@ -9116,7 +9156,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`gel-flow`，`rib-vault`。凝固琥珀肋表皮、深红褶断面、紫灰细床；3条宽粗肋由共同高头伸出、末端错落。最近邻 `wax-tongues`；高硬肋组织侧通路，和低扁软叶的跨越负空间不同，不借真实透明来隐藏碰撞。",
       "nearestWorldIds": [
         "wax-tongues"
@@ -9149,7 +9189,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9174,7 +9214,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9199,7 +9239,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9231,7 +9271,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Thick coarse gel ribs share a closed high head and low flow tail, with visible slot and external bypass; unlike main-plus-secondary fibrous court. Weakest comb neighbor retained.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "pale-sail",
@@ -9249,7 +9290,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`membrane-rim`，两件 `pleated-sheet`。珍珠灰大侧面与暗酒红褶内，蓝灰裸床；两高幕错位相对，横向出口不同高低边。最近邻 `pleated-hide`；长折廊变成跨视口双面挤压，正对亮面之外仍有不被抹平的侧暗。",
       "nearestWorldIds": [
         "pleated-hide"
@@ -9282,7 +9323,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9307,7 +9348,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9332,7 +9373,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9364,7 +9405,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Two facing broad sheet ends create staggered real passage; normal side and mouth views show finite thick cut ends and mother surfaces.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "root-cistern",
@@ -9382,7 +9424,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`fibre-knot`，弯折 `rib-vault` 组合。暗棕紫粗束、浅肉灰纤维断端、冷蓝压实床；粗束围出偏心空庭，两个断口朝不同方向。最近邻 `split-rib-causeway`；开放环庭与双脊过道不同，不做真实深坑或绿植。",
       "nearestWorldIds": [
         "split-rib-causeway"
@@ -9415,7 +9457,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9440,7 +9482,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9465,7 +9507,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9497,7 +9539,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Two inward rib groups enclose separate quiet courts and connect through an actual opening; back-bone is physically seen from north. Unlike split-rib-causeway the occupied space is broad courts rather than a continuously pinched lane.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "scab-islands",
@@ -9515,7 +9558,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`folded-slab`，分离 `lobed-cushion`。暗红褐致密痂层、浅灰粉内层、蓝灰低床；3组不相连的不等双叶痂群（共6厚叶）围出偏心静床和两条交织宽路，组内短缝与组间宽路有尺度区别。最近邻 `grain-laminate`；主体为块状剥片而非长板挡砂，片内留安静大面、粗裂只在剥口。沿已验证lobed-cushion每实例2–3叶的实际合同，不把三组误写成三件单体；三组不共轴、不等宽长/高度，不能仅将wax-tongues复制三次。",
       "nearestWorldIds": [
         "grain-laminate"
@@ -9548,7 +9591,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9573,7 +9616,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9598,7 +9641,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9630,7 +9673,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Three disconnected paired leaves form wide crossed floor routes, distinct from short gaps within each pair. Deep red layered tops and pale section are read against blue floor; source grammar is still lobed cushion, not a new geometry family.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "foam-trenches",
@@ -9648,7 +9692,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`broken-shell`，纵列 `cellular-shell`。灰蓝干泡皮、奶灰内壁、暗紫床；不等泡腔断开后留一条连续侧沟与数处穿腔侧门。最近邻 `blister-field`；散腔之间的开放连接变成沿一侧展开的长沟，必须在轮廓与转弯上分开。",
       "nearestWorldIds": [
         "blister-field"
@@ -9681,7 +9725,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9706,7 +9750,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9731,7 +9775,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9763,7 +9807,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Main and lower arcs open toward continuous side route; between-mouth position exposes different thickness and actual passage. Unlike porcelain-maw opposing throats, mouths align toward one side.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "resin-fall",
@@ -9781,7 +9826,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`gel-flow`，大台缘加低叶。深紫凝脂头、浅蓝灰断面、暖灰薄尾；单高头下方两个不同方向的低舌，外侧宽路和舌间短切口并存。最近邻 `reversed-flow`；重点是高头跨越低尾的厚度，不画流动瀑布、跨层走路或额外伤害。",
       "nearestWorldIds": [
         "reversed-flow"
@@ -9814,7 +9859,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9839,7 +9884,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9864,7 +9909,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9896,7 +9941,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Large high violet head has a cleaved asymmetric notch and raised partial layer; warm thin tails can be crossed. Physical high head vs low wake is distinct from reversed-flow low pooling.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "tendon-shelves",
@@ -9914,7 +9960,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`fibre-knot`，分足巨体。赭粉韧纤挤成偏斜厚头、蓝紫床、浅灰断端；两支承足之间有真缺口，外侧有宽迂回。最近邻 `monolith-sill`；竖向纤维拉伸与分足受力取代岩层平切，不做皮下器官。",
       "nearestWorldIds": [
         "monolith-sill"
@@ -9949,7 +9995,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -9974,7 +10020,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10000,7 +10046,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10032,7 +10078,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Repaired second native foot actual 20px keyboard passage and visible edge; first body/material unchanged by documented single-instance pose repair. Original B05 failure and finite scope preserved. Final enabled-source low/medium/severe seed20261005 current-shape frames additionally reviewed by root, with actual generated identity, camera viewport and facing verified.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "felt-basin",
@@ -10050,7 +10097,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`membrane-rim`，`cellular-shell`。灰紫压毡表皮、浅暖纤层内缘，低平床细节安静；两不等浅腔之间是一段实厚折隔，断口朝外。最近邻 `pallid-membrane`；多腔和压层必须成立，不能以“毡”命名平滑薄膜。",
       "nearestWorldIds": [
         "pallid-membrane"
@@ -10083,7 +10130,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10108,7 +10155,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10133,7 +10180,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10165,7 +10212,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Low cavities have folded compressed skin and pale cut, and actual thick folded divider interrupts central connection. Actual route enters left cavity, moves around divider and reaches right cavity.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "cork-shelves",
@@ -10183,7 +10231,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`granular-ridge`，大台缘。赤褐多孔致密表皮、黄灰髓断面、墨蓝平床；一长厚岸与一短横岸形成不对称宽绕路。最近邻 `chalk-steps`；非粉末表皮、暗主体和单侧静区共同区别，孔感由原材料组织而非均匀黑点生成。",
       "nearestWorldIds": [
         "chalk-steps"
@@ -10216,7 +10264,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10241,7 +10289,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10266,7 +10314,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10298,7 +10346,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Near-vertical long western shore and short northern cross-shore make an asymmetric L beside large eastern court. Red-brown compact granular surface and pale coarse cuts differ from smooth white glazed shore.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "lacquer-court",
@@ -10316,7 +10365,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`folded-slab`，大台缘。浓酒红完整皮面、冷紫断层、浅灰蓝床；长而宽的低台旁仅一侧竖起碎壁，另一侧保留静庭。最近邻 `bleached-court`；叠压薄层与碎端区别于均质厚釉，不能只作红版白岸。",
       "nearestWorldIds": [
         "bleached-court"
@@ -10349,7 +10398,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10374,7 +10423,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10399,7 +10448,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10431,7 +10480,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Wide low layered front edge and separately raised torn fold to north have clear height and route roles. Broad southern floor remains open; north ridge is not a plain recolored shore.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "ribbed-delta",
@@ -10450,7 +10500,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "主 `gel-flow`、次 `fibre-knot`；低分叶积面穿过粗肋。琥珀胶、冷蓝肋与暗红灰床；沿干外床绕行或从肋间叶口穿过。最近邻 `gel-fibre`；必须读到三肋分槽的汇流组织，而非又一池盖一根束。",
       "nearestWorldIds": [
         "gel-fibre"
@@ -10483,7 +10533,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10508,7 +10558,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10533,7 +10583,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10565,7 +10615,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Four high fibrous ribs bound slots under a shared back; low amber gel leaf surface meets their open ends, unlike a single fibre crossing a pool. Actual slot entry and 1168px outer route around high back are distinct.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "bladder-weave",
@@ -10584,7 +10635,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "主 `membrane-rim`、次 `fibre-knot`；多腔厚膜被两条斜纤牵住。淡粉腔面、深蓝纤锚、紫灰床；腔口错侧，纤锚实际切分内外路线。最近邻 `tension-membrane`；平膜牵角变成腔与束互卡，拒绝蛛网细线和单纯装饰拉绳。",
       "nearestWorldIds": [
         "tension-membrane"
@@ -10617,7 +10668,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10642,7 +10693,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10667,7 +10718,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10699,7 +10750,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Pink thick membrane cavities and blue high fibrous anchors retain separate cut and surface roles. Two anchors are real barriers between actual left/right cavity routes, not decorative thread.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "flake-thicket",
@@ -10717,7 +10769,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`folded-slab`，错列 `pleated-sheet`。灰黄干层、深蓝断口、暗紫床；3片高薄折板形成短斜缝，外侧始终保留较长绕路。最近邻 `schist-shear`；立起薄叶而非平长层床，玩家不能被“薄”误导为可穿。",
       "nearestWorldIds": [
         "schist-shear"
@@ -10750,7 +10802,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10775,7 +10827,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10800,7 +10852,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10832,7 +10884,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Three unequal differently oriented dry folded plates make sequential oblique gaps with larger northern bypass; actual facing changes reveal thick pale cut edge against purple bare floor, not penetrable paper or parallel wall copies.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "resin-hollows",
@@ -10850,7 +10903,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`gel-flow`，`cellular-shell`。紫黑硬脂表皮、浅玫瑰内壁、蓝灰低床；3个粗厚空腔之间开口不齐，通路转向而不闭锁。最近邻 `wax-tongues`；由低铺叶变为有内腔的凝固厚体，仍不做宝石晶体或玻璃球。",
       "nearestWorldIds": [
         "wax-tongues"
@@ -10883,7 +10936,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10908,7 +10961,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10933,7 +10986,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -10965,7 +11018,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Three offset major hard-gel cavities are entered from differing mouth directions, with lower residual arcs beside them. Dark purple continuous skin and rose thick cuts differ from blue floor; actual full-body route visits all three mouths.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "sentinel-mass",
@@ -10983,7 +11037,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`folded-slab`，单个分足巨体。普鲁士蓝高体、浅灰层端、低饱和紫灰床；主体只占一处但跨视口，静区目标大于前组，足间短口对照宽外圈。最近邻 `monolith-sill`；保持单巨体明确剪影，以高窄分足和更长暴露外圈区别，若只有大小差则退回重排。",
       "nearestWorldIds": [
         "monolith-sill"
@@ -11016,7 +11070,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11041,7 +11095,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11066,7 +11120,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11098,7 +11152,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Repaired joined high primary body and lower broad shoulder form two differently directed feet. Actual west-to-south new passage and visible high/low material joint resolve original palette/proportion-only duplicate. Final enabled-source low/medium/severe seed20261005 current-shape frames additionally reviewed by root, with actual generated identity, camera viewport and facing verified.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "stepped-bowl",
@@ -11116,7 +11171,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`broken-shell`，两段大台缘。暖粉厚壳、蓝灰内断层、淡灰裸床；两段朝内的折岸在不同位置留宽口，围出不闭合偏心庭，内外通道形成错阶；不虚称共享terrace-shelf能直接生成圆弧碗。最近邻 `porcelain-maw`；不向喉部收窄，而是绕不同开口换环。所有站位仍在同一XY地面。",
       "nearestWorldIds": [
         "porcelain-maw"
@@ -11149,7 +11204,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11174,7 +11229,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11199,7 +11254,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11231,7 +11286,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Two differently oriented offset thick banks enclose a real open court and side entrances; actual north/south views distinguish upper cut face and lower floor.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "draped-bay",
@@ -11250,7 +11306,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "主 `membrane-rim`、次 `folded-slab`；一条高褶幕绕过独立巨块后展开。苍蓝灰膜、暗酒灰柱与暖灰静床；入口先见一段幕侧，转角后是宽静内湾。最近邻 `pale-sail`；双幕挤道变成单幕围湾，暗湾不是新增吞光或无来源环境光。",
       "nearestWorldIds": [
         "pale-sail"
@@ -11283,7 +11339,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11308,7 +11364,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11333,7 +11389,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11365,7 +11421,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Same supported junction viewed with measured west/east facing shows wide folded membrane and separate high laminated mass with actual bare-floor gap; prior incomplete combination evidence retained.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "ember-cushions",
@@ -11383,7 +11440,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`gel-flow`，破环 `lobed-cushion`。赤褐厚叶、灰白裸床、暗紫断层；四组不等双叶（共八叶）围成破环，中心静床被两个主要宽缺口连到外侧。最近邻 `scab-islands`；圆缓压垫与锋利层痂区别必须出现在接地剖面、表皮与剪影。",
       "nearestWorldIds": [
         "scab-islands"
@@ -11416,7 +11473,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11441,7 +11498,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11466,7 +11523,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11498,7 +11555,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Unequal thick peripheral lobes border a throughgoing bare central court with north/south openings; source skin and real cut edge are visible where not swallowed.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "splinter-rotunda",
@@ -11516,7 +11574,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`fibre-knot`，3组不等角 `rib-vault`。浅铜灰纤维、靛蓝床、粉灰断束；三段朝内高肋围住静庭，留三个不同宽度的开口。最近邻 `root-cistern`；分段朝内支承与弯连续根围不同，拒绝完整放射车轮。",
       "nearestWorldIds": [
         "root-cistern"
@@ -11549,7 +11607,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11574,7 +11632,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11599,7 +11657,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11631,7 +11689,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Three unequal inward rib groups read around a large offset bare court, with actual west/central/east/north approaches. 02 south and 03 west show distinct backed ribs; 04 west exposes northern approach. Unlike root-cistern paired courts, this is one broad interior connecting differently oriented free ends. Fibrous thickness and cut ends remain visible against blue bed.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "quilted-scars",
@@ -11649,7 +11708,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`membrane-rim`，不等 `lobed-cushion`。暗胭脂厚膜、浅灰紫折面、冷蓝床；四组不等双叶厚膜（共八叶）通过两处低薄面连接，路径在高片之间交叉。最近邻 `satin-fan`；单大片开阔低扇变成厚片散置的多口平面，颜色分区必须依附各片实际皮层，不能布丁拼色。",
       "nearestWorldIds": [
         "satin-fan"
@@ -11682,7 +11741,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11707,7 +11766,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11732,7 +11791,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11764,7 +11823,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "02 north/south show multiple separated thick leaf ends around low connecting membrane which the player actually crosses. Unlike pleated long mother-sheet or felt concave bowls, there is no continuous tall partition or cavity: interleaved diagonal routes pass leaf groups. Different from ember peripheral broken ring with bare central court.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "silt-colonnade",
@@ -11782,7 +11842,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "`granular-ridge`，错列分足巨体。灰白压实外皮、铁红粒断面、深蓝灰床；3处高堆柱错位形成两条不同暴露度的宽路。最近邻 `cork-shelves`；离散高体间可穿行，和连续厚岸的贴边绕路不同，顶面不能像普通石墩加砂点。",
       "nearestWorldIds": [
         "cork-shelves"
@@ -11815,7 +11875,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11840,7 +11900,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11865,7 +11925,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11897,7 +11957,8 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "First and second feet were each crossed through their precise native 20px L paths by actual input. Coarse grey pressed granular facets, iron-red cleaved edges and blue bare beds distinguish material roles. Separated bodies require an exposed transfer before the differently oriented second inner turn; unlike continuous cork banks or connected sentinel high/low shoulders.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
-      }
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
     },
     {
       "id": "shell-causeway",
@@ -11916,7 +11977,7 @@
       },
       "implementation": "implemented",
       "integration": "production",
-      "invalidated": false,
+      "invalidated": true,
       "distinctness": "主 `broken-shell`、次 `folded-slab`；倒伏多腔壳的断壁形成斜向双岸，低片填一侧小口。深钴蓝釉、灰粉内壁、淡暖层床；长斜道有中段横口，外侧另绕。最近邻 `shell-chain`；成串离散壳改为连续斜岸和真实横口，不能仅旋转整张旧壳链。",
       "nearestWorldIds": [
         "shell-chain"
@@ -11949,7 +12010,7 @@
       "grades": {
         "low": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11974,7 +12035,7 @@
         },
         "medium": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -11999,7 +12060,7 @@
         },
         "severe": {
           "integration": "production",
-          "invalidated": false,
+          "invalidated": true,
           "review": {
             "technical": "pass",
             "visual": "pass",
@@ -12031,6 +12092,734 @@
         "technical": "每档32普通、8边界和8保留种子；当前跨引擎身份、正式进入/冷续及集中技术审阅已绑定。",
         "visual": "Actual first cavity entry, low middle crosspass, and opposing second cavity entry establish oblique opposing banks with a transverse walkable low layer. Blue outer shell and pink cut inner lip remain physically thick; low secondary arcs are visibly subordinate. Unlike same-side foam mouths, this route changes side through a low connection.",
         "experience": "三档各两个原定种子的实际键盘过程，每档至少一次非入口搜取后撤回同一已结算档；失败、空返和死亡完整保留。"
+      },
+      "invalidationReason": "I10新出发已采用修订6；保留本条修订5历史证据，当前资格待源码/几何/RGBA连续性及正式恢复证明。"
+    },
+    {
+      "id": "cleft-tableland",
+      "label": "裂开台地",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "连体母面已去掉三片独立封边；低档断肩外边清楚，重档两地颈可读，真正缺地与仍有材质的可走地床分开。",
+      "nearestWorldIds": [
+        "bleached-court"
+      ],
+      "knownVisualLimitations": "3103一固定seed三档关键正常静帧内部审阅通过；尚在576生成/24双种子实际过程验证，不计最终合格、正式启用或真人认可。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "fallen-spines",
+      "label": "倒伏脊段",
+      "family": "fibre-knot",
+      "families": [
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "低重同角度均可读连续长束、破碎短端与冷蓝地床；错位内路不是贴色沟。",
+      "nearestWorldIds": [
+        "amber-ribs",
+        "rib-vault"
+      ],
+      "knownVisualLimitations": "3103一固定seed三档关键正常静帧内部审阅通过；尚在576生成/24双种子实际过程验证，不计最终合格、正式启用或真人认可。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "clamped-shore",
+      "label": "夹壳岸",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell",
+        "gel-flow"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "内壁从外壳转入受压弧面，浅断端与紫胶低尾分开；不再是一块平切内板。root本人修改该形体，作者art对其进行了独立审阅。",
+      "nearestWorldIds": [
+        "shell-gel-delta"
+      ],
+      "knownVisualLimitations": "3103一固定seed三档关键正常静帧内部审阅通过；尚在576生成/24双种子实际过程验证，不计最终合格、正式启用或真人认可。",
+      "review": {
+        "technical": "pending",
+        "visual": "changes-required",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "changes-required",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "changes-required",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "changes-required",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "torn-reservoir",
+      "label": "撕底浅庭",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "连续红皮转入灰亮卷端，旧三个厚多边形拼片已消除；皮面、缺口与裸床关系成立。",
+      "nearestWorldIds": [
+        "pleated-hide",
+        "quilted-scars"
+      ],
+      "knownVisualLimitations": "3103一固定seed三档关键正常静帧内部审阅通过；尚在576生成/24双种子实际过程验证，不计最终合格、正式启用或真人认可。",
+      "review": {
+        "technical": "pending",
+        "visual": "changes-required",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "changes-required",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "changes-required",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "changes-required",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "braided-seam",
+      "label": "编裂长滩",
+      "family": "fibre-knot",
+      "families": [
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "三条不同宽度纵床由两处错位地颈串联，真实缺地迫使在中床转向。",
+      "nearestWorldIds": [
+        "cleft-tableland",
+        "fallen-spines"
+      ],
+      "knownVisualLimitations": "作者数据与20px身体路线前检完成；尚未绑定正常画面、固定双种子搜撤及正式进入，未计合格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "scalloped-reach",
+      "label": "缺唇长岸",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "三段不等凹湾切开外岸，厚壳留在岸尖；内陆宽路与临湾侧路可分辨。",
+      "nearestWorldIds": [
+        "clamped-shore",
+        "shell-causeway"
+      ],
+      "knownVisualLimitations": "作者数据与20px身体路线前检完成；尚未绑定正常画面、固定双种子搜撤及正式进入，未计合格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "offset-pan",
+      "label": "错台浅原",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "三横床沿上下错位地颈串联，以短断肩标记跨床与回程。",
+      "nearestWorldIds": [
+        "cleft-tableland",
+        "braided-seam"
+      ],
+      "knownVisualLimitations": "作者数据与20px身体路线前检完成；尚未绑定正常画面、固定双种子搜撤及正式进入，未计合格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "thin-delta",
+      "label": "薄脂分汊",
+      "family": "gel-flow",
+      "families": [
+        "gel-flow"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "两条有厚断沿终点的袋路与南侧完整回环；低胶薄面、厚头和裸床分工。",
+      "nearestWorldIds": [
+        "clamped-shore",
+        "shell-gel-delta"
+      ],
+      "knownVisualLimitations": "作者数据与20px身体路线前检完成；尚未绑定正常画面、固定双种子搜撤及正式进入，未计合格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
       }
     }
   ],
@@ -24520,6 +25309,25 @@
         "docs/qa/artifacts/r100-i07-i09/final-art-review.json",
         "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json"
       ]
+    },
+    {
+      "id": "R100-R6-P19-RECOVERY",
+      "kind": "automated",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projected-build-comparison.json",
+      "evidenceSha256": "8311ed7c11b3c471b343a2c962e9c3d9130033e06adfdd0f7f4fa83b1d1935c5",
+      "scope": "P19修订5封存去重：156份原保存配方/完整地图/四RGBA精确，AST只容许52个ID成员查询投影，构建实际gzip减少551.42kB。",
+      "limitations": "当前包仍较原基线多124.54kB，不授予首屏全资产<2MB、实际加载时间、r6全部世界或人审通过。"
+    },
+    {
+      "id": "R100-R6-B01-ART-REPAIR",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b01-independent-art-review.json",
+      "evidenceSha256": "6c09736b3782a9f8a04032fa6cf6f06ec7a19a1a1cdf80fb31b070a2f6b44c28",
+      "scope": "B01四世界三档正常有限视野；作者22张、root列明14张静帧，几何/足印合同和修前失败保留，P20–P24具体缺陷修复。",
+      "limitations": "一固定seed、受限关键视角；无完整影片/全种子资格、实际双种子搜撤、真人或听感通过。",
+      "purpose": "bounded-art-review"
     }
   ],
   "risks": [
@@ -24921,6 +25729,92 @@
       "resolution": "将被否决的孤立高体改为相连且不对称的高低双肩，形成不同朝向的两个真口；其他 47 世界和共享代码保持不变。旧 144 格整组归档，修后美术、游玩和技术证据均绑定当前版本。",
       "resolutionEvidence": "作者与源码保护、双肩真实交接报告、修后完整 144 格资格和限定身份复审共同证明构造关系变化；最终绑定继续覆盖两个真口及其他 47 世界不变。",
       "remainingRequirement": ""
+    },
+    {
+      "id": "R100-P19",
+      "title": "修订5封存重复包含历史执行器，首屏压缩包增加约676kB",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "code/pipeline",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-P19-RECOVERY"
+      ],
+      "note": "旧build game-config 7102.34kB/gzip1944.64kB，新9650.96kB/gzip2620.60kB，静态入口链使其在首屏加载。尚无实际加载耗时证据，不能由包大小声称卡顿。保留完整freeze，派生只接受revision5的专用闭包，外层历史分派和同步合同保持。 证据：docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projected-build-comparison.json 与 projection-exact-156.json；原始失败及完整闭包未删。",
+      "resolutionProgress": "保留完整封存与第一派生档，正式revision5恢复只引入可重建ID投影闭包。全156保存配方/完整地图/四层原RGBA哈希精确，误入版本与未知ID拒绝，构建与typecheck通过；root独立核对AST消费者约束、156唯一世界/等级和绑定来源SHA。",
+      "remainingRequirement": "具体重复封存缺陷已解决。当前game-config gzip2069.18kB，较本轮初稿减少551.42kB，仍较原基线增加124.54kB；不代表首屏全部资产<2MB或加载时间通过。继续在最终性能/加载记录实际成本。",
+      "resolution": "保留完整封存与第一派生档，正式revision5恢复只引入可重建ID投影闭包。全156保存配方/完整地图/四层原RGBA哈希精确，误入版本与未知ID拒绝，构建与typecheck通过；root独立核对AST消费者约束、156唯一世界/等级和绑定来源SHA。"
+    },
+    {
+      "id": "R100-P20",
+      "title": "构造版本4缺少真实发光裂面和同源光源位置",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "code/art",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "note": "四个新profile初稿未生成material3及joint；surface-fields仅由material3扩散结构侵蚀，因此对应结构侵蚀/发光/活动局部光缺失。Root后续完整核对source-cells确认：中心fallback只用于选择已有material3，找不到实际像素时会跳过，不会实际生成悬空灯；先前对漂浮光的推断已撤回。旧Host存在不能代替结构侵蚀。",
+      "resolution": "3103冻结源：局部真实几何/断面/原足印检查通过，作者三档正常视野与root列明静帧独立复审通过；仅关闭本条具体缺陷，世界生成/实际搜撤资格单独执行。"
+    },
+    {
+      "id": "R100-P21",
+      "title": "裂床与撕膜的新实体断面在XY顶视中投影为零",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "code/art",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "note": "Root独立几何检查：fracture-fan/torn-sheet代表solid的32/106个材质1三角全部XY面积0。竖直面存在不代表当前无Z投影的画面能看见厚度；不能以三角数量签边界清晰。诊断见b01-geometry/root-face-area-review.json，非最终源绑定。",
+      "resolution": "3103冻结源：局部真实几何/断面/原足印检查通过，作者三档正常视野与root列明静帧独立复审通过；仅关闭本条具体缺陷，世界生成/实际搜撤资格单独执行。"
+    },
+    {
+      "id": "R100-P22",
+      "title": "首批裂台正常画面读成规则拼板，未形成自然裂床",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "art/code",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "note": "Root及作者观察3101冻结源medium实帧：裂台3个规则凸片与整圈等宽倒角，内部连接也显出切缝；顶面和地床的绘制关系过近。边界可见与身体可达不等于美术成立。原图位于b01-medium/cleft-tableland-medium/01-approach-north.png。",
+      "resolution": "3103冻结源：局部真实几何/断面/原足印检查通过，作者三档正常视野与root列明静帧独立复审通过；仅关闭本条具体缺陷，世界生成/实际搜撤资格单独执行。"
+    },
+    {
+      "id": "R100-P23",
+      "title": "首批撕膜卷边读成厚多边形拼片",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "shapes",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "note": "3102正常视野卷端与密场两帧，作者/root均否决；形体需共享连续母皮与真实卷曲，不能靠涂更多纹理。",
+      "resolution": "3103冻结源：局部真实几何/断面/原足印检查通过，作者三档正常视野与root列明静帧独立复审通过；仅关闭本条具体缺陷，世界生成/实际搜撤资格单独执行。"
+    },
+    {
+      "id": "R100-P24",
+      "title": "首批夹壳内壁过平且绿色层线过齐",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "root",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B01-ART-REPAIR"
+      ],
+      "note": "3102材料接触与胶尾视角中，两材交接实际存在，但壳内面像平切斜板。root改为连续曲率、不等受压内唇和短端真实断口；既有600三角预算保持，九个实例/等级足印逐像素不变。正常修后图待审。",
+      "resolution": "3103冻结源：局部真实几何/断面/原足印检查通过，作者三档正常视野与root列明静帧独立复审通过；仅关闭本条具体缺陷，世界生成/实际搜撤资格单独执行。"
     }
   ],
   "changeLog": [
@@ -25045,6 +25939,21 @@
       "date": "2026-10-06",
       "kind": "checkpoint",
       "note": "最后4世界实现并登记52候选；原48及共享画法保持。B07近似哨体改高低连肩/双向足口，实际补图内部通过。新32尚未正式启用，继续最终全库验证。"
+    },
+    {
+      "date": "2026-10-06",
+      "kind": "authorization",
+      "note": "用户授权推I10/11/12。I10进入目标与首批能力设计，按72/92/108推进；原52修订5与已结案范围保留，新56尚未合格或正式启用。"
+    },
+    {
+      "date": "2026-10-06",
+      "kind": "implementation",
+      "note": "修订6接入开发，首4正在完成真实缺地浅断沿；旧52修订5资格暂不计入当前合格数，历史I01–I09达成保留，待严格连续性后恢复限定资格。"
+    },
+    {
+      "date": "2026-10-07",
+      "kind": "implementation",
+      "note": "累计60作者候选。B01四世界正常图审通过、576生成通过，双种子实际搜撤执行中；B02四世界身体通路修正完成，待正常图审。旧52限定继承已独审，不抹掉r6正式进入/恢复缺口。"
     }
   ],
   "qualityPlan": {

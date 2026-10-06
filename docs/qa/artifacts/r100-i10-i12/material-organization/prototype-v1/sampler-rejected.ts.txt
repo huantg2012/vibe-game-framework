@@ -1,0 +1,78 @@
+/** Material microstructure only. Geometry supplies every cavity and cut face.
+ * Preparation-worker code; never reads gameplay, light, or hidden contents. */
+import type { WorldMaterialOrganization } from './r100-world-appearance';
+import { materialNoise } from './material-noise';
+
+export interface MaterialOrganizationSample {
+  /** Coordinates of a small source-brush fragment, in native material pixels. */
+  u: number;
+  v: number;
+  blend: number;
+  /** Bounded pigment variation, not baked illumination or displacement. */
+  tone: number;
+  roughness: number;
+}
+
+const unitHash = (x: number, y: number, seed: number): number => {
+  let value = Math.imul(x, 374761393) ^ Math.imul(y, 668265263) ^ seed;
+  value = Math.imul(value ^ value >>> 13, 1274126177);
+  return ((value ^ value >>> 16) >>> 0) / 4294967296;
+};
+const clamp = (value: number): number => Math.max(0, Math.min(1, value));
+
+/** Caller owns the output. The slot is the actual geometric material slot:
+ * 0 skin, 1 cut, 2 inner wall, 3 pollution joint. A dark source pixel never
+ * creates a pore; porous walls have to exist in the mesh before this is called. */
+export function sampleMaterialOrganization(kind: WorldMaterialOrganization,
+  u: number, v: number, slot: number, region: number, seed: number,
+  out: MaterialOrganizationSample): void {
+  out.u = u; out.v = v; out.blend = 0; out.tone = 0; out.roughness = 0;
+  if (slot === 3) return;
+  if (kind === 'short-fibre') {
+    // A few finite strands share each compressed tuft's direction. Their
+    // lengths end inside the tuft, unlike the old membrane's sweeping veins.
+    const cellSize = 13, cellX = Math.floor(u / cellSize), cellY = Math.floor(v / cellSize);
+    const pressure = materialNoise(u / 47, v / 38, seed ^ 0x9145);
+    let strongest = 0, sourceU = u, sourceV = v, fibreTone = 0;
+    for (let cy = cellY - 1; cy <= cellY + 1; cy++) for (let cx = cellX - 1; cx <= cellX + 1; cx++) {
+      const centerU = (cx + .2 + unitHash(cx, cy, seed ^ 0x4711) * .6) * cellSize;
+      const centerV = (cy + .2 + unitHash(cx, cy, seed ^ 0x7651) * .6) * cellSize;
+      const angle = (unitHash(cx, cy, seed ^ 0x1295) - .5) * 2.1 + (pressure - .5) * .8;
+      const ca = Math.cos(angle), sa = Math.sin(angle), dx = u - centerU, dy = v - centerV;
+      const along = dx * ca + dy * sa, across = -dx * sa + dy * ca;
+      const halfLength = 3.4 + unitHash(cx, cy, seed ^ 0x6283) * 4.4;
+      // Three offset, unequal strands make one tuft. The fine grain still
+      // comes from the accepted painted source, not independent pixel noise.
+      for (let strand = 0; strand < 3; strand++) {
+        const offset = (strand - 1) * (1.7 + pressure * .8);
+        const length = halfLength * (1 - strand * .13);
+        const bend = Math.sin(along / (length + 1) * 1.7) * .55;
+        const lateral = Math.abs(across - offset - bend);
+        const end = clamp((length - Math.abs(along + strand * .7)) / 1.3);
+        const weight = end * clamp((1.45 - lateral) / .75);
+        if (weight <= strongest) continue;
+        strongest = weight;
+        sourceU = along * .7 + cx * 17.3;
+        sourceV = lateral * 2.2 + cy * 19.7 + strand * 7;
+        fibreTone = (.018 + pressure * .045) * (strand === 1 ? -1 : 1);
+      }
+    }
+    const torn = slot === 1 || region === 2 || region === 3;
+    out.u = sourceU; out.v = sourceV;
+    out.blend = strongest * (torn ? .76 : region === 1 ? .58 : .64);
+    out.tone = strongest * fibreTone;
+    out.roughness = torn ? .93 : region === 1 ? .84 : .89;
+    return;
+  }
+  // Pore architecture is geometry-owned. This treatment only separates the
+  // continuous skin, connected cut matrix and compact inner wall. No dark
+  // circles, thresholds, alpha holes, or fake depth are added to the texture.
+  const tissue = materialNoise(u / 29, v / 23, seed ^ 0x1593);
+  const compression = materialNoise(u / 61, v / 51, seed ^ 0x7031);
+  const exposed = slot === 1 || slot === 2 || region === 3;
+  out.u = u * (exposed ? .73 : .48) + (compression - .5) * 4;
+  out.v = v * (exposed ? .55 : .48) + (tissue - .5) * 3;
+  out.blend = exposed ? .68 : .35;
+  out.tone = (tissue - .5) * (exposed ? .045 : .022);
+  out.roughness = slot === 2 ? .88 : slot === 1 ? .94 : .76;
+}

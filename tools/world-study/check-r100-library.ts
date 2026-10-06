@@ -47,7 +47,7 @@ function qualify(input: QualificationCase) {
     const a = enemy.patrol.waypoints[index - 1]!, b = enemy.patrol.waypoints[index]!;
     assert.equal(bodyDisplacementFraction(grid, { x: (a.col + .5) * 8, y: (a.row + .5) * 8 }, 10, 10, (b.col - a.col) * 8, (b.row - a.row) * 8), 1);
   }
-  assert.equal(requested.package.algorithmRevision, 5);
+  assert.equal(requested.package.algorithmRevision, 6);
   assert(layout.enemySpawns.every(enemy => enemy.patrol.mode === 'pingpong' && enemy.patrol.waypoints.length >= 2), 'new worlds cannot silently fall back to a permanent guard');
   const patrolWindows = (native.diagnostics.expedition as { patrolWindows: { id: string; durationMs: number }[] }).patrolWindows;
   const searchNodes = [...layout.kindlingNodes, ...layout.contaminantNodes].filter(node => node.tier !== 'safe');
@@ -173,6 +173,7 @@ if (!isMainThread) {
     assert.equal(new Set([...priorRecords, ...resume.cases].map(keyOf)).size, resume.expectedCases, 'Resume list must cover every missing original case');
     assert(priorRecords.filter(row => !row.ok).every(row => resume.cases.some(next => keyOf(next) === keyOf(row) && next.cohort === row.cohort)), 'Every original failure retains its exact case and cohort');
   }
+  const compactReport = process.argv.includes('--compact-report');
   const reportPath = resolve(arg('--report') ?? 'docs/qa/artifacts/r100-i03-i06/native-library.json');
   const folder = dirname(reportPath); mkdirSync(folder, { recursive: true });
   const normal = Array.from({ length: 32 }, (_, i) => ((i + 1) * 0x100000000 / 33) >>> 0);
@@ -241,7 +242,9 @@ if (!isMainThread) {
     source, timeoutMs, concurrency, worlds: new Set(cases.map(row => row.world)).size,
     grades: new Set(cases.map(row => `${row.world}/${row.grade}`)).size, seeds, cases: cases.length,
     successful: rows.length, failures, transferred: rows.length, attemptDistribution: distribution,
-    workerDurationMs: { p50: timings[Math.floor(timings.length * .5)], p95: timings[Math.floor(timings.length * .95)], p99: timings[Math.floor(timings.length * .99)], max: timings.at(-1) }, rows };
+    workerDurationMs: { p50: timings[Math.floor(timings.length * .5)], p95: timings[Math.floor(timings.length * .95)], p99: timings[Math.floor(timings.length * .99)], max: timings.at(-1) },
+    rawCases: { path: log, sha256: sha(readFileSync(log)), records: caseRecords.length },
+    rows: compactReport ? undefined : rows };
   writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
   if (resume) {
     const latest = new Map([...priorRecords, ...caseRecords].map(row => [keyOf(row), row]));
@@ -256,7 +259,8 @@ if (!isMainThread) {
       caseList: { path: resolve(caseListPath!), sha256: sha(readFileSync(caseListPath!)) },
       originalFailures: priorRecords.filter(row => !row.ok),
       retries: caseRecords.filter(row => priorRecords.some(previous => keyOf(previous) === keyOf(row))),
-      rows: successful.map(row => row.value).sort((a, b) => keyOf(a!).localeCompare(keyOf(b!))) };
+      rawCases: report.rawCases,
+      rows: compactReport ? undefined : successful.map(row => row.value).sort((a, b) => keyOf(a!).localeCompare(keyOf(b!))) };
     assert.equal(aggregate.cases, resume.expectedCases);
     writeFileSync(resolve(folder, 'aggregate.json'), JSON.stringify(aggregate, null, 2) + '\n');
   }

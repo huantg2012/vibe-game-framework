@@ -50,6 +50,12 @@ function validateMaterial(material: SearchRemainsMaterial): void {
 export function createSearchRemainsPixels(profile: WorldProfile, seed: number, painting?: SearchRemainsMaterial): SearchRemainsPixels {
   const definition = SEARCH_REMAINS.find(row => row.worldId === profile.id);
   if (!definition) throw new Error(`Search remains: no source grammar for world ${profile.id}`);
+  return createSearchRemainsGrammarPixels(profile, seed, definition.grammar, painting);
+}
+
+/** Pure source-grammar renderer, also used to review new fracture products before
+ * a world is authored. Production world selection always uses the CSV above. */
+export function createSearchRemainsGrammarPixels(profile: WorldProfile, seed: number, grammar: SearchRemainsGrammar, painting?: SearchRemainsMaterial): SearchRemainsPixels {
   if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('Search remains: expected an unsigned integer seed');
   if (painting) validateMaterial(painting);
   const pixels = new Uint8ClampedArray(WIDTH * HEIGHT * 4);
@@ -142,7 +148,7 @@ export function createSearchRemainsPixels(profile: WorldProfile, seed: number, p
   // Small contact patches underneath the supported fragments, not a surrounding
   // black ellipse or a stroke up the silhouette. Lighting still belongs to Rift.
   fill([[7, 20], [17, 19], [22, 21], [20, 23], [10, 23], [6, 22]], 'contact', 0);
-  switch (definition.grammar) {
+  switch (grammar) {
     case 'laminated-flakes': {
       plate([[4, 17], [12, 13], [27, 14], [25, 18], [14, 22], [6, 21]], 1, 0);
       plate([[6, 11], [18, 6], [25, 9], [23, 12], [16, 14], [10, 18], [4, 15]], 2, 1);
@@ -231,6 +237,32 @@ export function createSearchRemainsPixels(profile: WorldProfile, seed: number, p
       plate([[27, 20], [30, 17], [31, 20], [29, 23], [26, 22]], 1, 4);
       break;
     }
+    case 'compressed-fibre-fragments': {
+      // Unequal compressed tufts, with torn short ends. The continuous quiet
+      // planes and their exposed thickness carry the form, not a rope bundle.
+      plate([[3, 14], [7, 11], [13, 10], [18, 11], [23, 10], [28, 13], [26, 15], [28, 16], [23, 17], [20, 19], [14, 18], [9, 19], [5, 17], [2, 17]], 2, 0);
+      fill([[5, 16], [9, 16], [13, 15], [17, 16], [16, 18], [13, 17], [11, 19], [8, 18]], 'cut', 0);
+      fill([[19, 16], [23, 15], [25, 16], [23, 17], [21, 19], [19, 18]], 'top', 1);
+      plate([[24, 20], [27, 18], [30, 20], [29, 22], [25, 23], [22, 21]], 1, 2);
+      plate([[3, 21], [6, 20], [9, 21], [7, 23], [3, 22]], 1, 3);
+      break;
+    }
+    case 'porous-core-chips': {
+      // A broken pith chip has a dense outer skin and a thick porous cut. Each
+      // small cavity has an opaque inner floor; no alpha hole implies a passage.
+      plate([[7, 8], [12, 5], [20, 6], [25, 11], [23, 16], [17, 19], [10, 17], [6, 13]], 4, 0);
+      fill([[6, 13], [10, 15], [17, 16], [23, 13], [23, 18], [18, 22], [11, 20], [7, 18]], 'cut', 0);
+      fill([[9, 15], [12, 15], [15, 17], [14, 19], [11, 19], [9, 17]], 'inside', 0);
+      fill([[11, 18], [14, 18], [13, 19], [11, 19]], 'side', 0);
+      fill([[17, 16], [19, 16], [19, 18], [17, 18]], 'inside', 1);
+      fill([[17, 20], [19, 19], [20, 20], [18, 21]], 'inside', 1);
+      fill([[21, 15], [23, 14], [23, 16], [21, 17]], 'inside', 2);
+      plate([[24, 18], [27, 16], [31, 19], [29, 22], [25, 22], [23, 20]], 2, 3);
+      fill([[25, 19], [27, 18], [28, 20], [26, 21]], 'inside', 3);
+      plate([[3, 19], [5, 18], [8, 21], [6, 23], [3, 22]], 1, 4);
+      break;
+    }
+    default: throw new Error(`Search remains: unsupported source grammar ${String(grammar)}`);
   }
-  return { width: WIDTH, height: HEIGHT, pixels, grammar: definition.grammar, sourceId: painting?.source ?? profile.id };
+  return { width: WIDTH, height: HEIGHT, pixels, grammar, sourceId: painting?.source ?? profile.id };
 }

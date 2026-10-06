@@ -1,0 +1,94 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "command": [
+        "node",
+        "--check",
+        "tools/qa/r100-i09-continuous.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.025,
+      "log": "docs/qa/artifacts/r100-i10-i12/controller-revision6/continuous-syntax.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "tools/qa/r100-i09-continuous.mjs",
+        "--self-check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.275,
+      "log": "docs/qa/artifacts/r100-i10-i12/controller-revision6/continuous-selfcheck.log",
+      "logSha256": "c439e1296335d3b2643f3812a4369704f5d1e2eca4db476fca6c39031e1ed093"
+    },
+    {
+      "command": [
+        "node",
+        "tools/qa/r100-i09-continuous.mjs",
+        "--check-expansion-contract"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.264,
+      "log": "docs/qa/artifacts/r100-i10-i12/controller-revision6/continuous-expansion-contract.log",
+      "logSha256": "80b0b7e9faeae54fb2ebc8992e2ccabbc906eed13f8b259d5afa67d07fa489cc"
+    },
+    {
+      "command": [
+        "node",
+        "tools/qa/derive-r100-revision6-reviewer.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.032,
+      "log": "docs/qa/artifacts/r100-i10-i12/controller-revision6/reviewer-derivation-check.log",
+      "logSha256": "ffd67c673810ce9619c7dd7ee3591ab4e27e6044f6701e51fcc5613a4687d9d4"
+    },
+    {
+      "command": [
+        "node",
+        "tools/qa/derive-r100-revision6-reviewer.mjs",
+        "--self-check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.034,
+      "log": "docs/qa/artifacts/r100-i10-i12/controller-revision6/reviewer-derivation-selfcheck.log",
+      "logSha256": "5fbfbf0f97fe7cb16e4aef21df579b9a862f052caa03047a8a8fa9f02d5f63a1"
+    },
+    {
+      "command": [
+        "node",
+        "tools/qa/r100-revision6-review-continuous.mjs",
+        "--self-check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.035,
+      "log": "docs/qa/artifacts/r100-i10-i12/controller-revision6/reviewer-accounting-selfcheck.log",
+      "logSha256": "3539ada786e7bf1d87b1e8b5e31e16a5ef9f2d918dd37c2e6ef0254821821629"
+    }
+  ],
+  "sources": [
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "7680dd09c9d9a4989ecde5b0173efd72c6cd24fee33ecf272eb57330a4af2c60"
+    },
+    {
+      "path": "tools/qa/derive-r100-revision6-reviewer.mjs",
+      "sha256": "49f1597abd5c337abd82d7194ea7ababd1edb11d5f620707b9edbded0afd9b30"
+    },
+    {
+      "path": "tools/qa/r100-revision6-review-continuous.mjs",
+      "sha256": "28db9ca4224f48e06ea9fadf50521fbff80d58b45d01512c8a29a2fc5b0b57b5"
+    },
+    {
+      "path": "tools/qa/r100-i09-review-continuous-death-loss.mjs",
+      "sha256": "ecdeb748031d5ba0fe31a8240831271ce9b63e79170b01db5498ebf595c00707"
+    },
+    {
+      "path": "tools/qa/r100-i09-journey.mjs",
+      "sha256": "dfde2f7429261bb81008e1f341c7e862ee6d0f71bc8c629f553b948066022bb3"
+    }
+  ],
+  "scope": "Offline orchestration/admission/accounting only. Final108 pool and real48 unavailable; no gameplay, population or experience approval."
+}

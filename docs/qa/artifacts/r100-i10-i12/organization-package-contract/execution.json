@@ -1,0 +1,81 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.318,
+      "log": "docs/qa/artifacts/r100-i10-i12/organization-package-contract/codegen.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.433,
+      "log": "docs/qa/artifacts/r100-i10-i12/organization-package-contract/codegen-check.log",
+      "logSha256": "47f1d061e4b1f943527693c5a53bad5621a191247e67112a3246748866b54955"
+    },
+    {
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-revision6-contract.ts",
+        "--organizations"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.754,
+      "log": "docs/qa/artifacts/r100-i10-i12/organization-package-contract/contracts.log",
+      "logSha256": "efa0a5459d608595542efd6b8141a598a7bde4afa5fb54793bfec9a60aa4ed00"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.8,
+      "log": "docs/qa/artifacts/r100-i10-i12/organization-package-contract/typecheck.log",
+      "logSha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    }
+  ],
+  "sources": [
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+    },
+    {
+      "path": "tools/world-study/codegen-r100-packages.mjs",
+      "sha256": "f12b31f93080a1d895f5c17be5f465414515798cb5321b76b37092fc51c1db0b"
+    },
+    {
+      "path": "tools/world-study/r100-qualification-manifests.mjs",
+      "sha256": "fc578db9afccb28e4fd10845ab5dc9f2cee442fb0e8897457069eef525a15231"
+    },
+    {
+      "path": "tools/world-study/check-r100-revision6-contract.ts",
+      "sha256": "94eb77a8a82b1de6cd4e8170aed67aee7912c4241efde849848f55ea49a5d511"
+    },
+    {
+      "path": "data/rift-material-organizations.csv",
+      "sha256": "062b5ec22851ee681dfd57eb8c9ce1c384b27457651ff0742efe0363f921c0ad"
+    },
+    {
+      "path": "src/generated/r100-package-manifest.ts",
+      "sha256": "9409900ef0e9c6d530db5a0a76aa5c64a4f29d7dcbf964e700a9a97902c3216f"
+    },
+    {
+      "path": "src/generated/r100-material-organizations.ts",
+      "sha256": "e5993c8c97a898d05aabae42a8a6505604927b7f23663cb2b1e98def6c6b9474"
+    }
+  ],
+  "scope": "Synthetic recipe/material integrity contracts only; all authored worlds remain unselected for organization; no art or game qualification."
+}

@@ -1,0 +1,91 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-source/source-snapshot.json",
+    "sha256": "7a54d7fcac183cc7c14cffa1f217331ce6b879881a8e1dc786953957bfa178ca"
+  },
+  "plan": {
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "cases": [
+      {
+        "world": "fallen-spines",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-inner-stagger",
+            "x": 612,
+            "y": 412,
+            "faces": [
+              "west",
+              "north"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "clamped-shore",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-material-contact",
+            "x": 532,
+            "y": 428,
+            "faces": [
+              "north",
+              "east"
+            ]
+          },
+          {
+            "label": "02-opposite-bank",
+            "x": 668,
+            "y": 348,
+            "faces": [
+              "south"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "torn-reservoir",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-rolled-edge",
+            "x": 460,
+            "y": 508,
+            "faces": [
+              "north"
+            ]
+          },
+          {
+            "label": "02-density-field",
+            "x": 612,
+            "y": 340,
+            "faces": [
+              "west",
+              "south"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "ed5d215d42c6067f27a6b82bdbe58547bee35b60ee17a41c088a3f3fa72c0ee2",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "fallen-spines",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": []
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "failed",
+  "failure": "TimeoutError: page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3101/r100-gym.html?world=fallen-spines&grade=medium&seed=20261005&loadout=bare\", waiting until \"load\"\u001b[22m\n",
+  "stack": "page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3101/r100-gym.html?world=fallen-spines&grade=medium&seed=20261005&loadout=bare\", waiting until \"load\"\u001b[22m\n\n    at /Users/yilungao/coh/tools/qa/capture-r100-expansion-art.mjs:29:16"
+}

@@ -1,0 +1,6 @@
+{
+  "status": "failed-before-publish",
+  "error": "Missing native qualification dependency package-lock.json",
+  "cause": "Browser source snapshot copies src/data/public, not package-lock. No package output was published.",
+  "correction": "Use an isolated read-only view of frozen src/data/public plus a copied package-lock verified byte-exact to d194 baseline; leave browser snapshot untouched."
+}

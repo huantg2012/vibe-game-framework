@@ -5,12 +5,16 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {reconcileTerminalPickups} from './r100-observed-searches.mjs';
+import {collectI09SearchReceipts} from './r100-i09-search-receipts.mjs';
 
 export function buildPlaySummary(planPath, bytes = file => fs.readFileSync(file), exists = file => fs.existsSync(file)) {
 const read = file => JSON.parse(bytes(file));
 const sha = file => createHash('sha256').update(bytes(file)).digest('hex');
 const plan = read(planPath), grades = ['low', 'medium', 'severe'], seeds = [20261005, 3075192741];
 assert.equal(plan.version, 1);
+const algorithmRevisions = plan.algorithmRevisions ?? [5];
+assert(algorithmRevisions.length && new Set(algorithmRevisions).size === algorithmRevisions.length
+  && algorithmRevisions.every(revision => revision === 5 || revision === 6), 'Declare supported source revisions explicitly');
 assert(plan.worlds?.length && new Set(plan.worlds).size === plan.worlds.length);
 assert(plan.batches?.length && new Set(plan.batches).size === plan.batches.length);
 const key = row => `${row.world}/${row.grade}/${row.seed}`;
@@ -20,6 +24,21 @@ const attempts = [], sources = [], scheduled = new Set();
 for (const folder of plan.batches) {
   const policyPath = path.join(folder, 'policy-freeze.json'), batchPath = path.join(folder, 'batch-report.json');
   const policy = read(policyPath), batch = read(batchPath);
+  const algorithmRevision = policy.algorithmRevision ?? 5;
+  assert(algorithmRevisions.includes(algorithmRevision), 'Batch revision is outside the summary plan');
+  const controllerPolicyRevision = policy.controllerPolicyRevision ?? 13;
+  assert([13, 15].includes(controllerPolicyRevision));
+  if (algorithmRevision === 6) {
+    assert.equal(controllerPolicyRevision, 15, 'Expansion batches require the actual-pickup controller');
+    const reference = policy.controllerDerivation; assert(reference, 'Revision6 input adapter receipt is required');
+    assert.equal(sha(reference.path), reference.sha256);
+    const derived = read(reference.path);
+    assert.equal(derived.inputPolicyRevision, 15); assert.equal(derived.algorithmRevision, 6);
+    assert.equal(derived.executor.sha256, policy.harnessSha256);
+    assert.equal(sha(derived.original.path), derived.original.sha256);
+    assert.equal(derived.transformation.kind, 'result-version-assertion-only');
+    assert.equal(derived.transformation.allOtherSourceBytesExact, true);
+  }
   assert.equal(sha(policy.manifest), policy.manifestSha256, 'Source receipt changed');
   assert.equal(sha(policy.storageSource), policy.storageSourceSha256, 'Earned save source changed');
   assert.equal(sha(policy.storage), policy.storageSha256, 'Remapped earned save changed');
@@ -37,6 +56,7 @@ for (const folder of plan.batches) {
   }
   sources.push({folder, policy: policyPath, policySha256: sha(policyPath), reportSha256: sha(batchPath),
     sourceManifest: policy.manifest, sourceManifestSha256: policy.manifestSha256, harnessSha256: policy.harnessSha256,
+    algorithmRevision, controllerPolicyRevision,
     status: batch.status, planned: policy.cases.length, attempted: batch.attempts.length});
   for (const attempt of batch.attempts) {
     const expected = rows.get(attempt.dir); assert(expected && key(expected) === key(attempt));
@@ -47,6 +67,7 @@ for (const folder of plan.batches) {
     if (!exists(reportPath)) { receipt.problems.push('No completed journey report'); continue; }
     receipt.reportSha256 = sha(reportPath);
     const data = read(reportPath);
+    assert.equal(data.policyRevision, controllerPolicyRevision);
     assert.equal(data.harnessSha256, policy.harnessSha256);
     assert.deepEqual(data.harnessDependencies, policy.dependencies);
     assert.equal(data.controlledBuild, null, 'Qualification must use actually earned equipment');
@@ -62,7 +83,7 @@ for (const folder of plan.batches) {
     if (!generation) { receipt.problems.push('No committed field identity'); continue; }
     assert.equal(generation.package.id, `r100-${attempt.world}`);
     assert.equal(generation.package.grade, attempt.grade);
-    assert.equal(generation.package.algorithmRevision, 5);
+    assert.equal(generation.package.algorithmRevision, algorithmRevision);
     assert.equal(generation.requestedSeed, attempt.seed);
     receipt.outcome = journey.outcome ?? null;
     receipt.elapsedMs = journey.fieldResult?.elapsedMs ?? journey.exploration?.state?.elapsedMs ?? 0;
@@ -71,11 +92,17 @@ for (const folder of plan.batches) {
     if (journey.failure) receipt.problems.push(journey.failure);
     if (attempt.exitCode !== 0 || journey.status !== 'completed-real-input') receipt.problems.push('Input journey did not complete');
     const beforeRun = journey.entrySave?.state?.inventory?.run, afterRun = journey.afterReturn?.state?.inventory?.run;
-    const settled = Boolean(beforeRun?.id && beforeRun.id === afterRun?.id && afterRun.baseSettled && afterRun.status === 'settled');
+    const settled = Boolean(beforeRun?.id && beforeRun.status === 'active' && beforeRun.id === afterRun?.id
+      && afterRun.baseSettled && afterRun.status === 'settled' && afterRun.outcome === journey.outcome);
     if (!settled) receipt.problems.push('No matching, settled base transaction');
     if (!['extract', 'death'].includes(journey.outcome)) receipt.problems.push('No actual extract/death outcome');
     if (!(receipt.elapsedMs >= 10000)) receipt.problems.push('Insufficient actual field process');
-    for (const search of journey.searches.filter(row => row.collected)) {
+    const actualPickups = controllerPolicyRevision === 15 ? collectI09SearchReceipts(journey) : null;
+    if (actualPickups) {
+      receipt.actualPickups = actualPickups.length;
+      receipt.nearEntryPickups = actualPickups.filter(row => !row.eligibleNonEntry).length;
+    }
+    for (const search of actualPickups ? actualPickups.filter(row => row.eligibleNonEntry) : journey.searches.filter(row => row.collected)) {
       const node = journey.fieldResult?.nodes?.find(row => row.id === search.id), entry = journey.entryState?.pos;
       if (!node?.collected || !entry) { receipt.problems.push(`No terminal field proof for ${search.id}`); continue; }
       const distance = Math.hypot(node.pos.x - entry.x, node.pos.y - entry.y);
@@ -89,7 +116,7 @@ for (const folder of plan.batches) {
     // The controller can finish a nearby node, or observe completion only
     // after logging the target. Keep its original log and require independent
     // terminal/save agreement before accounting for any missed pickup.
-    receipt.collected.push(...reconcileTerminalPickups(journey));
+    if (!actualPickups) receipt.collected.push(...reconcileTerminalPickups(journey));
     receipt.processComplete = receipt.problems.length === 0;
     receipt.searchAndExtract = receipt.processComplete && journey.outcome === 'extract' && receipt.collected.length > 0;
   }
@@ -106,6 +133,7 @@ const pairs = plan.worlds.flatMap(world => grades.map(grade => {
 }));
 const qualified = pairs.filter(row => row.qualified);
 const summary = {version: 1, createdAt: new Date().toISOString(), status: qualified.length === pairs.length ? 'pass' : 'incomplete',
+  algorithmRevisions,
   plan: planPath, planSha256: sha(planPath), method: 'Both originally fixed seeds must retain a completed real process; at least one must actually collect a non-entry remain and extract to a settled base. Late/adjacent pickups require entry-to-terminal node changes and matching settled loot receipts. Empty returns and deaths never count as successful searches. All attempts, including original environment errors, remain in the record.',
   limitations: 'Controlled world/seed with copies of an actually earned save, geometry-assisted expert navigation. Does not establish novice usability, natural continuous economy, visual acceptance, performance, or source continuity to a later catalog; those need separate evidence.',
   expectedGradePairs: pairs.length, qualifiedGradePairs: qualified.length, expectedSeeds: wanted.size, scheduledSeeds: scheduled.size,

@@ -1,5 +1,6 @@
 /** I09 four continuous earned-save branches. No seed/world injection, replacement
- * attempts, or automatic art/economy approval. Run only against frozen 52 worlds.
+ * attempts, or automatic art/economy approval. Default: frozen52/revision5.
+ * QA_EXPANSION_PLAN selects the frozen final108/revision6 contract.
  * GAME_URL, QA_SOURCE_MANIFEST, QA_SELECTION_REPORT and QA_OUTPUT_DIR are required.
  * --summarize rechecks existing receipts without starting browsers.
  * --self-check exercises accounting/continuity guards with synthetic records. */
@@ -11,6 +12,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { collectI09SearchReceipts } from './r100-i09-search-receipts.mjs';
 import { verifyServedSourceFile } from './r100-i09-final-probe.mjs';
+import { validateExpansionPlan } from './check-r100-expansion-plan.mjs';
 
 const ROUNDS = 12;
 const GRADES = ['low', 'medium', 'severe'];
@@ -29,6 +31,30 @@ const ANCHORS = ['src/generated/r100-native-worlds.ts', 'src/generated/r100-worl
 const hashBytes = bytes => createHash('sha256').update(bytes).digest('hex');
 const sha = file => hashBytes(fs.readFileSync(file));
 const read = file => JSON.parse(fs.readFileSync(file, 'utf8'));
+function expansionContract(file) {
+  const plan = read(file); validateExpansionPlan(plan);
+  assert.equal(plan.status, 'frozen');
+  const worldIds = [...plan.baseline.worlds, ...plan.batches.flatMap(batch => batch.worlds)].sort();
+  assert.equal(worldIds.length, 108); assert.equal(new Set(worldIds).size, 108);
+  const journeyPath = 'docs/qa/artifacts/r100-i10-i12/controller-revision6/derivation.json';
+  const reviewerPath = 'docs/qa/artifacts/r100-i10-i12/controller-revision6/reviewer-derivation.json';
+  const journey = read(journeyPath), reviewer = read(reviewerPath);
+  for (const contract of [journey, reviewer]) {
+    for (const row of [contract.original, contract.executor, contract.tool]) assert.equal(sha(row.path), row.sha256);
+    assert.equal(contract.algorithmRevision, 6); assert.equal(contract.inputPolicyRevision, 15);
+  }
+  assert.equal(journey.original.path, plan.continuousNatural.controller);
+  assert.equal(journey.original.sha256, plan.continuousNatural.controllerSha256);
+  assert.equal(journey.transformation.kind, 'result-version-assertion-only');
+  assert.equal(journey.transformation.allOtherSourceBytesExact, true);
+  assert.equal(reviewer.expectedWorlds, 108); assert.equal(reviewer.allOtherSourceBytesExact, true);
+  return { algorithmRevision: 6, expectedWorlds: 108, worldIds, storageSource: plan.continuousNatural.storage,
+    harness: journey.executor.path, reviewTool: reviewer.executor.path,
+    reviewerDerivation: { path: reviewerPath, sha256: sha(reviewerPath) },
+    controllerDerivation: { path: journeyPath, sha256: sha(journeyPath) },
+    files: [file, journeyPath, reviewerPath, 'tools/qa/check-r100-expansion-plan.mjs',
+      journey.original.path, journey.tool.path, reviewer.original.path, reviewer.tool.path] };
+}
 const gradeAt = (policy, index) => policy === 'alternating' ? GRADES[index % 3] : policy;
 const mainSave = storage => {
   assert.equal(storage.origins.length, 1, 'one isolated storage origin required');
@@ -42,7 +68,7 @@ function remapStorage(original, gameUrl) {
   assert.deepEqual(mapped.origins[0].localStorage, original.origins[0].localStorage, 'all save and companion bytes remain exact');
   return mapped;
 }
-function verifyJourney(receipt, policy, index, previous, initial) {
+function verifyJourney(receipt, policy, index, previous, initial, algorithmRevision = 5) {
   assert.equal(receipt.ordinal, index + 1); assert.equal(receipt.policy, policy);
   assert.equal(receipt.grade, gradeAt(policy, index), 'grade must follow predeclared policy, including severe after a death');
   assert.equal(receipt.status, 'completed-real-input'); assert.equal(receipt.noStateInjection, true);
@@ -55,7 +81,7 @@ function verifyJourney(receipt, policy, index, previous, initial) {
     for (const key of ['items', 'equipment', 'run']) assert.deepEqual(before.inventory[key], initial.inventory[key], `earned initial inventory ${key}`);
   }
   const generation = receipt.identity.generation;
-  assert.equal(generation.package.algorithmRevision, 5); assert.equal(generation.package.grade, receipt.grade);
+  assert.equal(generation.package.algorithmRevision, algorithmRevision); assert.equal(generation.package.grade, receipt.grade);
   assert.equal(before.inventory.version, 4); assert.equal(entry.inventory.version, 4);
   assert.equal(entry.cycle, before.cycle + 1); assert.notEqual(entry.inventory.run.id, before.inventory.run?.id);
   assert.equal(entry.inventory.run.id, after.inventory.run.id); assert.equal(after.inventory.run.id, end.inventory.run.id);
@@ -81,7 +107,7 @@ function verifyJourney(receipt, policy, index, previous, initial) {
     navigationWarning: receipt.navigationWarning ?? null,
     performance: receipt.performance, history: expected, beforeHash: receipt.before.sha256, afterHash: receipt.afterPreparation.sha256 };
 }
-function summarizeBranch(data, policy, initial, neighbors, receiptDirectory) {
+function summarizeBranch(data, policy, initial, neighbors, receiptDirectory, algorithmRevision = 5) {
   assert.equal(data.postReturnManagement, true); assert.equal(data.normalManagement, true);
   assert.equal(data.controlledWorld, null); assert.equal(data.controlledBuild, null); assert.equal(data.fixedDefectIdentity, null);
   const attempts = data.realJourneyAttempts; assert(attempts.length <= ROUNDS);
@@ -94,7 +120,7 @@ function summarizeBranch(data, policy, initial, neighbors, receiptDirectory) {
         assert.equal(sha(file), receipt[key].sha256, 'original saved bytes must match the report receipt');
         assert.deepEqual(read(file), receipt[key].state);
       }
-      const row = verifyJourney(receipt, policy, index, attempts[index - 1], initial);
+      const row = verifyJourney(receipt, policy, index, attempts[index - 1], initial, algorithmRevision);
       assert(!runIds.has(row.runId), 'a run cannot count twice'); runIds.add(row.runId); rows.push(row);
     } catch (error) { issues.push({ ordinal: index + 1, failure: String(error), reportedStatus: attempts[index].status, reportedFailure: attempts[index].failure ?? null }); }
   }
@@ -129,13 +155,17 @@ function selfCheck() {
     entryState: { pos: { x: 0, y: 0 }, nodes: [{ id: 'node', kind: 'kindling', pos: { x: 400, y: 0 }, collected: false }] },
     fieldResult: { elapsedMs: 50000, nodes: [{ id: 'node', kind: 'kindling', pos: { x: 400, y: 0 }, collected: true }] } };
   assert.equal(verifyJourney(receipt, 'low', 0, null, initial).world, 'test-world');
+  const revision6 = structuredClone(receipt); revision6.identity.generation.package.algorithmRevision = 6;
+  assert.equal(verifyJourney(revision6, 'low', 0, null, initial, 6).world, 'test-world');
+  assert.throws(() => verifyJourney(revision6, 'low', 0, null, initial), 'Default still admits only revision5');
+  assert.throws(() => verifyJourney(receipt, 'low', 0, null, initial, 6), 'Expansion cannot accept an old revision as a new run');
   const recounted = structuredClone(receipt); recounted.afterPreparation.state.inventory.riftWorldHistory.visits.push({ worldId: 'test-world', grade: 'low' });
   assert.throws(() => verifyJourney(recounted, 'low', 0, null, initial), 'return cannot append history again');
   const changedGrade = structuredClone(receipt); changedGrade.grade = 'low'; changedGrade.policy = 'severe';
   assert.throws(() => verifyJourney(changedGrade, 'severe', 0, null, initial), 'severe chain cannot silently switch to low');
   const refilled = structuredClone(receipt); refilled.before.state.kindlingReserve++;
   assert.throws(() => verifyJourney(refilled, 'low', 0, null, initial), 'earned starting resources cannot be refilled');
-  console.log('PASS I09 orchestration: origin-only byte preservation, fixed/alternating plans, empty or controlled reports rejected, one-trip accounting, duplicate history, silent grade downgrade and resource refill rejected');
+  console.log('PASS continuous orchestration: origin-only bytes, fixed/alternating plans, revision5/6 isolation, empty/controlled reports, trip/history continuity, silent grade downgrade and resource refill guards');
 }
 async function verifySources(source, gameUrl, failureDirectory) {
   const url = new URL(gameUrl);
@@ -155,6 +185,13 @@ function assertStable(policy) {
 }
 async function main() {
   if (process.argv.includes('--self-check')) { selfCheck(); return; }
+  if (process.argv.includes('--check-expansion-contract')) {
+    const contract = expansionContract(process.env.QA_EXPANSION_PLAN ?? 'docs/qa/artifacts/r100-i10-i12/qualification-plan.json');
+    console.log(JSON.stringify({ status: 'pass', algorithmRevision: contract.algorithmRevision,
+      expectedWorlds: contract.expectedWorlds, harness: contract.harness, reviewTool: contract.reviewTool,
+      controllerDerivation: contract.controllerDerivation, reviewerDerivation: contract.reviewerDerivation,
+      limitation: 'Offline contract only; no enabled-pool, runtime, continuous-sample or experience claim.' })); return;
+  }
   const out = path.resolve(process.env.QA_OUTPUT_DIR ?? ''); assert(process.env.QA_OUTPUT_DIR, 'QA_OUTPUT_DIR required');
   const policyPath = path.join(out, 'policy-freeze.json');
   if (process.argv.includes('--summarize')) {
@@ -170,17 +207,17 @@ async function main() {
       if (fs.existsSync(file)) {
         const data = read(file);
         assert.equal(data.policyRevision, 15, 'I09 uses actual pickup counting and public slot bindings');
-        assert.equal(data.harnessSha256, policy.fixedFiles.find(row => row.file === HARNESS).sha256, 'journey uses frozen harness');
+        assert.equal(data.harnessSha256, policy.fixedFiles.find(row => row.file === (policy.harness ?? HARNESS)).sha256, 'journey uses frozen harness');
         for (const dependency of data.harnessDependencies) assert.equal(dependency.sha256, policy.fixedFiles.find(row => row.file === dependency.file)?.sha256);
       }
-      return fs.existsSync(file) ? { ...summarizeBranch(read(file), branch.policy, initial, neighbors, path.join(out, branch.folder, branch.policy)), report: file, reportSha256: sha(file) }
+      return fs.existsSync(file) ? { ...summarizeBranch(read(file), branch.policy, initial, neighbors, path.join(out, branch.folder, branch.policy), policy.algorithmRevision ?? 5), report: file, reportSha256: sha(file) }
         : { policy: branch.policy, plannedTrips: ROUNDS, recordedTrips: 0, validatedTrips: 0, completed: false, issues: ['No report; attempt not completed'] };
     });
     const result = { status: sourceValid && branches.every(branch => branch.completed) ? 'completed-continuous-samples-pending-review' : 'incomplete-or-invalid', sourceValid,
       policy: policyPath, policySha256: sha(policyPath), plannedTrips: ROUNDS * POLICIES.length,
       review: policy.review,
       validatedTrips: branches.reduce((sum, branch) => sum + branch.validatedTrips, 0), branches,
-      limitation: 'Shared earned ancestor, four continued save branches and geometry-assisted observed-threat driving. No novice, full 52-world coverage, subjective audio, or I13 final economic claim.' };
+      limitation: 'Shared earned ancestor, four continued save branches and geometry-assisted observed-threat driving. No novice, full-library coverage, subjective audio, or I13 final economic claim.' };
     fs.writeFileSync(path.join(out, 'summary.json'), JSON.stringify(result, null, 2) + '\n');
     if (result.status !== 'completed-continuous-samples-pending-review') process.exitCode = 1;
     console.log(JSON.stringify({ status: result.status, plannedTrips: result.plannedTrips, validatedTrips: result.validatedTrips })); return;
@@ -188,33 +225,47 @@ async function main() {
   const manifest = process.env.QA_SOURCE_MANIFEST, gameUrl = process.env.GAME_URL, selectionReport = process.env.QA_SELECTION_REPORT;
   assert(manifest && gameUrl && selectionReport, 'Declare frozen source manifest, GAME_URL and final selection report');
   assert(!fs.existsSync(policyPath), 'An existing frozen attempt cannot be overwritten or rerolled');
+  const expansionPath = process.env.QA_EXPANSION_PLAN;
+  const contract = expansionPath ? expansionContract(expansionPath) : {
+    algorithmRevision: 5, expectedWorlds: 52, storageSource: SOURCE_STORAGE, harness: HARNESS, reviewTool: REVIEW_TOOL, files: [] };
+  const { harness, reviewTool, storageSource } = contract;
   const source = read(manifest), anchors = await verifySources(source, gameUrl, path.join(out, 'source-audit-failures', 'initial'));
   for (const file of DEPENDENCIES.filter(file => file.startsWith('src/'))) assert.equal(sha(file), source.sources[file], `Node route helper differs from frozen game: ${file}`);
   const catalogSource = fs.readFileSync(path.join(source.temporaryRoot, 'src/generated/r100-native-worlds.ts'), 'utf8');
   const declaration = 'R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = ';
   const catalog = JSON.parse(catalogSource.slice(catalogSource.indexOf(declaration) + declaration.length).trim().replace(/;$/, ''));
-  const ids = catalog.filter(world => world.enabled).map(world => world.id).sort(); assert.equal(ids.length, 52, 'Wait for the final 52-world library'); assert.equal(new Set(ids).size, 52);
+  const ids = catalog.filter(world => world.enabled).map(world => world.id).sort();
+  assert.equal(ids.length, contract.expectedWorlds, 'Wait for the declared final enabled library'); assert.equal(new Set(ids).size, contract.expectedWorlds);
+  if (contract.worldIds) assert.deepEqual(ids, contract.worldIds, 'All and only the predeclared final worlds');
   const selection = read(selectionReport); assert.deepEqual(selection.worldIds, ids);
   assert.equal(selection.catalogSourceHash, /R100_NATIVE_CATALOG_SOURCE_HASH = '([^']+)'/.exec(catalogSource)?.[1]);
   const selectionSource = fs.readFileSync(path.join(source.temporaryRoot, 'src/generated/r100-world-selection.ts'), 'utf8');
   assert.equal(selection.policySourceHash, /R100_SELECTION_SOURCE_HASH = '([^']+)'/.exec(selectionSource)?.[1]);
   assert.equal(selection.policy.historyLimit, 8);
-  const harnessSource = fs.readFileSync(HARNESS, 'utf8'); assert(harnessSource.includes("'alternating'"), 'Journey harness must first implement the approved alternating policy');
+  const harnessSource = fs.readFileSync(harness, 'utf8'); assert(harnessSource.includes("'alternating'"), 'Journey harness must first implement the approved alternating policy');
   fs.mkdirSync(out, { recursive: true });
-  const storage = path.join(out, 'earned-storage.json'), original = read(SOURCE_STORAGE);
+  const storage = path.join(out, 'earned-storage.json'), original = read(storageSource);
   fs.writeFileSync(storage, JSON.stringify(remapStorage(original, gameUrl), null, 2) + '\n', { flag: 'wx' });
   const initial = JSON.parse(mainSave(original)); assert.equal(initial.inventory.run.baseSettled, true);
   const frozenSelection = path.join(out, 'sampling-evidence.json'); fs.copyFileSync(selectionReport, frozenSelection, fs.constants.COPYFILE_EXCL);
   const frozenManifest = path.join(out, 'server-manifest.json'); fs.copyFileSync(manifest, frozenManifest, fs.constants.COPYFILE_EXCL);
   const frozenReview = path.join(out, 'review-policy.json'); fs.copyFileSync(REVIEW_POLICY, frozenReview, fs.constants.COPYFILE_EXCL);
-  const fixedFiles = [manifest, frozenManifest, selectionReport, frozenSelection, SOURCE_STORAGE, storage, REVIEW_POLICY, REVIEW_TOOL, frozenReview, HARNESS, ...DEPENDENCIES, new URL(import.meta.url)].map(file => ({ file: file instanceof URL ? fileURLToPath(file) : file, sha256: sha(file) }));
-  const harnessCopies = [HARNESS, REVIEW_POLICY, REVIEW_TOOL, ...DEPENDENCIES, fileURLToPath(import.meta.url)].map(file => {
+  const frozenExpansion = expansionPath ? path.join(out, 'qualification-plan.json') : null;
+  if (frozenExpansion) fs.copyFileSync(expansionPath, frozenExpansion, fs.constants.COPYFILE_EXCL);
+  const fixedFiles = [...new Set([manifest, frozenManifest, selectionReport, frozenSelection, storageSource, storage,
+    REVIEW_POLICY, reviewTool, frozenReview, harness, ...DEPENDENCIES, ...contract.files, ...(frozenExpansion ? [frozenExpansion] : []), fileURLToPath(import.meta.url)])]
+    .map(file => ({ file, sha256: sha(file) }));
+  const harnessCopies = [...new Set([harness, REVIEW_POLICY, reviewTool, ...DEPENDENCIES, ...contract.files, fileURLToPath(import.meta.url)])].map(file => {
     const copy = path.join(out, 'harness-sources', path.relative(process.cwd(), path.resolve(file)));
     fs.mkdirSync(path.dirname(copy), { recursive: true }); fs.copyFileSync(file, copy, fs.constants.COPYFILE_EXCL);
     assert.equal(sha(copy), sha(file)); return { original: file, copy, sha256: sha(copy) };
   });
-  const policy = { version: 1, createdAt: new Date().toISOString(), gameUrl, sourceManifest: frozenManifest, sourceManifestOriginal: manifest, servedSourceAnchors: anchors, storageSource: SOURCE_STORAGE, storage,
-    review: { policy: frozenReview, policySha256: sha(frozenReview), tool: REVIEW_TOOL, toolSha256: sha(REVIEW_TOOL), status: 'requires-independent-review-of-actual-results', completionIsExperienceApproval: false },
+  const policy = { version: 1, createdAt: new Date().toISOString(), gameUrl, sourceManifest: frozenManifest, sourceManifestOriginal: manifest, servedSourceAnchors: anchors, storageSource, storage,
+    algorithmRevision: contract.algorithmRevision, harness, controllerDerivation: contract.controllerDerivation ?? null,
+    expansion: frozenExpansion ? { path: frozenExpansion, sha256: sha(frozenExpansion) } : null,
+    review: { policy: frozenReview, policySha256: sha(frozenReview), tool: reviewTool, toolSha256: sha(reviewTool),
+      ...(contract.reviewerDerivation ? { predeclared: true, derivation: contract.reviewerDerivation } : {}),
+      status: 'requires-independent-review-of-actual-results', completionIsExperienceApproval: false },
     sourceSaveSha256: hashBytes(mainSave(original)), initialCycle: initial.cycle, initialReserve: initial.kindlingReserve, selectionReport: frozenSelection, selectionReportOriginal: selectionReport, harnessCopies,
     worldIds: ids, fixedFiles, branches: POLICIES.map(policy => ({ policy, folder: policy, rounds: ROUNDS,
       grades: Array.from({ length: ROUNDS }, (_, index) => gradeAt(policy, index)) })),
@@ -237,7 +288,7 @@ async function main() {
       for (const name of ['QA_WORLD_ID', 'QA_SEED', 'QA_CONTROLLED_BUILD', 'QA_REPRO_IDENTITY_FILE', 'QA_REPLAY_INPUTS']) delete env[name];
       const fd = fs.openSync(path.join(folder, 'runner.log'), 'wx');
       await new Promise(resolve => {
-        const child = spawn(process.execPath, ['--import', 'tsx', HARNESS], { cwd: process.cwd(), env, stdio: ['ignore', fd, fd] });
+        const child = spawn(process.execPath, ['--import', 'tsx', harness], { cwd: process.cwd(), env, stdio: ['ignore', fd, fd] });
         activeChild = child;
         const timeout = setTimeout(() => { row.timeout = true; child.kill('SIGTERM'); }, ROUNDS * 480000);
         child.once('error', error => { row.spawnError = String(error); });

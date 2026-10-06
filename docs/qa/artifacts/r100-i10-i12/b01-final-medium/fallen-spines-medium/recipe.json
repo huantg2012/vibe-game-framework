@@ -1,0 +1,284 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "fallen-spines",
+    "label": "倒伏脊段",
+    "description": "倒伏脊段的原生材料与完整搜撤地段",
+    "material": "crystal",
+    "surface": {
+      "substrate": "crystal",
+      "coating": "crystal",
+      "organization": "bands",
+      "coverage": 0.66,
+      "wear": 0.43,
+      "deposits": 0.42,
+      "scale": 0.95,
+      "relief": 0.58,
+      "contrast": 0.85,
+      "regionScale": 1.1,
+      "quietness": 0.5,
+      "formScale": 1.5,
+      "fragmentation": 0.32,
+      "accentCoverage": 0.18
+    },
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 2240064,
+      "floor": 5006719,
+      "floorLight": 9282230,
+      "materialDark": 5058615,
+      "materialMid": 9658732,
+      "materialLight": 13476000,
+      "faceLight": 14734025,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 5006719,
+      "groundLight": 9282230,
+      "groundDark": 2240064,
+      "wall": 9658732,
+      "wallLight": 13476000,
+      "wallDark": 5058615
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "fallen-spines",
+    "ground": {
+      "dark": 2240064,
+      "mid": 5006719,
+      "light": 9282230
+    },
+    "solid": {
+      "dark": 5058615,
+      "mid": 9658732,
+      "light": 13476000
+    },
+    "cleaved": {
+      "dark": 6772568,
+      "mid": 12034978,
+      "light": 14734025
+    },
+    "secondary": {
+      "dark": 3748679,
+      "mid": 8086661,
+      "light": 12098231
+    },
+    "groundPattern": "veins",
+    "patternScale": 128,
+    "patternStrength": 0.58,
+    "secondaryCoverage": 0.17,
+    "textureContrast": 1.14,
+    "quietCoverage": 0.45
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "fallen-spines-medium",
+    "family": "fibre-knot",
+    "grade": "medium",
+    "label": "倒伏脊段",
+    "profile": "fallen-spines",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": -0.28,
+    "light_radius": 136,
+    "emission": 0.55,
+    "motion_period": 18,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 380,
+        "y": 244,
+        "rotation": 0.4,
+        "length": 258,
+        "width": 98,
+        "height": 43,
+        "thickness": 12,
+        "fold": 0.54,
+        "branches": 3,
+        "opening": 0.55,
+        "distortion": 0.24,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 2,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 615,
+        "y": 287,
+        "rotation": -0.24,
+        "length": 285,
+        "width": 108,
+        "height": 54,
+        "thickness": 13,
+        "fold": 0.7,
+        "branches": 4,
+        "opening": 0.52,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 3,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 460,
+        "y": 412,
+        "rotation": 0.08,
+        "length": 245,
+        "width": 88,
+        "height": 37,
+        "thickness": 11,
+        "fold": 0.45,
+        "branches": 3,
+        "opening": 0.55,
+        "distortion": 0.3,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 4,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 758,
+        "y": 440,
+        "rotation": 0.68,
+        "length": 225,
+        "width": 91,
+        "height": 32,
+        "thickness": 10,
+        "fold": 0.35,
+        "branches": 2,
+        "opening": 0.6,
+        "distortion": 0.24,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 5,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 543,
+        "y": 567,
+        "rotation": -0.32,
+        "length": 208,
+        "width": 79,
+        "height": 29,
+        "thickness": 10,
+        "fold": 0.48,
+        "branches": 3,
+        "opening": 0.5,
+        "distortion": 0.3,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "package": {
+    "id": "r100-fallen-spines",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "fibre-knot": {
+        "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+        "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+        "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+      }
+    },
+    "dependencyHash": "561c90ba",
+    "grade": "medium"
+  }
+}

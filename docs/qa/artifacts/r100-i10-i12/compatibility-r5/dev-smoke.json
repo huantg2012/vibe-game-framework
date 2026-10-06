@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "at": "2026-10-06T13:11:57.236249+00:00",
+  "command": [
+    "npm",
+    "run",
+    "dev",
+    "--",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "3110",
+    "--strictPort"
+  ],
+  "ownerProcessGroup": 38573,
+  "port": 3110,
+  "responses": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 1021
+    },
+    {
+      "path": "/src/generation/world-study/r100-package.ts",
+      "status": 200,
+      "bytes": 23340,
+      "sha256": "099c49b63ba075dac5d2b44d4d24fad6f3b36e4242856310546db5fa8690d4b9"
+    },
+    {
+      "path": "/src/systems/r100-world/surface-bake.ts",
+      "status": 200,
+      "bytes": 42240,
+      "sha256": "d9aa67b34c79160db1eb18d9dda7375b8db4cae6cc89653ef0cf331febdee8b5"
+    }
+  ],
+  "failure": null,
+  "serverStopped": true,
+  "scope": "HTTP and transformed-module startup smoke only; no browser/gameplay. Owned process group stopped; user3027 untouched."
+}

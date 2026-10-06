@@ -6,9 +6,8 @@ import { validR100ProductionRecipe } from '@/generation/world-study/r100-package
 import type { WorldProductionRecipeV3 } from '@/generation/world-study/production-recipe';
 import { hydrateR100MasterWorld, type R100NativeWorldData } from '@/generation/world-study/r100-native-data';
 import type { MasterWorld } from '@/generation/world-study/r100-master-world';
-import { PAINTED_MATERIALS } from '@/generated/r100-materials';
 import type { RiftDevRuntimeContext } from '@/scenes/rift-scene';
-import { loadPaintedMaterial, type PaintedMaterial } from './r100-world/painted-material';
+import { loadPaintedMaterial, paintedMaterialDefinition, type PaintedMaterial } from './r100-world/painted-material';
 import { MasterPresentation } from './r100-world/presentation';
 import { MasterSurfaceRenderer } from './r100-world/surface-renderer';
 import { R100SurfacePreparationClient } from './r100-world/surface-preparation-client';
@@ -92,7 +91,7 @@ export async function prepareR100Presentation(recipe:WorldProductionRecipeV3,
  let renderer:MasterSurfaceRenderer|undefined;
  try {
   const families=materialFamilies(recipe);
-  const sources=await observeAbort(Promise.all(families.map(family=>loadPaintedMaterial(family))),options.signal);
+  const sources=await observeAbort(Promise.all(families.map(family=>loadPaintedMaterial(family,family===recipe.nativeDefinition.family?recipe.appearance?.materialOrganization:undefined))),options.signal);
   const material:PaintedMaterial=Object.freeze({...sources[0]!,
    ...(native.appearance?{appearance:native.appearance}:{}),
    ...(families.length>1?{families:Object.freeze(Object.fromEntries(families.map((family,index)=>[family,sources[index]!])))}:{})});
@@ -140,7 +139,7 @@ export function createR100WorldPresentation(native: R100NativeWorldData, layout:
   painting: PaintedMaterial): R100WorldPresentation {
   const families=new Set([native.definition.family,...native.definition.instances.map(instance=>instance.family??native.definition.family)]);
   for(const family of families){
-  const definition = PAINTED_MATERIALS.find(row => row.family === family),source=family===native.definition.family?painting:painting.families?.[family];
+  const definition = paintedMaterialDefinition(family,family===native.definition.family?native.appearance?.materialOrganization:undefined),source=family===native.definition.family?painting:painting.families?.[family];
   if (!definition || !source || source.source !== definition.source || source.solid?.source !== definition.solid.source
     || source.width !== definition.logical_pixels || source.height !== definition.logical_pixels
     || source.pixels.length !== source.width * source.height * 4

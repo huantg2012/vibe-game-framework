@@ -1,0 +1,74 @@
+{
+  "status": "estimate-not-execution",
+  "samples": [
+    {
+      "kind": "cpu",
+      "path": "docs/qa/artifacts/r100-i07-i09/b06-qualification/full/report.json",
+      "sha256": "c6a0adcfe178677a817c60f998d2c4fd068b851109f3df7c21e2172c95b088de",
+      "cases": 480,
+      "concurrency": 1,
+      "workerDurationMs": {
+        "p50": 857.2420000000275,
+        "p95": 1094.610166999977,
+        "p99": 1360.3847909999895,
+        "max": 1949.2641660000081
+      },
+      "meanGenerationAndChecksMs": 711.0670191958342
+    },
+    {
+      "kind": "cpu",
+      "path": "docs/qa/artifacts/r100-i07-i09/b08-qualification/full/report.json",
+      "sha256": "4f65e490d561ac5fcc326668e2e3c697b3b5b49c23333071f1cdd5ae1bb90855",
+      "cases": 480,
+      "concurrency": 1,
+      "workerDurationMs": {
+        "p50": 877.5080000000016,
+        "p95": 1655.1281660000095,
+        "p99": 2157.876458999992,
+        "max": 3880.875166999991
+      },
+      "meanGenerationAndChecksMs": 818.0793924562495
+    },
+    {
+      "kind": "play",
+      "path": "docs/qa/artifacts/r100-i07-i09/b06-play-v13/batch-report.json",
+      "sha256": "95cae38a53689e06b7e3789beabf44e052c372363307f30a92fa33fe492e0f40",
+      "processes": 24,
+      "meanWallSeconds": 42.724875,
+      "totalWallSeconds": 1025.397,
+      "maxWallSeconds": 126.633
+    },
+    {
+      "kind": "play",
+      "path": "docs/qa/artifacts/r100-i07-i09/b08-play-v13/batch-report.json",
+      "sha256": "d182d518761e0075ddad1b11351a5eb06036b7965c1aaa2a3f048a82017ef138",
+      "processes": 24,
+      "meanWallSeconds": 51.728,
+      "totalWallSeconds": 1241.472,
+      "maxWallSeconds": 95.058
+    }
+  ],
+  "newGenerationCases": 10656,
+  "newFixedJourneys": 336,
+  "estimatedSingleCpuHours": [
+    3,
+    5
+  ],
+  "estimatedSingleBrowserFixedPlayHours": [
+    4,
+    6
+  ],
+  "performanceMinimumAliveMinutes": 108,
+  "recommendedWorkers": {
+    "whileBrowser": 1,
+    "cpuOnlyInitialMaximum": 2,
+    "performance": 0
+  },
+  "limits": [
+    "New v4 geometry and VOID can be slower; baseline is not runtime proof",
+    "Two workers only when browser closed, monitor wall time/timeouts, revert to one on degradation",
+    "Never parallel QA browsers, never change seeds or substitute duplicate counts",
+    "Budget requires exclusive browser/CPU; no generation worker",
+    "Inherited old52 seeds/play require direct source/recipe/map/RGBA continuity before counting"
+  ]
+}

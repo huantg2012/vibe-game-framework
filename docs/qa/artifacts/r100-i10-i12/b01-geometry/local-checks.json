@@ -1,0 +1,175 @@
+{
+  "status": "local-technical-pass-pending-normal-visual",
+  "baseline": "d194be4c",
+  "worlds": [
+    {
+      "id": "cleft-tableland",
+      "grade": "low",
+      "status": "PASS",
+      "triangles": 2056
+    },
+    {
+      "id": "cleft-tableland",
+      "grade": "medium",
+      "status": "PASS",
+      "triangles": 2056
+    },
+    {
+      "id": "cleft-tableland",
+      "grade": "severe",
+      "status": "PASS",
+      "triangles": 2056
+    },
+    {
+      "id": "fallen-spines",
+      "grade": "low",
+      "status": "PASS",
+      "triangles": 660
+    },
+    {
+      "id": "fallen-spines",
+      "grade": "medium",
+      "status": "PASS",
+      "triangles": 660
+    },
+    {
+      "id": "fallen-spines",
+      "grade": "severe",
+      "status": "PASS",
+      "triangles": 660
+    },
+    {
+      "id": "clamped-shore",
+      "grade": "low",
+      "status": "PASS",
+      "triangles": 368
+    },
+    {
+      "id": "clamped-shore",
+      "grade": "medium",
+      "status": "PASS",
+      "triangles": 368
+    },
+    {
+      "id": "clamped-shore",
+      "grade": "severe",
+      "status": "PASS",
+      "triangles": 368
+    },
+    {
+      "id": "torn-reservoir",
+      "grade": "low",
+      "status": "PASS",
+      "triangles": 450
+    },
+    {
+      "id": "torn-reservoir",
+      "grade": "medium",
+      "status": "PASS",
+      "triangles": 450
+    },
+    {
+      "id": "torn-reservoir",
+      "grade": "severe",
+      "status": "PASS",
+      "triangles": 450
+    }
+  ],
+  "oldProtection": {
+    "definitions": 52,
+    "meshesExact": 465,
+    "erosionDefinitions": 156
+  },
+  "newGeometry": {
+    "bodySamples": 2400,
+    "sweepSamples": 9372,
+    "negativeContracts": 19,
+    "minSolidVisibleCutPixels": 713,
+    "minSolidMaterial3Pixels": 21,
+    "maximumJointToSameObjectFracturePx": 0.5868476466622261
+  },
+  "checks": [
+    {
+      "command": "check-native-ground-contract.ts",
+      "exitCode": 0,
+      "report": "docs/qa/artifacts/r100-i10-i12/b01-geometry/contract-final.json"
+    },
+    {
+      "command": "check-native-ground-worlds.ts",
+      "exitCode": 0,
+      "report": "docs/qa/artifacts/r100-i10-i12/b01-geometry/worlds-refined/report.json"
+    },
+    {
+      "command": "check-native-ground-edge.ts",
+      "exitCode": 0,
+      "report": "docs/qa/artifacts/r100-i10-i12/b01-geometry/edge-width8-after.log"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/b01-geometry/typecheck-final.log"
+    },
+    {
+      "command": "node tools/world-study/codegen-r100-worlds.mjs --check",
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/b01-geometry/codegen-final.log"
+    },
+    {
+      "command": "git diff --check [owned files]",
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/b01-geometry/diff-check-final.log"
+    },
+    {
+      "command": "npm run dev -- --host 127.0.0.1 --port 3191 --strictPort",
+      "status": "ready-http200-then-intentionally-stopped",
+      "report": "docs/qa/artifacts/r100-i10-i12/b01-geometry/dev-smoke.json"
+    }
+  ],
+  "lintScope": "No dedicated npm lint script exists; TypeScript strict/noUnused and whitespace diff check executed. This does not claim an unconfigured linter ran.",
+  "preservedFailures": [
+    "docs/qa/artifacts/r100-i10-i12/b01-geometry/contract-attempt1.log",
+    "docs/qa/artifacts/r100-i10-i12/b01-geometry/worlds-attempt1/report.json",
+    "docs/qa/artifacts/r100-i10-i12/b01-geometry/worlds-attempt2/report.json",
+    "docs/qa/artifacts/r100-i10-i12/b01-geometry/typecheck-attempt1.log",
+    "docs/qa/artifacts/r100-i10-i12/b01-geometry/edge-width8-before.log"
+  ],
+  "corrections": {
+    "P20": "Original v4 had no material3 area or joint, so structural infection/activity sources were absent. source-cells skips a mesh without material3; it did not create a floating fallback light. Localized actual face fractures and joints now verified.",
+    "P21": "Solid fracture-fan/torn-sheet needed nonzero-XY cut faces; now crowns retreat inside unchanged feet. Valid width8 edge needed an interior peak within the same8px support cell; a four-triangle cell fan fixes sampling without changing support."
+  },
+  "sources": [
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "29bba73c996622ce2307cc9d5571d232dd953081a7a1fdf65318935a43b69bed"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground-edge.ts",
+      "sha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-erosion.ts",
+      "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+    },
+    {
+      "path": "src/generation/world-study/r100-master-world.ts",
+      "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+    },
+    {
+      "path": "data/rift-native-worlds.csv",
+      "sha256": "523bbe50df5735c309d4766dd357127e89c725a677e055f0613f3f45dff7e8b4"
+    },
+    {
+      "path": "src/generated/r100-native-worlds.ts",
+      "sha256": "5ceae20a89297bb9ef035a57258c6dc197ea1c5708c8ed0336d20e77d82eb885"
+    },
+    {
+      "path": "tools/world-study/codegen-r100-worlds.mjs",
+      "sha256": "74e852375be13cc71bc1bd2327963ac292384b8796c77b3871ab736bb3824817"
+    }
+  ],
+  "scope": "Author-local geometry, real full-body paths, surface ownership, CSV compatibility and dev startup. No new world enabled, no normal visual/complete play qualification, no performance claim."
+}

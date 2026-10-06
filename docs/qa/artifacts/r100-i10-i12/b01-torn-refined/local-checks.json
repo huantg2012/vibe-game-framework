@@ -1,0 +1,111 @@
+{
+  "status": "local-technical-pass-pending-normal-visual",
+  "createdAt": "2026-10-06T16:18:20.528Z",
+  "source": {
+    "path": "src/generation/world-study/native-volume-ground.ts",
+    "sha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60",
+    "changedFunctions": [
+      "clampBank",
+      "tornSheet"
+    ],
+    "ownership": {
+      "clampBank": "root",
+      "tornSheet": "identity_shapes"
+    }
+  },
+  "checks": [
+    {
+      "log": "contract-attempt2.log",
+      "exitCode": 0,
+      "sha256": "32d23d4208ce5ddd8fcdb86b8e72b0562c29c16380669d2afd553db3bc8fd032"
+    },
+    {
+      "log": "connection-attempt1.log",
+      "exitCode": 0,
+      "sha256": "9132d0a361e6922bd92148e2d576fa14760172e49a1a256158ac25f09cdf020c"
+    },
+    {
+      "log": "worlds-attempt1.log",
+      "exitCode": 0,
+      "sha256": "33b058ba1bb4d8ef2dd2bc3b6e29157f7823bbdc099de9a1221eb04f9dbdc8bb"
+    },
+    {
+      "log": "typecheck.log",
+      "exitCode": 0,
+      "sha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    },
+    {
+      "log": "codegen.log",
+      "exitCode": 0,
+      "sha256": "68d444155859a73c4393e8e7d23880acd1a0f4e85087d058571b78c2d51cb0c4"
+    },
+    {
+      "log": "edge-width8.log",
+      "exitCode": 0,
+      "sha256": "46d0cec73248930ffe754a234c6337c75895a084d61e0af22dc998760ce2e972"
+    },
+    {
+      "log": "diff-check.log",
+      "exitCode": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "preservedFailures": [
+    {
+      "log": "contract-attempt1.log",
+      "exitCode": 1,
+      "reason": "Root initial clampBank1534 triangles exceeded the existing600/profile bound. Root reduced sampling to574 without weakening the bound; original log retained."
+    }
+  ],
+  "dev": {
+    "report": "dev-smoke.json",
+    "sha256": "d17faeed91933ace4e621512c3f7806b9b91df9a7f2150a4a68a31d79b3834be",
+    "stopped": true
+  },
+  "lint": "No dedicated lint script configured; strict/noUnused TypeScript and whitespace checks passed. No separate lint pass claimed.",
+  "maps": {
+    "passed": 12,
+    "seed": 20261005,
+    "body": "20x20",
+    "minSolidCutPixels": 267,
+    "minMaterial3Pixels": 21,
+    "maxJointDistancePx": 0.6716222935483871,
+    "triangles": [
+      {
+        "world": "cleft-tableland",
+        "triangles": 2148
+      },
+      {
+        "world": "fallen-spines",
+        "triangles": 660
+      },
+      {
+        "world": "clamped-shore",
+        "triangles": 1791
+      },
+      {
+        "world": "torn-reservoir",
+        "triangles": 994
+      }
+    ],
+    "twoNecks": "Every grade has3 adjacent20px whole-body bidirectional routes at each neck."
+  },
+  "geometry": {
+    "oldWorldsExact": 52,
+    "oldMeshesExact": 465,
+    "bodyOracleSamples": 2400,
+    "stoppedSweepSamples": 9372,
+    "tornTriangles": 253,
+    "tornFootprintPixelsExact": 46193,
+    "sharedRootSamples": 34,
+    "topNormalDirections": 17
+  },
+  "protectedFiles": {
+    "data/rift-native-worlds.csv": "523bbe50df5735c309d4766dd357127e89c725a677e055f0613f3f45dff7e8b4",
+    "src/generated/r100-native-worlds.ts": "5ceae20a89297bb9ef035a57258c6dc197ea1c5708c8ed0336d20e77d82eb885",
+    "src/generation/world-study/native-volume-geometry.ts": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916",
+    "src/generation/world-study/native-volume-ground-edge.ts": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d",
+    "src/generation/world-study/r100-master-world.ts": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+  },
+  "scope": "P23 torn-sheet and root clamp-bank local repair. No author CSV/interface/VOID/body/old-revision change. Old photographs, failed source and oversampling failure remain. Normal low/medium/severe material and silhouette review still pending."
+}

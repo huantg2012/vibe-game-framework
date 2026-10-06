@@ -31,12 +31,12 @@ const originalLog = [{ ...passed, ok: true, value: { ...passed, attempts: 1 }, d
   { ...failed, ok: false, error: 'Synthetic timeout fixture', durationMs: 60000 }].map(row => JSON.stringify(row)).join('\n') + '\n';
 writeFileSync(priorCases, originalLog);
 const baseline = { version: 1, executorSha256, expectedCases: 3, priorCases, cases: [failed, missing] };
-function invoke(label, value, includeExecutor = true) {
+function invoke(label, value, includeExecutor = true, compact = false) {
   const at = resolve(folder, label); mkdirSync(at);
   const manifest = resolve(at, 'case-list.json'); writeFileSync(manifest, JSON.stringify(value));
   return { at, result: spawnSync(process.execPath, [dispatcher,
     '--case-list', manifest, ...(includeExecutor ? ['--executor', executor] : []),
-    '--concurrency', '1', '--report', resolve(at, 'report.json')], { encoding: 'utf8', timeout: 20000 }) };
+    '--concurrency', '1', ...(compact ? ['--compact-report'] : []), '--report', resolve(at, 'report.json')], { encoding: 'utf8', timeout: 20000 }) };
 }
 try {
   await build({ entryPoints: ['tools/world-study/check-r100-library.ts'], outfile: dispatcher, bundle: true,
@@ -69,7 +69,17 @@ try {
   assert.deepEqual(readFileSync(calls, 'utf8').trim().split('\n').map(JSON.parse), [failed, missing]);
   assert.equal(readFileSync(priorCases, 'utf8'), originalLog, 'Original failure evidence is immutable');
   assert.equal(sha(readFileSync(resolve(at, 'qualification-' + executorSha256.slice(0, 12) + '.mjs'))), executorSha256);
+  const compact = invoke('valid-compact', baseline, true, true);
+  assert.equal(compact.result.error, undefined); assert.equal(compact.result.status, 0, compact.result.stderr);
+  const compactReport = JSON.parse(readFileSync(resolve(compact.at, 'report.json'), 'utf8'));
+  const compactAggregate = JSON.parse(readFileSync(resolve(compact.at, 'aggregate.json'), 'utf8'));
+  assert(!Object.hasOwn(compactReport, 'rows') && !Object.hasOwn(compactAggregate, 'rows'));
+  assert.equal(compactReport.rawCases.records, 2);
+  assert.equal(compactReport.rawCases.sha256, sha(readFileSync(compactReport.rawCases.path)));
+  assert.equal(compactAggregate.originalFailures.length, 1); assert.equal(compactAggregate.retries.length, 1);
+  assert.equal(readFileSync(priorCases, 'utf8'), originalLog);
   console.log('PASS resume dispatcher: 11 invalid manifests rejected without workers; exact failed/missing cases only; original failure and executor preserved. Synthetic dispatcher fixture, no world qualification.');
+  console.log('PASS compact report: successful raw attempts remain hash-bound once; summaries omit duplicate rows; original failure and retry evidence retained.');
 } finally {
   rmSync(folder, { recursive: true, force: true });
   rmSync(driverFolder, { recursive: true, force: true });

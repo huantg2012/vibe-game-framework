@@ -1,0 +1,58 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-06T13:06:41.383440+00:00",
+  "priorAttempt": "Initial concurrent typecheck observed MasterWorld algorithmRevision still 5 before the owner changed it to 5|6; TS2322 at r100-production-map.ts(28,56). This check runs after that coordinated interface change.",
+  "checks": [
+    {
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/initial-check-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "tools/qa/r100-i09-final-probe.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/initial-check-2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "tools/qa/check-r100-production-browser.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/initial-check-3.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "tools/qa/check-r100-expansion-plan.mjs",
+        "--self-check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/initial-check-4.log",
+      "sha256": "5593af7e10aebd88177d6bf7d142fc4bed613dcfa4ca392305c509fc7768e25f"
+    },
+    {
+      "command": [
+        "node",
+        "tools/qa/r100-i09-final-probe.mjs",
+        "--self-check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/initial-check-5.log",
+      "sha256": "648847f65221d0788cf7cfac6b10dc15d93c45e8fe1a1c482300caae16b04198"
+    }
+  ],
+  "scope": "Type/lint-equivalent strict compiler, parser syntax, plan and probe self-checks only; no QA browser or game server."
+}

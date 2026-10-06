@@ -1,0 +1,6 @@
+{
+  "status": "failed-harness-adapter",
+  "error": "Native body collision requires the original 8px navigation map",
+  "cause": "QA passed GeneratedRiftLayout instead of its tileMap to NativeBodyCollision.",
+  "fix": "Pass generated.layout.tileMap; no product-code change."
+}

@@ -1,0 +1,54 @@
+{
+  "status": "isolated-sampling-improvement-not-world-art-pass",
+  "createdAt": "2026-10-06T16:54:15.971321+00:00",
+  "actualSources": [
+    {
+      "path": "public/assets/r100-materials/short-fibre-solid-source.png",
+      "sha256": "488fa9b7cc8cd093c832aab4684cd229b76c582cbecce743d7db24a27b32ec2a"
+    },
+    {
+      "path": "public/assets/r100-materials/porous-marrow-solid-source.png",
+      "sha256": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+    }
+  ],
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/i11-geometry-preparation/eight-directions-v2/short-fibre-eight-directions.png",
+      "sha256": "e02aa312c09152b7da10ddf8574a22c76560989fa54e6eb94ba2182f5b23ab8a",
+      "personallyViewed": true
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/i11-geometry-preparation/eight-directions-v2/porous-marrow-eight-directions.png",
+      "sha256": "cfd39e7fb2fc39658afdaedc3c705c5f91c09123125a287a6778867649d74ecc",
+      "personallyViewed": true
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/i11-geometry-preparation/eight-directions-v3/short-fibre-eight-directions.png",
+      "sha256": "7cfc753415390ac60aa43ba27bbd280538cf89a80724a9f953905acf3c15f8e8",
+      "personallyViewed": true
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/i11-geometry-preparation/eight-directions-v3/porous-marrow-eight-directions.png",
+      "sha256": "9723fdcbac52b1edd46a3c53377e00c30953516993f02dc76c6bb53402091505",
+      "personallyViewed": true
+    }
+  ],
+  "unchanged": [
+    "Source-v3 bytes",
+    "Mesh, normals, lighting and appearance colors",
+    "64 geometry/body contracts; no runtime source changed"
+  ],
+  "cause": "Centered local XY UV crosses a mirror-repeat fold inside one object. The v2 source SHA is correct; this is not accidental use of an old image. Production currently applies the same mirrored sampling relation, so the issue must be prevented for the explicit new organization branch before world use.",
+  "experiment": "v3 translates the whole mesh UV bounds into one contiguous source patch, uses a uniform texel density for both axes, and reduces that density only if the available source region cannot contain the full UV span. No per-pixel noise, reflection or wrapping within the piece.",
+  "findings": [
+    "The bilateral flower-like pattern visible on short-fibre v2 is absent in the viewed v3 panels. Unequal compressed groups and short strips remain connected rather than mirrored around the object center.",
+    "The repeated symmetric pore clusters are reduced, but porous-marrow still presents a broad straight skin/cut division in this geometry. Sampling improvement alone does not establish a finished porous broken bank.",
+    "Short-fibre silhouette still reads as a broad wedge; edge-layer and pore-wall placement need the intended normal-FOV world specimen."
+  ],
+  "limits": [
+    "Fixed isolated lamp and neutral appearance field; no tactical FOV or actual world gameplay.",
+    "No dynamic or audio review.",
+    "Do not mark B06 worlds accepted from these images."
+  ],
+  "next": "Only explicitly opted-in organization surfaces may use the tested sampling window; old52/empty appearance paths must remain byte exact. Before integration, coordinate geometry face UV for real cuts and retain normal-world review."
+}

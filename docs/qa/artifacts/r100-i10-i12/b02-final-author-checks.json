@@ -1,0 +1,207 @@
+{
+  "status": "author-local-technical-pass-pending-normal-art-and-production",
+  "worlds": [
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta"
+  ],
+  "allRemainDisabled": true,
+  "grades": 12,
+  "requestedSeed": 20261005,
+  "sourceProtection": {
+    "old56DefinitionsAndProfilesExact": true,
+    "old56CsvPrefixExact": true,
+    "old56ComparedTo": "b02-author-refined/native56-before.ts.txt",
+    "sharedGeometryMasterBodyExactTo3103": [
+      {
+        "path": "src/generation/world-study/native-body-collision.ts",
+        "sha256": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-cellular.ts",
+        "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-erosion.ts",
+        "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-expansion.ts",
+        "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-geometry.ts",
+        "sha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-ground-edge.ts",
+        "sha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-ground.ts",
+        "sha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-raster.ts",
+        "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+      }
+    ]
+  },
+  "currentNative": {
+    "csvSha256": "e8a99833620ecb0c48d55ae1575768ba0f8ff6fff2fdde9a073de431d7fef4de",
+    "generatedSha256": "985aede54ee4f15997ace49b9c3b49a5d6bc4466db8307df8d34f7d9fb7465a5"
+  },
+  "results": [
+    {
+      "id": "braided-seam",
+      "grade": "low",
+      "status": "PASS",
+      "triangles": 1821,
+      "durationMs": 396.446042
+    },
+    {
+      "id": "braided-seam",
+      "grade": "medium",
+      "status": "PASS",
+      "triangles": 1821,
+      "durationMs": 560.679416
+    },
+    {
+      "id": "braided-seam",
+      "grade": "severe",
+      "status": "PASS",
+      "triangles": 1821,
+      "durationMs": 424.1356250000001
+    },
+    {
+      "id": "scalloped-reach",
+      "grade": "low",
+      "status": "PASS",
+      "triangles": 3165,
+      "durationMs": 1401.537125
+    },
+    {
+      "id": "scalloped-reach",
+      "grade": "medium",
+      "status": "PASS",
+      "triangles": 3165,
+      "durationMs": 1770.303625
+    },
+    {
+      "id": "scalloped-reach",
+      "grade": "severe",
+      "status": "PASS",
+      "triangles": 3165,
+      "durationMs": 1445.4010000000007
+    },
+    {
+      "id": "offset-pan",
+      "grade": "low",
+      "status": "PASS",
+      "triangles": 2300,
+      "durationMs": 371.43075000000044
+    },
+    {
+      "id": "offset-pan",
+      "grade": "medium",
+      "status": "PASS",
+      "triangles": 2300,
+      "durationMs": 482.89966600000025
+    },
+    {
+      "id": "offset-pan",
+      "grade": "severe",
+      "status": "PASS",
+      "triangles": 2300,
+      "durationMs": 460.01195800000005
+    },
+    {
+      "id": "thin-delta",
+      "grade": "low",
+      "status": "PASS",
+      "triangles": 3624,
+      "durationMs": 1000.3935839999999
+    },
+    {
+      "id": "thin-delta",
+      "grade": "medium",
+      "status": "PASS",
+      "triangles": 3624,
+      "durationMs": 1013.8087499999999
+    },
+    {
+      "id": "thin-delta",
+      "grade": "severe",
+      "status": "PASS",
+      "triangles": 3624,
+      "durationMs": 1128.2292499999999
+    }
+  ],
+  "reports": [
+    {
+      "path": "b02-author-refined/report.json",
+      "sha256": "45df120e07ae58581d2e9e2e74594088572f948e196ffb8316c686ec309be918",
+      "scope": "first3worlds9grades current; original thin3 grades superseded by authored terminal cuts"
+    },
+    {
+      "path": "b02-thin-ends-refined/report.json",
+      "sha256": "136092c60a4502b094fa39b94e1b5b3abb65c5c045df56df1e0dd10ef598f9e7",
+      "scope": "thin3grades current including branch terminals and southern loop"
+    }
+  ],
+  "originalFailures": [
+    "b02-author-preflight/edge-width12/edge-preflight.json",
+    "b02-author-preflight/body-attempt1/report.json",
+    "b02-author-preflight/body-attempt2/report.json"
+  ],
+  "diagnoses": [
+    "scalloped shoulder moved from630112 to560176 to restore a wide northern return; original north station retained",
+    "thin true authored end caps replace default map-border stops; two same-material cut banks416/376pixels; triangles1764<=2048"
+  ],
+  "checks": [
+    {
+      "path": "b02-thin-ends-refined/typecheck.log",
+      "sha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0",
+      "exitCode": 0
+    },
+    {
+      "path": "b02-thin-ends-refined/appearance-check.log",
+      "sha256": "3719aa00f10817c4f84616ed4d89b9ed62a82b547e67f4a4b43fc1f5d3f7139c",
+      "exitCode": 0
+    },
+    {
+      "path": "b02-thin-ends-refined/remains-check.log",
+      "sha256": "2df8287a2880f2901e96979bef7b3e6df4ed02610d0fa792dd12890d8fdcbc74",
+      "exitCode": 0
+    },
+    {
+      "path": "b02-thin-ends-refined/worlds-check.log",
+      "sha256": "fadd72bd0428d5b1ab2e6cb16a6ed55410008116c7eff33b0c45129278ed0a36",
+      "exitCode": 0
+    },
+    {
+      "path": "b02-thin-ends-refined/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exitCode": 0
+    },
+    {
+      "path": "b02-thin-ends-refined/dev.log",
+      "sha256": "544e1701585f6d09363f75ccf5be79f1dbb3b3adc76c2742f6f64a22f502932a",
+      "exitCode": 130,
+      "detail": "npm dev ready3192, actual HTTP index200; explicitly stopped withSIGINT130",
+      "expectedStop": "SIGINT after ready+HTTP200",
+      "smokeExitCode": 0
+    }
+  ],
+  "failedQaInvocation": {
+    "path": "b02-thin-ends-refined/codegen.log",
+    "reason": "mistyped optional compiler paths, module-not-found; original log retained; actual appearance/remains compiler checks subsequently exit0"
+  },
+  "lint": "No configured lint script. Strict/noUnused TypeScript and git diff whitespace check passed; no independent ESLint claim.",
+  "scopeLimit": "No new product geometry. Author master body checks and startup smoke do not replace frozen production generation, actual gameplay, normal-view art or final performance."
+}

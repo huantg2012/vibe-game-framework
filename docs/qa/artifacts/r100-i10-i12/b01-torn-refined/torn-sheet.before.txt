@@ -1,0 +1,55 @@
+function tornSheet(b: Builder): void {
+  const s = b.spec;
+  // A large low skin has broad two-dimensional patches; the open bite lies
+  // between them. For solid use, the same patches become grounded rolled lips.
+  const parts: readonly (readonly UV[])[] = [
+    [[-.50, -.23], [-.29, -.48], [.13, -.37], [.04, -.02], [-.28, .13], [-.46, .02]],
+    [[-.28, .13], [.04, -.02], [.13, .23], [-.10, .49], [-.37, .34]],
+    [[.13, -.37], [.40, -.26], [.51, -.03], [.34, .29], [.23, .13], [.04, -.02]],
+  ];
+  // Clip broad convex skin into affine bands before folding. A fan with one
+  // raised centre would make three stone-like pyramids, not a continuous roll.
+  const tilt = .12 + s.fold * .18;
+  const coordinate = ([x, y]: UV): number => y + tilt * x;
+  const clip = (polygon: readonly UV[], boundary: number, greater: boolean): UV[] => {
+    const result: UV[] = [];
+    for (let j = 0; j < polygon.length; j++) {
+      const a = polygon[j]!, c = polygon[(j + 1) % polygon.length]!, av = coordinate(a), cv = coordinate(c);
+      const ai = greater ? av >= boundary : av <= boundary, ci = greater ? cv >= boundary : cv <= boundary;
+      if (ai) result.push(a);
+      if (ai !== ci) { const t = (boundary - av) / (cv - av); result.push([a[0] + (c[0] - a[0]) * t, a[1] + (c[1] - a[1]) * t]); }
+    }
+    return result;
+  };
+  const bands = [-.7, -.30, -.12, .03 + s.opening * .04, .26, .7];
+  const rise = [s.blocking === 1 ? .24 : .08, .73, 1, .43, .22, .16];
+  for (let i = 0; i < parts.length; i++) {
+    const foot = parts[i]!.map(([x, y]): UV => [x * s.length, y * s.width]), crown = insetOutline(b, foot);
+    const normalized = crown.map(([x, y]): UV => [x / s.length, y / s.width]);
+    const height = (x: number, y: number): number => {
+      const v = coordinate([x / s.length, y / s.width]);
+      const band = Math.max(0, Math.min(bands.length - 2, bands.findIndex(boundary => boundary > v) - 1));
+      const t = (v - bands[band]!) / (bands[band + 1]! - bands[band]!);
+      return s.height * (rise[band]! + (rise[band + 1]! - rise[band]!) * t) * (i === 0 ? 1 : i === 1 ? .62 : .83);
+    };
+    for (let band = 0; band < bands.length - 1; band++) {
+      const polygon = clip(clip(normalized, bands[band]!, true), bands[band + 1]!, false);
+      if (polygon.length < 3) continue;
+      // Internal fold boundaries share their exact top vertices. They have no
+      // ground-reaching sidewalls and therefore cannot become striped blocks.
+      section(b, polygon.map(([x, y]): UV => [x * s.length, y * s.width]), height, i === 0 && band === 2, false);
+    }
+    for (let j = 0; j < foot.length; j++) {
+      const af = foot[j]!, cf = foot[(j + 1) % foot.length]!, a = crown[j]!, c = crown[(j + 1) % crown.length]!;
+      const av = coordinate([a[0] / s.length, a[1] / s.width]), cv = coordinate([c[0] / s.length, c[1] / s.width]);
+      const cuts = [0, ...bands.map(boundary => (boundary - av) / (cv - av)).filter(t => t > 0 && t < 1), 1].sort((x, y) => x - y);
+      const at = (u: UV, v: UV, t: number): UV => [u[0] + (v[0] - u[0]) * t, u[1] + (v[1] - u[1]) * t];
+      for (let k = 0; k < cuts.length - 1; k++) {
+        const p = at(a, c, cuts[k]!), q = at(a, c, cuts[k + 1]!);
+        const pFoot: Point = [...at(af, cf, cuts[k]!), 0], qFoot: Point = [...at(af, cf, cuts[k + 1]!), 0];
+        const pTop: Point = [...p, surfaceHeight(b, height(...p))], qTop: Point = [...q, surfaceHeight(b, height(...q))];
+        b.quad(pFoot, qFoot, qTop, pTop, 1, [uv(pFoot), uv(qFoot), uv(qTop), uv(pTop)], [0, 0, 1], 2);
+      }
+    }
+  }
+}

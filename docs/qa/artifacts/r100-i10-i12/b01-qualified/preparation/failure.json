@@ -1,0 +1,19 @@
+{
+  "status": "failed-before-any-case",
+  "command": [
+    "node",
+    "tools/qa/prepare-r100-expansion-batch.mjs",
+    "--source",
+    "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "--batch",
+    "B01",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/b01-qualified/preparation"
+  ],
+  "exitCode": 1,
+  "error": "esbuild: Could not resolve 17 ../../src imports from nonexistent frozen tools/world-study resolveDir",
+  "firstError": "Could not resolve ../../src/generated/r100-native-worlds",
+  "rawStderrRetained": false,
+  "limitation": "Tool response was truncated; this is the exact surfaced error summary, not fabricated complete stderr. No executor or case was created.",
+  "toolSha256": "2ebbeb7c867d1ef24a5111a9a3b7b3ec3f047b97f727b56f50ffb06c17fe1b77"
+}

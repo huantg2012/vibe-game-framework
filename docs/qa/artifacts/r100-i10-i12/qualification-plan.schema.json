@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coh:r100-i10-i12-qualification-plan:1",
+  "title": "R100 I10–I12 prospective qualification plan",
+  "description": "Structural schema only. Cross-field counts, frozen SHA inputs, full seed identity, batch readiness and protected acceptance limits are enforced by tools/qa/check-r100-expansion-plan.mjs. A valid plan is not completed evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "status",
+    "baseRevision",
+    "algorithmRevision",
+    "features",
+    "baseline",
+    "grades",
+    "batches",
+    "generation",
+    "actualPlay",
+    "continuity",
+    "finalPool",
+    "i11ContractMatrix",
+    "retention",
+    "soundGate",
+    "execution",
+    "continuousNatural",
+    "designCards"
+  ],
+  "properties": {
+    "executionSource": {
+      "description": "Optional only on a separate ready execution copy. Semantic validation permits only the selected batch status to differ from this frozen original.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": { "path": { "type": "string" }, "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" } }
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "status": {
+      "enum": [
+        "planning",
+        "frozen"
+      ]
+    },
+    "baseRevision": {
+      "const": "d194be4cb8f89f37d4ba7f05d17e16f9bed055ee"
+    },
+    "algorithmRevision": {
+      "const": 6
+    },
+    "features": {
+      "type": "array"
+    },
+    "baseline": {
+      "type": "object"
+    },
+    "grades": {
+      "type": "array"
+    },
+    "batches": {
+      "type": "array",
+      "minItems": 14,
+      "maxItems": 14,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "iteration",
+          "capacity",
+          "status",
+          "worlds"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^B(0[1-9]|1[0-4])$"
+          },
+          "iteration": {
+            "enum": [
+              "R100-I10",
+              "R100-I11",
+              "R100-I12"
+            ]
+          },
+          "capacity": {
+            "const": 4
+          },
+          "status": {
+            "enum": [
+              "unassigned",
+              "specified",
+              "ready"
+            ]
+          },
+          "worlds": {
+            "type": "array",
+            "maxItems": 4,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{0,79}$"
+            }
+          }
+        }
+      }
+    },
+    "generation": {
+      "type": "object"
+    },
+    "actualPlay": {
+      "type": "object"
+    },
+    "continuity": {
+      "type": "object"
+    },
+    "finalPool": {
+      "type": "object"
+    },
+    "i11ContractMatrix": {
+      "type": "object"
+    },
+    "retention": {
+      "type": "object"
+    },
+    "soundGate": {
+      "type": "object"
+    },
+    "execution": {
+      "type": "object"
+    },
+    "continuousNatural": {
+      "type": "object"
+    },
+    "designCards": {
+      "type": "object"
+    }
+  }
+}

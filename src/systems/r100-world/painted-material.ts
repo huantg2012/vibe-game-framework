@@ -1,5 +1,7 @@
 /** Prepared material pixels only. World geometry, erosion and lighting remain native. */
 import { PAINTED_MATERIALS, type PaintedMaterialFamily } from '@/generated/r100-materials';
+import { ORGANIZATION_MATERIALS } from '@/generated/r100-material-organizations';
+import type { WorldMaterialOrganization } from '@/generation/world-study/r100-world-appearance';
 import type { NativeVolumeFamily } from '@/generation/world-study/native-volume-geometry';
 
 export interface PaintedSurface {
@@ -22,7 +24,7 @@ export interface PaintedMaterial extends PaintedSurface {
    * for the active world, never a palette substitution by world id. */
   readonly families?: Readonly<Partial<Record<NativeVolumeFamily, PaintedMaterial>>>;
 }
-// Three family requests each own two immutable 512px buffers. Overlapping
+// Only requested families/organizations allocate immutable pixel buffers. Overlapping
 // rebuilds share one pending request; a failed pair can be retried as a pair.
 const materials = new Map<string, Promise<PaintedMaterial>>();
 
@@ -59,9 +61,17 @@ async function prepareMaterial(definition: SurfaceDefinition, family:string): Pr
   }
 }
 
-export function loadPaintedMaterial(family: PaintedMaterialFamily): Promise<PaintedMaterial> {
-  const definition = PAINTED_MATERIALS.find(value => value.family === family);
-  if (!definition) return Promise.reject(new Error(`Unknown R100 painted material family: ${family}`));
+/** The same definition selects both preparation pixels and scene admission.
+ * Secondary families call this without an organization and keep their atoms. */
+export function paintedMaterialDefinition(family: PaintedMaterialFamily, organization?: WorldMaterialOrganization) {
+  return organization
+    ? ORGANIZATION_MATERIALS.find(value => value.organization === organization)
+    : PAINTED_MATERIALS.find(value => value.family === family);
+}
+
+export function loadPaintedMaterial(family: PaintedMaterialFamily, organization?: WorldMaterialOrganization): Promise<PaintedMaterial> {
+  const definition = paintedMaterialDefinition(family, organization);
+  if (!definition) return Promise.reject(new Error(`Unknown R100 painted material: ${organization ?? family}`));
   const existing = materials.get(definition.source);
   if (existing) return existing;
   const request = Promise.all([prepareMaterial(definition,family),prepareMaterial(definition.solid,`${family} solid`)]).then(([ground,solid])=>({

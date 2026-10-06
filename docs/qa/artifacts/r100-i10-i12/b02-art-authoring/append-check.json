@@ -1,0 +1,50 @@
+{
+  "status": "author-data-compiled-pass",
+  "files": [
+    {
+      "path": "data/rift-world-appearance.csv",
+      "oldRows": 56,
+      "newRows": 60,
+      "oldPrefixSha256": "efd9d2867988e1da349b4cf4becf569db388eebfb411c67a6f4b5331353cc9a6",
+      "unchangedPrefix": true,
+      "afterSha256": "dbfed9ebbdd910287169ab1b10438aeb1b0ee842d438d15ce863de75399a6fd4"
+    },
+    {
+      "path": "data/rift-search-remains.csv",
+      "oldRows": 58,
+      "newRows": 62,
+      "oldPrefixSha256": "f5a20d1a97064da75392a917c77b11a52ef9988cee33c343689f37d5e5ad8ebb",
+      "unchangedPrefix": true,
+      "afterSha256": "ca2452d4ca9fb45b142044e9ab63633892d2d7cda67f4afe8c15d0074abec14f"
+    }
+  ],
+  "scope": "Prior source rows preserved byte-for-byte; not a visual verdict.",
+  "generated": {
+    "priorAppearanceRows": 56,
+    "appearanceRows": 60,
+    "priorRemainsRows": 58,
+    "remainsRows": 62,
+    "priorObjectsDeepExact": true,
+    "files": [
+      {
+        "path": "src/generated/r100-world-appearance.ts",
+        "sha256": "f43b3fec04bd0776fb3d580a8302d9229aaee0c23d0975156d1c864c28a32925"
+      },
+      {
+        "path": "src/generated/rift-search-remains.ts",
+        "sha256": "38b6095f976105bb930f8d385ed25abee88ece5c15c74d872f8ddcb86e3c8f50"
+      }
+    ]
+  },
+  "checks": [
+    "Appearance compiler and --check: 60 identities/exact catalog coverage",
+    "Remains compiler and --check: 62 identities/exact combined catalog coverage",
+    "Generated prior 56 appearances and 58 remains deep exact",
+    "62-world x 9-seed remains check: 558 samples plus 30 historical silhouette checks pass",
+    "tsc --noEmit pass"
+  ],
+  "rendererContinuity": {
+    "note": "3103 frozen search-remains.ts predates new unused grammar API. B02 runtime therefore differs beyond appended data; original seven branches plus 504 sample exact evidence are explicitly reviewed by pipeline, not assumed from time order.",
+    "evidence": "docs/qa/artifacts/r100-i10-i12/material-organization/remains-v3/existing-rgba-exact.json"
+  }
+}

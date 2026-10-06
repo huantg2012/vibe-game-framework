@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "scope": "Synthetic dependency ownership only; no material art or runtime claim.",
+  "checks": [
+    "empty selection keeps family-only projection; selected organization adds exactly one atom pair",
+    "unselected organization atom change leaves both world receipts exact",
+    "selected atom change affects only its world and cannot overwrite a frozen receipt",
+    "selected organization definition changes only its world receipt",
+    "missing selected organization rejected"
+  ],
+  "harness": {
+    "path": "tools/world-study/check-r100-organization-manifests.mjs",
+    "sha256": "6fe4b48ca44108660bf5061eb66720ab5d945548752a1aafb7436387632d5c83"
+  },
+  "compiler": {
+    "path": "tools/world-study/r100-qualification-manifests.mjs",
+    "sha256": "fc578db9afccb28e4fd10845ab5dc9f2cee442fb0e8897457069eef525a15231"
+  }
+}

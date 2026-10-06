@@ -30,7 +30,7 @@ const field = { secondary: 0, tone: 0, detail: 1 }, output = new Float32Array(3)
 for (const appearance of R100_WORLD_APPEARANCES) {
   assert(validR100WorldAppearance(appearance));
   const recipe = createR100ProductionRecipe(appearance.worldId, 20261005, 'medium');
-  assert.equal(recipe.package.algorithmRevision, 5); assert(validR100ProductionRecipe(recipe));
+  assert.equal(recipe.package.algorithmRevision, 6); assert(validR100ProductionRecipe(recipe));
   assert.equal(recipe.profile.palette.materialMid, appearance.solid.mid);
   assert.equal(recipe.profile.palette.faceLight, appearance.cleaved.light);
   const altered = structuredClone(recipe); (altered.appearance!.ground as { mid: number }).mid ^= 0x001010;

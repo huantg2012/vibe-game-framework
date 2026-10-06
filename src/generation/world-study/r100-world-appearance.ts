@@ -7,6 +7,8 @@ export interface WorldMaterialRamp {
 }
 export const WORLD_GROUND_PATTERNS = ['strata', 'veins', 'plates', 'grains', 'tension', 'flow'] as const;
 export type WorldGroundPattern = typeof WORLD_GROUND_PATTERNS[number];
+export const WORLD_MATERIAL_ORGANIZATIONS = ['short-fibre', 'porous-marrow'] as const;
+export type WorldMaterialOrganization = typeof WORLD_MATERIAL_ORGANIZATIONS[number];
 export interface R100WorldAppearance {
   readonly version: 1;
   readonly worldId: string;
@@ -20,6 +22,8 @@ export interface R100WorldAppearance {
   readonly secondaryCoverage: number;
   readonly textureContrast: number;
   readonly quietCoverage: number;
+  /** Absent preserves the accepted material sampling byte for byte. */
+  readonly materialOrganization?: WorldMaterialOrganization;
 }
 const inRange = (value: unknown, low: number, high: number): value is number => typeof value === 'number' && Number.isFinite(value) && value >= low && value <= high;
 const luminance = (color: number): number => (color >>> 16 & 255) * .2126 + (color >>> 8 & 255) * .7152 + (color & 255) * .0722;
@@ -28,7 +32,8 @@ export function validR100WorldAppearance(value: unknown): value is R100WorldAppe
   const row = value as R100WorldAppearance;
   if (row.version !== 1 || !/^[a-z][a-z0-9-]+$/.test(row.worldId) || !WORLD_GROUND_PATTERNS.includes(row.groundPattern)
     || !inRange(row.patternScale, 48, 256) || !inRange(row.patternStrength, 0, 1)
-    || !inRange(row.secondaryCoverage, 0, .6) || !inRange(row.textureContrast, .6, 1.6) || !inRange(row.quietCoverage, .1, .65)) return false;
+    || !inRange(row.secondaryCoverage, 0, .6) || !inRange(row.textureContrast, .6, 1.6) || !inRange(row.quietCoverage, .1, .65)
+    || (row.materialOrganization !== undefined && !WORLD_MATERIAL_ORGANIZATIONS.includes(row.materialOrganization))) return false;
   return [row.ground, row.solid, row.cleaved, row.secondary].every(ramp => !!ramp
     && [ramp.dark, ramp.mid, ramp.light].every(color => Number.isSafeInteger(color) && inRange(color, 0, 0xffffff))
     && luminance(ramp.dark) < luminance(ramp.mid) && luminance(ramp.mid) < luminance(ramp.light));

@@ -1,0 +1,58 @@
+{
+  "status": "pass",
+  "at": "2026-10-06T13:10:26.707012+00:00",
+  "checks": [
+    {
+      "command": [
+        "node",
+        "tools/recovery/freeze-native-r100-revision2.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/freeze-2-check.log",
+      "sha256": "4bf4c869ea96934e1fdff47842ec66b019cb8faf52c7068298c079a7783ba9b2"
+    },
+    {
+      "command": [
+        "node",
+        "tools/recovery/freeze-native-r100-revision3.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/freeze-3-check.log",
+      "sha256": "3411463f868bfd437e1381cfce2014374f179b07438156f3f96a3246090a013b"
+    },
+    {
+      "command": [
+        "node",
+        "tools/recovery/freeze-native-r100-revision4.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/freeze-4-check.log",
+      "sha256": "3f97a1c1887078e54c9224a42d4cc702019b5c547c5cfe464713259c83d42b3b"
+    },
+    {
+      "command": [
+        "node",
+        "tools/recovery/freeze-native-r100-revision5.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/freeze-5-check.log",
+      "sha256": "def7c2d364ed716e0b761c2413f0c8027e2ead1db0380b4cae970d75162c9709"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/build.log",
+      "sha256": "8e78d5a9395db09e14d9fdf72851ac2bafba97632323ebe5094abccb4e49e7b2"
+    }
+  ],
+  "lint": "No npm lint script in this project; strict tsc noUnusedLocals/noUnusedParameters/noFallthroughCases plus changed .mjs syntax checks used.",
+  "test": "No generic npm test script; focused existing inventory/save/resume plus new exact compatibility and plan/probe tests executed separately."
+}

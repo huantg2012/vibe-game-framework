@@ -1,0 +1,128 @@
+{
+  "status": "observations-not-batch-approval",
+  "algorithmRevision": 6,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "sha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+  },
+  "cases": [
+    {
+      "case": "010-fallen-spines-medium-3075192741",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/010-fallen-spines-medium-3075192741/report.json",
+        "sha256": "008d2fced7e625bbd739898e1ef4d87a1c814256cbbdb82e89c545d02958cc6e"
+      },
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/010-fallen-spines-medium-3075192741/medium/journey.jsonl",
+        "sha256": "7d724709a0b74781786dcabfc9af526b8264dc00a5baedd9cb3d177a3a1f284a"
+      },
+      "outcome": "extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "distanceFromEntry": 296.86360504447157
+        }
+      ],
+      "carriedKindling": 4,
+      "nonEntrySearchAndExtract": false,
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "reason": "One actual pickup at296.864px; brought back4kindling. Counts as a real process, not non-entry search. This is not an empty-handed return.",
+      "selectedInputEvents": []
+    },
+    {
+      "case": "013-clamped-shore-low-20261005",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/013-clamped-shore-low-20261005/report.json",
+        "sha256": "8c1ddba7bc277b1a6cc29bf36e3cda21493597e0a86567aabaef29f789e0b2b9"
+      },
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/013-clamped-shore-low-20261005/low/journey.jsonl",
+        "sha256": "0664cffe8b7dc82e28be876a9604925a859c4dcbc9eb2f05c1242cf1dac905ad"
+      },
+      "outcome": "extract",
+      "actualPickups": [],
+      "carriedKindling": 0,
+      "nonEntrySearchAndExtract": false,
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "reason": "Two observed approaches abandoned as still dangerous. Actual G distraction and Q suppression consumed. Returned empty; no evidence that the authored route is impossible.",
+      "selectedInputEvents": [
+        {
+          "at": "2026-10-06T16:45:03.263Z",
+          "event": "abandoned-observed-approach",
+          "reason": "approach-kept-dangerous",
+          "target": {
+            "id": "r100-kindling-contested-1",
+            "kind": "kindling",
+            "pos": {
+              "x": 788,
+              "y": 548
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          }
+        },
+        {
+          "at": "2026-10-06T16:45:03.830Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 4
+          },
+          "remaining": 3,
+          "used": 1,
+          "facePoint": {
+            "x": 600.7787078570809,
+            "y": 653.7354611937612
+          }
+        },
+        {
+          "at": "2026-10-06T16:45:28.434Z",
+          "event": "abandoned-observed-approach",
+          "reason": "approach-kept-dangerous",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "kind": "kindling",
+            "pos": {
+              "x": 868,
+              "y": 116
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          }
+        },
+        {
+          "at": "2026-10-06T16:45:35.764Z",
+          "event": "known-tool-context-input",
+          "label": "imminent-visible-green-crossing",
+          "slot": 0,
+          "key": "Q",
+          "item": {
+            "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+            "name": "灰釉齿",
+            "description": "压住一处污染源1秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 944,
+            "y": 176
+          }
+        }
+      ]
+    }
+  ],
+  "accountingNote": "The existing aggregate emptyReturns field means no qualifying non-entry pickup. Distinguish near-entry pickups from actual empty-handed return in user-facing reports. Original controller and accounting implementation are unchanged."
+}

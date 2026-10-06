@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 
 const source = 'data/rift-search-remains.csv';
 const target = 'src/generated/rift-search-remains.ts';
-const grammars = ['laminated-flakes', 'fractured-fibres', 'glaze-shell', 'mineral-splinters', 'packed-granules', 'torn-membrane', 'gel-fragments'];
+const grammars = ['laminated-flakes', 'fractured-fibres', 'glaze-shell', 'mineral-splinters', 'packed-granules', 'torn-membrane', 'gel-fragments', 'compressed-fibre-fragments', 'porous-core-chips'];
 
 export function compileSearchRemainsCSV(raw, worldIds) {
   const lines = raw.trim().split(/\r?\n/);
@@ -18,7 +18,7 @@ export function compileSearchRemainsCSV(raw, worldIds) {
     return { worldId, grammar };
   });
   if (rows.length !== worldIds.length || new Set(rows.map(row => row.worldId)).size !== worldIds.length) throw new Error('Every source world requires exactly one search remains grammar');
-  return `// GENERATED from ${source}; edit the CSV, not this file.\nexport const SEARCH_REMAINS_SOURCE_HASH = '${createHash('sha256').update(raw).digest('hex')}';\nexport const SEARCH_REMAINS = ${JSON.stringify(rows, null, 2)} as const;\nexport type SearchRemainsGrammar = typeof SEARCH_REMAINS[number]['grammar'];\n`;
+  return `// GENERATED from ${source}; edit the CSV, not this file.\nexport const SEARCH_REMAINS_SOURCE_HASH = '${createHash('sha256').update(raw).digest('hex')}';\nexport const SEARCH_REMAINS = ${JSON.stringify(rows, null, 2)} as const;\nexport type SearchRemainsGrammar = ${grammars.map(value => `'${value}'`).join(' | ')};\n`;
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-05
+last-modified: 2026-10-06
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -76,11 +76,17 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `PlayerConfig.readMovementInput` 只接受DEV巡查意图，真实键盘优先；`MasterPatrol` 在最终身体网格找路线，移动、加速、碰撞、动画仍归Player。作者小场景不计入108世界或324等级资格；I02实际美术和运行证据归[任务](tasks/rift-r100-i02.md)、[独立美术记录](art/rift-r100-i02-review.md)及[QA](qa/rift-r100-i02.md)。
 
+## R100 I10—I12：地床分路与修订6（实施中）
+
+`native-volume-ground.ts`独立拥有构造版本4的宽断床、倒束、夹岸与撕膜；`native-volume-geometry.ts`显式按版本/profile分派，旧v1–v3不换实现。`native-volume-erosion.ts`共享CSV解析及冻结配方恢复校验；作者多边形编入原`MasterDefinition.erosion`，由同一个8px地表存在网格表达真实缺地；不因此生成Host或赋予普通实体吞光能力。`native-volume-ground-edge.ts`只在实际存在的地表格内建立浅断沿，归首个主材低浮雕所有，不另生阻挡层。完整身体路线在最终缺地和实体叠加后检查，不从仅含几何中心的路线推断可通。具体数据语法、大小和退化拒绝见[地图spec](specs/system-map-generation.md)。
+
+`legacy-r100-v5/executor.js`从`d194be4c`的68个依赖封存生成、验证及预烤；`freeze-native-r100-revision5.mjs --check`核对完整闭包。正式恢复引入独立`executor-recovery.js`：先由`derive-native-r100-revision5.mjs`移除内部不可能的历史分派，再由`project-native-r100-revision5.mjs`严格证明目录只有ID成员查询后只留52个ID；原始和两级派生文件均保留，未改外层revision1–5同步接口。`check-r100-revision5-projection.ts`逐一核对原156配方、完整地图与四层RGBA哈希。新包保持version3/内容version2并显式标记algorithmRevision6；保存的revision5由封存验证/生成/预烤处理，不读取新CSV重算。当前调用接口保持，资格与来源连续性由[I10–I12 QA](qa/rift-r100-i10-i12.md)单独确认，模块存在不代表108世界已完成。
+
 ## R100 I07—I09：扩展形体与连续选择
 
 `native-volume-expansion.ts`只拥有constructionVersion3的显式shapeProfile，材料仍由family决定；CSV逐实例声明，编译器与配方校验同时拒绝未知profile或旧版本混带字段。开口必须是完整负空间，可见三角形同时生成法线/UV/完整身体足迹，不引入Z轴玩法。原20世界定义与v1/v2几何保持；新世界通过独立正常实帧、完整搜撤及两种子过程后逐批启用。
 
-`legacy-r100-v4/executor.js`封存`f1c4158b`的62项生成/校验/预烤依赖；`freeze-native-r100-revision4.mjs --check`可逐字重建。`r100-production-map.ts`按revision分派；新MasterWorld带`algorithmRevision:5`，旧r4数据不注入该属性以保持完整载荷字节。`surface-bake.ts`对旧无appearance走r3、旧有appearance且无revision走r4、显式5走当前预烤。`check-r100-revision4.ts`检查20×3完整恢复、当前旧世界几何以及四图RGBA等价。
+`legacy-r100-v4/executor.js`封存`f1c4158b`的62项生成/校验/预烤依赖；`freeze-native-r100-revision4.mjs --check`可逐字重建。`r100-production-map.ts`按revision分派；此轮MasterWorld带`algorithmRevision:5`，旧r4数据不注入该属性以保持完整载荷字节。`surface-bake.ts`对旧无appearance走r3、旧有appearance且无revision走r4；显式5在I10起改走冻结修订5，显式6走当前预烤。`check-r100-revision4.ts`检查20×3完整恢复、当前旧世界几何以及四图RGBA等价。
 
 `data/rift-world-selection.csv`→`generated/r100-world-selection.ts`→`r100-world-selection.ts`；选择器消费当前启用世界和`RiftWorldHistory`，按最近8次出发降低同世界/近邻概率，权重始终大于0。`InventoryStore.beginRun`的持久事务与history追加原子提交；`SaveManager`将行装schema3迁至4，取消/失败/冷续不改历史。近期选择策略不混入冻结地图签名，已经出发的局面仍只消费原配方。生成的当前候选数、启用数与审核通过数分别归R100台账，不由CSV长度推断完成。
 
@@ -90,7 +96,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-volume-geometry.ts`按显式`constructionVersion`执行两套兼容构造；默认版本1保留，版本2提供六族深化形状。数据编译器校验CSV字段并写入各实例，碰撞、可走破口、面与材质坐标均来自同一网格。新角色色、HUD和污染数值不属于本次变更。
 
-`legacy-r100-v3/executor.js`从固定`5788ef07`封存生成、配方校验、表面预烤闭包；`freeze-native-r100-revision3.mjs --check`核对摘要，旧修订3不导入当前材料与几何实现。`r100-production-map.ts`和`r100-world-presentation.ts`按revision路由。该节记录revision4的材料管线；当前新出击为revision5，revision1/2/3/4封存继续保留。验证与未覆盖范围见[本轮QA](qa/rift-r100-world-identity.md)。
+`legacy-r100-v3/executor.js`从固定`5788ef07`封存生成、配方校验、表面预烤闭包；`freeze-native-r100-revision3.mjs --check`核对摘要，旧修订3不导入当前材料与几何实现。`r100-production-map.ts`和`r100-world-presentation.ts`按revision路由。该节记录revision4的材料管线；I10起新出击为revision6，revision1/2/3/4/5封存继续保留。验证与未覆盖范围见[本轮QA](qa/rift-r100-world-identity.md)。
 
 ## R100 I01：持久生成版本与DEV资格底座
 

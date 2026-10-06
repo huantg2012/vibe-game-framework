@@ -16,8 +16,12 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57"
     },
     {
+      "path": "data/rift-material-organizations.csv",
+      "sha256": "062b5ec22851ee681dfd57eb8c9ce1c384b27457651ff0742efe0363f921c0ad"
+    },
+    {
       "path": "data/rift-native-worlds.csv",
-      "sha256": "cb8aef6a6a386f37a130cb68c7e800f6d3dfc013b895c099a0902485a004baa2"
+      "sha256": "e8a99833620ecb0c48d55ae1575768ba0f8ff6fff2fdde9a073de431d7fef4de"
     },
     {
       "path": "data/rift-pollution-grades.csv",
@@ -25,11 +29,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-search-remains.csv",
-      "sha256": "15cffbdf6f219c5105bd97480437ba36b6deb9f2d9471b293b60f6daf934b8d3"
+      "sha256": "ca2452d4ca9fb45b142044e9ab63633892d2d7cda67f4afe8c15d0074abec14f"
     },
     {
       "path": "data/rift-world-appearance.csv",
-      "sha256": "0cb840245bf2fd0e5878aa18ee2a8dc1ffe5907640bbbb21b39983becc20fefa"
+      "sha256": "dbfed9ebbdd910287169ab1b10438aeb1b0ee842d438d15ce863de75399a6fd4"
     },
     {
       "path": "public/assets/r100-materials/ash-strata-source.png",
@@ -72,8 +76,24 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf"
     },
     {
+      "path": "public/assets/r100-materials/porous-marrow-ground-source.png",
+      "sha256": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55"
+    },
+    {
+      "path": "public/assets/r100-materials/porous-marrow-solid-source.png",
+      "sha256": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+    },
+    {
       "path": "public/assets/r100-materials/shell-solid-source.png",
       "sha256": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+    },
+    {
+      "path": "public/assets/r100-materials/short-fibre-ground-source.png",
+      "sha256": "39a3207c28c9c00ca4713e72cf44edddbd9e948cdd88959d553bb9db94f68b4c"
+    },
+    {
+      "path": "public/assets/r100-materials/short-fibre-solid-source.png",
+      "sha256": "488fa9b7cc8cd093c832aab4684cd229b76c582cbecce743d7db24a27b32ec2a"
     },
     {
       "path": "public/assets/r100-materials/slab-solid-source.png",
@@ -84,12 +104,24 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
     },
     {
+      "path": "src/generation/world-study/native-volume-erosion.ts",
+      "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+    },
+    {
       "path": "src/generation/world-study/native-volume-expansion.ts",
       "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
     },
     {
       "path": "src/generation/world-study/native-volume-geometry.ts",
-      "sha256": "9d5925d2fbd47f31e4f6ed60d24c3b48b1ab57949a0acc53c6d647abfe17af06"
+      "sha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground-edge.ts",
+      "sha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60"
     },
     {
       "path": "src/generation/world-study/native-volume-raster.ts",
@@ -109,11 +141,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-master-world.ts",
-      "sha256": "64c932e103212cf9866d96b98a82d945361ffa9397ec04a29ebb9b3ec8a51893"
+      "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
     },
     {
       "path": "src/generation/world-study/r100-package.ts",
-      "sha256": "47fe6158ac41a4df332460de5be8355adeb58830b56246014c9b67dcf7cf5bd7"
+      "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
     },
     {
       "path": "src/generation/world-study/r100-patrol-windows.ts",
@@ -125,7 +157,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-world-appearance.ts",
-      "sha256": "92fc6eb520f1809f57508bb6773bd4ed9913f94bc8f6d69dd2e925d1b4f708df"
+      "sha256": "019e641e9c7471a6a58d250d44a8341c35fd58ad6f007b5abffc668578c76f4a"
     },
     {
       "path": "src/generation/world-study/world-material-pigment.ts",
@@ -137,10 +169,10 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/systems/r100-world/surface-bake.ts",
-      "sha256": "7536bd4b7282cde4dfdfecbf1b98bd771ec2f817588d0a6070cbb41469c57ff4"
+      "sha256": "411f7394344c9c41776d2f774b172b8071561c1a790b02c6d506046519872262"
     }
   ],
-  "hash": "686abceed2363922f285c208e95aa0be66994cae7055e24cb960327f1e411d01"
+  "hash": "2f08cf3b29592fe186e9731dafbee0608ae17ad04c229fd57d93dbf589fdcd97"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {
@@ -172,5 +204,15 @@ export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly defi
     "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
     "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
     "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+  },
+  "organization:short-fibre": {
+    "definition": "5136e92cd5d57693961e7e72797a4fa4c543d1ac0adb5008cc9e25b57957822e",
+    "surface": "39a3207c28c9c00ca4713e72cf44edddbd9e948cdd88959d553bb9db94f68b4c",
+    "solid": "488fa9b7cc8cd093c832aab4684cd229b76c582cbecce743d7db24a27b32ec2a"
+  },
+  "organization:porous-marrow": {
+    "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+    "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+    "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
   }
 };

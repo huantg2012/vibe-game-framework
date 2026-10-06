@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>R100 · 六种材料审听</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; background:#111515; color:#d6d9d4; }
+    body { margin:0; } main { max-width:1100px; margin:44px auto; padding:0 28px 60px; }
+    h1 { font-size:28px; font-weight:500; margin:0 0 12px; } p { line-height:1.75; }
+    .intro { max-width:900px; color:#aeb7b2; } .note { border-left:3px solid #9b9c80; padding:10px 18px; background:#1b2220; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:22px; margin:30px 0; }
+    article { padding:22px; border:1px solid #3b4743; background:#171e1b; }
+    h2 { font-size:21px; font-weight:500; margin:0; } .use { color:#b0bbb3; min-height:3.5em; font-size:14px; }
+    .controls { display:flex; gap:8px; flex-wrap:wrap; align-items:center; } button,select { font:inherit; padding:8px 11px; background:#26312b; color:#e2e4d8; border:1px solid #697466; border-radius:0; cursor:pointer; }
+    button:focus-visible,select:focus-visible,a:focus-visible { outline:2px solid #e0d3a7; outline-offset:3px; }
+    audio { display:block; width:100%; height:38px; margin:18px 0 10px; }
+    .detail { min-height:3em; font-size:12px; color:#8f9e95; line-height:1.6; } a { color:#bbc6a4; }
+    #status { min-height:1.5em; color:#d7c9a3; } footer { border-top:1px solid #344139; padding-top:18px; font-size:13px; color:#91a095; }
+  </style>
+</head>
+<body><main>
+  <h1>六种材料，先听声音</h1>
+  <p class="intro">这是游戏现有的六组材料声景。先用相同设备和音量听中污染，再切换低污染、重度污染。可先听15秒，也可播放完整一轮；一次只播放一组，页面不额外调大、压缩或归一化音量。</p>
+  <div class="note"><strong>请判断声音，不必先看工程报告。</strong><p>它们是否与材料相配？纤维与膜层是否太像？反复听会不会烦？混入敌人警觉、受伤和翻找中断提示时，重要声音是否仍能听清？</p></div>
+  <p class="intro">以下是已有真实浏览器总线录音：保留游戏的混音、增益与循环声源；录制时听者固定在声源近处，并人为触发四种重要提示，便于比较。它不是自然遭遇录像，也没有被登记为听感通过。六组配方复用五个材料声源，并非六套完全独立录音素材。</p>
+  <p id="status" role="status" aria-live="polite">正在载入录音列表…</p>
+  <div id="families" class="grid"></div>
+  <footer><p>“15秒”从录音开头试听；部分低污染的完整受力周期更长，重要提示可能在15秒之后，请用“完整一轮”继续审听。录音末尾的暂停/停止也保留原样。黑暗、距离变化和实际战斗中的体验仍需在游戏中听。</p><p><a href="r100-material-listening.json">录音与实际来源</a> · <a href="../artifacts/r100-i03-i06/audio-mix/index.html">完整旧混音对照与原录音</a></p></footer>
+</main>
+<script type="module">
+  const list = document.querySelector('#families');
+  const status = document.querySelector('#status');
+  const grades = {low:'低污染', medium:'中污染', severe:'重度污染'};
+  const players = [];
+  let active = null;
+  const stopOthers = (player) => { for (const other of players) if (other !== player) other.pause(); };
+  try {
+    const response = await fetch('./r100-material-listening.json');
+    if (!response.ok) throw new Error(`录音列表读取失败 (${response.status})`);
+    const data = await response.json();
+    for (const family of data.families) {
+      const article = document.createElement('article');
+      const title = document.createElement('h2'); title.textContent = family.label;
+      const use = document.createElement('p'); use.className = 'use'; use.textContent = family.use;
+      const controls = document.createElement('div'); controls.className = 'controls';
+      const select = document.createElement('select'); select.setAttribute('aria-label',`${family.label}的污染等级`);
+      for (const grade of ['low','medium','severe']) { const option = document.createElement('option'); option.value = grade; option.textContent = grades[grade]; select.append(option); }
+      select.value = 'medium';
+      const sample = document.createElement('button'); sample.type = 'button'; sample.textContent = '听15秒';
+      const full = document.createElement('button'); full.type = 'button'; full.textContent = '完整一轮';
+      const audio = document.createElement('audio'); audio.controls = true; audio.preload = 'none'; audio.volume = 1;
+      audio.setAttribute('aria-label',`${family.label}实际混音`); players.push(audio);
+      const detail = document.createElement('p'); detail.className = 'detail';
+      let stopAt = null;
+      let playRequest = 0;
+      const setClip = () => {
+        playRequest += 1; audio.pause(); stopAt = null;
+        const clip = family.clips.find(item => item.grade === select.value);
+        audio.src = clip.audio;
+        status.textContent = `已选择：${family.label} · ${grades[select.value]}`;
+        detail.textContent = `材料受力周期 ${clip.pressurePeriodSeconds} 秒。四种重要提示约在 ${clip.cues.map(cue=>cue.seconds.toFixed(1)).join(' / ')} 秒出现。`;
+      };
+      const play = async (limited) => {
+        const request = ++playRequest;
+        stopOthers(audio); audio.currentTime = 0; stopAt = limited ? 15 : null;
+        try { await audio.play(); if (request !== playRequest || audio.paused) return; active = family.label; status.textContent = `正在听：${family.label} · ${grades[select.value]}${limited?' · 15秒试听':' · 完整录音'}`; }
+        catch (error) {
+          if (request !== playRequest || (error.name === 'AbortError' && audio.paused)) return;
+          status.textContent = `无法播放${family.label}：${error.message}`;
+        }
+      };
+      sample.addEventListener('click',()=>void play(true)); full.addEventListener('click',()=>void play(false));
+      select.addEventListener('change',setClip);
+      audio.addEventListener('play',()=>{ stopOthers(audio); active = family.label; });
+      audio.addEventListener('timeupdate',()=>{ if (stopAt !== null && audio.currentTime >= stopAt) { audio.pause(); stopAt = null; status.textContent = `${family.label}的15秒试听结束，可播放完整一轮。`; } });
+      audio.addEventListener('ended',()=>{ stopAt = null; status.textContent = `${family.label}播放结束。`; });
+      audio.addEventListener('error',()=>{ status.textContent = `${family.label}录音无法载入，请检查网络或打开原录音链接。`; });
+      controls.append(select,sample,full); article.append(title,use,controls,audio,detail); list.append(article); setClip();
+    }
+    status.textContent = '已准备六组真实混音，默认中污染。尚未记录真人听感结论。';
+    document.addEventListener('visibilitychange',()=>{ if (document.hidden) { for (const player of players) player.pause(); if (active) status.textContent = `${active}已暂停。`; } });
+    window.addEventListener('pagehide',()=>{ for (const player of players) player.pause(); });
+  } catch(error) { status.textContent = error.message; }
+</script>
+</body></html>

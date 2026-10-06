@@ -1,3 +1,4 @@
+import { bakeMasterWorldSurface as bakeRevision5Surface } from '@/generation/legacy-r100-v5/executor-recovery.js';
 import { bakeMasterWorldSurface as bakeRevision4Surface } from '@/generation/legacy-r100-v4/executor.js';
 /** Pure immutable texture bake. Runs in the preparation Worker, never in a frame. */
 import { bakeMasterWorldSurface as bakeRevision3Surface } from '@/generation/legacy-r100-v3/executor.js';
@@ -91,6 +92,7 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
      const sx=left+mirror(u*scale+(seed%83),pw),sy=top+mirror(v*scale+((seed>>>8)%97),ph);
      paintingIndex=(sy*receiverPaint.width+sx)*4;
     }else paintingIndex=worldPaintingIndex;
+
    }
    if(appearance){
     sampleWorldAppearance(appearance,x*ca+y*sa,-x*sa+y*ca,seed,identityField);
@@ -176,5 +178,6 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
 export function bakeMasterWorldSurface(world:MasterWorld,painting?:PaintedMaterial):MasterSurfaceBake {
  if(!world.appearance)return bakeRevision3Surface(world,painting);
  if(world.algorithmRevision===undefined)return bakeRevision4Surface(world,painting);
+ if(world.algorithmRevision===5)return bakeRevision5Surface(world,painting);
  return bakeMasterSurface(world,paintMasterGround(world),new NativeVolumeLighting(world.raster,masterVolumePalette(world),{seed:world.sample.seed,axis:world.definition.axis}),painting);
 }

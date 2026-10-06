@@ -1,0 +1,69 @@
+{
+  "status": "pass",
+  "at": "2026-10-06T13:08:46.177212+00:00",
+  "checks": [
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/focused-check-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/focused-check-2.log",
+      "sha256": "eb33a3873208e3940a542fe63b69dab08a0e3f141de2c418546f5682d4752a42"
+    },
+    {
+      "command": [
+        "node",
+        "tools/world-study/check-r100-library-resume.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/focused-check-3.log",
+      "sha256": "f354fbbc0131d7734dc750a1b5e3af7eaa6e5ebaeb4397b6c8ef8b93bb93a32e"
+    },
+    {
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/inventory/check-world-history.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/focused-check-4.log",
+      "sha256": "8400e464d2daf105b12c5b36638466a10dd73def52f85febef420fb779142888"
+    },
+    {
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/inventory/check-save-migration.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/focused-check-5.log",
+      "sha256": "73788c7b9429cb4ee4e525bd9203db8c786c7c9bd00a731e769e60bd7e8d9362"
+    },
+    {
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-revision5.ts",
+        "--report",
+        "docs/qa/artifacts/r100-i10-i12/compatibility-r5/contract-erosion-recheck.json"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/focused-check-6.log",
+      "sha256": "6b266063ccb3b93b20a15eda2923dddb2ae2ff56eda173b57575077ba92fad54"
+    }
+  ]
+}

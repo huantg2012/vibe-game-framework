@@ -1,6 +1,6 @@
 // GENERATED from data/rift-world-appearance.csv; do not hand edit.
 import type { R100WorldAppearance } from '../generation/world-study/r100-world-appearance';
-export const R100_APPEARANCE_SOURCE_HASH = '0cb840245bf2fd0e5878aa18ee2a8dc1ffe5907640bbbb21b39983becc20fefa';
+export const R100_APPEARANCE_SOURCE_HASH = 'dbfed9ebbdd910287169ab1b10438aeb1b0ee842d438d15ce863de75399a6fd4';
 export const R100_WORLD_APPEARANCES: readonly R100WorldAppearance[] = [
   {
     "version": 1,
@@ -1561,5 +1561,245 @@ export const R100_WORLD_APPEARANCES: readonly R100WorldAppearance[] = [
     "secondaryCoverage": 0.34,
     "textureContrast": 1.1,
     "quietCoverage": 0.45
+  },
+  {
+    "version": 1,
+    "worldId": "cleft-tableland",
+    "ground": {
+      "dark": 3484992,
+      "mid": 7035767,
+      "light": 10850475
+    },
+    "solid": {
+      "dark": 6443110,
+      "mid": 11243948,
+      "light": 14534104
+    },
+    "cleaved": {
+      "dark": 3423059,
+      "mid": 7964325,
+      "light": 12372957
+    },
+    "secondary": {
+      "dark": 4928832,
+      "mid": 9859709,
+      "light": 12953004
+    },
+    "groundPattern": "strata",
+    "patternScale": 240,
+    "patternStrength": 0.46,
+    "secondaryCoverage": 0.18,
+    "textureContrast": 1.1,
+    "quietCoverage": 0.61
+  },
+  {
+    "version": 1,
+    "worldId": "fallen-spines",
+    "ground": {
+      "dark": 2240064,
+      "mid": 5006719,
+      "light": 9282230
+    },
+    "solid": {
+      "dark": 5058615,
+      "mid": 9658732,
+      "light": 13476000
+    },
+    "cleaved": {
+      "dark": 6772568,
+      "mid": 12034978,
+      "light": 14734025
+    },
+    "secondary": {
+      "dark": 3748679,
+      "mid": 8086661,
+      "light": 12098231
+    },
+    "groundPattern": "veins",
+    "patternScale": 128,
+    "patternStrength": 0.58,
+    "secondaryCoverage": 0.17,
+    "textureContrast": 1.14,
+    "quietCoverage": 0.45
+  },
+  {
+    "version": 1,
+    "worldId": "clamped-shore",
+    "ground": {
+      "dark": 3485241,
+      "mid": 7298415,
+      "light": 11309473
+    },
+    "solid": {
+      "dark": 5000019,
+      "mid": 10920868,
+      "light": 14276041
+    },
+    "cleaved": {
+      "dark": 6636595,
+      "mid": 11434328,
+      "light": 14267787
+    },
+    "secondary": {
+      "dark": 3417416,
+      "mid": 7359369,
+      "light": 11767736
+    },
+    "groundPattern": "plates",
+    "patternScale": 216,
+    "patternStrength": 0.48,
+    "secondaryCoverage": 0.25,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.57
+  },
+  {
+    "version": 1,
+    "worldId": "torn-reservoir",
+    "ground": {
+      "dark": 2108741,
+      "mid": 5071756,
+      "light": 9741766
+    },
+    "solid": {
+      "dark": 4795198,
+      "mid": 9917807,
+      "light": 13603235
+    },
+    "cleaved": {
+      "dark": 6574436,
+      "mid": 11704754,
+      "light": 14470364
+    },
+    "secondary": {
+      "dark": 3553346,
+      "mid": 7829637,
+      "light": 10922164
+    },
+    "groundPattern": "tension",
+    "patternScale": 208,
+    "patternStrength": 0.46,
+    "secondaryCoverage": 0.21,
+    "textureContrast": 1.09,
+    "quietCoverage": 0.6
+  },
+  {
+    "version": 1,
+    "worldId": "braided-seam",
+    "ground": {
+      "dark": 1452094,
+      "mid": 3561334,
+      "light": 7903663
+    },
+    "solid": {
+      "dark": 2505034,
+      "mid": 5470349,
+      "light": 10534599
+    },
+    "cleaved": {
+      "dark": 5913901,
+      "mid": 11172950,
+      "light": 14268826
+    },
+    "secondary": {
+      "dark": 3945031,
+      "mid": 7823486,
+      "light": 10983088
+    },
+    "groundPattern": "veins",
+    "patternScale": 240,
+    "patternStrength": 0.4,
+    "secondaryCoverage": 0.12,
+    "textureContrast": 1.11,
+    "quietCoverage": 0.63
+  },
+  {
+    "version": 1,
+    "worldId": "scalloped-reach",
+    "ground": {
+      "dark": 1779777,
+      "mid": 4216707,
+      "light": 8821698
+    },
+    "solid": {
+      "dark": 5255502,
+      "mid": 11036313,
+      "light": 14066621
+    },
+    "cleaved": {
+      "dark": 6575966,
+      "mid": 11641513,
+      "light": 14800598
+    },
+    "secondary": {
+      "dark": 4339266,
+      "mid": 8546163,
+      "light": 12098213
+    },
+    "groundPattern": "plates",
+    "patternScale": 232,
+    "patternStrength": 0.44,
+    "secondaryCoverage": 0.19,
+    "textureContrast": 1.09,
+    "quietCoverage": 0.58
+  },
+  {
+    "version": 1,
+    "worldId": "offset-pan",
+    "ground": {
+      "dark": 3812665,
+      "mid": 7756909,
+      "light": 11505825
+    },
+    "solid": {
+      "dark": 5724263,
+      "mid": 11578811,
+      "light": 14474725
+    },
+    "cleaved": {
+      "dark": 5515576,
+      "mid": 10506855,
+      "light": 13343401
+    },
+    "secondary": {
+      "dark": 3751504,
+      "mid": 7634327,
+      "light": 11187144
+    },
+    "groundPattern": "strata",
+    "patternScale": 256,
+    "patternStrength": 0.35,
+    "secondaryCoverage": 0.13,
+    "textureContrast": 1.08,
+    "quietCoverage": 0.65
+  },
+  {
+    "version": 1,
+    "worldId": "thin-delta",
+    "ground": {
+      "dark": 2108998,
+      "mid": 5072519,
+      "light": 9612229
+    },
+    "solid": {
+      "dark": 4139086,
+      "mid": 7951777,
+      "light": 12032467
+    },
+    "cleaved": {
+      "dark": 6244185,
+      "mid": 11438750,
+      "light": 14533835
+    },
+    "secondary": {
+      "dark": 5323591,
+      "mid": 9924740,
+      "light": 13214895
+    },
+    "groundPattern": "flow",
+    "patternScale": 224,
+    "patternStrength": 0.46,
+    "secondaryCoverage": 0.17,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.62
   }
 ];

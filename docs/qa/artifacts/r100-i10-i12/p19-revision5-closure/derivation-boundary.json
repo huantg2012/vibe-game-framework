@@ -1,0 +1,55 @@
+{
+  "status": "boundary-pass-exact-and-production-build-pending",
+  "original": {
+    "path": "src/generation/legacy-r100-v5/manifest.json",
+    "sha256": "46407d131262582a68bc4c6445790156987882f7d8bd60d1e320457739ea2262",
+    "executorBytes": 6075655
+  },
+  "derived": {
+    "path": "src/generation/legacy-r100-v5/manifest-revision5.json",
+    "sha256": "bf2b55eba45a03c4def58ea6d271539a9e76c8b3af7a500baab7ff9121636d1c",
+    "executorBytes": 1339531
+  },
+  "checks": [
+    {
+      "command": "node tools/recovery/derive-native-r100-revision5.mjs --write",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/recovery/derive-native-r100-revision5.mjs --check",
+      "exitCode": 0
+    },
+    {
+      "command": "node --import tsx tools/world-study/check-r100-revision5-only.ts",
+      "exitCode": 0,
+      "originalRecipeCount": 156,
+      "rejectedRevisionVariants": 10,
+      "boundaries": [
+        "validator",
+        "map",
+        "surface"
+      ],
+      "malformedAndMissingAppearanceRejected": true
+    }
+  ],
+  "baselineBuild": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/02-build.log",
+    "gameConfigKb": 7102.34,
+    "gameConfigGzipKb": 1944.64,
+    "sha256": "76d076b56f7757878c0b4156060b991d9658cdbb2652f37718458f890478e231"
+  },
+  "beforeBuild": {
+    "path": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/build.log",
+    "gameConfigKb": 9650.96,
+    "gameConfigGzipKb": 2620.6,
+    "sha256": "8e78d5a9395db09e14d9fdf72851ac2bafba97632323ebe5094abccb4e49e7b2"
+  },
+  "limitations": [
+    "Exact map/RGBA comparison and production build pending; no runtime loading claim",
+    "Original archive remains unchanged; outer synchronous historical routing remains"
+  ],
+  "testSource": {
+    "path": "tools/world-study/check-r100-revision5-only.ts",
+    "sha256": "9420c6504d8494d48bbb75af52f53e2dd984ca4ce40ff646bb941c3c6f6a9309"
+  }
+}

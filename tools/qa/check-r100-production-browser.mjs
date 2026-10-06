@@ -6,6 +6,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 
+const expectedRevision = Number(process.env.QA_EXPECTED_ALGORITHM_REVISION ?? 5);
+assert([5, 6].includes(expectedRevision), 'Unsupported expected algorithm revision');
 const out = path.resolve(process.env.QA_OUTPUT_DIR ?? 'docs/qa/artifacts/r100-i03/production');
 fs.mkdirSync(out, { recursive: true });
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? '/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
@@ -137,7 +139,7 @@ try {
       const before = await page.evaluate(() => JSON.parse(localStorage.getItem('coh-save-v1')));
       result.identity = before.riftCheckpoint?.identity ?? before.riftDeparture?.identity;
       assert.equal(result.identity.generation.version, 3);
-      assert.equal(result.identity.generation.package.algorithmRevision, 5);
+      assert.equal(result.identity.generation.package.algorithmRevision, expectedRevision);
       assert.equal(before.inventory.version, 4);
       result.committedWorldHistory = before.inventory.riftWorldHistory;
       assert.deepEqual(result.committedWorldHistory, { version: 1, visits: [{

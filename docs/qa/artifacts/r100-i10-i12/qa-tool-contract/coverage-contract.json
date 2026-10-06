@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "notReadyBatch": {
+    "exitCode": 1,
+    "expectedRejection": "Selected batch is not ready",
+    "noOutputCreated": true,
+    "sourceManifestNeverRead": true,
+    "log": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/not-ready-batch.log"
+  },
+  "accountingCheck": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/coverage-accounting.log",
+    "cases": 14,
+    "exitCode": 0,
+    "newCases": [
+      "settled outcome disagreement",
+      "undeclared algorithm revision",
+      "revision6/controller15 synthetic namespace",
+      "near entry counts as actual process, not qualified search"
+    ]
+  },
+  "files": {
+    "tools/qa/r100-i07-i09-coverage.mjs": "29efa89793f4b2e6c16028e6c5aab16c5436d9fa4862d41e8dd31ee4a83fc453",
+    "tools/qa/r100-play-qualification.mjs": "42c2cef6554bc732741797f3df86474886e225259d2c227f57d2b0e82e0635a0",
+    "tools/qa/check-r100-play-qualification.mjs": "b4bd1286b5c3f00705f574ef469f6f9afa628b95a1fe5266b7431220d09c1e88",
+    "tools/qa/check-r100-expansion-plan.mjs": "2927702d298f9b6d6d71c0c7decd68270ed45d25c45424ea96b12a2fbdb96eeb"
+  },
+  "scope": "Offline guard/accounting checks only; no gameplay, service or browser started; original v15 input source unchanged."
+}

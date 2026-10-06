@@ -1,0 +1,25 @@
+{
+  "cpu": "check-organization-remains.ts:200 samples passed",
+  "existing": "check-search-remains.ts:58 world sources passed",
+  "compatibility": "504 existing world/seed RGBA exactly matched before grammar extraction",
+  "typecheck": "passed",
+  "dev": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 1021
+    },
+    {
+      "path": "/src/generation/world-study/search-remains.ts",
+      "status": 200,
+      "bytes": 56231
+    },
+    {
+      "path": "/src/generated/rift-search-remains.ts",
+      "status": 200,
+      "bytes": 15574
+    }
+  ],
+  "lint": "No lint script configured; TypeScript strict/noUnused checks present",
+  "limitations": "Native unlit preview only; new grammars not selected by any world, normal lit-world review pending."
+}

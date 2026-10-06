@@ -1,0 +1,1538 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "sha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+  },
+  "plan": {
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "cases": [
+      {
+        "world": "torn-reservoir",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-approach",
+            "x": 276,
+            "y": 452,
+            "faces": [
+              "east"
+            ]
+          },
+          {
+            "label": "02-rolled-edge",
+            "x": 460,
+            "y": 508,
+            "faces": [
+              "north"
+            ]
+          },
+          {
+            "label": "03-density-field",
+            "x": 612,
+            "y": 340,
+            "faces": [
+              "west",
+              "south"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "clamped-shore",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-approach",
+            "x": 348,
+            "y": 476,
+            "faces": [
+              "north"
+            ]
+          },
+          {
+            "label": "02-material-contact",
+            "x": 532,
+            "y": 428,
+            "faces": [
+              "north",
+              "east"
+            ]
+          },
+          {
+            "label": "03-gel-tail",
+            "x": 860,
+            "y": 545,
+            "faces": [
+              "west"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "cleft-tableland",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-approach",
+            "x": 380,
+            "y": 284,
+            "faces": [
+              "north",
+              "east"
+            ]
+          },
+          {
+            "label": "02-upper-neck",
+            "x": 716,
+            "y": 284,
+            "faces": [
+              "west"
+            ]
+          },
+          {
+            "label": "03-lower-neck",
+            "x": 796,
+            "y": 556,
+            "faces": [
+              "west"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "fallen-spines",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-approach",
+            "x": 324,
+            "y": 372,
+            "faces": [
+              "east"
+            ]
+          },
+          {
+            "label": "02-inner-stagger",
+            "x": 612,
+            "y": 412,
+            "faces": [
+              "west",
+              "north"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "761e0de5c6c11d698ef605ffb093e527e1a413fe6aa19e5887f127ef4ea23cc8",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "torn-reservoir",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-approach",
+            "x": 276,
+            "y": 452,
+            "faces": [
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "01-approach",
+              "x": 276,
+              "y": 452,
+              "faces": [
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 276,
+              "y": 452
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 276,
+                "y": 588
+              },
+              {
+                "x": 276,
+                "y": 452
+              }
+            ],
+            "length": 216
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/torn-reservoir-medium/01-approach-east.png",
+              "sha256": "a22a5038aaa6de50f729c22ac9648f7078f577a83605a47fbc21a4a3a4edaae6",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 280.5754039889688,
+                  "y": 446.055198480191
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 22.227610229999915,
+                "elapsedMs": 3783.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 280.5754039889688,
+                  "y": 446.055198480191
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 22.26079022999991,
+                "elapsedMs": 3883.0999999999995
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-rolled-edge",
+            "x": 460,
+            "y": 508,
+            "faces": [
+              "north"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-rolled-edge",
+              "x": 460,
+              "y": 508,
+              "faces": [
+                "north"
+              ]
+            },
+            "actual": {
+              "x": 460,
+              "y": 508
+            },
+            "points": [
+              {
+                "x": 284,
+                "y": 444
+              },
+              {
+                "x": 396,
+                "y": 444
+              },
+              {
+                "x": 396,
+                "y": 452
+              },
+              {
+                "x": 460,
+                "y": 452
+              },
+              {
+                "x": 460,
+                "y": 508
+              }
+            ],
+            "length": 240
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/torn-reservoir-medium/02-rolled-edge-north.png",
+              "sha256": "26285f12023a8dca80099d770dd7036d57678ca8a834ab5e15a0ac4c591c0d77",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 461.90148975687384,
+                  "y": 503.5240587262689
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 23.704060505999745,
+                "elapsedMs": 8233
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 461.90148975687384,
+                  "y": 503.5240587262689
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 23.742771611999743,
+                "elapsedMs": 8349.599999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-density-field",
+            "x": 612,
+            "y": 340,
+            "faces": [
+              "west",
+              "south"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-density-field",
+              "x": 612,
+              "y": 340,
+              "faces": [
+                "west",
+                "south"
+              ]
+            },
+            "actual": {
+              "x": 612,
+              "y": 340
+            },
+            "points": [
+              {
+                "x": 460,
+                "y": 500
+              },
+              {
+                "x": 740,
+                "y": 500
+              },
+              {
+                "x": 740,
+                "y": 436
+              },
+              {
+                "x": 732,
+                "y": 436
+              },
+              {
+                "x": 732,
+                "y": 412
+              },
+              {
+                "x": 724,
+                "y": 412
+              },
+              {
+                "x": 724,
+                "y": 404
+              },
+              {
+                "x": 716,
+                "y": 404
+              },
+              {
+                "x": 716,
+                "y": 396
+              },
+              {
+                "x": 708,
+                "y": 396
+              },
+              {
+                "x": 708,
+                "y": 388
+              },
+              {
+                "x": 692,
+                "y": 388
+              },
+              {
+                "x": 692,
+                "y": 380
+              },
+              {
+                "x": 684,
+                "y": 380
+              },
+              {
+                "x": 684,
+                "y": 372
+              },
+              {
+                "x": 676,
+                "y": 372
+              },
+              {
+                "x": 676,
+                "y": 364
+              },
+              {
+                "x": 660,
+                "y": 364
+              },
+              {
+                "x": 660,
+                "y": 356
+              },
+              {
+                "x": 652,
+                "y": 356
+              },
+              {
+                "x": 652,
+                "y": 348
+              },
+              {
+                "x": 612,
+                "y": 348
+              },
+              {
+                "x": 612,
+                "y": 340
+              }
+            ],
+            "length": 568
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/torn-reservoir-medium/03-density-field-west.png",
+              "sha256": "ed2cd5618e02112303f3b8e9577a3f6006a461e5365a0873c6f77595e48d52f4",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 598.0975229798219,
+                  "y": 337.99835195778724
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 32.4771449279994,
+                "elapsedMs": 19332.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 598.0975229798219,
+                  "y": 337.99835195778724
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 32.631982715999385,
+                "elapsedMs": 19565.9
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/torn-reservoir-medium/03-density-field-south.png",
+              "sha256": "1ebf0939655344a01299b8cbea36d6f7aa431bcb45c63438d419c69b4f0c7ab0",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.570859158647969,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 598.0975229798219,
+                  "y": 345.4417852911205
+                },
+                "facingAngle": 1.570859158647969,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 32.83106271599938,
+                "elapsedMs": 19865.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 598.0975229798219,
+                  "y": 345.4417852911205
+                },
+                "facingAngle": 1.570859158647969,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 32.957146715999386,
+                "elapsedMs": 20065.9
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "torn-reservoir",
+        "grade": "medium",
+        "package": {
+          "id": "r100-torn-reservoir",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "a6603b38",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3103/r100-gym.html?world=torn-reservoir&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/torn-reservoir-medium/recipe.json",
+        "sha256": "da1297ce95ca3af6aba8a02a397adf42f24ed88b2223f301915bc29471181bd0"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 598.0975229798219,
+          "y": 345.4417852911205
+        },
+        "facingAngle": 1.570859158647969,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 32.96931050399939,
+        "elapsedMs": 20082.5
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 598.0975229798219,
+          "y": 345.4417852911205
+        },
+        "facingAngle": 1.570859158647969,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 33.7711251119994,
+        "elapsedMs": 21282.4
+      }
+    },
+    {
+      "world": "clamped-shore",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-approach",
+            "x": 348,
+            "y": 476,
+            "faces": [
+              "north"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "01-approach",
+              "x": 348,
+              "y": 476,
+              "faces": [
+                "north"
+              ]
+            },
+            "actual": {
+              "x": 348,
+              "y": 476
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 348,
+                "y": 588
+              },
+              {
+                "x": 348,
+                "y": 476
+              }
+            ],
+            "length": 264
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/clamped-shore-medium/01-approach-north.png",
+              "sha256": "317c4ad2fe67aee6619775eac1d7ad003f4f67feaccfc402f8243b34ad773c85",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 347.34626356443914,
+                  "y": 464.63002594756273
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.603635851999847,
+                "elapsedMs": 4916.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 347.34626356443914,
+                  "y": 464.63002594756273
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.647871427999842,
+                "elapsedMs": 5049.9
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-material-contact",
+            "x": 532,
+            "y": 428,
+            "faces": [
+              "north",
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-material-contact",
+              "x": 532,
+              "y": 428,
+              "faces": [
+                "north",
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 532,
+              "y": 428
+            },
+            "points": [
+              {
+                "x": 348,
+                "y": 468
+              },
+              {
+                "x": 532,
+                "y": 468
+              },
+              {
+                "x": 532,
+                "y": 428
+              }
+            ],
+            "length": 224
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/clamped-shore-medium/02-material-contact-north.png",
+              "sha256": "e29d60dac8b760859b1d5a693f5682d28558e9485e4d97da558a22d02da686d7",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 534.6084517891458,
+                  "y": 425.51543728506755
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.90865833999973,
+                "elapsedMs": 8849.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 534.6084517891458,
+                  "y": 425.51543728506755
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.952897233999728,
+                "elapsedMs": 8983
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/clamped-shore-medium/02-material-contact-east.png",
+              "sha256": "34201368909d9830aced5d198bd493b854920198df1c799138bd1c9177a08251",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185307309758,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 542.0548184558124,
+                  "y": 425.51543728506755
+                },
+                "facingAngle": -0.00006283185307309758,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.05795838599971,
+                "elapsedMs": 9299.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 542.0548184558124,
+                  "y": 425.51543728506755
+                },
+                "facingAngle": -0.00006283185307309758,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.107725067999706,
+                "elapsedMs": 9449.6
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-gel-tail",
+            "x": 860,
+            "y": 545,
+            "faces": [
+              "west"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-gel-tail",
+              "x": 860,
+              "y": 545,
+              "faces": [
+                "west"
+              ]
+            },
+            "actual": {
+              "x": 860,
+              "y": 548
+            },
+            "points": [
+              {
+                "x": 540,
+                "y": 428
+              },
+              {
+                "x": 588,
+                "y": 428
+              },
+              {
+                "x": 588,
+                "y": 492
+              },
+              {
+                "x": 596,
+                "y": 492
+              },
+              {
+                "x": 596,
+                "y": 500
+              },
+              {
+                "x": 604,
+                "y": 500
+              },
+              {
+                "x": 604,
+                "y": 516
+              },
+              {
+                "x": 612,
+                "y": 516
+              },
+              {
+                "x": 612,
+                "y": 524
+              },
+              {
+                "x": 860,
+                "y": 524
+              },
+              {
+                "x": 860,
+                "y": 548
+              }
+            ],
+            "length": 440
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/clamped-shore-medium/03-gel-tail-west.png",
+              "sha256": "9343977ab50e37ac341dabc101e83744c4b9fc4bbe4a12a94a3b0a1006beb90c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141341326177501,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 851.0759416472099,
+                  "y": 550.1259474864444
+                },
+                "facingAngle": 3.141341326177501,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 21.077218937999394,
+                "elapsedMs": 18399.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 851.0759416472099,
+                  "y": 550.1259474864444
+                },
+                "facingAngle": 3.141341326177501,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 21.12699225599939,
+                "elapsedMs": 18549.3
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "clamped-shore",
+        "grade": "medium",
+        "package": {
+          "id": "r100-clamped-shore",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "91976298",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3103/r100-gym.html?world=clamped-shore&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/clamped-shore-medium/recipe.json",
+        "sha256": "b9eb0697a0b8fa52a8d7371b0b641d9e42cfbd87b52d9e77f9c40f8c3811adc3"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 851.0759416472099,
+          "y": 550.1259474864444
+        },
+        "facingAngle": 3.141341326177501,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 21.12699225599939,
+        "elapsedMs": 18549.3
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 851.0759416472099,
+          "y": 550.1259474864444
+        },
+        "facingAngle": 3.141341326177501,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 21.52512902999938,
+        "elapsedMs": 19749.2
+      }
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-approach",
+            "x": 380,
+            "y": 284,
+            "faces": [
+              "north",
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "01-approach",
+              "x": 380,
+              "y": 284,
+              "faces": [
+                "north",
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 380,
+              "y": 284
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 380,
+                "y": 588
+              },
+              {
+                "x": 380,
+                "y": 284
+              }
+            ],
+            "length": 488
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/cleft-tableland-medium/01-approach-north.png",
+              "sha256": "480d4fe79bdc4e1877278008a99d41947b821eb522411f4b1afe87b98d04a28f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 379.1986056907902,
+                  "y": 273.1002158733408
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.787007187999752,
+                "elapsedMs": 8483
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 379.1986056907902,
+                  "y": 273.1002158733408
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.884894823999744,
+                "elapsedMs": 8783.1
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/cleft-tableland-medium/01-approach-east.png",
+              "sha256": "a330ba5b9e4606873e1b0eabb2d91bf5a92bb54a209f7646b0b7f82f09c9797e",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 386.8382056907902,
+                  "y": 273.1002158733408
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.997146081999738,
+                "elapsedMs": 9116.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 386.8382056907902,
+                  "y": 273.1002158733408
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.091148339999734,
+                "elapsedMs": 9399.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-upper-neck",
+            "x": 716,
+            "y": 284,
+            "faces": [
+              "west"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-upper-neck",
+              "x": 716,
+              "y": 284,
+              "faces": [
+                "west"
+              ]
+            },
+            "actual": {
+              "x": 716,
+              "y": 284
+            },
+            "points": [
+              {
+                "x": 388,
+                "y": 276
+              },
+              {
+                "x": 716,
+                "y": 276
+              },
+              {
+                "x": 716,
+                "y": 284
+              }
+            ],
+            "length": 336
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/cleft-tableland-medium/02-upper-neck-west.png",
+              "sha256": "2bf670e1a9ff5e8f4cdc8db18940a81029b2b61ab8fcefc24e8192a0c3ca9ede",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.1415298217367207,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 711.1544240219457,
+                  "y": 285.94209850606694
+                },
+                "facingAngle": 3.1415298217367207,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 32.76203548199947,
+                "elapsedMs": 15099.400000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 711.1544240219457,
+                  "y": 285.94209850606694
+                },
+                "facingAngle": 3.1415298217367207,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 32.90580442199945,
+                "elapsedMs": 15316.099999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-lower-neck",
+            "x": 796,
+            "y": 556,
+            "faces": [
+              "west"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-lower-neck",
+              "x": 796,
+              "y": 556,
+              "faces": [
+                "west"
+              ]
+            },
+            "actual": {
+              "x": 796,
+              "y": 556
+            },
+            "points": [
+              {
+                "x": 708,
+                "y": 284
+              },
+              {
+                "x": 796,
+                "y": 284
+              },
+              {
+                "x": 796,
+                "y": 556
+              }
+            ],
+            "length": 360
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/cleft-tableland-medium/03-lower-neck-west.png",
+              "sha256": "0bd77dd2055d0d00f4b9e104edfed967d70d4843623d3ab7ba7fade11ba2386d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 779.6411417505129,
+                  "y": 553.7502444210501
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 37.26326746199932,
+                "elapsedMs": 21882.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 779.6411417505129,
+                  "y": 553.7502444210501
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 37.36280082599932,
+                "elapsedMs": 22032.6
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "cleft-tableland",
+        "grade": "medium",
+        "package": {
+          "id": "r100-cleft-tableland",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "4992b5c1",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3103/r100-gym.html?world=cleft-tableland&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/cleft-tableland-medium/recipe.json",
+        "sha256": "1f310cd3757206490e658cb0ebf582ebec86f7852f844ed3f28715cd5908cdab"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 779.6411417505129,
+          "y": 553.7502444210501
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 85,
+        "chaos": 37.36280082599932,
+        "elapsedMs": 22032.6
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 779.6411417505129,
+          "y": 553.7502444210501
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 85,
+        "chaos": 38.1701299499993,
+        "elapsedMs": 23249.1
+      }
+    },
+    {
+      "world": "fallen-spines",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-approach",
+            "x": 324,
+            "y": 372,
+            "faces": [
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "01-approach",
+              "x": 324,
+              "y": 372,
+              "faces": [
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 324,
+              "y": 380
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 324,
+                "y": 588
+              },
+              {
+                "x": 324,
+                "y": 380
+              }
+            ],
+            "length": 336
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/fallen-spines-medium/01-approach-east.png",
+              "sha256": "efd3b3dc143f7a5d3586aea9416d4a2f5af65c2083d1cb570a792e9cdb36c3c0",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 326.26028661164725,
+                  "y": 378.45589135562466
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.211904883999807,
+                "elapsedMs": 6749.700000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 326.26028661164725,
+                  "y": 378.45589135562466
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.2506159899998,
+                "elapsedMs": 6866.4
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-inner-stagger",
+            "x": 612,
+            "y": 412,
+            "faces": [
+              "west",
+              "north"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-inner-stagger",
+              "x": 612,
+              "y": 412,
+              "faces": [
+                "west",
+                "north"
+              ]
+            },
+            "actual": {
+              "x": 612,
+              "y": 404
+            },
+            "points": [
+              {
+                "x": 324,
+                "y": 380
+              },
+              {
+                "x": 316,
+                "y": 380
+              },
+              {
+                "x": 316,
+                "y": 348
+              },
+              {
+                "x": 468,
+                "y": 348
+              },
+              {
+                "x": 468,
+                "y": 364
+              },
+              {
+                "x": 508,
+                "y": 364
+              },
+              {
+                "x": 508,
+                "y": 372
+              },
+              {
+                "x": 612,
+                "y": 372
+              },
+              {
+                "x": 612,
+                "y": 404
+              }
+            ],
+            "length": 392
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/fallen-spines-medium/02-inner-stagger-west.png",
+              "sha256": "4117130f5ca274ec138497bc243339bcc3122385fc4b4aac629709b17f2dd914",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141341326177508,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 607.5770652320313,
+                  "y": 403.90117707388714
+                },
+                "facingAngle": 3.141341326177508,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 19.711370873999524,
+                "elapsedMs": 14282.800000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 607.5770652320313,
+                  "y": 403.90117707388714
+                },
+                "facingAngle": 3.141341326177508,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 19.783248707999512,
+                "elapsedMs": 14499.4
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/fallen-spines-medium/02-inner-stagger-north.png",
+              "sha256": "8de711a78358d82a4e14d10b68fd8797b8db01a4e064a5d244339b6d189dff2d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5712989816194738,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 607.5770652320313,
+                  "y": 396.45701040722054
+                },
+                "facingAngle": -1.5712989816194738,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.877264237999498,
+                "elapsedMs": 14782.800000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 607.5770652320313,
+                  "y": 396.45701040722054
+                },
+                "facingAngle": -1.5712989816194738,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.921493177999487,
+                "elapsedMs": 14916.1
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "fallen-spines",
+        "grade": "medium",
+        "package": {
+          "id": "r100-fallen-spines",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "561c90ba",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3103/r100-gym.html?world=fallen-spines&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-final-medium/fallen-spines-medium/recipe.json",
+        "sha256": "1c9ff2591dd2193d5cbb159b1e20ffcba380159c8d163a5cd99dc3a62999b9fd"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 607.5770652320313,
+          "y": 396.45701040722054
+        },
+        "facingAngle": -1.5712989816194738,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 19.927024283999486,
+        "elapsedMs": 14932.800000000001
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 607.5770652320313,
+          "y": 396.45701040722054
+        },
+        "facingAngle": -1.5712989816194738,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 20.325171011999434,
+        "elapsedMs": 16132.699999999999
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

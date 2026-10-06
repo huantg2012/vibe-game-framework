@@ -1,0 +1,113 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "name": "projection-manifest",
+      "command": [
+        "node",
+        "tools/recovery/project-native-r100-revision5.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.576,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projection-manifest.log",
+      "logSha256": "1f8e1044dd692a657884d56a869a05bb4f549d8134270bce55f8329c6d2bd1d2"
+    },
+    {
+      "name": "projected-codegen",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.298,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projected-codegen.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "projected-codegen-check",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.286,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projected-codegen-check.log",
+      "logSha256": "eb33a3873208e3940a542fe63b69dab08a0e3f141de2c418546f5682d4752a42"
+    },
+    {
+      "name": "projected-typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.272,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projected-typecheck.log",
+      "logSha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    },
+    {
+      "name": "projected-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 18.459,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projected-build.log",
+      "logSha256": "60db06521fbe636ae9b59b8684006202f21bb0b1609fb4fe6ced5bfe911d90b0"
+    },
+    {
+      "name": "revision6-controller-derive",
+      "command": [
+        "node",
+        "tools/qa/derive-r100-revision6-journey.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.288,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/revision6-controller-derive.log",
+      "logSha256": "a75093a598841b9e012aeabfaca9e19596b2b5bfc177560034bf9d157ccad253"
+    },
+    {
+      "name": "revision6-controller-policy",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/r100-revision6-journey.mjs",
+        "--check-return-policy"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.187,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/revision6-controller-policy.log",
+      "logSha256": "f6fcaf33d077670481e642eb2143c7bd95efbbab4e8b37bdf4658d1d2508e87c"
+    },
+    {
+      "name": "revision6-coverage-accounting",
+      "command": [
+        "node",
+        "tools/qa/check-r100-play-qualification.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.083,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/revision6-coverage-accounting.log",
+      "logSha256": "ee1f6f150593eb5e9f0e1b723e51f2860f836da768b81104a8ab90e90fae781d"
+    },
+    {
+      "name": "execution-readiness-final",
+      "command": [
+        "node",
+        "tools/qa/check-r100-expansion-plan.mjs",
+        "--self-check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.056,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/execution-readiness-final.log",
+      "logSha256": "204f38514cf8d3a78394a45abedd6e70478b9357319177e536b2835db4997bd7"
+    }
+  ]
+}

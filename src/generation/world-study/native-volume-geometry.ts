@@ -1,7 +1,11 @@
 /** Editable material constructions in Rift's existing XY plane. Z is real height;
  * it never changes the ground projection, character scale, or walkable floor. */
-import { buildExpandedNativeVolume, NATIVE_VOLUME_SHAPE_PROFILES, type NativeVolumeShapeProfile } from './native-volume-expansion';
-export { NATIVE_VOLUME_SHAPE_PROFILES, type NativeVolumeShapeProfile } from './native-volume-expansion';
+import { buildExpandedNativeVolume, NATIVE_VOLUME_SHAPE_PROFILES, type NativeVolumeShapeProfile as NativeVolumeV3Profile } from './native-volume-expansion';
+import { buildGroundNativeVolume, NATIVE_VOLUME_V4_PROFILES, type NativeVolumeV4Profile } from './native-volume-ground';
+import { appendNativeGroundEdges, type NativeGroundEdgeContext } from './native-volume-ground-edge';
+export { NATIVE_VOLUME_SHAPE_PROFILES } from './native-volume-expansion';
+export { NATIVE_VOLUME_V4_PROFILES } from './native-volume-ground';
+export type NativeVolumeShapeProfile = NativeVolumeV3Profile | NativeVolumeV4Profile;
 export type NativeVolumeFamily = 'folded-slab' | 'fibre-knot' | 'broken-shell' | 'granular-ridge' | 'membrane-rim' | 'gel-flow';
 /** Stable raster encoding; append rather than reorder existing families. */
 export const NATIVE_VOLUME_FAMILY_SEQUENCE: readonly NativeVolumeFamily[] = ['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'];
@@ -19,9 +23,11 @@ export interface NativeVolumeSpec {
   /** Explicit physical role from the author. Omitted/0 preserves relief geometry. */
   blocking?: number;
   /** Explicit authored construction schema. Omitted retains the approved masters. */
-  constructionVersion?: 1 | 2 | 3;
-  /** Version 3 topology, independent of the source material family. */
+  constructionVersion?: 1 | 2 | 3 | 4;
+  /** Explicit versioned topology, independent of the source material family. */
   shapeProfile?: NativeVolumeShapeProfile;
+  /** Ground-side shallow section, owned by one v4 primary-material relief. */
+  groundEdgeWidth?: number;
 }
 export interface NativeVolumePoint { x: number; y: number; z: number }
 export interface NativeVolumeJoint extends NativeVolumePoint { readonly index: number }
@@ -55,7 +61,7 @@ function phase(seed: number, salt: number): number {
 
 export function validateNativeVolumeSpec(spec: Readonly<NativeVolumeSpec>): void {
   const numbers = ['id', 'seed', 'x', 'y', 'rotation', 'length', 'width', 'height', 'thickness', 'fold', 'branches', 'opening', 'distortion'] as const;
-  const keys = new Set<string>([...numbers, 'family', 'blocking', 'constructionVersion', 'shapeProfile']);
+  const keys = new Set<string>([...numbers, 'family', 'blocking', 'constructionVersion', 'shapeProfile', 'groundEdgeWidth']);
   if (Object.keys(spec).some(key => !keys.has(key)) || numbers.some(key => !Number.isFinite(spec[key])))
     throw new Error('Native volume must contain exactly the known required numeric fields');
   for (const [key, value] of Object.entries(spec)) {
@@ -67,10 +73,13 @@ export function validateNativeVolumeSpec(spec: Readonly<NativeVolumeSpec>): void
   if (!['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'].includes(spec.family)) throw new Error('Unknown native volume family');
   if (!Number.isInteger(spec.id) || spec.id < 1 || spec.id > 0x7fffffff) throw new Error('Volume id must be a positive Int32');
   if (!Number.isInteger(spec.seed)) throw new Error('Volume seed must be an integer');
-  if (spec.constructionVersion !== undefined && ![1, 2, 3].includes(spec.constructionVersion)) throw new Error('Native volume constructionVersion must be 1, 2 or 3');
-  if (spec.constructionVersion === 3 ? !NATIVE_VOLUME_SHAPE_PROFILES.includes(spec.shapeProfile!) : spec.shapeProfile !== undefined)
-    throw new Error('Native volume shapeProfile is required only for construction version 3 and must be known');
+  if (spec.constructionVersion !== undefined && ![1, 2, 3, 4].includes(spec.constructionVersion)) throw new Error('Native volume constructionVersion must be 1, 2, 3 or 4');
+  const profiles: readonly string[] = spec.constructionVersion === 4 ? NATIVE_VOLUME_V4_PROFILES : spec.constructionVersion === 3 ? NATIVE_VOLUME_SHAPE_PROFILES : [];
+  if (profiles.length ? !profiles.includes(spec.shapeProfile!) : spec.shapeProfile !== undefined)
+    throw new Error('Native volume shapeProfile must belong to its explicit construction version');
   if (spec.blocking !== undefined && spec.blocking !== 0 && spec.blocking !== 1) throw new Error('Native volume blocking must be 0 or 1');
+  if (spec.groundEdgeWidth !== undefined && (spec.constructionVersion !== 4 || spec.blocking !== 0 || spec.height > 6
+    || spec.groundEdgeWidth < 8 || spec.groundEdgeWidth > 24)) throw new Error('Native ground edge requires v4 low relief and width 8–24px');
   if (spec.length < 16 || spec.width < 12 || spec.height < 2 || spec.thickness < 1
     || spec.length > 2048 || spec.width > 2048 || spec.height > 512
     || spec.thickness > Math.min(spec.length, spec.width) * .45) throw new Error('Native volume dimensions outside bounded construction range');
@@ -688,10 +697,12 @@ function surfaceFracture(b:MeshBuilder,rows:readonly (readonly Point[])[],path:r
   const centre=path[Math.floor(path.length/2)]!;b.joint(sample(...centre));
 }
 
-export function buildNativeVolume(spec: Readonly<NativeVolumeSpec>): NativeVolumeMesh {
+export function buildNativeVolume(spec: Readonly<NativeVolumeSpec>, ground?: NativeGroundEdgeContext): NativeVolumeMesh {
   validateNativeVolumeSpec(spec);
+  if (spec.groundEdgeWidth !== undefined && !ground) throw new Error('Native ground edge is missing its authoritative terrain context');
   const builder = new MeshBuilder(spec);
-  if (spec.constructionVersion === 3) buildExpandedNativeVolume(builder);
+  if (spec.constructionVersion === 4) buildGroundNativeVolume(builder);
+  else if (spec.constructionVersion === 3) buildExpandedNativeVolume(builder);
   else if (spec.constructionVersion === 2) {
     if (spec.family === 'folded-slab') shearedBeds(builder);
     else if (spec.family === 'fibre-knot') tensileBranches(builder);
@@ -706,5 +717,6 @@ export function buildNativeVolume(spec: Readonly<NativeVolumeSpec>): NativeVolum
   else if (spec.family === 'granular-ridge') granularRidge(builder);
   else if (spec.family === 'membrane-rim') membraneRim(builder);
   else gelFlow(builder);
+  if (spec.groundEdgeWidth !== undefined) appendNativeGroundEdges(builder, ground!);
   return builder.finish();
 }

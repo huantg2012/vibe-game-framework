@@ -1,0 +1,1900 @@
+{
+  "schemaVersion": 1,
+  "purpose": "r100-world-review-dependencies",
+  "worldId": "pallid-membrane",
+  "algorithm": {
+    "id": "r100-native",
+    "version": 3,
+    "revision": 6
+  },
+  "profile": {
+    "id": "pallid-membrane",
+    "label": "苍膜洼",
+    "description": "苍膜洼的原生材料与完整搜撤地段",
+    "material": "membrane",
+    "surface": {
+      "substrate": "membrane",
+      "coating": "membrane",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 7367527,
+      "floor": 11182476,
+      "floorLight": 12564125,
+      "materialDark": 4868945,
+      "materialMid": 7695973,
+      "materialLight": 9799795,
+      "faceLight": 13813675,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 11182476,
+      "groundLight": 12564125,
+      "groundDark": 7367527,
+      "wall": 7695973,
+      "wallLight": 13813675,
+      "wallDark": 4868945
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "pallid-membrane",
+    "ground": {
+      "dark": 2892864,
+      "mid": 5389415,
+      "light": 9070734
+    },
+    "solid": {
+      "dark": 5325150,
+      "mid": 11046313,
+      "light": 13877202
+    },
+    "cleaved": {
+      "dark": 7363192,
+      "mid": 13678794,
+      "light": 15391712
+    },
+    "secondary": {
+      "dark": 3422025,
+      "mid": 7764887,
+      "light": 11383237
+    },
+    "groundPattern": "tension",
+    "patternScale": 224,
+    "patternStrength": 0.39,
+    "secondaryCoverage": 0.2,
+    "textureContrast": 0.95,
+    "quietCoverage": 0.61
+  },
+  "grades": [
+    {
+      "grade": "low",
+      "nativeDefinition": {
+        "id": "pallid-membrane-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "苍膜洼",
+        "profile": "pallid-membrane",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 505,
+            "y": 432,
+            "rotation": 0.12,
+            "length": 506,
+            "width": 280,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.42,
+            "distortion": 0.5456,
+            "constructionVersion": 2
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 535,
+            "y": 298,
+            "rotation": 0.1,
+            "length": 594,
+            "width": 266,
+            "height": 26,
+            "thickness": 9,
+            "fold": 0.2904,
+            "branches": 3,
+            "opening": 0.45,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 2
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 794,
+            "y": 550,
+            "rotation": -0.65,
+            "length": 226,
+            "width": 130,
+            "height": 18,
+            "thickness": 6,
+            "fold": 0.3872,
+            "branches": 3,
+            "opening": 0.62,
+            "distortion": 0.48400000000000004,
+            "constructionVersion": 2
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      "pollution": {
+        "id": "low",
+        "version": 1,
+        "label": "低污染",
+        "status": "dev-masters",
+        "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+        "paintCount": 2,
+        "paintSubstrate": "oil_film",
+        "paintContinuity": "monolith",
+        "paintCoverage": "infiltrate",
+        "volumeCount": 1,
+        "volumeSubstrate": "gas_mass",
+        "volumeCoverage": "infiltrate",
+        "volumeCols": 3,
+        "volumeRows": 3,
+        "chaosStartRate": 0.24,
+        "chaosEndRate": 0.34,
+        "chaosRampStartSeconds": 90,
+        "chaosRampEndSeconds": 210
+      },
+      "content": {
+        "grade_id": "low",
+        "version": 2,
+        "status": "production-candidate",
+        "label": "低污染",
+        "public_risk": "污染较少，混乱增长较慢",
+        "public_preparation": "观察路线，补充行装",
+        "public_reward": "深入仍需承担路程",
+        "enemy_count": 2,
+        "kindling_safe_count": 1,
+        "kindling_contested_count": 2,
+        "kindling_deep_count": 1,
+        "kindling_safe_value": 1,
+        "kindling_contested_value": 2,
+        "kindling_deep_value": 4,
+        "contaminant_safe_count": 1,
+        "contaminant_contested_count": 1,
+        "contaminant_deep_count": 0
+      }
+    },
+    {
+      "grade": "medium",
+      "nativeDefinition": {
+        "id": "pallid-membrane-medium",
+        "family": "membrane-rim",
+        "grade": "medium",
+        "label": "苍膜洼",
+        "profile": "pallid-membrane",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 505,
+            "y": 432,
+            "rotation": 0.12,
+            "length": 506,
+            "width": 280,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.3,
+            "branches": 3,
+            "opening": 0.42,
+            "distortion": 0.62,
+            "constructionVersion": 2
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 535,
+            "y": 298,
+            "rotation": 0.1,
+            "length": 594,
+            "width": 266,
+            "height": 26,
+            "thickness": 9,
+            "fold": 0.33,
+            "branches": 3,
+            "opening": 0.45,
+            "distortion": 0.72,
+            "constructionVersion": 2
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 794,
+            "y": 550,
+            "rotation": -0.65,
+            "length": 226,
+            "width": 130,
+            "height": 18,
+            "thickness": 6,
+            "fold": 0.44,
+            "branches": 3,
+            "opening": 0.62,
+            "distortion": 0.55,
+            "constructionVersion": 2
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      "pollution": {
+        "id": "medium",
+        "version": 1,
+        "label": "中污染",
+        "status": "dev-masters",
+        "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+        "paintCount": 4,
+        "paintSubstrate": "oil_film",
+        "paintContinuity": "monolith",
+        "paintCoverage": "rewrite",
+        "volumeCount": 2,
+        "volumeSubstrate": "gas_mass",
+        "volumeCoverage": "rewrite",
+        "volumeCols": 4,
+        "volumeRows": 3,
+        "chaosStartRate": 0.42,
+        "chaosEndRate": 0.6,
+        "chaosRampStartSeconds": 60,
+        "chaosRampEndSeconds": 180
+      },
+      "content": {
+        "grade_id": "medium",
+        "version": 2,
+        "status": "production-candidate",
+        "label": "中污染",
+        "public_risk": "侵蚀更广，久留代价更高",
+        "public_preparation": "按行装选择绕行或穿越",
+        "public_reward": "更多收获在较深处",
+        "enemy_count": 3,
+        "kindling_safe_count": 1,
+        "kindling_contested_count": 2,
+        "kindling_deep_count": 2,
+        "kindling_safe_value": 1,
+        "kindling_contested_value": 2,
+        "kindling_deep_value": 4,
+        "contaminant_safe_count": 1,
+        "contaminant_contested_count": 1,
+        "contaminant_deep_count": 1
+      }
+    },
+    {
+      "grade": "severe",
+      "nativeDefinition": {
+        "id": "pallid-membrane-severe",
+        "family": "membrane-rim",
+        "grade": "severe",
+        "label": "苍膜洼",
+        "profile": "pallid-membrane",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 505,
+            "y": 432,
+            "rotation": 0.12,
+            "length": 506,
+            "width": 280,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.33,
+            "branches": 3,
+            "opening": 0.42,
+            "distortion": 0.682,
+            "constructionVersion": 2
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 535,
+            "y": 298,
+            "rotation": 0.1,
+            "length": 594,
+            "width": 266,
+            "height": 26,
+            "thickness": 9,
+            "fold": 0.36300000000000004,
+            "branches": 3,
+            "opening": 0.45,
+            "distortion": 0.792,
+            "constructionVersion": 2
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 794,
+            "y": 550,
+            "rotation": -0.65,
+            "length": 226,
+            "width": 130,
+            "height": 18,
+            "thickness": 6,
+            "fold": 0.48400000000000004,
+            "branches": 3,
+            "opening": 0.62,
+            "distortion": 0.6050000000000001,
+            "constructionVersion": 2
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      },
+      "pollution": {
+        "id": "severe",
+        "version": 1,
+        "label": "重度污染",
+        "status": "dev-masters",
+        "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+        "paintCount": 6,
+        "paintSubstrate": "oil_film",
+        "paintContinuity": "monolith",
+        "paintCoverage": "overwrite",
+        "volumeCount": 3,
+        "volumeSubstrate": "gas_mass",
+        "volumeCoverage": "overwrite",
+        "volumeCols": 5,
+        "volumeRows": 3,
+        "chaosStartRate": 0.64,
+        "chaosEndRate": 0.96,
+        "chaosRampStartSeconds": 40,
+        "chaosRampEndSeconds": 130
+      },
+      "content": {
+        "grade_id": "severe",
+        "version": 2,
+        "status": "production-candidate",
+        "label": "重度污染",
+        "public_risk": "地面与空气受侵占，混乱增长快",
+        "public_preparation": "备好脱身工具，留出归途",
+        "public_reward": "更多收获在深处，入口无加成",
+        "enemy_count": 4,
+        "kindling_safe_count": 1,
+        "kindling_contested_count": 2,
+        "kindling_deep_count": 2,
+        "kindling_safe_value": 1,
+        "kindling_contested_value": 2,
+        "kindling_deep_value": 6,
+        "contaminant_safe_count": 1,
+        "contaminant_contested_count": 1,
+        "contaminant_deep_count": 2
+      }
+    }
+  ],
+  "materials": [
+    {
+      "definition": {
+        "family": "membrane-rim",
+        "source": "/assets/r100-materials/membrane-rim-source.png",
+        "logical_pixels": 512,
+        "world_size": 512,
+        "regions": {
+          "skin": {
+            "x": 0.04,
+            "y": 0.36,
+            "width": 0.55,
+            "height": 0.6
+          },
+          "cleaved": {
+            "x": 0.63,
+            "y": 0.36,
+            "width": 0.33,
+            "height": 0.6
+          },
+          "loose": {
+            "x": 0.04,
+            "y": 0.03,
+            "width": 0.92,
+            "height": 0.24
+          }
+        },
+        "solid": {
+          "source": "/assets/r100-materials/membrane-rim-solid-source.png",
+          "logical_pixels": 512,
+          "world_size": 384,
+          "regions": {
+            "skin": {
+              "x": 0.025,
+              "y": 0.025,
+              "width": 0.6,
+              "height": 0.95
+            },
+            "cleaved": {
+              "x": 0.69,
+              "y": 0.025,
+              "width": 0.28,
+              "height": 0.95
+            },
+            "loose": {
+              "x": 0.69,
+              "y": 0.025,
+              "width": 0.28,
+              "height": 0.95
+            }
+          },
+          "skinRoughness": 0.3,
+          "cutRoughness": 0.73,
+          "gain": 0.91,
+          "cutGain": 1.03
+        }
+      },
+      "assets": [
+        {
+          "path": "public/assets/r100-materials/membrane-rim-source.png",
+          "sha256": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf"
+        },
+        {
+          "path": "public/assets/r100-materials/membrane-rim-solid-source.png",
+          "sha256": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+        }
+      ]
+    }
+  ],
+  "remains": {
+    "worldId": "pallid-membrane",
+    "grammar": "torn-membrane"
+  },
+  "dependencies": [
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "path": "src/art/contaminant-catalog-icons-ground.ts",
+      "sha256": "b9bf0762b83fd3b070b4ab39e4d209b7ca66a8d8c91e086be2fbbfd5cf5196ec"
+    },
+    {
+      "path": "src/art/contaminant-catalog-icons-objects.ts",
+      "sha256": "e661696c9c3861562ed056da733e9b1c5d8541c153f24dfdc41379f7c66df79e"
+    },
+    {
+      "path": "src/art/contaminant-catalog-icons-pixels.ts",
+      "sha256": "236f2feee19d92e62f59e3863a6fd75aab2a061d483e8f34e501f50229de657e"
+    },
+    {
+      "path": "src/art/contaminant-catalog-icons-secondary.ts",
+      "sha256": "f08c23209f48ee231433de5ed8529b2eb7850b36fbb464db1d10026ee753e1f5"
+    },
+    {
+      "path": "src/art/contaminant-catalog-icons-shells.ts",
+      "sha256": "91428c55e9a7d7458992d2bf188d844130f437ec71f60c6ea7019b367da4f5bf"
+    },
+    {
+      "path": "src/art/contaminant-catalog-icons-world-faces.ts",
+      "sha256": "6ae0c2ea19d3c356d7dbbeaed21332b739ced93623de456c0e38594ee95e1b70"
+    },
+    {
+      "path": "src/art/contaminant-catalog-icons.ts",
+      "sha256": "64b4fedd4a10cbaa8df949a6ecf661e00d36aa07b96b44d11d6e8dc378b15c37"
+    },
+    {
+      "path": "src/art/contaminant-icons.ts",
+      "sha256": "ef8b2c02d7ed136e6ea3aacd4ec86f784b52881f76ce437aa9482677d35b06a4"
+    },
+    {
+      "path": "src/art/crowbar-pixels.ts",
+      "sha256": "625af6d341071ffc947d021512d55951775210a55b1404a10cb742af3003b9ff"
+    },
+    {
+      "path": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    {
+      "path": "src/core/commit-effects.ts",
+      "sha256": "600a92ce42887215575fee3b23e45cd71843599d6e79ffa2dec9993ba2af904d"
+    },
+    {
+      "path": "src/core/event-bus.ts",
+      "sha256": "7a5add701fadcccf1362c98db50079f5eb862d541ae29fa3ed23cafd27224d3b"
+    },
+    {
+      "path": "src/dev/spatial-study/stage/bridge.ts",
+      "sha256": "4a58435b32f2ad89a1578d3b71909c860595f374df4b78123cc7ec33f5bc0956"
+    },
+    {
+      "path": "src/entities/actor-motion.ts",
+      "sha256": "6d060e8fac6ab13d81e53c906e1099730d68a48502e09751c1de9b76fd63740c"
+    },
+    {
+      "path": "src/entities/contam-flakes.ts",
+      "sha256": "107a2ce007542580fc5ed9c14e3fa72fccc8df7f90d313bcbf842e0042916565"
+    },
+    {
+      "path": "src/entities/enemy-factory.ts",
+      "sha256": "577781cfeb8ff508ffe2799129de1446b400c27f949d17fc9f9990d82d65ae1d"
+    },
+    {
+      "path": "src/entities/form-renderers/d/beast-model.ts",
+      "sha256": "70e91b7b4422263dc077bc3ea53c53605ba1fbd28e91a61f09d1139ccfd3b786"
+    },
+    {
+      "path": "src/entities/form-renderers/d/bing.ts",
+      "sha256": "9e4a2a4c92cd8bf0504ff49904ee7df5ef0fc4e9de9d43f3368f954465b904d6"
+    },
+    {
+      "path": "src/entities/form-renderers/d/body-pixel-material.ts",
+      "sha256": "888105657187ea9a7c4c27a4801042355fb25f886765839b71115ef52e2915c9"
+    },
+    {
+      "path": "src/entities/form-renderers/d/ding-cloud.ts",
+      "sha256": "e60de1c114d98a9fb6406df41802472b0e2b3bdf424a651a0926db046a806ad5"
+    },
+    {
+      "path": "src/entities/form-renderers/d/ding-paint.ts",
+      "sha256": "3a9f8b0730927079248f30298d1dc9f414f10518e198cde3b37c750a1391bc54"
+    },
+    {
+      "path": "src/entities/form-renderers/d/ding-recipe.ts",
+      "sha256": "58a185c3ab36ab44630c2ea973eed9bfa274bd1f1600c3d8bb9f0435cdcb8dca"
+    },
+    {
+      "path": "src/entities/form-renderers/d/ding.ts",
+      "sha256": "1d2210cb78d904e0764bf68dde578d2195d1143e9fdf68d31ad10daaf6513751"
+    },
+    {
+      "path": "src/entities/form-renderers/d/environment-pixels.ts",
+      "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+    },
+    {
+      "path": "src/entities/form-renderers/d/fragment-ramp.ts",
+      "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/attach.ts",
+      "sha256": "8ae2d6c6fab5a1cbd2a13c588c6a8d1eb07361aae3540bd017d66135605e0581"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/bake.ts",
+      "sha256": "02a26951bc95e3b961f9b05073ec09324f41faba38ab324bbb7099b695d31ce3"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/buffer.ts",
+      "sha256": "d4ee462eadc585e6ebc7aa33f123f5ed0bd1cef5fece8b5a185544fae717042c"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/canvas.ts",
+      "sha256": "e94b756ac6cd94f6534b87e95869a9b69b25c2d5fd321ed0ab8c76024e8fff07"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/doorframe.ts",
+      "sha256": "ba907b09705f5f256d71dd6b542b1c222e02461589115a62a4bb3fedf779888d"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/fixture.ts",
+      "sha256": "386d0cfef30d78cc96ded4db20fe33f7e91abc86728a0c775e8e4712411105cb"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/gait.ts",
+      "sha256": "78385a87efa1fceacd73d949c2410e0ddafd64559837d7015d8a9fd4225eb6fc"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/insect-remnant.ts",
+      "sha256": "0aa9edb908c77c9ca988ca0363c05ca9d437d95793564893c93bee3a6480252c"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/mammal-remnant.ts",
+      "sha256": "8754458e39dee1dd90f5adea44b416e871819c912ec5dc36e889776647b7e546"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/operators.ts",
+      "sha256": "5278661218d636965d5d42ca6a729bfa45b468a5b759831827611e6a7fb53e0c"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/organic-remnant.ts",
+      "sha256": "332d3ae26d6f13bd8507e2c6afc4311cb76ddf336361dac20a3397deabc9e928"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/parts.ts",
+      "sha256": "d533b89f4fb54537aa79248b3274d867036de86ec22d57b4a41d44b745a59ddc"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/stalk-clump.ts",
+      "sha256": "c46a88dc842ebc0968c274e2c974f1250383ab5d1ee083f71cc0988078874c08"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/street-wreckage.ts",
+      "sha256": "c9b7aca2af0bd4478bbd25aae8cd6027906ec7ded407866ca6c66302cf900ad6"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/types.ts",
+      "sha256": "bcc82daef1ecaa030353a76c3e65201290437eaf4cc8177744da755b34dd1a33"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/weld.ts",
+      "sha256": "327b573b83e707ec11c527a0c257393aa9be8165b43f26d011f03ce3010cb8dd"
+    },
+    {
+      "path": "src/entities/form-renderers/d/genome/worm-remnant.ts",
+      "sha256": "4ea9201ac3ddc40411c37129ef309fcf7e11ee94a96bfb941a34645e31d1f608"
+    },
+    {
+      "path": "src/entities/form-renderers/d/growth-model.ts",
+      "sha256": "2cd3a0d218b811121d94f6b5c18497685aad1f210c4469c5df80a98f83d09840"
+    },
+    {
+      "path": "src/entities/form-renderers/d/human-model.ts",
+      "sha256": "d8bf202526f8888a8c95a65e0fcbe5cdc1871503e3b20d95ce5bc4a8247911cd"
+    },
+    {
+      "path": "src/entities/form-renderers/d/insect-model.ts",
+      "sha256": "2b370729e054efd14a5e541ec11bb8fac22f9518ee5b098931f9f288f7fb68c9"
+    },
+    {
+      "path": "src/entities/form-renderers/d/jia-cluster-mode.ts",
+      "sha256": "dd7b0ecfe40c2c23b5c0eba084eb439f419655a17e499aeff971cda059ad266e"
+    },
+    {
+      "path": "src/entities/form-renderers/d/jia-pixels.ts",
+      "sha256": "e21059a7c0dc61f6949b39b4bcba8198f0106d347f3e60e9a0ab63dee03444ca"
+    },
+    {
+      "path": "src/entities/form-renderers/d/model-animation.ts",
+      "sha256": "13e1e66bb334967774329fc6fdd33cd70da4d9664a8515dd7fdaae63b6850d1e"
+    },
+    {
+      "path": "src/entities/form-renderers/d/model-raster.ts",
+      "sha256": "a3f3465c1c93538c7b7adb71c34304491125743450d53e8c2422f93c9849e8ef"
+    },
+    {
+      "path": "src/entities/form-renderers/d/model-visual.ts",
+      "sha256": "c9579192b84af6e3e7076f8a141c975feed13a7a57aa28caef9d67ef5ab7b829"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/attach.ts",
+      "sha256": "bfb1b20047d00c28a6fdce2a2f7f90c477675d5f65f334817bb115ab21fb7d27"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+      "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/legacy-presentation.ts",
+      "sha256": "970ebdf2ca3a7b24e926bbf16761ab3469da8d33a7239b4c23c28a39eff10af3"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/live.ts",
+      "sha256": "6398f95443a742887d958d583faab8964bebccbdc6a850f7a47c5f44b595e862"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+      "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/prepared.ts",
+      "sha256": "46ebe991b6af2f17fd889b71459d6a2f7ab01a28278b78269c59e22d0265931e"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/topology.ts",
+      "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/visibility.ts",
+      "sha256": "5377ceb044933ddfe0f4a673b19ba1ba4516b74ec2c903c8d20eda5fbd934fdf"
+    },
+    {
+      "path": "src/entities/form-renderers/d/production-models.ts",
+      "sha256": "fd6e3c67ccc4fce615eb00de103ebeca6938773fed923c524632084a0576d40d"
+    },
+    {
+      "path": "src/entities/form-renderers/d/remnant-model.ts",
+      "sha256": "6bd50aeaee8695f1c71aefd566f1a169163d9b4157b994e6bc738173118fa793"
+    },
+    {
+      "path": "src/entities/form-renderers/d/volume-material.ts",
+      "sha256": "737dab944b6a89963c194f3513126edd4f983e14598fd219eed6e1afeab36adc"
+    },
+    {
+      "path": "src/entities/form-renderers/d/volume-paint.ts",
+      "sha256": "039ffdbf1a69ac36ebe184bfc05c718426e5abb4bf6d13de44765e4e3f519852"
+    },
+    {
+      "path": "src/entities/form-renderers/d/worm-model.ts",
+      "sha256": "d90a61da3f18e508fcf7cff5d81b495a65c1659a67cdd89bb624ce4bc8db7296"
+    },
+    {
+      "path": "src/entities/form-renderers/d/yi-paint.ts",
+      "sha256": "984b0a495c45cc8a828ca88d3188876135e79e45124c5058bc2da44b15481333"
+    },
+    {
+      "path": "src/entities/form-renderers/d/yi-recipe.ts",
+      "sha256": "51f7ae87beddfccb9d732b2680f8b6ed05c1b360f041a60405e8eb8f964db688"
+    },
+    {
+      "path": "src/entities/form-renderers/d/yi.ts",
+      "sha256": "7cf8815c137febc088648264cff388f10d3739f1654dd386236f6fa311449e90"
+    },
+    {
+      "path": "src/entities/form-renderers/form-renderer.ts",
+      "sha256": "72bad9b45011398720c488001737233b8756539ce43cc8af3f81f22bb9b5b8a1"
+    },
+    {
+      "path": "src/entities/form-renderers/registry.ts",
+      "sha256": "0757de7c754ca24184402f2d3c654d8139f75284ea3f70ed493d1a639e077e39"
+    },
+    {
+      "path": "src/entities/form-renderers/scheme-d-mixed.ts",
+      "sha256": "17ad131036f7a129879557a9b557c3afdbe26bc200cf8babd20ad8f9e858f78c"
+    },
+    {
+      "path": "src/entities/hit-reaction.ts",
+      "sha256": "952ba24a3cb7b3634cb856535bde03c2c7489ddb87ad771a600de9370cf1a5f3"
+    },
+    {
+      "path": "src/entities/infiltrator-sprite.ts",
+      "sha256": "858945f8cdc77c7b3507f0cab38e7f56e42f5212d9734b7e42eb2bf6333d3980"
+    },
+    {
+      "path": "src/entities/player-lamp-aura.ts",
+      "sha256": "d4fe64e7c9300516ac426860411db4e9f9d11beff7d207239232ce02396ab3d0"
+    },
+    {
+      "path": "src/entities/player-movement-input.ts",
+      "sha256": "d8a535a02700e79ebf161f2020870091dc6e3c043d11452ee8140e317db154e3"
+    },
+    {
+      "path": "src/entities/player-sprite-dense.ts",
+      "sha256": "8f6be3b3bf11983d479f1e57ebaac55fba31a5d81ba9b0663257941f4f2a8531"
+    },
+    {
+      "path": "src/entities/player-weapon-rig.ts",
+      "sha256": "57605004e74dd99b2857abde90de61156e2b8e1f2dd393400850f181d36d7641"
+    },
+    {
+      "path": "src/entities/player.ts",
+      "sha256": "3bbd3f44a602d6e9d92da05d2b396f69db4684cb68fa86b09d62c57f2b05a049"
+    },
+    {
+      "path": "src/entities/restraint-reaction.ts",
+      "sha256": "86fde8d096e306983f75f799186b7575068ab94074a1bc19bdbbecd1a56e1b21"
+    },
+    {
+      "path": "src/entities/rewriter-sprite.ts",
+      "sha256": "25e8e0445bb4b8194901922ae29325312a4356363e6507f69d87189a3b7a483b"
+    },
+    {
+      "path": "src/generated/atmosphere-copy-data.ts",
+      "sha256": "4b35b7f08ca2ff58266897146b4c5e6343b6718c01363a10328e0ec5449d212e"
+    },
+    {
+      "path": "src/generated/build-lab-data.ts",
+      "sha256": "bdd7c9218b394e9f877207378e1b375138be8b024416f2c38334b7b704cde672"
+    },
+    {
+      "path": "src/generated/contaminant-catalog-data.ts",
+      "sha256": "3e6751994c7c064dcfdc2178297b075db55ca06a35c0ae9f2a633a9abbc1b64d"
+    },
+    {
+      "path": "src/generated/contaminant-data.ts",
+      "sha256": "dd94fa026a863ad556c4e47ce2efc5ff15ec0a5d027042e3f125c0ce9748cba1"
+    },
+    {
+      "path": "src/generated/contaminant-economy-data.ts",
+      "sha256": "637cf397a504553139700bda4b2323640794a8f8add004d9fe295c83a8d9b0d2"
+    },
+    {
+      "path": "src/generated/contaminant-quality-data.ts",
+      "sha256": "767bab485f3d95fa687e02cce79e25771085f37145f7fe91d3053a8c4ccc1057"
+    },
+    {
+      "path": "src/generated/contaminant-sources-data.ts",
+      "sha256": "f9e01340b6b4f871de9be5c17bc32a23535cc47dcab33a3888da5fdbd8b53904"
+    },
+    {
+      "path": "src/generated/contamination-body-data.ts",
+      "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+    },
+    {
+      "path": "src/generated/contamination-capability-data.ts",
+      "sha256": "9d2e8adfade83f546849fc6e024ae5b61b186c38faba33f657e0307c1d0e0d3b"
+    },
+    {
+      "path": "src/generated/contamination-family-data.ts",
+      "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+    },
+    {
+      "path": "src/generated/contamination-lexicon-data.ts",
+      "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+    },
+    {
+      "path": "src/generated/contamination-volume-data.ts",
+      "sha256": "5f592f2f33ce86dd932f95dc16609ee9ee18d0c56dcdf67b571006f99732aeab"
+    },
+    {
+      "path": "src/generated/enemy-data.ts",
+      "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+    },
+    {
+      "path": "src/generated/growth-route-data.ts",
+      "sha256": "342463708ec431e00ea00be8094ce937fca6a5eb300be5b4bea029440e0e6c4d"
+    },
+    {
+      "path": "src/generated/r100-world-selection.ts",
+      "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+    },
+    {
+      "path": "src/generated/rift-fragment-data.ts",
+      "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+    },
+    {
+      "path": "src/generated/rift-world-conditions-data.ts",
+      "sha256": "257fb47e344dc4ed8b9c67e2fe69362207aa3a3aaeecee750ae8dbca10fd9be4"
+    },
+    {
+      "path": "src/generated/rift-world-pool-data.ts",
+      "sha256": "f181f51e8a332b357818ce17f97e2373aaee4ef3c7c8e39e611a9c07676e5514"
+    },
+    {
+      "path": "src/generated/rift-world-space-data.ts",
+      "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+    },
+    {
+      "path": "src/generated/survival-data.ts",
+      "sha256": "487657e4967ada8c122ff66a92164f186d1f652b4c189660ac446679b5ce6d26"
+    },
+    {
+      "path": "src/generated/upgrade-data.ts",
+      "sha256": "92671875683043d5f1689ad4e22716d1c8766f3a91552bb11a52682a7322b8f6"
+    },
+    {
+      "path": "src/generated/weapon-data.ts",
+      "sha256": "25d13904e55acfa346408853b75c5eadecaec4fe43145c94c69504be251deb61"
+    },
+    {
+      "path": "src/generation/atmosphere.ts",
+      "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+    },
+    {
+      "path": "src/generation/connectivity.ts",
+      "sha256": "09ce50871f059aa2293d3011e52c6031b9f6712a952032374a5016b6ffa3a790"
+    },
+    {
+      "path": "src/generation/contaminant-source-regions.ts",
+      "sha256": "1e6ad9078ff6ccd143282e8d260dabb88b5817919d49afe10605d748cbbf437c"
+    },
+    {
+      "path": "src/generation/contamination-draw.ts",
+      "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+    },
+    {
+      "path": "src/generation/contamination-pins.ts",
+      "sha256": "c15713531378ae833b13cd6e45417fca25867ea19dc30f7a464534a9b1b69b1b"
+    },
+    {
+      "path": "src/generation/cover.ts",
+      "sha256": "1df3e511b090dd8d99d0374e7431fd2048ac805c458b758cafbb976d2d8ba7d9"
+    },
+    {
+      "path": "src/generation/draft-pipeline.ts",
+      "sha256": "bd84d233e3afc414e8f14810b64de9594608b4a35248b259b70c22149edfc575"
+    },
+    {
+      "path": "src/generation/dual-path.ts",
+      "sha256": "3df3c42227ffe0498f4e7555d8f75c5abe7d39e219418e2c0c2a6b4ad75dd699"
+    },
+    {
+      "path": "src/generation/fragment-roll.ts",
+      "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+    },
+    {
+      "path": "src/generation/legacy-r100-v2/executor.js",
+      "sha256": "bc5117ae07ff61565a1076b466ed1addf14b67691573a6acefe9fb47af1af06f"
+    },
+    {
+      "path": "src/generation/legacy-r100-v3/executor.js",
+      "sha256": "8aa337fb4687b45206db5db496bbe1a0a5269975b002cb2d1a7880c89870be78"
+    },
+    {
+      "path": "src/generation/legacy-r100-v4/executor.js",
+      "sha256": "90a5a6e4c122923c872ebaa623461b6f7217b37fc41c2c1854d2f07c049399f7"
+    },
+    {
+      "path": "src/generation/legacy-r100-v5/executor-recovery.js",
+      "sha256": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6"
+    },
+    {
+      "path": "src/generation/legacy-rift-generation.ts",
+      "sha256": "4d77303290a1c083941e9ad38b87d411e6fe9a9142ef745b6eb459f0a1e31b33"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/arithmetic-executor.js",
+      "sha256": "7cb7efec95c81dc35415273b31e90ba6a5847f11225848e9f32c3c7bc2c9d6d5"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/binary64-fma.ts",
+      "sha256": "a6a356d4b722ac4268e922c5fd576fcda1f3ee77457b5594538a255aa5594ed1"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/executor.js",
+      "sha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/fdlibm-atan2.ts",
+      "sha256": "03f61c093cf96b72763971e1271173564cac7822863486aa5ecf49668bf8199c"
+    },
+    {
+      "path": "src/generation/masses.ts",
+      "sha256": "e1d8e88c574f04122d77490bdfeff5e70e540c4e7079e98688ab06e9384ce195"
+    },
+    {
+      "path": "src/generation/outline-mask.ts",
+      "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+    },
+    {
+      "path": "src/generation/palette-quantize.ts",
+      "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+    },
+    {
+      "path": "src/generation/preview-paint.ts",
+      "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+    },
+    {
+      "path": "src/generation/recipes.ts",
+      "sha256": "4231c82c8dd3caec74b008705e55904b724609d08f8cf41f455a122b72c88f81"
+    },
+    {
+      "path": "src/generation/rift-generation-client.ts",
+      "sha256": "aa686256bba14afc8f80ac42b797fd6ae3ddf9b8f1bce7fc4320f47b52e1c10c"
+    },
+    {
+      "path": "src/generation/rift-generation-execute.ts",
+      "sha256": "73b0882b47c2b040c11f1f021125c7ce44d1f5d0be5c9785c69adbcad1c36cfc"
+    },
+    {
+      "path": "src/generation/rift-generation-identity.ts",
+      "sha256": "3dc102724053672adc37d32b7f8aa3b502a229dbbe3f5508b8149d74cc654afd"
+    },
+    {
+      "path": "src/generation/rift-generation-protocol.ts",
+      "sha256": "e2d463a46c37f022434d6405e70fa2cac3cc50d791100c90290903981b8fea43"
+    },
+    {
+      "path": "src/generation/rift-generation-worker.ts",
+      "sha256": "ded61501ad8c6ce0b62c9da48622614f16b094f11850972e7142194424d9aeca"
+    },
+    {
+      "path": "src/generation/rift-layout.ts",
+      "sha256": "f251fb0e7f26f8f6f22d62b57d55acac98e24aa403de768c8e91f3f4be3abe4f"
+    },
+    {
+      "path": "src/generation/seed-fork.ts",
+      "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+    },
+    {
+      "path": "src/generation/silhouette.ts",
+      "sha256": "56d62e0540e19e9c723e1b0efb33dd4498cc1262615358c9e82cae13bc4718f8"
+    },
+    {
+      "path": "src/generation/static-body-access.ts",
+      "sha256": "9e88f47f5ada1daf3a3cbb01af3b76427389fe0fa6450958902dcf9ab5c90bb7"
+    },
+    {
+      "path": "src/generation/stealth-density.ts",
+      "sha256": "5d289db0f7d848e438c9bb0a7aad603550c9ebda4d3e9cbdf9d339da9bb477f8"
+    },
+    {
+      "path": "src/generation/structure-grammars.ts",
+      "sha256": "23c52627de2378e4f53788f60a91c57bf41582ada2cd500e298e0558ac676858"
+    },
+    {
+      "path": "src/generation/terrain-safe-volume-seat.ts",
+      "sha256": "7c2fc5d75240a302a41b4d25e64cf1840939c944db7ae13fec7231148b7e78fa"
+    },
+    {
+      "path": "src/generation/types.ts",
+      "sha256": "c201e0ff3894de9a5eb93fa036a1d89305b56ff41bdda56b2156bdb122001d27"
+    },
+    {
+      "path": "src/generation/wall-edge-path.ts",
+      "sha256": "a0c1f2944b266640b643bc5fd4da54c9c71de2dc2a2e7cff37a0321416baa925"
+    },
+    {
+      "path": "src/generation/wall-host-placement.ts",
+      "sha256": "37883e816361daaeb478903ba71170867a1c25f4c4443ae5a1df884e948ac800"
+    },
+    {
+      "path": "src/generation/world-study/ground-material.ts",
+      "sha256": "9ee8325004cdfb826b8fa256d3cc5a9a3a167ea6a0eda2ee7f342736854e3b06"
+    },
+    {
+      "path": "src/generation/world-study/layout.ts",
+      "sha256": "0658f1317e4deb12aa2266ab48a87a5d2bc67290c09b0e8a11875bb9a33ee23c"
+    },
+    {
+      "path": "src/generation/world-study/master-ground-field.ts",
+      "sha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783"
+    },
+    {
+      "path": "src/generation/world-study/material-field.ts",
+      "sha256": "f3971a905e6dcddc2d67a9393df604e412fd2c1c08686bf01e84fd19ef23bc10"
+    },
+    {
+      "path": "src/generation/world-study/material-forms.ts",
+      "sha256": "9d4a2ba692280afd5ea3aca767bb9211d74245903056584a7c3e24a8b843fe30"
+    },
+    {
+      "path": "src/generation/world-study/material-light.ts",
+      "sha256": "d9ce19155e6cd05eb71fe9a80f856df3a6084cdbeea626aa1692d4b494ff29e3"
+    },
+    {
+      "path": "src/generation/world-study/material-noise.ts",
+      "sha256": "e401a0d6289738fb030344f6d6c00027e690d778fe1faf8f280cc8754f4292d5"
+    },
+    {
+      "path": "src/generation/world-study/material-response.ts",
+      "sha256": "848e9a05681a1d298cd26014550c2ba56cd5bba181d7b2ec0089ed0326f26647"
+    },
+    {
+      "path": "src/generation/world-study/native-body-collision.ts",
+      "sha256": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-cellular.ts",
+      "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-erosion.ts",
+      "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-expansion.ts",
+      "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground-edge.ts",
+      "sha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-raster.ts",
+      "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+    },
+    {
+      "path": "src/generation/world-study/open-space.ts",
+      "sha256": "19fa36a60c12e7303572d2c6526d2b00d9085169bb3d2c01d338cee7f2ffefe4"
+    },
+    {
+      "path": "src/generation/world-study/pollution-grade.ts",
+      "sha256": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0"
+    },
+    {
+      "path": "src/generation/world-study/production-map.ts",
+      "sha256": "d48e0bd4f26462797ec89934082b0397516d12548511f63cb2b5104fb043cf82"
+    },
+    {
+      "path": "src/generation/world-study/production-recipe.ts",
+      "sha256": "e5d461474f53c2f7450fb28aaa670558ba833bc084d18c62ff5abfd677e33a5b"
+    },
+    {
+      "path": "src/generation/world-study/profiles.ts",
+      "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+    },
+    {
+      "path": "src/generation/world-study/r100-expedition.ts",
+      "sha256": "3d62896b06faccee9e902806a8bb71827c84efa2775d5a2f07d69a05a6d771b1"
+    },
+    {
+      "path": "src/generation/world-study/r100-master-world.ts",
+      "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+    },
+    {
+      "path": "src/generation/world-study/r100-native-data.ts",
+      "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+    },
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+    },
+    {
+      "path": "src/generation/world-study/r100-patrol-windows.ts",
+      "sha256": "80bd1a32f5e528f416a3d33c28bbe7f9a20fd23c2eb7cb9674c628d145c790f2"
+    },
+    {
+      "path": "src/generation/world-study/r100-pollution.ts",
+      "sha256": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "87509365a644732c6783c58390f37488985822b3e5f53639bb62ea2c34f82883"
+    },
+    {
+      "path": "src/generation/world-study/r100-world-appearance.ts",
+      "sha256": "019e641e9c7471a6a58d250d44a8341c35fd58ad6f007b5abffc668578c76f4a"
+    },
+    {
+      "path": "src/generation/world-study/r100-world-selection.ts",
+      "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+    },
+    {
+      "path": "src/generation/world-study/raster.ts",
+      "sha256": "48f348198c1b1a0088f5b9bc6ff6fc8e21dfd2e2fb5efe9f560d0f89658c2766"
+    },
+    {
+      "path": "src/generation/world-study/region-field.ts",
+      "sha256": "03e2256d3d0cf0d80e51d9f3af7f353884162445370e63aa27c63083f40ea4b7"
+    },
+    {
+      "path": "src/generation/world-study/search-remains.ts",
+      "sha256": "d44aec31cd09e10d00ccca5b9a45f72ea420d8655ebe1b6f999601ae056fb872"
+    },
+    {
+      "path": "src/generation/world-study/semantic-deployment.ts",
+      "sha256": "4e339e6c006c7eaafe619e5d7c0494fc878a8e3b50bb912ad72e5ed58fc979bc"
+    },
+    {
+      "path": "src/generation/world-study/shape.ts",
+      "sha256": "498f846e415e8aeec8f3a08464e2120fa45702d04a3b4cdaeb73862a94f06364"
+    },
+    {
+      "path": "src/generation/world-study/space-profile.ts",
+      "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+    },
+    {
+      "path": "src/generation/world-study/space-quality.ts",
+      "sha256": "1c69fb82a366e5f57c7f92500b959d293da1d5bcb5daf768a68c2bd477893724"
+    },
+    {
+      "path": "src/generation/world-study/support.ts",
+      "sha256": "21c380b643339d80ae304ad5f9490d7c41bc11654404ac1f721e83f5e9f0bcc9"
+    },
+    {
+      "path": "src/generation/world-study/surface-field.ts",
+      "sha256": "3027349a312cc085562751dc8cb9c71b3be18f226cc3855f4ca3a40533f3db91"
+    },
+    {
+      "path": "src/generation/world-study/surface.ts",
+      "sha256": "63f6ca1e73d097f3eba75fcf330b30732efb027148632800f4947550c4947aba"
+    },
+    {
+      "path": "src/generation/world-study/types.ts",
+      "sha256": "23c4f0c6b87f0ceda4fdc3ce10fd7364e3b3adbfa652cb48aae06eb52e3d609a"
+    },
+    {
+      "path": "src/generation/world-study/world-conditions.ts",
+      "sha256": "c3f83782511fafebafbf6d6da2dbb5dc4e02a3a8a1942109e591d256d50fcccd"
+    },
+    {
+      "path": "src/generation/world-study/world-material-pigment.ts",
+      "sha256": "fd524196627d38cc804379e4e1448c2707b557c395e0748038910fb507fc028a"
+    },
+    {
+      "path": "src/generation/world-study/world-scenery.ts",
+      "sha256": "171f1b193730d9cdd87ab42ecb349d9c2fe05594201ccfc08f3d269c0a396176"
+    },
+    {
+      "path": "src/i18n/index.ts",
+      "sha256": "477c915586aaef06f136ca9991ddc5a514767a7f1dc69d6f65f38d2fe0e882ea"
+    },
+    {
+      "path": "src/i18n/locales/en.ts",
+      "sha256": "924893a4439e8b0dc342f416c4310812c47c2bee80e134526125242d15f801fb"
+    },
+    {
+      "path": "src/i18n/locales/zh-CN.ts",
+      "sha256": "7d427cf4eb337ea61646fe74f37052a7d8a0851034734a7ed5080e6eb8239e5b"
+    },
+    {
+      "path": "src/i18n/types.ts",
+      "sha256": "f94a23d2747727cffc3d3c8897ca552a1e4411776610c622ef3dbea45753d4e9"
+    },
+    {
+      "path": "src/managers/audio-catalog.ts",
+      "sha256": "016c2994a24ffd206b7e24a9f1b2e9228ed28364f6781b0b4651908ce57c8c9e"
+    },
+    {
+      "path": "src/managers/audio-manager.ts",
+      "sha256": "0c1aa43edfdb6e8f5f8e0fc2021f8cb69102f4fb4de0437a584b8891f2f97840"
+    },
+    {
+      "path": "src/managers/game-state.ts",
+      "sha256": "5b74229d7c694ee0c4af028ae480ec34438d10e7792d174c36e30cf5a718b000"
+    },
+    {
+      "path": "src/managers/rift-recovery.ts",
+      "sha256": "dbe9ac569320c6c3df6680f13c61913d2901b30da287d9e8adf185882810dfa4"
+    },
+    {
+      "path": "src/managers/save-manager.ts",
+      "sha256": "245d98e29dcfd87f7155fe7ae046adbe925aba834d4fa7cfc9eaa0e5272dd19f"
+    },
+    {
+      "path": "src/managers/session.ts",
+      "sha256": "ce4292bdd0e2bbe3e96b8527bc7943d69fa84a97d3a9040709aa6cb44dc76dbc"
+    },
+    {
+      "path": "src/narrative/atmosphere.ts",
+      "sha256": "1d7aa750663c91d875d1c2f7fa3f4836b4b74984601cec6e33aa4f5e9de9ddb7"
+    },
+    {
+      "path": "src/narrative/narration-memory.ts",
+      "sha256": "5db78fe234dceebec556f460dff1e9262088a1149c24de947c7b89fe0123963d"
+    },
+    {
+      "path": "src/scenes/rift-map-data.ts",
+      "sha256": "2e473be1b6585cdf9bacdae4774d59ef75c889484bb0db1c02d7cd257b0c28c8"
+    },
+    {
+      "path": "src/scenes/rift-scene.ts",
+      "sha256": "6f39cad6e744c5de2985a21631dbb782f62a1c0a86652a2206ef29c195eaa43b"
+    },
+    {
+      "path": "src/systems/ai/activity-state.ts",
+      "sha256": "779f02925f104a6c07f504e7f1d95215b46578cde1509ca96792e48b5a706c50"
+    },
+    {
+      "path": "src/systems/ai/ai-system.ts",
+      "sha256": "136fad657c34711e00e5a5084b1fac0d0496388bf85c40d0a3debe48230d5435"
+    },
+    {
+      "path": "src/systems/ai/behaviors.ts",
+      "sha256": "f09a058a249d00a2acbd778f5a56b55ba7c6724d34481600ae705b8cbfc5d11d"
+    },
+    {
+      "path": "src/systems/ai/contact-separation.ts",
+      "sha256": "d52ff02fdaab5b080daf45901b55445be604df26eeafa2be5caeec22a9a95fb9"
+    },
+    {
+      "path": "src/systems/ai/context.ts",
+      "sha256": "55a2121eb178931dc71e1bd57ab3d86607af801b31ba51cbacff35704c35175e"
+    },
+    {
+      "path": "src/systems/ai/index.ts",
+      "sha256": "99d8ef01a0b08850f7d034f7b85e47f8381ef774435ede06b729fd7961cd504d"
+    },
+    {
+      "path": "src/systems/ai/physical-grid.ts",
+      "sha256": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+    },
+    {
+      "path": "src/systems/ai/runtime-state.ts",
+      "sha256": "983d3130b96e56b65bd7106c90574402294b8e79933ee17605b6ec7444e79103"
+    },
+    {
+      "path": "src/systems/ai/runtime-validation.ts",
+      "sha256": "ad91ca5520fd899c0d966b71a0b39026c530e07762f65a125f5899112489a34d"
+    },
+    {
+      "path": "src/systems/ai/state-machine.ts",
+      "sha256": "41961f2c370726757f59cbe694f7fd756bec385775ceff9f2bc650c5b7c39a67"
+    },
+    {
+      "path": "src/systems/catalog-ability-runtime.ts",
+      "sha256": "2b2a7a2695529df0b636f4c7c3b451832906382fd65bedefe9671c9068bde42b"
+    },
+    {
+      "path": "src/systems/chaos-system.ts",
+      "sha256": "55d1439ec522c126d6d4b823cf4808fe545672e81b114b5ef04ff26d29a8cb43"
+    },
+    {
+      "path": "src/systems/combat-system.ts",
+      "sha256": "12a31b2644ac2eb22e56d5207744e29164d9b404e523d45032fa27493cecf529"
+    },
+    {
+      "path": "src/systems/contaminant-catalog.ts",
+      "sha256": "9ed208132afd99cc1e17eb8b9bc10a9bf1cbd59377f111f1e6776b0694e27a4f"
+    },
+    {
+      "path": "src/systems/contaminant-drop-plan.ts",
+      "sha256": "5fb13a9357f236556740914ed9b136a713e25ee341f0a4e8187129ebd4cda147"
+    },
+    {
+      "path": "src/systems/contaminant-migration.ts",
+      "sha256": "a7fdec1f562c92e6a69ff7d1f37136f42241ac98cdf6bf292658ad76a1d45415"
+    },
+    {
+      "path": "src/systems/contaminant-quality.ts",
+      "sha256": "0bcb58872bdce1edf52d126e3f3a35b34db5dd78054f9fb1952b045b6da86347"
+    },
+    {
+      "path": "src/systems/contaminant-system.ts",
+      "sha256": "d0b42b355052401b60c0ed954a55bb5d6cfc8b5bcaaa2a7f47c423ab3ca3f23c"
+    },
+    {
+      "path": "src/systems/contamination-host-live.ts",
+      "sha256": "0f5f31b67d8206568c6bb3e13fd4525a62bd4cbf969cffbe7b9eab642c6f2cd0"
+    },
+    {
+      "path": "src/systems/contamination-host-system.ts",
+      "sha256": "72a0c1ff5d14d08a5bbece1a1f3133a179ab8c6dc028fa939632350d89b40139"
+    },
+    {
+      "path": "src/systems/defense-engine.ts",
+      "sha256": "31006b129434b02e9ff6db85c643825be432af99140063c9cca6b76b4872c7de"
+    },
+    {
+      "path": "src/systems/dust-flow.ts",
+      "sha256": "21c24f13682402ec0aa3aa12826dc177e221838ffac435ea223679da9a781ad9"
+    },
+    {
+      "path": "src/systems/enemy-control-state.ts",
+      "sha256": "8ee00b93877789d4b1b4399b71c82cc07d469de8ac46ea14181cd41615635349"
+    },
+    {
+      "path": "src/systems/environment-hazard-control.ts",
+      "sha256": "9100fa155985da856d7bf042a4aecd1627c429a6594715521f161683eae1c859"
+    },
+    {
+      "path": "src/systems/equipment-lifecycle.ts",
+      "sha256": "a77cb965c0743b6fedd5167faf4dc61e05c2582b87b0d09525073d3048666a43"
+    },
+    {
+      "path": "src/systems/extraction-system.ts",
+      "sha256": "0f15190998192986f48a5325982c557352d9eabca7b959e2b628389b81d43a95"
+    },
+    {
+      "path": "src/systems/field-loot-inventory.ts",
+      "sha256": "413cbb67bbc223888ad0e1278f3bb1d8039253ac3963f2e5639c85d94de141c5"
+    },
+    {
+      "path": "src/systems/ground-depth.ts",
+      "sha256": "4c6d46ece1fce6ebc90912f5a57c3de19ca170ac25202d27ed18925ceda83d2e"
+    },
+    {
+      "path": "src/systems/growth-system.ts",
+      "sha256": "e5768f33d994218f36dc098227c20bf14213e6389734dd9999909175ed712f07"
+    },
+    {
+      "path": "src/systems/impact-system.ts",
+      "sha256": "1f9ae2b615388fefea2df478ec19d5a0f9ab0fa77ff49c74fc3595fc1b4faa29"
+    },
+    {
+      "path": "src/systems/inventory-store.ts",
+      "sha256": "b68d2daa85f4b291dcd86e52b890d865146098430ae31da73ac7dcff5e974782"
+    },
+    {
+      "path": "src/systems/kindling-yield.ts",
+      "sha256": "2213e7ee61b9954820a772835e10016bd583ff958262dc0fd25477fd0c3ade29"
+    },
+    {
+      "path": "src/systems/loot-search-presentation.ts",
+      "sha256": "bc8d7eef9fbf25b048cf9973b16af6a982cc880aa7aa55f23285b78f72230b6a"
+    },
+    {
+      "path": "src/systems/loot-search-system.ts",
+      "sha256": "6ba7c4b01c46347e75258dc6287f10ca3bd02964c58eb23203f3b5c63fb7a186"
+    },
+    {
+      "path": "src/systems/native-rift-body-recovery.ts",
+      "sha256": "022fcf15cffa0fcc9e5e09cf140d3cd7364496d8a2e3c943a5604817cf108422"
+    },
+    {
+      "path": "src/systems/pathfinding.ts",
+      "sha256": "35d680b2bcd20165b79bf9e07f3286770b74e4d4d22013153f8255d9987e755a"
+    },
+    {
+      "path": "src/systems/procedural-surface.ts",
+      "sha256": "a3bdbc88d91be71799436192bec0526d6ba564459f5774203294fd0fea7edabc"
+    },
+    {
+      "path": "src/systems/r100-extraction-presentation.ts",
+      "sha256": "eb5c39aec12baf449407945fa4e9786f1595b60cd5ff9984b916c8c59abfc0dd"
+    },
+    {
+      "path": "src/systems/r100-world-presentation.ts",
+      "sha256": "f19b862e9897b6f8f44162d8c726a833da25963cb71a106b101616fb22a19a96"
+    },
+    {
+      "path": "src/systems/r100-world/audio.ts",
+      "sha256": "cb12387b4de1b9a2f7fc1b04880f037488951c1cecdbfa001cc778425c26071f"
+    },
+    {
+      "path": "src/systems/r100-world/ground.ts",
+      "sha256": "36fc10eb24d9d111619c968367e937b82693d31d775a8d07800831794aa57f0d"
+    },
+    {
+      "path": "src/systems/r100-world/painted-material.ts",
+      "sha256": "27aaed1f473c464f3872e8d48be0386d08bef41e43f8fc7f2d274656df5701ae"
+    },
+    {
+      "path": "src/systems/r100-world/prepared-gameplay.ts",
+      "sha256": "579847af4117584f9ca76ee2a9cf93326f8a689ccfc6c26fd2330358283fca76"
+    },
+    {
+      "path": "src/systems/r100-world/presentation-state.ts",
+      "sha256": "22ce24073f78b0286acc22d7bc4e08efcb8ef4a6012fa77aee8d8d1f363af7fa"
+    },
+    {
+      "path": "src/systems/r100-world/presentation.ts",
+      "sha256": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+    },
+    {
+      "path": "src/systems/r100-world/source-cells.ts",
+      "sha256": "bd0fcaa3e93a6e9a06916e068249d5853de519cd960a5a0ce44b001bd62735a3"
+    },
+    {
+      "path": "src/systems/r100-world/surface-bake.ts",
+      "sha256": "411f7394344c9c41776d2f774b172b8071561c1a790b02c6d506046519872262"
+    },
+    {
+      "path": "src/systems/r100-world/surface-fields.ts",
+      "sha256": "7668ee50463c178e51c26047639932b53c8faf79bb9a9c926ec8cf91434d60b1"
+    },
+    {
+      "path": "src/systems/r100-world/surface-preparation-client.ts",
+      "sha256": "d83258c6688a7e8a3a7eababfd6fe4de766c4f2073b3a63b56525fa1a156b846"
+    },
+    {
+      "path": "src/systems/r100-world/surface-preparation-worker.ts",
+      "sha256": "aeb2c81ac7ab2fc43a7e56e475d9a102dc7186d112079c8d38b2d2ddbe3d0e59"
+    },
+    {
+      "path": "src/systems/r100-world/surface-preparation.ts",
+      "sha256": "d3dcb5ae0ebaa5a0d331b1abebd06890becd39058e2dbca65f6ae766a9379da2"
+    },
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "sha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd"
+    },
+    {
+      "path": "src/systems/rift-entry-frame-fence.ts",
+      "sha256": "59a9cfa7c541488280837a62a2aaa5eaa81dea9d6a44826be24d07fcea105d53"
+    },
+    {
+      "path": "src/systems/rift-frame-commit.ts",
+      "sha256": "fbcb12fbf92f750eb27546625bf20a4e20146d93e45c4d4409e422ed2497a765"
+    },
+    {
+      "path": "src/systems/rift-host-manifest.ts",
+      "sha256": "35ea65080468cd03e1b75f3cc45a272a0ab2a42bfd811ee4b24cf61ac0599fc9"
+    },
+    {
+      "path": "src/systems/rift-recovery-state.ts",
+      "sha256": "8cb9c3aa8d591461ef39886371fbcd302b560ae64a312116382dea671e4e081d"
+    },
+    {
+      "path": "src/systems/rift-staged-entry.ts",
+      "sha256": "3d0a94c4a339821e4bd69701fa62d6572c8fdc6cefe20795427d169c422c1aa6"
+    },
+    {
+      "path": "src/systems/run-controller.ts",
+      "sha256": "6bd34ebf3025e8b985b9ce7c35ab5425b4bbc0057432d1164245455fd90f6c6b"
+    },
+    {
+      "path": "src/systems/run-passive-receipt.ts",
+      "sha256": "635d36ff36dd11a915b01ec679f2b46cad1488d049626c26d505585db712676c"
+    },
+    {
+      "path": "src/systems/search-remains-ambient.ts",
+      "sha256": "d86a5dbeedd634000b3df49ea8bcdef2efb87a9a87327d2ceb0d42cedec6cf70"
+    },
+    {
+      "path": "src/systems/stability-tracker.ts",
+      "sha256": "3391e649a786ca5fc03ca9e5dbe2051ee51d343f14f2b545596fda99da58d74f"
+    },
+    {
+      "path": "src/systems/survival-attributes.ts",
+      "sha256": "b51c38c6652dcd010df0e7cfd0455b4df2d2b6ce893142e16b70152c8fa59fd7"
+    },
+    {
+      "path": "src/systems/tide-system.ts",
+      "sha256": "864f56cfa60a38643a565d8f1931cfcda6a8b710a4e4fba750eff8aa2d99be44"
+    },
+    {
+      "path": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "path": "src/systems/tilemap-renderer.ts",
+      "sha256": "b13ef6abc9494c5cf450b018738b7415c10468c6cd8ec419ec544fc709bd460f"
+    },
+    {
+      "path": "src/systems/tool-body-echo.ts",
+      "sha256": "0c5d025ee923d3e8b84cb191d7a957429faff34d56689874209559858e4d9f6a"
+    },
+    {
+      "path": "src/systems/tool-ground-vfx.ts",
+      "sha256": "7fd97ac1ca7bc3a017ffefdf650b587a6393aa3078944ad01a62094412c02ae2"
+    },
+    {
+      "path": "src/systems/tool-presentation.ts",
+      "sha256": "54b7db6b1fd3178b153734ea71e9830a0ad22bf942faafd3a6732645b3c78029"
+    },
+    {
+      "path": "src/systems/tool-runtime-extended.ts",
+      "sha256": "8ef077be370c3a610e17b6c98cccc8eeb6a2419209cae42158acf17299ff2b78"
+    },
+    {
+      "path": "src/systems/tool-system.ts",
+      "sha256": "1ce523a94660ea0f8bb15e73e6ab4b47833674af7a8bb7b33e4f860779a0044f"
+    },
+    {
+      "path": "src/systems/tool-targeting.ts",
+      "sha256": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+    },
+    {
+      "path": "src/systems/tool-vfx.ts",
+      "sha256": "dc74b394cad423a56c2caffbc684067479ed53d35dc8d89c633fba9850b7eae7"
+    },
+    {
+      "path": "src/systems/trail-system.ts",
+      "sha256": "7c60966cc374ca4ce620f550c2b6a340ff195e811b1528d5bff7d9a9dcc80244"
+    },
+    {
+      "path": "src/systems/visibility-system.ts",
+      "sha256": "b4a54956afc4a1f38457f496cb07496ac5acc53229ad627981bf638c8417df02"
+    },
+    {
+      "path": "src/systems/vision-textures.ts",
+      "sha256": "1c05f41486e4e5a8d4896d9038fc0a61238c18cdbbe2989f498dadbb2a60bef4"
+    },
+    {
+      "path": "src/systems/volume-presence.ts",
+      "sha256": "0ff791c4445dd99be74edbf5106938134198c5e64851d432ecdb6dff9e6b677f"
+    },
+    {
+      "path": "src/systems/weapon-loot.ts",
+      "sha256": "2727823c30d1776334f670566fa68fb0ed5c4693923d793ec70568b3b9d6a2bb"
+    },
+    {
+      "path": "src/systems/weapon-swing.ts",
+      "sha256": "306fec7a73eaab37fa9fe0cfdc66a5a6ce309f8778ef22e34b00e6a0c84c68e2"
+    },
+    {
+      "path": "src/systems/world-search-presentation.ts",
+      "sha256": "22dafa0bf5684bca2e0bbbeede658f81608c13c708112efd87a00d67fde8aef5"
+    },
+    {
+      "path": "src/systems/world-space-surface.ts",
+      "sha256": "56ba1df81238788921f96d63ac8cf2138822f12c3543df0c653163b2819c56ac"
+    },
+    {
+      "path": "src/types/ai-types.ts",
+      "sha256": "159e68d91e1a1f6cacd3abe63b3bfc935bf2b711340a38e648ca7711e8fac6b2"
+    },
+    {
+      "path": "src/types/events.ts",
+      "sha256": "f1898794aac8afe9f778f7788669f35a3273fb1d9c2c2065cecee0d9dd29111e"
+    },
+    {
+      "path": "src/types/game-types.ts",
+      "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+    },
+    {
+      "path": "src/types/inventory-types.ts",
+      "sha256": "db77f7f5f4a05dc9fb3763741a91c3b90e8b28c733712b89524d7d23f702c109"
+    },
+    {
+      "path": "src/types/map-types.ts",
+      "sha256": "d9308149b3958f195749509b8e51065e671a59fdcf9c654b7575a18f07a3a00c"
+    },
+    {
+      "path": "src/types/rift-checkpoint.ts",
+      "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+    },
+    {
+      "path": "src/types/rift-world-history.ts",
+      "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+    },
+    {
+      "path": "src/ui/contaminant-names.ts",
+      "sha256": "ae23e00d632df37d6f65d4fceec8212861e0385e9cacc2a098dd977211bd093e"
+    },
+    {
+      "path": "src/ui/contaminant-presentation.ts",
+      "sha256": "c3e1c492c6048030c24f5903853b24a0dbf6a9e688960375312b90f463ef3847"
+    },
+    {
+      "path": "src/ui/dom/detection-pulse.ts",
+      "sha256": "ff89e9531387a3be0f45698e69af9bf66100a2f5d8146012654d9e71c461907c"
+    },
+    {
+      "path": "src/ui/dom/encounter-narration.ts",
+      "sha256": "74a43cb391467aafb6f4fbaeaf9444e774206e43841bc590a4f17390d156b9a9"
+    },
+    {
+      "path": "src/ui/dom/inventory-panel-styles.ts",
+      "sha256": "95a9013757c5baa2d691c2d28091667a12dcfbf7df76fddfb5b89daba60b56eb"
+    },
+    {
+      "path": "src/ui/dom/inventory-panel.ts",
+      "sha256": "17e3fdad8cf9cf2018988856f4aca9cfc3cdee6b836e20350b94004e34773e7f"
+    },
+    {
+      "path": "src/ui/dom/loot-search-hud.ts",
+      "sha256": "8acfaf974b585e5dabb9eeab2ffcfc05058a079b5698fcb0d0d00efa7f2162e9"
+    },
+    {
+      "path": "src/ui/dom/panel-styles.ts",
+      "sha256": "75dfbbb3b9adeafa3e663bcc457492fcd876260564e9346323e5d5b583375a2b"
+    },
+    {
+      "path": "src/ui/dom/pause-menu.ts",
+      "sha256": "77bd58ff3affeb984cd01aeff13d4a1cdddae222fde6917696771247bae0ba2e"
+    },
+    {
+      "path": "src/ui/dom/rift-hud.ts",
+      "sha256": "3e4664ec3c342aefbb1cc2acfce3ff921f52ad5ac8c3a86f069fc5ed080213ea"
+    },
+    {
+      "path": "src/ui/dom/rift-result-panel.ts",
+      "sha256": "4081af9c58af8497d210384359ddbe0ede8c09afcffa3cf6d5ee0ff55ccbb4c6"
+    },
+    {
+      "path": "src/ui/inventory-presenter.ts",
+      "sha256": "598447af95b15e261ce758f6a1632d2d0de619156acaa93d07785eb895892e61"
+    },
+    {
+      "path": "src/ui/minimap.ts",
+      "sha256": "dfbcf020b9e92ee73e6f6ec64817f838192c95ea49a7d222c691078f6b5aeb65"
+    },
+    {
+      "path": "src/ui/side-effect-labels.ts",
+      "sha256": "15918b711ebce96274d9203f82a879ebdb94427c52a39e7532a62ffa3c0f41f2"
+    },
+    {
+      "path": "src/utils/grid-raycast.ts",
+      "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+    },
+    {
+      "path": "src/utils/math.ts",
+      "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+    },
+    {
+      "path": "src/utils/random.ts",
+      "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+    }
+  ]
+}

@@ -15,7 +15,7 @@ for (const record of records) {
   assert.equal(checkpointChecksum(restored), checkpointChecksum(direct), 'entire structured-clone payload stays exact');
   assert.equal(generatedRiftIdentity(restored.layout, old, restored).signature, record.identity.signature, 'actual prior browser identity stays exact');
   const current = createR100ProductionRecipe(record.world, old.requestedSeed, record.grade);
-  assert.equal(current.package.algorithmRevision, 5); assert.equal(current.contentDefinition.version, 2);
+  assert.equal(current.package.algorithmRevision, 6); assert.equal(current.contentDefinition.version, 2);
   assert(validR100ProductionRecipe(current));
   const forgedRevision = structuredClone(old); forgedRevision.package.algorithmRevision = 3;
   assert(!validR100ProductionRecipe(forgedRevision), 'old receipt cannot be relabelled');
@@ -24,4 +24,4 @@ for (const record of records) {
   const future = structuredClone(current); (future.package as { algorithmRevision: number }).algorithmRevision = current.package.algorithmRevision + 1;
   assert(!validR100ProductionRecipe(future), 'unknown executor cannot be accepted');
 }
-console.log('PASS 60 actual revision-2 browser identities and exact world payloads; revision-5/definition-2 selection; mutated/future rejection.');
+console.log('PASS 60 actual revision-2 browser identities and exact world payloads; revision-6/definition-2 selection; mutated/future rejection.');

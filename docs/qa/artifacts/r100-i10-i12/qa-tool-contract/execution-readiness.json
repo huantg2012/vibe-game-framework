@@ -1,0 +1,15 @@
+{
+  "status": "pass",
+  "command": "node tools/qa/check-r100-expansion-plan.mjs --self-check",
+  "exitCode": 0,
+  "planNegativeCases": 14,
+  "executionCopyNegativeCases": 6,
+  "executionReadyOnlyPositive": true,
+  "rules": "Original frozen plan remains unchanged; only executionSource receipt and selected batch specified-to-ready can differ. All parsed input values exact. No runtime qualification.",
+  "files": {
+    "tools/qa/check-r100-expansion-plan.mjs": "2e621ab1367a30c471099715cc3fbe6c0321b924be032d806c4a1eda1b0c30e1",
+    "tools/qa/r100-i07-i09-coverage.mjs": "4606de8f818f9b785366fc2830bfdb0974c957539d381b1fcf77c311291d7840",
+    "docs/qa/artifacts/r100-i10-i12/qualification-plan.json": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25",
+    "docs/qa/artifacts/r100-i10-i12/qualification-plan.schema.json": "684eb7ae9065d4627f045b03e826616795bac19db77c603d43386ea2b59401f9"
+  }
+}

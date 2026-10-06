@@ -1,0 +1,110 @@
+{
+  "status": "pass",
+  "mode": "six-profile-smoke",
+  "previousExecutor": {
+    "path": "src/generation/legacy-r100-v5/executor-revision5.js",
+    "sha256": "9129bd82ad367edb6271de5563a5f004a5b2065101f198b7df233e87f29ab8ac"
+  },
+  "projectedExecutor": {
+    "path": "src/generation/legacy-r100-v5/executor-recovery.js",
+    "sha256": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6"
+  },
+  "reference": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/exact-156.json",
+    "sha256": "0500651df3c33b1d1535cc26e7feb3a2752f05e13884bb4976e3ce7b140f0582"
+  },
+  "priorReport": {
+    "path": "docs/qa/artifacts/r100-i09/production-final52-recheck/report.json",
+    "sha256": "50808d3cbe54cfa9a2a9dbb8f1585821af79ddc2302e9b634e4fdba7f2484cc1"
+  },
+  "harness": {
+    "path": "tools/world-study/check-r100-revision5-projection.ts",
+    "sha256": "76f50ec38fa96c96c667b9609449655aedc276371a2209da1caef91039d682ab"
+  },
+  "originalRecipes": 156,
+  "rejectedRevisionVariants": 10,
+  "unknownCatalogIdRejected": true,
+  "mapHashSchema": "JSON typed-array-base64 and map-entries v1; comparable clears only packageHash/revision/metadata.signature",
+  "plannedCases": 6,
+  "cases": [
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 178,
+      "payloadHash": "6c107f49baacfe77da736106fe9714ca2eba75c0f61ab9f05b329676d56d37a7",
+      "comparablePayloadHash": "b6ec3e07289c880fe31e8772668242f01cd39ea2fade2aa3adb2f14c90cbbcf8",
+      "surface": {
+        "albedo": "9256ea3bf81980a714143541be2a9f10edbf2a7c9af27315805331162ecbff6b",
+        "normal": "f6a2a6753e03d8c800ca2e2e014c3675b66a68e4607f69864f170e3769af357d",
+        "response": "53288beeed2dd27e1289252dce01d48cb3b2fadc191f1ac06fc9e206b451a0c8",
+        "emission": "e502be33e68e63f050948b8dc8bc41fa56daa7c4f773c236829bbae2be7432b5"
+      }
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "medium",
+      "seed": 31,
+      "payloadHash": "a359f5b5305f25c59612c09287ab9daecd292acc05972d756bfe73e684c7991b",
+      "comparablePayloadHash": "4d62881118fb7b0e21bd35954bd6e1da59d7bbed53fbd42272052efae961450c",
+      "surface": {
+        "albedo": "2a340f1421a4e6bb3a840675868c79d31288ffb57b2d31dd9cd10ab2b15341ba",
+        "normal": "b52e44cb9d0cbd4594cd63c103731dcf97bc065b245709f363f31c831f6f6caf",
+        "response": "6578be04d9b144b5d3e5d042d3e19e8204dbc2949726bd87494757941c1fcafd",
+        "emission": "cb9d36521f34c78e1030028fe3d2a474f75cd6f4305b249f855b2efb03bf2cfe"
+      }
+    },
+    {
+      "world": "blister-field",
+      "grade": "severe",
+      "seed": 49,
+      "payloadHash": "ff8575a6147043705b439ef31b437d634cda7f111b9375a1cfbe8e9609b3b46f",
+      "comparablePayloadHash": "c0147711aab8176fc54e204a927df122a2faa9db2ee0dd4c51f0150c201c53dc",
+      "surface": {
+        "albedo": "3f14e6396a5db0ae46fc7123a7c56f68dc6016532d79cd14a85787f306c77136",
+        "normal": "f355e2f4cc1cf8bdbe47953086426db854f0aae9c59113fd3e0d2ae68a8a96e8",
+        "response": "efc14dc6c208aab268277946ad5937c090d1dc5eadc0d286501ba0af2b134de5",
+        "emission": "f2588e61dae806962002320b91c3ba50421bec28028d07b7094aec96148d8094"
+      }
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "severe",
+      "seed": 35,
+      "payloadHash": "17b3a3fa19a8e5ec7f1982176bbf2bfc7c317f7a07437d515f70c8ce86714316",
+      "comparablePayloadHash": "e56cd947b0b37592f0ddc3e1c3610b1f3ac12d55bf9f8315c580a095f1a08631",
+      "surface": {
+        "albedo": "887b79ca8f9a6970a7fc911c28b336feeebb1c7c53211869d7301f1381e6e1a1",
+        "normal": "04d3a8da9e0223814afae82b2ab46170a53fc9e074f4a322b4bd9bb3872b6ad5",
+        "response": "421720e2764ffa086916d69414e0fccb087b053de5298fa0cea11a7c1d7912ac",
+        "emission": "0eda4551931809b6c55bb4e2217133cfb145ab30c92418efeb521b4008c85b63"
+      }
+    },
+    {
+      "world": "monolith-sill",
+      "grade": "low",
+      "seed": 59,
+      "payloadHash": "513a39dc7507a230867c7482c7427313952a667b4b3460fcd9e265f4d49b95f9",
+      "comparablePayloadHash": "659f8b53856eeb35affb60fad0d3ffd5508ba82e72e359a7444c174f3e0060b2",
+      "surface": {
+        "albedo": "ca4ba707939c97ce48691d513e4cd1edc52085201fde81f95abb7f848255d561",
+        "normal": "9a9e9a70dfdb4eff97b6236e82847be6705e14fde4da97e443bac99d9c7ddad5",
+        "response": "7c06126f9ea855cd2e01c2059d9af244f891c870dd6e81634919bec5d195db73",
+        "emission": "67a8ed8ff5e114c374d12ef557857d25fdcc8db90ab8309f266bc0131128f4a0"
+      }
+    },
+    {
+      "world": "chalk-steps",
+      "grade": "medium",
+      "seed": 17,
+      "payloadHash": "18b9cbaaf0ab2c4d4e310ca6c9210420ad8a9f404afa578fb9f244a8ef27b9c5",
+      "comparablePayloadHash": "91b2e1498387438d38e857324c35929181f351ae20ba5294f944898918e1bde3",
+      "surface": {
+        "albedo": "d124b1ac3b17209398cc837926a7090075771187f164582199bbbdd42044b33f",
+        "normal": "ba945801a9f4153fdc0386eb016a6543a366d5df60894453894b1f1c7aaee2a2",
+        "response": "f99ae97cbd2419ffa4a7de025afc11863e3bf94267ab30ca0189d992eb6a13ab",
+        "emission": "4c3f2e4fa77c917f49747b42bad80245e94c7b54044b385b4ca0225662102dd4"
+      }
+    }
+  ],
+  "scope": "Original saved revision5 recovery only. The previous immutable map is compared; original surface hashes are reused without rebaking. Not revision6 qualification or a browser claim."
+}

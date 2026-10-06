@@ -9,6 +9,7 @@ import type { ContaminationForm } from '@/generation/contamination-draw';
 import { measureOutline } from '@/generation/outline-mask';
 import type { GeneratedRiftLayout } from '@/generation/types';
 import { buildNativeVolume, type NativeVolumeMesh, type NativeVolumeSpec, type NativeVolumeFamily } from '@/generation/world-study/native-volume-geometry';
+import { validateNativeGroundEdgeOwnership } from './native-volume-erosion';
 import { compileNativeVolumeRaster } from '@/generation/world-study/native-volume-raster';
 import { worldProfileById } from '@/generation/world-study/profiles';
 import type { WorldSample } from '@/generation/world-study/types';
@@ -30,10 +31,12 @@ export interface MasterDefinition {
   readonly ground_quietness:number; readonly ground_contrast:number; readonly ground_coverage:number; readonly ground_material_blend:number;
   readonly instances:readonly (Readonly<Omit<NativeVolumeSpec,'seed'|'family'|'blocking'>> & {readonly role:MasterPhysicalRole; readonly family?:NativeVolumeFamily})[];
   readonly erosion:readonly (readonly Readonly<Vector2>[])[];
+  /** Present only when the author explicitly replaces the grade default. */
+  readonly authoredErosion?: true;
 }
 export interface MasterWorld {
   /** New packages opt into current presentation; absence preserves frozen r4. */
-  readonly algorithmRevision?: 5;
+  readonly algorithmRevision?: 5 | 6;
   readonly appearance?: import('./r100-world-appearance').R100WorldAppearance;
   /** Production-only frozen dependency identity; DEV masters omit it. */
   readonly packageHash?: string;
@@ -95,12 +98,6 @@ function solidCoverage(meshes: readonly NativeVolumeMesh[], cols: number, rows: 
 export function createMasterWorld(definition: MasterDefinition, seed: number, frozen?: { readonly grade: PollutionGradeDefinition; readonly profile: WorldProfile }): MasterWorld {
   if (!Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('种子必须是 0–4294967295 的整数');
   const width = definition.cols * TILE, height = definition.rows * TILE;
-  const roles = new Map<number, MasterPhysicalRole>();
-  const meshes = definition.instances.map(instance => {
-    const { role, ...geometry } = instance; roles.set(instance.id, role);
-    return buildNativeVolume({ ...geometry, blocking: role === 'solid' ? 1 : 0, family: instance.family ?? definition.family, seed: seed ^ Math.imul(instance.id, 104729) });
-  });
-  const raster = compileNativeVolumeRaster(meshes, { x:0, y:0, width, height, pixelSize:1, supportCellSize:SUPPORT, opticalHeight:24 });
   const land = new Uint8Array(definition.cols * definition.rows), walls = new Uint8Array(land.length);
   const flowAngle = new Float32Array(land.length), deposition = new Float32Array(land.length);
   for (let row=0; row<definition.rows; row++) for (let col=0; col<definition.cols; col++) {
@@ -118,6 +115,14 @@ export function createMasterWorld(definition: MasterDefinition, seed: number, fr
     matter[index] = floor && !erosion[index] ? 1 : 0;
   }
   const matterAt = (x:number,y:number): boolean => x>=0 && y>=0 && x<width && y<height && matter[Math.floor(y/SUPPORT)*cols+Math.floor(x/SUPPORT)]===1;
+  validateNativeGroundEdgeOwnership(definition);
+  const roles = new Map<number, MasterPhysicalRole>();
+  const meshes = definition.instances.map(instance => {
+    const { role, ...geometry } = instance; roles.set(instance.id, role);
+    return buildNativeVolume({ ...geometry, blocking: role === 'solid' ? 1 : 0, family: instance.family ?? definition.family, seed: seed ^ Math.imul(instance.id, 104729) },
+      instance.groundEdgeWidth === undefined ? undefined : { polygons: definition.erosion, width, height, matterAt });
+  });
+  const raster = compileNativeVolumeRaster(meshes, { x:0, y:0, width, height, pixelSize:1, supportCellSize:SUPPORT, opticalHeight:24 });
   const roleAt = (x:number,y:number): MasterPhysicalRole | null => {
     if (!matterAt(x,y)) return null;
     return roles.get(raster.objectId[Math.floor(y) * raster.width + Math.floor(x)]!) ?? null;

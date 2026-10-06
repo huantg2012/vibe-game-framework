@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "tools/qa/prepare-r100-expansion-batch.mjs",
+    "--source",
+    "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "--batch",
+    "B01",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/b01-qualified/preparation-recheck"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 0.561,
+  "log": "docs/qa/artifacts/r100-i10-i12/b01-qualified/preparation-recheck.log",
+  "logSha256": "a873fb05a3fb1cce3d72fe29a6d54e13aae8745e90b8f934e06c34849a987fb3"
+}

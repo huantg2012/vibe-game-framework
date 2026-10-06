@@ -1,0 +1,63 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "name": "receipt-codegen",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.286,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/receipt-codegen.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "receipt-check",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.292,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/receipt-check.log",
+      "logSha256": "eb33a3873208e3940a542fe63b69dab08a0e3f141de2c418546f5682d4752a42"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.25,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/typecheck.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 19.308,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/build.log",
+      "logSha256": "f0489297b5686870c5aca937f605ab485256a4e661abcfda31ce031c68a30234"
+    },
+    {
+      "name": "coverage-accounting",
+      "command": [
+        "node",
+        "tools/qa/check-r100-play-qualification.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.11,
+      "log": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/coverage-accounting.log",
+      "logSha256": "ee1f6f150593eb5e9f0e1b723e51f2860f836da768b81104a8ab90e90fae781d"
+    }
+  ]
+}
