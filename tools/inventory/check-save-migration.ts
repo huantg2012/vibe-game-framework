@@ -174,7 +174,7 @@ try {
     delete (weapon.weapon as Partial<typeof weapon.weapon>).impactCharges;
     delete (weapon.weapon as Partial<typeof weapon.weapon>).usesRemaining;
     memoryStorage.setItem(key, JSON.stringify(old)); assert(saveManager.load());
-    assert.equal(readV2().inventory.version, 3);
+    assert.equal(readV2().inventory.version, 4);
     const migratedWeapon = inventoryStore.getItem(id); assert(migratedWeapon?.kind === 'weapon');
     assert.equal(migratedWeapon.weapon.stage, 'tool'); assert.equal(migratedWeapon.weapon.usesRemaining, def.maxUses);
     assert(inventoryStore.consumeEquipmentUse(id).ok);
@@ -230,6 +230,21 @@ try {
     assert.equal(inventoryStore.getItem(passive.id), undefined); assert.equal(inventoryStore.getItem(c.id)?.location.kind, 'stash');
     assert.deepEqual(inventoryStore.getDiscoveredCatalogIds(), ['reverse_woven_basket']);
     assert.equal(projectItemForPlayer(inventoryStore.getContaminants()[0]!).identification, 'unidentified');
+  });
+  check('schema 3 base history migrates once; malformed schema 4 history rejects the whole envelope', () => {
+    saveManager.deleteSave(); resetRuntime(); saveManager.save();
+    const legacy = readV2(); legacy.inventory.version = 3; delete legacy.inventory.riftWorldHistory;
+    const items = clone(legacy.inventory.items); memoryStorage.setItem(key, JSON.stringify(legacy));
+    assert(saveManager.load()); assert.equal(readV2().inventory.version, 4);
+    assert.deepEqual(readV2().inventory.riftWorldHistory, { version: 1, visits: [] });
+    assert.deepEqual(inventoryStore.getState().items, items);
+    const before = snapshot(), valid = readV2(), persisted = memoryStorage.getItem(key);
+    assert(saveManager.load()); assert.equal(memoryStorage.getItem(key), persisted);
+    for (const history of [undefined, { version: 2, visits: [] }, { version: 1, visits: [{ worldId: 'ash-strata', grade: 'invalid' }] }]) {
+      const malformed = clone(valid); malformed.inventory.riftWorldHistory = history as typeof malformed.inventory.riftWorldHistory;
+      const bytes = JSON.stringify(malformed); memoryStorage.setItem(key, bytes);
+      assert.equal(saveManager.load(), false); assert.deepEqual(snapshot(), before); assert.equal(memoryStorage.getItem(key), bytes);
+    }
   });
   console.log(`${checks} real SaveManager migration/integration checks passed.`);
 } finally {

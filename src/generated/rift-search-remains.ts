@@ -1,5 +1,5 @@
 // GENERATED from data/rift-search-remains.csv; edit the CSV, not this file.
-export const SEARCH_REMAINS_SOURCE_HASH = '81d6ddb73e874035a9a88021558729c268054530dbef6363d3878629729ba777';
+export const SEARCH_REMAINS_SOURCE_HASH = '15cffbdf6f219c5105bd97480437ba36b6deb9f2d9471b293b60f6daf934b8d3';
 export const SEARCH_REMAINS = [
   {
     "worldId": "ash-strata",
@@ -87,6 +87,134 @@ export const SEARCH_REMAINS = [
   },
   {
     "worldId": "shell-grit",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "rib-vault",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "pleated-hide",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "blister-field",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "wax-tongues",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "monolith-sill",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "bleached-court",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "split-rib-causeway",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "satin-fan",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "chalk-steps",
+    "grammar": "packed-granules"
+  },
+  {
+    "worldId": "porcelain-maw",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "amber-ribs",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "pale-sail",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "root-cistern",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "scab-islands",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "foam-trenches",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "resin-fall",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "tendon-shelves",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "felt-basin",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "cork-shelves",
+    "grammar": "packed-granules"
+  },
+  {
+    "worldId": "lacquer-court",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "ribbed-delta",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "bladder-weave",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "flake-thicket",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "resin-hollows",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "sentinel-mass",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "stepped-bowl",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "draped-bay",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "ember-cushions",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "splinter-rotunda",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "quilted-scars",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "silt-colonnade",
+    "grammar": "packed-granules"
+  },
+  {
+    "worldId": "shell-causeway",
     "grammar": "glaze-shell"
   }
 ] as const;

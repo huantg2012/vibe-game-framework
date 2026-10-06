@@ -1,3 +1,4 @@
+import { bakeMasterWorldSurface as bakeRevision4Surface } from '@/generation/legacy-r100-v4/executor.js';
 /** Pure immutable texture bake. Runs in the preparation Worker, never in a frame. */
 import { bakeMasterWorldSurface as bakeRevision3Surface } from '@/generation/legacy-r100-v3/executor.js';
 import { mapWorldPigment, paintedToneRange, sampleWorldAppearance, type WorldAppearanceField, type PaintedToneRange } from '@/generation/world-study/world-material-pigment';
@@ -174,5 +175,6 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
 }
 export function bakeMasterWorldSurface(world:MasterWorld,painting?:PaintedMaterial):MasterSurfaceBake {
  if(!world.appearance)return bakeRevision3Surface(world,painting);
+ if(world.algorithmRevision===undefined)return bakeRevision4Surface(world,painting);
  return bakeMasterSurface(world,paintMasterGround(world),new NativeVolumeLighting(world.raster,masterVolumePalette(world),{seed:world.sample.seed,axis:world.definition.axis}),painting);
 }

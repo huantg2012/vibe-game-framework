@@ -44,7 +44,7 @@ export interface RunInventoryLedger {
   baseSettled?: boolean;
 }
 export interface InventoryState {
-  version: 1 | 2 | 3;
+  version: 1 | 2 | 3 | 4;
   items: InventoryItem[];
   equipment: InventoryEquipment;
   run: RunInventoryLedger | null;
@@ -54,6 +54,8 @@ export interface InventoryState {
   catalogTutorialRevealed?: boolean;
   offeringReceipts?: Record<string,OfferingTransformResult[]>;
   nextAcquiredOrdinal?: number;
+  /** Required in schema 4. Older records migrate without inventing past visits. */
+  riftWorldHistory?: import('./rift-world-history').RiftWorldHistory;
 }
 export type InventoryError = 'invalid-item' | 'duplicate-id' | 'duplicate-action' | 'wrong-location' | 'equipped' | 'incompatible' | 'overweight' | 'run-active' | 'no-active-run' | 'invalid-ground' | 'storage-failed' | 'missing-weapon' | 'not-ready';
 export type InventoryResult<T = undefined> = { ok: true; value: T } | { ok: false; error: InventoryError };

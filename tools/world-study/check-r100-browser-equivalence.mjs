@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 const folder = process.env.QA_OUTPUT_DIR ?? 'docs/qa/artifacts/r100-i05-qualification-rev2';
 fs.mkdirSync(folder, { recursive: true });
 const script = `import {R100_NATIVE_WORLDS} from './src/generated/r100-native-worlds.ts';
@@ -21,6 +22,11 @@ const { chromium } = await import('/Users/yilungao/.cache/codex-runtimes/codex-p
 const browser = await chromium.launch({ headless: true, executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
 try {
   const page = await browser.newPage();
+  const servedUrls = new Set();
+  page.on('response', response => {
+    const url = new URL(response.url());
+    if (response.ok() && /^\/(src\/|assets\/r100-materials\/)/.test(url.pathname)) servedUrls.add(response.url());
+  });
   await page.goto(process.env.GAME_URL ?? 'http://127.0.0.1:3064/');
   const results = await page.evaluate(async ({ current, old }) => {
     const { createR100ProductionMap } = await import('/src/generation/world-study/r100-production-map.ts');
@@ -29,12 +35,18 @@ try {
       const world = createR100ProductionMap(saved.generation), value = generatedRiftIdentity(world.layout, saved.generation, world);
       const { catalogVersion: _catalog, combatRulesVersion: _combat, lootAlgorithmVersion: _loot, ...expected } = saved;
       return { world: saved.generation.package.id, grade: saved.generation.package.grade, revision: saved.generation.package.algorithmRevision,
-        seed: saved.seed, expected: saved.signature, actual: value.signature, exactIdentity: JSON.stringify(value) === JSON.stringify(expected) };
+        seed: saved.seed, requestedSeed: saved.generation.requestedSeed, expected: saved.signature, actual: value.signature, exactIdentity: JSON.stringify(value) === JSON.stringify(expected) };
     });
   }, { current, old });
-  const report = { scope: '60 new-revision Node→actual Chromium exact identities; 18 original saved Chromium revision-1 identities→current Chromium. Old Node divergence remains documented, never rounded on restore.',
+  const loadedSourceHashes = {};
+  for (const url of [...servedUrls].sort()) {
+    const response = await fetch(url);
+    if (!response.ok) throw Error(`Source audit HTTP ${response.status}: ${url}`);
+    loadedSourceHashes[new URL(url).pathname] = createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex');
+  }
+  const report = { scope: `${current.length} new-revision Node→actual Chromium exact identities; ${old.length} original saved Chromium revision-1 identities→current Chromium. Old Node divergence remains documented, never rounded on restore.`,
     url: process.env.GAME_URL ?? 'http://127.0.0.1:3064/', node: process.version, chromium: browser.version(),
-    status: results.every(row => row.exactIdentity) ? 'pass' : 'failed', results };
+    status: results.every(row => row.exactIdentity) ? 'pass' : 'failed', loadedSourceHashes, results };
   fs.writeFileSync(path.join(folder, 'browser-equivalence.json'), JSON.stringify(report, null, 2) + '\n');
   console.log(report.status, results.length, 'exact identities', results.filter(row => !row.exactIdentity));
   if (report.status !== 'pass') process.exitCode = 1;

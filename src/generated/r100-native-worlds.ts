@@ -2,7 +2,7 @@
 import type { MasterDefinition } from '../generation/world-study/r100-master-world';
 import type { WorldProfile } from '../generation/world-study/types';
 export interface R100NativeWorldEntry { readonly id: string; readonly label: string; readonly iteration: number; readonly enabled: boolean; readonly profile: WorldProfile; readonly definitions: readonly MasterDefinition[] }
-export const R100_NATIVE_CATALOG_SOURCE_HASH = 'ea72fb17264fd0eb56765209f4156776ae97953f7b0974b7cb51ced866251dd9';
+export const R100_NATIVE_CATALOG_SOURCE_HASH = '0226b4e234b58429cf31411f8042d5fb6bf52dfdb246decf625c28907474deec';
 export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
   {
     "id": "ash-strata",
@@ -9640,6 +9640,14398 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.38,
             "distortion": 0.682,
             "constructionVersion": 2
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rib-vault",
+    "label": "肋骨空庭",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "rib-vault",
+      "label": "肋骨空庭",
+      "description": "肋骨空庭的原生材料与完整搜撤地段",
+      "material": "crystal",
+      "surface": {
+        "substrate": "crystal",
+        "coating": "crystal",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "rib-vault-low",
+        "family": "fibre-knot",
+        "grade": "low",
+        "label": "肋骨空庭",
+        "profile": "rib-vault",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 395,
+            "y": 328,
+            "rotation": -1.57,
+            "length": 472,
+            "width": 362,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.5456,
+            "branches": 4,
+            "opening": 0.82,
+            "distortion": 0.49280000000000007,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "relief",
+            "x": 622,
+            "y": 453,
+            "rotation": 0.15,
+            "length": 424,
+            "width": 258,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.2816,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.3696,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 787,
+            "y": 400,
+            "rotation": 1.2,
+            "length": 268,
+            "width": 180,
+            "height": 32,
+            "thickness": 10,
+            "fold": 0.396,
+            "branches": 2,
+            "opening": 0.75,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "rib-vault-medium",
+        "family": "fibre-knot",
+        "grade": "medium",
+        "label": "肋骨空庭",
+        "profile": "rib-vault",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 395,
+            "y": 328,
+            "rotation": -1.57,
+            "length": 472,
+            "width": 362,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.62,
+            "branches": 4,
+            "opening": 0.82,
+            "distortion": 0.56,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "relief",
+            "x": 622,
+            "y": 453,
+            "rotation": 0.15,
+            "length": 424,
+            "width": 258,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.32,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.42,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 787,
+            "y": 400,
+            "rotation": 1.2,
+            "length": 268,
+            "width": 180,
+            "height": 32,
+            "thickness": 10,
+            "fold": 0.45,
+            "branches": 2,
+            "opening": 0.75,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "rib-vault-severe",
+        "family": "fibre-knot",
+        "grade": "severe",
+        "label": "肋骨空庭",
+        "profile": "rib-vault",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 395,
+            "y": 328,
+            "rotation": -1.57,
+            "length": 472,
+            "width": 362,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.682,
+            "branches": 4,
+            "opening": 0.82,
+            "distortion": 0.6160000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "relief",
+            "x": 622,
+            "y": 453,
+            "rotation": 0.15,
+            "length": 424,
+            "width": 258,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.35200000000000004,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.462,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 787,
+            "y": 400,
+            "rotation": 1.2,
+            "length": 268,
+            "width": 180,
+            "height": 32,
+            "thickness": 10,
+            "fold": 0.49500000000000005,
+            "branches": 2,
+            "opening": 0.75,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pleated-hide",
+    "label": "褶皮长廊",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "pleated-hide",
+      "label": "褶皮长廊",
+      "description": "褶皮长廊的原生材料与完整搜撤地段",
+      "material": "membrane",
+      "surface": {
+        "substrate": "membrane",
+        "coating": "membrane",
+        "organization": "bands",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "pleated-hide-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "褶皮长廊",
+        "profile": "pleated-hide",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 498,
+            "y": 475,
+            "rotation": 0.1,
+            "length": 506,
+            "width": 266,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.84,
+            "distortion": 0.44,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 460,
+            "y": 367,
+            "rotation": -0.28,
+            "length": 648,
+            "width": 212,
+            "height": 70,
+            "thickness": 12,
+            "fold": 0.6512,
+            "branches": 5,
+            "opening": 0.72,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 804,
+            "y": 507,
+            "rotation": 1.22,
+            "length": 246,
+            "width": 148,
+            "height": 31,
+            "thickness": 9,
+            "fold": 0.5104,
+            "branches": 3,
+            "opening": 0.78,
+            "distortion": 0.4576,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "pleated-hide-medium",
+        "family": "membrane-rim",
+        "grade": "medium",
+        "label": "褶皮长廊",
+        "profile": "pleated-hide",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 498,
+            "y": 475,
+            "rotation": 0.1,
+            "length": 506,
+            "width": 266,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.3,
+            "branches": 3,
+            "opening": 0.84,
+            "distortion": 0.5,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 460,
+            "y": 367,
+            "rotation": -0.28,
+            "length": 648,
+            "width": 212,
+            "height": 70,
+            "thickness": 12,
+            "fold": 0.74,
+            "branches": 5,
+            "opening": 0.72,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 804,
+            "y": 507,
+            "rotation": 1.22,
+            "length": 246,
+            "width": 148,
+            "height": 31,
+            "thickness": 9,
+            "fold": 0.58,
+            "branches": 3,
+            "opening": 0.78,
+            "distortion": 0.52,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "pleated-hide-severe",
+        "family": "membrane-rim",
+        "grade": "severe",
+        "label": "褶皮长廊",
+        "profile": "pleated-hide",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 498,
+            "y": 475,
+            "rotation": 0.1,
+            "length": 506,
+            "width": 266,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.33,
+            "branches": 3,
+            "opening": 0.84,
+            "distortion": 0.55,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 460,
+            "y": 367,
+            "rotation": -0.28,
+            "length": 648,
+            "width": 212,
+            "height": 70,
+            "thickness": 12,
+            "fold": 0.8140000000000001,
+            "branches": 5,
+            "opening": 0.72,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 804,
+            "y": 507,
+            "rotation": 1.22,
+            "length": 246,
+            "width": 148,
+            "height": 31,
+            "thickness": 9,
+            "fold": 0.638,
+            "branches": 3,
+            "opening": 0.78,
+            "distortion": 0.5720000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "blister-field",
+    "label": "囊壁洼地",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "blister-field",
+      "label": "囊壁洼地",
+      "description": "囊壁洼地的原生材料与完整搜撤地段",
+      "material": "glaze",
+      "surface": {
+        "substrate": "glaze",
+        "coating": "glaze",
+        "organization": "patches",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "blister-field-low",
+        "family": "broken-shell",
+        "grade": "low",
+        "label": "囊壁洼地",
+        "profile": "blister-field",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 510,
+            "y": 347,
+            "rotation": -0.15,
+            "length": 650,
+            "width": 358,
+            "height": 58,
+            "thickness": 15,
+            "fold": 0.4576,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "relief",
+            "x": 573,
+            "y": 534,
+            "rotation": 0.25,
+            "length": 446,
+            "width": 196,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.264,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.4576,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "blister-field-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "label": "囊壁洼地",
+        "profile": "blister-field",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 510,
+            "y": 347,
+            "rotation": -0.15,
+            "length": 650,
+            "width": 358,
+            "height": 58,
+            "thickness": 15,
+            "fold": 0.52,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "relief",
+            "x": 573,
+            "y": 534,
+            "rotation": 0.25,
+            "length": 446,
+            "width": 196,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.3,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.52,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "blister-field-severe",
+        "family": "broken-shell",
+        "grade": "severe",
+        "label": "囊壁洼地",
+        "profile": "blister-field",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 510,
+            "y": 347,
+            "rotation": -0.15,
+            "length": 650,
+            "width": 358,
+            "height": 58,
+            "thickness": 15,
+            "fold": 0.5720000000000001,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "relief",
+            "x": 573,
+            "y": 534,
+            "rotation": 0.25,
+            "length": 446,
+            "width": 196,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.33,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.5720000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "wax-tongues",
+    "label": "蜡舌滩",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "wax-tongues",
+      "label": "蜡舌滩",
+      "description": "蜡舌滩的原生材料与完整搜撤地段",
+      "material": "gel",
+      "surface": {
+        "substrate": "gel",
+        "coating": "gel",
+        "organization": "patches",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "wax-tongues-low",
+        "family": "gel-flow",
+        "grade": "low",
+        "label": "蜡舌滩",
+        "profile": "wax-tongues",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 445,
+            "y": 452,
+            "rotation": -0.2,
+            "length": 582,
+            "width": 308,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.1936,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.49280000000000007,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 549,
+            "y": 367,
+            "rotation": -0.42,
+            "length": 610,
+            "width": 330,
+            "height": 49,
+            "thickness": 12,
+            "fold": 0.6864,
+            "branches": 3,
+            "opening": 0.82,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 826,
+            "y": 573,
+            "rotation": 2.4,
+            "length": 224,
+            "width": 166,
+            "height": 24,
+            "thickness": 8,
+            "fold": 0.4048,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.44,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "wax-tongues-medium",
+        "family": "gel-flow",
+        "grade": "medium",
+        "label": "蜡舌滩",
+        "profile": "wax-tongues",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 445,
+            "y": 452,
+            "rotation": -0.2,
+            "length": 582,
+            "width": 308,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.22,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.56,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 549,
+            "y": 367,
+            "rotation": -0.42,
+            "length": 610,
+            "width": 330,
+            "height": 49,
+            "thickness": 12,
+            "fold": 0.78,
+            "branches": 3,
+            "opening": 0.82,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 826,
+            "y": 573,
+            "rotation": 2.4,
+            "length": 224,
+            "width": 166,
+            "height": 24,
+            "thickness": 8,
+            "fold": 0.46,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.5,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "wax-tongues-severe",
+        "family": "gel-flow",
+        "grade": "severe",
+        "label": "蜡舌滩",
+        "profile": "wax-tongues",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 445,
+            "y": 452,
+            "rotation": -0.2,
+            "length": 582,
+            "width": 308,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.24200000000000002,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.6160000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 549,
+            "y": 367,
+            "rotation": -0.42,
+            "length": 610,
+            "width": 330,
+            "height": 49,
+            "thickness": 12,
+            "fold": 0.8580000000000001,
+            "branches": 3,
+            "opening": 0.82,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 826,
+            "y": 573,
+            "rotation": 2.4,
+            "length": 224,
+            "width": 166,
+            "height": 24,
+            "thickness": 8,
+            "fold": 0.5060000000000001,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.55,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "monolith-sill",
+    "label": "单柱旷地",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "monolith-sill",
+      "label": "单柱旷地",
+      "description": "单柱旷地的原生材料与完整搜撤地段",
+      "material": "strata",
+      "surface": {
+        "substrate": "strata",
+        "coating": "strata",
+        "organization": "patches",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 2302755,
+        "floor": 3421236,
+        "floorLight": 4539717,
+        "materialDark": 3158064,
+        "materialMid": 5855577,
+        "materialLight": 7895160,
+        "faceLight": 10066329,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 3421236,
+        "groundLight": 4539717,
+        "groundDark": 2302755,
+        "wall": 5855577,
+        "wallLight": 10066329,
+        "wallDark": 3158064
+      }
+    },
+    "definitions": [
+      {
+        "id": "monolith-sill-low",
+        "family": "folded-slab",
+        "grade": "low",
+        "label": "单柱旷地",
+        "profile": "monolith-sill",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 680,
+            "y": 350,
+            "rotation": -0.1,
+            "length": 470,
+            "width": 380,
+            "height": 105,
+            "thickness": 18,
+            "fold": 0.49280000000000007,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.5720000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "monolith-sill-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "label": "单柱旷地",
+        "profile": "monolith-sill",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 680,
+            "y": 350,
+            "rotation": -0.1,
+            "length": 470,
+            "width": 380,
+            "height": 105,
+            "thickness": 18,
+            "fold": 0.56,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.65,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "monolith-sill-severe",
+        "family": "folded-slab",
+        "grade": "severe",
+        "label": "单柱旷地",
+        "profile": "monolith-sill",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 680,
+            "y": 350,
+            "rotation": -0.1,
+            "length": 470,
+            "width": 380,
+            "height": 105,
+            "thickness": 18,
+            "fold": 0.6160000000000001,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.7150000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bleached-court",
+    "label": "白壳阔庭",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "bleached-court",
+      "label": "白壳阔庭",
+      "description": "白壳阔庭的原生材料与完整搜撤地段",
+      "material": "glaze",
+      "surface": {
+        "substrate": "glaze",
+        "coating": "glaze",
+        "organization": "bands",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "bleached-court-low",
+        "family": "broken-shell",
+        "grade": "low",
+        "label": "白壳阔庭",
+        "profile": "bleached-court",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 485,
+            "y": 260,
+            "rotation": -0.04,
+            "length": 740,
+            "width": 280,
+            "height": 85,
+            "thickness": 16,
+            "fold": 0.3696,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 887,
+            "y": 510,
+            "rotation": 0.22,
+            "length": 150,
+            "width": 130,
+            "height": 30,
+            "thickness": 8,
+            "fold": 0.33440000000000003,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "bleached-court-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "label": "白壳阔庭",
+        "profile": "bleached-court",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 485,
+            "y": 260,
+            "rotation": -0.04,
+            "length": 740,
+            "width": 280,
+            "height": 85,
+            "thickness": 16,
+            "fold": 0.42,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 887,
+            "y": 510,
+            "rotation": 0.22,
+            "length": 150,
+            "width": 130,
+            "height": 30,
+            "thickness": 8,
+            "fold": 0.38,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "bleached-court-severe",
+        "family": "broken-shell",
+        "grade": "severe",
+        "label": "白壳阔庭",
+        "profile": "bleached-court",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 485,
+            "y": 260,
+            "rotation": -0.04,
+            "length": 740,
+            "width": 280,
+            "height": 85,
+            "thickness": 16,
+            "fold": 0.462,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 887,
+            "y": 510,
+            "rotation": 0.22,
+            "length": 150,
+            "width": 130,
+            "height": 30,
+            "thickness": 8,
+            "fold": 0.41800000000000004,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "split-rib-causeway",
+    "label": "双脊渡口",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "split-rib-causeway",
+      "label": "双脊渡口",
+      "description": "双脊渡口的原生材料与完整搜撤地段",
+      "material": "crystal",
+      "surface": {
+        "substrate": "crystal",
+        "coating": "crystal",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "split-rib-causeway-low",
+        "family": "fibre-knot",
+        "grade": "low",
+        "label": "双脊渡口",
+        "profile": "split-rib-causeway",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 410,
+            "y": 325,
+            "rotation": -1.5,
+            "length": 430,
+            "width": 350,
+            "height": 70,
+            "thickness": 14,
+            "fold": 0.4224,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 650,
+            "y": 460,
+            "rotation": 1.65,
+            "length": 380,
+            "width": 350,
+            "height": 60,
+            "thickness": 12,
+            "fold": 0.528,
+            "branches": 3,
+            "opening": 0.84,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "split-rib-causeway-medium",
+        "family": "fibre-knot",
+        "grade": "medium",
+        "label": "双脊渡口",
+        "profile": "split-rib-causeway",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 410,
+            "y": 325,
+            "rotation": -1.5,
+            "length": 430,
+            "width": 350,
+            "height": 70,
+            "thickness": 14,
+            "fold": 0.48,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 650,
+            "y": 460,
+            "rotation": 1.65,
+            "length": 380,
+            "width": 350,
+            "height": 60,
+            "thickness": 12,
+            "fold": 0.6,
+            "branches": 3,
+            "opening": 0.84,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "split-rib-causeway-severe",
+        "family": "fibre-knot",
+        "grade": "severe",
+        "label": "双脊渡口",
+        "profile": "split-rib-causeway",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 410,
+            "y": 325,
+            "rotation": -1.5,
+            "length": 430,
+            "width": 350,
+            "height": 70,
+            "thickness": 14,
+            "fold": 0.528,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 650,
+            "y": 460,
+            "rotation": 1.65,
+            "length": 380,
+            "width": 350,
+            "height": 60,
+            "thickness": 12,
+            "fold": 0.66,
+            "branches": 3,
+            "opening": 0.84,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "satin-fan",
+    "label": "绢面扇地",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "satin-fan",
+      "label": "绢面扇地",
+      "description": "绢面扇地的原生材料与完整搜撤地段",
+      "material": "membrane",
+      "surface": {
+        "substrate": "membrane",
+        "coating": "membrane",
+        "organization": "patches",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "satin-fan-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "绢面扇地",
+        "profile": "satin-fan",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 420,
+            "y": 470,
+            "rotation": -0.5,
+            "length": 520,
+            "width": 270,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.2112,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.5104,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 480,
+            "y": 410,
+            "rotation": 0.3,
+            "length": 450,
+            "width": 250,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.86,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 756,
+            "y": 310,
+            "rotation": 0.68,
+            "length": 250,
+            "width": 170,
+            "height": 45,
+            "thickness": 10,
+            "fold": 0.7215999999999999,
+            "branches": 2,
+            "opening": 0.82,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "satin-fan-medium",
+        "family": "membrane-rim",
+        "grade": "medium",
+        "label": "绢面扇地",
+        "profile": "satin-fan",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 420,
+            "y": 470,
+            "rotation": -0.5,
+            "length": 520,
+            "width": 270,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.24,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.58,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 480,
+            "y": 410,
+            "rotation": 0.3,
+            "length": 450,
+            "width": 250,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.3,
+            "branches": 3,
+            "opening": 0.86,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 756,
+            "y": 310,
+            "rotation": 0.68,
+            "length": 250,
+            "width": 170,
+            "height": 45,
+            "thickness": 10,
+            "fold": 0.82,
+            "branches": 2,
+            "opening": 0.82,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "satin-fan-severe",
+        "family": "membrane-rim",
+        "grade": "severe",
+        "label": "绢面扇地",
+        "profile": "satin-fan",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 420,
+            "y": 470,
+            "rotation": -0.5,
+            "length": 520,
+            "width": 270,
+            "height": 6,
+            "thickness": 2,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.638,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 480,
+            "y": 410,
+            "rotation": 0.3,
+            "length": 450,
+            "width": 250,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.33,
+            "branches": 3,
+            "opening": 0.86,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 756,
+            "y": 310,
+            "rotation": 0.68,
+            "length": 250,
+            "width": 170,
+            "height": 45,
+            "thickness": 10,
+            "fold": 0.88,
+            "branches": 2,
+            "opening": 0.82,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "chalk-steps",
+    "label": "粉白阶岸",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "chalk-steps",
+      "label": "粉白阶岸",
+      "description": "粉白阶岸的原生材料与完整搜撤地段",
+      "material": "granular",
+      "surface": {
+        "substrate": "granular",
+        "coating": "granular",
+        "organization": "bands",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 2302755,
+        "floor": 3421236,
+        "floorLight": 4539717,
+        "materialDark": 3158064,
+        "materialMid": 5855577,
+        "materialLight": 7895160,
+        "faceLight": 10066329,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 3421236,
+        "groundLight": 4539717,
+        "groundDark": 2302755,
+        "wall": 5855577,
+        "wallLight": 10066329,
+        "wallDark": 3158064
+      }
+    },
+    "definitions": [
+      {
+        "id": "chalk-steps-low",
+        "family": "granular-ridge",
+        "grade": "low",
+        "label": "粉白阶岸",
+        "profile": "chalk-steps",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 450,
+            "y": 320,
+            "rotation": -0.2,
+            "length": 560,
+            "width": 220,
+            "height": 76,
+            "thickness": 16,
+            "fold": 0.4224,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 740,
+            "y": 470,
+            "rotation": 0.35,
+            "length": 370,
+            "width": 240,
+            "height": 92,
+            "thickness": 18,
+            "fold": 0.4576,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "chalk-steps-medium",
+        "family": "granular-ridge",
+        "grade": "medium",
+        "label": "粉白阶岸",
+        "profile": "chalk-steps",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 450,
+            "y": 320,
+            "rotation": -0.2,
+            "length": 560,
+            "width": 220,
+            "height": 76,
+            "thickness": 16,
+            "fold": 0.48,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 740,
+            "y": 470,
+            "rotation": 0.35,
+            "length": 370,
+            "width": 240,
+            "height": 92,
+            "thickness": 18,
+            "fold": 0.52,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "chalk-steps-severe",
+        "family": "granular-ridge",
+        "grade": "severe",
+        "label": "粉白阶岸",
+        "profile": "chalk-steps",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 450,
+            "y": 320,
+            "rotation": -0.2,
+            "length": 560,
+            "width": 220,
+            "height": 76,
+            "thickness": 16,
+            "fold": 0.528,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 740,
+            "y": 470,
+            "rotation": 0.35,
+            "length": 370,
+            "width": 240,
+            "height": 92,
+            "thickness": 18,
+            "fold": 0.5720000000000001,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "porcelain-maw",
+    "label": "瓷喉",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "porcelain-maw",
+      "label": "瓷喉",
+      "description": "瓷喉的原生材料与完整搜撤地段",
+      "material": "glaze",
+      "surface": {
+        "substrate": "glaze",
+        "coating": "glaze",
+        "organization": "clusters",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "porcelain-maw-low",
+        "family": "broken-shell",
+        "grade": "low",
+        "label": "瓷喉",
+        "profile": "porcelain-maw",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 435,
+            "y": 260,
+            "rotation": -1.3,
+            "length": 380,
+            "width": 260,
+            "height": 76,
+            "thickness": 15,
+            "fold": 0.4048,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 700,
+            "y": 470,
+            "rotation": 1.85,
+            "length": 410,
+            "width": 280,
+            "height": 88,
+            "thickness": 16,
+            "fold": 0.4576,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "porcelain-maw-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "label": "瓷喉",
+        "profile": "porcelain-maw",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 435,
+            "y": 260,
+            "rotation": -1.3,
+            "length": 380,
+            "width": 260,
+            "height": 76,
+            "thickness": 15,
+            "fold": 0.46,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 700,
+            "y": 470,
+            "rotation": 1.85,
+            "length": 410,
+            "width": 280,
+            "height": 88,
+            "thickness": 16,
+            "fold": 0.52,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "porcelain-maw-severe",
+        "family": "broken-shell",
+        "grade": "severe",
+        "label": "瓷喉",
+        "profile": "porcelain-maw",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 435,
+            "y": 260,
+            "rotation": -1.3,
+            "length": 380,
+            "width": 260,
+            "height": 76,
+            "thickness": 15,
+            "fold": 0.5060000000000001,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 700,
+            "y": 470,
+            "rotation": 1.85,
+            "length": 410,
+            "width": 280,
+            "height": 88,
+            "thickness": 16,
+            "fold": 0.5720000000000001,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "amber-ribs",
+    "label": "琥珀肋道",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "amber-ribs",
+      "label": "琥珀肋道",
+      "description": "琥珀肋道的原生材料与完整搜撤地段",
+      "material": "gel",
+      "surface": {
+        "substrate": "gel",
+        "coating": "gel",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "amber-ribs-low",
+        "family": "gel-flow",
+        "grade": "low",
+        "label": "琥珀肋道",
+        "profile": "amber-ribs",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 615,
+            "y": 470,
+            "rotation": -0.25,
+            "length": 400,
+            "width": 230,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.2112,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.4752,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 520,
+            "y": 350,
+            "rotation": -0.8,
+            "length": 530,
+            "width": 400,
+            "height": 68,
+            "thickness": 17,
+            "fold": 0.5456,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "amber-ribs-medium",
+        "family": "gel-flow",
+        "grade": "medium",
+        "label": "琥珀肋道",
+        "profile": "amber-ribs",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 615,
+            "y": 470,
+            "rotation": -0.25,
+            "length": 400,
+            "width": 230,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.24,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.54,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 520,
+            "y": 350,
+            "rotation": -0.8,
+            "length": 530,
+            "width": 400,
+            "height": 68,
+            "thickness": 17,
+            "fold": 0.62,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "amber-ribs-severe",
+        "family": "gel-flow",
+        "grade": "severe",
+        "label": "琥珀肋道",
+        "profile": "amber-ribs",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 615,
+            "y": 470,
+            "rotation": -0.25,
+            "length": 400,
+            "width": 230,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.5940000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 520,
+            "y": 350,
+            "rotation": -0.8,
+            "length": 530,
+            "width": 400,
+            "height": 68,
+            "thickness": 17,
+            "fold": 0.682,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "pale-sail",
+    "label": "苍帆夹道",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "pale-sail",
+      "label": "苍帆夹道",
+      "description": "苍帆夹道的原生材料与完整搜撤地段",
+      "material": "membrane",
+      "surface": {
+        "substrate": "membrane",
+        "coating": "membrane",
+        "organization": "bands",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "pale-sail-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "苍帆夹道",
+        "profile": "pale-sail",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 410,
+            "y": 330,
+            "rotation": -0.55,
+            "length": 440,
+            "width": 230,
+            "height": 94,
+            "thickness": 13,
+            "fold": 0.6335999999999999,
+            "branches": 4,
+            "opening": 0.88,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 740,
+            "y": 430,
+            "rotation": 2.7,
+            "length": 470,
+            "width": 210,
+            "height": 108,
+            "thickness": 14,
+            "fold": 0.5808,
+            "branches": 3,
+            "opening": 0.86,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "pale-sail-medium",
+        "family": "membrane-rim",
+        "grade": "medium",
+        "label": "苍帆夹道",
+        "profile": "pale-sail",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 410,
+            "y": 330,
+            "rotation": -0.55,
+            "length": 440,
+            "width": 230,
+            "height": 94,
+            "thickness": 13,
+            "fold": 0.72,
+            "branches": 4,
+            "opening": 0.88,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 740,
+            "y": 430,
+            "rotation": 2.7,
+            "length": 470,
+            "width": 210,
+            "height": 108,
+            "thickness": 14,
+            "fold": 0.66,
+            "branches": 3,
+            "opening": 0.86,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "pale-sail-severe",
+        "family": "membrane-rim",
+        "grade": "severe",
+        "label": "苍帆夹道",
+        "profile": "pale-sail",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 410,
+            "y": 330,
+            "rotation": -0.55,
+            "length": 440,
+            "width": 230,
+            "height": 94,
+            "thickness": 13,
+            "fold": 0.792,
+            "branches": 4,
+            "opening": 0.88,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 740,
+            "y": 430,
+            "rotation": 2.7,
+            "length": 470,
+            "width": 210,
+            "height": 108,
+            "thickness": 14,
+            "fold": 0.7260000000000001,
+            "branches": 3,
+            "opening": 0.86,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "root-cistern",
+    "label": "根束空池",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "root-cistern",
+      "label": "根束空池",
+      "description": "根束空池的原生材料与完整搜撤地段",
+      "material": "crystal",
+      "surface": {
+        "substrate": "crystal",
+        "coating": "crystal",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "root-cistern-low",
+        "family": "fibre-knot",
+        "grade": "low",
+        "label": "根束空池",
+        "profile": "root-cistern",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 475,
+            "y": 285,
+            "rotation": 0.1,
+            "length": 540,
+            "width": 290,
+            "height": 82,
+            "thickness": 18,
+            "fold": 0.5104,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.5808,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 620,
+            "y": 525,
+            "rotation": 3.23,
+            "length": 350,
+            "width": 240,
+            "height": 57,
+            "thickness": 15,
+            "fold": 0.5632,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.5104,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "root-cistern-medium",
+        "family": "fibre-knot",
+        "grade": "medium",
+        "label": "根束空池",
+        "profile": "root-cistern",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 475,
+            "y": 285,
+            "rotation": 0.1,
+            "length": 540,
+            "width": 290,
+            "height": 82,
+            "thickness": 18,
+            "fold": 0.58,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 620,
+            "y": 525,
+            "rotation": 3.23,
+            "length": 350,
+            "width": 240,
+            "height": 57,
+            "thickness": 15,
+            "fold": 0.64,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.58,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "root-cistern-severe",
+        "family": "fibre-knot",
+        "grade": "severe",
+        "label": "根束空池",
+        "profile": "root-cistern",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 475,
+            "y": 285,
+            "rotation": 0.1,
+            "length": 540,
+            "width": 290,
+            "height": 82,
+            "thickness": 18,
+            "fold": 0.638,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.7260000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 620,
+            "y": 525,
+            "rotation": 3.23,
+            "length": 350,
+            "width": 240,
+            "height": 57,
+            "thickness": 15,
+            "fold": 0.7040000000000001,
+            "branches": 2,
+            "opening": 0.86,
+            "distortion": 0.638,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "scab-islands",
+    "label": "痂片群岛",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "scab-islands",
+      "label": "痂片群岛",
+      "description": "痂片群岛的原生材料与完整搜撤地段",
+      "material": "strata",
+      "surface": {
+        "substrate": "strata",
+        "coating": "strata",
+        "organization": "patches",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 2302755,
+        "floor": 3421236,
+        "floorLight": 4539717,
+        "materialDark": 3158064,
+        "materialMid": 5855577,
+        "materialLight": 7895160,
+        "faceLight": 10066329,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 3421236,
+        "groundLight": 4539717,
+        "groundDark": 2302755,
+        "wall": 5855577,
+        "wallLight": 10066329,
+        "wallDark": 3158064
+      }
+    },
+    "definitions": [
+      {
+        "id": "scab-islands-low",
+        "family": "folded-slab",
+        "grade": "low",
+        "label": "痂片群岛",
+        "profile": "scab-islands",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 350,
+            "y": 265,
+            "rotation": -0.6,
+            "length": 300,
+            "width": 210,
+            "height": 35,
+            "thickness": 10,
+            "fold": 0.2816,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 750,
+            "y": 255,
+            "rotation": 0.45,
+            "length": 360,
+            "width": 250,
+            "height": 55,
+            "thickness": 14,
+            "fold": 0.33440000000000003,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.528,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 555,
+            "y": 610,
+            "rotation": 2,
+            "length": 240,
+            "width": 180,
+            "height": 45,
+            "thickness": 12,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "scab-islands-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "label": "痂片群岛",
+        "profile": "scab-islands",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 350,
+            "y": 265,
+            "rotation": -0.6,
+            "length": 300,
+            "width": 210,
+            "height": 35,
+            "thickness": 10,
+            "fold": 0.32,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 750,
+            "y": 255,
+            "rotation": 0.45,
+            "length": 360,
+            "width": 250,
+            "height": 55,
+            "thickness": 14,
+            "fold": 0.38,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.6,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 555,
+            "y": 610,
+            "rotation": 2,
+            "length": 240,
+            "width": 180,
+            "height": 45,
+            "thickness": 12,
+            "fold": 0.3,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "scab-islands-severe",
+        "family": "folded-slab",
+        "grade": "severe",
+        "label": "痂片群岛",
+        "profile": "scab-islands",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 350,
+            "y": 265,
+            "rotation": -0.6,
+            "length": 300,
+            "width": 210,
+            "height": 35,
+            "thickness": 10,
+            "fold": 0.35200000000000004,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 750,
+            "y": 255,
+            "rotation": 0.45,
+            "length": 360,
+            "width": 250,
+            "height": 55,
+            "thickness": 14,
+            "fold": 0.41800000000000004,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 555,
+            "y": 610,
+            "rotation": 2,
+            "length": 240,
+            "width": 180,
+            "height": 45,
+            "thickness": 12,
+            "fold": 0.33,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foam-trenches",
+    "label": "泡壳沟渠",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "foam-trenches",
+      "label": "泡壳沟渠",
+      "description": "泡壳沟渠的原生材料与完整搜撤地段",
+      "material": "glaze",
+      "surface": {
+        "substrate": "glaze",
+        "coating": "glaze",
+        "organization": "bands",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "foam-trenches-low",
+        "family": "broken-shell",
+        "grade": "low",
+        "label": "泡壳沟渠",
+        "profile": "foam-trenches",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 375,
+            "y": 285,
+            "rotation": 0.85,
+            "length": 340,
+            "width": 260,
+            "height": 60,
+            "thickness": 14,
+            "fold": 0.4048,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 665,
+            "y": 460,
+            "rotation": 0.85,
+            "length": 440,
+            "width": 290,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.4576,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "foam-trenches-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "label": "泡壳沟渠",
+        "profile": "foam-trenches",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 375,
+            "y": 285,
+            "rotation": 0.85,
+            "length": 340,
+            "width": 260,
+            "height": 60,
+            "thickness": 14,
+            "fold": 0.46,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 665,
+            "y": 460,
+            "rotation": 0.85,
+            "length": 440,
+            "width": 290,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.52,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "foam-trenches-severe",
+        "family": "broken-shell",
+        "grade": "severe",
+        "label": "泡壳沟渠",
+        "profile": "foam-trenches",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 375,
+            "y": 285,
+            "rotation": 0.85,
+            "length": 340,
+            "width": 260,
+            "height": 60,
+            "thickness": 14,
+            "fold": 0.5060000000000001,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 665,
+            "y": 460,
+            "rotation": 0.85,
+            "length": 440,
+            "width": 290,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.5720000000000001,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "resin-fall",
+    "label": "凝脂叠滩",
+    "iteration": 7,
+    "enabled": false,
+    "profile": {
+      "id": "resin-fall",
+      "label": "凝脂叠滩",
+      "description": "凝脂叠滩的原生材料与完整搜撤地段",
+      "material": "gel",
+      "surface": {
+        "substrate": "gel",
+        "coating": "gel",
+        "organization": "bands",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "resin-fall-low",
+        "family": "gel-flow",
+        "grade": "low",
+        "label": "凝脂叠滩",
+        "profile": "resin-fall",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 410,
+            "y": 485,
+            "rotation": -0.55,
+            "length": 480,
+            "width": 220,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.1936,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.528,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 705,
+            "y": 535,
+            "rotation": 0.65,
+            "length": 390,
+            "width": 230,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.24640000000000004,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.5808,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 625,
+            "y": 280,
+            "rotation": -0.4,
+            "length": 600,
+            "width": 280,
+            "height": 98,
+            "thickness": 17,
+            "fold": 0.5456,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "resin-fall-medium",
+        "family": "gel-flow",
+        "grade": "medium",
+        "label": "凝脂叠滩",
+        "profile": "resin-fall",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 410,
+            "y": 485,
+            "rotation": -0.55,
+            "length": 480,
+            "width": 220,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.22,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.6,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 705,
+            "y": 535,
+            "rotation": 0.65,
+            "length": 390,
+            "width": 230,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.28,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 625,
+            "y": 280,
+            "rotation": -0.4,
+            "length": 600,
+            "width": 280,
+            "height": 98,
+            "thickness": 17,
+            "fold": 0.62,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "resin-fall-severe",
+        "family": "gel-flow",
+        "grade": "severe",
+        "label": "凝脂叠滩",
+        "profile": "resin-fall",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 410,
+            "y": 485,
+            "rotation": -0.55,
+            "length": 480,
+            "width": 220,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.24200000000000002,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 705,
+            "y": 535,
+            "rotation": 0.65,
+            "length": 390,
+            "width": 230,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.30800000000000005,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.7260000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 625,
+            "y": 280,
+            "rotation": -0.4,
+            "length": 600,
+            "width": 280,
+            "height": 98,
+            "thickness": 17,
+            "fold": 0.682,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tendon-shelves",
+    "label": "韧束断台",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "tendon-shelves",
+      "label": "韧束断台",
+      "description": "韧束断台的原生材料与完整搜撤地段",
+      "material": "crystal",
+      "surface": {
+        "substrate": "crystal",
+        "coating": "crystal",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "tendon-shelves-low",
+        "family": "fibre-knot",
+        "grade": "low",
+        "label": "韧束断台",
+        "profile": "tendon-shelves",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 470,
+            "y": 300,
+            "rotation": -0.25,
+            "length": 450,
+            "width": 330,
+            "height": 125,
+            "thickness": 18,
+            "fold": 0.5984,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 800,
+            "y": 550,
+            "rotation": 1.75,
+            "length": 280,
+            "width": 220,
+            "height": 72,
+            "thickness": 13,
+            "fold": 0.4752,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "tendon-shelves-medium",
+        "family": "fibre-knot",
+        "grade": "medium",
+        "label": "韧束断台",
+        "profile": "tendon-shelves",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 470,
+            "y": 300,
+            "rotation": -0.25,
+            "length": 450,
+            "width": 330,
+            "height": 125,
+            "thickness": 18,
+            "fold": 0.68,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 800,
+            "y": 550,
+            "rotation": 1.75,
+            "length": 280,
+            "width": 220,
+            "height": 72,
+            "thickness": 13,
+            "fold": 0.54,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "tendon-shelves-severe",
+        "family": "fibre-knot",
+        "grade": "severe",
+        "label": "韧束断台",
+        "profile": "tendon-shelves",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 470,
+            "y": 300,
+            "rotation": -0.25,
+            "length": 450,
+            "width": 330,
+            "height": 125,
+            "thickness": 18,
+            "fold": 0.7480000000000001,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 800,
+            "y": 550,
+            "rotation": 1.75,
+            "length": 280,
+            "width": 220,
+            "height": 72,
+            "thickness": 13,
+            "fold": 0.5940000000000001,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "felt-basin",
+    "label": "毡层洼",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "felt-basin",
+      "label": "毡层洼",
+      "description": "毡层洼的原生材料与完整搜撤地段",
+      "material": "membrane",
+      "surface": {
+        "substrate": "membrane",
+        "coating": "membrane",
+        "organization": "clusters",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "felt-basin-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "毡层洼",
+        "profile": "felt-basin",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 410,
+            "y": 330,
+            "rotation": -1.1,
+            "length": 360,
+            "width": 300,
+            "height": 52,
+            "thickness": 14,
+            "fold": 0.3696,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 800,
+            "y": 460,
+            "rotation": 2,
+            "length": 280,
+            "width": 210,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.33440000000000003,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.528,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 555,
+            "y": 310,
+            "rotation": 0.65,
+            "length": 260,
+            "width": 140,
+            "height": 62,
+            "thickness": 12,
+            "fold": 0.528,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "felt-basin-medium",
+        "family": "membrane-rim",
+        "grade": "medium",
+        "label": "毡层洼",
+        "profile": "felt-basin",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 410,
+            "y": 330,
+            "rotation": -1.1,
+            "length": 360,
+            "width": 300,
+            "height": 52,
+            "thickness": 14,
+            "fold": 0.42,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 800,
+            "y": 460,
+            "rotation": 2,
+            "length": 280,
+            "width": 210,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.38,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.6,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 555,
+            "y": 310,
+            "rotation": 0.65,
+            "length": 260,
+            "width": 140,
+            "height": 62,
+            "thickness": 12,
+            "fold": 0.6,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "felt-basin-severe",
+        "family": "membrane-rim",
+        "grade": "severe",
+        "label": "毡层洼",
+        "profile": "felt-basin",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 410,
+            "y": 330,
+            "rotation": -1.1,
+            "length": 360,
+            "width": 300,
+            "height": 52,
+            "thickness": 14,
+            "fold": 0.462,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 800,
+            "y": 460,
+            "rotation": 2,
+            "length": 280,
+            "width": 210,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.41800000000000004,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 555,
+            "y": 310,
+            "rotation": 0.65,
+            "length": 260,
+            "width": 140,
+            "height": 62,
+            "thickness": 12,
+            "fold": 0.66,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "cork-shelves",
+    "label": "孔髓厚岸",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "cork-shelves",
+      "label": "孔髓厚岸",
+      "description": "孔髓厚岸的原生材料与完整搜撤地段",
+      "material": "granular",
+      "surface": {
+        "substrate": "granular",
+        "coating": "granular",
+        "organization": "bands",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 2302755,
+        "floor": 3421236,
+        "floorLight": 4539717,
+        "materialDark": 3158064,
+        "materialMid": 5855577,
+        "materialLight": 7895160,
+        "faceLight": 10066329,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 3421236,
+        "groundLight": 4539717,
+        "groundDark": 2302755,
+        "wall": 5855577,
+        "wallLight": 10066329,
+        "wallDark": 3158064
+      }
+    },
+    "definitions": [
+      {
+        "id": "cork-shelves-low",
+        "family": "granular-ridge",
+        "grade": "low",
+        "label": "孔髓厚岸",
+        "profile": "cork-shelves",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 340,
+            "y": 370,
+            "rotation": 1.5,
+            "length": 620,
+            "width": 210,
+            "height": 75,
+            "thickness": 17,
+            "fold": 0.4752,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.5808,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 675,
+            "y": 230,
+            "rotation": -0.12,
+            "length": 350,
+            "width": 220,
+            "height": 92,
+            "thickness": 18,
+            "fold": 0.5456,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "cork-shelves-medium",
+        "family": "granular-ridge",
+        "grade": "medium",
+        "label": "孔髓厚岸",
+        "profile": "cork-shelves",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 340,
+            "y": 370,
+            "rotation": 1.5,
+            "length": 620,
+            "width": 210,
+            "height": 75,
+            "thickness": 17,
+            "fold": 0.54,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 675,
+            "y": 230,
+            "rotation": -0.12,
+            "length": 350,
+            "width": 220,
+            "height": 92,
+            "thickness": 18,
+            "fold": 0.62,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "cork-shelves-severe",
+        "family": "granular-ridge",
+        "grade": "severe",
+        "label": "孔髓厚岸",
+        "profile": "cork-shelves",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 340,
+            "y": 370,
+            "rotation": 1.5,
+            "length": 620,
+            "width": 210,
+            "height": 75,
+            "thickness": 17,
+            "fold": 0.5940000000000001,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.7260000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 675,
+            "y": 230,
+            "rotation": -0.12,
+            "length": 350,
+            "width": 220,
+            "height": 92,
+            "thickness": 18,
+            "fold": 0.682,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lacquer-court",
+    "label": "漆层空庭",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "lacquer-court",
+      "label": "漆层空庭",
+      "description": "漆层空庭的原生材料与完整搜撤地段",
+      "material": "strata",
+      "surface": {
+        "substrate": "strata",
+        "coating": "strata",
+        "organization": "bands",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 2302755,
+        "floor": 3421236,
+        "floorLight": 4539717,
+        "materialDark": 3158064,
+        "materialMid": 5855577,
+        "materialLight": 7895160,
+        "faceLight": 10066329,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 3421236,
+        "groundLight": 4539717,
+        "groundDark": 2302755,
+        "wall": 5855577,
+        "wallLight": 10066329,
+        "wallDark": 3158064
+      }
+    },
+    "definitions": [
+      {
+        "id": "lacquer-court-low",
+        "family": "folded-slab",
+        "grade": "low",
+        "label": "漆层空庭",
+        "profile": "lacquer-court",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 550,
+            "y": 390,
+            "rotation": 0.08,
+            "length": 730,
+            "width": 250,
+            "height": 30,
+            "thickness": 10,
+            "fold": 0.2816,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 430,
+            "y": 220,
+            "rotation": -0.1,
+            "length": 440,
+            "width": 160,
+            "height": 70,
+            "thickness": 13,
+            "fold": 0.6512,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "lacquer-court-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "label": "漆层空庭",
+        "profile": "lacquer-court",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 550,
+            "y": 390,
+            "rotation": 0.08,
+            "length": 730,
+            "width": 250,
+            "height": 30,
+            "thickness": 10,
+            "fold": 0.32,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 430,
+            "y": 220,
+            "rotation": -0.1,
+            "length": 440,
+            "width": 160,
+            "height": 70,
+            "thickness": 13,
+            "fold": 0.74,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "lacquer-court-severe",
+        "family": "folded-slab",
+        "grade": "severe",
+        "label": "漆层空庭",
+        "profile": "lacquer-court",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 550,
+            "y": 390,
+            "rotation": 0.08,
+            "length": 730,
+            "width": 250,
+            "height": 30,
+            "thickness": 10,
+            "fold": 0.35200000000000004,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 430,
+            "y": 220,
+            "rotation": -0.1,
+            "length": 440,
+            "width": 160,
+            "height": 70,
+            "thickness": 13,
+            "fold": 0.8140000000000001,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ribbed-delta",
+    "label": "肋间分流地",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "ribbed-delta",
+      "label": "肋间分流地",
+      "description": "肋间分流地的原生材料与完整搜撤地段",
+      "material": "gel",
+      "surface": {
+        "substrate": "gel",
+        "coating": "gel",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "ribbed-delta-low",
+        "family": "gel-flow",
+        "grade": "low",
+        "label": "肋间分流地",
+        "profile": "ribbed-delta",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 480,
+            "y": 425,
+            "rotation": 0.55,
+            "length": 470,
+            "width": 230,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.24640000000000004,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 660,
+            "y": 485,
+            "rotation": -0.55,
+            "length": 360,
+            "width": 220,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.2112,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 575,
+            "y": 315,
+            "rotation": -0.35,
+            "length": 580,
+            "width": 350,
+            "height": 76,
+            "thickness": 16,
+            "fold": 0.5456,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.5808,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "ribbed-delta-medium",
+        "family": "gel-flow",
+        "grade": "medium",
+        "label": "肋间分流地",
+        "profile": "ribbed-delta",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 480,
+            "y": 425,
+            "rotation": 0.55,
+            "length": 470,
+            "width": 230,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.28,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 660,
+            "y": 485,
+            "rotation": -0.55,
+            "length": 360,
+            "width": 220,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.24,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 575,
+            "y": 315,
+            "rotation": -0.35,
+            "length": 580,
+            "width": 350,
+            "height": 76,
+            "thickness": 16,
+            "fold": 0.62,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "ribbed-delta-severe",
+        "family": "gel-flow",
+        "grade": "severe",
+        "label": "肋间分流地",
+        "profile": "ribbed-delta",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 480,
+            "y": 425,
+            "rotation": 0.55,
+            "length": 470,
+            "width": 230,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.30800000000000005,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "relief",
+            "x": 660,
+            "y": 485,
+            "rotation": -0.55,
+            "length": 360,
+            "width": 220,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 575,
+            "y": 315,
+            "rotation": -0.35,
+            "length": 580,
+            "width": 350,
+            "height": 76,
+            "thickness": 16,
+            "fold": 0.682,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.7260000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "bladder-weave",
+    "label": "囊膜织口",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "bladder-weave",
+      "label": "囊膜织口",
+      "description": "囊膜织口的原生材料与完整搜撤地段",
+      "material": "membrane",
+      "surface": {
+        "substrate": "membrane",
+        "coating": "membrane",
+        "organization": "clusters",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "bladder-weave-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "囊膜织口",
+        "profile": "bladder-weave",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 400,
+            "y": 290,
+            "rotation": -0.4,
+            "length": 350,
+            "width": 300,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.3696,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 735,
+            "y": 430,
+            "rotation": 2.5,
+            "length": 300,
+            "width": 240,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.4048,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 560,
+            "y": 265,
+            "rotation": 0.8,
+            "length": 410,
+            "width": 150,
+            "height": 62,
+            "thickness": 11,
+            "fold": 0.49280000000000007,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.528,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 4,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 545,
+            "y": 510,
+            "rotation": -0.6,
+            "length": 380,
+            "width": 140,
+            "height": 48,
+            "thickness": 9,
+            "fold": 0.4576,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "bladder-weave-medium",
+        "family": "membrane-rim",
+        "grade": "medium",
+        "label": "囊膜织口",
+        "profile": "bladder-weave",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 400,
+            "y": 290,
+            "rotation": -0.4,
+            "length": 350,
+            "width": 300,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.42,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 735,
+            "y": 430,
+            "rotation": 2.5,
+            "length": 300,
+            "width": 240,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.46,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 560,
+            "y": 265,
+            "rotation": 0.8,
+            "length": 410,
+            "width": 150,
+            "height": 62,
+            "thickness": 11,
+            "fold": 0.56,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.6,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 4,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 545,
+            "y": 510,
+            "rotation": -0.6,
+            "length": 380,
+            "width": 140,
+            "height": 48,
+            "thickness": 9,
+            "fold": 0.52,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "bladder-weave-severe",
+        "family": "membrane-rim",
+        "grade": "severe",
+        "label": "囊膜织口",
+        "profile": "bladder-weave",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 400,
+            "y": 290,
+            "rotation": -0.4,
+            "length": 350,
+            "width": 300,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.462,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 735,
+            "y": 430,
+            "rotation": 2.5,
+            "length": 300,
+            "width": 240,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.5060000000000001,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 560,
+            "y": 265,
+            "rotation": 0.8,
+            "length": 410,
+            "width": 150,
+            "height": 62,
+            "thickness": 11,
+            "fold": 0.6160000000000001,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 4,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 545,
+            "y": 510,
+            "rotation": -0.6,
+            "length": 380,
+            "width": 140,
+            "height": 48,
+            "thickness": 9,
+            "fold": 0.5720000000000001,
+            "branches": 2,
+            "opening": 0.88,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "flake-thicket",
+    "label": "薄片错林",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "flake-thicket",
+      "label": "薄片错林",
+      "description": "薄片错林的原生材料与完整搜撤地段",
+      "material": "strata",
+      "surface": {
+        "substrate": "strata",
+        "coating": "strata",
+        "organization": "bands",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 2302755,
+        "floor": 3421236,
+        "floorLight": 4539717,
+        "materialDark": 3158064,
+        "materialMid": 5855577,
+        "materialLight": 7895160,
+        "faceLight": 10066329,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 3421236,
+        "groundLight": 4539717,
+        "groundDark": 2302755,
+        "wall": 5855577,
+        "wallLight": 10066329,
+        "wallDark": 3158064
+      }
+    },
+    "definitions": [
+      {
+        "id": "flake-thicket-low",
+        "family": "folded-slab",
+        "grade": "low",
+        "label": "薄片错林",
+        "profile": "flake-thicket",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 365,
+            "y": 300,
+            "rotation": 0.55,
+            "length": 360,
+            "width": 160,
+            "height": 65,
+            "thickness": 12,
+            "fold": 0.5808,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 590,
+            "y": 390,
+            "rotation": -0.45,
+            "length": 410,
+            "width": 170,
+            "height": 88,
+            "thickness": 14,
+            "fold": 0.6335999999999999,
+            "branches": 4,
+            "opening": 0.92,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 810,
+            "y": 325,
+            "rotation": 0.5,
+            "length": 300,
+            "width": 140,
+            "height": 52,
+            "thickness": 10,
+            "fold": 0.528,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "flake-thicket-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "label": "薄片错林",
+        "profile": "flake-thicket",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 365,
+            "y": 300,
+            "rotation": 0.55,
+            "length": 360,
+            "width": 160,
+            "height": 65,
+            "thickness": 12,
+            "fold": 0.66,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 590,
+            "y": 390,
+            "rotation": -0.45,
+            "length": 410,
+            "width": 170,
+            "height": 88,
+            "thickness": 14,
+            "fold": 0.72,
+            "branches": 4,
+            "opening": 0.92,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 810,
+            "y": 325,
+            "rotation": 0.5,
+            "length": 300,
+            "width": 140,
+            "height": 52,
+            "thickness": 10,
+            "fold": 0.6,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "flake-thicket-severe",
+        "family": "folded-slab",
+        "grade": "severe",
+        "label": "薄片错林",
+        "profile": "flake-thicket",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 365,
+            "y": 300,
+            "rotation": 0.55,
+            "length": 360,
+            "width": 160,
+            "height": 65,
+            "thickness": 12,
+            "fold": 0.7260000000000001,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 590,
+            "y": 390,
+            "rotation": -0.45,
+            "length": 410,
+            "width": 170,
+            "height": 88,
+            "thickness": 14,
+            "fold": 0.792,
+            "branches": 4,
+            "opening": 0.92,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 810,
+            "y": 325,
+            "rotation": 0.5,
+            "length": 300,
+            "width": 140,
+            "height": 52,
+            "thickness": 10,
+            "fold": 0.66,
+            "branches": 3,
+            "opening": 0.88,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "resin-hollows",
+    "label": "凝脂空囊",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "resin-hollows",
+      "label": "凝脂空囊",
+      "description": "凝脂空囊的原生材料与完整搜撤地段",
+      "material": "gel",
+      "surface": {
+        "substrate": "gel",
+        "coating": "gel",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "resin-hollows-low",
+        "family": "gel-flow",
+        "grade": "low",
+        "label": "凝脂空囊",
+        "profile": "resin-hollows",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 380,
+            "y": 260,
+            "rotation": -0.9,
+            "length": 310,
+            "width": 260,
+            "height": 58,
+            "thickness": 13,
+            "fold": 0.4224,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 755,
+            "y": 335,
+            "rotation": 1.1,
+            "length": 360,
+            "width": 280,
+            "height": 82,
+            "thickness": 16,
+            "fold": 0.5456,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 550,
+            "y": 575,
+            "rotation": 3,
+            "length": 280,
+            "width": 220,
+            "height": 43,
+            "thickness": 11,
+            "fold": 0.3872,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.528,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "resin-hollows-medium",
+        "family": "gel-flow",
+        "grade": "medium",
+        "label": "凝脂空囊",
+        "profile": "resin-hollows",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 380,
+            "y": 260,
+            "rotation": -0.9,
+            "length": 310,
+            "width": 260,
+            "height": 58,
+            "thickness": 13,
+            "fold": 0.48,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 755,
+            "y": 335,
+            "rotation": 1.1,
+            "length": 360,
+            "width": 280,
+            "height": 82,
+            "thickness": 16,
+            "fold": 0.62,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 550,
+            "y": 575,
+            "rotation": 3,
+            "length": 280,
+            "width": 220,
+            "height": 43,
+            "thickness": 11,
+            "fold": 0.44,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.6,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "resin-hollows-severe",
+        "family": "gel-flow",
+        "grade": "severe",
+        "label": "凝脂空囊",
+        "profile": "resin-hollows",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 380,
+            "y": 260,
+            "rotation": -0.9,
+            "length": 310,
+            "width": 260,
+            "height": 58,
+            "thickness": 13,
+            "fold": 0.528,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 755,
+            "y": 335,
+            "rotation": 1.1,
+            "length": 360,
+            "width": 280,
+            "height": 82,
+            "thickness": 16,
+            "fold": 0.682,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 550,
+            "y": 575,
+            "rotation": 3,
+            "length": 280,
+            "width": 220,
+            "height": 43,
+            "thickness": 11,
+            "fold": 0.48400000000000004,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sentinel-mass",
+    "label": "孤块静原",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "sentinel-mass",
+      "label": "孤块静原",
+      "description": "孤块静原的原生材料与完整搜撤地段",
+      "material": "strata",
+      "surface": {
+        "substrate": "strata",
+        "coating": "strata",
+        "organization": "clusters",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 2302755,
+        "floor": 3421236,
+        "floorLight": 4539717,
+        "materialDark": 3158064,
+        "materialMid": 5855577,
+        "materialLight": 7895160,
+        "faceLight": 10066329,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 3421236,
+        "groundLight": 4539717,
+        "groundDark": 2302755,
+        "wall": 5855577,
+        "wallLight": 10066329,
+        "wallDark": 3158064
+      }
+    },
+    "definitions": [
+      {
+        "id": "sentinel-mass-low",
+        "family": "folded-slab",
+        "grade": "low",
+        "label": "孤块静原",
+        "profile": "sentinel-mass",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 450,
+            "y": 340,
+            "rotation": -0.45,
+            "length": 300,
+            "width": 590,
+            "height": 155,
+            "thickness": 22,
+            "fold": 0.5984,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 260,
+            "y": 270,
+            "rotation": 1.5707963267948966,
+            "length": 380,
+            "width": 260,
+            "height": 88,
+            "thickness": 18,
+            "fold": 0.4752,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "sentinel-mass-medium",
+        "family": "folded-slab",
+        "grade": "medium",
+        "label": "孤块静原",
+        "profile": "sentinel-mass",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 450,
+            "y": 340,
+            "rotation": -0.45,
+            "length": 300,
+            "width": 590,
+            "height": 155,
+            "thickness": 22,
+            "fold": 0.68,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 260,
+            "y": 270,
+            "rotation": 1.5707963267948966,
+            "length": 380,
+            "width": 260,
+            "height": 88,
+            "thickness": 18,
+            "fold": 0.54,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "sentinel-mass-severe",
+        "family": "folded-slab",
+        "grade": "severe",
+        "label": "孤块静原",
+        "profile": "sentinel-mass",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 450,
+            "y": 340,
+            "rotation": -0.45,
+            "length": 300,
+            "width": 590,
+            "height": 155,
+            "thickness": 22,
+            "fold": 0.7480000000000001,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 260,
+            "y": 270,
+            "rotation": 1.5707963267948966,
+            "length": 380,
+            "width": 260,
+            "height": 88,
+            "thickness": 18,
+            "fold": 0.5940000000000001,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "stepped-bowl",
+    "label": "退阶环洼",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "stepped-bowl",
+      "label": "退阶环洼",
+      "description": "退阶环洼的原生材料与完整搜撤地段",
+      "material": "glaze",
+      "surface": {
+        "substrate": "glaze",
+        "coating": "glaze",
+        "organization": "clusters",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "stepped-bowl-low",
+        "family": "broken-shell",
+        "grade": "low",
+        "label": "退阶环洼",
+        "profile": "stepped-bowl",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 420,
+            "y": 280,
+            "rotation": -0.65,
+            "length": 500,
+            "width": 220,
+            "height": 80,
+            "thickness": 17,
+            "fold": 0.5104,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 690,
+            "y": 485,
+            "rotation": 2.5,
+            "length": 410,
+            "width": 240,
+            "height": 56,
+            "thickness": 14,
+            "fold": 0.4048,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "stepped-bowl-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "label": "退阶环洼",
+        "profile": "stepped-bowl",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 420,
+            "y": 280,
+            "rotation": -0.65,
+            "length": 500,
+            "width": 220,
+            "height": 80,
+            "thickness": 17,
+            "fold": 0.58,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 690,
+            "y": 485,
+            "rotation": 2.5,
+            "length": 410,
+            "width": 240,
+            "height": 56,
+            "thickness": 14,
+            "fold": 0.46,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "stepped-bowl-severe",
+        "family": "broken-shell",
+        "grade": "severe",
+        "label": "退阶环洼",
+        "profile": "stepped-bowl",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 420,
+            "y": 280,
+            "rotation": -0.65,
+            "length": 500,
+            "width": 220,
+            "height": 80,
+            "thickness": 17,
+            "fold": 0.638,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 690,
+            "y": 485,
+            "rotation": 2.5,
+            "length": 410,
+            "width": 240,
+            "height": 56,
+            "thickness": 14,
+            "fold": 0.5060000000000001,
+            "branches": 2,
+            "opening": 0.9,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "terrace-shelf"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "draped-bay",
+    "label": "垂膜暗湾",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "draped-bay",
+      "label": "垂膜暗湾",
+      "description": "垂膜暗湾的原生材料与完整搜撤地段",
+      "material": "membrane",
+      "surface": {
+        "substrate": "membrane",
+        "coating": "membrane",
+        "organization": "bands",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "draped-bay-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "垂膜暗湾",
+        "profile": "draped-bay",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 420,
+            "y": 330,
+            "rotation": 0.45,
+            "length": 600,
+            "width": 190,
+            "height": 92,
+            "thickness": 15,
+            "fold": 0.6335999999999999,
+            "branches": 4,
+            "opening": 0.94,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 800,
+            "y": 225,
+            "rotation": 0.35,
+            "length": 300,
+            "width": 260,
+            "height": 115,
+            "thickness": 19,
+            "fold": 0.5456,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "draped-bay-medium",
+        "family": "membrane-rim",
+        "grade": "medium",
+        "label": "垂膜暗湾",
+        "profile": "draped-bay",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 420,
+            "y": 330,
+            "rotation": 0.45,
+            "length": 600,
+            "width": 190,
+            "height": 92,
+            "thickness": 15,
+            "fold": 0.72,
+            "branches": 4,
+            "opening": 0.94,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 800,
+            "y": 225,
+            "rotation": 0.35,
+            "length": 300,
+            "width": 260,
+            "height": 115,
+            "thickness": 19,
+            "fold": 0.62,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "draped-bay-severe",
+        "family": "membrane-rim",
+        "grade": "severe",
+        "label": "垂膜暗湾",
+        "profile": "draped-bay",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 420,
+            "y": 330,
+            "rotation": 0.45,
+            "length": 600,
+            "width": 190,
+            "height": 92,
+            "thickness": 15,
+            "fold": 0.792,
+            "branches": 4,
+            "opening": 0.94,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "pleated-sheet"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 800,
+            "y": 225,
+            "rotation": 0.35,
+            "length": 300,
+            "width": 260,
+            "height": 115,
+            "thickness": 19,
+            "fold": 0.682,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ember-cushions",
+    "label": "赤垫裂原",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "ember-cushions",
+      "label": "赤垫裂原",
+      "description": "赤垫裂原的原生材料与完整搜撤地段",
+      "material": "gel",
+      "surface": {
+        "substrate": "gel",
+        "coating": "gel",
+        "organization": "patches",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "ember-cushions-low",
+        "family": "gel-flow",
+        "grade": "low",
+        "label": "赤垫裂原",
+        "profile": "ember-cushions",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 340,
+            "y": 270,
+            "rotation": 0.4,
+            "length": 260,
+            "width": 180,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.2992,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.5808,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 700,
+            "y": 230,
+            "rotation": 2.4,
+            "length": 330,
+            "width": 190,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.3696,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 780,
+            "y": 540,
+            "rotation": -1.1,
+            "length": 300,
+            "width": 210,
+            "height": 48,
+            "thickness": 12,
+            "fold": 0.33440000000000003,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 4,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 430,
+            "y": 590,
+            "rotation": 0.9,
+            "length": 240,
+            "width": 170,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.528,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "ember-cushions-medium",
+        "family": "gel-flow",
+        "grade": "medium",
+        "label": "赤垫裂原",
+        "profile": "ember-cushions",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 340,
+            "y": 270,
+            "rotation": 0.4,
+            "length": 260,
+            "width": 180,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.34,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 700,
+            "y": 230,
+            "rotation": 2.4,
+            "length": 330,
+            "width": 190,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.42,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 780,
+            "y": 540,
+            "rotation": -1.1,
+            "length": 300,
+            "width": 210,
+            "height": 48,
+            "thickness": 12,
+            "fold": 0.38,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 4,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 430,
+            "y": 590,
+            "rotation": 0.9,
+            "length": 240,
+            "width": 170,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.3,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.6,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "ember-cushions-severe",
+        "family": "gel-flow",
+        "grade": "severe",
+        "label": "赤垫裂原",
+        "profile": "ember-cushions",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 340,
+            "y": 270,
+            "rotation": 0.4,
+            "length": 260,
+            "width": 180,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.37400000000000005,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.7260000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 700,
+            "y": 230,
+            "rotation": 2.4,
+            "length": 330,
+            "width": 190,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.462,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 780,
+            "y": 540,
+            "rotation": -1.1,
+            "length": 300,
+            "width": 210,
+            "height": 48,
+            "thickness": 12,
+            "fold": 0.41800000000000004,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 4,
+            "family": "gel-flow",
+            "role": "solid",
+            "x": 430,
+            "y": 590,
+            "rotation": 0.9,
+            "length": 240,
+            "width": 170,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.33,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "splinter-rotunda",
+    "label": "断束环庭",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "splinter-rotunda",
+      "label": "断束环庭",
+      "description": "断束环庭的原生材料与完整搜撤地段",
+      "material": "crystal",
+      "surface": {
+        "substrate": "crystal",
+        "coating": "crystal",
+        "organization": "clusters",
+        "coverage": 0.66,
+        "wear": 0.43,
+        "deposits": 0.42,
+        "scale": 0.95,
+        "relief": 0.58,
+        "contrast": 0.85,
+        "regionScale": 1.1,
+        "quietness": 0.5,
+        "formScale": 1.5,
+        "fragmentation": 0.32,
+        "accentCoverage": 0.18
+      },
+      "palette": {
+        "void": 856090,
+        "shadow": 1449000,
+        "floorDeep": 2303798,
+        "floor": 3158599,
+        "floorLight": 4472919,
+        "materialDark": 3488592,
+        "materialMid": 5001839,
+        "materialLight": 7173782,
+        "faceLight": 10136256,
+        "accentDim": 5326174,
+        "accent": 7956100,
+        "accentLight": 11444401,
+        "peak": 14476773,
+        "actorDark": 2433318,
+        "actorMid": 11702376,
+        "actorLight": 15584925,
+        "ground": 3158599,
+        "groundLight": 4472919,
+        "groundDark": 2303798,
+        "wall": 5001839,
+        "wallLight": 10136256,
+        "wallDark": 3488592
+      }
+    },
+    "definitions": [
+      {
+        "id": "splinter-rotunda-low",
+        "family": "fibre-knot",
+        "grade": "low",
+        "label": "断束环庭",
+        "profile": "splinter-rotunda",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 22,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 385,
+            "y": 260,
+            "rotation": -0.6,
+            "length": 360,
+            "width": 240,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.5104,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.5808,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 760,
+            "y": 340,
+            "rotation": 1.3,
+            "length": 330,
+            "width": 220,
+            "height": 60,
+            "thickness": 13,
+            "fold": 0.4752,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.6335999999999999,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 500,
+            "y": 600,
+            "rotation": 3,
+            "length": 410,
+            "width": 230,
+            "height": 90,
+            "thickness": 18,
+            "fold": 0.5632,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "splinter-rotunda-medium",
+        "family": "fibre-knot",
+        "grade": "medium",
+        "label": "断束环庭",
+        "profile": "splinter-rotunda",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 136,
+        "emission": 0.55,
+        "motion_period": 18,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 385,
+            "y": 260,
+            "rotation": -0.6,
+            "length": 360,
+            "width": 240,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.58,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 760,
+            "y": 340,
+            "rotation": 1.3,
+            "length": 330,
+            "width": 220,
+            "height": 60,
+            "thickness": 13,
+            "fold": 0.54,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.72,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 500,
+            "y": 600,
+            "rotation": 3,
+            "length": 410,
+            "width": 230,
+            "height": 90,
+            "thickness": 18,
+            "fold": 0.64,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "splinter-rotunda-severe",
+        "family": "fibre-knot",
+        "grade": "severe",
+        "label": "断束环庭",
+        "profile": "splinter-rotunda",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 385,
+            "y": 260,
+            "rotation": -0.6,
+            "length": 360,
+            "width": 240,
+            "height": 78,
+            "thickness": 16,
+            "fold": 0.638,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.7260000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 2,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 760,
+            "y": 340,
+            "rotation": 1.3,
+            "length": 330,
+            "width": 220,
+            "height": 60,
+            "thickness": 13,
+            "fold": 0.5940000000000001,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.792,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          },
+          {
+            "id": 3,
+            "family": "fibre-knot",
+            "role": "solid",
+            "x": 500,
+            "y": 600,
+            "rotation": 3,
+            "length": 410,
+            "width": 230,
+            "height": 90,
+            "thickness": 18,
+            "fold": 0.7040000000000001,
+            "branches": 4,
+            "opening": 0.9,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "rib-vault"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "quilted-scars",
+    "label": "缀膜伤原",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "quilted-scars",
+      "label": "缀膜伤原",
+      "description": "缀膜伤原的原生材料与完整搜撤地段",
+      "material": "membrane",
+      "surface": {
+        "substrate": "membrane",
+        "coating": "membrane",
+        "organization": "patches",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "quilted-scars-low",
+        "family": "membrane-rim",
+        "grade": "low",
+        "label": "缀膜伤原",
+        "profile": "quilted-scars",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 500,
+            "y": 350,
+            "rotation": 0.5,
+            "length": 310,
+            "width": 140,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.2112,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.528,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 600,
+            "y": 490,
+            "rotation": -0.55,
+            "length": 300,
+            "width": 150,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.2288,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.5808,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 360,
+            "y": 280,
+            "rotation": 0.4,
+            "length": 230,
+            "width": 160,
+            "height": 30,
+            "thickness": 9,
+            "fold": 0.2816,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 4,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 650,
+            "y": 280,
+            "rotation": 2.2,
+            "length": 290,
+            "width": 180,
+            "height": 48,
+            "thickness": 12,
+            "fold": 0.35200000000000004,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 5,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 760,
+            "y": 535,
+            "rotation": -0.8,
+            "length": 250,
+            "width": 180,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.2992,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 6,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 435,
+            "y": 560,
+            "rotation": 0.7,
+            "length": 320,
+            "width": 190,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.33440000000000003,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quilted-scars-medium",
+        "family": "membrane-rim",
+        "grade": "medium",
+        "label": "缀膜伤原",
+        "profile": "quilted-scars",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 500,
+            "y": 350,
+            "rotation": 0.5,
+            "length": 310,
+            "width": 140,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.24,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.6,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 600,
+            "y": 490,
+            "rotation": -0.55,
+            "length": 300,
+            "width": 150,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.26,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 360,
+            "y": 280,
+            "rotation": 0.4,
+            "length": 230,
+            "width": 160,
+            "height": 30,
+            "thickness": 9,
+            "fold": 0.32,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 4,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 650,
+            "y": 280,
+            "rotation": 2.2,
+            "length": 290,
+            "width": 180,
+            "height": 48,
+            "thickness": 12,
+            "fold": 0.4,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 5,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 760,
+            "y": 535,
+            "rotation": -0.8,
+            "length": 250,
+            "width": 180,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.34,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 6,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 435,
+            "y": 560,
+            "rotation": 0.7,
+            "length": 320,
+            "width": 190,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.38,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "quilted-scars-severe",
+        "family": "membrane-rim",
+        "grade": "severe",
+        "label": "缀膜伤原",
+        "profile": "quilted-scars",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.1,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 500,
+            "y": 350,
+            "rotation": 0.5,
+            "length": 310,
+            "width": 140,
+            "height": 4,
+            "thickness": 2,
+            "fold": 0.264,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "membrane-rim",
+            "role": "relief",
+            "x": 600,
+            "y": 490,
+            "rotation": -0.55,
+            "length": 300,
+            "width": 150,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.28600000000000003,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.7260000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 3,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 360,
+            "y": 280,
+            "rotation": 0.4,
+            "length": 230,
+            "width": 160,
+            "height": 30,
+            "thickness": 9,
+            "fold": 0.35200000000000004,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 4,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 650,
+            "y": 280,
+            "rotation": 2.2,
+            "length": 290,
+            "width": 180,
+            "height": 48,
+            "thickness": 12,
+            "fold": 0.44000000000000006,
+            "branches": 3,
+            "opening": 0.92,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 5,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 760,
+            "y": 535,
+            "rotation": -0.8,
+            "length": 250,
+            "width": 180,
+            "height": 36,
+            "thickness": 10,
+            "fold": 0.37400000000000005,
+            "branches": 3,
+            "opening": 0.9,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 6,
+            "family": "membrane-rim",
+            "role": "solid",
+            "x": 435,
+            "y": 560,
+            "rotation": 0.7,
+            "length": 320,
+            "width": 190,
+            "height": 42,
+            "thickness": 11,
+            "fold": 0.41800000000000004,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "silt-colonnade",
+    "label": "淤堆柱廊",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "silt-colonnade",
+      "label": "淤堆柱廊",
+      "description": "淤堆柱廊的原生材料与完整搜撤地段",
+      "material": "granular",
+      "surface": {
+        "substrate": "granular",
+        "coating": "granular",
+        "organization": "clusters",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 2302755,
+        "floor": 3421236,
+        "floorLight": 4539717,
+        "materialDark": 3158064,
+        "materialMid": 5855577,
+        "materialLight": 7895160,
+        "faceLight": 10066329,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 3421236,
+        "groundLight": 4539717,
+        "groundDark": 2302755,
+        "wall": 5855577,
+        "wallLight": 10066329,
+        "wallDark": 3158064
+      }
+    },
+    "definitions": [
+      {
+        "id": "silt-colonnade-low",
+        "family": "granular-ridge",
+        "grade": "low",
+        "label": "淤堆柱廊",
+        "profile": "silt-colonnade",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 112,
+        "emission": 0.35,
+        "motion_period": 19,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 355,
+            "y": 260,
+            "rotation": 0.3,
+            "length": 260,
+            "width": 220,
+            "height": 100,
+            "thickness": 17,
+            "fold": 0.5456,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 640,
+            "y": 515,
+            "rotation": 0.8,
+            "length": 290,
+            "width": 250,
+            "height": 115,
+            "thickness": 19,
+            "fold": 0.5984,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.616,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 3,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 850,
+            "y": 250,
+            "rotation": 2.5,
+            "length": 230,
+            "width": 230,
+            "height": 82,
+            "thickness": 15,
+            "fold": 0.49280000000000007,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.5808,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "silt-colonnade-medium",
+        "family": "granular-ridge",
+        "grade": "medium",
+        "label": "淤堆柱廊",
+        "profile": "silt-colonnade",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 132,
+        "emission": 0.55,
+        "motion_period": 16,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 355,
+            "y": 260,
+            "rotation": 0.3,
+            "length": 260,
+            "width": 220,
+            "height": 100,
+            "thickness": 17,
+            "fold": 0.62,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 640,
+            "y": 515,
+            "rotation": 0.8,
+            "length": 290,
+            "width": 250,
+            "height": 115,
+            "thickness": 19,
+            "fold": 0.68,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 3,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 850,
+            "y": 250,
+            "rotation": 2.5,
+            "length": 230,
+            "width": 230,
+            "height": 82,
+            "thickness": 15,
+            "fold": 0.56,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.66,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "silt-colonnade-severe",
+        "family": "granular-ridge",
+        "grade": "severe",
+        "label": "淤堆柱廊",
+        "profile": "silt-colonnade",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": 0.42,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 355,
+            "y": 260,
+            "rotation": 0.3,
+            "length": 260,
+            "width": 220,
+            "height": 100,
+            "thickness": 17,
+            "fold": 0.682,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 2,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 640,
+            "y": 515,
+            "rotation": 0.8,
+            "length": 290,
+            "width": 250,
+            "height": 115,
+            "thickness": 19,
+            "fold": 0.7480000000000001,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.77,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          },
+          {
+            "id": 3,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 850,
+            "y": 250,
+            "rotation": 2.5,
+            "length": 230,
+            "width": 230,
+            "height": 82,
+            "thickness": 15,
+            "fold": 0.6160000000000001,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7260000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "monolith-buttress"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 712,
+              "y": 392
+            },
+            {
+              "x": 824,
+              "y": 424
+            },
+            {
+              "x": 864,
+              "y": 480
+            },
+            {
+              "x": 800,
+              "y": 520
+            },
+            {
+              "x": 712,
+              "y": 480
+            },
+            {
+              "x": 664,
+              "y": 504
+            },
+            {
+              "x": 616,
+              "y": 472
+            }
+          ],
+          [
+            {
+              "x": 176,
+              "y": 176
+            },
+            {
+              "x": 256,
+              "y": 152
+            },
+            {
+              "x": 344,
+              "y": 184
+            },
+            {
+              "x": 352,
+              "y": 224
+            },
+            {
+              "x": 288,
+              "y": 248
+            },
+            {
+              "x": 224,
+              "y": 232
+            },
+            {
+              "x": 160,
+              "y": 216
+            }
+          ],
+          [
+            {
+              "x": 384,
+              "y": 560
+            },
+            {
+              "x": 456,
+              "y": 544
+            },
+            {
+              "x": 528,
+              "y": 576
+            },
+            {
+              "x": 520,
+              "y": 612
+            },
+            {
+              "x": 448,
+              "y": 620
+            },
+            {
+              "x": 392,
+              "y": 592
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "id": "shell-causeway",
+    "label": "壳片斜脊",
+    "iteration": 8,
+    "enabled": false,
+    "profile": {
+      "id": "shell-causeway",
+      "label": "壳片斜脊",
+      "description": "壳片斜脊的原生材料与完整搜撤地段",
+      "material": "glaze",
+      "surface": {
+        "substrate": "glaze",
+        "coating": "glaze",
+        "organization": "bands",
+        "coverage": 0.54,
+        "wear": 0.57,
+        "deposits": 0.55,
+        "scale": 1.2,
+        "relief": 0.5,
+        "contrast": 0.72,
+        "regionScale": 1.4,
+        "quietness": 0.55,
+        "formScale": 1.6,
+        "fragmentation": 0.42,
+        "accentCoverage": 0.11
+      },
+      "palette": {
+        "void": 1448997,
+        "shadow": 2699322,
+        "floorDeep": 7367527,
+        "floor": 11182476,
+        "floorLight": 12564125,
+        "materialDark": 4868945,
+        "materialMid": 7695973,
+        "materialLight": 9799795,
+        "faceLight": 13813675,
+        "accentDim": 6443617,
+        "accent": 8809848,
+        "accentLight": 11639443,
+        "peak": 15590084,
+        "actorDark": 2369326,
+        "actorMid": 4936539,
+        "actorLight": 12750939,
+        "ground": 11182476,
+        "groundLight": 12564125,
+        "groundDark": 7367527,
+        "wall": 7695973,
+        "wallLight": 13813675,
+        "wallDark": 4868945
+      }
+    },
+    "definitions": [
+      {
+        "id": "shell-causeway-low",
+        "family": "broken-shell",
+        "grade": "low",
+        "label": "壳片斜脊",
+        "profile": "shell-causeway",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 108,
+        "emission": 0.35,
+        "motion_period": 24,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "relief",
+            "x": 590,
+            "y": 430,
+            "rotation": 0.65,
+            "length": 360,
+            "width": 160,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.2288,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.5456,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 440,
+            "y": 300,
+            "rotation": -0.9,
+            "length": 420,
+            "width": 300,
+            "height": 72,
+            "thickness": 16,
+            "fold": 0.4752,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.5984,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 800,
+            "y": 500,
+            "rotation": 2.2,
+            "length": 390,
+            "width": 270,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.4224,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.5632,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 668,
+              "y": 424
+            },
+            {
+              "x": 704,
+              "y": 416
+            },
+            {
+              "x": 752,
+              "y": 440
+            },
+            {
+              "x": 744,
+              "y": 464
+            },
+            {
+              "x": 692,
+              "y": 454
+            }
+          ]
+        ]
+      },
+      {
+        "id": "shell-causeway-medium",
+        "family": "broken-shell",
+        "grade": "medium",
+        "label": "壳片斜脊",
+        "profile": "shell-causeway",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 134,
+        "emission": 0.55,
+        "motion_period": 20,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "relief",
+            "x": 590,
+            "y": 430,
+            "rotation": 0.65,
+            "length": 360,
+            "width": 160,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.26,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.62,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 440,
+            "y": 300,
+            "rotation": -0.9,
+            "length": 420,
+            "width": 300,
+            "height": 72,
+            "thickness": 16,
+            "fold": 0.54,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.68,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 800,
+            "y": 500,
+            "rotation": 2.2,
+            "length": 390,
+            "width": 270,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.48,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.64,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 632,
+              "y": 424
+            },
+            {
+              "x": 696,
+              "y": 400
+            },
+            {
+              "x": 776,
+              "y": 424
+            },
+            {
+              "x": 804,
+              "y": 464
+            },
+            {
+              "x": 764,
+              "y": 488
+            },
+            {
+              "x": 700,
+              "y": 460
+            },
+            {
+              "x": 656,
+              "y": 464
+            }
+          ],
+          [
+            {
+              "x": 216,
+              "y": 200
+            },
+            {
+              "x": 288,
+              "y": 176
+            },
+            {
+              "x": 332,
+              "y": 200
+            },
+            {
+              "x": 316,
+              "y": 232
+            },
+            {
+              "x": 248,
+              "y": 240
+            }
+          ]
+        ]
+      },
+      {
+        "id": "shell-causeway-severe",
+        "family": "broken-shell",
+        "grade": "severe",
+        "label": "壳片斜脊",
+        "profile": "shell-causeway",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 155,
+        "emission": 0.72,
+        "motion_period": 17,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "relief",
+            "x": 590,
+            "y": 430,
+            "rotation": 0.65,
+            "length": 360,
+            "width": 160,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.28600000000000003,
+            "branches": 3,
+            "opening": 0.94,
+            "distortion": 0.682,
+            "constructionVersion": 3,
+            "shapeProfile": "lobed-cushion"
+          },
+          {
+            "id": 2,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 440,
+            "y": 300,
+            "rotation": -0.9,
+            "length": 420,
+            "width": 300,
+            "height": 72,
+            "thickness": 16,
+            "fold": 0.5940000000000001,
+            "branches": 2,
+            "opening": 0.94,
+            "distortion": 0.7480000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
+          },
+          {
+            "id": 3,
+            "family": "broken-shell",
+            "role": "solid",
+            "x": 800,
+            "y": 500,
+            "rotation": 2.2,
+            "length": 390,
+            "width": 270,
+            "height": 58,
+            "thickness": 14,
+            "fold": 0.528,
+            "branches": 2,
+            "opening": 0.92,
+            "distortion": 0.7040000000000001,
+            "constructionVersion": 3,
+            "shapeProfile": "cellular-shell"
           }
         ],
         "erosion": [

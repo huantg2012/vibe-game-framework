@@ -26,6 +26,7 @@ import { validateRiftRecoveryState } from '@/systems/rift-recovery-state';
 import { TileGrid } from '@/systems/tile-grid';
 import { GAME_CONSTANTS } from '@/config/constants';
 import type { InventoryState } from '@/types/inventory-types';
+import type { RiftWorldHistory } from '@/types/rift-world-history';
 import { validRiftCheckpoint, validRiftDeparture, type RiftCheckpoint } from '@/types/rift-checkpoint';
 
 const worlds = new WeakMap<GeneratedRiftLayout, WorldProductionMap>();
@@ -37,7 +38,7 @@ const signatures = new WeakMap<GeneratedRiftLayout, string>();
 const hostManifests = new WeakMap<GeneratedRiftLayout, RiftHostManifest>();
 const generationClient = new RiftGenerationClient();
 let requiredPreparedKey: string | null = null;
-export interface ProceduralPreparationOptions { readonly signal?: AbortSignal; readonly pollutionGrade?: PollutionGrade }
+export interface ProceduralPreparationOptions { readonly signal?: AbortSignal; readonly pollutionGrade?: PollutionGrade; readonly worldHistory?: RiftWorldHistory }
 export interface ProceduralPreparationMetrics {
   readonly generationMs: number;
   readonly elapsedMs: number;
@@ -120,7 +121,7 @@ async function prepareGeneratedLayout(input: RiftGenerationInput, options: Proce
 export async function prepareProceduralDeparture(options: ProceduralPreparationOptions = {}): Promise<RiftCheckpoint['identity']> {
   throwIfCancelled(options.signal);
   const values = new Uint32Array(1); crypto.getRandomValues(values);
-  const generation = selectR100ProductionRecipe(values[0]!, options.pollutionGrade ?? 'low');
+  const generation = selectR100ProductionRecipe(values[0]!, options.pollutionGrade ?? 'low', options.worldHistory);
   const identity = await prepareGeneratedLayout({ kind: 'departure', generation }, options);
   return { ...identity, catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 };
 }
@@ -149,9 +150,9 @@ export function withPreparedProceduralRecovery<T>(identity: RiftCheckpoint['iden
   requiredPreparedKey = layoutKey(identity);
   try { return action(); } finally { requiredPreparedKey = previous; }
 }
-export function createProceduralDeparture(pollutionGrade: PollutionGrade = 'low'): RiftCheckpoint['identity'] {
+export function createProceduralDeparture(pollutionGrade: PollutionGrade = 'low', worldHistory?: RiftWorldHistory): RiftCheckpoint['identity'] {
   const values = new Uint32Array(1); crypto.getRandomValues(values);
-  const layout = rememberWorld(selectR100ProductionRecipe(values[0]!, pollutionGrade));
+  const layout = rememberWorld(selectR100ProductionRecipe(values[0]!, pollutionGrade, worldHistory));
   const identity = proceduralRiftIdentity(layout);
   layouts.clear(); layouts.set(layoutKey(identity), layout);
   return { ...identity, catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2 };

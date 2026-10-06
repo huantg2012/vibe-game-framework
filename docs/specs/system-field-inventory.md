@@ -3,14 +3,24 @@ status: APPROVED-FOR-IMPLEMENTATION
 phase: IMPLEMENTING / USER-REVIEW-PENDING
 created-by: director
 created-date: 2026-09-08
-last-modified-date: 2026-10-04
-last-modified-by: design（R100 P13成长价格与既购兼容边界；原异步恢复合同保留）
+last-modified-date: 2026-10-05
+last-modified-by: code（R100 I09近期世界与出发原子提交；既有成长与恢复合同保留）
 interfaces-with: [system-player-weapons, system-growth-tide, system-chaos-scavenge-extract, system-combat, system-survival-attributes, system-map-generation]
-exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, inventoryStore.reconcileExpandedToolSlots(previousSlotCount), SaveLoadSnapshot, saveManager.captureLoadSnapshot(), saveManager.matchesLoadSnapshot(snapshot), loadExpedition]
+exposes: [ItemLocation, EquipmentLifecycle, CarryBudget, InventoryTransaction, RunInventoryLedger, RiftWorldHistory, inventoryStore.getRiftWorldHistory(), inventoryStore.reconcileExpandedToolSlots(previousSlotCount), SaveLoadSnapshot, saveManager.captureLoadSnapshot(), saveManager.matchesLoadSnapshot(snapshot), loadExpedition]
 interface-changed: true
 note: DEC-142统一供奉与有限使用；DEC-158中断政策在迭代27接入正式随机2D。旧active或损坏世界包只在基地/库存有效且玩家明确确认后安全弃局；不删除全档。
 ---
 
+
+## R100 I09 · 近期世界与正式出发
+
+`InventoryState.version:4`增加`riftWorldHistory:{version:1,visits:[{worldId,grade}]}`，按旧到新记录最近8次正式已提交出发，三个等级共用。记录只有已经承诺的目的地，不保存或展示未来抽样结果；选择等级时不生成具体世界。当前20世界颜色与形态人审基线仍为2026-10-05的`f1c4158b`；本次选择策略不改其美术资格。
+
+策略由`data/rift-world-selection.csv`编译，所有当前enabled世界初始等权。同世界最近一次的权重从0.2线性恢复到第8个位置的1；近邻从0.55恢复到1，多个历史影响取最强的一项，不连乘、不排除。近邻按原生物质、混合物质、显式形态、地表组织、实体数、平均厚度和长宽比的对称距离判断，阈值0.28；这只是降低相似场所连遇的抽样提示，不是视觉差异或质量认定。选择与CSV行顺序无关，未知的退休世界记录仍可加载、只是不参与近邻比较。
+
+`beginRun(runId,versions,worldVisit?)`在同一库存候选里追加世界，正式场景将该候选与cycle、被动消费及冻结的`riftDeparture`一并保存。只有持久化成功才交接世界。准备中取消、Worker失败、旧档被替换或装备校验失败不追加；拒写后保留同一候选并锁住新出发，重试只重写该候选，不再抽样或追加。冷续原世界、已结算归来与DEV隔离入口均不追加；死亡、撤离及安全弃局保留实际已出发历史，新档重置清空。
+
+合法旧库存schema1/2/3没有历史时迁为空，不从cycle或在途身份补造记录。基地旧档可立即持久化迁移；在途旧档保持原存档字节到下一个完整事务，冻结generation不改变。新schema4缺历史、非法等级/ID、超长历史或未知历史版本均拒绝加载，所有领域状态和原字节保持。存档不要求历史ID仍在当前库，以允许世界退休后冷续。
 
 ## 迭代29 R3 · 线性扩槽、容量权益与被动迁移
 
@@ -154,7 +164,7 @@ Tab/Esc收起，Esc先取消交换草稿；移动意图退出并交回移动，�
 
 ## 8. Schema、迁移与验收
 
-外层SaveDataV2保留；当前catalog库存内部schema为3（迭代19首次加入武器生命周期时为2）。旧inventory v1武器缺生命周期时，一次性迁为就绪且满初始余次，保留ID/位置/装备/账本；这是兼容补偿，重复读取不补满。已有污染物供奉进度/剩余次数原样保留。含生命周期合同的新v2/v3武器缺字段、非法次数、未知定义或引用矛盾应拒绝加载，不以默认值暗自解锁。
+外层SaveDataV2保留；当前库存内部schema为4（schema3为catalog版本）（迭代19首次加入武器生命周期时为2）。旧inventory v1武器缺生命周期时，一次性迁为就绪且满初始余次，保留ID/位置/装备/账本；这是兼容补偿，重复读取不补满。已有污染物供奉进度/剩余次数原样保留。含生命周期合同的新v2/v3/v4武器缺字段、非法次数、未知定义或引用矛盾应拒绝加载，不以默认值暗自解锁。
 
 领域统一入口：getEquipmentLifecycle、getOfferingItems、slotOffering、finishOfferingImpact、prepareWeapon/Tool、beginRun、consumeEquipmentUse、reveal/take/drop/exchange/settleRun。旧污染物服务仅投影/派生，不另存第二套实例。
 

@@ -193,6 +193,7 @@ await check('admitted original checkpoint routes the saved world without rewriti
   assert.equal(routes.at(-1)?.[0], 'RiftScene');
   assert.deepEqual((routes.at(-1)?.[1] as { recovery: { checkpoint: unknown } }).recovery.checkpoint, fixture.checkpoint);
   assert.equal(records.get(key), original);
+  assert.deepEqual(inventoryStore.getRiftWorldHistory(), { version: 1, visits: [] }, 'old active identity does not invent a historical visit');
 });
 
 await check('SaveManager expected snapshot rejects replacement even at the final synchronous boundary', () => {
@@ -235,16 +236,27 @@ await check('actual departure retains one frozen transaction and identity across
   assert(surfaceHandles.size > 0, 'failed write retains the already prepared native scene for exact retry');
   assert.equal(records.get(key), departureBytes, 'failed setItem retains the old record');
   const runId = inventoryStore.getRun()!.id, cycle = gameState.getCycle(), workers = ControlledWorker.all.length;
+  const history = inventoryStore.getRiftWorldHistory();
+  assert.equal(history.visits.length, 1, 'beginRun stages the selected world exactly once');
+  assert.deepEqual(history.visits[0], {
+    worldId: worker.request.input.kind === 'departure' && worker.request.input.generation.version === 3
+      ? worker.request.input.generation.package.id.slice('r100-'.length) : null,
+    grade: worker.request.input.kind === 'departure' && worker.request.input.generation.version === 3
+      ? worker.request.input.generation.package.grade : null,
+  });
   gate.transitionToRift(); assert.equal(ControlledWorker.all.length, workers);
   assert.equal(inventoryStore.getRun()!.id, runId);
   failWrites = false; retry();
   assert.equal(finished, 1); assert.equal(inventoryStore.getRun()!.id, runId); assert.equal(gameState.getCycle(), cycle);
   assert.equal(saveManager.peekRiftDeparture()?.runId, runId);
+  assert.deepEqual(inventoryStore.getRiftWorldHistory(), history, 'retry never appends a second history visit');
+  assert.deepEqual((JSON.parse(records.get(key)!) as SaveDataV2).inventory.riftWorldHistory, history);
   assert(surfaceHandles.size > 0, 'successful retry retains resources until actual scene handoff');
 });
 
 // Start from an actual v3 departure saved above, rather than a mocked preparation.
 const preparedDepartureBytes = records.get(key)!;
+const preparedHistory = inventoryStore.getRiftWorldHistory();
 await check('record replacement after native GPU allocation rejects handoff and releases the abandoned scene', async () => {
   const atStart = facts(), routeCount = routes.length, replacement = JSON.stringify(base);
   afterSurfaceAllocation = () => records.set(key, replacement);
@@ -261,6 +273,7 @@ await check('scene-start failure retains the durable departure but releases its 
   assert.equal(await loadExpedition(brokenHost, undefined, undefined, options), 'failed');
   assert.equal(records.get(key), preparedDepartureBytes); assert.equal(surfaceHandles.size, 0);
   assert.equal(afterSurfaceAllocation, undefined);
+  assert.deepEqual(inventoryStore.getRiftWorldHistory(), preparedHistory, 'admitted cold departure never recounts the visit');
   assert.equal(brokenHost.events.listenerCount('shutdown'), 0); assert.equal(brokenHost.events.listenerCount('destroy'), 0);
 });
 

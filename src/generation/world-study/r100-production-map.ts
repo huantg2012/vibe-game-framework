@@ -1,3 +1,4 @@
+import { createR100ProductionMap as createRevision4Map } from '../legacy-r100-v4/executor.js';
 import { createR100ProductionMap as createRevision3Map } from '../legacy-r100-v3/executor.js';
 import { mix32 } from '@/generation/seed-fork';
 /** V3 generation. A failed seed fails that exact frozen trip; it never changes grade. */
@@ -13,6 +14,7 @@ import type { WorldProductionMap } from './production-map';
 export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldProductionMap {
   if (recipe.package?.algorithmRevision === 1 || recipe.package?.algorithmRevision === 2) return createFrozenR100ProductionMap(recipe);
   if (recipe.package?.algorithmRevision === 3) return createRevision3Map(recipe);
+  if (recipe.package?.algorithmRevision === 4) return createRevision4Map(recipe);
   if (!validR100ProductionRecipe(recipe)) throw new Error('Invalid or unavailable native world package');
   const rejected: { seed: number; reason: string }[] = [];
   for (let attempt = 0; attempt < 8; attempt++) {
@@ -21,7 +23,7 @@ export function createR100ProductionMap(recipe: WorldProductionRecipeV3): WorldP
   const master = createMasterWorld(recipe.nativeDefinition, seed,
     { grade: recipe.gradeDefinition, profile: recipe.profile });
   const deployed = deployR100Expedition(master, recipe.contentDefinition), layout = deployed.layout;
-  const native = serializeR100MasterWorld({ ...master, appearance: recipe.appearance, layout, diagnostics: { ...master.diagnostics,
+  const native = serializeR100MasterWorld({ ...master, algorithmRevision: 5, appearance: recipe.appearance, layout, diagnostics: { ...master.diagnostics,
     qualification: 'v3-production-candidate', expedition: deployed.diagnostics } }, recipe.gradeDefinition, recipe.package.dependencyHash);
   return { sample: master.sample, layout, hostTileMap: master.hostTileMap, native,
     metadata: { world: recipe.package.id, space: recipe.nativeDefinition.id, contentFragmentTypeId: recipe.contentFragmentTypeId,

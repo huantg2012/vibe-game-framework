@@ -84,6 +84,9 @@ try {
       const choice = page.locator(`[data-departure-grade="${grade}"]`);
       await choice.waitFor(); await choice.click();
       assert.equal(await choice.getAttribute('aria-pressed'), 'true');
+      result.historyBeforeDeparture = await page.evaluate(async () =>
+        (await import('/src/systems/inventory-store.ts')).inventoryStore.getRiftWorldHistory());
+      assert.deepEqual(result.historyBeforeDeparture, { version: 1, visits: [] }, 'fresh formal coverage starts with empty history');
       if (world) {
         result.controlledSeed = await page.evaluate(async ({ world, grade }) => {
           const { selectR100ProductionRecipe } = await import('/src/generation/world-study/r100-package.ts');
@@ -134,6 +137,12 @@ try {
       const before = await page.evaluate(() => JSON.parse(localStorage.getItem('coh-save-v1')));
       result.identity = before.riftCheckpoint?.identity ?? before.riftDeparture?.identity;
       assert.equal(result.identity.generation.version, 3);
+      assert.equal(result.identity.generation.package.algorithmRevision, 5);
+      assert.equal(before.inventory.version, 4);
+      result.committedWorldHistory = before.inventory.riftWorldHistory;
+      assert.deepEqual(result.committedWorldHistory, { version: 1, visits: [{
+        worldId: result.identity.generation.package.id.slice('r100-'.length), grade,
+      }] }, 'exactly one official departure records its selected world and grade');
       assert.equal(result.identity.generation.package.grade, grade);
       if (world) {
         assert.equal(result.identity.generation.package.id, `r100-${world}`);
@@ -169,6 +178,8 @@ try {
         assert(after.riftCheckpoint.elapsedMs >= before.riftCheckpoint.elapsedMs);
         result.bodyGeometry = { version: 1, fullBodyCheckpointAdmitted: true, coldBodyPositionPreserved: true };
       }
+      assert.deepEqual(after.inventory.riftWorldHistory, result.committedWorldHistory, 'cold recovery preserves the entire recent history without another visit');
+      result.worldHistoryPreserved = true;
       result.coldIdentityPreserved = true;
       result.performanceBudget = { maximumContinuousMs: 50, entryPass: result.entryLongTasks.length === 0,
         restorePass: result.restoreLongTasks.length === 0, sourceAuditDeferred: deferAudit, serialBrowserCases: true };

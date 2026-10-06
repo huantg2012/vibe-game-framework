@@ -6,7 +6,9 @@ const {chromium}=await import(process.env.PLAYWRIGHT_MODULE??'/Users/yilungao/.c
 const out=path.resolve(process.env.QA_OUTPUT_DIR??'docs/qa/artifacts/r100-i06/lifecycle');fs.mkdirSync(out,{recursive:true});
 const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',args:['--enable-precise-memory-info']});
 const context=await browser.newContext({viewport:{width:1440,height:1000}}),page=await context.newPage(),cdp=await context.newCDPSession(page);
-const report={scope:'One persistent Phaser Game; six source-family warmups, ten identical and twelve mixed native reconstructions; two actual GC calls before each retained sample. Weak references never retain scene objects. No GPU driver byte/RSS claim; retained WebGL object/context ownership and main-isolate memory only.',samples:[],errors:[]};
+const repetitions=Number(process.env.QA_REBUILDS??10);
+const report={scope:'One persistent Phaser Game; source-family warmups then configured identical and mixed native reconstructions. Two actual GC calls before each retained sample. Weak references never retain scene objects. No GPU driver byte/RSS claim; retained WebGL object/context ownership and main-isolate memory only.',samples:[],mixedCoverage:[],errors:[]};
+assert(Number.isInteger(repetitions)&&repetitions>=1&&repetitions<=100,'bounded identical rebuild count');
 page.on('pageerror',e=>report.errors.push(String(e)));
 await page.addInitScript(()=>{
  const rows=[],ids=new WeakMap();
@@ -40,10 +42,17 @@ try{
  await page.waitForFunction(()=>window.__r100Gym?.getState().runtime.running,null,{timeout:60000});
  for(const world of ['ash-strata','crystal-fibre','ivory-basin','cinder-ridge','pallid-membrane','silt-gel'])await select(world,'severe',20261004);
  await select('ash-strata','severe',20261004);await sample('warmed-baseline');
- for(let n=0;n<10;n++){await select('ash-strata','severe',20261004);await sample(`identical-${n+1}`);}
+ for(let n=0;n<repetitions;n++){await select('ash-strata','severe',20261004);await sample(`identical-${n+1}`);}
  const worlds=await page.locator('#world option').evaluateAll(options=>options.map(o=>o.value));
- for(let n=0;n<12;n++){await select(worlds[(n+6)%worlds.length],['low','medium','severe'][n%3],20261004+n);}
- await select('ash-strata','severe',20261004);await sample('after-mixed-12');
+ const mixed=process.env.QA_MIXED_REBUILDS===undefined?worlds.length*3:Number(process.env.QA_MIXED_REBUILDS);
+ assert(worlds.length>0&&Number.isInteger(mixed)&&mixed>=1&&mixed<=worlds.length*9,'bounded mixed rebuild count');
+ report.catalogWorldIds=worlds;report.repetitions=repetitions;report.mixedRebuilds=mixed;
+ for(let n=0;n<mixed;n++){
+  const world=worlds[n%worlds.length],grade=['low','medium','severe'][Math.floor(n/worlds.length)%3],seed=20261004+n;
+  await select(world,grade,seed);report.mixedCoverage.push({world,grade,seed});
+ }
+ if(mixed>=worlds.length*3)assert.equal(new Set(report.mixedCoverage.map(row=>`${row.world}/${row.grade}`)).size,worlds.length*3,'every catalog world is rebuilt at all three grades');
+ await select('ash-strata','severe',20261004);await sample(`after-mixed-${mixed}`);
  const baseline=report.samples[0];
  for(const row of report.samples){
   assert.equal(row.objects.WebGL2.active,baseline.objects.WebGL2.active,'no abandoned prepared or scene GL contexts');

@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 const source = 'data/rift-native-worlds.csv', text = readFileSync(source, 'utf8');
 const [headers, ...lines] = text.trim().split(/\r?\n/).map(line => line.split(','));
 const families = ['folded-slab', 'fibre-knot', 'broken-shell', 'granular-ridge', 'membrane-rim', 'gel-flow'];
+const shapeProfiles = ['rib-vault', 'pleated-sheet', 'cellular-shell', 'lobed-cushion', 'monolith-buttress', 'terrace-shelf'];
 const materials = ['strata', 'crystal', 'glaze', 'granular', 'membrane', 'gel'];
 const rawMasters = readFileSync('src/generation/world-study/r100-generated-scenes.ts', 'utf8');
 const masters = JSON.parse(rawMasters.slice(rawMasters.indexOf('export const MASTER_SCENES = ') + 'export const MASTER_SCENES = '.length).replace(/ as const;\s*$/, ''));
@@ -13,9 +14,9 @@ const records = lines.map((values, index) => {
   if (values.length !== headers.length) throw new Error(`Invalid native world row ${index + 2}`);
   const row = Object.fromEntries(headers.map((key, at) => [key, values[at]]));
   const constructionVersion = Number(row.construction_version ?? 1);
-  if (![1, 2].includes(constructionVersion)) throw new Error('Invalid native construction version');
+  if (![1, 2, 3].includes(constructionVersion)) throw new Error('Invalid native construction version');
   const familyIndex = families.indexOf(row.family);
-  if (!/^[a-z][a-z0-9-]+$/.test(row.world_id) || !row.label || familyIndex < 0 || !['3', '4', '5', '6'].includes(row.iteration)
+  if (!/^[a-z][a-z0-9-]+$/.test(row.world_id) || !row.label || familyIndex < 0 || !['3', '4', '5', '6', '7', '8'].includes(row.iteration)
     || !['true', 'false'].includes(row.enabled) || !['bands', 'clusters', 'patches'].includes(row.organization)) throw new Error('Invalid world identity/organization');
   const base = profiles.find(profile => profile.id === row.base_profile);
   if (!base) throw new Error(`Missing base palette ${row.base_profile}`);
@@ -30,6 +31,9 @@ const records = lines.map((values, index) => {
       || numbers.some(number => !Number.isFinite(Number(number)))) throw new Error(`Invalid instance ${row.world_id}/${at}`);
     return { id: at + 1, family, role, ...Object.fromEntries(keys.map((key, i) => [key, Number(numbers[i])])) };
   }) : null;
+  const shapes = row.shape_profiles ? row.shape_profiles.split('|') : [];
+  if (constructionVersion === 3 ? !instances || shapes.length !== instances.length || shapes.some(profile => !shapeProfiles.includes(profile)) : shapes.length !== 0)
+    throw new Error(`Invalid shape profiles for native world ${row.world_id}`);
   const definitions = ['low','medium','severe'].map(grade => {
     const master = masters.find(definition => definition.family === (familyIndex < 3 ? row.family : ['folded-slab', 'broken-shell', 'fibre-knot'][familyIndex - 3]) && definition.grade === grade);
     if (!master) throw new Error('Missing approved geometry grammar');
@@ -38,7 +42,8 @@ const records = lines.map((values, index) => {
     return { ...master, id: `${row.world_id}-${grade}`, family: row.family, profile: row.world_id, label: row.label,
       cols: 32, rows: 24, spawn_x: 196, spawn_y: 588, exit_x: 148, exit_y: 664, search_x: 516, search_y: 580, enemy_x: 840, enemy_y: 172,
       axis: row.organization === 'bands' ? -.28 : row.organization === 'clusters' ? .42 : .1,
-      instances: instances.map(instance => ({ ...instance, ...(constructionVersion === 2 ? { constructionVersion: 2 } : {}), distortion: Math.min(constructionVersion === 2 ? 1 : .5, instance.distortion * amplitude),
+      instances: instances.map((instance, at) => ({ ...instance, ...(constructionVersion > 1 ? { constructionVersion } : {}),
+        ...(constructionVersion === 3 ? { shapeProfile: shapes[at] } : {}), distortion: Math.min(constructionVersion > 1 ? 1 : .5, instance.distortion * amplitude),
         fold: Math.min(.88, instance.fold * amplitude) })),
       erosion: master.erosion.map(polygon => polygon.map(point => ({ x: point.x + 48, y: point.y + 72 }))) };
   });

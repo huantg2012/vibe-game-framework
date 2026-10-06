@@ -7,12 +7,14 @@ import { getEquipmentLifecycle, type OfferingTransformResult } from '../types/in
 import { CONTAMINANT_DATA } from '../generated/contaminant-data';
 import { isContaminantQuality, supportsContaminantQuality } from './contaminant-quality';
 import { createRunPassiveReceipt, restoreRunPassiveReceipts } from './run-passive-receipt';
+import { appendRiftWorldVisit, emptyRiftWorldHistory, validRiftWorldHistory, validRiftWorldVisit,
+  type RiftWorldHistory, type RiftWorldVisit } from '@/types/rift-world-history';
 /** Single inventory owner. Pure and Phaser-free; all field mutations persist before publishing. */
 import type { Contaminant, Vector2 } from '../types/game-types';
 import type { InventoryEquipment, InventoryError, InventoryGroundValidation, InventoryItem, InventoryResult, InventoryRules, InventoryState, NewInventoryItem, RunInventoryLedger } from '../types/inventory-types';
 
 function emptyState(): InventoryState {
-  return { version: 3, items: [], equipment: { weaponId: null, toolIds: [], defenseIds: [] }, run: null, starterGranted: false, firstWeaponDiscovered: false, catalogTutorialRevealed: false, discoveredCatalogIds: [], offeringReceipts: {}, nextAcquiredOrdinal: 1 };
+  return { version: 4, items: [], equipment: { weaponId: null, toolIds: [], defenseIds: [] }, run: null, starterGranted: false, firstWeaponDiscovered: false, catalogTutorialRevealed: false, discoveredCatalogIds: [], offeringReceipts: {}, nextAcquiredOrdinal: 1, riftWorldHistory: emptyRiftWorldHistory() };
 }
 function copy<T>(value: T): T { return JSON.parse(JSON.stringify(value)) as T; }
 function fail(error: InventoryError): InventoryResult<never> { return { ok: false, error }; }
@@ -53,6 +55,7 @@ export class InventoryStore {
   getItem(id: string): InventoryItem | undefined { return this.state.items.find(item => item.id === id); }
   getEquipment(): Readonly<InventoryEquipment> { return this.state.equipment; }
   getRun(): Readonly<RunInventoryLedger> | null { return this.state.run; }
+  getRiftWorldHistory(): RiftWorldHistory { return copy(this.state.riftWorldHistory!); }
   isCatalogTutorialEligible():boolean { return !this.state.catalogTutorialRevealed; }
   getDiscoveredCatalogIds():readonly string[] { return this.state.discoveredCatalogIds??[]; }
   getCapacity(): number { return this.capacity(this.state); }
@@ -147,15 +150,17 @@ export class InventoryStore {
     this.publish(frame.before);
   }
   loadState(state: InventoryState): boolean {
-    if (!state || ![1, 2, 3].includes(state.version) || !Array.isArray(state.items) || !state.equipment || !Array.isArray(state.equipment.toolIds) || !Array.isArray(state.equipment.defenseIds)) return false;
+    if (!state || ![1, 2, 3, 4].includes(state.version) || !Array.isArray(state.items) || !state.equipment || !Array.isArray(state.equipment.toolIds) || !Array.isArray(state.equipment.defenseIds)) return false;
     state = copy(state);
+    if (state.version < 4 && state.riftWorldHistory === undefined) state.riftWorldHistory = emptyRiftWorldHistory();
+    if (!validRiftWorldHistory(state.riftWorldHistory)) return false;
     if (state.version === 1) {
       for (const item of state.items) if (item?.kind === 'weapon' && item.weapon && item.weapon.stage === undefined) {
         try { item.weapon = createWeaponInstance(item.weapon.definitionId, true, item.id); } catch { return false; }
       }
     }
     const legacySchema=state.version<3;
-    state.version = 3;
+    state.version = 4;
     state.catalogTutorialRevealed ??= legacySchema;
     if(typeof state.catalogTutorialRevealed!=='boolean')return false;
     state.discoveredCatalogIds ??= []; state.offeringReceipts ??= {}; state.nextAcquiredOrdinal ??= 1;
@@ -326,8 +331,9 @@ export class InventoryStore {
       return success(undefined);
     });
   }
-  beginRun(runId: string, versions?: {catalogVersion:'legacy-v1'|'contaminant-v1';lootAlgorithmVersion:1;combatRulesVersion:1|2}): InventoryResult {
+  beginRun(runId: string, versions?: {catalogVersion:'legacy-v1'|'contaminant-v1';lootAlgorithmVersion:1;combatRulesVersion:1|2}, worldVisit?: RiftWorldVisit): InventoryResult {
     return this.transaction(state => {
+      if (worldVisit !== undefined && !validRiftWorldVisit(worldVisit)) return fail('invalid-item');
       if (state.run?.id === runId) return fail('run-active');
       if (state.run?.status === 'active') return fail('run-active');
       if (!state.equipment.weaponId || !state.items.some(item => item.id === state.equipment.weaponId && item.kind === 'weapon' && item.weapon.stage === 'tool' && item.weapon.usesRemaining > 0)) return fail('missing-weapon');
@@ -356,6 +362,7 @@ export class InventoryStore {
         return receipt ? [receipt] : [];
       });
       state.run = { id: runId, status: 'active', carriedOutIds: state.items.filter(item => item.location.kind === 'carried').map(item => item.id), revealedNodes: {}, destroyedIds: [], ...versions, actionReceipts: {}, passiveReceipts };
+      if (worldVisit) state.riftWorldHistory = appendRiftWorldVisit(state.riftWorldHistory!, worldVisit);
       return success(undefined);
     });
   }

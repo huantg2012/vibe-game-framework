@@ -990,7 +990,8 @@ export class PurificationScene extends Phaser.Scene {
     let retainedForDeparture = false;
     try {
       installProceduralRiftRecovery();
-      const identity = await prepareProceduralDeparture({ signal: controller.signal, pollutionGrade: this.departureGrade });
+      const identity = await prepareProceduralDeparture({ signal: controller.signal, pollutionGrade: this.departureGrade,
+        worldHistory: inventoryStore.getRiftWorldHistory() });
       if (identity.generation?.version === 3) {
         const world = restoreProceduralWorld(identity)!;
         await prepareR100Presentation(identity.generation, { signal: controller.signal, world });
@@ -1027,8 +1028,11 @@ export class PurificationScene extends Phaser.Scene {
   private commitRiftDeparture(): boolean {
     let error: string | null = null;
     const saved = saveManager.commitWorldTransaction(() => {
+      const generation = this.productionDeparture?.generation;
       const begun = inventoryStore.beginRun(crypto.randomUUID(), this.productionDeparture ? {
         catalogVersion: 'contaminant-v1', lootAlgorithmVersion: 1, combatRulesVersion: 2,
+      } : undefined, generation?.version === 3 ? {
+        worldId: generation.package.id.slice('r100-'.length), grade: generation.package.grade,
       } : undefined);
       if (!begun.ok) { error = inventoryError(begun.error); return; }
       gameState.incrementCycle();

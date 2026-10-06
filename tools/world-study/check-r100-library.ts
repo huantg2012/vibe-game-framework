@@ -23,6 +23,14 @@ import { MasterMaterialAudio, validMasterMaterialAudioState } from '../../src/sy
 import { r100MaterialPressure } from '../../src/systems/r100-world/presentation-state';
 
 interface QualificationCase { world: string; grade: 'low' | 'medium' | 'severe'; seed: number; cohort: string }
+interface ResumeCaseList {
+  version: 1;
+  executorSha256: string;
+  expectedCases: number;
+  priorCases: string;
+  cases: QualificationCase[];
+}
+interface CaseRecord extends QualificationCase { ok: boolean; value?: ReturnType<typeof qualify>; error?: string; durationMs: number }
 function qualify(input: QualificationCase) {
  const world = R100_NATIVE_WORLDS.find(row => row.id === input.world)!, grade = input.grade, seed = input.seed;
  const graphic: unknown = new Proxy({}, { get: () => () => graphic });
@@ -39,7 +47,7 @@ function qualify(input: QualificationCase) {
     const a = enemy.patrol.waypoints[index - 1]!, b = enemy.patrol.waypoints[index]!;
     assert.equal(bodyDisplacementFraction(grid, { x: (a.col + .5) * 8, y: (a.row + .5) * 8 }, 10, 10, (b.col - a.col) * 8, (b.row - a.row) * 8), 1);
   }
-  assert.equal(requested.package.algorithmRevision, 4);
+  assert.equal(requested.package.algorithmRevision, 5);
   assert(layout.enemySpawns.every(enemy => enemy.patrol.mode === 'pingpong' && enemy.patrol.waypoints.length >= 2), 'new worlds cannot silently fall back to a permanent guard');
   const patrolWindows = (native.diagnostics.expedition as { patrolWindows: { id: string; durationMs: number }[] }).patrolWindows;
   const searchNodes = [...layout.kindlingNodes, ...layout.contaminantNodes].filter(node => node.tier !== 'safe');
@@ -132,33 +140,79 @@ if (!isMainThread) {
   const { build } = await import('esbuild');
   const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
   const arg = (name: string) => { const at = process.argv.indexOf(name); return at < 0 ? undefined : process.argv[at + 1]; };
-  const full = process.argv.includes('--full'), held = arg('--holdout');
+  const full = process.argv.includes('--full'), held = arg('--holdout'), caseListPath = arg('--case-list');
+  const existingExecutor = arg('--executor');
+  assert(!caseListPath || existingExecutor && !full && !held, '--case-list requires the original --executor and cannot replace a full/holdout seed policy');
+  const resume = caseListPath ? JSON.parse(readFileSync(caseListPath, 'utf8')) as ResumeCaseList : null;
+  assert(!caseListPath || resume && typeof resume === 'object' && !Array.isArray(resume), 'Case list must be an explicit resume manifest');
+  const keyOf = (row: QualificationCase): string => `${row.world}/${row.grade}/${row.seed}`;
+  const validCase = (row: QualificationCase): boolean => row !== null && typeof row === 'object'
+    && Object.keys(row).length === 4 && ['world', 'grade', 'seed', 'cohort'].every(key => Object.hasOwn(row, key))
+    && R100_NATIVE_WORLDS.some(world => world.id === row.world) && POLLUTION_GRADES.includes(row.grade)
+    && Number.isSafeInteger(row.seed) && row.seed >= 0 && row.seed <= 0xffffffff
+    && ['ordinary', 'boundary', 'independent-holdout', 'smoke'].includes(row.cohort);
+  if (resume) {
+    assert(Object.keys(resume).length === 5 && ['version', 'executorSha256', 'expectedCases', 'priorCases', 'cases'].every(key => Object.hasOwn(resume, key)));
+    assert(resume.version === 1 && /^[a-f0-9]{64}$/.test(resume.executorSha256));
+    assert(Number.isSafeInteger(resume.expectedCases) && resume.expectedCases > 0 && typeof resume.priorCases === 'string');
+    assert(Array.isArray(resume.cases) && resume.cases.length > 0 && resume.cases.every(validCase), 'Case list contains an invalid original world/grade/seed/cohort');
+    assert.equal(new Set(resume.cases.map(keyOf)).size, resume.cases.length, 'A resume list cannot duplicate a case');
+  }
+  const priorRecords: CaseRecord[] = resume ? readFileSync(resume.priorCases, 'utf8').trim().split('\n').filter(Boolean).map(line => JSON.parse(line)) : [];
+  if (resume) {
+    const plan = JSON.parse(readFileSync(resolve(dirname(resume.priorCases), 'planned-cases.json'), 'utf8')) as { executorSha256: string; cases: QualificationCase[] };
+    assert.equal(plan.executorSha256, resume.executorSha256, 'Resume plan must belong to the original executor');
+    assert(Array.isArray(plan.cases) && plan.cases.every(validCase));
+    const planned = new Map(plan.cases.map(row => [keyOf(row), row.cohort]));
+    assert.equal(planned.size, plan.cases.length); assert.equal(planned.size, resume.expectedCases);
+    assert([...priorRecords, ...resume.cases].every(row => planned.get(keyOf(row)) === row.cohort), 'Never substitute a seed or cohort for an unexecuted original case');
+    assert(priorRecords.every(row => typeof row.ok === 'boolean' && (!row.ok || row.value && keyOf(row.value) === keyOf(row))), 'Original results must match their recorded case identity');
+    assert.equal(new Set(priorRecords.map(keyOf)).size, priorRecords.length, 'Use the original, unmodified case log as the resume source');
+    const successful = new Set(priorRecords.filter(row => row.ok).map(keyOf));
+    assert(resume.cases.every(row => !successful.has(keyOf(row))), 'An already successful original case must not be rerun');
+    assert.equal(new Set([...priorRecords, ...resume.cases].map(keyOf)).size, resume.expectedCases, 'Resume list must cover every missing original case');
+    assert(priorRecords.filter(row => !row.ok).every(row => resume.cases.some(next => keyOf(next) === keyOf(row) && next.cohort === row.cohort)), 'Every original failure retains its exact case and cohort');
+  }
   const reportPath = resolve(arg('--report') ?? 'docs/qa/artifacts/r100-i03-i06/native-library.json');
   const folder = dirname(reportPath); mkdirSync(folder, { recursive: true });
   const normal = Array.from({ length: 32 }, (_, i) => ((i + 1) * 0x100000000 / 33) >>> 0);
   // Integer limits, a former packing retry, and the recorded real checkpoint failure world.
   const boundary = [0, 1, 28, 65535, 65536, 0x7fffffff, 0xffffffff, 3390232493];
   const heldData = held ? JSON.parse(readFileSync(held, 'utf8')) : null;
-  const seeds = held ? ((Array.isArray(heldData) ? heldData : heldData.seeds) as number[]).map(seed => ({ seed, cohort: 'independent-holdout' }))
+  const seeds = resume ? Array.from(new Map(resume.cases.map(({ seed, cohort }) => [seed, { seed, cohort }])).values())
+    : held ? ((Array.isArray(heldData) ? heldData : heldData.seeds) as number[]).map(seed => ({ seed, cohort: 'independent-holdout' }))
     : full ? [...normal.map(seed => ({ seed, cohort: 'ordinary' })), ...boundary.map(seed => ({ seed, cohort: 'boundary' }))]
     : [20261002, 20261003].map(seed => ({ seed, cohort: 'smoke' }));
   assert.equal(new Set(seeds.map(row => row.seed)).size, seeds.length);
   assert(seeds.every(row => Number.isSafeInteger(row.seed) && row.seed >= 0 && row.seed <= 0xffffffff));
-  const existingExecutor = arg('--executor');
   const result = existingExecutor ? null : await build({ entryPoints: ['tools/world-study/check-r100-library.ts'], bundle: true, write: false,
     platform: 'node', format: 'esm', target: 'node22', tsconfig: 'tools/contam-preview/tsconfig.json',
     external: ['esbuild'], metafile: true });
   const bytes = existingExecutor ? readFileSync(existingExecutor) : result!.outputFiles[0]!.contents;
   const bundleHash = sha(bytes), executor = resolve(folder, `qualification-${bundleHash.slice(0, 12)}.mjs`);
+  if (resume) {
+    assert.equal(bundleHash, resume.executorSha256, 'Resume must execute the exact original frozen code');
+    const priorSource = JSON.parse(readFileSync(resolve(dirname(resume.priorCases), 'source-snapshot.json'), 'utf8'));
+    assert.equal(priorSource.sha256, bundleHash, 'Original cases and resumed cases must share an executor');
+    assert.notEqual(resolve(resume.priorCases), resolve(folder, 'cases.jsonl'), 'Never overwrite the original failure log');
+  }
   writeFileSync(executor, bytes);
   const previousSource = existingExecutor ? JSON.parse(readFileSync(resolve(dirname(existingExecutor), 'source-snapshot.json'), 'utf8')) : null;
   if (previousSource) assert.equal(previousSource.sha256, bundleHash, 'holdout must load the already committed executor');
-  const source = { executor: executor.slice(process.cwd().length + 1), sha256: bundleHash,
+  const source = { executor, sha256: bundleHash,
     dependencies: previousSource?.dependencies ?? Object.keys(result!.metafile!.inputs).sort().map(path => ({ path, sha256: sha(readFileSync(path)) })) };
   writeFileSync(resolve(folder, 'source-snapshot.json'), JSON.stringify(source, null, 2) + '\n');
-  const cases = R100_NATIVE_WORLDS.filter(row => !arg('--world') || row.id === arg('--world')).flatMap(world =>
+  const requestedWorlds = (arg('--worlds') ?? arg('--world'))?.split(',');
+  if (requestedWorlds) {
+    assert(requestedWorlds.length > 0 && new Set(requestedWorlds).size === requestedWorlds.length);
+    assert(requestedWorlds.every(id => R100_NATIVE_WORLDS.some(world => world.id === id)), 'Unknown requested qualification world');
+  }
+  const cases = resume?.cases ?? R100_NATIVE_WORLDS.filter(row => !requestedWorlds || requestedWorlds.includes(row.id)).flatMap(world =>
     POLLUTION_GRADES.flatMap(grade => seeds.map(row => ({ world: world.id, grade, ...row }))));
+  if (resume && requestedWorlds) assert(cases.every(row => requestedWorlds.includes(row.world)), 'Resume cases must belong to the requested worlds');
+  writeFileSync(resolve(folder, 'planned-cases.json'), JSON.stringify({ executorSha256: bundleHash, cases }, null, 2) + '\n');
   const rows: ReturnType<typeof qualify>[] = [], failures: unknown[] = [], timings: number[] = [];
+  const caseRecords: CaseRecord[] = [];
   const log = resolve(folder, 'cases.jsonl'); writeFileSync(log, '');
   const timeoutMs = 60000, concurrency = Math.min(2, Math.max(1, Number(arg('--concurrency') ?? 2)));
   console.log(`FROZEN ${bundleHash}: ${cases.length} cases, ${concurrency} isolated workers, ${timeoutMs}ms timeout/case`);
@@ -175,7 +229,8 @@ if (!isMainThread) {
       const input = cases[cursor++]!, started = performance.now(), value = await run(input);
       const durationMs = performance.now() - started; timings.push(durationMs);
       if (value.ok) rows.push(value.value); else failures.push({ ...input, error: value.error, durationMs });
-      appendFileSync(log, JSON.stringify({ ...input, ...value, durationMs }) + '\n');
+      const record = { ...input, ...value, durationMs }; caseRecords.push(record);
+      appendFileSync(log, JSON.stringify(record) + '\n');
       if ((rows.length + failures.length) % 60 === 0) console.log(`QUALIFIED ${rows.length + failures.length}/${cases.length}; failures=${failures.length}`);
     }
   }));
@@ -188,6 +243,23 @@ if (!isMainThread) {
     successful: rows.length, failures, transferred: rows.length, attemptDistribution: distribution,
     workerDurationMs: { p50: timings[Math.floor(timings.length * .5)], p95: timings[Math.floor(timings.length * .95)], p99: timings[Math.floor(timings.length * .99)], max: timings.at(-1) }, rows };
   writeFileSync(reportPath, JSON.stringify(report, null, 2) + '\n');
+  if (resume) {
+    const latest = new Map([...priorRecords, ...caseRecords].map(row => [keyOf(row), row]));
+    const unresolved = [...latest.values()].filter(row => !row.ok), successful = [...latest.values()].filter(row => row.ok);
+    const aggregate = { status: unresolved.length ? 'failed' : 'pass', scope: report.scope, source,
+      expectedCases: resume.expectedCases, cases: latest.size, successful: successful.length,
+      worlds: new Set([...latest.values()].map(row => row.world)).size,
+      grades: new Set([...latest.values()].map(row => `${row.world}/${row.grade}`)).size,
+      seeds: Array.from(new Map([...latest.values()].map(({ seed, cohort }) => [seed, { seed, cohort }])).values()),
+      transferred: successful.length, failures: unresolved,
+      originalCases: resolve(resume.priorCases), retryReport: reportPath,
+      caseList: { path: resolve(caseListPath!), sha256: sha(readFileSync(caseListPath!)) },
+      originalFailures: priorRecords.filter(row => !row.ok),
+      retries: caseRecords.filter(row => priorRecords.some(previous => keyOf(previous) === keyOf(row))),
+      rows: successful.map(row => row.value).sort((a, b) => keyOf(a!).localeCompare(keyOf(b!))) };
+    assert.equal(aggregate.cases, resume.expectedCases);
+    writeFileSync(resolve(folder, 'aggregate.json'), JSON.stringify(aggregate, null, 2) + '\n');
+  }
   console.log(`${report.status.toUpperCase()} native library ${report.worlds} worlds / ${report.grades} grades / ${report.cases} fixed seed cases; ${rows.length} transferred cold reconstructions; ${failures.length} failures`);
   if (failures.length) process.exitCode = 1;
 }

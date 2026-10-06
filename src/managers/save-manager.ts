@@ -465,7 +465,7 @@ export const saveManager = {
     // commit; that commit includes schema 2 and the unchanged world conditions.
     // Preserve existing forecasts/checkpoints. Older records without any forecast
     // still initialize their first one, as the original V1 migration did.
-    if ((!loadedRun || loadedRun.baseSettled) && (data.version === 1 || data.inventory.version === 1
+    if ((!loadedRun || loadedRun.baseSettled) && (data.version === 1 || data.inventory.version < 4
       || data.growth.schemaVersion === undefined || repairedSlots)) {
       try { writeRecord(JSON.stringify(attachCheckpoint(collectSave(inventoryStore.getState(), data.impactForecast === undefined)))); }
       catch { /* trySave exposes retry; do not erase the readable old record */ }

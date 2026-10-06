@@ -10,6 +10,7 @@ const paths = ['data/rift-master-scenes.csv', 'data/rift-pollution-grades.csv', 
   'src/generation/world-study/r100-master-world.ts', 'src/generation/world-study/r100-pollution.ts',
   'src/generation/world-study/r100-expedition.ts', 'src/generation/world-study/r100-expedition-v1.ts',
   'src/generation/world-study/r100-patrol-windows.ts', 'src/generation/world-study/r100-package.ts', 'src/generation/world-study/native-volume-geometry.ts',
+  'src/generation/world-study/native-volume-expansion.ts', 'src/generation/world-study/native-volume-cellular.ts',
   'src/generation/world-study/native-volume-raster.ts', 'src/generation/world-study/pollution-grade.ts'];
 for (const match of readFileSync('data/rift-master-materials.csv', 'utf8').matchAll(/\/assets\/[a-zA-Z0-9_./-]+\.png/g)) paths.push(`public${match[0]}`);
 const dependencies = [...new Set(paths)].sort().map(path => ({ path, sha256: hash(readFileSync(path)) }));
