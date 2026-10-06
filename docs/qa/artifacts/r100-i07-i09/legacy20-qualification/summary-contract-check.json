@@ -1,0 +1,23 @@
+{
+  "scope": "Aggregation must reject duplicate worlds, replayed successes and missing original cases; raw generation artifacts unmodified.",
+  "cases": [
+    {
+      "case": "duplicate-world",
+      "rejected": true,
+      "exitCode": 1,
+      "detail": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:"
+    },
+    {
+      "case": "rerun-success",
+      "rejected": true,
+      "exitCode": 1,
+      "detail": "AssertionError [ERR_ASSERTION]: An already successful case was rerun: ash-strata/low/260301048"
+    },
+    {
+      "case": "missing-full",
+      "rejected": true,
+      "exitCode": 1,
+      "detail": "INCOMPLETE: 483/2880 unique fixed cases; 483 attempts; 0 original failures retained\n"
+    }
+  ]
+}

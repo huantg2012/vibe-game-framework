@@ -17,7 +17,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-native-worlds.csv",
-      "sha256": "0226b4e234b58429cf31411f8042d5fb6bf52dfdb246decf625c28907474deec"
+      "sha256": "cb8aef6a6a386f37a130cb68c7e800f6d3dfc013b895c099a0902485a004baa2"
     },
     {
       "path": "data/rift-pollution-grades.csv",
@@ -140,7 +140,7 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "7536bd4b7282cde4dfdfecbf1b98bd771ec2f817588d0a6070cbb41469c57ff4"
     }
   ],
-  "hash": "f21f732f688ab7f44143859d900607870b5e157367f8b57249d624ec88a9e5dc"
+  "hash": "686abceed2363922f285c208e95aa0be66994cae7055e24cb960327f1e411d01"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

@@ -1,0 +1,325 @@
+{
+  "status": "bounded-author-review-pass",
+  "reviewer": "world_loot_pixels",
+  "scope": "Final-source six normal-FOV views replacing historical ordinary-grade gallery images. Existing prior root-reviewed deep evidence remains separate; this is not formal full-expedition or human approval.",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "captureReport": {
+    "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/report.json",
+    "sha256": "ac4ca5bc423304475d82f94050a8b5e141a8ae5569ef7c592c0cc2a704dccb6f"
+  },
+  "limitations": [
+    "Same actual recipe seed20261005 and planned stations/facing, but real movement and turn inputs yield slightly different actual positions/times per grade. Not strict pixel-identical camera A/B.",
+    "No tools used and no body/HP/time/light edits; enemies and pollution remain active. Gym bare training loadout and diagnostic static macro-routing, not novice formal play.",
+    "All PNGs are original canvas1136×758. No resizing, crops, relighting or corrections. Severe real occlusion is preserved.",
+    "Original invalid shadowed-variable acquisition in gallery-current-shapes-final is excluded; its original files and erratum remain."
+  ],
+  "images": [
+    {
+      "worldId": "tendon-shelves",
+      "grade": "low",
+      "seed": 20261005,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/tendon-shelves-low/current-shape.png",
+        "sha256": "8c8e5c32b9df81f1d3b57e9784e748f58047bcc76d698f302cfb3e064719e869",
+        "width": 1136,
+        "height": 758,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 788.9378607343477,
+            "y": 539.6498468066283
+          },
+          "facingAngle": -1.5705449993826108,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.24033887999996,
+          "elapsedMs": 11899.5
+        }
+      },
+      "actualFacing": {
+        "event": "facing-observation",
+        "goal": "current-shape",
+        "key": "w",
+        "requestedDirection": "north",
+        "desiredAngle": -1.5707963267948966,
+        "actual": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 788.9378607343477,
+            "y": 539.6498468066283
+          },
+          "facingAngle": -1.5705449993826108,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.24033887999996,
+          "elapsedMs": 11899.5
+        },
+        "angleError": 0.00025132741228572897,
+        "matched": true,
+        "turnInputs": 1
+      },
+      "finding": "第二足内转的红褐纤维厚面、浅色下沿与暗床分开。"
+    },
+    {
+      "worldId": "tendon-shelves",
+      "grade": "medium",
+      "seed": 20261005,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/tendon-shelves-medium/current-shape.png",
+        "sha256": "fb6c3401114621afc63be8fc9758799f6478137fc8cb36e41cb355e422775560",
+        "width": 1136,
+        "height": 758,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 788.8457412882128,
+            "y": 540.3287246466673
+          },
+          "facingAngle": -1.5703565038233913,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 23.839421195999808,
+          "elapsedMs": 11999.5
+        }
+      },
+      "actualFacing": {
+        "event": "facing-observation",
+        "goal": "current-shape",
+        "key": "w",
+        "requestedDirection": "north",
+        "desiredAngle": -1.5707963267948966,
+        "actual": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 788.8457412882128,
+            "y": 540.3287246466673
+          },
+          "facingAngle": -1.5703565038233913,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 23.839421195999808,
+          "elapsedMs": 11999.5
+        },
+        "angleError": 0.00043982297150524374,
+        "matched": true,
+        "turnInputs": 1
+      },
+      "finding": "修后第二足内转的厚面、底沿和近身可通行地可辨；上方部分被真实吞光遮住，敌人仍在场。"
+    },
+    {
+      "worldId": "tendon-shelves",
+      "grade": "severe",
+      "seed": 20261005,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/tendon-shelves-severe/current-shape.png",
+        "sha256": "91172ba2f5b6ccc1de38d48cdf67081775c91d2a18346edfa3639938f1aafe27",
+        "width": 1136,
+        "height": 758,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 788.9006072474335,
+            "y": 535.1504297054822
+          },
+          "facingAngle": -1.5709848223541165,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 21.429283754666432,
+          "elapsedMs": 12799.4
+        }
+      },
+      "actualFacing": {
+        "event": "facing-observation",
+        "goal": "current-shape",
+        "key": "w",
+        "requestedDirection": "north",
+        "desiredAngle": -1.5707963267948966,
+        "actual": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 788.9006072474335,
+            "y": 535.1504297054822
+          },
+          "facingAngle": -1.5709848223541165,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 21.429283754666432,
+          "elapsedMs": 12799.4
+        },
+        "angleError": 0.00018849555921995886,
+        "matched": true,
+        "turnInputs": 2
+      },
+      "finding": "近身下沿与内转仍可读，大部分上壁被真实吞光遮住；未照见的完整形体不在结论内。"
+    },
+    {
+      "worldId": "sentinel-mass",
+      "grade": "low",
+      "seed": 20261005,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/sentinel-mass-low/current-shape.png",
+        "sha256": "01a488ec5e5c3a92a72b299ec5506dd74a994076db6da4ca942585ca47f47403",
+        "width": 1136,
+        "height": 758,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 247.5007022832289,
+            "y": 268.88384540317116
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.750539511999968,
+          "elapsedMs": 9316.3
+        }
+      },
+      "actualFacing": {
+        "event": "facing-observation",
+        "goal": "current-shape",
+        "key": "d",
+        "requestedDirection": "east",
+        "desiredAngle": 0,
+        "actual": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 247.5007022832289,
+            "y": 268.88384540317116
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.750539511999968,
+          "elapsedMs": 9316.3
+        },
+        "angleError": 0,
+        "matched": true,
+        "turnInputs": 0
+      },
+      "finding": "低肩前壁连向后方高主斜面，面高差与西口站位可读。"
+    },
+    {
+      "worldId": "sentinel-mass",
+      "grade": "medium",
+      "seed": 20261005,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/sentinel-mass-medium/current-shape.png",
+        "sha256": "30c9497245ed9dd85b7d1fcd39841db795f6cf02603d9ab4898de09b677a23b3",
+        "width": 1136,
+        "height": 758,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 256.49990010000005,
+            "y": 270.5950766328043
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 18.22934967599972,
+          "elapsedMs": 9816.2
+        }
+      },
+      "actualFacing": {
+        "event": "facing-observation",
+        "goal": "current-shape",
+        "key": "d",
+        "requestedDirection": "east",
+        "desiredAngle": 0,
+        "actual": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 256.49990010000005,
+            "y": 270.5950766328043
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 18.22934967599972,
+          "elapsedMs": 9816.2
+        },
+        "angleError": 0,
+        "matched": true,
+        "turnInputs": 2
+      },
+      "finding": "高斜面与低肩的连接、浅断边仍可辨；上半主体被吞光遮住。"
+    },
+    {
+      "worldId": "sentinel-mass",
+      "grade": "severe",
+      "seed": 20261005,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/sentinel-mass-severe/current-shape.png",
+        "sha256": "f48a3f381e741b82c6311299769cfa79e297978b9f494f437cf074e3fa3777bb",
+        "width": 1136,
+        "height": 758,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 245.85563809205905,
+            "y": 270.16376635414844
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 27.727162815999797,
+          "elapsedMs": 9432.9
+        }
+      },
+      "actualFacing": {
+        "event": "facing-observation",
+        "goal": "current-shape",
+        "key": "d",
+        "requestedDirection": "east",
+        "desiredAngle": 0,
+        "actual": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 245.85563809205905,
+            "y": 270.16376635414844
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 27.727162815999797,
+          "elapsedMs": 9432.9
+        },
+        "angleError": 0,
+        "matched": true,
+        "turnInputs": 0
+      },
+      "finding": "近处低肩亮断沿及高主斜面局部仍可区分；未照见的北背和整外轮廓不在结论内。"
+    }
+  ],
+  "independentRootReview": {
+    "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/independent-root-review.json",
+    "sha256": "228046629f456de8d414647b9103d03eafa8e4ead378b7518937803e276b473d"
+  }
+}

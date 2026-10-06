@@ -1,0 +1,263 @@
+{
+  "status": "pass",
+  "scope": "Independent remaining checks after preserved stale future-revision negative test failure. No failure erased, no product changes.",
+  "original": "report.json",
+  "startedAt": "2026-10-06T01:25:46.737Z",
+  "checks": [
+    {
+      "id": "04-world-history",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/inventory/check-world-history.ts"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "sources": [
+        {
+          "path": "tools/inventory/check-world-history.ts",
+          "sha256": "7346089d4cc61a5001e2f44f68f7abaaad6587d1a68ba987553c8811dd79a226"
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:25:46.739Z",
+      "log": "04-world-history.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:25:46.867Z",
+      "logSha256": "8400e464d2daf105b12c5b36638466a10dd73def52f85febef420fb779142888"
+    },
+    {
+      "id": "05-save-migration",
+      "command": [
+        "npm",
+        "run",
+        "check:inventory-save"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "sources": [
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        },
+        {
+          "path": "tools/inventory/check-save-migration.ts",
+          "sha256": "d454572fa0f62142ec629762281724689fef3357a25cfd1bf966a8fae637bb1d"
+        }
+      ],
+      "startedAt": "2026-10-06T01:25:46.867Z",
+      "log": "05-save-migration.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:25:47.251Z",
+      "logSha256": "4361495d9d5d05285e243797b4f143577a9a3d6d34d5f634626c851a2d822e93"
+    },
+    {
+      "id": "06-world-selection",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-world-selection.ts",
+        "--out",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/final-code-checks/selection"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "sources": [
+        {
+          "path": "tools/world-study/check-r100-world-selection.ts",
+          "sha256": "25307a382cf90f658b0ec7029513af76c15b652662a8816876e8d3e3b78fb0da"
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:25:47.252Z",
+      "log": "06-world-selection.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:25:50.736Z",
+      "logSha256": "819db2e20c3f3ca5ed2331662092935b44039d006d07c4b39a525fc1438b4c1a"
+    },
+    {
+      "id": "07-worlds-codegen",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-worlds.mjs",
+        "--check"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "sources": [
+        {
+          "path": "tools/world-study/codegen-r100-worlds.mjs",
+          "sha256": "3fbcb4f98db3b2208f0f5ef87a95c8e41eb2582aa7c5db7b8c8ec7a9cec54db5"
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:25:50.737Z",
+      "log": "07-worlds-codegen.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:25:50.774Z",
+      "logSha256": "c34938a3a4bc1ba6e00b7da888ad2e1c17326664543aee0c0e3cd82d0ac641ab"
+    },
+    {
+      "id": "08-appearance-codegen",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/codegen-r100-appearance.ts",
+        "--check"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "sources": [
+        {
+          "path": "tools/world-study/codegen-r100-appearance.ts",
+          "sha256": "394fb08a3441a8909426a0fbd7bcd2d180c3c155a482c1548ae6316a00fc367f"
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:25:50.775Z",
+      "log": "08-appearance-codegen.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:25:50.917Z",
+      "logSha256": "0b16ee76a5a84100c756e79001a3826b6d4580727d2ee683c5d2dc3da2f0c62b"
+    },
+    {
+      "id": "09-remains-codegen",
+      "command": [
+        "node",
+        "tools/world-study/generate-search-remains.mjs",
+        "--check"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "sources": [
+        {
+          "path": "tools/world-study/generate-search-remains.mjs",
+          "sha256": "48f8aa59267bcc80f9a8cb9117a2f54651f1bc51f5a2408f1388fe09bfffba78"
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:25:50.917Z",
+      "log": "09-remains-codegen.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:25:50.948Z",
+      "logSha256": "8847c7fdbb6a3ffb9bbb49c66f1c456a6614679e6159d46fe5bcdf8f41572335"
+    },
+    {
+      "id": "10-selection-codegen",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-selection.mjs",
+        "--check"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "sources": [
+        {
+          "path": "tools/world-study/codegen-r100-selection.mjs",
+          "sha256": "b989159d19295878bfcf35fcb83d4d4a5c34aeeaa0d25a35b798b39ab21a492f"
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:25:50.949Z",
+      "log": "10-selection-codegen.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:25:50.979Z",
+      "logSha256": "42b871ef923f6cb5fe3ea94038edf6b33c872217765c8c74601ad35818ea167e"
+    },
+    {
+      "id": "11-package-receipt-check",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "--check"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "sources": [
+        {
+          "path": "tools/world-study/codegen-r100-packages.mjs",
+          "sha256": "3367064890f2402ecd8ad68a2ee601960dfd700c4a3be912e420e410cf0dd702"
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:25:50.979Z",
+      "log": "11-package-receipt-check.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:25:51.276Z",
+      "logSha256": "c86fe347b4dfaadba76fce0b25eafe2bce6aed32786cb8aaf80f647e55ff5705"
+    }
+  ],
+  "endedAt": "2026-10-06T01:25:51.276Z"
+}

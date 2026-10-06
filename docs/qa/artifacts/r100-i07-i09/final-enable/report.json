@@ -1,0 +1,22 @@
+{
+  "status": "pass-enabled-only-recipe-compatibility",
+  "beforeEnabled": 20,
+  "afterEnabled": 52,
+  "changedCsvFields": 32,
+  "old20GradeRecipesExact": 60,
+  "all52GradeRecipesExact": 156,
+  "preEnableRecipesStillValid": 156,
+  "sourceHashesBefore": {
+    "data/rift-native-worlds.csv": "0226b4e234b58429cf31411f8042d5fb6bf52dfdb246decf625c28907474deec",
+    "src/generated/r100-native-worlds.ts": "2b92e4d0569063cc119435c4d969ea065d3b418a66c479c9f4f4d520701f8570",
+    "src/generated/r100-package-manifest.ts": "a242facd29b161bbf19ad3643a2cdd6694f4637523f1345a717af6d83cafc785",
+    "src/generation/world-study/r100-package.ts": "47fe6158ac41a4df332460de5be8355adeb58830b56246014c9b67dcf7cf5bd7"
+  },
+  "sourceHashesAfter": {
+    "data/rift-native-worlds.csv": "cb8aef6a6a386f37a130cb68c7e800f6d3dfc013b895c099a0902485a004baa2",
+    "src/generated/r100-native-worlds.ts": "a4c35a8751271a052edb72475058705fe6977cfbf3aa2f8a99b867e56b009fe3",
+    "src/generated/r100-package-manifest.ts": "cd5b455dd0bb66fe2ecc728b4bcc6de1e1addafa92b17d13c3334a9df12f8668",
+    "src/generation/world-study/r100-package.ts": "47fe6158ac41a4df332460de5be8355adeb58830b56246014c9b67dcf7cf5bd7"
+  },
+  "scope": "Exact full recipe JSON and dependency hash plus production validator; no new map, browser recovery, visual or performance claim."
+}

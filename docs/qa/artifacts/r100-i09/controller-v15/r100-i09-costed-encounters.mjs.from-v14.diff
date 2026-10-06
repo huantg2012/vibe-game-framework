@@ -1,0 +1,51 @@
+--- frozen-policy14/r100-i09-costed-encounters.mjs
++++ policy15/r100-i09-costed-encounters.mjs
+@@ -1,10 +1,21 @@
+ /** Local I09 slot adapter copied from tools/world-study/r100-p13-costed-encounters.mjs.
+  * Original SHA256: 8850a30414e72f0465304fc3c90e38a0e08406b9e442b9b8ea7bfaea80ae3715.
+- * Only differences: runtime active slot enumeration and matching key dispatch;
+- * contextual tool logs include the actual slot/key. Original P13 stays unchanged.
++ * Differences: runtime active slot enumeration and matching key dispatch;
++ * contextual tool logs include the actual slot/key. Policy15 releases E after
++ * any newly completed pickup, including a nearby node selected by the game.
++ * Original P13 stays unchanged.
+  * Threat observations, item predicates, cooldowns and movement rules are identical.
+  */
++import assert from 'node:assert/strict';
+ import { activeToolSlots } from './r100-i09-tool-slots.mjs';
++
++/** Only completion flags and IDs are consumed, never unrevealed loot contents. */
++export function newlyCollectedNodeIds(before, after) {
++ const initial = new Map(before.nodes.map(node => [node.id, node.collected]));
++ assert.equal(initial.size, before.nodes.length, 'Unique initial search nodes required');
++ assert.equal(new Set(after.nodes.map(node => node.id)).size, after.nodes.length, 'Unique current search nodes required');
++ return after.nodes.filter(node => initial.get(node.id) === false && node.collected === true).map(node => node.id);
++}
+ /** QA input policy: observations expose only currently rendered opponents/hosts.
+  * Full geometry may be used by caller for route planning; hidden AI state,
+  * detection meters, patrol futures and unrevealed item identities are never read.
+@@ -200,7 +211,7 @@
+   if(danger){await evade(target,facts);return {reroute:true,facts:await observe()};}
+   return {reroute:true,facts};
+  }
+- async function search(target){
++ async function search(target,budget){
+   await face(target.pos,65);let facts=await observe();
+   const threats=()=>facts.enemies.filter(e=>(stoppedUntil.get(e.id)??0)<=facts.elapsedMs+300);
+   const closeGuard=threats().find(e=>distance(e.position,facts.position)<110);
+@@ -209,10 +220,12 @@
+    if(!await lure(target,facts)){await evade(target,facts);return {attempted:false,reason:'visible-opponent-too-close'};}
+   }
+   const started=Date.now();let before=await driver.state();
+-  await page.keyboard.down('e');driver.log({event:'key-down',key:'e',reason:'guarded-search'});
+-  try{while(Date.now()-started<5000){await page.waitForTimeout(150);const s=await driver.state();facts=await observe();
++  if(budget&&newlyCollectedNodeIds(budget.entryState,before).length>=budget.limit)return{attempted:false,reason:'actual-search-limit'};
++  try{await page.keyboard.down('e');driver.log({event:'key-down',key:'e',reason:'guarded-search'});
++   while(Date.now()-started<5000){await page.waitForTimeout(150);const s=await driver.state();facts=await observe();
+     if(s.ended||s.hp<before.hp){driver.log({event:'search-cancelled-after-hit'});return {attempted:true,reason:'actual-hit'};}
+-    if(s.nodes.find(node=>node.id===target.id)?.collected)return {attempted:true,reason:'collected'};
++    const completedNodeIds=newlyCollectedNodeIds(before,s);
++    if(completedNodeIds.length)return {attempted:true,reason:'collected',completedNodeIds};
+     if(s.elapsedMs-before.elapsedMs>=1600)return{attempted:true,reason:'channel-not-completed'};
+     if(threats().some(e=>distance(e.position,facts.position)<48||e.attack==='windup')){driver.log({event:'search-cancelled-visible-approach'});return{attempted:true,reason:'visible-approach'};}
+   }}finally{await page.keyboard.up('e');driver.log({event:'key-up',key:'e'});}

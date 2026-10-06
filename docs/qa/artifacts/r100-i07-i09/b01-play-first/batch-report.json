@@ -1,0 +1,76 @@
+{
+  "status": "completed-fixed-attempts-pending-review",
+  "startedAt": "2026-10-05T14:01:47.449Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-rib-vault-low-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-05T14:01:47.449Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-05T14:04:29.895Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "rib-vault",
+          "grade": "low",
+          "revision": 5,
+          "collected": 1,
+          "elapsedMs": 45948.16999999994,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 181.2773926949054,
+            "y": 648.0427296816065
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "low",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 2,
+      "dir": "002-wax-tongues-low-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-05T14:04:29.898Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-05T14:07:39.923Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "wax-tongues",
+          "grade": "low",
+          "revision": 5,
+          "collected": 1,
+          "elapsedMs": 51931.230000000054,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 179.2930797497954,
+            "y": 643.8551067718272
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    }
+  ],
+  "endedAt": "2026-10-05T14:07:39.928Z"
+}

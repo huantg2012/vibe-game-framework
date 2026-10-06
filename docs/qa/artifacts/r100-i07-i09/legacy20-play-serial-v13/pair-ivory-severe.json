@@ -1,0 +1,74 @@
+{
+  "createdAt": "2026-10-05T15:53:37.364339+00:00",
+  "status": "paired-play-contract-evidence-present-pending-overall-review",
+  "world": "ivory-basin",
+  "grade": "severe",
+  "method": "Two original fixed seeds retained. At least one actual non-entry search and extraction plus one distinct-seed pressure/failure process. Primary/secondary labels describe initial execution intention and do not override the task contract.",
+  "cases": [
+    {
+      "case": "017-ivory-basin-severe-20261005",
+      "report": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/017-ivory-basin-severe-20261005/report.json",
+      "sha256": "56f8f23e4668d44ea9a442c62bd434453a2223cb9eb6dd7540ca14301f86a719",
+      "seed": 20261005,
+      "package": {
+        "id": "r100-ivory-basin",
+        "algorithm": "r100-native",
+        "version": 3,
+        "algorithmRevision": 5,
+        "materials": {
+          "broken-shell": {
+            "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+            "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+            "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+          }
+        },
+        "dependencyHash": "7ca1f625",
+        "grade": "severe"
+      },
+      "outcome": "extract",
+      "collected": 0,
+      "nonEntryNodes": [],
+      "elapsedMs": 121215.14000000092,
+      "hp": 115,
+      "chaos": 138.91015820799333,
+      "role": "actual-empty-return-pressure-process",
+      "baseSettled": true
+    },
+    {
+      "case": "018-ivory-basin-severe-3075192741",
+      "report": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/018-ivory-basin-severe-3075192741/report.json",
+      "sha256": "fa13827b64a086bb0f5efb204f087ccdeb38d1760f9ddfdeb076a2102dac856c",
+      "seed": 3075192741,
+      "package": {
+        "id": "r100-ivory-basin",
+        "algorithm": "r100-native",
+        "version": 3,
+        "algorithmRevision": 5,
+        "materials": {
+          "broken-shell": {
+            "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+            "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+            "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+          }
+        },
+        "dependencyHash": "7ca1f625",
+        "grade": "severe"
+      },
+      "outcome": "extract",
+      "collected": 1,
+      "nonEntryNodes": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 570.4734875522262
+        }
+      ],
+      "elapsedMs": 38648.48999999972,
+      "hp": 145,
+      "chaos": 75.70660648853442,
+      "role": "actual-search-and-extract",
+      "baseSettled": true
+    }
+  ],
+  "interpretation": "018 supplies the actual search-and-extract evidence. 017 remains an unsuccessful search target with an actual empty extraction; it is not relabeled as a successful search, erased, or replaced. No recheck or seed change was used.",
+  "remainingIndependentIssue": "016 medium WebGL-context-loss original attempt still needs an exact-seed single-browser recheck; unrelated to this severe pair."
+}

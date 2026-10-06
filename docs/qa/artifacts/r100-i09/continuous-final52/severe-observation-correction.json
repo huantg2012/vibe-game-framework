@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "recordedAt": "2026-10-06T07:25:09.314Z",
+  "status": "corrected-intermediate-observation",
+  "scope": "One actual continuous severe branch trip; no rerun, seed replacement or input change.",
+  "report": "docs/qa/artifacts/r100-i09/continuous-final52/severe/report.json",
+  "ordinal": 7,
+  "rowSha256": "ef23f769f0138230f8712180f64783fec5028669d41ac5894376178db6a07179",
+  "journeyLog": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/journey.jsonl",
+  "identity": {
+    "world": "r100-flake-thicket",
+    "requestedSeed": 2216461123,
+    "effectiveSeed": 2216461123,
+    "runId": "c9589526-4eef-4dd1-bf79-57fc6272f4d9"
+  },
+  "intermediateObservation": {
+    "label": "7-return",
+    "scene": "base",
+    "lastObservedHp": 10,
+    "lastObservedChaos": 150,
+    "assistantInference": "The intermediate message described a return to base as a successful retreat before the complete outcome was available.",
+    "limitation": "A base-scene return follows both extraction and death. This observation does not establish extraction or carried-home rewards."
+  },
+  "completeResult": {
+    "outcome": "death",
+    "hp": 0,
+    "chaos": 150,
+    "elapsedMs": 84029.98000000387,
+    "actualNonEntryPickups": 1,
+    "fieldCarriedBeforeDeath": 7,
+    "successfullyCarriedHome": false,
+    "reserveBefore": 22,
+    "reserveAfter": 13,
+    "repairSpent": 9
+  },
+  "diagnosis": {
+    "returnTriggeredAtMs": 40898.36999999932,
+    "chaosAtDecision": 104.58870999389845,
+    "reservedChaos": 63.26330537470618,
+    "routeLengthAtDecision": 1383.8812512513364,
+    "evasionCount": 4,
+    "evasionInputMs": 1120,
+    "firstObservedChaos150Ms": 68530.60000000053,
+    "bodyPlanningTotalMs": 2314.996919999714,
+    "frameP95Ms": 18.300000190734863,
+    "frameP99Ms": 18.600000381469727,
+    "framesOver50": 0,
+    "runtimeErrors": [],
+    "consoleErrors": [],
+    "conclusion": "The completed outcome is death after one actual pickup, not search-and-extract. This sample retains actual danger, retreat route, tool use and repair loss. Timing provides no evidence of a load regression, but does not establish an optimal route or controller decision, nor level impossibility."
+  },
+  "correction": "Full raw outcome was reported immediately once available. Parent confirmed no interim success was booked. All summaries must use completed settled-run outcome; return-to-base labels alone cannot imply extraction.",
+  "experienceApproval": "pending"
+}

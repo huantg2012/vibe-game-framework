@@ -1,0 +1,80 @@
+{
+  "status": "completed-fixed-attempts-pending-review",
+  "startedAt": "2026-10-06T02:29:44.408Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-pressed-dunes-severe-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-06T02:29:44.409Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T02:31:40.191Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "pressed-dunes",
+          "grade": "severe",
+          "revision": 5,
+          "requestedSeed": 20261005,
+          "matchesPlan": true,
+          "collected": 0,
+          "elapsedMs": 103762.51000000071,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 179.80370799446447,
+            "y": 660.4093674645387
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 2,
+      "dir": "002-pressed-dunes-severe-3075192741",
+      "status": "completed-script",
+      "startedAt": "2026-10-06T02:31:40.193Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T02:32:37.730Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "pressed-dunes",
+          "grade": "severe",
+          "revision": 5,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 1,
+          "elapsedMs": 45581.52999999975,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 178.73510847214536,
+            "y": 660.8065433624288
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    }
+  ],
+  "endedAt": "2026-10-06T02:32:37.732Z"
+}

@@ -1,0 +1,28 @@
+{
+  "status": "reviewed-retained-pressure-outcome",
+  "createdAt": "2026-10-06T04:50:40.173Z",
+  "reviewer": "root",
+  "report": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/026-ember-cushions-low-3075192741/report.json",
+  "sha256": "5d9667ca04a00c3d585e7c45d4d52c1830b9523e1c4c76d8940cf68ce24f2b16",
+  "scope": "Read-only source/terminal review of fixed original empty return; no new browser run or visual acceptance.",
+  "world": "ember-cushions",
+  "grade": "low",
+  "seed": 3075192741,
+  "findings": {
+    "firstDeepSearchAtMs": 24782.329999999725,
+    "decision": {
+      "attempted": false,
+      "reason": "visible-opponent-too-close"
+    },
+    "farEndAtMs": 42648.27999999975,
+    "farEndHp": 100,
+    "explorationStop": "far-region-reached-with-no-new-observed-remains",
+    "returnAtMs": 77780.20000000004,
+    "returnHp": 100,
+    "returnChaos": 62.03397482648102,
+    "collectedNodes": [],
+    "errors": [],
+    "navigationWarning": null
+  },
+  "conclusion": "Original low seed reached the deep search region, declined interaction due to a visible nearby opponent, took 45 damage, and returned without pickups. Other original low seed completed a real search/extraction. Preserve this empty return; this record does not establish a blocked path or justify rerolling."
+}

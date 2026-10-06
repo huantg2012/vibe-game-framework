@@ -1,0 +1,774 @@
+{
+  "status": "bounded-art-pass",
+  "source": {
+    "path": "b08-source/source-snapshot.json",
+    "sha256": "b9d215892a0b4487ed640cd9f493a17177e302ba222e3a341d94dc8b1640146e"
+  },
+  "readScope": {
+    "normalWalkPersonallyViewed": 12,
+    "deepFramesPersonallyViewed": 31,
+    "normalGrades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "deepGrade": "medium",
+    "seed": 20261005
+  },
+  "method": "Normal finite FOV and camera; controlled candidate world/training loadout, actual keyboard from original spawn. Full floor geometry read for diagnostic body routing, not novice navigation; no position/HP/clock/fog edits. Enemy and pollution simulation stays active.",
+  "reports": [
+    {
+      "path": "b08-normal/report.json",
+      "sha256": "dbb45b6dbeba68123d656c80034030e3312504a0701bc89227bdb2cc254c91be"
+    },
+    {
+      "path": "b08-deep/report.json",
+      "sha256": "78ba403b219604720ffda10bfd588a03199c61f0a0d3ff3ce896043286e4d815"
+    },
+    {
+      "path": "b08-geometry/final-art-routes.json",
+      "sha256": "915d00d275792cfccd15292138c94d68c2f12906561411e13a7049d5621595a4"
+    }
+  ],
+  "actualFacing": {
+    "allMatched": true,
+    "maximumAngleError": 0.0005026548245650186
+  },
+  "worlds": {
+    "splinter-rotunda": {
+      "status": "bounded-art-pass",
+      "finding": "Three unequal inward rib groups read around a large offset bare court, with actual west/central/east/north approaches. 02 south and 03 west show distinct backed ribs; 04 west exposes northern approach. Unlike root-cistern paired courts, this is one broad interior connecting differently oriented free ends. Fibrous thickness and cut ends remain visible against blue bed.",
+      "limitations": "Entire groups cannot appear simultaneously inside finite FOV; 01 east/02 west mainly document open bed. No full-combat/extraction claim.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 645.36021426036,
+          "y": 172.81917717338757
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 39.632880641999535,
+        "elapsedMs": 27415.5
+      },
+      "stations": [
+        {
+          "requested": {
+            "label": "01-west-opening",
+            "x": 250,
+            "y": 480,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 258.33250630957485,
+            "y": 471.8858708139652
+          },
+          "routeLength": 160,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "02-offset-court",
+            "x": 550,
+            "y": 420,
+            "faces": [
+              [
+                "a",
+                "west"
+              ],
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 535.972266701112,
+            "y": 424.6403020255047
+          },
+          "routeLength": 336,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "03-east-opening",
+            "x": 700,
+            "y": 600,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 691.0509698138356,
+            "y": 588.1216506288135
+          },
+          "routeLength": 336,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "04-north-opening",
+            "x": 650,
+            "y": 160,
+            "faces": [
+              [
+                "s",
+                "south"
+              ],
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 645.36021426036,
+            "y": 172.81917717338757
+          },
+          "routeLength": 528,
+          "precise": false
+        }
+      ]
+    },
+    "quilted-scars": {
+      "status": "bounded-art-pass",
+      "finding": "02 north/south show multiple separated thick leaf ends around low connecting membrane which the player actually crosses. Unlike pleated long mother-sheet or felt concave bowls, there is no continuous tall partition or cavity: interleaved diagonal routes pass leaf groups. Different from ember peripheral broken ring with bare central court.",
+      "limitations": "03 west exterior is hidden by actual light eater; not evidence that whole outer boundary is visible. Material is compressed membrane, not literal woven quilt.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 892.0217043523289,
+          "y": 631.8458189112589
+        },
+        "facingAngle": 3.141341326177514,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 34.555265109999915,
+        "elapsedMs": 46964.8
+      },
+      "stations": [
+        {
+          "requested": {
+            "label": "01-south-membrane",
+            "x": 200,
+            "y": 650,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 201.92895747934756,
+            "y": 657.1647655083372
+          },
+          "routeLength": 64,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "02-low-crossing",
+            "x": 550,
+            "y": 430,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 549.4256939037459,
+            "y": 439.7022919489665
+          },
+          "routeLength": 656,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "03-west-thick-leaf",
+            "x": 150,
+            "y": 220,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 153.67062913980334,
+            "y": 215.30137538219395
+          },
+          "routeLength": 616,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "04-east-leaves",
+            "x": 900,
+            "y": 630,
+            "faces": [
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 892.0217043523289,
+            "y": 631.8458189112589
+          },
+          "routeLength": 1160,
+          "precise": false
+        }
+      ]
+    },
+    "silt-colonnade": {
+      "status": "bounded-art-pass",
+      "finding": "First and second feet were each crossed through their precise native 20px L paths by actual input. Coarse grey pressed granular facets, iron-red cleaved edges and blue bare beds distinguish material roles. Separated bodies require an exposed transfer before the differently oriented second inner turn; unlike continuous cork banks or connected sentinel high/low shoulders.",
+      "limitations": "Third foot has independent static support evidence, but was not crossed in this art run. Shared monolith grammar is explicit; not an entirely new shape per world. Upper exterior partly hidden.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 747.9584631931419,
+          "y": 637.8064649491183
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 27.253987829999588,
+        "elapsedMs": 37015.1
+      },
+      "stations": [
+        {
+          "requested": {
+            "label": "01-first-front",
+            "x": 315.99133272070316,
+            "y": 386.10441656458,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 317.494185996443,
+            "y": 383.8229187126096
+          },
+          "routeLength": 320,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "02-first-inner",
+            "x": 351.4242054993978,
+            "y": 271.55957151841983,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 358.11520272416345,
+            "y": 270.9019427364933
+          },
+          "routeLength": 117.27875061883154,
+          "precise": true
+        },
+        {
+          "requested": {
+            "label": "03-first-side",
+            "x": 505.42444754644544,
+            "y": 319.1974288322278,
+            "precise": true,
+            "faces": [
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 491.2337015913554,
+            "y": 321.5015327690222
+          },
+          "routeLength": 155.02408711982244,
+          "precise": true
+        },
+        {
+          "requested": {
+            "label": "04-second-front",
+            "x": 532.3965863650716,
+            "y": 619.5060064020748,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 537.8048665652728,
+            "y": 611.3871464718536
+          },
+          "routeLength": 384,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "05-second-inner",
+            "x": 630.1363537501315,
+            "y": 524.5797172535235,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 628.5934773918259,
+            "y": 514.5811065561487
+          },
+          "routeLength": 126.73055390576937,
+          "precise": true
+        },
+        {
+          "requested": {
+            "label": "06-second-side",
+            "x": 755.4042200907519,
+            "y": 653.5603423972577,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 747.9584631931419,
+            "y": 637.8064649491183
+          },
+          "routeLength": 188.13875852368065,
+          "precise": true
+        }
+      ]
+    },
+    "shell-causeway": {
+      "status": "bounded-art-pass",
+      "finding": "Actual first cavity entry, low middle crosspass, and opposing second cavity entry establish oblique opposing banks with a transverse walkable low layer. Blue outer shell and pink cut inner lip remain physically thick; low secondary arcs are visibly subordinate. Unlike same-side foam mouths, this route changes side through a low connection.",
+      "limitations": "04 low crosspass partly swallowed by actual light eater; actual input confirms crossing but does not reveal every join surface. No all-wall/all-seed or full expedition claim.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 844.2398760117858,
+          "y": 413.3463550770001
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 24.54439953599929,
+        "elapsedMs": 28848.9
+      },
+      "stations": [
+        {
+          "requested": {
+            "label": "01-outer-shell",
+            "x": 350,
+            "y": 530,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 348.2952696214303,
+            "y": 526.878166211048
+          },
+          "routeLength": 208,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "02-first-mouth",
+            "x": 520.4297585222921,
+            "y": 497.8687796092293,
+            "faces": [
+              [
+                "a",
+                "west"
+              ],
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 509.9874278639335,
+            "y": 489.9794841713522
+          },
+          "routeLength": 200,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "03-first-cavity",
+            "x": 398.23076062040474,
+            "y": 400.8976245590057,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 388.0883077576112,
+            "y": 390.99978944265985
+          },
+          "routeLength": 142.91651543952023,
+          "precise": true
+        },
+        {
+          "requested": {
+            "label": "04-low-crosspass",
+            "x": 590,
+            "y": 430,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 594.2122038801903,
+            "y": 433.5198221064784
+          },
+          "routeLength": 240,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "05-second-mouth",
+            "x": 722.0365609329968,
+            "y": 322.65651359904507,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 728.901986829205,
+            "y": 317.99550902662264
+          },
+          "routeLength": 240,
+          "precise": false
+        },
+        {
+          "requested": {
+            "label": "06-second-cavity",
+            "x": 835.5494560292674,
+            "y": 405.28207046169564,
+            "precise": true,
+            "faces": [
+              [
+                "d",
+                "east"
+              ],
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 844.2398760117858,
+            "y": 413.3463550770001
+          },
+          "routeLength": 137.81373840781268,
+          "precise": true
+        }
+      ]
+    }
+  },
+  "personallyViewedFrames": [
+    {
+      "path": "b08-normal/quilted-scars-low-walk.png",
+      "sha256": "30dc15026b183b9425a878cef076217e25b8714187b42f3206fb6ba14ae577ae"
+    },
+    {
+      "path": "b08-normal/quilted-scars-medium-walk.png",
+      "sha256": "df3de8e0aa65fc8cf613655bb4d9e0cc87ed8eb11793f1821b9bff01978f167f"
+    },
+    {
+      "path": "b08-normal/quilted-scars-severe-walk.png",
+      "sha256": "577e95aa9abf4aedcc2c7aba2390b7dca5e5c70acdec8234dd25163872e3fcda"
+    },
+    {
+      "path": "b08-normal/shell-causeway-low-walk.png",
+      "sha256": "040ec9c2fb4d27d036d5cf86e41ae443069b9e92731bbb694a2a6f56774319d7"
+    },
+    {
+      "path": "b08-normal/shell-causeway-medium-walk.png",
+      "sha256": "d7e77a3238295030987881dcd324d071ff4ec38dc8e47fa47fbb2f7df0d98ae6"
+    },
+    {
+      "path": "b08-normal/shell-causeway-severe-walk.png",
+      "sha256": "5797019758e8594f8389fcd3e9635e3ff02ff34cd0f7979bd906ec17af6a6599"
+    },
+    {
+      "path": "b08-normal/silt-colonnade-low-walk.png",
+      "sha256": "e3364208bef861cc51cf938d3ab0cb77d4a500d4b00fb8ee9a7c4ba054057520"
+    },
+    {
+      "path": "b08-normal/silt-colonnade-medium-walk.png",
+      "sha256": "1c9c4bdf7dee83212a36555e0a853513640c5e0807b80ea4f2a66239750b5798"
+    },
+    {
+      "path": "b08-normal/silt-colonnade-severe-walk.png",
+      "sha256": "47b5e26a8bbdd530449532b644358eb269a8e4cf889076a8a604200d32a685c2"
+    },
+    {
+      "path": "b08-normal/splinter-rotunda-low-walk.png",
+      "sha256": "287d7137ab39c9c600274301fe06c8d838f44d31faa00c4fecf76c7d3e3c1094"
+    },
+    {
+      "path": "b08-normal/splinter-rotunda-medium-walk.png",
+      "sha256": "77275aff8fe4eaff74ea6bed498ef7b970711620baad5ee4d28d91b375159d5a"
+    },
+    {
+      "path": "b08-normal/splinter-rotunda-severe-walk.png",
+      "sha256": "4045da6905e16a27aabb6940f88d17cb1ef66f2e6da460ed6699730816b64abe"
+    },
+    {
+      "path": "b08-deep/quilted-scars/01-south-membrane-east.png",
+      "sha256": "0c2734e9af9670294a516725dc53fa3d326a6610a180eb4649f70db453ab837c"
+    },
+    {
+      "path": "b08-deep/quilted-scars/02-low-crossing-north.png",
+      "sha256": "87adeee7afe75ad5cf20e25a843d80c03b7bb9d877ed6ea8b2fb8caaad3cee0f"
+    },
+    {
+      "path": "b08-deep/quilted-scars/02-low-crossing-south.png",
+      "sha256": "520dfa96f632179b27b4d0f7b81b15fbe2c2275abe08828f242d7413f8fe867c"
+    },
+    {
+      "path": "b08-deep/quilted-scars/03-west-thick-leaf-east.png",
+      "sha256": "053bc5d3aa07fb7c5ed0047be11267a60ebc61da73542681ffd123f988adc78d"
+    },
+    {
+      "path": "b08-deep/quilted-scars/04-east-leaves-west.png",
+      "sha256": "4209e95ccd577af56f56cab02620678e5270408587d1adf47e84ff6904a33a1c"
+    },
+    {
+      "path": "b08-deep/shell-causeway/01-outer-shell-north.png",
+      "sha256": "9c90a4ea7a4801c3b536ae7fad8e2a61b86796501fa7ffa47e0b30bc1c88c048"
+    },
+    {
+      "path": "b08-deep/shell-causeway/02-first-mouth-north.png",
+      "sha256": "7e1c0cd95071d5ceed540058ab99fad58d34ea9c570985ab1621f6505bdf72f4"
+    },
+    {
+      "path": "b08-deep/shell-causeway/02-first-mouth-west.png",
+      "sha256": "6297d60f0742e0d021229df0b5b79bfd773a7bf8eaf6f79d79ce1b53c819f23d"
+    },
+    {
+      "path": "b08-deep/shell-causeway/03-first-cavity-north.png",
+      "sha256": "d81df9b19b015c064c4321bc8e1eed74151baab41db4a9cce57eb1791caf0405"
+    },
+    {
+      "path": "b08-deep/shell-causeway/03-first-cavity-west.png",
+      "sha256": "92db238138083f2155be7cd759412475210da1508a78b784f0f2e10d5098f261"
+    },
+    {
+      "path": "b08-deep/shell-causeway/04-low-crosspass-east.png",
+      "sha256": "a605c6fca422370d0f66edde5c778b2ec21f973deeae2705659f1fa14d43139b"
+    },
+    {
+      "path": "b08-deep/shell-causeway/05-second-mouth-east.png",
+      "sha256": "ac677393c2b47c49279a1ace3bfa976845c8a5d70c7279ed804288ad2f823bc4"
+    },
+    {
+      "path": "b08-deep/shell-causeway/06-second-cavity-east.png",
+      "sha256": "404fce4393aa3a473b9b305fabd4f2d420f9c79387d5906d187167a330dfd6b0"
+    },
+    {
+      "path": "b08-deep/shell-causeway/06-second-cavity-south.png",
+      "sha256": "9ee6f900b48817a99cb6453d64ece0038412afc17f4c13d784cdac0a85f51141"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/01-first-front-north.png",
+      "sha256": "26029db1928c7e8448c4b046e99e330ef87bd21dde3d75211f77c372c3d6f680"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/02-first-inner-east.png",
+      "sha256": "dafdaadb16fab011adc2b7a930468788f35c597ec5dfe276f54d4a0fbdf91a12"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/02-first-inner-north.png",
+      "sha256": "4bdda1b1b7e88026150c7089a73098c5c49c230dadc7b67c3648bfdacd34b24e"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/03-first-side-west.png",
+      "sha256": "c26daebef05794066c9a30af622b59dd0b0bdc80b785863f76abc3b3bc2d488f"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/04-second-front-east.png",
+      "sha256": "7e4b2a2ad4af11f6529dbc7ba69c822f358b6fb26f0e6571f5efa42b5a59900d"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/04-second-front-north.png",
+      "sha256": "5d7219bf4a512322407388c2a03e049c8efda3feb905eeaa51684b8eebc830bd"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/05-second-inner-north.png",
+      "sha256": "a912bee9a6bb59f6a64d5fd8a3eb6206197f041fa6de4e8c6890275031b23459"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/06-second-side-north.png",
+      "sha256": "66c8b0fdc53b25f14468aff5dc9657517a881d5aa134006a53bae3333f128615"
+    },
+    {
+      "path": "b08-deep/silt-colonnade/06-second-side-west.png",
+      "sha256": "c202b7e54a094336617ecc39cd56a6dc36ef1b530233232328f33e1a45db6f17"
+    },
+    {
+      "path": "b08-deep/splinter-rotunda/01-west-opening-east.png",
+      "sha256": "7ebd89786834fbe3df005992d9bb69343eccabf8e7f9ad40522bbc026120dd16"
+    },
+    {
+      "path": "b08-deep/splinter-rotunda/01-west-opening-north.png",
+      "sha256": "5561bfb497322db55689995806a60dab380fd8b2fb703c8790f68066f689996d"
+    },
+    {
+      "path": "b08-deep/splinter-rotunda/02-offset-court-south.png",
+      "sha256": "a1ab355ff3181524190db39ee6a80a1087ae3ad68656988702cc01946437c5da"
+    },
+    {
+      "path": "b08-deep/splinter-rotunda/02-offset-court-west.png",
+      "sha256": "6d7a644c1df3db23eb948b646c92049a4503518e907dbb066d6bbace5bdd8e09"
+    },
+    {
+      "path": "b08-deep/splinter-rotunda/03-east-opening-north.png",
+      "sha256": "f976dd3097bf369ab83a7f6d404b07513885eb51953a30c4249a9000b161f56b"
+    },
+    {
+      "path": "b08-deep/splinter-rotunda/03-east-opening-west.png",
+      "sha256": "2869a9cdd20747537cc4a9b85e80db6ef7a766ba2153a001c575db6bb0fc97c5"
+    },
+    {
+      "path": "b08-deep/splinter-rotunda/04-north-opening-south.png",
+      "sha256": "422ba41bda87d1827c33af1bf2a49af3ef690ad5056d8560f1bcc2162d5ba66f"
+    },
+    {
+      "path": "b08-deep/splinter-rotunda/04-north-opening-west.png",
+      "sha256": "e6a96c24079aed8c078faa6a4e3fc09dd3d1a4c2a4b7f9a88fe09e44d8568f97"
+    }
+  ],
+  "limitations": [
+    "Training fixture and read-only full floor routing, not novice navigation or natural inventory.",
+    "Actual enemies/pollution active; no position/HP/clock/fog edits.",
+    "No human approval or whole-library fatigue claim."
+  ],
+  "independentReview": {
+    "reviewer": "root",
+    "verdict": "Bounded pass: segmented inward ribs and quiet court; thick leaves with low crossing and bare-bed boundary; coarse granular L mouths with real routes; opposing thick shell cavities and differently oriented connection. No whole-wall, third-column actual crossing or full expedition claim.",
+    "frames": [
+      {
+        "path": "b08-deep/splinter-rotunda/03-east-opening-west.png",
+        "sha256": "2869a9cdd20747537cc4a9b85e80db6ef7a766ba2153a001c575db6bb0fc97c5"
+      },
+      {
+        "path": "b08-deep/quilted-scars/02-low-crossing-north.png",
+        "sha256": "87adeee7afe75ad5cf20e25a843d80c03b7bb9d877ed6ea8b2fb8caaad3cee0f"
+      },
+      {
+        "path": "b08-deep/silt-colonnade/02-first-inner-east.png",
+        "sha256": "dafdaadb16fab011adc2b7a930468788f35c597ec5dfe276f54d4a0fbdf91a12"
+      },
+      {
+        "path": "b08-deep/shell-causeway/03-first-cavity-north.png",
+        "sha256": "d81df9b19b015c064c4321bc8e1eed74151baab41db4a9cce57eb1791caf0405"
+      },
+      {
+        "path": "b08-deep/silt-colonnade/02-first-inner-north.png",
+        "sha256": "4bdda1b1b7e88026150c7089a73098c5c49c230dadc7b67c3648bfdacd34b24e"
+      },
+      {
+        "path": "b08-deep/silt-colonnade/06-second-side-west.png",
+        "sha256": "c202b7e54a094336617ecc39cd56a6dc36ef1b530233232328f33e1a45db6f17"
+      },
+      {
+        "path": "b08-deep/splinter-rotunda/02-offset-court-south.png",
+        "sha256": "a1ab355ff3181524190db39ee6a80a1087ae3ad68656988702cc01946437c5da"
+      },
+      {
+        "path": "b08-deep/shell-causeway/06-second-cavity-south.png",
+        "sha256": "9ee6f900b48817a99cb6453d64ece0038412afc17f4c13d784cdac0a85f51141"
+      },
+      {
+        "path": "b08-deep/quilted-scars/03-west-thick-leaf-east.png",
+        "sha256": "053bc5d3aa07fb7c5ed0047be11267a60ebc61da73542681ffd123f988adc78d"
+      }
+    ]
+  }
+}

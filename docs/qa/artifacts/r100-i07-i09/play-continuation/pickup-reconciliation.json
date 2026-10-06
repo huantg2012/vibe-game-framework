@@ -1,0 +1,38 @@
+{
+  "scope": "Correct target-log undercount from unchanged actual terminal and settled-save records; original summaries kept. No gameplay replay or gate relaxation.",
+  "before": "docs/qa/artifacts/r100-i07-i09/play-continuation/old20-summary.json",
+  "after": "docs/qa/artifacts/r100-i07-i09/play-continuation/old20-reconciled-summary.json",
+  "changes": [
+    {
+      "report": "docs/qa/artifacts/r100-i07-i09/legacy20-play-recheck-077-078-v13/001-pressed-dunes-severe-20261005/report.json",
+      "beforeCollected": [],
+      "afterCollected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 819.7950963503013,
+          "elapsedMs": 103762.51000000071,
+          "timing": "terminal upper bound; exact completion time was not captured",
+          "evidence": "entry-uncollected / terminal-collected / same-run-settled",
+          "settledProof": {
+            "kindlingGained": 12
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-2",
+          "distanceFromEntry": 826.9461893013354,
+          "elapsedMs": 103762.51000000071,
+          "timing": "terminal upper bound; exact completion time was not captured",
+          "evidence": "entry-uncollected / terminal-collected / same-run-settled",
+          "settledProof": {
+            "returnedIds": [
+              "CAT_48dac475-50eb-492b-9a62-b3aead01ca2c_r100-contaminant-deep-2"
+            ]
+          }
+        }
+      ],
+      "searchAndExtractBefore": false,
+      "searchAndExtractAfter": true
+    }
+  ],
+  "helperSha256": "8d58a4aea1366bd50fee9f11f98258280c0f51f76be92da3065bbcba9b089a51"
+}

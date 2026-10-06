@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "command": "node tools/world-study/check-r100-library-resume.mjs",
+  "exitCode": 1,
+  "label": "unknown-field",
+  "timeoutMs": 20000,
+  "error": "AssertionError [ERR_ASSERTION]: unknown-field: dispatcher must reject before a worker timeout; actual Error: spawnSync /usr/local/bin/node ETIMEDOUT; expected undefined",
+  "childCommand": "node node_modules/tsx/dist/cli.mjs --tsconfig tools/contam-preview/tsconfig.json tools/world-study/check-r100-library.ts --case-list <temporary>/unknown-field/case-list.json --executor <temporary>/original/qualification-fixture.mjs --concurrency 1 --report <temporary>/unknown-field/report.json",
+  "scope": "Synthetic dispatch unit, not production world qualification. First two invalid argument cases had completed; third child timed out. Temporary fixture folder was cleaned by the test finally block.",
+  "diagnosis": "Suspected repeated TSX cold import cost; not yet proven. Next bounded repair bundles the driver once, retaining the same 20000ms timeout."
+}

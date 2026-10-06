@@ -1,0 +1,894 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-06T06:42:33.368904+00:00",
+  "status": "bounded-low-static-review-no-new-blocker-observed",
+  "reviewer": "world_loot_pixels",
+  "reviewerRole": "知情美术审查者；参与过材料/外观制作，非盲测、非用户终审。",
+  "method": "直接逐张查看已完成低污染连续链的28张原始正常PNG：每趟深入探索与第一次搜取各1张，另对最相近组合及明显不同组合补4张后续帧。未开浏览器、未截图、未调色/裁切/增亮，未改源/策略。只取报告身份和对应截图附近快照用于核实，未以隐藏内容决定图审结论。",
+  "input": {
+    "report": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/report.json",
+      "sha256": "11ec48306fc0aa1e70d2e5755b3f8580f98a77be6d1f0adf792c3c45eb9bf883"
+    },
+    "journey": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/journey.jsonl",
+      "sha256": "b359ce77ecf5a49872efc687ab72110b461e356a5122cf3865810cb9295c4fbe"
+    },
+    "policy": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/policy-freeze.json",
+      "sha256": "f8415fd5b9d1a3292d4487d72a590d4b34495334697af80cddb652376262f99e"
+    },
+    "serverManifest": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/server-manifest.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    "originalFinalSource": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    }
+  },
+  "scope": {
+    "branch": "low",
+    "rounds": 12,
+    "uniqueWorlds": 11,
+    "personallyViewedPngCount": 28,
+    "allImagesNormalGameplay": true,
+    "dynamicVideoReviewed": false,
+    "audioHeard": false,
+    "humanPlayerReview": false,
+    "wholeRouteVisualInspection": false,
+    "all52WorldsCovered": false
+  },
+  "reportedJourneyFacts": {
+    "source": "report.json only, not independently replayed",
+    "extractOutcomes": 12,
+    "errorCount": 0,
+    "searchCompletions": 24,
+    "worldSequence": [
+      "shell-gel-delta",
+      "wax-tongues",
+      "laminate-shell",
+      "fibre-silt",
+      "pale-sail",
+      "ribbed-delta",
+      "scab-islands",
+      "monolith-sill",
+      "wax-tongues",
+      "ivory-basin",
+      "resin-hollows",
+      "gel-fibre"
+    ]
+  },
+  "comparisons": [
+    {
+      "kind": "closest-observed-distinct-worlds",
+      "worlds": [
+        "fibre-silt",
+        "gel-fibre"
+      ],
+      "ordinals": [
+        4,
+        12
+      ],
+      "primaryFrames": [
+        "4-far-exploration",
+        "12-far-exploration"
+      ],
+      "supportingFrames": [
+        "4-search-1",
+        "12-search-1",
+        "4-continued-exploration-2",
+        "12-continued-exploration-3"
+      ],
+      "similarity": "长纤维从左下向右上分叉，细平行层理和局部青绿侵蚀的基本画面结构非常接近，是这条链中最弱的不同世界组合。",
+      "nonColorDifferences": [
+        "第4趟主视野为粗颗粒地床与裸露束条，第12趟束条下有浅蓝宽填体和明确抬升断面。",
+        "第12趟地面连续大流纹和宽抬升面，第4趟是粗碎颗粒与较窄束条；区别不只黄/蓝换位。"
+      ],
+      "judgment": "已见局部可分但近邻较弱；不提出当前生产阻断，也不据这些视角签两张世界全程足够不同。",
+      "limitations": [
+        "种子不同，位置约(347.9,243.4)与(373.8,258.8)，未锁同朝向。",
+        "第4趟搜取和续探帧有折角底片HUD效果，因此主要对照采用两张无该活动提示的探索帧。",
+        "后续帧均未覆盖完整主体，不能证明整个路线组织或统计疲劳。"
+      ]
+    },
+    {
+      "kind": "clearly-different-observed-worlds",
+      "worlds": [
+        "pale-sail",
+        "resin-hollows"
+      ],
+      "ordinals": [
+        5,
+        11
+      ],
+      "primaryFrames": [
+        "5-far-exploration",
+        "11-far-exploration"
+      ],
+      "supportingFrames": [
+        "5-search-1",
+        "11-search-1"
+      ],
+      "nonColorDifferences": [
+        "第5趟是宽连续褶面、多个折坡/谷和有厚度的折断端；第11趟露出圆弧内壁、弧口断端与低床关系。",
+        "第5趟附近路线贴着斜折壁一侧，第11趟局部空处被弧形内壁部分围住；此差异在露出的实体轮廓上可见，不需要名字解释。"
+      ],
+      "judgment": "此处材质组织与局部空间的差异明确，非单纯冷暖换色。",
+      "limitations": [
+        "只签可见部分；第11趟没有完整三腔同时在画。",
+        "站位与朝向不同，不可比较准确高度/比例，也不能由此推断整地图通路。"
+      ]
+    },
+    {
+      "kind": "same-world-repeat-observation",
+      "worlds": [
+        "wax-tongues"
+      ],
+      "ordinals": [
+        2,
+        9
+      ],
+      "primaryFrames": [
+        "2-far-exploration",
+        "9-far-exploration"
+      ],
+      "judgment": "实际两次抽到同世界，黄顶/粉厚断面宽叶与紫色低床可稳定复认；不同站位说明方向变化，不当作跨世界多样性证据。",
+      "limitations": [
+        "不是连续相邻重复。",
+        "一次12趟链不能估计全库概率或证明长期疲劳/不疲劳。"
+      ]
+    }
+  ],
+  "dimensionFindings": {
+    "material": "粗颗粒、细层理、宽流纹、褶面与圆弧厚壁在所见场景中有差别；近邻共享底层组织依然明显，不能宣称新增世界都有独立微结构。",
+    "localIdentity": "主体露入灯光时常可读；6探索、9搜取、12续探等主要只见床面，局部信息有限。未观察到由此造成玩家迷路的因果。",
+    "blockingBoundary": "照见的纤束、蜡舌/厚叶、褶幕和大板/弧壁具有侧面或厚沿，未在这些帧中发现明确消失却阻挡的边界。截图不能核实精确20px身体支持或黑暗中的墙；这里不重新签碰撞。",
+    "lightAndContamination": "正常本色可为蓝、粉、黄等，青绿蚀处局限在结构/污染体，未把全部背景染成污染绿。暗材仍有纹理/受光面；真实黑区保留。单帧黑色也可能来自视野外、地形VOID或遮挡，本审查不把每个黑区都归为吞光，不签吞光范围/动态功能。",
+    "searchRemains": "可见暖曲块、白小壳等仍有独立厚度和来源色，未出现全部同一通用石堆的回归。搜后帧不适合验证搜前隐藏奖励识别，未据此签所有残骸。"
+  },
+  "newBlockers": [],
+  "i10CandidateUpdate": {
+    "proposal": {
+      "path": "/tmp/r100-i10-art-gaps.md",
+      "sha256": "b3bea0ec3d9fffe6342343905bd290c48641201d68c0533a62f7b0be26864b97"
+    },
+    "retainWithDirectLocalSupport": [
+      {
+        "candidate": 2,
+        "reason": "纤维两世界共享长叉束，加上很多高体只露一片大面，支持下一批试中尺度断开错搭的构件关系。只是新内容方向，不要求返工已通过近邻。",
+        "frames": [
+          "4-far-exploration",
+          "12-far-exploration",
+          "8-search-1"
+        ]
+      },
+      {
+        "candidate": 4,
+        "reason": "同一链里，多张搜取/续探只见床面；支持设计一个近距小视野可复认的真实材料交会。不能推断实际迷路，更不能用补光抹掉潜行黑暗。",
+        "frames": [
+          "6-far-exploration",
+          "9-search-1",
+          "12-continued-exploration-3"
+        ]
+      }
+    ],
+    "retainAsUnprovenPlanningCandidates": [
+      {
+        "candidate": 1,
+        "reason": "样本所见仍多为高体与周边低床，但未查看全部路线，不能从有限静帧证明地床组织普遍不足。"
+      },
+      {
+        "candidate": 3,
+        "reason": "本低链没有felt/cork母版，不能用这一批为短纤毡/孔髓新物性追加实证；仍是之前材料能力审查的未实施候选。"
+      }
+    ],
+    "implementationAuthorizedHere": false,
+    "awaitOtherBranchesBeforeFinalPriority": true
+  },
+  "limitations": [
+    "这是12趟实际连续抽取的静帧检查，不是本人连续操控，也未看WebM。",
+    "28张所见PNG覆盖11个不同世界、仅低污染、各局部视野；不外推52世界或中/重污染。",
+    "装备、视距被动、当前工具效果、站位、朝向和时机未统一；不能从亮度差异推断相同材料管线参数。",
+    "不把报告0错误/成功撤回当作视觉全覆盖，也不把美术结论作为经济/战术/性能签字。",
+    "真实音频没有审听，动态闪烁、运动反馈和长期视听疲劳均未验证。"
+  ],
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/1-far-exploration.png",
+      "sha256": "9c5e36a3199e1a0328726d2c2530e842abba72203b3869d9bb1218347810fd7a",
+      "label": "1-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 1,
+      "worldId": "shell-gel-delta",
+      "requestedSeed": 1980094257,
+      "grade": "low",
+      "finding": "粉紫抬升断唇与褐色流向地床相接，靠近角色的弯曲厚边可见；主体上部不在完整视野中。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:09:46.488Z",
+        "position": {
+          "x": 386.3236349962013,
+          "y": 265.2859719567156
+        },
+        "elapsedMs": 11566.199999999992,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/1-search-1.png",
+      "sha256": "3665372cfddb9acc4be5b91ed4b6a3e6d6c571f3a52508dda8d358dc1c9d9e14",
+      "label": "1-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 1,
+      "worldId": "shell-gel-delta",
+      "requestedSeed": 1980094257,
+      "grade": "low",
+      "finding": "上方有限视野中流纹地表和同源暖色曲块残骸可辨，翻找后的奖励提示不作为预先识别内容的证据。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:09:55.049Z",
+        "position": {
+          "x": 510.0883784160827,
+          "y": 70.73055460186893
+        },
+        "elapsedMs": 20165.859999999884,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/2-far-exploration.png",
+      "sha256": "abd1479f71e8cc337724a1804c5ee59461ef9e703c713f1d5f60126e178c4a8d",
+      "label": "2-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 2,
+      "worldId": "wax-tongues",
+      "requestedSeed": 4291898064,
+      "grade": "low",
+      "finding": "紫色低床上方露出不等叶端，黄顶、粉断面和背光侧形成厚度；不是仅用地面颜色画出的障碍。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:12:07.188Z",
+        "position": {
+          "x": 697.0158505405577,
+          "y": 339.1738711340679
+        },
+        "elapsedMs": 17349.290000000008,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/2-search-1.png",
+      "sha256": "37efacfc203e7cd83511a565917a42453067264cd1bede198baf8d03cc7b09aa",
+      "label": "2-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 2,
+      "worldId": "wax-tongues",
+      "requestedSeed": 4291898064,
+      "grade": "low",
+      "finding": "宽叶端与低床边界仍清楚，场内敌人与右上可见污染体保留；高体只露一个端部。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:12:15.286Z",
+        "position": {
+          "x": 910.2019867191971,
+          "y": 206.45338078223384
+        },
+        "elapsedMs": 25432.339999999964,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/3-far-exploration.png",
+      "sha256": "35734f1ef3e44d4d28e4c1a42e1a626cc03042cfac75d1940795607e7eb2193b",
+      "label": "3-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 3,
+      "worldId": "laminate-shell",
+      "requestedSeed": 3015699201,
+      "grade": "low",
+      "finding": "冷蓝颗粒地与粉色异材斑相接，前方长暗板有细亮上沿；HUD显示空白相框2秒，本帧不作无道具效果的严格光照基准。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:14:13.844Z",
+        "position": {
+          "x": 300.71275100931155,
+          "y": 67.8283976657338
+        },
+        "elapsedMs": 23582.40000000014,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/3-search-1.png",
+      "sha256": "64f3583a3ccdeeb975dc84a95f6259a7029530bc98851df59e46ebfb1bc4d96d",
+      "label": "3-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 3,
+      "worldId": "laminate-shell",
+      "requestedSeed": 3015699201,
+      "grade": "low",
+      "finding": "板体顶面、前壁与薄亮底沿分开，青绿集中于局部蚀处；不将画面中心的大暗面当吞光区。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:14:17.793Z",
+        "position": {
+          "x": 456.82411767597637,
+          "y": 67.8283976657338
+        },
+        "elapsedMs": 27532.22000000012,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/4-far-exploration.png",
+      "sha256": "2d279696b2360a936422d312c9823be7261f01311135620e902fa44ccd6d954e",
+      "label": "4-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 4,
+      "worldId": "fibre-silt",
+      "requestedSeed": 2474924354,
+      "grade": "low",
+      "finding": "赭黄粗颗粒地上横过长叉纤束，细平行层理、实物下沿和青绿蚀处分离；这是本批最相近组合的一端。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:15:58.609Z",
+        "position": {
+          "x": 347.8723254008296,
+          "y": 243.37604811760738
+        },
+        "elapsedMs": 13916.08000000009,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/4-search-1.png",
+      "sha256": "1aa931ab89d5decf8e0e23c8eb724814bf45ecd83563fa3fba96faa04cee7f60",
+      "label": "4-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 4,
+      "worldId": "fibre-silt",
+      "requestedSeed": 2474924354,
+      "grade": "low",
+      "finding": "只有颗粒地及一小截纤束；HUD显示折角底片4秒，列为实玩效果帧，不充当无效果的材质对照。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:16:17.454Z",
+        "position": {
+          "x": 470.6967517825439,
+          "y": 127.58839517946818
+        },
+        "elapsedMs": 32748.660000000058,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/5-far-exploration.png",
+      "sha256": "624289244afb2c7033432a78ec171f25f21e5e3b74aa3349a2d8c96039c5fd4b",
+      "label": "5-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 5,
+      "worldId": "pale-sail",
+      "requestedSeed": 1637391975,
+      "grade": "low",
+      "finding": "左前白灰褶面有不等折坡、暗折谷及粉色厚断端；角色右侧仍留低床，局部形体能从颜色之外识别。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:18:31.519Z",
+        "position": {
+          "x": 468.5990807709444,
+          "y": 327.4862873066991
+        },
+        "elapsedMs": 16832.679999999997,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/5-search-1.png",
+      "sha256": "0820b69193c7d51092491e4f9a1187ba2730a1755ea7f0bc6cb7cad87244dba1",
+      "label": "5-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 5,
+      "worldId": "pale-sail",
+      "requestedSeed": 1637391975,
+      "grade": "low",
+      "finding": "粗褶断面形成折角并露出撕断端，角色附近低床没有被涂成同一个平面。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:18:37.050Z",
+        "position": {
+          "x": 423.7479064817633,
+          "y": 155.30186543529385
+        },
+        "elapsedMs": 22365.779999999733,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/6-far-exploration.png",
+      "sha256": "3be1d2eca791f22e92b0348a6ab518065be91ea7e4ce1d765ba9a956a933745e",
+      "label": "6-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 6,
+      "worldId": "ribbed-delta",
+      "requestedSeed": 1663718475,
+      "grade": "low",
+      "finding": "大部分是红色带方向裂纹的地床和一小截蓝边，没有照见完整肋列；不据此签肋列组织。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:20:04.578Z",
+        "position": {
+          "x": 645.2247806666663,
+          "y": 588
+        },
+        "elapsedMs": 7566.37000000005,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/6-search-1.png",
+      "sha256": "96654e14c59fb96fa82027ef64f8ba133cd9c91eb1d772e3c3601aad550968d5",
+      "label": "6-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 6,
+      "worldId": "ribbed-delta",
+      "requestedSeed": 1663718475,
+      "grade": "low",
+      "finding": "红粗地、蓝异材斑和暖色遗留物可辨，未露出主体肋架；支持材质连续，不支持完整巨构审查。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:20:09.364Z",
+        "position": {
+          "x": 824.8025773475663,
+          "y": 558.7661193403897
+        },
+        "elapsedMs": 12366.180000000024,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/7-far-exploration.png",
+      "sha256": "c5e795592d8d274c3bfb4a2423fb7841ef62fe0a51de992ac0646c3b5f35580d",
+      "label": "7-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 7,
+      "worldId": "scab-islands",
+      "requestedSeed": 1505054286,
+      "grade": "low",
+      "finding": "蓝色粗地中两块偏红厚叶的尖端及亮断面露出，叶间空隙可见；不代表三组整体构图。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:22:38.077Z",
+        "position": {
+          "x": 584.5914469231318,
+          "y": 522.3847331804803
+        },
+        "elapsedMs": 9082.970000000048,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/7-search-1.png",
+      "sha256": "783ba07a38b0df931f9a2e560f437aaeb100432f37ab19c6a43bd472a4baeaa7",
+      "label": "7-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 7,
+      "worldId": "scab-islands",
+      "requestedSeed": 1505054286,
+      "grade": "low",
+      "finding": "厚叶红顶和浅粉侧面压住蓝粗地，末端有明确厚度；并非与地表同层的彩色贴片。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:22:43.278Z",
+        "position": {
+          "x": 776.8569120414421,
+          "y": 477.3915306247852
+        },
+        "elapsedMs": 14282.760000000022,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/8-far-exploration.png",
+      "sha256": "21b7b6f299ffdc398be941f58c69d5597c53f726feff30a44bcf0021952ac794",
+      "label": "8-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 8,
+      "worldId": "monolith-sill",
+      "requestedSeed": 3421537417,
+      "grade": "low",
+      "finding": "浅粉粗地旁仅有高体的暗蓝斜面和局部亮厚沿；边界可读，整件L口未被此帧覆盖。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:25:13.438Z",
+        "position": {
+          "x": 592.7162192503548,
+          "y": 554.9859801364456
+        },
+        "elapsedMs": 7849.670000000056,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/8-search-1.png",
+      "sha256": "227150884df0aa8cacae6c8e3318b539b219167327f3115edd321be021809762",
+      "label": "8-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 8,
+      "worldId": "monolith-sill",
+      "requestedSeed": 3421537417,
+      "grade": "low",
+      "finding": "暗蓝大顶面与浅色厚前沿分离，地面在其下方继续；不能用这一个端面证明整个分足通路。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:25:18.237Z",
+        "position": {
+          "x": 794.4642901090367,
+          "y": 542.528875118101
+        },
+        "elapsedMs": 12649.49000000003,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/9-far-exploration.png",
+      "sha256": "37f10d1324d0bff9a8b3b6a37d707743197f63d2cda0dadb1654cfa308caabaf",
+      "label": "9-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 9,
+      "worldId": "wax-tongues",
+      "requestedSeed": 3761601451,
+      "grade": "low",
+      "finding": "同一蜡舌世界再次出现，仍可认出黄顶/粉断面宽叶和中间紫色低床；视角不同，不能量化种子形变。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:27:50.017Z",
+        "position": {
+          "x": 708.590844069003,
+          "y": 330.095546500532
+        },
+        "elapsedMs": 36965.16000000041,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/9-search-1.png",
+      "sha256": "4ccacbef103c146bfdc2d30bb3ccb3bdf25b62b7181316286040a08ac7c086b1",
+      "label": "9-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 9,
+      "worldId": "wax-tongues",
+      "requestedSeed": 3761601451,
+      "grade": "low",
+      "finding": "大部分只见紫色地床与污染体，不能从本帧单独推断蜡舌布局；需要结合同趟探索帧。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:27:58.210Z",
+        "position": {
+          "x": 886.3724951588235,
+          "y": 210.929626118338
+        },
+        "elapsedMs": 45164.820000001564,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/10-far-exploration.png",
+      "sha256": "627374f5f3791a653c987d2ce3356c660cf81166e9d617c0df546bd2e2b69366",
+      "label": "10-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 10,
+      "worldId": "ivory-basin",
+      "requestedSeed": 2246577925,
+      "grade": "low",
+      "finding": "灰粉粗地、左侧小曲壳残骸和右上方部分奶白弧唇分开；可见黑洞/视野外黑暗的具体来源不能只凭静帧判定。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:30:12.528Z",
+        "position": {
+          "x": 480.7997272000023,
+          "y": 380
+        },
+        "elapsedMs": 4083.16000000005,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/10-search-1.png",
+      "sha256": "61eef98e909884fa8286a6c3e0eba17ca14777cb6a1815a2d95ea99efc1410b2",
+      "label": "10-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 10,
+      "worldId": "ivory-basin",
+      "requestedSeed": 2246577925,
+      "grade": "low",
+      "finding": "普通受光地表、小壳残骸、青绿污染体不同；上方大黑区不能只凭图像断言全是吞光或全是VOID。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:30:17.937Z",
+        "position": {
+          "x": 661.9999001,
+          "y": 395.44561023348797
+        },
+        "elapsedMs": 9499.609999999975,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/11-far-exploration.png",
+      "sha256": "ddc3a09dc145dd6a8753247e76031a31cd660363828cfb216be3c29f59b0b763",
+      "label": "11-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 11,
+      "worldId": "resin-hollows",
+      "requestedSeed": 4091201791,
+      "grade": "low",
+      "finding": "蓝灰流向地床旁露出紫色圆弧厚内壁、断端和较平滑的面，局部与白色折幕区别明显。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:31:57.905Z",
+        "position": {
+          "x": 518.6449896672074,
+          "y": 514.1439441302081
+        },
+        "elapsedMs": 8482.939999999944,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/11-search-1.png",
+      "sha256": "76256c330f801515b5e5a072d5e4014ba31657d9a5a861653f0b57b36e36e15b",
+      "label": "11-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 11,
+      "worldId": "resin-hollows",
+      "requestedSeed": 4091201791,
+      "grade": "low",
+      "finding": "弧形内壁只露左侧一段，内侧暗面/亮边与地床分离；其余腔壁被黑暗遮住，未签全圈边界。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:32:05.639Z",
+        "position": {
+          "x": 713.0115822585153,
+          "y": 488.00614943001915
+        },
+        "elapsedMs": 16215.999999999683,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/12-far-exploration.png",
+      "sha256": "a3645097e49bd0b7b81f05987cd50c0cce9dacb310e709a79666c65ac07ccd6e",
+      "label": "12-far-exploration",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 12,
+      "worldId": "gel-fibre",
+      "requestedSeed": 999781258,
+      "grade": "low",
+      "finding": "叉束下方有独立浅蓝抬升填体，带宽断面；地床较平滑并有流向，区别于第4趟粗颗粒地，但叉束主剪影仍明显同族。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:34:04.234Z",
+        "position": {
+          "x": 373.78972967959226,
+          "y": 258.79507773727096
+        },
+        "elapsedMs": 12449.49999999984,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/12-search-1.png",
+      "sha256": "14e8f1a94238018f3e69e98f17bc431269ffb970aab8a060e832b39bc3fc8e23",
+      "label": "12-search-1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 12,
+      "worldId": "gel-fibre",
+      "requestedSeed": 999781258,
+      "grade": "low",
+      "finding": "长叉束覆盖浅蓝填体，细层理和宽面在同一个视口并存；主剪影与第4趟相近，但存在非颜色的填体断面差异。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:34:12.634Z",
+        "position": {
+          "x": 531.0608373187015,
+          "y": 140.75259813050684
+        },
+        "elapsedMs": 20865.83999999978,
+        "exactShutterSynchronization": false
+      },
+      "comparisonLimitation": "普通实玩截图，站位、朝向、装备/效果和截取时机不同；不是同机位、同灯光状态的A/B。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/4-continued-exploration-2.png",
+      "sha256": "912e7edc87d13eecd9bf4ed509eef283497a8ff1e7bd94092295720badf2c083",
+      "label": "4-continued-exploration-2",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 4,
+      "worldId": "fibre-silt",
+      "requestedSeed": 2474924354,
+      "grade": "low",
+      "finding": "画面以粗颗粒地为主，只露一小纤束端；HUD显示折角底片2秒，不能用它抹去第4/12趟主构造相似的事实。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:16:20.239Z",
+        "position": {
+          "x": 631.0548777302483,
+          "y": 122.6460564904868
+        },
+        "elapsedMs": 35548.55999999979,
+        "exactShutterSynchronization": false
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/12-continued-exploration-3.png",
+      "sha256": "fba140aac3d50a31d5690e37de36b7110a84f68cc4a5c6fdb7469f6eeee84f27",
+      "label": "12-continued-exploration-3",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 12,
+      "worldId": "gel-fibre",
+      "requestedSeed": 999781258,
+      "grade": "low",
+      "finding": "紫色流纹大地面占主要可见区，完整叉束已出画；证明局部身份信息会随位置减少，不证明玩家实际迷路。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:34:21.130Z",
+        "position": {
+          "x": 638.1783549920084,
+          "y": 42.0000999
+        },
+        "elapsedMs": 29348.799999999832,
+        "exactShutterSynchronization": false
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/5-continued-exploration-2.png",
+      "sha256": "003d950ee0f7dcfe1f21c919e0732152b66afa9cdbaccdfd33a9fb687c64eb2a",
+      "label": "5-continued-exploration-2",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 5,
+      "worldId": "pale-sail",
+      "requestedSeed": 1637391975,
+      "grade": "low",
+      "finding": "仅剩大蓝灰流纹地面和可见敌人，褶幕不在画中；不能把名称里的帆当作本帧所见。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:18:43.314Z",
+        "position": {
+          "x": 678.8803909771386,
+          "y": 109.86010389146327
+        },
+        "elapsedMs": 28632.22999999933,
+        "exactShutterSynchronization": false
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/10-search-2.png",
+      "sha256": "955953f5e68daf047967fc11c16aed75c10f21b72edc1944fb9cc9e183d8cbb7",
+      "label": "10-search-2",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "ordinal": 10,
+      "worldId": "ivory-basin",
+      "requestedSeed": 2246577925,
+      "grade": "low",
+      "finding": "灰粉地面上小白壳与青绿污染体明确分离，角色附近可行床可读；上部黑暗不按形状直接判定其规则来源。",
+      "nearbySnapshot": {
+        "at": "2026-10-06T06:30:20.723Z",
+        "position": {
+          "x": 679.5760135668638,
+          "y": 444.92853511411914
+        },
+        "elapsedMs": 12282.809999999903,
+        "exactShutterSynchronization": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "status": "completed-fixed-attempts-pending-review",
+  "startedAt": "2026-10-05T15:01:39.184Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-rib-vault-low-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-05T15:01:39.184Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-05T15:02:43.324Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "rib-vault",
+          "grade": "low",
+          "revision": 5,
+          "requestedSeed": 20261005,
+          "matchesPlan": true,
+          "collected": 1,
+          "elapsedMs": 50014.65999999999,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 180.22770145714767,
+            "y": 643.2116727942027
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 2,
+      "dir": "002-rib-vault-low-3075192741",
+      "status": "completed-script",
+      "startedAt": "2026-10-05T15:02:43.327Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-05T15:03:20.471Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "rib-vault",
+          "grade": "low",
+          "revision": 5,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 1,
+          "elapsedMs": 23532.399999999787,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 170.34538258452,
+            "y": 636.1063623340996
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    }
+  ],
+  "endedAt": "2026-10-05T15:03:20.474Z"
+}

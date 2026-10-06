@@ -1,0 +1,55 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b07-identity-source/source-snapshot.json",
+    "sha256": "0411781ba2f02b48fcd2bfc84ca45cc601f2d7e7dab395d3601138aff821e530"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b08-source/source-snapshot.json",
+    "sha256": "b9d215892a0b4487ed640cd9f493a17177e302ba222e3a341d94dc8b1640146e"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "draped-bay",
+      "contentSha256": "bbff5908a2d98b0a9fc990bf8d8cae0ba8881b1f7e4de761065991f9a3558c31",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "sentinel-mass",
+      "contentSha256": "69b0c26d058e3e7a2929a2e0d328eb5529465d3f8a470c5a332bd44086e39ee0",
+      "enabledBefore": false,
+      "enabledAfter": false
+    }
+  ],
+  "unchangedFiles": 1364,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

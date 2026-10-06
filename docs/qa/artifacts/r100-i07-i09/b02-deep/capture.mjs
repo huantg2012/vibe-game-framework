@@ -1,0 +1,32 @@
+import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
+
+const{chromium}=await import('/Users/yilungao/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs');
+const out=path.resolve(process.env.QA_OUTPUT_DIR??'docs/qa/artifacts/r100-i07-i09/b02-deep');fs.mkdirSync(out,{recursive:true});
+const browser=await chromium.launch({headless:true,executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'});
+const report={scope:'Normal finite FOV and camera; controlled candidate world/training loadout, actual keyboard from original spawn. Full floor geometry read for diagnostic body routing, not novice navigation; no position/HP/clock/fog edits. Enemy and pollution simulation stays active.',cases:[],errors:[]};
+try{for(const world of (process.env.QA_WORLDS??'monolith-sill,bleached-court,split-rib-causeway,satin-fan').split(',')){
+ const dir=path.join(out,world);fs.mkdirSync(dir,{recursive:true});const context=await browser.newContext({viewport:{width:1440,height:1000},recordVideo:{dir,size:{width:1152,height:800}}}),page=await context.newPage();
+ const log=v=>fs.appendFileSync(path.join(dir,'journey.jsonl'),JSON.stringify({at:new Date().toISOString(),...v})+'\n');
+ const driver={log,async state(){return page.evaluate(()=>{const s=window.__game.scene.getScene('RiftScene');return {scene:'rift',active:s.scene.isActive(),ended:s.runController.isRunEnded(),pos:{...s.player.getPosition()},hp:s.combat.getHealth(),chaos:s.chaos.getValue(),elapsedMs:s.runController.getElapsedMs()};});},async hold(keys,ms){log({event:'hold',keys,ms});try{for(const k of keys)await page.keyboard.down(k);await page.waitForTimeout(ms);}finally{for(const k of keys)await page.keyboard.up(k);}await page.waitForTimeout(35);}};page.on('pageerror',e=>report.errors.push(String(e)));
+ assert(process.env.GAME_URL,'Explicit frozen GAME_URL required');await page.goto(`${process.env.GAME_URL}/r100-gym.html?world=${world}&grade=medium&seed=20261005`);await page.waitForFunction(()=>window.__r100Gym?.getState().runtime.running,null,{timeout:60000});await page.evaluate(async()=>{const{audioManager}=await import('/src/managers/audio-manager.ts');window.__game=audioManager.game;});await page.locator('#game-container').focus();
+ const result={world,grade:'medium',seed:20261005,steps:[]}; report.cases.push(result);
+ async function plan(target){
+ const data=await page.evaluate(()=>{const s=window.__game.scene.getScene('RiftScene'),g=s.formFloorGrid,b=s.player.getSprite().body;return{cols:g.cols,rows:g.rows,size:g.tileSize,walk:Array.from({length:g.cols*g.rows},(_,i)=>g.isWalkable(i%g.cols,Math.floor(i/g.cols))),start:{...s.player.getPosition()},halfX:b.width/2+1,halfY:b.height/2+1}});
+ const{cols,rows,size,walk,start,halfX,halfY}=data,center=i=>({x:(i%cols+.5)*size,y:(Math.floor(i/cols)+.5)*size}),floor=(x,y)=>x>=0&&y>=0&&x<cols&&y<rows&&walk[y*cols+x];
+ const clear=p=>{for(let y=Math.floor((p.y-halfY)/size);y<=Math.floor((p.y+halfY-.01)/size);y++)for(let x=Math.floor((p.x-halfX)/size);x<=Math.floor((p.x+halfX-.01)/size);x++)if(!floor(x,y))return false;return true;};
+ const safe=walk.map((v,i)=>v&&clear(center(i))),begin=Math.floor(start.y/size)*cols+Math.floor(start.x/size),prev=new Map([[begin,-1]]),q=[begin];
+ for(let n=0;n<q.length;n++){const i=q[n],x=i%cols,y=Math.floor(i/cols);for(const[dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){const a=x+dx,b=y+dy,k=b*cols+a;if(!floor(a,b)||!safe[k]||prev.has(k))continue;prev.set(k,i);q.push(k);}}
+ const end=q.filter(i=>safe[i]).sort((a,b)=>Math.hypot(center(a).x-target.x,center(a).y-target.y)-Math.hypot(center(b).x-target.x,center(b).y-target.y))[0];assert(end!==undefined,'No reachable body target');const raw=[];for(let i=end;i!==-1;i=prev.get(i))raw.push(center(i));raw.reverse();const points=[raw[0]];for(let i=1;i<raw.length-1;i++)if((raw[i-1].x===raw[i].x)!==(raw[i].x===raw[i+1].x))points.push(raw[i]);points.push(raw.at(-1));return{requested:target,actual:center(end),points,length:(raw.length-1)*size};}
+ const goalsByWorld={
+ 'monolith-sill':[{label:'01-quiet-court',x:460,y:450},{label:'02-foot-notch',x:650,y:440},{label:'03-side-opening',x:860,y:370},{label:'04-back-face',x:630,y:130}],
+ 'bleached-court':[{label:'01-front-court',x:480,y:450},{label:'02-back-edge',x:520,y:90},{label:'03-broken-end',x:820,y:260},{label:'04-separated-fragment',x:800,y:510}],
+ 'split-rib-causeway':[{label:'01-lower-rib-mouth',x:480,y:480},{label:'02-staggered-midway',x:550,y:360},{label:'03-upper-exit',x:650,y:230},{label:'04-wide-outer-route',x:825,y:460}],
+ 'satin-fan':[{label:'01-walkable-fan',x:470,y:450},{label:'02-overlapping-thin-leaves',x:600,y:390},{label:'03-raised-fold',x:760,y:350},{label:'04-open-outer-bed',x:820,y:500}],
+};
+ const goals=goalsByWorld[world]; assert(goals,'Only declared B02 worlds');
+ for(const goal of goals){const route=await plan(goal),started=Date.now();let last=null,stuck=0;driver.log({event:'body-route',route});
+ for(const p of route.points)for(let step=0;step<90;step++){const s=await driver.state();assert(s.scene==='rift'&&!s.ended&&s.active,'Route must remain an active real run');assert(Date.now()-started<60000,'Route over budget');const dx=p.x-s.pos.x,dy=p.y-s.pos.y;if(Math.hypot(dx,dy)<3)break;stuck=last&&Math.hypot(last.x-s.pos.x,last.y-s.pos.y)<.35?stuck+1:0;last=s.pos;assert(stuck<9,`actual movement blocked near ${JSON.stringify(p)}`);const keys=[];if(Math.abs(dx)>2)keys.push(dx>0?'d':'a');if(Math.abs(dy)>2)keys.push(dy>0?'s':'w');await driver.hold(keys,Math.max(35,Math.min(160,Math.hypot(dx,dy)/80*1000)));}
+ await driver.hold(['w'],65);await page.waitForTimeout(80);await page.locator('#game-container canvas').screenshot({path:path.join(dir,`${goal.label}-north.png`)});await driver.hold(['d'],65);await page.waitForTimeout(80);await page.locator('#game-container canvas').screenshot({path:path.join(dir,`${goal.label}-east.png`)});result.steps.push({goal,route,state:await driver.state()});fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2));
+ }
+ await context.close();fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2));console.log(world+': full real-input deep route captured');
+}assert.deepEqual(report.errors,[]);report.status='captured';}catch(error){report.status='failed';report.failure=String(error);console.error(error);process.exitCode=1;}finally{fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2));await browser.close();}

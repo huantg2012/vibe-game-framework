@@ -1,0 +1,48 @@
+{
+  "status": "no-current-blocking-finding",
+  "reviewedAt": "2026-10-05T14:52:42.636559+00:00",
+  "method": "Read-only source and dependency audit; no browser, new simulation or acceptance claim.",
+  "sources": {
+    "src/types/rift-world-history.ts": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80",
+    "src/generated/r100-world-selection.ts": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182",
+    "src/generation/world-study/r100-world-selection.ts": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40",
+    "src/generation/world-study/r100-package.ts": "47fe6158ac41a4df332460de5be8355adeb58830b56246014c9b67dcf7cf5bd7",
+    "src/managers/rift-recovery.ts": "dbe9ac569320c6c3df6680f13c61913d2901b30da287d9e8adf185882810dfa4",
+    "src/managers/save-manager.ts": "245d98e29dcfd87f7155fe7ae046adbe925aba834d4fa7cfc9eaa0e5272dd19f",
+    "src/systems/inventory-store.ts": "b68d2daa85f4b291dcd86e52b890d865146098430ae31da73ac7dcff5e974782",
+    "src/scenes/purification-scene.ts": "f5b94d1083a7a8b37992dc76892400ad621e3cef167de906d6f42fa7adf39a5e",
+    "docs/specs/system-field-inventory.md": "d411893d1d424146e4d02ff7274fe1f8fe4472aa4aeb9035a847cfc56c142e71"
+  },
+  "findings": [
+    {
+      "scope": "Loading and retired world history",
+      "finding": "History validates only its own version, bounded visits, ID syntax and pollution grade. It imports the small generated selection policy and pure pollution-grade module, not the native catalog, geometry or Phaser. Unknown retired world IDs remain readable."
+    },
+    {
+      "scope": "Departure and retry",
+      "finding": "The normal scene draws after confirmation, compares unchanged preparation and saved-record snapshots before beginRun, and appends the selected visit with inventory/cycle/frozen departure. A refused write retains pendingWorldBytes and blocks a second departure; retry saves the same candidate."
+    },
+    {
+      "scope": "Cold continuation",
+      "finding": "Recovery uses the saved generation identity through its matching executor. It does not call the world selector or append a visit."
+    },
+    {
+      "scope": "Selection fairness",
+      "finding": "Enabled choices are ID-sorted, all weights remain positive, and history takes the strongest penalty rather than multiplying. Grade is recorded but does not partition or change weighting. Selection policy is excluded from the map dependency receipt."
+    }
+  ],
+  "maintenanceConstraints": [
+    {
+      "condition": "A later change reduces policy.historyLimit below existing saved visit count",
+      "risk": "Current history-version-1 validation reads this bound from current generated policy. Such a change requires an explicit save migration/version decision, not a CSV-only edit. The currently approved fixed limit is 8."
+    },
+    {
+      "condition": "A later revision removes a native catalog ID entirely",
+      "risk": "Current revision-5 recipe admission requires the ID to exist. Disabling rows preserves recovery; removal requires a frozen revision-5 executor or retained identity. The current 20-to-52 expansion is append-only."
+    }
+  ],
+  "limitations": [
+    "No additional machine or gameplay tests were run for this audit. Existing focused test results remain separately scoped.",
+    "This does not accept newly authored worlds, declare the final 52-world pool enabled, or close I09."
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "status": "final-runtime-evidence-recorded",
+  "scope": "Final52 revision5 evidence contract for root binder. Missing files mean pending, never pass. Failures use original output; rechecks get new output and explicit composition.",
+  "artifacts": {
+    "packages": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-packages/index.json",
+      "format": "schemaVersion1, worlds[52]: worldId/family/families/dependencyManifest{path,hash}/grades; each manifest binds revision5 and exact source/material receipts",
+      "writer": "writeR100QualificationManifests({outputDirectory: path directory, immutable:true}) after final52 snapshot is fixed",
+      "receipt": {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-packages/index.json",
+        "sha256": "a038a38d0c658df18a5cfa9387d282bf1343dc032a9883344f235dab25ca65a6"
+      }
+    },
+    "production": {
+      "path": "docs/qa/artifacts/r100-i09/production-final52-recheck/report.json",
+      "format": "status passed; cases156 unique world/grade with identity.generation.package.algorithmRevision5, coldIdentityPreserved true, errors[], committedWorldHistory; loadedSourceHashes map. Controlled predeparture seeds select the enabled formal pool; this is not natural sampling.",
+      "priorAttempt": {
+        "binding": "docs/qa/artifacts/r100-i09/production-final52/source-binding.json",
+        "scope": "Failed before browser: raw transport format rejected; zero gameplay cases. Original directory preserved."
+      },
+      "receipt": {
+        "path": "docs/qa/artifacts/r100-i09/production-final52-recheck/report.json",
+        "sha256": "50808d3cbe54cfa9a2a9dbb8f1585821af79ddc2302e9b634e4fdba7f2484cc1"
+      },
+      "sourceBinding": {
+        "path": "docs/qa/artifacts/r100-i09/production-final52-recheck/source-binding.json",
+        "sha256": "c3f79340ba4da9530cdfa6420bea8411c32112021596cf0655ec4ba8232d9ea2",
+        "status": "pass"
+      }
+    },
+    "equivalence": {
+      "path": "docs/qa/artifacts/r100-i09/equivalence-final52/browser-equivalence.json",
+      "format": "status pass; results174, each exactIdentity true:156 current revision5 Node->Chromium plus18 original revision1 browser-save identities. Does not claim these174 cover revision2/3/4 compatibility; those retain separate root-owned evidence.",
+      "receipt": {
+        "path": "docs/qa/artifacts/r100-i09/equivalence-final52/browser-equivalence.json",
+        "sha256": "8f3d4e46952bb71e200901fb4ea4c74726fead530699c4f5e3c7e2321614ed60"
+      },
+      "sourceBinding": {
+        "path": "docs/qa/artifacts/r100-i09/equivalence-final52/source-binding.json",
+        "sha256": "6ad304051e0fec85c69a9956453b03698633009b5297ecef3f8ec50a8fac4271",
+        "status": "pass"
+      }
+    },
+    "runtimeBudget": {
+      "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/report.json",
+      "format": "status passed-reference-samples; worlds52; cases52 severe samples with duration>=60000, fullAliveDuration true, budgetPass true; errors[]; operator-declared exclusiveWindow true. Actual future evidence required; planned scope is not a result.",
+      "receipt": {
+        "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/report.json",
+        "sha256": "a3b0f5a09966d3fb30759417b53a40be561376ab4df12089e76403ad63d0e5bd"
+      },
+      "sourceBinding": {
+        "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/source-binding.json",
+        "sha256": "1c0dfa6f5bce7c4dc411ea73730f71de688a0cf1733d63cf7d34ba857564ef9a",
+        "status": "pass"
+      }
+    },
+    "lifecycle": {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/report.json",
+      "format": "status passed-bounded-lifecycle; catalogWorldIds52, repetitions10, mixedRebuilds156, mixedCoverage unique52x3; same-world GL ownership and <=10MiB retained observation bounds; errors[]. No GPU driver-byte claim.",
+      "receipt": {
+        "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/report.json",
+        "sha256": "7ec895bc5da391c81632c4a27f7e1020a41ccc474a1a7f727ab3d8979c295438"
+      },
+      "sourceBinding": {
+        "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/source-binding.json",
+        "sha256": "40c48d6b88e849e2ab14880d19aef9518bc50a0401341180076230d10cb030e2",
+        "status": "pass"
+      },
+      "shaderReview": {
+        "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/shader-lifetime-review.json",
+        "sha256": "868bcaa490eb5f66c05a213d44d5fd2fbeb1d7374f370ffd88c9f8b478ad47ec"
+      }
+    },
+    "selection": {
+      "path": "docs/qa/artifacts/r100-i09/selection-final52/selection.json",
+      "format": "policy/catalogSourceHash/policySourceHash/worldIds52/descriptors/neighbors/uniform/recent;32768 samples each policy, all policy checks must exit0. No automatic visual or economic verdict.",
+      "receipt": {
+        "path": "docs/qa/artifacts/r100-i09/selection-final52/selection.json",
+        "sha256": "9a433c250e76b35fdd4038edcc483aa04787b31f4e935cbef324610c2e535354"
+      }
+    },
+    "continuous": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/summary.json",
+      "format": "status completed-continuous-samples-pending-review; sourceValid true; plannedTrips48, validatedTrips48; four branches low/medium/severe/alternating each completed and12rows. Raw branch reports policyRevision15, no controlled world/build/fixed identity; exact saved resource/history continuity and <=3 total actual pickups; only pickups farther than320px qualify as non-entry searches. Deaths/empty returns remain actual outcomes.",
+      "companions": [
+        "policy-freeze.json",
+        "execution.json",
+        "sampling-evidence.json",
+        "server-manifest.json",
+        "earned-storage.json",
+        "low/report.json",
+        "medium/report.json",
+        "severe/report.json",
+        "alternating/report.json"
+      ],
+      "pickupAccounting": "Actual unique entry-uncollected/terminal-collected nodes, input-segment observed completion and same-run settled recovery of missed extraction telemetry. At most3, unknown terminal pickups are issues; policy14 source and offline results remain historical. Total actual/eligible non-entry/near-entry counts are separate; near-only returns remain valid recorded trips without meeting the non-entry search goal.",
+      "review": {
+        "path": "docs/qa/artifacts/r100-i09/continuous-final52/review-death-loss-v2.json",
+        "sha256": "aeb68ba8218b924fbb396be93f357f73d9654e900927e0126f385e53f09fe477",
+        "status": "complete-valid-data-pending-experience-review",
+        "tool": {
+          "path": "tools/qa/r100-i09-review-continuous-death-loss.mjs",
+          "sha256": "ecdeb748031d5ba0fe31a8240831271ce9b63e79170b01db5498ebf595c00707",
+          "derivedFrom": {
+            "path": "tools/qa/r100-i09-review-continuous.mjs",
+            "sha256": "3e626ef26bc10eb3bcd5967225049af16cf4f244d637eb85337c998616fba8d9"
+          },
+          "author": "identity_pipeline",
+          "change": "Recognize verified carried active-tool loss on same-run settled death; retain original use and destruction counts."
+        },
+        "priorFailedReview": {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/review.json",
+          "sha256": "1d2fa01e7b2fd7a94748182e5221b9995ae1af358caf9e6765e5332e074bd546"
+        },
+        "correctionCheck": {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-check-v2.json",
+          "sha256": "53f60b648977716e437efa7f2c746514b4cddfaebc3dd908f387548f26665fa3"
+        },
+        "scope": "All raw48/source/frozen input-policy bytes unchanged. Legal death-carried losses recorded separately, never actual tool uses or exhausted/destroyed items. Experience approval remains pending."
+      },
+      "receipt": {
+        "path": "docs/qa/artifacts/r100-i09/continuous-final52/summary.json",
+        "sha256": "0b120eb65f081cb11590c71dc6cb7910e04017b552c4c8e76b1c2407302a0be5"
+      }
+    }
+  },
+  "updatedAt": "2026-10-06T09:15:50.577Z",
+  "experienceReview": "Root independent-experience-review.json is separate from technical data validity; no human or final economic/audio approval is implied."
+}

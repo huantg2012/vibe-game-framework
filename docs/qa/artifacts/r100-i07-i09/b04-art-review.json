@@ -1,0 +1,443 @@
+{
+  "status": "bounded-art-pass",
+  "source": "b04-source/source-snapshot.json",
+  "server": "http://127.0.0.1:3093",
+  "readScope": {
+    "normalWalkFramesPersonallyViewed": 12,
+    "deepFramesPersonallyViewed": 20,
+    "gradeShortCases": 12,
+    "deepCases": 4,
+    "deepGrade": "medium",
+    "seed": 20261005
+  },
+  "method": "Actual keyboard from spawn, normal FOV/camera/lighting; full conservative geometry only for body route planning; Gym training fixture; no teleport, HP, clock, enemy, loot, or fog edits. Not a first-time player study or full search-return.",
+  "errors": [],
+  "evidenceSha256": {
+    "b04-normal/report.json": "3275354f6ea65dee6b64617206f23cce4f8507348108c4ec94fcaf584591e157",
+    "b04-deep/report.json": "50629f2110330572bd139713158a1a6ae98ce09ddd7e93467c120b1ee26c8a9c",
+    "b04-source/source-snapshot.json": "86e6a0cc547cc77cedfb6267f4814dc2d107d9831923d66d3da7bfc0420831f6"
+  },
+  "worlds": {
+    "root-cistern": {
+      "conclusion": "bounded-art-pass",
+      "basis": "Two inward rib groups enclose separate quiet courts and connect through an actual opening; back-bone is physically seen from north. Unlike split-rib-causeway the occupied space is broad courts rather than a continuously pinched lane.",
+      "frames": [
+        "02-inner-court-north.png",
+        "02-inner-court-south.png",
+        "03-back-bone-south.png"
+      ],
+      "limits": "04 east exterior shows mostly floor and actual light-eating region; does not certify entire outer wall.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 869.6420407510614,
+          "y": 398.12251056553254
+        },
+        "hp": 100,
+        "chaos": 53.01335939600017,
+        "elapsedMs": 40098.5
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-lower-opening",
+            "x": 480,
+            "y": 620,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 476,
+            "y": 620
+          },
+          "routeLength": 312
+        },
+        {
+          "requested": {
+            "label": "02-inner-court",
+            "x": 540,
+            "y": 405,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 540,
+            "y": 404
+          },
+          "routeLength": 400
+        },
+        {
+          "requested": {
+            "label": "03-back-bone",
+            "x": 450,
+            "y": 110,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 452,
+            "y": 108
+          },
+          "routeLength": 896
+        },
+        {
+          "requested": {
+            "label": "04-eastern-bypass",
+            "x": 875,
+            "y": 400,
+            "faces": [
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 876,
+            "y": 396
+          },
+          "routeLength": 704
+        }
+      ]
+    },
+    "scab-islands": {
+      "conclusion": "bounded-art-pass",
+      "basis": "Three disconnected paired leaves form wide crossed floor routes, distinct from short gaps within each pair. Deep red layered tops and pale section are read against blue floor; source grammar is still lobed cushion, not a new geometry family.",
+      "frames": [
+        "03-upper-gap-west.png",
+        "03-upper-gap-east.png",
+        "04-south-leaf-north.png"
+      ],
+      "limits": "01 and 02 see partial silhouettes only. Do not describe three groups as three single islands.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 577.7763000073062,
+          "y": 717.8657663285841
+        },
+        "hp": 85,
+        "chaos": 33.22348169999896,
+        "elapsedMs": 29065.5
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-lower-group",
+            "x": 420,
+            "y": 500,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 420,
+            "y": 500
+          },
+          "routeLength": 312
+        },
+        {
+          "requested": {
+            "label": "02-middle-court",
+            "x": 555,
+            "y": 400,
+            "faces": [
+              [
+                "a",
+                "west"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 556,
+            "y": 404
+          },
+          "routeLength": 216
+        },
+        {
+          "requested": {
+            "label": "03-upper-gap",
+            "x": 540,
+            "y": 200,
+            "faces": [
+              [
+                "a",
+                "west"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 540,
+            "y": 204
+          },
+          "routeLength": 208
+        },
+        {
+          "requested": {
+            "label": "04-south-leaf",
+            "x": 570,
+            "y": 720,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 580,
+            "y": 724
+          },
+          "routeLength": 776
+        }
+      ]
+    },
+    "foam-trenches": {
+      "conclusion": "bounded-art-pass",
+      "basis": "Main and lower arcs open toward continuous side route; between-mouth position exposes different thickness and actual passage. Unlike porcelain-maw opposing throats, mouths align toward one side.",
+      "frames": [
+        "02-between-mouths-north.png",
+        "02-between-mouths-east.png",
+        "03-upper-bowl-south.png"
+      ],
+      "limits": "04 lower mouth partially hidden by real light eater; dense foam microstructure is not claimed from smooth shell source.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 683.1593251314547,
+          "y": 557.2946452472855
+        },
+        "hp": 85,
+        "chaos": 49.83708520000028,
+        "elapsedMs": 48514.7
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-side-channel",
+            "x": 290,
+            "y": 480,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 292,
+            "y": 484
+          },
+          "routeLength": 200
+        },
+        {
+          "requested": {
+            "label": "02-between-mouths",
+            "x": 495,
+            "y": 390,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 516,
+            "y": 404
+          },
+          "routeLength": 296
+        },
+        {
+          "requested": {
+            "label": "03-upper-bowl",
+            "x": 360,
+            "y": 110,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 356,
+            "y": 108
+          },
+          "routeLength": 832
+        },
+        {
+          "requested": {
+            "label": "04-lower-mouth",
+            "x": 700,
+            "y": 550,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 684,
+            "y": 564
+          },
+          "routeLength": 1096
+        }
+      ]
+    },
+    "resin-fall": {
+      "conclusion": "bounded-art-pass",
+      "basis": "Large high violet head has a cleaved asymmetric notch and raised partial layer; warm thin tails can be crossed. Physical high head vs low wake is distinct from reversed-flow low pooling.",
+      "frames": [
+        "01-low-tails-north.png",
+        "02-high-head-north.png",
+        "03-rear-cut-south.png",
+        "04-side-face-west.png"
+      ],
+      "limits": "Projected high-top face near actor is not a traversable raised level. Macro view route includes combat exposure without defensive policy, no balance verdict.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 896.6674283431466,
+          "y": 305.18699989057643
+        },
+        "hp": 40,
+        "chaos": 64.66924579799964,
+        "elapsedMs": 45231.5
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-low-tails",
+            "x": 550,
+            "y": 580,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 548,
+            "y": 580
+          },
+          "routeLength": 360
+        },
+        {
+          "requested": {
+            "label": "02-high-head",
+            "x": 625,
+            "y": 400,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 652,
+            "y": 396
+          },
+          "routeLength": 608
+        },
+        {
+          "requested": {
+            "label": "03-rear-cut",
+            "x": 650,
+            "y": 110,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 652,
+            "y": 108
+          },
+          "routeLength": 936
+        },
+        {
+          "requested": {
+            "label": "04-side-face",
+            "x": 910,
+            "y": 300,
+            "faces": [
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 908,
+            "y": 300
+          },
+          "routeLength": 600
+        }
+      ]
+    }
+  },
+  "notApproved": [
+    "human acceptance",
+    "all seeds or all routes",
+    "full expedition balance",
+    "unseen surfaces"
+  ],
+  "independentReview": {
+    "reviewer": "root",
+    "frames": [
+      "root-cistern/02-inner-court-north.png",
+      "root-cistern/02-inner-court-south.png",
+      "scab-islands/03-upper-gap-west.png",
+      "foam-trenches/02-between-mouths-north.png",
+      "foam-trenches/04-lower-mouth-north.png",
+      "resin-fall/01-low-tails-north.png",
+      "resin-fall/02-high-head-north.png",
+      "resin-fall/04-side-face-west.png"
+    ],
+    "conclusion": "Bounded pass for courts, disconnected paired leaves with wide paths, same-side shell-mouth channel, high head and low tails; visible foot boundaries clear. Light eater still hides parts of outer walls, not approved as fully visible. I09 weakest-neighbor review remains."
+  }
+}

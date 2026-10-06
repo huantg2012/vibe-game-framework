@@ -1,0 +1,13 @@
+family_id,display_role,slot,scope,param_key,range_semantics,ordinary_uses,target_contract,stack_contract
+solidify,凝滞,active,timed,freeze_duration_ms,target_distance,5,当前可见且无遮挡地面实体；受伤解除；恢复完整预兆,同一目标生效中拒绝；解除后2秒控制抗性
+sight,视距,passive,run,vision_radius_multiplier,none,2,先混乱缩距及保底后乘半径；再算真实遮挡；不增光亮,唯一被动槽；不叠加
+resistance,抗污,active,timed,contamination_resistance_points,none,3,所有正向混乱进入既有抗性环节；总抗性上限60%,生效中拒绝；若已达上限无收益则拒绝
+dash,短冲,active,instant,dash_distance_px,travel_distance,3,200ms内连续身体扫掠；不穿VOID或WALL；不无敌；危害照常,短冲执行中拒绝；结束后共享0.4秒再次施放间隔
+silence,消声,active,timed,silence_duration_ms,none,5,仅压自身行动听觉信号；不改变视认与已确认追逐,本人同族生效中拒绝
+sound_lure,声诱,active,timed,lure_duration_ms,throw_distance,5,可见合法落点；真实声路96px；每秒声脉冲；不抹追逐,本角色同族最多1个存活诱饵；生效中拒绝
+tripwire,绊线,active,timed,crossing_stop_ms,placement_distance,4,面前32px横铺64px完整线；每敌每线触发一次；不禁攻,同族最多1条；停步后2秒控制抗性
+slow_zone,重区,active,timed,enemy_movement_multiplier,radius,4,脚下64px半径；仅连通合法地面；只慢地面实体移动,同族最多1处；不同重区取最强不相乘
+image_lure,假身,active,timed,lure_duration_ms,none,4,当前位置；敌人实际可见才参与选择；不抹追逐,同族最多1个；与声诱可共存且感官分开
+survey,探查,active,snapshot,snapshot_path_range_px,walkable_path_distance,3,沿通行路径距离采样位置并显示6秒；不照亮不揭内容；空结果有效,快照显示中拒绝；不保留实时绑定
+suppress,压制,active,timed,suppression_duration_ms,target_distance,3,可见无遮挡活动Host源；所有危险阶段可用；不影响实体,目标已有压制或暂缓拒绝；结束后2秒再压制保护
+capacity,负重,passive,run,carry_capacity_bonus,none,2,本趟加容量；自身重量读物件定义；现有速度曲线读新上限,唯一被动槽；末次效果先完成回库再解除

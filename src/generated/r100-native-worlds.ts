@@ -2,7 +2,7 @@
 import type { MasterDefinition } from '../generation/world-study/r100-master-world';
 import type { WorldProfile } from '../generation/world-study/types';
 export interface R100NativeWorldEntry { readonly id: string; readonly label: string; readonly iteration: number; readonly enabled: boolean; readonly profile: WorldProfile; readonly definitions: readonly MasterDefinition[] }
-export const R100_NATIVE_CATALOG_SOURCE_HASH = '0226b4e234b58429cf31411f8042d5fb6bf52dfdb246decf625c28907474deec';
+export const R100_NATIVE_CATALOG_SOURCE_HASH = 'cb8aef6a6a386f37a130cb68c7e800f6d3dfc013b895c099a0902485a004baa2';
 export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
   {
     "id": "ash-strata",
@@ -9741,7 +9741,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "rib-vault",
     "label": "肋骨空庭",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "rib-vault",
       "label": "肋骨空庭",
@@ -10211,7 +10211,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "pleated-hide",
     "label": "褶皮长廊",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "pleated-hide",
       "label": "褶皮长廊",
@@ -10681,7 +10681,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "blister-field",
     "label": "囊壁洼地",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "blister-field",
       "label": "囊壁洼地",
@@ -11097,7 +11097,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "wax-tongues",
     "label": "蜡舌滩",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "wax-tongues",
       "label": "蜡舌滩",
@@ -11567,7 +11567,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "monolith-sill",
     "label": "单柱旷地",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "monolith-sill",
       "label": "单柱旷地",
@@ -11929,7 +11929,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "bleached-court",
     "label": "白壳阔庭",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "bleached-court",
       "label": "白壳阔庭",
@@ -12345,7 +12345,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "split-rib-causeway",
     "label": "双脊渡口",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "split-rib-causeway",
       "label": "双脊渡口",
@@ -12761,7 +12761,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "satin-fan",
     "label": "绢面扇地",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "satin-fan",
       "label": "绢面扇地",
@@ -13231,7 +13231,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "chalk-steps",
     "label": "粉白阶岸",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "chalk-steps",
       "label": "粉白阶岸",
@@ -13647,7 +13647,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "porcelain-maw",
     "label": "瓷喉",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "porcelain-maw",
       "label": "瓷喉",
@@ -14063,7 +14063,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "amber-ribs",
     "label": "琥珀肋道",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "amber-ribs",
       "label": "琥珀肋道",
@@ -14479,7 +14479,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "pale-sail",
     "label": "苍帆夹道",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "pale-sail",
       "label": "苍帆夹道",
@@ -14895,7 +14895,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "root-cistern",
     "label": "根束空池",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "root-cistern",
       "label": "根束空池",
@@ -15311,7 +15311,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "scab-islands",
     "label": "痂片群岛",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "scab-islands",
       "label": "痂片群岛",
@@ -15781,7 +15781,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "foam-trenches",
     "label": "泡壳沟渠",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "foam-trenches",
       "label": "泡壳沟渠",
@@ -16197,7 +16197,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "resin-fall",
     "label": "凝脂叠滩",
     "iteration": 7,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "resin-fall",
       "label": "凝脂叠滩",
@@ -16667,7 +16667,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "tendon-shelves",
     "label": "韧束断台",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "tendon-shelves",
       "label": "韧束断台",
@@ -17083,7 +17083,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "felt-basin",
     "label": "毡层洼",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "felt-basin",
       "label": "毡层洼",
@@ -17553,7 +17553,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "cork-shelves",
     "label": "孔髓厚岸",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "cork-shelves",
       "label": "孔髓厚岸",
@@ -17969,7 +17969,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "lacquer-court",
     "label": "漆层空庭",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "lacquer-court",
       "label": "漆层空庭",
@@ -18385,7 +18385,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "ribbed-delta",
     "label": "肋间分流地",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "ribbed-delta",
       "label": "肋间分流地",
@@ -18855,7 +18855,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "bladder-weave",
     "label": "囊膜织口",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "bladder-weave",
       "label": "囊膜织口",
@@ -19379,7 +19379,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "flake-thicket",
     "label": "薄片错林",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "flake-thicket",
       "label": "薄片错林",
@@ -19849,7 +19849,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "resin-hollows",
     "label": "凝脂空囊",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "resin-hollows",
       "label": "凝脂空囊",
@@ -20319,7 +20319,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "sentinel-mass",
     "label": "孤块静原",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "sentinel-mass",
       "label": "孤块静原",
@@ -20735,7 +20735,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "stepped-bowl",
     "label": "退阶环洼",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "stepped-bowl",
       "label": "退阶环洼",
@@ -21151,7 +21151,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "draped-bay",
     "label": "垂膜暗湾",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "draped-bay",
       "label": "垂膜暗湾",
@@ -21567,7 +21567,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "ember-cushions",
     "label": "赤垫裂原",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "ember-cushions",
       "label": "赤垫裂原",
@@ -22091,7 +22091,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "splinter-rotunda",
     "label": "断束环庭",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "splinter-rotunda",
       "label": "断束环庭",
@@ -22561,7 +22561,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "quilted-scars",
     "label": "缀膜伤原",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "quilted-scars",
       "label": "缀膜伤原",
@@ -23193,7 +23193,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "silt-colonnade",
     "label": "淤堆柱廊",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "silt-colonnade",
       "label": "淤堆柱廊",
@@ -23663,7 +23663,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
     "id": "shell-causeway",
     "label": "壳片斜脊",
     "iteration": 8,
-    "enabled": false,
+    "enabled": true,
     "profile": {
       "id": "shell-causeway",
       "label": "壳片斜脊",

@@ -1,0 +1,71 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b06-source/source-snapshot.json",
+    "sha256": "e04f2d0922dc82b76448808f1f715c748025a4d8a75d21824c29044e1a673678"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "bladder-weave",
+      "contentSha256": "f13f36ee193f65b101b13c7be43567e53712618acec9f18c6599aa3dab0a0f4c",
+      "enabledBefore": false,
+      "enabledAfter": true
+    },
+    {
+      "worldId": "flake-thicket",
+      "contentSha256": "6ddc2a23dc2bd01a25289b422bb73f62ba0f1d52d47ff5055ad6647370edeab9",
+      "enabledBefore": false,
+      "enabledAfter": true
+    },
+    {
+      "worldId": "resin-hollows",
+      "contentSha256": "9a2e0fdb0af703f66e05b982325ff197669306198c8a80ea6f93e35442582517",
+      "enabledBefore": false,
+      "enabledAfter": true
+    },
+    {
+      "worldId": "ribbed-delta",
+      "contentSha256": "1a17d9fdb4b8af29a92990ca2d9e14d0edd63b84f9848ac10b6cae445ff532f3",
+      "enabledBefore": false,
+      "enabledAfter": true
+    }
+  ],
+  "unchangedFiles": 1363,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-package-manifest.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

@@ -353,7 +353,7 @@
     "id": "COH-F023",
     "title": "唯一库存与携带所有权",
     "domain": "items",
-    "summary": "同一物件实例在基地、供奉、携带、地面间转移；装备引用实例，取放/交换、消耗与结算通过统一事务。",
+    "summary": "同一物件实例在基地、供奉、携带和地面间转移，装备引用实例，消耗与结算走统一事务。库存schema4加入最近世界记录并与beginRun原子保存，旧schema1–3迁移空历史。48实际连续出征核工具扣次、准备成本及死亡携带损失，死亡遗失与耗尽/销毁明确区分；经济规则保持。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -387,6 +387,22 @@
       {
         "path": "docs/specs/system-field-inventory.md",
         "role": "spec"
+      },
+      {
+        "path": "src/types/rift-world-history.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/inventory/check-world-history.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i07-i09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i07-i09.md",
+        "role": "art"
       }
     ],
     "dependsOn": [
@@ -397,9 +413,13 @@
       "COH-E-SRC-items",
       "COH-E-HIST-CATALOG",
       "COH-E-I29-AUTO",
-      "COH-E-I29-RUNTIME"
+      "COH-E-I29-RUNTIME",
+      "COH-E160",
+      "COH-E161"
     ],
-    "unknowns": []
+    "unknowns": [
+      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14及长期收益I13独立保留。"
+    ]
   },
   {
     "id": "COH-F024",

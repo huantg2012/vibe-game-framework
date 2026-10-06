@@ -1,0 +1,295 @@
+{
+  "status": "failed",
+  "scope": "Current52 candidate source; original20 enabled, new32 disabled. Sequential build/recovery/history/migration/selection/codegen checks only. No browser, full world qualification or sampling replacement.",
+  "startedAt": "2026-10-06T01:22:33.957Z",
+  "node": "v22.14.0",
+  "runnerSha256": "047a8357e87489b35cbd32219f3a5070eb05b46df85746657d36beef43cf1e5a",
+  "sourceBefore": "source-before.json",
+  "checks": [
+    {
+      "id": "01-package-receipt",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "startedAt": "2026-10-06T01:22:33.958Z",
+      "sources": [
+        {
+          "path": "tools/world-study/codegen-r100-packages.mjs",
+          "sha256": "3367064890f2402ecd8ad68a2ee601960dfd700c4a3be912e420e410cf0dd702"
+        }
+      ],
+      "log": "01-package-receipt.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:22:34.253Z",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "02-build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "startedAt": "2026-10-06T01:22:34.254Z",
+      "sources": [
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tsconfig.json",
+          "sha256": "f4ffc0588ba5e2914f15f857206c8bde4dac5d39d4120254a171d1501686361e"
+        },
+        {
+          "path": "vite.config.ts",
+          "sha256": "723ffde4258e0bc99939ada4be4b6f813204963efbff077e830a414747e1bf77"
+        }
+      ],
+      "log": "02-build.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:22:51.248Z",
+      "logSha256": "76d076b56f7757878c0b4156060b991d9658cdbb2652f37718458f890478e231"
+    },
+    {
+      "id": "03-rift-recovery",
+      "command": [
+        "npm",
+        "run",
+        "check:rift-recovery"
+      ],
+      "environment": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      },
+      "startedAt": "2026-10-06T01:22:51.248Z",
+      "sources": [
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+        },
+        {
+          "path": "tools/recovery/check.mjs",
+          "sha256": "66188b292f7cbc04a0c9029b9c5d43ca1698d8c7f218d50548687142b6734397"
+        },
+        {
+          "path": "tools/recovery/capture-legacy-generation.ts",
+          "sha256": "2bf0a57cf5b871d16e57d777cb5c792fadfc68aa97cec6c41a584389b7ea904f"
+        },
+        {
+          "path": "tools/recovery/check-actors.ts",
+          "sha256": "f0eb1fef19c05492f1cb274a9889e8de8fcad55efb2baf2957f10ea1535fbdb4"
+        },
+        {
+          "path": "tools/recovery/check-admission.ts",
+          "sha256": "12e3ab4728942fd55fae9e86948104f46d3e80dc7da21554007ab28297f1a8a5"
+        },
+        {
+          "path": "tools/recovery/check-async-destroy.ts",
+          "sha256": "82a00ce92bf6c2c6cdad25fee3b5bc513a060d4be8cc8533aa8cd15b793b675d"
+        },
+        {
+          "path": "tools/recovery/check-async-entry.ts",
+          "sha256": "37ca4d61e0d4c581d3dd96790f66c62d0bf1e5237b71fcfb925360842ef3be1a"
+        },
+        {
+          "path": "tools/recovery/check-catalog-authoritative-plan.ts",
+          "sha256": "58abd8bc137d79df81276d7dad49373d8af0f270aceb93df1110bdf3cbc025bc"
+        },
+        {
+          "path": "tools/recovery/check-catalog-state.ts",
+          "sha256": "532b993e19c10cc22522471b8d63d7b169042d807d098d12a03012e0f0bab80b"
+        },
+        {
+          "path": "tools/recovery/check-current-tools.ts",
+          "sha256": "5f47d3375e672061b91cd4590cc63e20dc0991ab81938e2f8897dc0a293c0b31"
+        },
+        {
+          "path": "tools/recovery/check-effects.ts",
+          "sha256": "3e55fefffc4c38592453d0ca930447f501ea6a449ebd759100a91cb407bbec90"
+        },
+        {
+          "path": "tools/recovery/check-entry-frame-fence.ts",
+          "sha256": "b32ad3eee6358c53d226fa008669646085b63dcf05a8f09759aad77a12b2afc4"
+        },
+        {
+          "path": "tools/recovery/check-generation-worker.ts",
+          "sha256": "b444a126aba181469e3d8581923fba6a22f23ec9429b7a58af0ef1257b95f59b"
+        },
+        {
+          "path": "tools/recovery/check-journey-recovery.ts",
+          "sha256": "41888b310aedaa5936227960a41f34d505189c7714b7cd5e36108eac2d266672"
+        },
+        {
+          "path": "tools/recovery/check-legacy-arithmetic-recovery.ts",
+          "sha256": "6e1c2bdbb112d2d5841f8916154067a90068690816f8330de2b5d6ea67792d83"
+        },
+        {
+          "path": "tools/recovery/check-legacy-arithmetic.ts",
+          "sha256": "60a985ec54e186f6ad4c50afac9d658ee6f6c65ce148f669cee5ecf70f250dd9"
+        },
+        {
+          "path": "tools/recovery/check-legacy-generation-selection.ts",
+          "sha256": "8bfce1b0b0aa8c0d275d218f3714749d3fd6498eb709358106a687282fb43be2"
+        },
+        {
+          "path": "tools/recovery/check-legacy-generation.ts",
+          "sha256": "15cd42cee9d8397f9da29e155c8add5f45ac72baca62cbf3eedbc10348f596e6"
+        },
+        {
+          "path": "tools/recovery/check-lifecycle.ts",
+          "sha256": "714b5c5d39a32395257c026cd14627a88f4d7de21ac00883457316811f3939ba"
+        },
+        {
+          "path": "tools/recovery/check-minimap-world-scale.ts",
+          "sha256": "ab56f938c6f25f1d5bd78c58d0eb1a46804b8e6589c0fdf29352bb73408fc49f"
+        },
+        {
+          "path": "tools/recovery/check-minimap.ts",
+          "sha256": "8c33295aa519a1d9173acde63822f2a9140bf2eb9b183fd87a70804d02090906"
+        },
+        {
+          "path": "tools/recovery/check-native-body-admission.ts",
+          "sha256": "3a305600d34ea2e3076485e84aa7bc3b2359d38a4037d3701ef65147b4a5dfac"
+        },
+        {
+          "path": "tools/recovery/check-native-body-legacy-dash.ts",
+          "sha256": "52848ef6b33c927108470bfb91ac2bc14ea4528d4f817dc83352af33145fb08e"
+        },
+        {
+          "path": "tools/recovery/check-native-generation-revision.ts",
+          "sha256": "df056fb952f83171784c175773a3aefdb7c88e82201afcd49bb7cc131155224e"
+        },
+        {
+          "path": "tools/recovery/check-paint-geometry-compatibility.ts",
+          "sha256": "6c76f32bedfaba3b68364cd047b485932b3893237a6dcdf5d6a82f82677c1d24"
+        },
+        {
+          "path": "tools/recovery/check-persistence.ts",
+          "sha256": "95a15bf9f294f50e00680686c8e8a852c64dc505ed333e6d84cfe3e8faf001d7"
+        },
+        {
+          "path": "tools/recovery/check-procedural-admission.ts",
+          "sha256": "f34a2d99312d8912eefd28ac7026d4b57a923b37f44ef7f78667ce0ad146c70b"
+        },
+        {
+          "path": "tools/recovery/check-procedural-identity.ts",
+          "sha256": "ddf8cb5f0a1be58aae15466a411abe5a9abef520df02ac00825bead47f8a71f5"
+        },
+        {
+          "path": "tools/recovery/check-procedural-rescue.ts",
+          "sha256": "2f06e94610d37a28554e468249ce1325120138942091ccc8a355f714055f8009"
+        },
+        {
+          "path": "tools/recovery/check-run.ts",
+          "sha256": "42f36bbff0382bf33ef7a7eef3c63bc60d7aa0be937608f1fbf7e3ea65ea788e"
+        },
+        {
+          "path": "tools/recovery/check-save-replacement.ts",
+          "sha256": "ae04d0cfeff8b89cd76a7be86d969488de3795d7135011449d2de64bd89d619b"
+        },
+        {
+          "path": "tools/recovery/check-settlement-random.ts",
+          "sha256": "568f5b8d8d0c2e4e5e2a364022b46e6f078abb6cf20b8abcc6b4fd233b4582e4"
+        },
+        {
+          "path": "tools/recovery/check-staged-entry.ts",
+          "sha256": "97c8b53ee2420370f69b51ce9d23071c1c03daf7e01d0dc9f3210cc0f886a504"
+        },
+        {
+          "path": "tools/recovery/check-state.ts",
+          "sha256": "7142c8853151797bc4170f4847640cadd7123b4f0f51f4740560bae30f42dc7b"
+        },
+        {
+          "path": "tools/recovery/check-world-generation-version.ts",
+          "sha256": "c19a932b6d9d31b3c5a42ba814addeea208f63dada4aa6f38976eec1531aef6d"
+        },
+        {
+          "path": "tools/recovery/check-world.ts",
+          "sha256": "72a733b1d40092ad3bf1eaad4306b5206680470b7964b479384b4e8f2c228ed4"
+        },
+        {
+          "path": "tools/recovery/check.mjs",
+          "sha256": "66188b292f7cbc04a0c9029b9c5d43ca1698d8c7f218d50548687142b6734397"
+        },
+        {
+          "path": "tools/recovery/codegen-legacy-arithmetic.mjs",
+          "sha256": "2e99b6c2678ba998cbe6eab7001d54addcff73926493634f07defe0ebcd4405b"
+        },
+        {
+          "path": "tools/recovery/css-loader.mjs",
+          "sha256": "183f4cc6e78483420d5d18293689c2f95d3e27850b47107836c144560c444e25"
+        },
+        {
+          "path": "tools/recovery/diagnose-r100-checkpoint.ts",
+          "sha256": "fbe7e328fe5f0b46b2630bd1082cfa144b12e3a980430b93d64b21b6f9a6eb55"
+        },
+        {
+          "path": "tools/recovery/freeze-legacy-generation.mjs",
+          "sha256": "887fe1c90211a450f2dea80268230da0ccf75602ebd369d5820e6c4ba2b92adb"
+        },
+        {
+          "path": "tools/recovery/freeze-native-r100-revision2.mjs",
+          "sha256": "dd9142bc4b7357ba6f2472f4b2271d5c1b0e5614c3b98ac46d7743b04571fe8a"
+        },
+        {
+          "path": "tools/recovery/freeze-native-r100-revision3.mjs",
+          "sha256": "d7d17c62871da362449cafb4e57d32d384f537c9921cd4bb14a4bf7714dd44cd"
+        },
+        {
+          "path": "tools/recovery/freeze-native-r100-revision4.mjs",
+          "sha256": "2bb053360705322e380c183ca10a305854ddfb6092fd6bcbcd00ad3f5c430f77"
+        },
+        {
+          "path": "tools/recovery/legacy-departure-helper.ts",
+          "sha256": "e5f292fd011976d5e6efa69e20c20970bf8766638334dc73fb8334393474fbf1"
+        },
+        {
+          "path": "tools/recovery/legacy-generation-gold.ts",
+          "sha256": "67454f6a03c320598e0f799e13517349486c4736df16dabc43577b73a99a6040"
+        },
+        {
+          "path": "tools/recovery/native-fixture.ts",
+          "sha256": "c6e58c2213ad32e2de59947d2d9d6665b51060f4e2156e55aba44f50970442c4"
+        },
+        {
+          "path": "tools/recovery/qa-runtime.mjs",
+          "sha256": "672d76ae62d89cdbb07835084e3b894b41a918471797010a9bcbfc2ee6406e3f"
+        },
+        {
+          "path": "tools/recovery/register-css.mjs",
+          "sha256": "519d7aa6b48434790f50ac4f7c95cee02c9396d33abf153d046b5219d104dfa8"
+        },
+        {
+          "path": "tools/recovery/restore-legacy-generation-worker.ts",
+          "sha256": "b1697748f934a09a589aa0932c1105c513e94b4156337de757149a576b895fb2"
+        }
+      ],
+      "log": "03-rift-recovery.log",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-06T01:24:43.663Z",
+      "logSha256": "a4fe9749febeb134bbe85b6325adf622f566f40e2a7ff4e962c818fdf22a545a"
+    }
+  ],
+  "materialDependencies": {
+    "byteIdentical": true,
+    "sha256": "7d98eae218ece5357b57d673de892f4b6749e6728f696cd20174611dce024e57",
+    "beforeManifestSha256": "c57c22eabc3f686007ab9bfd5b2d5aac214efbf451bd88996dbc224c3d16b1d6",
+    "afterManifestSha256": "a242facd29b161bbf19ad3643a2cdd6694f4637523f1345a717af6d83cafc785"
+  },
+  "candidate": {
+    "worlds": 52,
+    "enabled": 20,
+    "disabled": 32
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: 03-rift-recovery failed; original log retained\n\n1 !== 0\n",
+  "endedAt": "2026-10-06T01:24:43.664Z"
+}

@@ -1,0 +1,460 @@
+{
+  "status": "bounded-art-pass",
+  "source": "b06-source/source-snapshot.json",
+  "server": "http://127.0.0.1:3095",
+  "readScope": {
+    "normalWalkFramesPersonallyViewed": 12,
+    "deepFramesPersonallyViewed": 20,
+    "gradeShortCases": 12,
+    "deepCompletedCases": 4,
+    "deepGrade": "medium",
+    "seed": 20261005
+  },
+  "method": "Normal finite FOV and camera; controlled candidate world/training loadout, actual keyboard from original spawn. Full floor geometry read for diagnostic body routing, not novice navigation; no position/HP/clock/fog edits. Enemy and pollution simulation stays active.",
+  "evidenceSha256": {
+    "b06-source/source-snapshot.json": "e04f2d0922dc82b76448808f1f715c748025a4d8a75d21824c29044e1a673678",
+    "b06-normal/report.json": "3e9e375e187a8cb9e6100a95de6fd61a867d5b59e5eed9fad874b30744632666",
+    "b06-deep/report.json": "90637a6a15e88dded726b9ec1be1fed88cd8f2b0dad6768927b008062f55a951",
+    "b06-deep-resin-followup/report.json": "02796ff9c41fa4849de5e915fd1ef99d6f2a29b557a79fecc16756c82a038ddc"
+  },
+  "captureFailure": {
+    "preserved": "b06-deep/report.json",
+    "message": "Error: page.evaluate: Execution context was destroyed, most likely because of a navigation",
+    "after": "three completed deep cases, resin first route in progress",
+    "sourceCopyHashMismatches": [],
+    "lastRecordedVideoFrame": "normal 100 HP / 16 chaos active scene",
+    "cause": "unresolved",
+    "environmentObservation": "Parent observed host UTC clock jump from 2026-10-05 16:xx to 2026-10-06 00:23; shell and clock agreed afterward. Possible host sleep/resume remains unconfirmed, not assigned as cause. Original JSONL ends 2026-10-05T16:22:16.383Z; followup starts 2026-10-06T00:22:12.550Z.",
+    "followup": "One explicitly authorized same-source same-seed resin-only capture; navigation/crash/console logs and stable scene readiness added, no swallowed mid-run error. No mid-run navigation/crash/error observed; successful capture does not certify root cause fixed."
+  },
+  "worlds": {
+    "ribbed-delta": {
+      "conclusion": "bounded-author-art-pass",
+      "basis": "Four high fibrous ribs bound slots under a shared back; low amber gel leaf surface meets their open ends, unlike a single fibre crossing a pool. Actual slot entry and 1168px outer route around high back are distinct.",
+      "frames": [
+        "01-low-leaves-north.png",
+        "02-rib-slot-north.png",
+        "02-rib-slot-east.png",
+        "03-back-head-south.png"
+      ],
+      "directory": "b06-deep",
+      "limits": "Fourth east-end frame partly swallowed by real light eater; not proof of full exterior or all leaf junctions.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 818.3640526438718,
+          "y": 438.4120264360864
+        },
+        "hp": 85,
+        "chaos": 49.55526511000026,
+        "elapsedMs": 39615
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-low-leaves",
+            "x": 530,
+            "y": 540,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 532,
+            "y": 540
+          },
+          "length": 384
+        },
+        {
+          "requested": {
+            "label": "02-rib-slot",
+            "x": 510,
+            "y": 340,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 508,
+            "y": 340
+          },
+          "length": 216
+        },
+        {
+          "requested": {
+            "label": "03-back-head",
+            "x": 580,
+            "y": 100,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 580,
+            "y": 100
+          },
+          "length": 1168
+        },
+        {
+          "requested": {
+            "label": "04-rib-ends",
+            "x": 830,
+            "y": 440,
+            "faces": [
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 828,
+            "y": 436
+          },
+          "length": 648
+        }
+      ]
+    },
+    "bladder-weave": {
+      "conclusion": "bounded-author-art-pass",
+      "basis": "Pink thick membrane cavities and blue high fibrous anchors retain separate cut and surface roles. Two anchors are real barriers between actual left/right cavity routes, not decorative thread.",
+      "frames": [
+        "01-left-cavity-north.png",
+        "01-left-cavity-east.png",
+        "02-fibre-anchor-north.png",
+        "03-right-cavity-south.png",
+        "04-south-anchor-north.png"
+      ],
+      "directory": "b06-deep",
+      "limits": "Right cavity and some outer arcs partly occluded by light eater. Route length reflects conservative macro navigation and is not shortest-path balance evidence.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 549.3102774395729,
+          "y": 601.3338241289998
+        },
+        "hp": 70,
+        "chaos": 50.26092483000008,
+        "elapsedMs": 56597.700000000004
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-left-cavity",
+            "x": 331,
+            "y": 352,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 332,
+            "y": 356
+          },
+          "length": 384
+        },
+        {
+          "requested": {
+            "label": "02-fibre-anchor",
+            "x": 560,
+            "y": 420,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 556,
+            "y": 412
+          },
+          "length": 288
+        },
+        {
+          "requested": {
+            "label": "03-right-cavity",
+            "x": 781,
+            "y": 366,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 780,
+            "y": 364
+          },
+          "length": 1544
+        },
+        {
+          "requested": {
+            "label": "04-south-anchor",
+            "x": 545,
+            "y": 610,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 548,
+            "y": 612
+          },
+          "length": 944
+        }
+      ]
+    },
+    "flake-thicket": {
+      "conclusion": "bounded-author-art-pass",
+      "basis": "Three unequal differently oriented dry folded plates make sequential oblique gaps with larger northern bypass; actual facing changes reveal thick pale cut edge against purple bare floor, not penetrable paper or parallel wall copies.",
+      "frames": [
+        "01-first-pleat-east.png",
+        "02-middle-gap-north.png",
+        "02-middle-gap-west.png",
+        "03-last-gap-north.png"
+      ],
+      "directory": "b06-deep",
+      "limits": "Northern fourth frame mainly shows bypass bare floor with a small end; not a full rear-wall review.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 588.9516660454814,
+          "y": 97.8367702517159
+        },
+        "hp": 100,
+        "chaos": 39.98104745999953,
+        "elapsedMs": 35848.5
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-first-pleat",
+            "x": 365,
+            "y": 300,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 364,
+            "y": 300
+          },
+          "length": 456
+        },
+        {
+          "requested": {
+            "label": "02-middle-gap",
+            "x": 590,
+            "y": 390,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 588,
+            "y": 388
+          },
+          "length": 392
+        },
+        {
+          "requested": {
+            "label": "03-last-gap",
+            "x": 810,
+            "y": 325,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 812,
+            "y": 324
+          },
+          "length": 600
+        },
+        {
+          "requested": {
+            "label": "04-northern-bypass",
+            "x": 590,
+            "y": 100,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 588,
+            "y": 100
+          },
+          "length": 456
+        }
+      ]
+    },
+    "resin-hollows": {
+      "conclusion": "bounded-author-art-pass",
+      "basis": "Three offset major hard-gel cavities are entered from differing mouth directions, with lower residual arcs beside them. Dark purple continuous skin and rose thick cuts differ from blue floor; actual full-body route visits all three mouths.",
+      "frames": [
+        "01-lower-mouth-south.png",
+        "02-west-mouth-north.png",
+        "03-east-mouth-east.png"
+      ],
+      "directory": "b06-deep-resin-followup",
+      "limits": "Not three equal closed bowls. Fourth rear frame mainly bare floor/edge and enemies, not full external-wall evidence. Initial capture failure remains unexplained; followup only fills missing visual case.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 756.6007961813265,
+          "y": 108.0538803937367
+        },
+        "hp": 85,
+        "chaos": 35.67602828999934,
+        "elapsedMs": 34548.7
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-lower-mouth",
+            "x": 616,
+            "y": 543,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 612,
+            "y": 540
+          },
+          "length": 480
+        },
+        {
+          "requested": {
+            "label": "02-west-mouth",
+            "x": 352,
+            "y": 337,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 356,
+            "y": 340
+          },
+          "length": 464
+        },
+        {
+          "requested": {
+            "label": "03-east-mouth",
+            "x": 689,
+            "y": 267,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 692,
+            "y": 268
+          },
+          "length": 400
+        },
+        {
+          "requested": {
+            "label": "04-rear-wall",
+            "x": 755,
+            "y": 110,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 756,
+            "y": 108
+          },
+          "length": 488
+        }
+      ]
+    }
+  },
+  "notApproved": [
+    "human acceptance",
+    "all seeds or all routes",
+    "full expedition balance",
+    "all occluded outer walls",
+    "initial capture failure root cause"
+  ],
+  "independentReview": {
+    "reviewer": "root",
+    "frames": [
+      "ribbed-delta/02-rib-slot-north.png",
+      "bladder-weave/04-south-anchor-north.png",
+      "flake-thicket/02-middle-gap-west.png",
+      "resin-hollows/03-east-mouth-east.png",
+      "bladder-weave/01-left-cavity-north.png",
+      "bladder-weave/03-right-cavity-south.png",
+      "resin-hollows/02-west-mouth-north.png"
+    ],
+    "conclusion": "Bounded pass for seen thickness, cavities and silhouettes; not all outer walls."
+  }
+}

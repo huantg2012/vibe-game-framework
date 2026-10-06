@@ -1,0 +1,60 @@
+{
+  "status": "bounded-art-review-three-local-pass-one-rework",
+  "sourcePort": 3090,
+  "sourceSnapshot": "b02-source/source-snapshot.json",
+  "captured": {
+    "shortNormalCases": 12,
+    "shortGrades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "deepWorlds": 4,
+    "deepFrames": 32,
+    "facingSupplementFrames": 4
+  },
+  "personallyViewed": {
+    "shortWalkFrames": 12,
+    "deepAndFacingFrames": [
+      "b02-deep/bleached-court/01-front-court-north.png",
+      "b02-deep/bleached-court/02-back-edge-north.png",
+      "b02-deep/bleached-court/03-broken-end-north.png",
+      "b02-deep/bleached-court/04-separated-fragment-north.png",
+      "b02-deep/monolith-sill/01-quiet-court-north.png",
+      "b02-deep/monolith-sill/02-foot-notch-north.png",
+      "b02-deep/monolith-sill/03-side-opening-north.png",
+      "b02-deep/monolith-sill/04-back-face-north.png",
+      "b02-deep/satin-fan/01-walkable-fan-north.png",
+      "b02-deep/satin-fan/02-overlapping-thin-leaves-north.png",
+      "b02-deep/satin-fan/03-raised-fold-north.png",
+      "b02-deep/satin-fan/04-open-outer-bed-north.png",
+      "b02-deep/split-rib-causeway/01-lower-rib-mouth-north.png",
+      "b02-deep/split-rib-causeway/02-staggered-midway-north.png",
+      "b02-deep/split-rib-causeway/03-upper-exit-north.png",
+      "b02-deep/split-rib-causeway/04-wide-outer-route-north.png",
+      "b02-deep-facing/bleached-court/02-back-edge-south.png",
+      "b02-deep-facing/bleached-court/03-broken-end-west.png",
+      "b02-deep-facing/bleached-court/04-separated-fragment-east.png"
+    ]
+  },
+  "localPass": [
+    "monolith-sill",
+    "split-rib-causeway",
+    "satin-fan"
+  ],
+  "rework": {
+    "bleached-court": "True nested rectangular ledges and parallel closed cut bands look like a display plinth. Preserve material ramps and broad quiet face; reshape terrace geometry only."
+  },
+  "limitations": [
+    "Diagnostic full-geometry navigation, actual WASD from original spawn, Gym controlled candidate/training loadout.",
+    "No state/fog/HP/time mutation. These are normal FOV art routes, not full search/extract or novice play.",
+    "North/east filenames denote input only. Back-side outward frames cannot approve the hidden surface.",
+    "No human approval or all-seed claim."
+  ],
+  "evidenceSha256": {
+    "b02-source/source-snapshot.json": "69c1884acd847fd506e353830a1767a8a1815c5411f117e604bb9254f1d42d5f",
+    "b02-normal/report.json": "0d2f9c948cd82183842c582e554be8dea0f6c8d6cf28c1d0c06671edd4397b50",
+    "b02-deep/report.json": "49709da39082edca9046fcc5ff0f6584c05f7b4caa19c4277a103283ed08743c",
+    "b02-deep-facing/report.json": "3e7b63c3cd3a16173ab7882834b3c3da790f25078dc2d7436d01c6f1edbf98ec"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "scope": "Refactor preserves raw-evidence qualification semantics; no new game outcomes.",
+  "cpu": {
+    "path": "docs/qa/artifacts/r100-i07-i09/qualification-policy/final52-summary.json",
+    "sha256": "1d66b70fa3e6ec73f812b3d8e3eb48551480be033591df6b3ffc022798692159",
+    "recomputedExact": true,
+    "cases": 7488
+  },
+  "play": {
+    "path": "docs/qa/artifacts/r100-i07-i09/play-summary-contract/exported-check.log",
+    "sha256": "3a1d8eb374e5ed6f584e25c143963b2283c34936ea283ab7f7e47089016a2f5e",
+    "checks": 9
+  },
+  "sources": [
+    {
+      "path": "tools/qa/r100-play-qualification.mjs",
+      "sha256": "6d30a6c56d0612e3f0ac87ecc0a4ee1882efb8931d6d25a678c45b92fdababed"
+    },
+    {
+      "path": "tools/qa/r100-qualification-summary.mjs",
+      "sha256": "ea45b5bf9d707278a6a319d19aa32e80ea0f4d218392d2b3fa468dd5d32d52f0"
+    },
+    {
+      "path": "tools/qa/r100-bind-i07-i09.mjs",
+      "sha256": "9a9f426bf4b8569b1173c24f0eabd927e2813df3d5de4cd96c69c2a6a5ac1af3"
+    }
+  ]
+}

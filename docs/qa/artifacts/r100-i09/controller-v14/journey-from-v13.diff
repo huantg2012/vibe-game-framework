@@ -1,0 +1,94 @@
+--- tools/qa/r100-i07-i09-journey.mjs	2026-10-05 23:00:25
++++ tools/qa/r100-i09-journey.mjs	2026-10-05 23:50:23
+@@ -1,21 +1,26 @@
+-/** I07-I09 bounded real-input journey. Reuses P13 observed-threat controller.
++/** I09 bounded real-input journey. Slot-aware copy of I07-I09 policy13.
++ * Source: tools/qa/r100-i07-i09-journey.mjs, SHA256
++ * 6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f.
++ * Policy14 changes only public active/passive slot discovery, matching keys and
++ * equipment labels. Threat, movement, time, preparation and search budgets stay13.
+  * Stops after the declared number of actually collected non-entry remains.
+  * Full static terrain is used for macro routing; hidden loot/enemy identities are not.
+  * Geometry-aided expert evidence, never novice play or natural economy when world/build is fixed.
+  * Preparation alone is opened by its scene method (integration exception). Other actions are actual keys.
+  * Ordinary mature fixtures exist only under QA_CONTROLLED_BUILD; natural policies never grant gear.
+- * Run: TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/qa/r100-i07-i09-journey.mjs
++ * Run: TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/qa/r100-i09-journey.mjs
+  */
+ import assert from 'node:assert/strict';
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import { createHash } from 'node:crypto';
+ import { createJourneyDriver } from '../qa/i27-journey-driver.mjs';
+-import { createVisibleEncounterPolicy } from '../world-study/r100-p13-costed-encounters.mjs';
++import { createVisibleEncounterPolicy } from './r100-i09-costed-encounters.mjs';
++import { activeToolSlots, planOwnedToolEquipment } from './r100-i09-tool-slots.mjs';
+ import { createLastLightMovementState, stepLastLightMovement, lastLightProjectedWalkingSpeed,
+   canInteractLastLight, getLastLightInteractionDistance } from '../../src/systems/last-light-locomotion.ts';
+ import { LAST_LIGHT_STATIONS, LAST_LIGHT_WORLD_WALK_SPEED } from '../../src/systems/last-light-layout.ts';
+-const out = path.resolve(process.env.QA_OUTPUT_DIR ?? 'docs/qa/artifacts/r100-i07-i09/journeys');
++const out = path.resolve(process.env.QA_OUTPUT_DIR ?? 'docs/qa/artifacts/r100-i09/journeys');
+ const grades = (process.env.QA_GRADES ?? 'low-growth,medium-growth').split(',');
+ const rounds = Number(process.env.QA_RUNS ?? 12), limit = Number(process.env.QA_SEARCH_LIMIT ?? 12);
+ const ordinalStart=Number(process.env.QA_ORDINAL_START??1);
+@@ -65,9 +70,9 @@
+ const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
+ const report = { method: 'Actual keyboard movement, E search/extraction, R return and E/arrow/Enter repair. Full geometry is read for diagnostic routing. Preparation opens through the normal scene method. No field reward, HP, chaos, clock or position injection. Natural runs use normal world selection and owned gear; controlled build/world and fixed defect identity are explicit fixtures recorded below.',
+   harnessSha256:createHash('sha256').update(fs.readFileSync(new URL(import.meta.url))).digest('hex'),
+-  harnessDependencies:['tools/world-study/r100-p13-costed-encounters.mjs','tools/qa/i27-journey-driver.mjs','src/systems/last-light-locomotion.ts','src/systems/last-light-layout.ts'].map(file=>({file,sha256:createHash('sha256').update(fs.readFileSync(file)).digest('hex')})),
++  harnessDependencies:['tools/qa/r100-i09-costed-encounters.mjs','tools/qa/r100-i09-tool-slots.mjs','tools/qa/i27-journey-driver.mjs','src/systems/last-light-locomotion.ts','src/systems/last-light-layout.ts'].map(file=>({file,sha256:createHash('sha256').update(fs.readFileSync(file)).digest('hex')})),
+   encounters:tacticalEnabled?'Current visible opponents/hosts and 5s last-seen memory; observed positions/facing, no hidden detection or patrol futures. Contextual known tools, evasion and guarded search.':'Original straight nearest-node policy with on-arrival tool keys',
+-  offeringPreference,normalManagement,postReturnManagement, policyRevision:13, returnEvasion:RETURN_EVASION, strategy:'Follow one fixed far physical direction, interrupt travel for actually observed uncollected non-deferred remains farther than320px from entry, search, then resume that direction while the observed return budget permits. Never inspect hidden content kind/tier/value. Return preserves the exit identity and responds only to currently seen short-leg threats with at most four280ms supported evade inputs; it then continues a body-supported path without voluntary pursuit or search-window fighting. Cumulative evade-input budget is1120ms and no further evasion starts after4000ms measured evasion work. The existing60s return-route cap remains. Current effective movement speed informs the estimated return budget; future pressure/speed degradation is not forecast.', surveyKnowledge: 'Only paid, currently displayed six-second position snapshots; no enemy identity, facing or live positions beyond visibility.', searchChaosLimit, searchHealthLimit, returnChaosBudget,
++  offeringPreference,normalManagement,postReturnManagement, policyRevision:14, slotPolicy:'Runtime public slot count and last passive index; active keys from GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS. Never press a passive slot.', returnEvasion:RETURN_EVASION, strategy:'Follow one fixed far physical direction, interrupt travel for actually observed uncollected non-deferred remains farther than320px from entry, search, then resume that direction while the observed return budget permits. Never inspect hidden content kind/tier/value. Return preserves the exit identity and responds only to currently seen short-leg threats with at most four280ms supported evade inputs; it then continues a body-supported path without voluntary pursuit or search-window fighting. Cumulative evade-input budget is1120ms and no further evasion starts after4000ms measured evasion work. The existing60s return-route cap remains. Current effective movement speed informs the estimated return budget; future pressure/speed degradation is not forecast.', surveyKnowledge: 'Only paid, currently displayed six-second position snapshots; no enemy identity, facing or live positions beyond visibility.', searchChaosLimit, searchHealthLimit, returnChaosBudget,
+   managementPolicy:'Keep core/purifier/storage at least 50, pay currently public growth with 2 kindling retained before storage100; afterward keep a recent actual maintenance reserve and invest current nodes. No unseen future item or growth reads.',
+   observedWindowPolicy:observedWindows?'Permit a 28px body-supported short approach behind currently observed non-approaching enemies; reobserve every350ms. No AI state or future patrol access.':'No back-facing approach permission; original conservative rerouting retained.',
+   status: 'running', fixedDefectIdentity:fixedIdentity,controlledBuild,controlledWorld,
+@@ -76,7 +81,8 @@
+ function selectNaturalGrade(policy, state, owned, prior) {
+   const equipped = new Set(owned.equipment.toolIds.filter(Boolean));
+   const usable = owned.items.filter(item => item.kind === 'contaminant' && item.canEquip && equipped.has(item.id));
+-  const active = usable.filter(item => item.toolSlots?.some(slot => slot === '0' || slot === '1'));
++  const activeIds = new Set(activeToolSlots(owned).map(slot => owned.equipment.toolIds[slot.index]));
++  const active = usable.filter(item => activeIds.has(item.id));
+   const minHp = Math.min(...state.modules.map(module => module.hp));
+   const lastDeath = prior.findLastIndex(run => run.outcome === 'death');
+   const sinceDeath = lastDeath < 0 ? Infinity : prior.length - lastDeath - 1;
+@@ -323,7 +329,10 @@
+  }
+  async function ownedForPreparation(){return page.evaluate(async()=>{
+    const{inventoryStore}=await import('/src/systems/inventory-store.ts'),{projectInventoryItem}=await import('/src/ui/inventory-presenter.ts');
+-   return{equipment:inventoryStore.getEquipment(),items:inventoryStore.getItems().map(item=>{const{icon,...facts}=projectInventoryItem(item,'prepare');return facts;})};
++   const{contaminantSystem}=await import('/src/systems/contaminant-system.ts'),{GAME_CONSTANTS}=await import('/src/config/constants.ts');
++   const count=contaminantSystem.getSortieSlotCount(),passive=contaminantSystem.getSortiePassiveSlotIndex();
++   const toolSlots=Array.from({length:count},(_,index)=>({index,id:String(index),key:index===passive?null:GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[index],label:index===passive?'被动':`工具 ${GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[index]}`}));
++   return{toolSlots,equipment:inventoryStore.getEquipment(),items:inventoryStore.getItems().map(item=>{const{icon,...facts}=projectInventoryItem(item,'prepare');return facts;})};
+  });}
+  async function equipOwned(){
+    const owned=await ownedForPreparation(),changes=[];
+@@ -340,12 +349,9 @@
+     const equipped=await ownedForPreparation();assert.deepEqual(equipped.equipment.toolIds.slice(0,2),definitions.map(id=>`qa-build-${id}`));
+     driver.log({event:'actual-owned-equipment-inputs',changes});return changes;
+    }
+-   const occupied=new Set(owned.equipment.toolIds.filter(Boolean));
+-   for(const slot of ['0','1','2']){
+-    if(owned.equipment.toolIds[Number(slot)])continue;
+-    const item=owned.items.find(candidate=>candidate.kind==='contaminant'&&candidate.canEquip&&candidate.toolSlots?.includes(slot)&&!occupied.has(candidate.id));if(!item)continue;
+-    await page.locator(`[role="option"][data-item-id="${item.id}"]`).click();
+-    await page.getByRole('button',{name:`装到 ${slot==='2'?'被动':`工具 ${slot==='0'?'Q':'F'}`}`,exact:true}).click();occupied.add(item.id);changes.push({slot,id:item.id});
++   for(const choice of planOwnedToolEquipment(owned)){
++    await page.locator(`[role="option"][data-item-id="${choice.id}"]`).click();
++    await page.getByRole('button',{name:`装到 ${choice.label}`,exact:true}).click();changes.push({slot:choice.slot,id:choice.id});
+    }
+    driver.log({event:'actual-owned-equipment-inputs',changes});return changes;
+  }
+@@ -399,8 +405,8 @@
+    await driver.press('Escape');await page.waitForTimeout(250);driver.log({event:'actual-offering-inputs',ids:offered});return offered;
+  }
+  async function useOwnedTools(label){
+-   const before=await ownedForPreparation();const ids=before.equipment.toolIds.slice(0,2);
+-   for(let i=0;i<ids.length;i++)if(ids[i])await driver.press(i===0?'q':'f');
++   const before=await ownedForPreparation(),slots=activeToolSlots(before);const ids=slots.map(slot=>before.equipment.toolIds[slot.index]);
++   for(const slot of slots)if(before.equipment.toolIds[slot.index])await driver.press(slot.key.toLowerCase());
+    const after=await ownedForPreparation();driver.log({event:'actual-tool-keys',label,before:before.items.filter(item=>ids.includes(item.id)),after:after.items.filter(item=>ids.includes(item.id))});
+  }
+  try{

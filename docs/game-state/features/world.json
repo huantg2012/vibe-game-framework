@@ -3,9 +3,9 @@
     "id": "COH-F011",
     "title": "正式随机世界与空间配方池",
     "domain": "world",
-    "summary": "新出击使用r100-native v3修订4，保留20世界各低/中/重档的选池；逐世界材料外观、显式实体构造、污染与内容和种子在出发前一起冻结。8次有界候选不换世界/等级。旧v3修订1/2/3及旧v1/v2走封存执行器，修订3另封存表面预烤和原材料资产依据。当前有限生成、确定性与恢复证据见E158，历史修订3资格保留原范围。 2026-10-05用户对5ba918a5的本批世界视觉明确“pass”，另列E159。",
+    "summary": "正式新出击使用r100-native v3修订5，52世界及低中重156等级启用。逐世界材料/实体/来源残骸/等级随种子冻结；最近8次正式出发跨等级软回避同世界和近邻。取消/失败/冷续不追加，旧修订1–4及v1/v2保持独立执行器。本轮完整限定验证见E161，旧20修订4视觉人审E159保留历史。",
     "delivery": "production",
-    "work": "active",
+    "work": "settled",
     "entryPoints": [
       "净化点 → 裂隙备行 → 选择污染等级 → 等级内随机v3世界",
       "标题继续 → 原存档的v1/v2/v3执行器和冻结数据"
@@ -269,6 +269,34 @@
         "path": "docs/qa/artifacts/r100-world-identity/recovery-input-diagnostic/README.md",
         "role": "doc",
         "note": "原350ms菜单输入失败保留；独立原存档复放和受控慢响应区分QA前提与恢复算法。"
+      },
+      {
+        "path": "src/generation/world-study/r100-world-selection.ts",
+        "role": "code"
+      },
+      {
+        "path": "data/rift-world-selection.csv",
+        "role": "data"
+      },
+      {
+        "path": "src/generated/r100-world-selection.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/types/rift-world-history.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-r100-world-selection.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i07-i09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i07-i09.md",
+        "role": "art"
       }
     ],
     "dependsOn": [
@@ -298,22 +326,23 @@
       "COH-E156",
       "COH-E157",
       "COH-E158",
-      "COH-E159"
+      "COH-E159",
+      "COH-E160",
+      "COH-E161"
     ],
     "unknowns": [
-      "支持范围为已有材料/单层碰撞能力内的有界条件链；完整24维设计、罕见世界供给和历史新奇权重尚未完成。",
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
       "修订3的2400+480生成、60正式新出发/冷续与I03—I06有限完整搜撤是历史证据（E156）；修订4重做几何后，须独立验证完整自然搜取与撤离，不能继承旧资格或把有限准入当作全种子通过。",
-      "本批20世界修订4视觉已获用户明确“pass”（E159）；新几何完整玩法资格仍待补，I07扩至36世界未完成，未增加世界数。"
+      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14及长期收益I13独立保留。"
     ]
   },
   {
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "正式修订4以20世界CSV材料色阶连续映射源图笔触，分别表达地面、完整表皮、断面和次材料；地表组织由非周期空间区域与源图细节共同形成。真实表面拥有材料身份，可走浅浮雕不再因非阻挡而被染成底床。六材料几何、法线、粗糙度、灯照、遮挡和污染绿继续独立；生成及RGBA/Host预烤仍在Worker完成。旧修订3使用原预烤闭包，新画面和历史审查分开记证。 本批20世界视觉于2026-10-05获用户明确“pass”（E159）。",
+    "summary": "修订5沿用已认可的材料连续映色与源笔触，新增六类显式形状及构造版本3，表达厚壳、褶皮、肋组、分足巨体、低叶和不规则台缘。地面/完整皮面/断面/次材分工，可走浅浮雕与阻挡脚边分开。52项有限正常图审及近邻返工绑定最终源；312实际过程另验，旧修订4RGBA按独立闭包恢复。",
     "delivery": "production",
-    "work": "active",
+    "work": "settled",
     "entryPoints": [
       "正式新世界 Rift 地表；研究页可定向查看"
     ],
@@ -526,6 +555,26 @@
         "path": "docs/art/rift-r100-world-identity.md",
         "role": "art",
         "note": "逐世界材料意图、首轮缺陷、修正和冻结后实际审图范围；不代签用户。"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-expansion.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-cellular.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-native-expansion-contract.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i07-i09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i07-i09.md",
+        "role": "art"
       }
     ],
     "dependsOn": [
@@ -548,22 +597,25 @@
       "COH-E156",
       "COH-E157",
       "COH-E158",
-      "COH-E159"
+      "COH-E159",
+      "COH-E160",
+      "COH-E161"
     ],
     "unknowns": [
       "旧v1/v2及v3修订1/2/3按各自封存身份恢复；当前修订4仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
       "历史地表动效、支撑与暂停/清理检查保留原版本；新世界身份的正常帧、定点补图与边界操作只证明各自可见/实际采样范围，不能代签整图可记忆性或完整自然绕行。",
       "修订3的120正常视野与20近邻深走为历史记录，不自动覆盖修订4新构造；本批修订4视觉人审另列E159，实际声音听感与较弱设备预算仍未通过本批代验。",
-      "本批视觉的人审“pass”不把有限作者配方和实图证据扩张成全种子、全边界、连续动效或完整自然旅程；低光、污染绿和可走/阻挡语义继续保持既有合同。"
+      "本批视觉的人审“pass”不把有限作者配方和实图证据扩张成全种子、全边界、连续动效或完整自然旅程；低光、污染绿和可走/阻挡语义继续保持既有合同。",
+      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14及长期收益I13独立保留。"
     ]
   },
   {
     "id": "COH-F013",
     "title": "遭遇、翻堆与撤离点投放",
     "domain": "world",
-    "summary": "v3投放继续验证完整身体、支撑、Host占地、实际交互站位及返程；当前修订4保留修订3污染/敌人/资源合同，重度深薪仍为2堆各6。翻找前不揭晓类别、品质或数额。残骸在保留来源形制、透明轮廓和行为的同时，读取冻结世界外观并复用表面连续映色，令断屑与原物材料一致；旧修订原内容及外观保持。新几何完整风险回报须另验。 本批来源残骸视觉随20世界重构获E159人审，部署和风险回报的待验范围不变。",
+    "summary": "52世界保留既有敌人、污染、薪柴收益和身体/交互站位准入，搜取残骸与来源材料匹配。每世界每档两原种子完整过程共312次通过限定资格；48自然连续趟保留空返/死亡及真实成本。绘画、实际搜撤和数值证据分开，长期重档相对收益仍归I13。",
     "delivery": "production",
-    "work": "active",
+    "work": "settled",
     "entryPoints": [
       "每次正式出击生成时自动部署",
       "DEV：rift-r100-masters.html → 九组作者地段原生Host投放"
@@ -733,6 +785,14 @@
       {
         "path": "docs/art/rift-r100-world-identity.md",
         "role": "art"
+      },
+      {
+        "path": "docs/qa/rift-r100-i07-i09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i07-i09.md",
+        "role": "art"
       }
     ],
     "dependsOn": [
@@ -761,7 +821,9 @@
       "COH-E153",
       "COH-E156",
       "COH-E158",
-      "COH-E159"
+      "COH-E159",
+      "COH-E160",
+      "COH-E161"
     ],
     "unknowns": [
       "内容继续沿用正式旧图书馆方言；FLOOR/VOID宿主图没有占墙落点，本轮不代表全部污染形态或新敌人技能已接入。",
@@ -770,7 +832,8 @@
       "本轮18例为九组DEV作者地段×两种子；数量/足迹和保护路线检查不代表任意种子投放成功、正式世界资格或自然搜撤取舍与平衡已验。",
       "E134仅补充来源外观的有限实景证据，不重新证明或改变部署质量、路线合同与资源平衡。",
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
-      "修订3集中2×6深薪、旧90趟经营及三母版针对性准备的有限证据保留；修订4未改收益和巡逻合同，但几何影响实际搜索/撤离路径，完整自然流程及长期相对效率不能继承。"
+      "修订3集中2×6深薪、旧90趟经营及三母版针对性准备的有限证据保留；修订4未改收益和巡逻合同，但几何影响实际搜索/撤离路径，完整自然流程及长期相对效率不能继承。",
+      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14及长期收益I13独立保留。"
     ]
   },
   {
@@ -822,13 +885,14 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100目标108世界/324等级；I01/I02人审和I03—I06修订3内部结案、6/14历史进度保留。当前20世界/60等级已以修订4重构材料身份、非周期地表组织与17派生世界实体构造，没有增加数量。本批单列有限技术、实帧与入口/恢复证据；新几何完整自然搜撤资格不得继承历史。2026-10-05用户对5ba918a5本批20世界视觉明确“pass”；I07扩至36世界及后续轮次未完成，完整新几何玩法、实际听感与发布风险仍独立待验。",
+    "summary": "R100目标108世界/324等级不变；I01/I02人审与I03–I09内部结案，9/14轮。当前52世界156等级修订5正式启用：I07/I08新增32世界，I09完成近期回避、连续出征和独占性能。E161记录本轮限定技术/美术/体验证据，用户认可与内部资格分账；I10尚未启动。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
-      "净化点 → 备行选级 → 正式v3修订4原生世界；当前20世界三级，证据范围见E158",
-      "r100-gym.html：20候选世界×三级，以正式生成器和RiftScene运行",
-      "docs/reading/rift-r100.html：唯一迭代/资格台账；原I01/I02历史证据保留"
+      "净化点 → 备行选级 → 修订5正式原生世界；当前20启用，新增32候选等待本轮完整资格",
+      "r100-gym.html：52候选世界×三级，可检查尚未进入随机池的新增内容",
+      "docs/reading/rift-r100.html：唯一迭代/资格台账；原I01/I02及修订4用户认可保留",
+      "docs/qa/interactive/r100-i07-i09-worlds.html：新增32世界、三档实图和近邻对照；完整限定验证见E161"
     ],
     "sources": [
       {
@@ -1441,6 +1505,166 @@
         "path": "docs/reading/rift-r100.html",
         "role": "doc",
         "note": "从唯一台账生成的只读看板；世界视觉人审与完整玩法资格分别显示。"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i07.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i08.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i07-i09.md",
+        "role": "art"
+      },
+      {
+        "path": "src/generation/legacy-r100-v4/assets.json",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v4/executor.d.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/legacy-r100-v4/executor.js",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-r100-i09-tool-slots.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-i07-i09-coverage.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-i07-i09-journey.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-i09-continuous.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-i09-costed-encounters.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-i09-journey.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-i09-tool-slots.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-play-qualification.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-qualification-summary.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/qa/r100-source-continuity.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-native-world-expansion.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/check-r100-library-resume.mjs",
+        "role": "test"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-selection.mjs",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i07-i09.md",
+        "role": "doc",
+        "note": "I07—I09本轮验证与原样用例调度；测试工具不等于实际通过。"
+      },
+      {
+        "path": "tools/qa/check-r100-play-qualification.mjs",
+        "role": "code",
+        "note": "I07—I09本轮验证与原样用例调度；测试工具不等于实际通过。"
+      },
+      {
+        "path": "tools/qa/r100-i07-i09-play-queue.mjs",
+        "role": "code",
+        "note": "I07—I09本轮验证与原样用例调度；测试工具不等于实际通过。"
+      },
+      {
+        "path": "tools/qa/r100-bind-i07-i09.mjs",
+        "role": "test",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "tools/qa/check-r100-final-binding.mjs",
+        "role": "test",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "tools/qa/check-r100-source-continuity.mjs",
+        "role": "test",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "tools/qa/r100-i09-final-probe.mjs",
+        "role": "test",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "tools/qa/r100-i09-review-continuous.mjs",
+        "role": "test",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "tools/qa/r100-i09-review-policy.json",
+        "role": "test",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "tools/qa/check-r100-i09-review.mjs",
+        "role": "test",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "docs/qa/interactive/r100-i07-i09-worlds.html",
+        "role": "doc",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "docs/qa/interactive/r100-i07-i09-worlds.status.json",
+        "role": "doc",
+        "note": "当前实现和有限证据入口；工具已存在不等于其最终真实验证已通过。"
+      },
+      {
+        "path": "tools/qa/r100-observed-searches.mjs",
+        "role": "test",
+        "note": "实际拾取日志与本趟场内/回库记录交叉核对；离线检查不代替真实连续游玩。"
+      },
+      {
+        "path": "tools/qa/check-r100-observed-searches.mjs",
+        "role": "test",
+        "note": "实际拾取日志与本趟场内/回库记录交叉核对；离线检查不代替真实连续游玩。"
+      },
+      {
+        "path": "tools/qa/r100-i09-search-receipts.mjs",
+        "role": "test",
+        "note": "实际拾取日志与本趟场内/回库记录交叉核对；离线检查不代替真实连续游玩。"
+      },
+      {
+        "path": "tools/qa/r100-i09-review-continuous-death-loss.mjs",
+        "role": "test",
+        "note": "原冻结复审保留；派生只读复审按既有规则独立核死亡携带损失与真实耗次，12反例及48实际数据通过。"
       }
     ],
     "dependsOn": [
@@ -1493,17 +1717,18 @@
       "COH-E156",
       "COH-E157",
       "COH-E158",
-      "COH-E159"
+      "COH-E159",
+      "COH-E160",
+      "COH-E161"
     ],
     "unknowns": [
-      "高体量普通solid和六材料生产能力已落地；仍无多层可行走、多区域过程、稀有例外、描述符新奇权重或逐包用户验收入库，20世界不是108目标完成。",
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
       "e8888655后用户确认折板南侧低斜面在normal中仍像地面。已局部重做阻挡物厚断面及材质坐标，外足占地不变；本轮取得44/48独立方向、50次受控键盘接近和600支撑采样；四方向未覆盖、四次战斗干扰和三次沿边滑动见E133，不算完整自然绕行。此前54帧不证明全部阻挡边缘可读，“这次好多了”当时仅为局部肯定；其后2026-10-04明确整体验收单列E138，未覆盖的运行范围仍不补判。",
       "翻找物来源修复只覆盖现有五来源及九组DEV母版；四种主形不等于新增四个合格世界。E134不外推采集后并行更新的地形材料，I01/I02的后续整体验收单列E138，不能倒改E134的实际证据范围。",
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
       "历史修订3的60正式新出发与60冷续、参考机GPU预算有界回收通过；其无Rift阶段≥50ms任务结论不外推修订4。新批仅记录自身实际性能采样，较弱真实硬件与整体发布长尾仍留I14。",
       "旧132趟失败与修订3的90趟成长、三母版准备验证均保留原记录；不把历史有限完整体验视作修订4新几何自然搜撤通过。实际听感R10、弱设备I14及中重相对低档长期效率R07/I13保持。",
-      "2026-10-05用户对5ba918a5世界区分度重构明确“pass”，当前本批视觉人审通过（E159）；首轮失败和E158有限内部验证保持历史原文。新几何完整玩法、I07数量扩产及整版终验仍未完成。"
+      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14及长期收益I13独立保留。"
     ]
   }
 ]

@@ -1,0 +1,38 @@
+{
+  "status": "reviewed-retained-unfinished-search",
+  "createdAt": "2026-10-06T04:54:52.076467+00:00",
+  "reviewer": "root",
+  "report": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/015-stepped-bowl-medium-20261005/report.json",
+  "sha256": "df82e63d17115341426c3810a8e1d26ae964ae583060f654ed82891d9d934385",
+  "viewedFrame": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/015-stepped-bowl-medium-20261005/medium/1-search-2.png",
+    "sha256": "be17d9f93e6321bdc93198f88bc2e3679b6a2deca97c4c7c721fc6fbdbe482ae"
+  },
+  "findings": {
+    "searches": [
+      {
+        "searchDecision": {
+          "attempted": true,
+          "reason": "visible-approach"
+        },
+        "id": "r100-contaminant-deep-1",
+        "kind": "contaminant",
+        "tier": "deep",
+        "collected": false,
+        "hp": 115,
+        "chaos": 61.44013474017103,
+        "carried": 0,
+        "elapsedMs": 45698.169999999736
+      }
+    ],
+    "outcome": "extract",
+    "explorationStop": "far-region-reached-with-no-new-observed-remains",
+    "hp": 85,
+    "chaos": 82.56614452155704,
+    "elapsedMs": 73513.71999999981,
+    "collectedNodes": [],
+    "errors": [],
+    "navigationWarning": null
+  },
+  "conclusion": "Actual E attempt did not finish a pickup. Viewed frame shows partial E progress with nearby visible threat; terminal has no collected node. Treat as empty return, not successful search. Other original medium seed satisfies actual collection/extraction; keep both processes. This bounded review does not claim general balance or visual acceptance."
+}

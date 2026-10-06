@@ -1,0 +1,177 @@
+{
+  "status": "pass-bounded-six-current-views",
+  "at": "2026-10-06T05:33:25.229Z",
+  "reviewer": "root",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "captureReport": {
+    "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/report.json",
+    "sha256": "ac4ca5bc423304475d82f94050a8b5e141a8ae5569ef7c592c0cc2a704dccb6f"
+  },
+  "harness": {
+    "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/capture-current-shapes.mjs",
+    "sha256": "d885b859d6af2ca6e1c956ede668402b5d529c246db379983e19cb47c4250b08"
+  },
+  "identityChecks": "Read actual recipe seed/world/grade, runtime grade, final URL, viewport, matched facing and PNG dimensions/hash for all six before accepting the comparison.",
+  "images": [
+    {
+      "world": "tendon-shelves",
+      "grade": "low",
+      "seed": 20261005,
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/tendon-shelves-low/current-shape.png",
+      "sha256": "8c8e5c32b9df81f1d3b57e9784e748f58047bcc76d698f302cfb3e064719e869",
+      "width": 1136,
+      "height": 758,
+      "state": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 788.9378607343477,
+          "y": 539.6498468066283
+        },
+        "facingAngle": -1.5705449993826108,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 17.24033887999996,
+        "elapsedMs": 11899.5
+      },
+      "verdict": "pass-bounded-current-view",
+      "observed": "Red-brown longitudinal fibrous side face, thick light foot edge and turning floor are distinct from the violet floor."
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "medium",
+      "seed": 20261005,
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/tendon-shelves-medium/current-shape.png",
+      "sha256": "fb6c3401114621afc63be8fc9758799f6478137fc8cb36e41cb355e422775560",
+      "width": 1136,
+      "height": 758,
+      "state": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 788.8457412882128,
+          "y": 540.3287246466673
+        },
+        "facingAngle": -1.5703565038233913,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 23.839421195999808,
+        "elapsedMs": 11999.5
+      },
+      "verdict": "pass-bounded-current-view",
+      "observed": "Red-brown longitudinal fibrous side face, thick light foot edge and turning floor are distinct from the violet floor."
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "severe",
+      "seed": 20261005,
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/tendon-shelves-severe/current-shape.png",
+      "sha256": "91172ba2f5b6ccc1de38d48cdf67081775c91d2a18346edfa3639938f1aafe27",
+      "width": 1136,
+      "height": 758,
+      "state": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 788.9006072474335,
+          "y": 535.1504297054822
+        },
+        "facingAngle": -1.5709848223541165,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 21.429283754666432,
+        "elapsedMs": 12799.4
+      },
+      "verdict": "pass-bounded-current-view",
+      "observed": "Near foot edge, upright side and supported inner floor remain visible. Actual light-eating shadow covers most upper wall; not full wall evidence."
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "low",
+      "seed": 20261005,
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/sentinel-mass-low/current-shape.png",
+      "sha256": "01a488ec5e5c3a92a72b299ec5506dd74a994076db6da4ca942585ca47f47403",
+      "width": 1136,
+      "height": 758,
+      "state": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 247.5007022832289,
+          "y": 268.88384540317116
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 16.750539511999968,
+        "elapsedMs": 9316.3
+      },
+      "verdict": "pass-bounded-current-view",
+      "observed": "Blue-black high sloping mass visibly joins a lower shoulder/front wall, with a differently oriented inner corner. Medium/severe hide more upper silhouette; do not claim whole-body visibility."
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "medium",
+      "seed": 20261005,
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/sentinel-mass-medium/current-shape.png",
+      "sha256": "30c9497245ed9dd85b7d1fcd39841db795f6cf02603d9ab4898de09b677a23b3",
+      "width": 1136,
+      "height": 758,
+      "state": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 256.49990010000005,
+          "y": 270.5950766328043
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 18.22934967599972,
+        "elapsedMs": 9816.2
+      },
+      "verdict": "pass-bounded-current-view",
+      "observed": "Blue-black high sloping mass visibly joins a lower shoulder/front wall, with a differently oriented inner corner. Medium/severe hide more upper silhouette; do not claim whole-body visibility."
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "severe",
+      "seed": 20261005,
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/sentinel-mass-severe/current-shape.png",
+      "sha256": "f48a3f381e741b82c6311299769cfa79e297978b9f494f437cf074e3fa3777bb",
+      "width": 1136,
+      "height": 758,
+      "state": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 245.85563809205905,
+          "y": 270.16376635414844
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 27.727162815999797,
+        "elapsedMs": 9432.9
+      },
+      "verdict": "pass-bounded-current-view",
+      "observed": "Blue-black high sloping mass visibly joins a lower shoulder/front wall, with a differently oriented inner corner. Medium/severe hide more upper silhouette; do not claim whole-body visibility."
+    }
+  ],
+  "scope": "Personally viewed six original1136x758 normal-game PNGs from final52 and request20261005; approve as repaired current views with stated occlusion limits.",
+  "limitations": [
+    "Actual displayed screenshots, not native960x640 or exact shared camera.",
+    "Actual keyboard turns leave about1–16px position variation; comparable view, not pixel-aligned before/after.",
+    "Finite art views are not independent gameplay, sound, performance or human approval."
+  ],
+  "invalidPreviousCapture": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/erratum.json"
+}

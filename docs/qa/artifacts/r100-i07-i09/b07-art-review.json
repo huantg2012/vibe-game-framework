@@ -1,0 +1,66 @@
+{
+  "status": "partial-art-pass-sentinel-rejected-draped-pending",
+  "source": {
+    "path": "b07-refined-source/source-snapshot.json",
+    "sha256": "82a204b65bdfbcb2db522835d8b809db373decc00549cc15bc6b5145abb565e0"
+  },
+  "normal": {
+    "path": "b07-refined-normal/report.json",
+    "sha256": "5eece660eba23bb5386299d105fdda71df1d502a8bc5900cc2bda89939257ed6",
+    "cases": 12,
+    "errors": 0,
+    "authorViewedWalkFrames": 12
+  },
+  "deep": [
+    {
+      "path": "b07-refined-deep/report.json",
+      "sha256": "a9c5b9640dd1dbc1df158a026c8479004182712451d61910c2ee695175f466c8"
+    },
+    {
+      "path": "b07-refined-deep-remaining/report.json",
+      "sha256": "833a4422ededec3ea735ecdda2701611f4753761fec022f33896e57161f210ec"
+    }
+  ],
+  "authorViewedDeepFrames": 18,
+  "rootReview": {
+    "frames": [
+      {
+        "path": "b07-refined-deep-remaining/stepped-bowl/02-offset-court-north.png",
+        "sha256": "e5755dcdfa04a6b24014b92ceae272b6de12fe8c2f1d8a0ef9d8fa00be7db318"
+      },
+      {
+        "path": "b07-refined-deep-remaining/stepped-bowl/04-upper-shore-south.png",
+        "sha256": "0a23dfb9272b587be5918fbb0b6165f809e38b7b3989344645707f9500599773"
+      },
+      {
+        "path": "b07-refined-deep-remaining/draped-bay/03-inner-turn-west.png",
+        "sha256": "745b9064473a6df387b31e821258d7dc7878b4e2a8b554a4d642700d59d0b597"
+      },
+      {
+        "path": "b07-refined-deep-remaining/ember-cushions/03-north-gap-south.png",
+        "sha256": "771adb6b46edda5a869a3a815fd82d704ec08bee2b3505ea8d0fbbc672b2f092"
+      }
+    ],
+    "verdicts": {
+      "stepped-bowl": "Bounded pass: offset stepped banks, cut surfaces and open court are visible.",
+      "ember-cushions": "Bounded pass: opposing thick leaves, pale quiet bed and actual north/south traversals are visible.",
+      "draped-bay": "Thick wall and inner turn visible, but curtain-to-giantmass relation still pending an actual-facing shot.",
+      "sentinel-mass": "Rejected world identity: compared with monolith-sill same blue slab/white edge/purple bed plus L opening, only proportion difference visible."
+    }
+  },
+  "retainedFailure": {
+    "path": "b07-refined-deep/report.json",
+    "kind": "Actual player death while moving to fourth back station after completing foot transit; art driver did not defend itself.",
+    "terminalFrame": "b07-refined-deep/sentinel-mass/terminal-from-video.png",
+    "terminalFrameSha256": "39909665e3c7c23808a956864e5aa83cc833e8d62ec22668d0e764f430121875",
+    "originalReportKept": true,
+    "runtimeErrors": 0,
+    "notClaimed": "No global world difficulty diagnosis, full search/extraction, or unseen north wall pass."
+  },
+  "facingLimitation": "35ms requested facing did not guarantee actual direction (1080deg/sec turn); filenames are request labels, not a verified angle. Review reads visible pixels; future supplemental capture logs getFacingAngle/getFacing4.",
+  "limits": [
+    "Normal finite FOV, active enemies; full floor geometry read only for macro art routing.",
+    "No teleport/state/fog/HP edits. Gym fixture is not novice or natural inventory qualification.",
+    "Root review is independent internal review, not user approval."
+  ]
+}

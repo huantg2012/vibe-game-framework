@@ -1,0 +1,60 @@
+{
+  "recording": "Summary of tool outputs from the completed checks in this session; not a new execution.",
+  "status": "pass",
+  "unchangedLegacyCases": 48,
+  "unchangedWorlds": 20,
+  "expansionCases": 32,
+  "checks": {
+    "existingNativeVolume": 117,
+    "existingV2Identity": 24,
+    "solidFoot": {
+      "reliefCases": 12,
+      "unchangedFamilies": 16,
+      "slabCases": 64
+    },
+    "typecheck": "pass",
+    "codegen": "24 worlds / 72 definitions and 24 appearances pass",
+    "dev": "43173 Vite ready; document and expansion module HTTP200; stopped",
+    "lint": "unavailable: package.json has no lint script"
+  },
+  "diagonalPassage": {
+    "body": [
+      20,
+      20
+    ],
+    "adjacentTrackSeparation": 2,
+    "tracks": [
+      {
+        "start": {
+          "x": 40,
+          "y": 174
+        },
+        "end": {
+          "x": 440,
+          "y": 214
+        },
+        "minimumBodyEdgeClearance": 2
+      },
+      {
+        "start": {
+          "x": 40,
+          "y": 176
+        },
+        "end": {
+          "x": 440,
+          "y": 216
+        },
+        "minimumBodyEdgeClearance": 4
+      }
+    ],
+    "clearanceMethod": "Expand the complete axis-aligned body by each margin and require the same exact nativeBody displacement sweep to return 1."
+  },
+  "sourceHashes": {
+    "src/generation/world-study/native-volume-geometry.ts": "9d5925d2fbd47f31e4f6ed60d24c3b48b1ab57949a0acc53c6d647abfe17af06",
+    "src/generation/world-study/native-volume-expansion.ts": "24c39673088d964fd923578e665675ef0577242cad8c669c9767cd1c0e46f423",
+    "data/rift-native-worlds.csv": "a63457016446870775df04d0c57bc0b87202e6863fea3a556688a20b03427304",
+    "tools/world-study/check-native-world-expansion.ts": "06ee1b50f8fd0f19ad1dbda750a997428d4ef622ffbbf2aa33dbf075aef99374",
+    "tools/world-study/fixtures/r100-construction-v1-v2.json": "1bd2efe2f605bc1d813c36f9abc39f4652f0e8a43c12cdd9b8e0b0543ef83df3"
+  },
+  "limits": "Geometry and runtime smoke only; world art/play qualification remains independent."
+}

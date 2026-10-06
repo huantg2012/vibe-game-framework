@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b04-source/source-snapshot.json",
+    "sha256": "86e6a0cc547cc77cedfb6267f4814dc2d107d9831923d66d3da7bfc0420831f6"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b08-source/source-snapshot.json",
+    "sha256": "b9d215892a0b4487ed640cd9f493a17177e302ba222e3a341d94dc8b1640146e"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "foam-trenches",
+      "contentSha256": "02fd792dcd044d4059f2a768f41c62a0709fb1111d4745dc360c09ee99cac561",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "resin-fall",
+      "contentSha256": "ee7ff70fb1a9ec09bed9c21d55eb16c60c9c6188fb0b924b7ed0366c83cba167",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "root-cistern",
+      "contentSha256": "718e87cd6b44fb3a797430d6570cd8d73e76c871447c3b5beafca000136f319b",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "scab-islands",
+      "contentSha256": "e04d17bf73eaf2926f0c7089e17ec75fc5568d961c2addd50c2143fd60151f8f",
+      "enabledBefore": false,
+      "enabledAfter": false
+    }
+  ],
+  "unchangedFiles": 1364,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

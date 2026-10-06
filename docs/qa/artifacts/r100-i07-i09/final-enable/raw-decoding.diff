@@ -1,0 +1,85 @@
+diff --git a/tools/qa/r100-i09-final-probe.mjs b/tools/qa/r100-i09-final-probe.mjs
+index 2fe05382..b7e7d5d0 100644
+--- a/tools/qa/r100-i09-final-probe.mjs
++++ b/tools/qa/r100-i09-final-probe.mjs
+@@ -10,6 +10,7 @@ import { createHash } from 'node:crypto';
+ import { spawn } from 'node:child_process';
+ import { createServer } from 'node:http';
+ import { fileURLToPath } from 'node:url';
++import ts from 'typescript';
+ 
+ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+ const PROBES = {
+@@ -81,6 +82,16 @@ function verifyFiles(source) {
+   }
+   return { nodeWorkingDirectory: ROOT, frozenDirectory: source.temporaryRoot, files: Object.keys(source.sources).length };
+ }
++function rawModuleBytes(bytes) {
++  const source = ts.createSourceFile('raw-module.js', bytes.toString('utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
++  assert.equal(source.parseDiagnostics.length, 0, 'Invalid raw module syntax');
++  assert.equal(source.statements.length, 1, 'Raw module must have exactly one export default');
++  const assignment = source.statements[0];
++  assert(ts.isExportAssignment(assignment) && !assignment.isExportEquals, 'Raw module must export default');
++  assert(ts.isStringLiteral(assignment.expression) || ts.isNoSubstitutionTemplateLiteral(assignment.expression),
++    'Raw module must export a literal string without interpolation or execution');
++  return Buffer.from(assignment.expression.text, 'utf8');
++}
+ async function verifyServed(source, gameUrl) {
+   const hashes = {};
+   // Vite transforms HTML entry files even with ?raw; their disk bytes are
+@@ -95,10 +106,7 @@ async function verifyServed(source, gameUrl) {
+       const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+       assert(response.ok, `${file}: HTTP ${response.status}`);
+       let bytes = Buffer.from(await response.arrayBuffer());
+-      if (!isPublic && !binary) {
+-        const match = /^export default ("(?:[^"\\]|\\.)*");?/.exec(bytes.toString('utf8'));
+-        if (match) bytes = Buffer.from(JSON.parse(match[1]), 'utf8');
+-      }
++      if (!isPublic && !binary) bytes = rawModuleBytes(bytes);
+       hashes[file] = hashBytes(bytes); assert.equal(hashes[file], source.sources[file], `Wrong served source: ${file}`);
+     }
+   }));
+@@ -124,6 +132,15 @@ async function selfCheck() {
+   for (const mutate of [x => x.results[1] = x.results[0], x => x.results[0].requestedSeed++, x => x.results[0].actual = 'changed']) {
+     const value = structuredClone(equivalent); mutate(value); assert.throws(() => validateFinalReport('equivalence', value, ids, []));
+   }
++  const templateModule = value => 'export default `' + value.replaceAll('\\', '\\\\').replaceAll('`', '\\`').replaceAll('${', '\\${').replaceAll('\r', '\\r') + '`;';
++  const literal = 'backtick ` / backslash \\ / ${literal text} / 雪\nsecond line\r\nthird line';
++  for (const module of ['export default ' + JSON.stringify(literal) + ';', templateModule(literal)])
++    assert.equal(rawModuleBytes(Buffer.from(module)).toString('utf8'), literal);
++  for (const module of ['export default `prefix ${globalThis.doNotExecute()} suffix`;',
++    'export default String("text");', 'globalThis.doNotExecute(); export default "text";',
++    'export default "text"; globalThis.doNotExecute();', 'export default "one"; export default "two";',
++    'export { value as default };', 'export default ("text");', 'export default `unterminated'])
++    assert.throws(() => rawModuleBytes(Buffer.from(module)), /Raw module|Invalid raw module/);
+   const fixture = { 'src/example.ts': Buffer.from('export const value = 1;\n'), 'src/example.png': Buffer.from([137, 80, 78, 71, 128, 255]), 'data/example.csv': Buffer.from('id,value\na,1\n'),
+     'public/example.bin': Buffer.from([0, 1, 128, 255]) };
+   const source = { sources: Object.fromEntries(Object.entries(fixture).map(([file, bytes]) => [file, hashBytes(bytes)])) };
+@@ -131,7 +148,8 @@ async function selfCheck() {
+     const file = new URL(request.url, 'http://localhost').pathname.slice(1);
+     const value = fixture[file] ?? fixture[`public/${file}`];
+     if (!value) { response.writeHead(404).end(); return; }
+-    response.end(file.endsWith('.ts') ? `export default ${JSON.stringify(value.toString('utf8'))};` : value);
++    response.end(file.endsWith('.ts') ? `export default ${JSON.stringify(value.toString('utf8'))};`
++      : file.endsWith('.csv') ? templateModule(value.toString('utf8')) : value);
+   });
+   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+   try {
+@@ -140,7 +158,7 @@ async function selfCheck() {
+     await assert.rejects(() => verifyServed({ sources: { 'src/example.ts': 'wrong-hash' } }, url), /Wrong served source/);
+     await assert.rejects(() => verifyServed({ sources: { 'src/missing.ts': 'missing' } }, url), /HTTP 404/);
+   } finally { await new Promise(resolve => server.close(resolve)); }
+-  console.log('PASS final probe: unique scope, exact revisions/seeds, one committed history, cold preservation, text/raw/binary HTTP hashes; wrong and missing source rejected');
++  console.log('PASS final probe: unique scope, exact revisions/seeds, one committed history, cold preservation, strict literal raw decoding including escapes/Unicode/newlines, interpolation/execution rejected, HTTP hashes, wrong/missing source rejected');
+ }
+ 
+ async function main() {
+@@ -159,7 +177,7 @@ async function main() {
+   fs.mkdirSync(out, { recursive: true });
+   const binding = { version: 1, kind, status: 'running', startedAt: new Date().toISOString(), gameUrl,
+     finalSource: receipt(manifest), harness: receipt(config.harness), wrapper: receipt(fileURLToPath(import.meta.url)),
+-    dependencies: [GOLD, 'tools/contam-preview/tsconfig.json'].map(receipt), worldIds: ids, beforeRuntimeVerified: false,
++    dependencies: [GOLD, 'tools/contam-preview/tsconfig.json', 'package-lock.json'].map(receipt), worldIds: ids, beforeRuntimeVerified: false,
+     afterRuntimeVerified: false, servedSourceVerified: false };
+   const save = () => fs.writeFileSync(path.join(out, 'source-binding.json'), JSON.stringify(binding, null, 2) + '\n'); save();
+   for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) {

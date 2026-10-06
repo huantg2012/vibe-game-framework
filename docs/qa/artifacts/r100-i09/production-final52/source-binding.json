@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "kind": "production",
+  "status": "failed",
+  "startedAt": "2026-10-06T05:34:42.283Z",
+  "gameUrl": "http://127.0.0.1:3100",
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-production-browser.mjs",
+    "sha256": "a30fc018d91e9f12d1380e5d1eea497e178276f5cd36edc2191273d96bd1e3d5"
+  },
+  "wrapper": {
+    "path": "tools/qa/r100-i09-final-probe.mjs",
+    "sha256": "22d3ad406dd73020447ee15cf26d3f244d5aa09ea7bd35174c186e6574e7c852"
+  },
+  "dependencies": [
+    {
+      "path": "tools/recovery/fixtures/r100-revision1-gold.json",
+      "sha256": "a61b9c30e27ae6c303a1290dbb5e7555c9434e7efb189ba0e3cea4351f0c30ef"
+    },
+    {
+      "path": "tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    }
+  ],
+  "worldIds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway"
+  ],
+  "beforeRuntimeVerified": false,
+  "afterRuntimeVerified": false,
+  "servedSourceVerified": false,
+  "beforeFiles": {
+    "nodeWorkingDirectory": "/Users/yilungao/coh",
+    "frozenDirectory": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-I0v2gE",
+    "files": 1370
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: Raw module must have exactly one export default\n\n17 !== 1\n",
+  "endedAt": "2026-10-06T05:34:42.486Z"
+}

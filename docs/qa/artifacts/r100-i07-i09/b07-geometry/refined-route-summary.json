@@ -1,0 +1,68 @@
+{
+  "status": "pass",
+  "cases": 441,
+  "fixedCases": 432,
+  "visualWitnessCases": 9,
+  "originalProbe": "docs/qa/artifacts/r100-i07-i09/b07-geometry/pose-fixed-seeds.json",
+  "steppedFinal": "docs/qa/artifacts/r100-i07-i09/b07-geometry/stepped-fixed-seeds-final.json",
+  "scope": "Same predetermined40+8 plus seed20261005, fullbody bidirectional sweeps with actual grade ground. Stepped original straight-line route probe crossed severe VOID; finalroute bends through the same wide SW mouth without changing authoring beyond the approved rotations. Original49 direct-route probe failures retained, not qualification cases.",
+  "worlds": [
+    {
+      "world": "sentinel-mass",
+      "cases": 147,
+      "minimumAdditionalBodyEdgeClearance": 9.25,
+      "route": [
+        {
+          "x": 603.9777990753755,
+          "y": 658.7582742328476
+        },
+        {
+          "x": 464.1146315819094,
+          "y": 369.2195084713444
+        },
+        {
+          "x": 631.5977926195073,
+          "y": 288.31591912665556
+        }
+      ]
+    },
+    {
+      "world": "draped-bay",
+      "cases": 147,
+      "minimumAdditionalBodyEdgeClearance": 4.75,
+      "route": [
+        {
+          "x": 746.5079420369495,
+          "y": 371.5421432041911
+        },
+        {
+          "x": 795.0965613533871,
+          "y": 238.4330297937175
+        },
+        {
+          "x": 969.8198859429996,
+          "y": 302.2120219804315
+        }
+      ]
+    },
+    {
+      "world": "stepped-bowl",
+      "cases": 147,
+      "minimumAdditionalBodyEdgeClearance": 6,
+      "route": [
+        {
+          "x": 348,
+          "y": 600
+        },
+        {
+          "x": 368,
+          "y": 544
+        },
+        {
+          "x": 732,
+          "y": 260
+        }
+      ]
+    }
+  ]
+}

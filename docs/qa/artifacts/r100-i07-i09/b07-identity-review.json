@@ -1,0 +1,227 @@
+{
+  "status": "bounded-art-pass",
+  "source": {
+    "path": "b07-identity-source/source-snapshot.json",
+    "sha256": "0411781ba2f02b48fcd2bfc84ca45cc601f2d7e7dab395d3601138aff821e530"
+  },
+  "report": {
+    "path": "b07-identity-followup/report.json",
+    "sha256": "4732f63a74fe511629c8cb14d9b4d97f4a5cb88686cd550c3497c57f17ebb62c"
+  },
+  "scope": "Same seed medium20261005, actual keyboard from original spawn; no state/HP/fog edits; full floor geometry used only for macro art routing. Candidate training fixture, not full natural search/extraction.",
+  "authorViewed": [
+    {
+      "path": "b07-identity-followup/sentinel-mass/03-low-side-exit-north.png",
+      "sha256": "6953fa4ada5c26ed169c6ad3dcb9d6eed49819fc9db525d5fdfe52ea9490ba10"
+    },
+    {
+      "path": "b07-identity-followup/sentinel-mass/01-west-foot-approach-east.png",
+      "sha256": "5351ec6cdc0471bb370c73cb725ac282831390bd383a12855f9c7d70a22c81c6"
+    },
+    {
+      "path": "b07-identity-followup/sentinel-mass/02-low-shoulder-meeting-east.png",
+      "sha256": "aff9924154c817210b0db1ca8735514c1ca180bf0e71c74e4bf642692b3429c2"
+    },
+    {
+      "path": "b07-identity-followup/draped-bay/01-curtain-mass-junction-east.png",
+      "sha256": "5465c99dc963640091fb8d039163bf86d402071e292d1fc933b95f3ac95eff5c"
+    },
+    {
+      "path": "b07-identity-followup/draped-bay/01-curtain-mass-junction-west.png",
+      "sha256": "c3531b27b94a73086f5fba4b0a8013e96632a0ebcaa8bac7334f4ce5f224345a"
+    }
+  ],
+  "facingValidated": true,
+  "maxAngleError": 0.0003141592653519431,
+  "worlds": [
+    {
+      "id": "sentinel-mass",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 246.25141050338974,
+          "y": 488.5513531830667
+        },
+        "facingAngle": -1.5704821675295446,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 20.18140538999949,
+        "elapsedMs": 15699.5
+      },
+      "facingObservations": [
+        {
+          "event": "facing-observation",
+          "goal": "01-west-foot-approach",
+          "key": "d",
+          "requestedDirection": "east",
+          "desiredAngle": 0,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 112.69926232882678,
+              "y": 263.6753059717936
+            },
+            "facingAngle": -0.00025132741228922617,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 17.112374837999837,
+            "elapsedMs": 6449.799999999999
+          },
+          "angleError": 0.00025132741228922617,
+          "matched": true,
+          "turnInputs": 1
+        },
+        {
+          "event": "facing-observation",
+          "goal": "02-low-shoulder-meeting",
+          "key": "d",
+          "requestedDirection": "east",
+          "desiredAngle": 0,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 252.29129341074022,
+              "y": 269.75879627801004
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.234923915999733,
+            "elapsedMs": 9833
+          },
+          "angleError": 0,
+          "matched": true,
+          "turnInputs": 1
+        },
+        {
+          "event": "facing-observation",
+          "goal": "03-low-side-exit",
+          "key": "w",
+          "requestedDirection": "north",
+          "desiredAngle": -1.5707963267948966,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 246.25141050338974,
+              "y": 488.5513531830667
+            },
+            "facingAngle": -1.5704821675295446,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 20.131638707999496,
+            "elapsedMs": 15549.400000000001
+          },
+          "angleError": 0.0003141592653519431,
+          "matched": true,
+          "turnInputs": 2
+        }
+      ]
+    },
+    {
+      "id": "draped-bay",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 642.7342293957283,
+          "y": 303.86667184459947
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 20.048688707999517,
+        "elapsedMs": 15299.399999999998
+      },
+      "facingObservations": [
+        {
+          "event": "facing-observation",
+          "goal": "01-curtain-mass-junction",
+          "key": "a",
+          "requestedDirection": "west",
+          "desiredAngle": 3.141592653589793,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 626.5951627290615,
+              "y": 303.86667184459947
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.844090873999523,
+            "elapsedMs": 14682.7
+          },
+          "angleError": 0,
+          "matched": true,
+          "turnInputs": 1
+        },
+        {
+          "event": "facing-observation",
+          "goal": "01-curtain-mass-junction",
+          "key": "d",
+          "requestedDirection": "east",
+          "desiredAngle": 0,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 642.7342293957283,
+              "y": 303.86667184459947
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 20.015512025999524,
+            "elapsedMs": 15199.3
+          },
+          "angleError": 0,
+          "matched": true,
+          "turnInputs": 2
+        }
+      ]
+    }
+  ],
+  "findings": {
+    "sentinel-mass": "New west mouth to inner turn to south opening was physically crossed. Nearer low vertical shoulder meets the oblique higher main surface in frame02; unequal feet and continuous high/low join appear in frame03. This changes the solitary L body relationship without palette changes. Primary old mouth real crossing remains source3097 evidence; this run did not also cross it.",
+    "draped-bay": "The same actual supported junction facing west/east reveals the wide folded membrane and separate high laminated mother mass with real bare-floor gap. Actual facing is logged, not inferred from filenames."
+  },
+  "limits": [
+    "Partial walls remain obscured by actual light-eating.",
+    "No whole-library fatigue pass from five frames.",
+    "Original single-giant identity rejection and art-route death kept unchanged.",
+    "User approval not asserted."
+  ],
+  "rootIndependentReview": {
+    "frames": [
+      {
+        "path": "b07-identity-followup/sentinel-mass/02-low-shoulder-meeting-east.png",
+        "sha256": "aff9924154c817210b0db1ca8735514c1ca180bf0e71c74e4bf642692b3429c2"
+      },
+      {
+        "path": "b07-identity-followup/sentinel-mass/03-low-side-exit-north.png",
+        "sha256": "6953fa4ada5c26ed169c6ad3dcb9d6eed49819fc9db525d5fdfe52ea9490ba10"
+      },
+      {
+        "path": "b07-identity-followup/draped-bay/01-curtain-mass-junction-west.png",
+        "sha256": "c3531b27b94a73086f5fba4b0a8013e96632a0ebcaa8bac7334f4ce5f224345a"
+      },
+      {
+        "path": "b07-identity-followup/draped-bay/01-curtain-mass-junction-east.png",
+        "sha256": "5465c99dc963640091fb8d039163bf86d402071e292d1fc933b95f3ac95eff5c"
+      }
+    ],
+    "verdict": "Sentinel high oblique primary mass visibly joins lower front shoulder; unequal feet and actual west-to-south passage support bounded identity repair. Draped two directions show different thickness/cut faces and real bare-floor gap. Original3097 rejection and death retained; not full search/extraction or human approval."
+  }
+}

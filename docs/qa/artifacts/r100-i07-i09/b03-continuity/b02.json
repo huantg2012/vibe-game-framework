@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b02-refined-source/source-snapshot.json",
+    "sha256": "9a178b2511864fea645d11ca12ad37a3df73d3fcb26711e2b1fc9f47602489d9"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b03-source/source-snapshot.json",
+    "sha256": "3fcbe00f47cbe70921eae6a39a77bb0e1530304a93dadf553516315e291cd422"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "monolith-sill",
+      "contentSha256": "c453d451e67efb1ce70c3a75bfeee2ed7b385c221054d9fe4a420b73fdb428a8",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "bleached-court",
+      "contentSha256": "78add2df8822b0b6bc06eed4dbcaeee17490e8e780acf4879b2770522a2d81c4",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "contentSha256": "36ab9cd0cc3d2601c844cb51692d0525f4a05900599d34e66bd8dd00ac928ac5",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "satin-fan",
+      "contentSha256": "8ccd6f4a31b69d6c08d1b28701ccc0e1a963d08f65aae2ffd4289c2ede389d40",
+      "enabledBefore": false,
+      "enabledAfter": false
+    }
+  ],
+  "unchangedFiles": 1364,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

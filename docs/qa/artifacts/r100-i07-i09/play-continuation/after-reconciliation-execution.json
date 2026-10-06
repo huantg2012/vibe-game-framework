@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "status": "completed-fixed-batches-pending-qualification",
+  "startedAt": "2026-10-06T02:50:08.340Z",
+  "pid": 70333,
+  "previous": "docs/qa/artifacts/r100-i07-i09/play-continuation/execution.json",
+  "fixedFiles": [
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/play-continuation/after-reconciliation.mjs",
+      "sha256": "11c61d08e8257477b32c1a39e43a0a6a1c4a5c3c6ac8b3d1359ef555abeb0251"
+    },
+    {
+      "file": "tools/qa/r100-i07-i09-play-queue.mjs",
+      "sha256": "b7a885b68b52e0e6a48ee98e200e8b4912743b46bc955b261f8bc10f4ef69133"
+    },
+    {
+      "file": "tools/qa/r100-i07-i09-journey.mjs",
+      "sha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f"
+    },
+    {
+      "file": "tools/qa/r100-i07-i09-coverage.mjs",
+      "sha256": "0c849954419185bd9b5eb7d159f289f09889a42cc704b6df86299bcca1b11880"
+    },
+    {
+      "file": "tools/qa/r100-play-qualification.mjs",
+      "sha256": "1bcb03943655918c99231d29876f3187c1445c379008ae9b033c6eb38492eaa9"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/play-queue/plan.json",
+      "sha256": "f1612fe86fa65daa159ad52f3c6b59ab1e59d2beeb65754987af34ea3e2aba71"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/play-continuation/old20-reconciled-summary.json",
+      "sha256": "3757d2cd2f2c7c9075380e1ba5c86fac5614aa4aa534d6106395697adc9fb417"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/play-continuation/pickup-reconciliation.json",
+      "sha256": "cd5c6ba374bcced6ad16a76e202c86264d806eed8d82d41527a5beef00e5089e"
+    }
+  ],
+  "method": "Let original guard stop on reviewed accounting-source change, independently verify that sole change and the reconciled qualification, then create a new144 execution. Does not bypass the original guard.",
+  "previousSha256": "8dabb0fd566e0e9eaf6f6cb0779767cd30a6aec2653f9cd88afc7d82b7e044ba",
+  "rebuiltOld20": {
+    "status": "pass",
+    "pairs": 60,
+    "attempts": 123,
+    "retainedOriginalFailures": 3
+  },
+  "childPid": 27175,
+  "exitCode": 0,
+  "signal": null,
+  "endedAt": "2026-10-06T05:13:25.472Z"
+}

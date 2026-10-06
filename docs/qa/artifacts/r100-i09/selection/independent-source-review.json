@@ -1,0 +1,30 @@
+{
+  "status": "bounded-static-review-pass",
+  "date": "2026-10-06T00:36:51.055152+00:00",
+  "reviewer": "root; runtime author identity_pipeline",
+  "files": {
+    "src/generation/world-study/r100-world-selection.ts": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40",
+    "src/types/rift-world-history.ts": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80",
+    "data/rift-world-selection.csv": "520f1869c819c27f44f5e6022a09db05dd2414c2206bd913a98c238b0ecc0869",
+    "src/systems/inventory-store.ts": "b68d2daa85f4b291dcd86e52b890d865146098430ae31da73ac7dcff5e974782",
+    "src/managers/save-manager.ts": "245d98e29dcfd87f7155fe7ae046adbe925aba834d4fa7cfc9eaa0e5272dd19f",
+    "src/scenes/purification-scene.ts": "f5b94d1083a7a8b37992dc76892400ad621e3cef167de906d6f42fa7adf39a5e",
+    "src/managers/rift-recovery.ts": "dbe9ac569320c6c3df6680f13c61913d2901b30da287d9e8adf185882810dfa4",
+    "tools/world-study/codegen-r100-selection.mjs": "b989159d19295878bfcf35fcb83d4d4a5c34aeeaa0d25a35b798b39ab21a492f",
+    "tools/inventory/check-world-history.ts": "7346089d4cc61a5001e2f44f68f7abaaad6587d1a68ba987553c8811dd79a226",
+    "tools/inventory/check-save-migration.ts": "d454572fa0f62142ec629762281724689fef3357a25cfd1bf966a8fae637bb1d"
+  },
+  "checks": [
+    "Selection keeps positive weights; repeated history uses strongest penalty rather than a product; age recovers across 8 entries; descriptor symmetry and stable ID order.",
+    "World history contains only committed world and grade; no future draw. Getter copies owner state, old schemas migrate without invented visits, retired IDs remain loadable.",
+    "Preparation snapshots inventory including history before asynchronous generation and compares before commit; aborted preparation does not append.",
+    "beginRun appends in the same inventory transaction as consuming actual equipped tools. Failed durable world-save retains one pending departure; Retry saves and finishes without another beginRun.",
+    "Cold restore does not append; current history rejects malformed fields, old schema3 is converted to4 and saved once at settled base."
+  ],
+  "limitations": [
+    "Static source review only, not final52 statistics or visual similarity judgment.",
+    "No new test execution counted here. Existing mutation/migration checks and actual browser departure reports provide separate dynamic evidence.",
+    "Final 156 production entry/recovery and48 natural continuous trips are still pending."
+  ],
+  "findings": []
+}

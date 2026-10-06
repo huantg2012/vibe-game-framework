@@ -1,0 +1,247 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-06T07:08:27.193393+00:00",
+  "status": "bounded-medium-static-review-no-new-blocker-observed",
+  "reviewer": "world_loot_pixels",
+  "reviewerRole": "知情美术审查者，参与过这些来源与外观制作，非用户/盲测。",
+  "method": "只看已完成medium12中的第1/9/10趟，各探索+首搜2张，共6张原始1440×960正常实玩PNG。未开浏览器、未新增截图、未调色或增亮、未改源/策略。",
+  "input": {
+    "report": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/report.json",
+      "sha256": "b21069ac71ccf8936822abb6a2d7d13715996ace44464cb562d3fbeb9a130662"
+    },
+    "journey": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/journey.jsonl",
+      "sha256": "8aa5c48538587107e29319022b2a8ea77c7c94d038f7f73ad70f890a99abe246"
+    },
+    "policy": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/policy-freeze.json",
+      "sha256": "f8415fd5b9d1a3292d4487d72a590d4b34495334697af80cddb652376262f99e"
+    },
+    "serverManifest": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/server-manifest.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    "originalFinalSource": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    }
+  },
+  "scope": {
+    "branch": "medium",
+    "selectedOrdinals": [
+      1,
+      9,
+      10
+    ],
+    "worlds": [
+      "sentinel-mass",
+      "tendon-shelves",
+      "bladder-weave"
+    ],
+    "viewedPngCount": 6,
+    "dynamicVideoReviewed": false,
+    "audioHeard": false,
+    "newBrowserRun": false,
+    "currentMediumTwelveAllReviewed": false,
+    "humanReview": false
+  },
+  "worldConclusions": [
+    {
+      "worldId": "sentinel-mass",
+      "ordinal": 1,
+      "requestedSeed": 994126055,
+      "judgment": "照见的蓝黑大斜面、厚断端和近足床分界清楚，无新明确阻断。",
+      "boundary": "只签当帧外侧面/短端；高低肩完整连接和两个方向真足通路仍以既有修后专项证据为准，此6帧不替代。"
+    },
+    {
+      "worldId": "tendon-shelves",
+      "ordinal": 9,
+      "requestedSeed": 2787413845,
+      "judgment": "照见的纵纤厚面、两个断沿及其间内转低床可读；到混乱66的有压力反馈画面，近沿也未背景化。",
+      "boundary": "未从截图独立证明第二足口连续行走成功，不据整趟extract结局替代该证明；右下黑区成因不只凭颜色判断。"
+    },
+    {
+      "worldId": "bladder-weave",
+      "ordinal": 10,
+      "requestedSeed": 910230896,
+      "judgment": "弧形内壁与窄纤条相交的局部关系成立，白粉小壳与大构造尺度分开。",
+      "boundary": "不签完整双腔/所有外墙；两帧混乱约25/27，不能叫高压峰值试验。"
+    }
+  ],
+  "newBlockers": [],
+  "pressureQualification": "三个世界都是中污染进入，所选帧并非都处于高压力。只有9-search-1实际HUD约混乱66/完整度130，出现渗透阶段绿色边缘反馈；其他约24–28且145HP。结论保持这个差异，不冒充六张高压峰值。",
+  "comparison": "第1和第9都保留直面+厚沿的同构造语言，但第9纵纤材料与双面围出的内转低床、第10细纤条+弧壁组合在本视口能分。第1没有照出完整连肩，不能据这两张再裁世界身份重复或确认完整修复。",
+  "lightAndDarkness": "正常材质本色、可照见暗面和局部青绿污染可分；黑暗保留，不将未照见部分判成隐形障碍。静图不能独立归因每块黑色是视野、吞光、实体遮挡或VOID，不新签吞光机制。",
+  "limitations": [
+    "不同实际随机种子、站位、朝向、装备与时间；不属于同机位对照。",
+    "附近snapshot是截图流程前后的诊断读数，并非相机曝光同一时刻的精密姿态。",
+    "未观察动态/听音频/连续手动操作，不签疲劳、战术、经济或整个中档12趟的美术质量。",
+    "成功撤回、技术0错误与静帧边界可读是不同证据，不互相替代。"
+  ],
+  "i10Implication": "保留上一份低档审阅中的局部结构辨识候选：第1搜取只露短端，再次显示有限视野不总包含世界主体。当前没有证据要求增亮、削弱吞光或立即重做这三个已修世界；不实施I10。",
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/1-far-exploration.png",
+      "sha256": "5db3823381c663ffe1e882b47cf15aa417c36262e308608a29b615aea821fc48",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "1-far-exploration",
+      "ordinal": 1,
+      "worldId": "sentinel-mass",
+      "requestedSeed": 994126055,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T06:36:24.793Z",
+        "position": {
+          "x": 295.95502533333314,
+          "y": 588
+        },
+        "elapsedMs": 2599.9100000000008,
+        "hp": 145,
+        "chaos": 24.794801721880308,
+        "exactShutterSynchronization": false
+      },
+      "finding": "蓝黑大斜面有清楚的浅色厚断边，下面的粉灰粗地没有与其合并；蓝色翻找残骸、暗绿污染体和高体的角色可区分。",
+      "limitation": "本帧只覆盖一个外侧大面，未照到高低双肩的完整连接，不能单独重签连体修复。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/1-search-1.png",
+      "sha256": "eccc44b19720b31572233c35f29734e5ea57a4b4ee0f5055938c47d6d39c2bad",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "1-search-1",
+      "ordinal": 1,
+      "worldId": "sentinel-mass",
+      "requestedSeed": 994126055,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T06:36:31.998Z",
+        "position": {
+          "x": 506.5693290987152,
+          "y": 647.8896885437048
+        },
+        "elapsedMs": 9799.629999999994,
+        "hp": 145,
+        "chaos": 26.995781699285747,
+        "exactShutterSynchronization": false
+      },
+      "finding": "近足尖/厚断端再次露出，角色旁的低床和小蓝残骸清楚；向上大部变黑后没有用假亮轮廓透视出整墙。",
+      "limitation": "主体只露短端，未验证另一方向的足口或黑暗中的完整边界。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/9-far-exploration.png",
+      "sha256": "10cbadc821062ac7f7e7fcf5b5678e9d69f397460a3d540fe55521af598f6dbc",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "9-far-exploration",
+      "ordinal": 9,
+      "worldId": "tendon-shelves",
+      "requestedSeed": 2787413845,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T06:54:47.424Z",
+        "position": {
+          "x": 503.4340534053727,
+          "y": 335.4460555960362
+        },
+        "elapsedMs": 12216.169999999865,
+        "hp": 145,
+        "chaos": 28.734526560835565,
+        "exactShutterSynchronization": false
+      },
+      "finding": "红褐纵向纤纹的两个实体面与亮厚沿围出内转的紫色低床，角色附近通行空隙可从实物断面识别；不只是红色画在地上。",
+      "limitation": "静帧不能证明角色实际连续穿过修后的第二足口，也不能从右下黑区推断全部是吞光或VOID。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/9-search-1.png",
+      "sha256": "aa74d35e5662df1398e81e05e1fcd7cdba618574aa3dadd851529a546ec15973",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "9-search-1",
+      "ordinal": 9,
+      "worldId": "tendon-shelves",
+      "requestedSeed": 2787413845,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T06:55:07.709Z",
+        "position": {
+          "x": 394.29980589896337,
+          "y": 105.51585542610133
+        },
+        "elapsedMs": 32515.369999999773,
+        "hp": 130,
+        "chaos": 67.00976405210312,
+        "exactShutterSynchronization": false
+      },
+      "finding": "混乱66/完整度130的实际受压画面里，红褐面前端的浅色厚沿仍连续可见，紫地与绿色污染体分开；全屏暗绿压力反馈没有淹没这个近边。",
+      "limitation": "此帧带渗透阶段的暗绿边缘反馈，不作与前一帧相同光照的颜色标定；主体大部被视野裁切。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/10-far-exploration.png",
+      "sha256": "0ebab36aab7451bc6b02a2c93891070da8143874ed823000971752502cab73ac",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "10-far-exploration",
+      "ordinal": 10,
+      "worldId": "bladder-weave",
+      "requestedSeed": 910230896,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T06:57:15.491Z",
+        "position": {
+          "x": 312.71453600000495,
+          "y": 588
+        },
+        "elapsedMs": 2516.54999999998,
+        "hp": 145,
+        "chaos": 25.77205281741282,
+        "exactShutterSynchronization": false
+      },
+      "finding": "紫灰地床上方有窄直/斜纤条，右侧露弯曲低壁和白粉小壳残骸；直条、弧壁、残骸三种尺度不同，局部组合可识别。",
+      "limitation": "未见两腔完整轮廓，不能仅凭这一片段签整张纺腔布局。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/10-search-1.png",
+      "sha256": "dd01cf4736e73f99f91aed153a1a1676972b504bab49716c60f7aab6c32f232f",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "10-search-1",
+      "ordinal": 10,
+      "worldId": "bladder-weave",
+      "requestedSeed": 910230896,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T06:57:21.287Z",
+        "position": {
+          "x": 489.55588349012555,
+          "y": 593.045265915625
+        },
+        "elapsedMs": 8316.320000000049,
+        "hp": 145,
+        "chaos": 27.55136527647242,
+        "exactShutterSynchronization": false
+      },
+      "finding": "弧形内壁转弯、上方跨过的窄纤条与右侧厚弧片同时可见，绿色侵蚀局限在纤条局部；小白壳没有与大弧壁混作同一物体。",
+      "limitation": "只审照到的这段弧边/纤条关系，远侧黑暗未审；当前混乱27而非高压峰值。"
+    }
+  ]
+}

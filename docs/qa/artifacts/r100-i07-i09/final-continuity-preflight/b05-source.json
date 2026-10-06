@@ -1,0 +1,61 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b05-source/source-snapshot.json",
+    "sha256": "c89e6bd7cd2b6746a913ac0356bd73435d17825262d2a7a53136eb165e2299b2"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b08-source/source-snapshot.json",
+    "sha256": "b9d215892a0b4487ed640cd9f493a17177e302ba222e3a341d94dc8b1640146e"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "cork-shelves",
+      "contentSha256": "d13c7d627d6846514e0334385c6d13b5b47c14674d4162f2793d7e8a499cd665",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "felt-basin",
+      "contentSha256": "3e62a724fa5a1f2a010e54e66e5e43d6d67e0c7fbb1c4265d3a03d080844f769",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "lacquer-court",
+      "contentSha256": "3f5f223d3078ebf25e02f83f6ab6ac6198225de69b6838f694f254a87fc51624",
+      "enabledBefore": false,
+      "enabledAfter": false
+    }
+  ],
+  "unchangedFiles": 1364,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

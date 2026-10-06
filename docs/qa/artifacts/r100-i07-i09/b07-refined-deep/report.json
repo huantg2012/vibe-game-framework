@@ -1,0 +1,241 @@
+{
+  "scope": "Normal finite FOV and camera; controlled candidate world/training loadout, actual keyboard from original spawn. Full floor geometry read for diagnostic body routing, not novice navigation; no position/HP/clock/fog edits. Enemy and pollution simulation stays active.",
+  "cases": [
+    {
+      "world": "sentinel-mass",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-front-foot",
+            "x": 603.9777990753755,
+            "y": 658.7582742328476,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "01-front-foot",
+              "x": 603.9777990753755,
+              "y": 658.7582742328476,
+              "faces": [
+                [
+                  "w",
+                  "north"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 604,
+              "y": 660
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 396,
+                "y": 588
+              },
+              {
+                "x": 396,
+                "y": 596
+              },
+              {
+                "x": 404,
+                "y": 596
+              },
+              {
+                "x": 404,
+                "y": 604
+              },
+              {
+                "x": 420,
+                "y": 604
+              },
+              {
+                "x": 420,
+                "y": 612
+              },
+              {
+                "x": 436,
+                "y": 612
+              },
+              {
+                "x": 436,
+                "y": 620
+              },
+              {
+                "x": 452,
+                "y": 620
+              },
+              {
+                "x": 452,
+                "y": 628
+              },
+              {
+                "x": 468,
+                "y": 628
+              },
+              {
+                "x": 468,
+                "y": 636
+              },
+              {
+                "x": 484,
+                "y": 636
+              },
+              {
+                "x": 484,
+                "y": 644
+              },
+              {
+                "x": 604,
+                "y": 644
+              },
+              {
+                "x": 604,
+                "y": 660
+              }
+            ],
+            "length": 480
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 602.3058754095199,
+              "y": 653.0702020357716
+            },
+            "hp": 100,
+            "chaos": 21.46715737199968,
+            "elapsedMs": 10249.6
+          }
+        },
+        {
+          "goal": {
+            "label": "02-inner-foot-turn",
+            "x": 464.1146315819094,
+            "y": 369.2195084713444,
+            "precise": true,
+            "faces": [
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-inner-foot-turn",
+              "x": 464.1146315819094,
+              "y": 369.2195084713444,
+              "precise": true,
+              "faces": [
+                [
+                  "a",
+                  "west"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 464.1146315819094,
+              "y": 369.2195084713444
+            },
+            "points": [
+              {
+                "x": 602.3058754095199,
+                "y": 653.0702020357716
+              },
+              {
+                "x": 464.1146315819094,
+                "y": 369.2195084713444
+              }
+            ],
+            "length": 315.70244868804616,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 461.7413296631514,
+              "y": 369.49401049821
+            },
+            "hp": 55,
+            "chaos": 29.828212115999285,
+            "elapsedMs": 22849.2
+          }
+        },
+        {
+          "goal": {
+            "label": "03-foot-side-exit",
+            "x": 631.5977926195073,
+            "y": 288.31591912665556,
+            "precise": true,
+            "faces": [
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-foot-side-exit",
+              "x": 631.5977926195073,
+              "y": 288.31591912665556,
+              "precise": true,
+              "faces": [
+                [
+                  "a",
+                  "west"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 631.5977926195073,
+              "y": 288.31591912665556
+            },
+            "points": [
+              {
+                "x": 461.7413296631514,
+                "y": 369.49401049821
+              },
+              {
+                "x": 631.5977926195073,
+                "y": 288.31591912665556
+              }
+            ],
+            "length": 188.2580689552837,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 629.7597455001712,
+              "y": 288.0030615901701
+            },
+            "hp": 25,
+            "chaos": 41.590231007999215,
+            "elapsedMs": 31532.1
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "status": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: Route must remain an active real run",
+  "stack": "AssertionError [ERR_ASSERTION]: Route must remain an active real run\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-refined-deep/capture.mjs:40:90"
+}

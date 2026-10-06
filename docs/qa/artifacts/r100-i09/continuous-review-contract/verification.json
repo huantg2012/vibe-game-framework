@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "status": "offline-contract-pass-not-gameplay-evidence",
+  "createdAt": "2026-10-06T01:53:00.932027+00:00",
+  "files": [
+    {
+      "path": "tools/qa/r100-i09-review-policy.json",
+      "sha256": "48e873c3988f75d119cce02291f0f7df55e81d5c7a03189596d97a64b29b3a67"
+    },
+    {
+      "path": "tools/qa/r100-i09-review-continuous.mjs",
+      "sha256": "e19101f5ab99f520dfba83fc3a8c4067ba3b636d095cdd25926de5434815b3f2"
+    },
+    {
+      "path": "tools/qa/check-r100-i09-review.mjs",
+      "sha256": "8db1f73e9691f91b2dd4acbcb548368eaaae01f9d592b35306804b82d91394c5"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "6254ef6ca7a98dc228631c847295cae17b15a0de2d5e4b417860fc5d47b728be"
+    }
+  ],
+  "tests": [
+    "review self-check: pressure streak and repair/growth accounting; passive-slot/wrong-key/zero-charge/incorrect-use rejection",
+    "continuous orchestration self-check: saved origin, fixed grades, exact one history, no resource refill",
+    "synthetic48 complete I/O: actual current selector replay over synthetic seed/history inputs,48 exact grades, tool Q charges/cost accounting; result remains experience pending",
+    "synthetic wrong selected world and changed save chain produce invalid status and diagnosis; fixture files removed",
+    "Independent peer review found total48/grade16 could hide13/13/13/9; now exact12 per branch and original earned first-save comparison are enforced. Both new negative I/O fixtures rejected, complete positive fixture still accepted as data-pending-review only.",
+    "Metrics distinguish actually searched remains (including later death) from remains searched on successful extraction, both per actual field minute; no lost loot is reported as income.",
+    "Requested/effective seeds are reconciled with the frozen eight-attempt schedule; rejection reasons are explicitly not inferred."
+  ],
+  "limitation": "No browser or real continuous trip was run. Synthetic fixtures existed only under a temporary node_modules test folder and were cleaned. Final48 real evidence still pending.",
+  "independentReview": {
+    "reviewer": "identity_shapes",
+    "findings": [
+      "Four branches must each have12 even if overall48 and grade counts16",
+      "First before-save must preserve frozen earned ancestor after legal schema migration"
+    ],
+    "resolution": "Both findings fixed and narrow re-review passed: raw and final branch counts enforce12 each; earned first-before state is checked; uneven48 and initial-refill tests re-seal raw/save hashes so they exercise the intended conditions. Bounded attempt schedule fields match production and do not infer rejection reasons.",
+    "finalStatus": "no-new-blocking-findings"
+  }
+}

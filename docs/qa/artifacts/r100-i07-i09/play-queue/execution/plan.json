@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "status": "ready-B03-through-B08",
+  "concurrency": 1,
+  "resourcePauseFile": "/tmp/coh-r100-i07-i09-20261005.pause",
+  "grades": [
+    "low",
+    "medium",
+    "severe"
+  ],
+  "seeds": [
+    20261005,
+    3075192741
+  ],
+  "predecessorParentPid": 97333,
+  "predecessors": [
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13",
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-recheck-016-v13",
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-recheck-077-078-v13",
+    "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13",
+    "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13",
+    "docs/qa/artifacts/r100-i07-i09/b02-play-v13"
+  ],
+  "priorCoverage": {
+    "calibration": "calibration-v13: rib-vault low both original seeds; never repeated",
+    "pausedQueue": {
+      "pid": 97338,
+      "parentPid": 97333,
+      "session": 99663,
+      "stages": [
+        "b01-other-play-v13 18 (2 already done)",
+        "b01-rib-upper-play-v13 4",
+        "b02-play-v13 24"
+      ]
+    },
+    "originalFailure": "legacy20-play-serial-v13 016 remains; dedicated same-seed recheck adds evidence without overwriting it"
+  },
+  "batches": [
+    {
+      "id": "b03",
+      "gameUrl": "http://127.0.0.1:3092",
+      "manifest": "docs/qa/artifacts/r100-i07-i09/b03-source/source-snapshot.json",
+      "worlds": [
+        "chalk-steps",
+        "porcelain-maw",
+        "amber-ribs",
+        "pale-sail"
+      ],
+      "output": "docs/qa/artifacts/r100-i07-i09/b03-play-v13"
+    },
+    {
+      "id": "b04",
+      "gameUrl": "http://127.0.0.1:3093",
+      "manifest": "docs/qa/artifacts/r100-i07-i09/b04-source/source-snapshot.json",
+      "worlds": [
+        "root-cistern",
+        "scab-islands",
+        "foam-trenches",
+        "resin-fall"
+      ],
+      "output": "docs/qa/artifacts/r100-i07-i09/b04-play-v13"
+    },
+    {
+      "id": "b05-other",
+      "gameUrl": "http://127.0.0.1:3094",
+      "manifest": "docs/qa/artifacts/r100-i07-i09/b05-source/source-snapshot.json",
+      "worlds": [
+        "felt-basin",
+        "cork-shelves",
+        "lacquer-court"
+      ],
+      "output": "docs/qa/artifacts/r100-i07-i09/b05-other-play-v13"
+    },
+    {
+      "id": "b06",
+      "gameUrl": "http://127.0.0.1:3095",
+      "manifest": "docs/qa/artifacts/r100-i07-i09/b06-source/source-snapshot.json",
+      "worlds": [
+        "ribbed-delta",
+        "bladder-weave",
+        "flake-thicket",
+        "resin-hollows"
+      ],
+      "output": "docs/qa/artifacts/r100-i07-i09/b06-play-v13"
+    },
+    {
+      "id": "b07-with-tendon",
+      "worlds": [
+        "tendon-shelves",
+        "sentinel-mass",
+        "stepped-bowl",
+        "draped-bay",
+        "ember-cushions"
+      ],
+      "output": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13",
+      "gameUrl": "http://127.0.0.1:3098",
+      "manifest": "docs/qa/artifacts/r100-i07-i09/b07-identity-source/source-snapshot.json",
+      "manifestSha256": "0411781ba2f02b48fcd2bfc84ca45cc601f2d7e7dab395d3601138aff821e530"
+    },
+    {
+      "id": "b08",
+      "worlds": [
+        "splinter-rotunda",
+        "quilted-scars",
+        "silt-colonnade",
+        "shell-causeway"
+      ],
+      "gameUrl": "http://127.0.0.1:3099/",
+      "manifest": "docs/qa/artifacts/r100-i07-i09/b08-source/source-snapshot.json",
+      "output": "docs/qa/artifacts/r100-i07-i09/b08-play-v13"
+    }
+  ],
+  "pendingBatches": [],
+  "method": "Original120 finishes; 016 and077/078 exact planned-seed rechecks close in separate folders; independent old20 qualification must pass with all original failures retained. Existing97338 resumes only after own Chrome exit; parent97333 runs all3 existing stages and exits. This plan then starts remaining fixed world batches sequentially and stops between batches on any script failure. No pass is assigned by the queue; both original seed processes and at least one actual search/extract per grade are assessed separately.",
+  "limitations": "Fixed-world expert-input qualification only. Natural48, formal156cold recovery, runtime budgets and lifecycle remain separate final52 tasks.",
+  "readyScope": "B03, B04, B05 remaining3, B06, repaired tendon+B07, and B08:24 worlds/144 fixed journeys, exact authored snapshots; final-source continuity is separately required."
+}

@@ -1,0 +1,45 @@
+{
+  "status": "pass",
+  "scope": "Accounting-only correction: predeparture errors remain incomplete. This is not a completed old20 play qualification.",
+  "negativeChecks": 10,
+  "log": {
+    "path": "docs/qa/artifacts/r100-i07-i09/play-summary-contract/predeparture-check.log",
+    "sha256": "07730b56e4a4282a9b5e503a6950212f7219d0ea4015ddc64cca9912271ecd09"
+  },
+  "actualErrorRecords": [
+    {
+      "key": "pressed-dunes/severe/20261005",
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/077-pressed-dunes-severe-20261005/report.json",
+      "exitCode": 1,
+      "processComplete": false,
+      "searchAndExtract": false,
+      "collected": [],
+      "problems": [
+        "No actual field journey started"
+      ],
+      "reportSha256": "715296549b6a61cc27534f5df0b0a7f93975833be5800d7fcdcabfd63bf85e62"
+    },
+    {
+      "key": "pressed-dunes/severe/3075192741",
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/078-pressed-dunes-severe-3075192741/report.json",
+      "exitCode": 1,
+      "processComplete": false,
+      "searchAndExtract": false,
+      "collected": [],
+      "problems": [
+        "No actual field journey started"
+      ],
+      "reportSha256": "715296549b6a61cc27534f5df0b0a7f93975833be5800d7fcdcabfd63bf85e62"
+    }
+  ],
+  "summarizer": {
+    "path": "tools/qa/r100-play-qualification.mjs",
+    "sha256": "870b264273c33d85050818088d916fa836cbb40b0a27dd8c0f74ad74c30f7256"
+  }
+}

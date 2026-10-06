@@ -6,10 +6,12 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import { createHash } from 'node:crypto';
 import { spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
+import ts from 'typescript';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const PROBES = {
@@ -81,7 +83,49 @@ function verifyFiles(source) {
   }
   return { nodeWorkingDirectory: ROOT, frozenDirectory: source.temporaryRoot, files: Object.keys(source.sources).length };
 }
-async function verifyServed(source, gameUrl) {
+export function rawModuleBytes(bytes) {
+  const source = ts.createSourceFile('raw-module.js', bytes.toString('utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  assert.equal(source.parseDiagnostics.length, 0, 'Invalid raw module syntax');
+  assert.equal(source.statements.length, 1, 'Raw module must have exactly one export default');
+  const assignment = source.statements[0];
+  assert(ts.isExportAssignment(assignment) && !assignment.isExportEquals, 'Raw module must export default');
+  assert(ts.isStringLiteral(assignment.expression) || ts.isNoSubstitutionTemplateLiteral(assignment.expression),
+    'Raw module must export a literal string without interpolation or execution');
+  return Buffer.from(assignment.expression.text, 'utf8');
+}
+export function exactRawSource(bytes, expected) {
+  // Some Vite responses contain the original file directly. Exact bytes also
+  // disambiguate a source file whose own content is an export-default string.
+  const directHash = hashBytes(bytes);
+  if (directHash === expected) return { sha256: directHash, encoding: 'direct-raw' };
+  const decodedHash = hashBytes(rawModuleBytes(bytes));
+  assert.equal(decodedHash, expected, 'Wrong decoded source bytes');
+  return { sha256: decodedHash, encoding: 'literal-module' };
+}
+export async function verifyServedSourceFile({ file, expected, url, literalModule = true, failureDirectory }) {
+  let response, bytes;
+  try {
+    response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    bytes = Buffer.from(await response.arrayBuffer());
+    assert(response.ok, `HTTP ${response.status}`);
+    if (literalModule) return exactRawSource(bytes, expected);
+    const actual = hashBytes(bytes);
+    assert.equal(actual, expected, 'Wrong direct source bytes');
+    return { sha256: actual, encoding: 'direct-raw' };
+  } catch (error) {
+    if (failureDirectory) {
+      const name = hashBytes(Buffer.from(`${file}\n${url}`));
+      fs.mkdirSync(failureDirectory, { recursive: true });
+      const body = bytes && path.join(failureDirectory, `${name}.body`);
+      if (body) fs.writeFileSync(body, bytes);
+      fs.writeFileSync(path.join(failureDirectory, `${name}.json`), JSON.stringify({ file, url: String(url),
+        expected, httpStatus: response?.status, headers: response && Object.fromEntries(response.headers),
+        body, bodySha256: bytes && hashBytes(bytes), failure: String(error) }, null, 2) + '\n');
+    }
+    throw new Error(`${file} (${url}): ${error}`);
+  }
+}
+async function verifyServed(source, gameUrl, failureDirectory) {
   const hashes = {};
   // Vite transforms HTML entry files even with ?raw; their disk bytes are
   // checked above. Verify all runtime/data/public bytes over HTTP separately.
@@ -92,14 +136,8 @@ async function verifyServed(source, gameUrl) {
       const file = files[cursor++], isPublic = file.startsWith('public/');
       const binary = /\.(?:png|jpe?g|webp|gif|ico|woff2?|ttf|mp3|ogg|wav|wasm)$/i.test(file);
       const url = new URL(isPublic ? `/${file.slice(7)}` : binary ? `/${file}` : `/${file}?raw&import`, gameUrl);
-      const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
-      assert(response.ok, `${file}: HTTP ${response.status}`);
-      let bytes = Buffer.from(await response.arrayBuffer());
-      if (!isPublic && !binary) {
-        const match = /^export default ("(?:[^"\\]|\\.)*");?/.exec(bytes.toString('utf8'));
-        if (match) bytes = Buffer.from(JSON.parse(match[1]), 'utf8');
-      }
-      hashes[file] = hashBytes(bytes); assert.equal(hashes[file], source.sources[file], `Wrong served source: ${file}`);
+      hashes[file] = (await verifyServedSourceFile({ file, expected: source.sources[file], url,
+        literalModule: !isPublic && !binary, failureDirectory })).sha256;
     }
   }));
   return Object.fromEntries(Object.entries(hashes).sort(([a], [b]) => a.localeCompare(b)));
@@ -124,23 +162,49 @@ async function selfCheck() {
   for (const mutate of [x => x.results[1] = x.results[0], x => x.results[0].requestedSeed++, x => x.results[0].actual = 'changed']) {
     const value = structuredClone(equivalent); mutate(value); assert.throws(() => validateFinalReport('equivalence', value, ids, []));
   }
+  const templateModule = value => 'export default `' + value.replaceAll('\\', '\\\\').replaceAll('`', '\\`').replaceAll('${', '\\${').replaceAll('\r', '\\r') + '`;';
+  const literal = 'backtick ` / backslash \\ / ${literal text} / 雪\nsecond line\r\nthird line';
+  for (const module of ['export default ' + JSON.stringify(literal) + ';', templateModule(literal)])
+    assert.equal(rawModuleBytes(Buffer.from(module)).toString('utf8'), literal);
+  for (const module of ['export default `prefix ${globalThis.doNotExecute()} suffix`;',
+    'export default String("text");', 'globalThis.doNotExecute(); export default "text";',
+    'export default "text"; globalThis.doNotExecute();', 'export default "one"; export default "two";',
+    'export { value as default };', 'export default ("text");', 'export default `unterminated'])
+    assert.throws(() => rawModuleBytes(Buffer.from(module)), /Raw module|Invalid raw module/);
+  for (const value of ['export const value: number = 1;\n', 'id,value\na,1\n', 'export default "original source";']) {
+    const bytes = Buffer.from(value), expected = hashBytes(bytes);
+    assert.deepEqual(exactRawSource(bytes, expected), { sha256: expected, encoding: 'direct-raw' });
+    assert.deepEqual(exactRawSource(Buffer.from(templateModule(value)), expected), { sha256: expected, encoding: 'literal-module' });
+    assert.throws(() => exactRawSource(Buffer.from(value + '\n'), expected));
+    assert.throws(() => exactRawSource(Buffer.from('export default ' + JSON.stringify(value) + '; globalThis.doNotExecute();'), expected));
+  }
   const fixture = { 'src/example.ts': Buffer.from('export const value = 1;\n'), 'src/example.png': Buffer.from([137, 80, 78, 71, 128, 255]), 'data/example.csv': Buffer.from('id,value\na,1\n'),
+    'src/direct.ts': Buffer.from('export const direct: number = 2;\n'), 'data/direct.csv': Buffer.from('id,value\nb,2\n'),
+    'src/literal-source.ts': Buffer.from('export default "original source";'),
     'public/example.bin': Buffer.from([0, 1, 128, 255]) };
   const source = { sources: Object.fromEntries(Object.entries(fixture).map(([file, bytes]) => [file, hashBytes(bytes)])) };
   const server = createServer((request, response) => {
     const file = new URL(request.url, 'http://localhost').pathname.slice(1);
     const value = fixture[file] ?? fixture[`public/${file}`];
     if (!value) { response.writeHead(404).end(); return; }
-    response.end(file.endsWith('.ts') ? `export default ${JSON.stringify(value.toString('utf8'))};` : value);
+    response.end(file === 'src/example.ts' ? `export default ${JSON.stringify(value.toString('utf8'))};`
+      : file === 'data/example.csv' ? templateModule(value.toString('utf8')) : value);
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const failureDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'r100-raw-check-'));
   try {
     const url = `http://127.0.0.1:${server.address().port}`;
     assert.deepEqual(await verifyServed(source, url), Object.fromEntries(Object.entries(source.sources).sort(([a], [b]) => a.localeCompare(b))));
-    await assert.rejects(() => verifyServed({ sources: { 'src/example.ts': 'wrong-hash' } }, url), /Wrong served source/);
+    await assert.rejects(() => verifyServed({ sources: { 'src/example.ts': 'wrong-hash' } }, url), /Wrong decoded source/);
     await assert.rejects(() => verifyServed({ sources: { 'src/missing.ts': 'missing' } }, url), /HTTP 404/);
-  } finally { await new Promise(resolve => server.close(resolve)); }
-  console.log('PASS final probe: unique scope, exact revisions/seeds, one committed history, cold preservation, text/raw/binary HTTP hashes; wrong and missing source rejected');
+    await assert.rejects(() => verifyServedSourceFile({ file: 'src/direct.ts', expected: 'wrong',
+      url: new URL('/src/direct.ts?raw&import', url), failureDirectory }), /src\/direct.ts.*Raw module/);
+    const failure = JSON.parse(fs.readFileSync(path.join(failureDirectory, fs.readdirSync(failureDirectory).find(file => file.endsWith('.json'))), 'utf8'));
+    assert.equal(failure.file, 'src/direct.ts'); assert.equal(failure.httpStatus, 200);
+    assert.equal(failure.url, `${url}/src/direct.ts?raw&import`);
+    assert.deepEqual(fs.readFileSync(failure.body), fixture['src/direct.ts']);
+  } finally { await new Promise(resolve => server.close(resolve)); fs.rmSync(failureDirectory, { recursive: true }); }
+  console.log('PASS final probe: unique scope, exact revisions/seeds, one committed history, cold preservation, exact direct TS/CSV/literal-source bytes, strict literal wrapper decoding including escapes/Unicode/newlines, wrong direct bytes/interpolation/execution rejected, HTTP hashes, wrong/missing source rejected with exact failure body/file/URL');
 }
 
 async function main() {
@@ -159,7 +223,7 @@ async function main() {
   fs.mkdirSync(out, { recursive: true });
   const binding = { version: 1, kind, status: 'running', startedAt: new Date().toISOString(), gameUrl,
     finalSource: receipt(manifest), harness: receipt(config.harness), wrapper: receipt(fileURLToPath(import.meta.url)),
-    dependencies: [GOLD, 'tools/contam-preview/tsconfig.json'].map(receipt), worldIds: ids, beforeRuntimeVerified: false,
+    dependencies: [GOLD, 'tools/contam-preview/tsconfig.json', 'package-lock.json'].map(receipt), worldIds: ids, beforeRuntimeVerified: false,
     afterRuntimeVerified: false, servedSourceVerified: false };
   const save = () => fs.writeFileSync(path.join(out, 'source-binding.json'), JSON.stringify(binding, null, 2) + '\n'); save();
   for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) {
@@ -167,7 +231,7 @@ async function main() {
     fs.copyFileSync(path.resolve(ROOT, item.path), target, fs.constants.COPYFILE_EXCL);
   }
   try {
-    binding.beforeFiles = verifyFiles(source); binding.beforeServedHashes = await verifyServed(source, gameUrl); binding.beforeRuntimeVerified = true; save();
+    binding.beforeFiles = verifyFiles(source); binding.beforeServedHashes = await verifyServed(source, gameUrl, path.join(out, 'source-audit-failures', 'before')); binding.beforeRuntimeVerified = true; save();
     const env = { ...process.env, GAME_URL: gameUrl, QA_OUTPUT_DIR: out, QA_WORLDS: ids.join(','), QA_GRADES: grades.join(','),
       QA_REQUIRE_BODY_VERSION: '1', QA_REBUILDS: '10', QA_MIXED_REBUILDS: String(ids.length * 3), QA_SCREENSHOTS: '0', QA_DEFER_AUDIT: '1' };
     for (const key of ['QA_STOP_ON_FAILURE', 'QA_CPU_PROFILE', 'QA_STAGE_TIMING', 'QA_P01_STRICT', 'QA_WORLD_ID', 'QA_SEED', 'QA_CONTROLLED_BUILD', 'QA_REPRO_IDENTITY_FILE']) delete env[key];
@@ -178,7 +242,7 @@ async function main() {
       child.once('close', (code, signal) => { fs.closeSync(fd); binding.exitCode = code; binding.signal = signal; resolve(); });
     });
     binding.afterFiles = verifyFiles(source); binding.afterRuntimeVerified = true;
-    binding.afterServedHashes = await verifyServed(source, gameUrl);
+    binding.afterServedHashes = await verifyServed(source, gameUrl, path.join(out, 'source-audit-failures', 'after'));
     assert.deepEqual(binding.afterServedHashes, binding.beforeServedHashes); binding.servedSourceVerified = true;
     for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) assert.equal(sha(item.path), item.sha256, `Probe input changed: ${item.path}`);
     binding.report = receipt(path.join(out, config.report)); assert.equal(binding.exitCode, 0, 'Original probe failed; preserve it before any diagnosis');

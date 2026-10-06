@@ -1,0 +1,229 @@
+{
+  "scope": "Normal finite FOV and camera; controlled candidate world/training loadout, actual keyboard from original spawn. Full floor geometry read for diagnostic body routing, not novice navigation; no position/HP/clock/fog edits. Enemy and pollution simulation stays active.",
+  "cases": [
+    {
+      "world": "tendon-shelves",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-front-approach",
+            "x": 670.1138550126403,
+            "y": 526.471520654267,
+            "faces": []
+          },
+          "route": {
+            "requested": {
+              "label": "01-front-approach",
+              "x": 670.1138550126403,
+              "y": 526.471520654267,
+              "faces": []
+            },
+            "actual": {
+              "x": 668,
+              "y": 524
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 668,
+                "y": 588
+              },
+              {
+                "x": 668,
+                "y": 524
+              }
+            ],
+            "length": 536
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 668.1973177544637,
+              "y": 521.9485209167117
+            },
+            "hp": 100,
+            "chaos": 20.89760608199981,
+            "elapsedMs": 8399.599999999999
+          }
+        },
+        {
+          "goal": {
+            "label": "02-front-mouth",
+            "x": 670.1138550126403,
+            "y": 526.471520654267,
+            "precise": true,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-front-mouth",
+              "x": 670.1138550126403,
+              "y": 526.471520654267,
+              "precise": true,
+              "faces": [
+                [
+                  "d",
+                  "east"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 670.1138550126403,
+              "y": 526.471520654267
+            },
+            "points": [
+              {
+                "x": 668.1973177544637,
+                "y": 521.9485209167117
+              },
+              {
+                "x": 670.1138550126403,
+                "y": 526.471520654267
+              }
+            ],
+            "length": 5.741391627966778,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 672.8335535276418,
+              "y": 527.6512538943626
+            },
+            "hp": 100,
+            "chaos": 21.306815021999814,
+            "elapsedMs": 9016.3
+          }
+        },
+        {
+          "goal": {
+            "label": "03-inner-turn",
+            "x": 788.0937700428253,
+            "y": 547.8432227266411,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-inner-turn",
+              "x": 788.0937700428253,
+              "y": 547.8432227266411,
+              "precise": true,
+              "faces": [
+                [
+                  "w",
+                  "north"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 788.0937700428253,
+              "y": 547.8432227266411
+            },
+            "points": [
+              {
+                "x": 672.8335535276418,
+                "y": 527.6512538943626
+              },
+              {
+                "x": 788.0937700428253,
+                "y": 547.8432227266411
+              }
+            ],
+            "length": 117.0155251086397,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 788.0435702469248,
+              "y": 544.1049780219307
+            },
+            "hp": 85,
+            "chaos": 24.69105557399978,
+            "elapsedMs": 14116.100000000002
+          }
+        },
+        {
+          "goal": {
+            "label": "04-side-exit",
+            "x": 757.1502547820735,
+            "y": 718.6631831039566,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "04-side-exit",
+              "x": 757.1502547820735,
+              "y": 718.6631831039566,
+              "precise": true,
+              "faces": [
+                [
+                  "w",
+                  "north"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 757.1502547820735,
+              "y": 718.6631831039566
+            },
+            "points": [
+              {
+                "x": 788.0435702469248,
+                "y": 544.1049780219307
+              },
+              {
+                "x": 757.1502547820735,
+                "y": 718.6631831039566
+              }
+            ],
+            "length": 177.27087719608497,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 757.0157434316604,
+              "y": 719.1201330241694
+            },
+            "hp": 85,
+            "chaos": 29.29181428199954,
+            "elapsedMs": 21049.100000000002
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "status": "captured"
+}

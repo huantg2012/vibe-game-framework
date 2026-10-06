@@ -1,0 +1,144 @@
+{
+  "status": "prepared-not-run",
+  "scope": "Gallery normal-grade images only; no gameplay, production, source data or acceptance status change. Existing deep and historical images stay untouched.",
+  "selectionConclusion": "Existing inspected formal frames do not supply clear, same-seed comparable repaired forms for all six normal slots. Use them only as auxiliary gameplay evidence.",
+  "formalPolicy": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/policy-freeze.json",
+    "sha256": "3fda8d1d36f76e735725346df85d4e07640d7344c6be55a94a003459e37e4842"
+  },
+  "formalSource": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b07-identity-source/source-snapshot.json",
+    "sha256": "0411781ba2f02b48fcd2bfc84ca45cc601f2d7e7dab395d3601138aff821e530"
+  },
+  "inspectedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/001-tendon-shelves-low-20261005/low/1-search-1.png",
+      "sha256": "da1d3b08d7ddac89d7527af18c42c47c173a61f13f36a13ec2dcf648a300e44a",
+      "width": 1440,
+      "height": 960,
+      "status": "rejected-for-baseline",
+      "finding": "Only a small edge is visible; repaired second foot not legible.",
+      "review": "Personally inspected original PNG; no adjustments."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/001-tendon-shelves-low-20261005/low/1-far-exploration.png",
+      "sha256": "a229da0bbd6b521e03d59c3cf107630b13f484ebcd5637ae6ef3040ad8e6ea60",
+      "width": 1440,
+      "height": 960,
+      "status": "rejected-for-baseline",
+      "finding": "Mostly ground and a small surface corner, not the repaired foot.",
+      "review": "Personally inspected original PNG; no adjustments."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/002-tendon-shelves-low-3075192741/low/1-search-1.png",
+      "sha256": "8da072d1bf4295dfd70578318a0d798038581559c729dc9815d868be57cf3015",
+      "width": 1440,
+      "height": 960,
+      "status": "auxiliary-only",
+      "finding": "Thick fibrous material, pale cut edge and opening readable; actual compass HUD4s. Seed/view differs from preferred medium and severe lacks corresponding view.",
+      "review": "Personally inspected original PNG; no adjustments."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/002-tendon-shelves-low-3075192741/low/1-far-exploration.png",
+      "sha256": "8bf35a97655fa7fa4dc39a4360364f849490d17a044d7adee2dd151f75020af4",
+      "width": 1440,
+      "height": 960,
+      "status": "auxiliary-only",
+      "finding": "Detached foot and floor visible but less useful than search frame; not common view across grades.",
+      "review": "Personally inspected original PNG; no adjustments."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/003-tendon-shelves-medium-20261005/medium/1-search-1.png",
+      "sha256": "844d0347126032ff9aa24534c9675307dd25e8afded8102ebe3209f766ae1eb3",
+      "width": 1440,
+      "height": 960,
+      "status": "auxiliary-only",
+      "finding": "Thick fibrous face and pale cut edge readable; no active compass HUD timer. Full repaired L mouth not all visible.",
+      "review": "Personally inspected original PNG; no adjustments."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/004-tendon-shelves-medium-3075192741/medium/1-search-1.png",
+      "sha256": "fe5e94d474842e072cc10564072a6e335de78d88726a71619b9dc9580c8f982c",
+      "width": 1440,
+      "height": 960,
+      "status": "auxiliary-only",
+      "finding": "Similar wall view with compass1s and enemy; not selected over003.",
+      "review": "Personally inspected original PNG; no adjustments."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/005-tendon-shelves-severe-20261005/severe/1-search-1.png",
+      "sha256": "a754cb43c508f1ca493e2766a17d98ce27ed32ae51a815e52fab863a5e69f5d3",
+      "width": 1440,
+      "height": 960,
+      "status": "rejected-for-baseline",
+      "finding": "Ground and remains visible; repaired second foot outside the FOV.",
+      "review": "Personally inspected original PNG; no adjustments."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/006-tendon-shelves-severe-3075192741/severe/1-search-1.png",
+      "sha256": "7a681b2fed1f187aa9a817766b0792c86305c9e9c84e20da215a4416895d9ef6",
+      "width": 1440,
+      "height": 960,
+      "status": "rejected-for-baseline",
+      "finding": "Ground, remains and enemies visible; repaired second foot not shown.",
+      "review": "Personally inspected original PNG; no adjustments."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13/007-sentinel-mass-low-20261005/low/1-search-1.png",
+      "sha256": "70a1c7e1538c37b3ec367e9a36d0a3a30c773b3f618e75de16c71337a8b9f2a7",
+      "width": 1440,
+      "height": 960,
+      "status": "auxiliary-only",
+      "finding": "A single thick edge readable; cannot establish high/low joined shoulders.",
+      "review": "Personally inspected original PNG; no adjustments."
+    }
+  ],
+  "compassEffectCheck": {
+    "effect": "Catalog survey publishes only to minimap showAbyssReveal; no world-scene lighting, visibility or obstacle-material change in this path. Active compass HUD does not invalidate main-scene material observation, but must be labelled as gameplay state.",
+    "sourceManifest": "docs/qa/artifacts/r100-i07-i09/b07-identity-source/source-snapshot.json",
+    "files": [
+      {
+        "path": "data/contaminant-items.csv",
+        "sha256": "d0d7daaf2005ae91b490cdc3986af47efe7c98d5cd0d07523e2eeed2257d2634"
+      },
+      {
+        "path": "src/systems/catalog-ability-runtime.ts",
+        "sha256": "2b2a7a2695529df0b636f4c7c3b451832906382fd65bedefe9671c9068bde42b"
+      },
+      {
+        "path": "src/scenes/rift-scene.ts",
+        "sha256": "6f39cad6e744c5de2985a21631dbb782f62a1c0a86652a2206ef29c195eaa43b"
+      },
+      {
+        "path": "src/ui/minimap.ts",
+        "sha256": "dfbcf020b9e92ee73e6f6ec64817f838192c95ea49a7d222c691078f6b5aeb65"
+      }
+    ]
+  },
+  "capturePlan": {
+    "status": "waiting-final52-source-and-sole-browser-window",
+    "script": "docs/qa/artifacts/r100-i07-i09/gallery-browser/capture-current-shapes.mjs",
+    "scriptSha256": "7801cf8487456a4b9a76fd298f3afee31d2b5a0eee87c952c438c86970dc52f7",
+    "seed": 20261005,
+    "worlds": [
+      "tendon-shelves",
+      "sentinel-mass"
+    ],
+    "grades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "count": 6,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "method": "Real keyboard from unchanged Gym spawn; same diagnostic fullbody route method as prior approved deep views. Normal finite FOV and follow camera, actual facing verified. No Q/F/G or direct state edits; enemies remain active. One destination PNG per case; death/blocked route/error halts and stays recorded. No claim of novice play or full expedition.",
+    "commandTemplate": "GAME_URL=<final-frozen-url> QA_SOURCE_MANIFEST=<final-source-snapshot.json> QA_OUTPUT_DIR=docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final QA_BROWSER_WINDOW=granted node docs/qa/artifacts/r100-i07-i09/gallery-browser/capture-current-shapes.mjs",
+    "checksCompleted": [
+      "node --check passed",
+      "--plan completed before any Playwright import or browser launch"
+    ]
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "status": "running",
+  "startedAt": "2026-10-05T14:32:54.573Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-rib-vault-low-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-05T14:32:54.573Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-05T14:34:58.639Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "death",
+          "world": "rib-vault",
+          "grade": "low",
+          "revision": 5,
+          "requestedSeed": 20261005,
+          "matchesPlan": true,
+          "collected": 0,
+          "elapsedMs": 82580.02999999956,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 638.4351539999983,
+            "y": 647.8870240000024
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 2,
+      "dir": "002-rib-vault-low-3075192741",
+      "status": "completed-script",
+      "startedAt": "2026-10-05T14:32:54.576Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-05T14:36:22.326Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "rib-vault",
+          "grade": "low",
+          "revision": 5,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 0,
+          "elapsedMs": 165076.72000000876,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 162.02880214115825,
+            "y": 629.4675926298731
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "rib-vault",
+      "grade": "medium",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 3,
+      "dir": "003-rib-vault-medium-20261005",
+      "status": "failed-script",
+      "startedAt": "2026-10-05T14:34:58.645Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-05T14:39:42.973Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "world": "rib-vault",
+          "grade": "medium",
+          "revision": 5,
+          "requestedSeed": 20261005,
+          "matchesPlan": true,
+          "collected": 0,
+          "elapsedMs": 45598.15000000003,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "failure": "AssertionError [ERR_ASSERTION]: route diagnostic exceeded 60s",
+          "baseSettled": false
+        }
+      ]
+    },
+    {
+      "world": "rib-vault",
+      "grade": "medium",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 4,
+      "dir": "004-rib-vault-medium-3075192741",
+      "status": "failed-script",
+      "startedAt": "2026-10-05T14:36:22.330Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-05T14:39:45.385Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "matchesPlan": false,
+          "collected": 0,
+          "elapsedMs": null,
+          "failure": "Error: page.evaluate: TimeoutError: Native surface preparation exceeded its budget",
+          "baseSettled": false
+        }
+      ]
+    },
+    {
+      "world": "rib-vault",
+      "grade": "severe",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 5,
+      "dir": "005-rib-vault-severe-20261005",
+      "status": "running",
+      "startedAt": "2026-10-05T14:39:42.977Z"
+    },
+    {
+      "world": "rib-vault",
+      "grade": "severe",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 6,
+      "dir": "006-rib-vault-severe-3075192741",
+      "status": "running",
+      "startedAt": "2026-10-05T14:39:45.387Z"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "scope": "52-row art draft content/receipt consistency only; no final source release or gameplay qualification.",
+  "checkedDraft": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-art-review.draft.json",
+    "sha256": "d3bce203b3ead52962398c3377cb8388164972f300e4b4c8a3d6c8c518ab550c"
+  },
+  "counts": {
+    "uniqueCatalogWorlds": 52,
+    "historicalHumanApprovalOnly": 20,
+    "newBoundedInternalArtOnly": 32,
+    "currentRootMediumFramesInAdditionToHistoricalApproval": 20
+  },
+  "checks": {
+    "catalogExact": true,
+    "old20ExplicitHistoricalInheritanceNotNewHumanApproval": true,
+    "new32NotAutomaticGameplayQualification": true,
+    "siltOnlyFirstTwoFeetActuallyCrossed": true,
+    "siltThirdFootStaticOnly": true,
+    "actualEvidenceAndSourceHashesMatch": true,
+    "finalSourceAndPackageHashesRemainUnfilled": true,
+    "old20DirectEvidenceUsesActualR5SourceAndCurrentFrames": true,
+    "historicalR4AndExactSurfaceReportRemainSeparate": true
+  },
+  "errors": []
+}

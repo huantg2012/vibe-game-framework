@@ -1,0 +1,108 @@
+{
+  "status": "completed-fixed-batches-pending-qualification",
+  "startedAt": "2026-10-06T03:12:15.877Z",
+  "fixedFiles": [
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/play-queue/plan.json",
+      "sha256": "f1612fe86fa65daa159ad52f3c6b59ab1e59d2beeb65754987af34ea3e2aba71"
+    },
+    {
+      "file": "tools/qa/r100-i07-i09-coverage.mjs",
+      "sha256": "0c849954419185bd9b5eb7d159f289f09889a42cc704b6df86299bcca1b11880"
+    },
+    {
+      "file": "tools/qa/r100-i07-i09-journey.mjs",
+      "sha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/b03-source/source-snapshot.json",
+      "sha256": "3fcbe00f47cbe70921eae6a39a77bb0e1530304a93dadf553516315e291cd422"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/b04-source/source-snapshot.json",
+      "sha256": "86e6a0cc547cc77cedfb6267f4814dc2d107d9831923d66d3da7bfc0420831f6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/b05-source/source-snapshot.json",
+      "sha256": "c89e6bd7cd2b6746a913ac0356bd73435d17825262d2a7a53136eb165e2299b2"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/b06-source/source-snapshot.json",
+      "sha256": "e04f2d0922dc82b76448808f1f715c748025a4d8a75d21824c29044e1a673678"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/b07-identity-source/source-snapshot.json",
+      "sha256": "0411781ba2f02b48fcd2bfc84ca45cc601f2d7e7dab395d3601138aff821e530"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/b08-source/source-snapshot.json",
+      "sha256": "b9d215892a0b4487ed640cd9f493a17177e302ba222e3a341d94dc8b1640146e"
+    }
+  ],
+  "concurrency": 1,
+  "pendingLaterBatches": [],
+  "readyPrefix": false,
+  "attempts": [
+    {
+      "id": "b03",
+      "output": "docs/qa/artifacts/r100-i07-i09/b03-play-v13",
+      "status": "completed-script",
+      "startedAt": "2026-10-06T03:12:15.878Z",
+      "pid": 27176,
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T03:32:11.115Z"
+    },
+    {
+      "id": "b04",
+      "output": "docs/qa/artifacts/r100-i07-i09/b04-play-v13",
+      "status": "completed-script",
+      "startedAt": "2026-10-06T03:32:11.116Z",
+      "pid": 42185,
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T03:54:26.558Z"
+    },
+    {
+      "id": "b05-other",
+      "output": "docs/qa/artifacts/r100-i07-i09/b05-other-play-v13",
+      "status": "completed-script",
+      "startedAt": "2026-10-06T03:54:26.559Z",
+      "pid": 59159,
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T04:08:53.696Z"
+    },
+    {
+      "id": "b06",
+      "output": "docs/qa/artifacts/r100-i07-i09/b06-play-v13",
+      "status": "completed-script",
+      "startedAt": "2026-10-06T04:08:53.698Z",
+      "pid": 70857,
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T04:25:59.390Z"
+    },
+    {
+      "id": "b07-with-tendon",
+      "output": "docs/qa/artifacts/r100-i07-i09/b07-with-tendon-play-v13",
+      "status": "completed-script",
+      "startedAt": "2026-10-06T04:25:59.391Z",
+      "pid": 84605,
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T04:52:43.798Z"
+    },
+    {
+      "id": "b08",
+      "output": "docs/qa/artifacts/r100-i07-i09/b08-play-v13",
+      "status": "completed-script",
+      "startedAt": "2026-10-06T04:52:43.799Z",
+      "pid": 6526,
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T05:13:25.470Z"
+    }
+  ],
+  "endedAt": "2026-10-06T05:13:25.470Z"
+}

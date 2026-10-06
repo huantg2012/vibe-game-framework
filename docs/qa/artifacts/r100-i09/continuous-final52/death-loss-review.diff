@@ -1,0 +1,120 @@
+--- tools/qa/r100-i09-review-continuous.mjs	2026-10-06 10:44:40
++++ tools/qa/r100-i09-review-continuous-death-loss.mjs	2026-10-06 16:07:25
+@@ -1,4 +1,6 @@
+-/** Read completed continuous receipts; no browser or game writes. This produces
++/** Derived from the unchanged policy15 frozen reviewer. This version recognizes
++ * the existing carried-item loss on settled death; it changes no input policy.
++ * Read completed continuous receipts; no browser or game writes. This produces
+  * review inputs and mandatory diagnosis flags, never experience approval.
+  * node --import tsx ... --input <continuous folder> --output <new review.json>
+  * --self-check validates accounting and streak guards without runtime imports. */
+@@ -47,6 +49,19 @@
+     growthBefore: before.growth, growthPrepared: prepared.growth,
+     returnedIds: returned.inventory.run.returnedIds ?? [], destroyedIds: returned.inventory.run.destroyedIds ?? [], offeredIds: receipt.offered ?? [] };
+ }
++function deathLostTool(receipt, id) {
++  if (receipt.outcome !== 'death') return false;
++  const entry = receipt.entrySave.state.inventory, returned = receipt.afterReturn.state.inventory;
++  assert.equal(entry.run.status, 'active'); assert.equal(typeof entry.run.id, 'string'); assert(entry.run.id.length > 0);
++  assert.equal(returned.run.id, entry.run.id); assert.equal(returned.run.status, 'settled');
++  assert.equal(returned.run.baseSettled, true); assert.equal(returned.run.outcome, 'death');
++  assert.deepEqual(returned.run.returnedIds, []); assert.equal(returned.run.kindlingGained, 0);
++  assert.equal(receipt.fieldResult.ended, true); assert.equal(receipt.fieldResult.hp, 0);
++  const item = entry.items.find(row => row.id === id);
++  return item?.location?.kind === 'carried' && entry.run.carriedOutIds.includes(id)
++    && !returned.items.some(row => row.id === id) && returned.equipment.weaponId !== id
++    && !returned.equipment.toolIds.includes(id);
++}
+ function toolsForTrip(receipt, log, constants) {
+   const begin = log.findIndex(row => row.event === 'snapshot' && row.label === `${receipt.ordinal}-entry`);
+   const end = log.findIndex((row, index) => index > begin && row.event === 'snapshot' && row.label === `${receipt.ordinal}-field-result`);
+@@ -65,15 +80,20 @@
+     assert([0, 1].includes(event.used)); assert.equal(event.used, event.item.uses - event.remaining);
+     remaining.set(event.item.id, event.remaining);
+   }
++  const deathLostIds = new Set();
+   for (const [id, expected] of remaining) {
+     const item = returned.inventory.items.find(row => row.id === id);
+     if (item) assert.equal(uses(item), expected, `Returned active-tool charges disagree with input log: ${id}`);
+-    else assert(expected === 0 || returned.inventory.run.destroyedIds?.includes(id), `Tool disappeared without exhaustion/destruction: ${id}`);
++    else if (expected !== 0 && !returned.inventory.run.destroyedIds?.includes(id)) {
++      assert(deathLostTool(receipt, id), `Tool disappeared without exhaustion/destruction/verified death loss: ${id}`);
++      deathLostIds.add(id);
++    }
+   }
+   return { inputLog: { first: begin + 1, last: end + 1 }, events: events.map(row => ({ at: row.at, key: row.key, slot: row.slot,
+     itemId: row.item.id, reason: row.label, beforeUses: row.item.uses, afterUses: row.remaining, used: row.used })),
+     passiveSlot, actualInventoryUses: [...remaining].map(([id, finalLoggedUses]) => ({ id, finalLoggedUses,
+-      returnedUses: uses(returned.inventory.items.find(item => item.id === id)), destroyed: returned.inventory.run.destroyedIds?.includes(id) ?? false })) };
++      returnedUses: uses(returned.inventory.items.find(item => item.id === id)), destroyed: returned.inventory.run.destroyedIds?.includes(id) ?? false,
++      deathLost: deathLostIds.has(id) })) };
+ }
+ function collected(receipt) {
+   return collectI09SearchReceipts(receipt);
+@@ -91,6 +111,7 @@
+     deaths: rows.filter(row => row.outcome === 'death').length,
+     reserveDelta: sum(rows, row => row.economy.reserveDelta), repairSpent: sum(rows, row => row.economy.repairSpent), growthSpent: sum(rows, row => row.economy.growthSpent),
+     returnedItems: sum(rows, row => row.economy.returnedIds.length), destroyedItems: sum(rows, row => row.economy.destroyedIds.length),
++    deathLostActiveTools: sum(rows, row => row.tools.actualInventoryUses.filter(item => item.deathLost).length),
+     tools: Object.fromEntries(['Q', 'F', 'G'].map(key => [key, { attempts: events.filter(row => row.key === key).length,
+       consumed: sum(events.filter(row => row.key === key), row => row.used), noConsumption: events.filter(row => row.key === key && row.used === 0).length }])) };
+ }
+@@ -114,7 +135,31 @@
+   for (const mutate of [rows => rows[1].slot = 3, rows => rows[1].key = 'Q', rows => rows[1].remaining = 2, rows => rows[1].item.uses = 0]) {
+     const copy = structuredClone(log); mutate(copy); assert.throws(() => toolsForTrip(toolReceipt, copy, constants));
+   }
+-  console.log('PASS continuous review: three-pressure streaks, exact actual preparation cost accounting, no automatic experience approval');
++  const death = structuredClone(toolReceipt);
++  death.outcome = 'death'; death.fieldResult = { ended: true, hp: 0 };
++  death.entrySave.state.inventory.items[0].location = { kind: 'carried' };
++  death.entrySave.state.inventory.run = { id: 'same-run', status: 'active', carriedOutIds: ['active'] };
++  death.afterReturn.state.inventory = { items: [], equipment: { weaponId: null, toolIds: [null, null, null, null] },
++    run: { id: 'same-run', status: 'settled', baseSettled: true, outcome: 'death', returnedIds: [], kindlingGained: 0, destroyedIds: [] } };
++  const loss = toolsForTrip(death, log, constants);
++  assert.deepEqual(loss.actualInventoryUses, [{ id: 'active', finalLoggedUses: 1, returnedUses: null, destroyed: false, deathLost: true }]);
++  assert.equal(sum(loss.events, row => row.used), 1, 'Death loss must not inflate actual use counts');
++  const cases = [
++    ['extract missing tool', row => { row.outcome = 'extract'; row.afterReturn.state.inventory.run.outcome = 'extract'; }],
++    ['death non-carried', row => row.entrySave.state.inventory.items[0].location.kind = 'stash'],
++    ['not carried out', row => row.entrySave.state.inventory.run.carriedOutIds = []],
++    ['different run', row => row.afterReturn.state.inventory.run.id = 'other-run'],
++    ['not settled', row => row.afterReturn.state.inventory.run.status = 'active'],
++    ['not base settled', row => row.afterReturn.state.inventory.run.baseSettled = false],
++    ['death returned items', row => row.afterReturn.state.inventory.run.returnedIds = ['active']],
++    ['death returned kindling', row => row.afterReturn.state.inventory.run.kindlingGained = 1],
++    ['not dead', row => row.fieldResult.hp = 1],
++    ['not ended', row => row.fieldResult.ended = false],
++    ['uncleared equipment', row => row.afterReturn.state.inventory.equipment.toolIds[2] = 'active'],
++  ];
++  for (const [label, mutate] of cases) { const copy = structuredClone(death); mutate(copy); assert.throws(() => toolsForTrip(copy, log, constants), undefined, label); }
++  console.log(JSON.stringify({ status: 'pass', validDeathLoss: true, deathLossNegativeCases: cases.map(([label]) => label),
++    originalAccountingAndInputCases: 'pass', experienceApproval: 'pending' }));
+ }
+ async function main() {
+   if (process.argv.includes('--self-check')) { selfCheck(); return; }
+@@ -122,7 +167,12 @@
+   const folder = path.resolve(arg('--input')), output = path.resolve(arg('--output')); assert(!fs.existsSync(output), 'Keep previous review results');
+   const summaryFile = path.join(folder, 'summary.json'), summary = read(summaryFile), policy = read(summary.policy), plan = read(policy.review.policy);
+   assert.equal(sha(policy.review.policy), policy.review.policySha256); assert.equal(sha(summary.policy), summary.policySha256);
+-  assert.equal(sha(fileURLToPath(import.meta.url)), policy.review.toolSha256, 'Use the review implementation frozen before the trips');
++  assert.equal(sha(path.resolve(ROOT, policy.review.tool)), policy.review.toolSha256, 'Original frozen reviewer must remain unchanged');
++  const originalReviewFile = path.join(folder, 'review.json'), originalReview = read(originalReviewFile);
++  assert.equal(originalReview.status, 'incomplete-or-invalid-data');
++  assert.equal(originalReview.reviewTool.sha256, policy.review.toolSha256);
++  assert(originalReview.inputs.some(row => path.resolve(row.path) === summaryFile && row.sha256 === sha(summaryFile)));
++  for (const row of originalReview.inputs) assert.equal(sha(row.path), row.sha256, `Original failed-review input changed: ${row.path}`);
+   for (const row of policy.fixedFiles) assert.equal(sha(row.file), row.sha256, `Frozen continuous input changed: ${row.file}`);
+   const storage = read(policy.storage); assert.equal(storage.origins.length, 1);
+   const saves = storage.origins[0].localStorage.filter(row => row.name === 'coh-save-v1'); assert.equal(saves.length, 1);
+@@ -220,7 +270,10 @@
+     && issues.length === 0 && Object.values(gradeCounts).every(count => count === 16);
+   const result = { version: 1, status: valid ? 'complete-valid-data-pending-experience-review' : 'incomplete-or-invalid-data',
+     experienceApproval: 'pending', reviewPolicy: { path: policy.review.policy, sha256: sha(policy.review.policy) },
+-    reviewTool: { path: policy.review.tool, sha256: policy.review.toolSha256 }, inputs,
++    reviewTool: { path: path.relative(ROOT, fileURLToPath(import.meta.url)), sha256: sha(fileURLToPath(import.meta.url)),
++      derivedFrom: { path: policy.review.tool, sha256: policy.review.toolSha256 }, author: 'identity_pipeline',
++      change: 'Recognize verified carried active-tool loss on same-run settled death; retain original use and destruction counts.' },
++    supersedes: { path: originalReviewFile, sha256: sha(originalReviewFile), reason: 'Frozen reviewer omitted the existing death carried-item loss rule.' }, inputs,
+     validatedTrips: all.length, gradeCounts, metrics, byGrade: Object.fromEntries(POLICIES.slice(0, 3).map(grade => [grade, aggregate(all.filter(row => row.grade === grade))])),
+     uncoveredToolKeys: Object.entries(metrics.tools).filter(([, value]) => value.consumed === 0).map(([key]) => key),
+     mandatoryDiagnosis: [...diagnosis, ...issues.map(row => ({ kind: 'contract-failure', ...row }))], branches, review: plan.review };

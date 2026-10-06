@@ -1,0 +1,42 @@
+{
+  "status": "method-reviewed-not-executed",
+  "at": "2026-10-06T06:50:43.775721+00:00",
+  "scope": "Planned runtime-budget-final52: 52 severe worlds, seed20261004, fixed real WASD path in formal RiftScene on memory-backed gym. Not continuous earned economy, whole-map visibility coverage or GPU timing.",
+  "loadout": "Default first CSV entry bare: production starter crowbar; empty active/passive tools; reset training state. No protection, invulnerability, heal, enemy removal or clock override.",
+  "sampling": "runtime.running means admitted entry fence released; wait800ms then record start;12 real held-key legs each5100ms; end.elapsedMs-start.elapsedMs>=60000 and !end.ended required. Death/extraction freezeAfterEnd stops elapsed simulation and cannot satisfy fullAliveDuration.",
+  "gates": {
+    "frameP95Ms": 20,
+    "frameP99Ms": 33.4,
+    "over50Fraction": 0.005,
+    "cpuDispatchP95Ms": 12,
+    "materialSubmitP95Ms": 3,
+    "all52FullAlive": true,
+    "nonzeroOnAnyFailure": true
+  },
+  "files": [
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "e5eba944112d64286a595e5b18579b9c46bf180c5cfffc293b71c6e688305e66"
+    },
+    {
+      "path": "src/dev/r100-gym.ts",
+      "sha256": "ec48f5f1d5a06077b97a2b179608236e5a640230d98638eebe33d037be7a4044"
+    },
+    {
+      "path": "src/dev/rift-gym-runtime.ts",
+      "sha256": "b7f34201c763aa7e00f6fbd4ac6f3ce61b60caaf26e9b32fcde77cadb12e0214"
+    },
+    {
+      "path": "src/dev/build-lab-session.ts",
+      "sha256": "f193674df658cbb0712e478ec27a1089d2f2b6b37714300232e9aa68928a332e"
+    },
+    {
+      "path": "data/build-lab-loadouts.csv",
+      "sha256": "d2772b7df28671434bd7518479c00a71f1f9a680cf2d61710f1cf1c1d8fd3264"
+    },
+    {
+      "path": "src/scenes/rift-scene.ts",
+      "sha256": "6f39cad6e744c5de2985a21631dbb782f62a1c0a86652a2206ef29c195eaa43b"
+    }
+  ]
+}

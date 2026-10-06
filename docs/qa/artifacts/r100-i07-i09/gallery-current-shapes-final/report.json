@@ -1,0 +1,1007 @@
+{
+  "plan": {
+    "seed": 20261005,
+    "worlds": [
+      "tendon-shelves",
+      "sentinel-mass"
+    ],
+    "grades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "method": "One actual-keyboard approach per case from Gym spawn. Normal camera/FOV, no tool inputs or player/health/time/lighting edits; diagnostic static body route is read. One final target PNG per case. Failures remain and halt the batch."
+  },
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "harnessSha256": "7801cf8487456a4b9a76fd298f3afee31d2b5a0eee87c952c438c86970dc52f7",
+  "scope": "Normal finite FOV and camera; controlled candidate world/training loadout, actual keyboard from original spawn. Full floor geometry read for diagnostic body routing, not novice navigation; no position/HP/clock/fog edits. Enemy and pollution simulation stays active.",
+  "cases": [
+    {
+      "world": "tendon-shelves",
+      "grade": "low",
+      "steps": [
+        {
+          "goal": {
+            "label": "second-foot-approach",
+            "x": 670.1138550126403,
+            "y": 526.471520654267,
+            "faces": []
+          },
+          "route": {
+            "requested": {
+              "label": "second-foot-approach",
+              "x": 670.1138550126403,
+              "y": 526.471520654267,
+              "faces": []
+            },
+            "actual": {
+              "x": 668,
+              "y": 524
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 668,
+                "y": 588
+              },
+              {
+                "x": 668,
+                "y": 524
+              }
+            ],
+            "length": 536
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 667.5668781128305,
+              "y": 521.5177449165617
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.842195311999973,
+            "elapsedMs": 8016.3
+          }
+        },
+        {
+          "goal": {
+            "label": "current-shape",
+            "x": 788.0937700428253,
+            "y": 547.8432227266411,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "current-shape",
+              "x": 788.0937700428253,
+              "y": 547.8432227266411,
+              "precise": true,
+              "faces": [
+                [
+                  "w",
+                  "north"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 788.0937700428253,
+              "y": 547.8432227266411
+            },
+            "points": [
+              {
+                "x": 667.5668781128305,
+                "y": 521.5177449165617
+              },
+              {
+                "x": 788.0937700428253,
+                "y": 547.8432227266411
+              }
+            ],
+            "length": 123.36840138476964,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 787.2332119863537,
+              "y": 531.4615719359755
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 85,
+            "chaos": 21.618049583999934,
+            "elapsedMs": 12699.5
+          }
+        }
+      ],
+      "facingObservations": [
+        {
+          "event": "facing-observation",
+          "goal": "current-shape",
+          "key": "w",
+          "requestedDirection": "north",
+          "desiredAngle": -1.5707963267948966,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 787.2332119863537,
+              "y": 531.4615719359755
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 85,
+            "chaos": 21.586443263999936,
+            "elapsedMs": 12616.099999999999
+          },
+          "angleError": 0,
+          "matched": true,
+          "turnInputs": 2
+        }
+      ],
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/tendon-shelves-low/current-shape.png",
+        "sha256": "ca55460fd382a80751379158120346b05473c91def66065e261aa0d23b842d99",
+        "width": 806,
+        "height": 538,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 787.2332119863537,
+            "y": 531.4615719359755
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 85,
+          "chaos": 21.586443263999936,
+          "elapsedMs": 12616.099999999999
+        }
+      }
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "medium",
+      "steps": [
+        {
+          "goal": {
+            "label": "second-foot-approach",
+            "x": 670.1138550126403,
+            "y": 526.471520654267,
+            "faces": []
+          },
+          "route": {
+            "requested": {
+              "label": "second-foot-approach",
+              "x": 670.1138550126403,
+              "y": 526.471520654267,
+              "faces": []
+            },
+            "actual": {
+              "x": 668,
+              "y": 524
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 668,
+                "y": 588
+              },
+              {
+                "x": 668,
+                "y": 524
+              }
+            ],
+            "length": 536
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 669.6921992200346,
+              "y": 523.4670877793051
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.637693869999744,
+            "elapsedMs": 8033.000000000001
+          }
+        },
+        {
+          "goal": {
+            "label": "current-shape",
+            "x": 788.0937700428253,
+            "y": 547.8432227266411,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "current-shape",
+              "x": 788.0937700428253,
+              "y": 547.8432227266411,
+              "precise": true,
+              "faces": [
+                [
+                  "w",
+                  "north"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 788.0937700428253,
+              "y": 547.8432227266411
+            },
+            "points": [
+              {
+                "x": 669.6921992200346,
+                "y": 523.4670877793051
+              },
+              {
+                "x": 788.0937700428253,
+                "y": 547.8432227266411
+              }
+            ],
+            "length": 120.88477128354533,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 788.2442557366027,
+              "y": 532.886295289985
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.152848615999574,
+            "elapsedMs": 12599.5
+          }
+        }
+      ],
+      "facingObservations": [
+        {
+          "event": "facing-observation",
+          "goal": "current-shape",
+          "key": "w",
+          "requestedDirection": "north",
+          "desiredAngle": -1.5707963267948966,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 788.2442557366027,
+              "y": 532.886295289985
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.119671933999577,
+            "elapsedMs": 12499.5
+          },
+          "angleError": 0,
+          "matched": true,
+          "turnInputs": 2
+        }
+      ],
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/tendon-shelves-medium/current-shape.png",
+        "sha256": "71b61e5db4fe3850ae4eb7d640f50968dd0c0934653aef1255695474c05159bd",
+        "width": 806,
+        "height": 538,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 788.2442557366027,
+            "y": 532.886295289985
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 19.119671933999577,
+          "elapsedMs": 12499.5
+        }
+      }
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "severe",
+      "steps": [
+        {
+          "goal": {
+            "label": "second-foot-approach",
+            "x": 670.1138550126403,
+            "y": 526.471520654267,
+            "faces": []
+          },
+          "route": {
+            "requested": {
+              "label": "second-foot-approach",
+              "x": 670.1138550126403,
+              "y": 526.471520654267,
+              "faces": []
+            },
+            "actual": {
+              "x": 668,
+              "y": 524
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 372,
+                "y": 588
+              },
+              {
+                "x": 372,
+                "y": 548
+              },
+              {
+                "x": 388,
+                "y": 548
+              },
+              {
+                "x": 388,
+                "y": 540
+              },
+              {
+                "x": 428,
+                "y": 540
+              },
+              {
+                "x": 428,
+                "y": 532
+              },
+              {
+                "x": 668,
+                "y": 532
+              },
+              {
+                "x": 668,
+                "y": 524
+              }
+            ],
+            "length": 536
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 668.7624214718905,
+              "y": 524.5182698166334
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 23.24962289066656,
+            "elapsedMs": 8683
+          }
+        },
+        {
+          "goal": {
+            "label": "current-shape",
+            "x": 788.0937700428253,
+            "y": 547.8432227266411,
+            "precise": true,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "current-shape",
+              "x": 788.0937700428253,
+              "y": 547.8432227266411,
+              "precise": true,
+              "faces": [
+                [
+                  "w",
+                  "north"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 788.0937700428253,
+              "y": 547.8432227266411
+            },
+            "points": [
+              {
+                "x": 668.7624214718905,
+                "y": 524.5182698166334
+              },
+              {
+                "x": 788.0937700428253,
+                "y": 547.8432227266411
+              }
+            ],
+            "length": 121.58957266152397,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 789.1578509918621,
+              "y": 540.3302215460892
+            },
+            "facingAngle": -1.570733494941827,
+            "facing4": "up",
+            "hp": 85,
+            "chaos": 27.934633834666627,
+            "elapsedMs": 13316.1
+          }
+        }
+      ],
+      "facingObservations": [
+        {
+          "event": "facing-observation",
+          "goal": "current-shape",
+          "key": "w",
+          "requestedDirection": "north",
+          "desiredAngle": -1.5707963267948966,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 789.1578509918621,
+              "y": 540.3302215460892
+            },
+            "facingAngle": -1.570733494941827,
+            "facing4": "up",
+            "hp": 85,
+            "chaos": 27.850360426666626,
+            "elapsedMs": 13232.8
+          },
+          "angleError": 0.00006283185306954488,
+          "matched": true,
+          "turnInputs": 1
+        }
+      ],
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/tendon-shelves-severe/current-shape.png",
+        "sha256": "4e95146781d46d7bd8306f079b4986261a9c120543e128011bb6601bcac17d7f",
+        "width": 806,
+        "height": 538,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 789.1578509918621,
+            "y": 540.3302215460892
+          },
+          "facingAngle": -1.570733494941827,
+          "facing4": "up",
+          "hp": 85,
+          "chaos": 27.850360426666626,
+          "elapsedMs": 13232.8
+        }
+      }
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "low",
+      "steps": [
+        {
+          "goal": {
+            "label": "west-foot-approach",
+            "x": 104,
+            "y": 270,
+            "faces": []
+          },
+          "route": {
+            "requested": {
+              "label": "west-foot-approach",
+              "x": 104,
+              "y": 270,
+              "faces": []
+            },
+            "actual": {
+              "x": 108,
+              "y": 268
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 108,
+                "y": 588
+              },
+              {
+                "x": 108,
+                "y": 268
+              }
+            ],
+            "length": 408
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 108.35284756612376,
+              "y": 265.9582762000608
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.17547007199999,
+            "elapsedMs": 6283.1
+          }
+        },
+        {
+          "goal": {
+            "label": "current-shape",
+            "x": 245.7,
+            "y": 270,
+            "precise": true,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "current-shape",
+              "x": 245.7,
+              "y": 270,
+              "precise": true,
+              "faces": [
+                [
+                  "d",
+                  "east"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 245.7,
+              "y": 270
+            },
+            "points": [
+              {
+                "x": 108.35284756612376,
+                "y": 265.9582762000608
+              },
+              {
+                "x": 245.7,
+                "y": 270
+              }
+            ],
+            "length": 137.40660760301677,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 245.9341054728766,
+              "y": 270.2703244950867
+            },
+            "facingAngle": 3.3861802251067274e-15,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.880118471999975,
+            "elapsedMs": 9999.6
+          }
+        }
+      ],
+      "facingObservations": [
+        {
+          "event": "facing-observation",
+          "goal": "current-shape",
+          "key": "d",
+          "requestedDirection": "east",
+          "desiredAngle": 0,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 245.9341054728766,
+              "y": 270.2703244950867
+            },
+            "facingAngle": 3.3861802251067274e-15,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.857999735999975,
+            "elapsedMs": 9882.9
+          },
+          "angleError": 3.3861802251067274e-15,
+          "matched": true,
+          "turnInputs": 0
+        }
+      ],
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/sentinel-mass-low/current-shape.png",
+        "sha256": "448830b2aa5a758ba4d4ba8503a1df7cab2637c7a931c7411f4c9a3ae3cfc584",
+        "width": 806,
+        "height": 538,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 245.9341054728766,
+            "y": 270.2703244950867
+          },
+          "facingAngle": 3.3861802251067274e-15,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.857999735999975,
+          "elapsedMs": 9882.9
+        }
+      }
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "medium",
+      "steps": [
+        {
+          "goal": {
+            "label": "west-foot-approach",
+            "x": 104,
+            "y": 270,
+            "faces": []
+          },
+          "route": {
+            "requested": {
+              "label": "west-foot-approach",
+              "x": 104,
+              "y": 270,
+              "faces": []
+            },
+            "actual": {
+              "x": 108,
+              "y": 268
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 108,
+                "y": 588
+              },
+              {
+                "x": 108,
+                "y": 268
+              }
+            ],
+            "length": 408
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 106.88062745762323,
+              "y": 268.4722055038008
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.01836483799983,
+            "elapsedMs": 6166.4
+          }
+        },
+        {
+          "goal": {
+            "label": "current-shape",
+            "x": 245.7,
+            "y": 270,
+            "precise": true,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "current-shape",
+              "x": 245.7,
+              "y": 270,
+              "precise": true,
+              "faces": [
+                [
+                  "d",
+                  "east"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 245.7,
+              "y": 270
+            },
+            "points": [
+              {
+                "x": 106.88062745762323,
+                "y": 268.4722055038008
+              },
+              {
+                "x": 245.7,
+                "y": 270
+              }
+            ],
+            "length": 138.8277794574335,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 247.81154268029266,
+              "y": 268.90891233603037
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 17.98054833999975,
+            "elapsedMs": 9066.300000000001
+          }
+        }
+      ],
+      "facingObservations": [
+        {
+          "event": "facing-observation",
+          "goal": "current-shape",
+          "key": "d",
+          "requestedDirection": "east",
+          "desiredAngle": 0,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 247.81154268029266,
+              "y": 268.90891233603037
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 17.952909399999754,
+            "elapsedMs": 8983
+          },
+          "angleError": 0,
+          "matched": true,
+          "turnInputs": 0
+        }
+      ],
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/sentinel-mass-medium/current-shape.png",
+        "sha256": "a44dd2eb41b3d7c3a01a6881d51bcb93dfb8933350fd8df7aefe8a217daf5970",
+        "width": 806,
+        "height": 538,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 247.81154268029266,
+            "y": 268.90891233603037
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 17.952909399999754,
+          "elapsedMs": 8983
+        }
+      }
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "severe",
+      "steps": [
+        {
+          "goal": {
+            "label": "west-foot-approach",
+            "x": 104,
+            "y": 270,
+            "faces": []
+          },
+          "route": {
+            "requested": {
+              "label": "west-foot-approach",
+              "x": 104,
+              "y": 270,
+              "faces": []
+            },
+            "actual": {
+              "x": 108,
+              "y": 268
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 108,
+                "y": 588
+              },
+              {
+                "x": 108,
+                "y": 268
+              }
+            ],
+            "length": 408
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 107.01468754229244,
+              "y": 265.68359084361913
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 34.1093085439999,
+            "elapsedMs": 6233.099999999999
+          }
+        },
+        {
+          "goal": {
+            "label": "current-shape",
+            "x": 245.7,
+            "y": 270,
+            "precise": true,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "current-shape",
+              "x": 245.7,
+              "y": 270,
+              "precise": true,
+              "faces": [
+                [
+                  "d",
+                  "east"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 245.7,
+              "y": 270
+            },
+            "points": [
+              {
+                "x": 107.01468754229244,
+                "y": 265.68359084361913
+              },
+              {
+                "x": 245.7,
+                "y": 270
+              }
+            ],
+            "length": 138.75246765192054,
+            "precise": true
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 252.0370787024994,
+              "y": 270.02301125796424
+            },
+            "facingAngle": 0.0005654866776518275,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 39.76930457600036,
+            "elapsedMs": 9516.3
+          }
+        }
+      ],
+      "facingObservations": [
+        {
+          "event": "facing-observation",
+          "goal": "current-shape",
+          "key": "d",
+          "requestedDirection": "east",
+          "desiredAngle": 0,
+          "actual": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 252.0370787024994,
+              "y": 270.02301125796424
+            },
+            "facingAngle": 0.0005654866776518275,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 39.72717292800034,
+            "elapsedMs": 9433
+          },
+          "angleError": 0.0005654866776518275,
+          "matched": true,
+          "turnInputs": 1
+        }
+      ],
+      "image": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/sentinel-mass-severe/current-shape.png",
+        "sha256": "39593a30e665461708fdccc0dfa16a44c4c04773734968dc8fe7dd84c7363172",
+        "width": 806,
+        "height": 538,
+        "state": {
+          "scene": "rift",
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 252.0370787024994,
+            "y": 270.02301125796424
+          },
+          "facingAngle": 0.0005654866776518275,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 39.72717292800034,
+          "elapsedMs": 9433
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "status": "captured"
+}

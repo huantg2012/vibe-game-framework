@@ -1,0 +1,107 @@
+{
+  "status": "offline-contract-pass-not-real-continuous-evidence",
+  "policyRevision": 15,
+  "createdAt": "2026-10-06T02:42:43.027571+00:00",
+  "files": [
+    {
+      "path": "tools/qa/r100-i09-journey.mjs",
+      "sha256": "6c0b278ac86077472861ba17a60151babaa0fdcf54322cac5728fade4464e0aa"
+    },
+    {
+      "path": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "f399881f5a0135021b7eafc2c785768db512df99cc55305bdec7491fe839cff6"
+    },
+    {
+      "path": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "38141c205be1138116a1287dbe8e6cf26f4fea47824a76ce5e3d49ff237359e3"
+    },
+    {
+      "path": "tools/qa/check-r100-i09-search-input.mjs",
+      "sha256": "86d0f2a0d93411cc5525b7cc1b66b3bc412dc475652c1b303b78d0d65e9b9061"
+    },
+    {
+      "path": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "8d58a4aea1366bd50fee9f11f98258280c0f51f76be92da3065bbcba9b089a51"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "48b9125da62fd492599d0a2d46d89765bffa83550a69c26025138321fac0b29c"
+    },
+    {
+      "path": "tools/qa/r100-i09-review-continuous.mjs",
+      "sha256": "08e472c12494545ad8047c4f3d8a97ec1ca80f7ad9e0358476b233312f6134ac"
+    },
+    {
+      "path": "tools/qa/check-r100-i09-review.mjs",
+      "sha256": "7dd081c10f9586c8d6228f8bce5d362127cc01b767a91dc4eeb48f040402799b"
+    },
+    {
+      "path": "tools/qa/r100-i09-review-policy.json",
+      "sha256": "0eb1327fa844108815b41b86ed1ce7907ff5fea9dad08633a4ed718ec7205b39"
+    }
+  ],
+  "preserved": [
+    "Originalv13/P13 hashes unchanged",
+    "Policy14 exact source copies and prior offline checks retained",
+    "Game src/data/public unchanged by this controller correction"
+  ],
+  "behaviorCases": [
+    {
+      "mode": "intended target completes",
+      "polls": 2,
+      "keys": [
+        "E down",
+        "E up"
+      ]
+    },
+    {
+      "mode": "nearby different node completes",
+      "polls": 2,
+      "keys": [
+        "E down",
+        "E up"
+      ]
+    },
+    {
+      "mode": "already collected only; no new pickup",
+      "polls": 11,
+      "result": "existing1600ms channel budget expires",
+      "keys": [
+        "E down",
+        "E up"
+      ]
+    },
+    {
+      "mode": "state read fails",
+      "polls": 1,
+      "keys": [
+        "E down",
+        "E up"
+      ]
+    },
+    {
+      "mode": "three actual pickups before keydown",
+      "polls": 0,
+      "keys": []
+    }
+  ],
+  "accountingChecks": [
+    "Three actual pickups exhaust allowance even if target logsfalse",
+    "No hidden kind/value property read",
+    "Duplicate node IDs rejected",
+    "Real077 log mismatch reconciles two actual extracted pickups",
+    "Death may count actual E-segment-observed search, never extraction income",
+    "Unreconciled terminal pickup is invalid rather than empty",
+    "Four actual pickups rejected"
+  ],
+  "otherChecks": [
+    "tsc --noEmit PASS",
+    "Public Q/F/G/passive/last charge and existing cooldown contract PASS",
+    "Continuous origin/history/grade/resource self-check PASS",
+    "Synthetic48 exact4x12 replay with4 resealed invalid cases PASS",
+    "Node syntax andgit diff --check PASS",
+    "npm run dev owned3201 startup andHTTP200 PASS; stopped owned process; no browser launched"
+  ],
+  "lint": "No lint script configured",
+  "limitation": "No real policy15 browser journey or natural48 has run. This changes QA inputs only at actual pickup completion/counting; no game rules, resource grants, enemy visibility, time or risk budget changes."
+}

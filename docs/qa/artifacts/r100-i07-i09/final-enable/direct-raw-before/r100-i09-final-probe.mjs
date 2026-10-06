@@ -1,0 +1,209 @@
+/** Freeze and run one final52 probe. Source audits happen outside its measured
+ * browser interval. No game state, world seed or probe outcome is rewritten.
+ * --probe production|equivalence|budget|lifecycle --source <manifest> --output <new folder>
+ * GAME_URL is required; budget also requires QA_EXCLUSIVE_WINDOW=1.
+ * --self-check verifies receipt scope guards without starting a browser. */
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { spawn } from 'node:child_process';
+import { createServer } from 'node:http';
+import { fileURLToPath } from 'node:url';
+import ts from 'typescript';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const PROBES = {
+  production: { harness: 'tools/qa/check-r100-production-browser.mjs', report: 'report.json' },
+  equivalence: { harness: 'tools/world-study/check-r100-browser-equivalence.mjs', report: 'browser-equivalence.json' },
+  budget: { harness: 'tools/qa/check-r100-runtime-budget.mjs', report: 'report.json' },
+  lifecycle: { harness: 'tools/qa/check-r100-gym-lifecycle.mjs', report: 'report.json' },
+};
+const GOLD = 'tools/recovery/fixtures/r100-revision1-gold.json';
+const hashBytes = bytes => createHash('sha256').update(bytes).digest('hex');
+const sha = file => hashBytes(fs.readFileSync(path.resolve(ROOT, file)));
+const read = file => JSON.parse(fs.readFileSync(path.resolve(ROOT, file), 'utf8'));
+const relative = file => path.relative(ROOT, path.resolve(ROOT, file));
+const receipt = file => ({ path: relative(file), sha256: sha(file) });
+const sorted = values => [...values].sort();
+const grades = ['low', 'medium', 'severe'];
+
+export function validateFinalReport(kind, report, ids, gold) {
+  const expected = sorted(ids.flatMap(world => grades.map(grade => `${world}/${grade}`)));
+  if (kind === 'production') {
+    assert.equal(report.status, 'passed');
+    assert.deepEqual(sorted(report.cases.map(row => `${row.world}/${row.grade}`)), expected);
+    for (const row of report.cases) {
+      assert.equal(row.status, 'passed'); assert.deepEqual(row.errors, []);
+      assert.equal(row.coldIdentityPreserved, true); assert.equal(row.worldHistoryPreserved, true);
+      assert.deepEqual(row.historyBeforeDeparture, { version: 1, visits: [] });
+      assert.deepEqual(row.committedWorldHistory, { version: 1, visits: [{ worldId: row.world, grade: row.grade }] });
+      assert.deepEqual(row.bodyGeometry, { version: 1, fullBodyCheckpointAdmitted: true, coldBodyPositionPreserved: true });
+      assert.equal(row.identity.generation.package.id, `r100-${row.world}`);
+      assert.equal(row.identity.generation.package.grade, row.grade);
+      assert.equal(row.identity.generation.package.algorithmRevision, 5);
+      assert.equal(row.identity.generation.requestedSeed, row.controlledSeed);
+    }
+  } else if (kind === 'equivalence') {
+    assert.equal(report.status, 'pass'); assert.equal(report.results.length, ids.length * 3 + gold.length);
+    const current = report.results.filter(row => row.revision === 5), old = report.results.filter(row => row.revision === 1);
+    assert.deepEqual(sorted(current.map(row => `${row.world.replace(/^r100-/, '')}/${row.grade}`)), expected);
+    assert.deepEqual(sorted(old.map(row => `${row.world}/${row.grade}/${row.seed}/${row.expected}`)),
+      sorted(gold.map(row => `${row.generation.package.id}/${row.generation.package.grade}/${row.seed}/${row.signature}`)));
+    for (const row of report.results) {
+      assert.equal(row.exactIdentity, true); assert.equal(row.actual, row.expected);
+      if (row.revision === 5) assert.equal(row.requestedSeed, 20261004);
+    }
+  } else if (kind === 'budget') {
+    assert.equal(report.status, 'passed-reference-samples'); assert.equal(report.exclusiveWindow, true);
+    assert.deepEqual(sorted(report.worlds), sorted(ids)); assert.deepEqual(sorted(report.cases.map(row => row.world)), sorted(ids));
+    assert.deepEqual(report.errors, []);
+    for (const row of report.cases) {
+      assert.equal(row.grade, 'severe'); assert.equal(row.fullAliveDuration, true);
+      assert(row.duration >= 60000); assert.equal(row.budgetPass, true);
+    }
+  } else if (kind === 'lifecycle') {
+    assert.equal(report.status, 'passed-bounded-lifecycle'); assert.deepEqual(report.errors, []);
+    assert.deepEqual(sorted(report.catalogWorldIds), sorted(ids)); assert.equal(report.repetitions, 10);
+    assert.equal(report.mixedRebuilds, ids.length * 3);
+    assert.deepEqual(sorted(report.mixedCoverage.map(row => `${row.world}/${row.grade}`)), expected);
+  } else assert.fail(`Unknown probe ${kind}`);
+  if (kind === 'production' || kind === 'equivalence')
+    assert(Object.keys(report.loadedSourceHashes ?? {}).length > 0, 'Probe must record actual served module URLs');
+}
+
+function verifyFiles(source) {
+  assert.equal(source.verifiedCopyHashes, true); assert.deepEqual(source.patches, []);
+  assert(Object.keys(source.sources).length > 0);
+  for (const [file, expected] of Object.entries(source.sources)) {
+    assert(!path.isAbsolute(file) && !file.split('/').includes('..'), `Invalid source path: ${file}`);
+    assert.equal(sha(file), expected, `Node working source changed: ${file}`);
+    assert.equal(sha(path.join(source.temporaryRoot, file)), expected, `Frozen source changed: ${file}`);
+  }
+  return { nodeWorkingDirectory: ROOT, frozenDirectory: source.temporaryRoot, files: Object.keys(source.sources).length };
+}
+export function rawModuleBytes(bytes) {
+  const source = ts.createSourceFile('raw-module.js', bytes.toString('utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  assert.equal(source.parseDiagnostics.length, 0, 'Invalid raw module syntax');
+  assert.equal(source.statements.length, 1, 'Raw module must have exactly one export default');
+  const assignment = source.statements[0];
+  assert(ts.isExportAssignment(assignment) && !assignment.isExportEquals, 'Raw module must export default');
+  assert(ts.isStringLiteral(assignment.expression) || ts.isNoSubstitutionTemplateLiteral(assignment.expression),
+    'Raw module must export a literal string without interpolation or execution');
+  return Buffer.from(assignment.expression.text, 'utf8');
+}
+async function verifyServed(source, gameUrl) {
+  const hashes = {};
+  // Vite transforms HTML entry files even with ?raw; their disk bytes are
+  // checked above. Verify all runtime/data/public bytes over HTTP separately.
+  const files = Object.keys(source.sources).filter(file => /^(src|data|public)\//.test(file));
+  let cursor = 0;
+  await Promise.all(Array.from({ length: 4 }, async () => {
+    while (cursor < files.length) {
+      const file = files[cursor++], isPublic = file.startsWith('public/');
+      const binary = /\.(?:png|jpe?g|webp|gif|ico|woff2?|ttf|mp3|ogg|wav|wasm)$/i.test(file);
+      const url = new URL(isPublic ? `/${file.slice(7)}` : binary ? `/${file}` : `/${file}?raw&import`, gameUrl);
+      const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+      assert(response.ok, `${file}: HTTP ${response.status}`);
+      let bytes = Buffer.from(await response.arrayBuffer());
+      if (!isPublic && !binary) bytes = rawModuleBytes(bytes);
+      hashes[file] = hashBytes(bytes); assert.equal(hashes[file], source.sources[file], `Wrong served source: ${file}`);
+    }
+  }));
+  return Object.fromEntries(Object.entries(hashes).sort(([a], [b]) => a.localeCompare(b)));
+}
+
+async function selfCheck() {
+  const ids = ['one'], rows = grades.map(grade => ({ world: 'one', grade, status: 'passed', errors: [],
+    coldIdentityPreserved: true, worldHistoryPreserved: true, historyBeforeDeparture: { version: 1, visits: [] },
+    committedWorldHistory: { version: 1, visits: [{ worldId: 'one', grade }] },
+    bodyGeometry: { version: 1, fullBodyCheckpointAdmitted: true, coldBodyPositionPreserved: true }, controlledSeed: 1,
+    identity: { generation: { requestedSeed: 1, package: { id: 'r100-one', grade, algorithmRevision: 5 } } } }));
+  const production = { status: 'passed', cases: rows, loadedSourceHashes: { source: 'hash' } };
+  validateFinalReport('production', production, ids, []);
+  for (const mutate of [x => x.cases.push(x.cases[0]), x => x.cases.pop(), x => x.cases[0].worldHistoryPreserved = false,
+    x => x.cases[0].committedWorldHistory.visits.push({ worldId: 'one', grade: 'low' }), x => x.cases[0].identity.generation.package.algorithmRevision = 4,
+    x => x.loadedSourceHashes = {}]) {
+    const value = structuredClone(production); mutate(value); assert.throws(() => validateFinalReport('production', value, ids, []));
+  }
+  const equivalent = { status: 'pass', loadedSourceHashes: { source: 'hash' }, results: grades.map(grade => ({ world: 'r100-one', grade, revision: 5,
+    seed: 20261004, requestedSeed: 20261004, exactIdentity: true, expected: 'signature', actual: 'signature' })) };
+  validateFinalReport('equivalence', equivalent, ids, []);
+  for (const mutate of [x => x.results[1] = x.results[0], x => x.results[0].requestedSeed++, x => x.results[0].actual = 'changed']) {
+    const value = structuredClone(equivalent); mutate(value); assert.throws(() => validateFinalReport('equivalence', value, ids, []));
+  }
+  const templateModule = value => 'export default `' + value.replaceAll('\\', '\\\\').replaceAll('`', '\\`').replaceAll('${', '\\${').replaceAll('\r', '\\r') + '`;';
+  const literal = 'backtick ` / backslash \\ / ${literal text} / 雪\nsecond line\r\nthird line';
+  for (const module of ['export default ' + JSON.stringify(literal) + ';', templateModule(literal)])
+    assert.equal(rawModuleBytes(Buffer.from(module)).toString('utf8'), literal);
+  for (const module of ['export default `prefix ${globalThis.doNotExecute()} suffix`;',
+    'export default String("text");', 'globalThis.doNotExecute(); export default "text";',
+    'export default "text"; globalThis.doNotExecute();', 'export default "one"; export default "two";',
+    'export { value as default };', 'export default ("text");', 'export default `unterminated'])
+    assert.throws(() => rawModuleBytes(Buffer.from(module)), /Raw module|Invalid raw module/);
+  const fixture = { 'src/example.ts': Buffer.from('export const value = 1;\n'), 'src/example.png': Buffer.from([137, 80, 78, 71, 128, 255]), 'data/example.csv': Buffer.from('id,value\na,1\n'),
+    'public/example.bin': Buffer.from([0, 1, 128, 255]) };
+  const source = { sources: Object.fromEntries(Object.entries(fixture).map(([file, bytes]) => [file, hashBytes(bytes)])) };
+  const server = createServer((request, response) => {
+    const file = new URL(request.url, 'http://localhost').pathname.slice(1);
+    const value = fixture[file] ?? fixture[`public/${file}`];
+    if (!value) { response.writeHead(404).end(); return; }
+    response.end(file.endsWith('.ts') ? `export default ${JSON.stringify(value.toString('utf8'))};`
+      : file.endsWith('.csv') ? templateModule(value.toString('utf8')) : value);
+  });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  try {
+    const url = `http://127.0.0.1:${server.address().port}`;
+    assert.deepEqual(await verifyServed(source, url), Object.fromEntries(Object.entries(source.sources).sort(([a], [b]) => a.localeCompare(b))));
+    await assert.rejects(() => verifyServed({ sources: { 'src/example.ts': 'wrong-hash' } }, url), /Wrong served source/);
+    await assert.rejects(() => verifyServed({ sources: { 'src/missing.ts': 'missing' } }, url), /HTTP 404/);
+  } finally { await new Promise(resolve => server.close(resolve)); }
+  console.log('PASS final probe: unique scope, exact revisions/seeds, one committed history, cold preservation, strict literal raw decoding including escapes/Unicode/newlines, interpolation/execution rejected, HTTP hashes, wrong/missing source rejected');
+}
+
+async function main() {
+  if (process.argv.includes('--self-check')) { await selfCheck(); return; }
+  const arg = name => { const at = process.argv.indexOf(name); assert(at >= 0 && process.argv[at + 1], `${name} required`); return process.argv[at + 1]; };
+  const kind = arg('--probe'), config = PROBES[kind]; assert(config, 'Known probe required');
+  const manifest = arg('--source'), out = path.resolve(ROOT, arg('--output')), gameUrl = process.env.GAME_URL;
+  assert(gameUrl, 'GAME_URL required'); assert(!fs.existsSync(out), 'Keep original attempts; choose a new output folder');
+  const source = read(manifest), url = new URL(gameUrl);
+  assert.equal(url.hostname, '127.0.0.1'); assert.equal(Number(url.port), source.port);
+  const catalogSource = fs.readFileSync(path.resolve(ROOT, 'src/generated/r100-native-worlds.ts'), 'utf8');
+  const catalog = JSON.parse(catalogSource.split('R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = ')[1].trim().replace(/;$/, ''));
+  const ids = catalog.filter(row => row.enabled).map(row => row.id);
+  assert.equal(ids.length, 52); assert.equal(new Set(ids).size, 52); assert.equal(catalog.length, 52);
+  if (kind === 'budget') assert.equal(process.env.QA_EXCLUSIVE_WINDOW, '1', 'Only measure in the agreed exclusive window');
+  fs.mkdirSync(out, { recursive: true });
+  const binding = { version: 1, kind, status: 'running', startedAt: new Date().toISOString(), gameUrl,
+    finalSource: receipt(manifest), harness: receipt(config.harness), wrapper: receipt(fileURLToPath(import.meta.url)),
+    dependencies: [GOLD, 'tools/contam-preview/tsconfig.json', 'package-lock.json'].map(receipt), worldIds: ids, beforeRuntimeVerified: false,
+    afterRuntimeVerified: false, servedSourceVerified: false };
+  const save = () => fs.writeFileSync(path.join(out, 'source-binding.json'), JSON.stringify(binding, null, 2) + '\n'); save();
+  for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) {
+    const target = path.join(out, 'sources', item.path); fs.mkdirSync(path.dirname(target), { recursive: true });
+    fs.copyFileSync(path.resolve(ROOT, item.path), target, fs.constants.COPYFILE_EXCL);
+  }
+  try {
+    binding.beforeFiles = verifyFiles(source); binding.beforeServedHashes = await verifyServed(source, gameUrl); binding.beforeRuntimeVerified = true; save();
+    const env = { ...process.env, GAME_URL: gameUrl, QA_OUTPUT_DIR: out, QA_WORLDS: ids.join(','), QA_GRADES: grades.join(','),
+      QA_REQUIRE_BODY_VERSION: '1', QA_REBUILDS: '10', QA_MIXED_REBUILDS: String(ids.length * 3), QA_SCREENSHOTS: '0', QA_DEFER_AUDIT: '1' };
+    for (const key of ['QA_STOP_ON_FAILURE', 'QA_CPU_PROFILE', 'QA_STAGE_TIMING', 'QA_P01_STRICT', 'QA_WORLD_ID', 'QA_SEED', 'QA_CONTROLLED_BUILD', 'QA_REPRO_IDENTITY_FILE']) delete env[key];
+    const fd = fs.openSync(path.join(out, 'runner.log'), 'wx');
+    await new Promise(resolve => {
+      const child = spawn(process.execPath, [config.harness], { cwd: ROOT, env, stdio: ['ignore', fd, fd] });
+      child.once('error', error => { binding.spawnError = String(error); });
+      child.once('close', (code, signal) => { fs.closeSync(fd); binding.exitCode = code; binding.signal = signal; resolve(); });
+    });
+    binding.afterFiles = verifyFiles(source); binding.afterRuntimeVerified = true;
+    binding.afterServedHashes = await verifyServed(source, gameUrl);
+    assert.deepEqual(binding.afterServedHashes, binding.beforeServedHashes); binding.servedSourceVerified = true;
+    for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) assert.equal(sha(item.path), item.sha256, `Probe input changed: ${item.path}`);
+    binding.report = receipt(path.join(out, config.report)); assert.equal(binding.exitCode, 0, 'Original probe failed; preserve it before any diagnosis');
+    validateFinalReport(kind, read(binding.report.path), ids, read(GOLD).records.map(row => row.identity));
+    binding.status = 'pass';
+  } catch (error) { binding.status = 'failed'; binding.failure = String(error); process.exitCode = 1; }
+  finally { binding.endedAt = new Date().toISOString(); save(); }
+  console.log(JSON.stringify({ status: binding.status, kind, report: binding.report, binding: relative(path.join(out, 'source-binding.json')) }));
+}
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

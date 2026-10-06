@@ -1,0 +1,46 @@
+{
+  "scope": "Repository meta-review page interaction, not gameplay or new world-art approval. Existing PNGs are unchanged.",
+  "url": "http://127.0.0.1:3027/docs/qa/interactive/r100-i07-i09-worlds.html",
+  "startedAt": "2026-10-06T02:28:52.919Z",
+  "htmlSha256": "9b0ef44e99468dfded21f4615939b4436b70d4cd7d43d0ee25aab2b2b8f9c950",
+  "scriptSha256": "94bda237b9764d2777adab9fe4cf0bfe1b677c596cab93fd8c8d45ebf0f3b7a9",
+  "checks": [
+    "32 world cards and 4 comparison pairs render with actual PNGs",
+    "I07/I08 filters, name/ID search, zero-match and reset",
+    "Modal opens, three grade PNGs load, native-size toggle, previous/next and Escape work",
+    "Sentinel and tendon repaired deep frames remain distinct from explicitly historical normal-grade views"
+  ],
+  "screenshots": [
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/01-neighbors.png",
+      "sha256": "e28c4f668cf639417f5f852a52dc62921209f86a5784cc742c755915282c3090"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/02-catalog.png",
+      "sha256": "11774a8ac8794971f8112793a8e669d173e29fc75243bdd64c66adc72550c909"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/03-three-grade-dialog.png",
+      "sha256": "28678ef8b7e8825884898f993bf4ca98a1f4b9a2324d0fff500154581457fb54"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/04-repaired-sentinel.png",
+      "sha256": "e9cecc98451e7779fd0bc8b272bf9e6264c81ab106bcb265b48995bf8d8f1036"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/failure.png",
+      "sha256": "444b487fe70f784678527fe170f9e4a4f84f36e3faedf430ea1aa3f07ef464a3"
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "requestFailures": [],
+  "httpErrors": [],
+  "status": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'Failed to load resource: the server responded with a status of 404 (Not Found)'\n+ ]\n- []\n",
+  "stack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'Failed to load resource: the server responded with a status of 404 (Not Found)'\n+ ]\n- []\n\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/gallery-browser/check.mjs:99:10",
+  "browserClosed": true,
+  "endedAt": "2026-10-06T02:28:55.011Z"
+}

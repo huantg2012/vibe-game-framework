@@ -1,0 +1,446 @@
+{
+  "status": "bounded-art-pass",
+  "source": "b05-source/source-snapshot.json",
+  "server": "http://127.0.0.1:3094",
+  "readScope": {
+    "normalWalkFramesPersonallyViewed": 12,
+    "deepFramesPersonallyViewed": 21,
+    "gradeShortCases": 12,
+    "deepCases": 4,
+    "deepGrade": "medium",
+    "seed": 20261005
+  },
+  "method": "Actual keyboard from spawn, normal finite FOV/camera; full conservative body geometry used only as macro route diagnostic, no hidden loot/enemy selection. Gym training fixture, enemies active; no HP/time/position/light edits. Not first-time play or full search-return.",
+  "errors": [],
+  "evidenceSha256": {
+    "b05-normal/report.json": "a35477be6df63e5d267c0687c611803b1f820d9a30c3ac860f5cde2b1ef75b08",
+    "b05-deep/report.json": "112831ebcbb3d0ce6f80b0e115702c7f5a3ab66766faa92e924191fcd624d6c2",
+    "b05-source/source-snapshot.json": "c89e6bd7cd2b6746a913ac0356bd73435d17825262d2a7a53136eb165e2299b2"
+  },
+  "worlds": {
+    "tendon-shelves": {
+      "conclusion": "bounded-art-pass",
+      "basis": "First foot opening has actual 208px approach into turning pocket. Thick connected mass and continuous strained fibre layers differ from low fractured slabs. Unequal second mass is visible, not certified as crossed.",
+      "frames": [
+        "01-front-foot-north.png",
+        "02-inner-foot-west.png",
+        "04-rear-mass-south.png"
+      ],
+      "limits": "Second requested foot795,479 projects to780,412 using conservative body macro route; no claim of crossing the second foot. Fibrous interpretation not literal anatomy.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 482.9072367487012,
+          "y": 106.61562235083521
+        },
+        "hp": 100,
+        "chaos": 33.6990373679988,
+        "elapsedMs": 31765.4
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-front-foot",
+            "x": 519,
+            "y": 492,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 516,
+            "y": 492
+          },
+          "length": 416
+        },
+        {
+          "requested": {
+            "label": "02-inner-foot",
+            "x": 474,
+            "y": 318,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 476,
+            "y": 316
+          },
+          "length": 208
+        },
+        {
+          "requested": {
+            "label": "03-second-foot",
+            "x": 795,
+            "y": 479,
+            "faces": [
+              [
+                "s",
+                "south"
+              ],
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 780,
+            "y": 412
+          },
+          "length": 464
+        },
+        {
+          "requested": {
+            "label": "04-rear-mass",
+            "x": 480,
+            "y": 100,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 484,
+            "y": 100
+          },
+          "length": 632
+        }
+      ]
+    },
+    "felt-basin": {
+      "conclusion": "bounded-art-pass",
+      "basis": "Low cavities have folded compressed skin and pale cut, and actual thick folded divider interrupts central connection. Actual route enters left cavity, moves around divider and reaches right cavity.",
+      "frames": [
+        "01-left-mouth-north.png",
+        "02-thick-divider-north.png",
+        "03-right-mouth-south.png",
+        "04-rear-cavity-south.png"
+      ],
+      "limits": "Compressed membrane identity supported; literal wool fuzz not claimed. Right exterior partly hidden by real light eater.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 405.1663738868175,
+          "y": 142.19984882746448
+        },
+        "hp": 100,
+        "chaos": 37.636252481999286,
+        "elapsedMs": 39131.8
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-left-mouth",
+            "x": 396,
+            "y": 424,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 396,
+            "y": 428
+          },
+          "length": 456
+        },
+        {
+          "requested": {
+            "label": "02-thick-divider",
+            "x": 555,
+            "y": 430,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 556,
+            "y": 428
+          },
+          "length": 176
+        },
+        {
+          "requested": {
+            "label": "03-right-mouth",
+            "x": 810,
+            "y": 388,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 812,
+            "y": 388
+          },
+          "length": 576
+        },
+        {
+          "requested": {
+            "label": "04-rear-cavity",
+            "x": 400,
+            "y": 130,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 404,
+            "y": 132
+          },
+          "length": 672
+        }
+      ]
+    },
+    "cork-shelves": {
+      "conclusion": "bounded-art-pass",
+      "basis": "Near-vertical long western shore and short northern cross-shore make an asymmetric L beside large eastern court. Red-brown compact granular surface and pale coarse cuts differ from smooth white glazed shore.",
+      "frames": [
+        "01-south-end-north.png",
+        "02-quiet-court-north.png",
+        "03-corner-west.png",
+        "04-back-shore-south.png"
+      ],
+      "limits": "Quiet court is composition, not enemy-free safety. No elevated walking.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 678.2459740514623,
+          "y": 108.4003993951594
+        },
+        "hp": 100,
+        "chaos": 35.53777386599898,
+        "elapsedMs": 28298.800000000003
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-south-end",
+            "x": 340,
+            "y": 710,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 340,
+            "y": 708
+          },
+          "length": 264
+        },
+        {
+          "requested": {
+            "label": "02-quiet-court",
+            "x": 600,
+            "y": 430,
+            "faces": [
+              [
+                "a",
+                "west"
+              ],
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 596,
+            "y": 428
+          },
+          "length": 528
+        },
+        {
+          "requested": {
+            "label": "03-corner",
+            "x": 575,
+            "y": 330,
+            "faces": [
+              [
+                "w",
+                "north"
+              ],
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 572,
+            "y": 340
+          },
+          "length": 96
+        },
+        {
+          "requested": {
+            "label": "04-back-shore",
+            "x": 675,
+            "y": 100,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 676,
+            "y": 100
+          },
+          "length": 520
+        }
+      ]
+    },
+    "lacquer-court": {
+      "conclusion": "bounded-art-pass",
+      "basis": "Wide low layered front edge and separately raised torn fold to north have clear height and route roles. Broad southern floor remains open; north ridge is not a plain recolored shore.",
+      "frames": [
+        "02-layer-end-north.png",
+        "03-north-ridge-south.png",
+        "04-east-end-west.png"
+      ],
+      "limits": "First southern frame mostly floor, not sufficient alone to sign identity. Shared terrace family remains recognizable, must retain I09 comparisons.",
+      "finalState": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 937.3990306896541,
+          "y": 387.8829822398211
+        },
+        "hp": 100,
+        "chaos": 34.00142580199981,
+        "elapsedMs": 38448.4
+      },
+      "requestedAndActual": [
+        {
+          "requested": {
+            "label": "01-south-floor",
+            "x": 550,
+            "y": 600,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 548,
+            "y": 596
+          },
+          "length": 360
+        },
+        {
+          "requested": {
+            "label": "02-layer-end",
+            "x": 550,
+            "y": 500,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 548,
+            "y": 500
+          },
+          "length": 96
+        },
+        {
+          "requested": {
+            "label": "03-north-ridge",
+            "x": 430,
+            "y": 110,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 428,
+            "y": 108
+          },
+          "length": 1040
+        },
+        {
+          "requested": {
+            "label": "04-east-end",
+            "x": 950,
+            "y": 390,
+            "faces": [
+              [
+                "a",
+                "west"
+              ]
+            ]
+          },
+          "actual": {
+            "x": 948,
+            "y": 388
+          },
+          "length": 824
+        }
+      ]
+    }
+  },
+  "notApproved": [
+    "human acceptance",
+    "all seeds or routes",
+    "second tendon foot actual crossing",
+    "full expedition balance"
+  ],
+  "independentReview": {
+    "reviewer": "root",
+    "frames": [
+      "tendon-shelves/02-inner-foot-west.png",
+      "felt-basin/02-thick-divider-north.png",
+      "felt-basin/01-left-mouth-north.png",
+      "cork-shelves/03-corner-west.png",
+      "lacquer-court/03-north-ridge-south.png",
+      "lacquer-court/02-layer-end-north.png"
+    ],
+    "conclusion": "Bounded pass, distinct fibrous mass/pressed fold divider/dark coarse shore/wide path/low layered lacquer with local high broken wall. Does not certify second tendon foot crossing."
+  }
+}

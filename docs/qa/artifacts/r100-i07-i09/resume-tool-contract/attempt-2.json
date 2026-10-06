@@ -1,0 +1,26 @@
+{
+  "status": "pass",
+  "attempt": 2,
+  "recordedAt": "2026-10-05T15:06:12.024011+00:00",
+  "command": "node tools/world-study/check-r100-library-resume.mjs",
+  "exitCode": 0,
+  "stdout": "docs/qa/artifacts/r100-i07-i09/resume-dispatcher/attempt-2.log",
+  "previousAttempt": "docs/qa/artifacts/r100-i07-i09/resume-tool-contract/attempt-1.json",
+  "change": "Build the dispatcher once under a temporary node_modules child so its external esbuild import resolves; each of12 probes is then one directly killable Node process. Invalid cases must raise AssertionError rather than merely fail to start.",
+  "timeoutMsUnchanged": 20000,
+  "checks": [
+    "11 malformed resume manifests rejected before any fixture worker",
+    "Exact failed and missing case identities/cohorts dispatched by original executor",
+    "Previously successful case not rerun; changed or missing planned seed/cohort rejected",
+    "Original failure log byte-identical; copied executor SHA matches original",
+    "Synthetic positive aggregate reports3 total successful cases and1 retained original failure/retry",
+    "tsc --noEmit PASS",
+    "node --check PASS",
+    "git diff --check PASS"
+  ],
+  "sources": {
+    "tools/world-study/check-r100-library.ts": "0132952581cf7b60af9dfca6b3129e7622700622f83e84120aed084f229a31bd",
+    "tools/world-study/check-r100-library-resume.mjs": "303994c82dd43413ba84644091db16b29b188f6355b502d2dc4a719d6f31b1d5"
+  },
+  "limitations": "Synthetic dispatcher contract only. No real world qualification case was run by this check, and no earlier failure was removed."
+}

@@ -1,0 +1,859 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-06T03:13:05.032Z",
+  "status": "pass",
+  "plan": "docs/qa/artifacts/r100-i07-i09/b02-play-complete/plan.json",
+  "planSha256": "2cc1064834c5c2c24e510cfce1202b5b9f24b863b7aed2e87597be168f5d7614",
+  "method": "Both originally fixed seeds must retain a completed real process; at least one must actually collect a non-entry remain and extract to a settled base. Late/adjacent pickups require entry-to-terminal node changes and matching settled loot receipts. Empty returns and deaths never count as successful searches. All attempts, including original environment errors, remain in the record.",
+  "limitations": "Controlled world/seed with copies of an actually earned save, geometry-assisted expert navigation. Does not establish novice usability, natural continuous economy, visual acceptance, performance, or source continuity to a later catalog; those need separate evidence.",
+  "expectedGradePairs": 12,
+  "qualifiedGradePairs": 12,
+  "expectedSeeds": 24,
+  "scheduledSeeds": 24,
+  "completedSeedProcesses": 24,
+  "actualAttempts": 24,
+  "searchAndExtractAttempts": 23,
+  "emptyReturns": 1,
+  "deaths": 0,
+  "invalidOrIncompleteProcesses": 0,
+  "sources": [
+    {
+      "folder": "docs/qa/artifacts/r100-i07-i09/b02-play-v13",
+      "policy": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/policy-freeze.json",
+      "policySha256": "b465d855f7796f0471bd50c42d3afc6cbbdc83b76a05b3209488b4016d8ba9c7",
+      "reportSha256": "90f744e1828c10f9370ada186b4411eae304fdf00bfb5f7d2d1872f72a8ba22f",
+      "sourceManifest": "docs/qa/artifacts/r100-i07-i09/b02-refined-source/source-snapshot.json",
+      "sourceManifestSha256": "9a178b2511864fea645d11ca12ad37a3df73d3fcb26711e2b1fc9f47602489d9",
+      "harnessSha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f",
+      "status": "completed-fixed-attempts-pending-review",
+      "planned": 24,
+      "attempted": 24
+    }
+  ],
+  "pairs": [
+    {
+      "world": "bleached-court",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/007-bleached-court-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/008-bleached-court-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "bleached-court",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/009-bleached-court-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/010-bleached-court-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "bleached-court",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/011-bleached-court-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/012-bleached-court-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "monolith-sill",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/001-monolith-sill-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/002-monolith-sill-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "monolith-sill",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/003-monolith-sill-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/004-monolith-sill-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "monolith-sill",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/005-monolith-sill-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/006-monolith-sill-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "satin-fan",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/019-satin-fan-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/020-satin-fan-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "satin-fan",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/021-satin-fan-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/022-satin-fan-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "satin-fan",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": false,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/023-satin-fan-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/024-satin-fan-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/013-split-rib-causeway-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/014-split-rib-causeway-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/015-split-rib-causeway-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/016-split-rib-causeway-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/017-split-rib-causeway-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b02-play-v13/018-split-rib-causeway-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    }
+  ],
+  "attempts": [
+    {
+      "key": "monolith-sill/low/20261005",
+      "world": "monolith-sill",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/001-monolith-sill-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 602.3420954905941,
+          "elapsedMs": 21332.499999999804
+        }
+      ],
+      "problems": [],
+      "reportSha256": "6ba39cc6ea7687c8601644550373e08ced6a2de4632c37605c776a8c2edbcd33",
+      "outcome": "extract",
+      "elapsedMs": 38498.44999999968
+    },
+    {
+      "key": "monolith-sill/low/3075192741",
+      "world": "monolith-sill",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/002-monolith-sill-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 601.0657202003788,
+          "elapsedMs": 18915.909999999916
+        }
+      ],
+      "problems": [],
+      "reportSha256": "2e9428eb4bcc9da0dbb39d20c82621f914324ed10a5af754b72f5ecf77c5b099",
+      "outcome": "extract",
+      "elapsedMs": 34331.979999999676
+    },
+    {
+      "key": "monolith-sill/medium/20261005",
+      "world": "monolith-sill",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/003-monolith-sill-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 594.6427498927402,
+          "elapsedMs": 17899.25999999993
+        }
+      ],
+      "problems": [],
+      "reportSha256": "a981b6e9308ada3f096e8efd00fa1ee67eddecc01c261451e603d8413bdbb7fb",
+      "outcome": "extract",
+      "elapsedMs": 34098.63999999965
+    },
+    {
+      "key": "monolith-sill/medium/3075192741",
+      "world": "monolith-sill",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/004-monolith-sill-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.8987379221053,
+          "elapsedMs": 11282.90999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "772023d4aeaf48ec7e435fc6c60c867a7e20447d07efcc0393814a0e3c7488a2",
+      "outcome": "extract",
+      "elapsedMs": 18282.589999999924
+    },
+    {
+      "key": "monolith-sill/severe/20261005",
+      "world": "monolith-sill",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/005-monolith-sill-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 641.2487816752559,
+          "elapsedMs": 23482.409999999778
+        }
+      ],
+      "problems": [],
+      "reportSha256": "aa50e4566864eb7912565bfb2b16c233fd2d0740a906cdf49dc75e055e13e17f",
+      "outcome": "extract",
+      "elapsedMs": 34165.30999999962
+    },
+    {
+      "key": "monolith-sill/severe/3075192741",
+      "world": "monolith-sill",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/006-monolith-sill-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 322.49030993194197,
+          "elapsedMs": 9466.299999999994
+        }
+      ],
+      "problems": [],
+      "reportSha256": "4a6abe7c052967e14e83e210ed142ae6801caf0aaac81043d24efe61dcd90b9f",
+      "outcome": "extract",
+      "elapsedMs": 16965.99999999997
+    },
+    {
+      "key": "bleached-court/low/20261005",
+      "world": "bleached-court",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/007-bleached-court-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 619.728973019658,
+          "elapsedMs": 23365.70999999982
+        }
+      ],
+      "problems": [],
+      "reportSha256": "34f45f9223c9c7a72b6a83f044f0afa0fb149fd48b375462706522b123bd8555",
+      "outcome": "extract",
+      "elapsedMs": 38348.439999999784
+    },
+    {
+      "key": "bleached-court/low/3075192741",
+      "world": "bleached-court",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/008-bleached-court-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 481.66378315169186,
+          "elapsedMs": 33115.33999999966
+        }
+      ],
+      "problems": [],
+      "reportSha256": "a237dff45f6be47045a50e21c218fbdba4e5ed7a591645d70f70ea39a7c93d36",
+      "outcome": "extract",
+      "elapsedMs": 45231.52999999985
+    },
+    {
+      "key": "bleached-court/medium/20261005",
+      "world": "bleached-court",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/009-bleached-court-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 336.0952246016001,
+          "elapsedMs": 7399.689999999996
+        }
+      ],
+      "problems": [],
+      "reportSha256": "1dfc27e2087decba23a7b2027fc2ee4a22d62f0435f6cdd696ca3e92bacd22a6",
+      "outcome": "extract",
+      "elapsedMs": 13016.13999999999
+    },
+    {
+      "key": "bleached-court/medium/3075192741",
+      "world": "bleached-court",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/010-bleached-court-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 336.0952246016001,
+          "elapsedMs": 7233.029999999995
+        }
+      ],
+      "problems": [],
+      "reportSha256": "56612096044d48590d1ca8c5e24c7759955838f0510e6ffa71e0f74b7c810559",
+      "outcome": "extract",
+      "elapsedMs": 12932.80999999999
+    },
+    {
+      "key": "bleached-court/severe/20261005",
+      "world": "bleached-court",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/011-bleached-court-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-deep-1",
+          "distanceFromEntry": 876.5386471799176,
+          "elapsedMs": 36365.22999999972
+        }
+      ],
+      "problems": [],
+      "reportSha256": "5f260f6fa383645fe16dc1dc30b5796dcaaff2073f8dea064cf6553405e5a60f",
+      "outcome": "extract",
+      "elapsedMs": 61230.86000000003
+    },
+    {
+      "key": "bleached-court/severe/3075192741",
+      "world": "bleached-court",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/012-bleached-court-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 615.1682696628621,
+          "elapsedMs": 19599.239999999885
+        }
+      ],
+      "problems": [],
+      "reportSha256": "bedba61d5d5b53ae6aeddaa6fc966a54391b0d4bb9abf7cf5038f120c9d45a80",
+      "outcome": "extract",
+      "elapsedMs": 33965.30999999968
+    },
+    {
+      "key": "split-rib-causeway/low/20261005",
+      "world": "split-rib-causeway",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/013-split-rib-causeway-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 789.7341324775067,
+          "elapsedMs": 34148.6299999997
+        }
+      ],
+      "problems": [],
+      "reportSha256": "c23a789620c36035dc7f2150c24ae8478e30fdfc6d23dd1dd3498558e8a828d3",
+      "outcome": "extract",
+      "elapsedMs": 54014.510000000024
+    },
+    {
+      "key": "split-rib-causeway/low/3075192741",
+      "world": "split-rib-causeway",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/014-split-rib-causeway-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 532.8864794681883,
+          "elapsedMs": 16049.359999999988
+        }
+      ],
+      "problems": [],
+      "reportSha256": "13dae9cd75a83cc9568e9adf1b5458478b5808337baaafabb38bef6535e5809d",
+      "outcome": "extract",
+      "elapsedMs": 29148.829999999718
+    },
+    {
+      "key": "split-rib-causeway/medium/20261005",
+      "world": "split-rib-causeway",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/015-split-rib-causeway-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 522.945503852935,
+          "elapsedMs": 30332.119999999682
+        }
+      ],
+      "problems": [],
+      "reportSha256": "9490c1b92379c058ba8c126b452492da637fdc68d61ff20932272c3e8a844e5e",
+      "outcome": "extract",
+      "elapsedMs": 46114.819999999876
+    },
+    {
+      "key": "split-rib-causeway/medium/3075192741",
+      "world": "split-rib-causeway",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/016-split-rib-causeway-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 459.63463751114324,
+          "elapsedMs": 17065.969999999972
+        }
+      ],
+      "problems": [],
+      "reportSha256": "288ec9773e7b96e602e0cc5d0b676df92930979063978c053bffba825127e3c1",
+      "outcome": "extract",
+      "elapsedMs": 30598.78999999973
+    },
+    {
+      "key": "split-rib-causeway/severe/20261005",
+      "world": "split-rib-causeway",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/017-split-rib-causeway-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 610.5735008989499,
+          "elapsedMs": 85229.91000000032
+        }
+      ],
+      "problems": [],
+      "reportSha256": "c0c381186e078e03ae4a150e528a4932adbf3a3c363afb0fa63a882a935afbfb",
+      "outcome": "extract",
+      "elapsedMs": 100162.6400000007
+    },
+    {
+      "key": "split-rib-causeway/severe/3075192741",
+      "world": "split-rib-causeway",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/018-split-rib-causeway-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 324.86304806795124,
+          "elapsedMs": 9332.969999999994
+        }
+      ],
+      "problems": [],
+      "reportSha256": "2a49678a2d4df455edc259e6b5689d7388c3059dfdc288af717e9178151fbf38",
+      "outcome": "extract",
+      "elapsedMs": 17315.969999999965
+    },
+    {
+      "key": "satin-fan/low/20261005",
+      "world": "satin-fan",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/019-satin-fan-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 566.87211961782,
+          "elapsedMs": 11766.17999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "b5c57e0a73dca14cf5f5451db51f341d5262faf79c3e98638bb088f7e4ad4d70",
+      "outcome": "extract",
+      "elapsedMs": 22965.73999999979
+    },
+    {
+      "key": "satin-fan/low/3075192741",
+      "world": "satin-fan",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/020-satin-fan-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 821.1991232338231,
+          "elapsedMs": 21415.809999999823
+        }
+      ],
+      "problems": [],
+      "reportSha256": "4dfd3e2cfd77ba41a00ae4ea0fadb9867b80b7914cb58bc23710f49ff5b2478f",
+      "outcome": "extract",
+      "elapsedMs": 42348.32999999981
+    },
+    {
+      "key": "satin-fan/medium/20261005",
+      "world": "satin-fan",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/021-satin-fan-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 576.2777108304641,
+          "elapsedMs": 42098.329999999885
+        }
+      ],
+      "problems": [],
+      "reportSha256": "b7bc7bc2456893b77af13e94901a90ebbc09f14a7453f5a8e3fcd3c6898198be",
+      "outcome": "extract",
+      "elapsedMs": 51197.95999999998
+    },
+    {
+      "key": "satin-fan/medium/3075192741",
+      "world": "satin-fan",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/022-satin-fan-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 592.4862867611367,
+          "elapsedMs": 11699.539999999992
+        }
+      ],
+      "problems": [],
+      "reportSha256": "8c09765a2bc049db6d1c66b619394eac20b518255237d58d0b51f819551f259e",
+      "outcome": "extract",
+      "elapsedMs": 21132.479999999865
+    },
+    {
+      "key": "satin-fan/severe/20261005",
+      "world": "satin-fan",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/023-satin-fan-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": false,
+      "collected": [],
+      "problems": [],
+      "reportSha256": "03d5b42e4594fdf8c1ff803192e28385bf8ffe13ec6f87047a5a642112727ccc",
+      "outcome": "extract",
+      "elapsedMs": 61064.18999999984
+    },
+    {
+      "key": "satin-fan/severe/3075192741",
+      "world": "satin-fan",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b02-play-v13/024-satin-fan-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 566.4203386178854,
+          "elapsedMs": 19482.539999999888
+        }
+      ],
+      "problems": [],
+      "reportSha256": "30441a0c827b568215788bc92b32efcd11275ae6c7df9812cf008488b42d5816",
+      "outcome": "extract",
+      "elapsedMs": 36948.50999999963
+    }
+  ]
+}

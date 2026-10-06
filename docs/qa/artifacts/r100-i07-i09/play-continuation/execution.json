@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "status": "stopped-on-failure",
+  "startedAt": "2026-10-06T02:29:44.262029+00:00",
+  "pid": 52077,
+  "fixedFiles": [
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/play-continuation/continue.py",
+      "sha256": "e4b832221d4859343be1bbca0096911927de0142b7a74b12c119c13079d8c491"
+    },
+    {
+      "path": "tools/qa/r100-i07-i09-journey.mjs",
+      "sha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f"
+    },
+    {
+      "path": "tools/qa/r100-i07-i09-coverage.mjs",
+      "sha256": "0c849954419185bd9b5eb7d159f289f09889a42cc704b6df86299bcca1b11880"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/play-queue/plan.json",
+      "sha256": "f1612fe86fa65daa159ad52f3c6b59ab1e59d2beeb65754987af34ea3e2aba71"
+    },
+    {
+      "path": "tools/qa/r100-i07-i09-play-queue.mjs",
+      "sha256": "b7a885b68b52e0e6a48ee98e200e8b4912743b46bc955b261f8bc10f4ef69133"
+    },
+    {
+      "path": "tools/qa/r100-play-qualification.mjs",
+      "sha256": "870b264273c33d85050818088d916fa836cbb40b0a27dd8c0f74ad74c30f7256"
+    }
+  ],
+  "stages": [
+    {
+      "stage": "recheck-077-078",
+      "startedAt": "2026-10-06T02:29:44.262770+00:00",
+      "argv": [
+        "node",
+        "tools/qa/r100-i07-i09-coverage.mjs"
+      ],
+      "status": "pass",
+      "pid": 52094,
+      "exitCode": 0,
+      "endedAt": "2026-10-06T02:32:37.735139+00:00"
+    },
+    {
+      "stage": "old20-qualification",
+      "startedAt": "2026-10-06T02:32:37.781120+00:00",
+      "argv": [
+        "node",
+        "tools/qa/r100-play-qualification.mjs",
+        "--plan",
+        "docs/qa/artifacts/r100-i07-i09/play-continuation/old20-summary-plan.json",
+        "--output",
+        "docs/qa/artifacts/r100-i07-i09/play-continuation/old20-summary.json"
+      ],
+      "status": "pass",
+      "pid": 54525,
+      "exitCode": 0,
+      "endedAt": "2026-10-06T02:32:37.977466+00:00"
+    },
+    {
+      "stage": "existing-b01-b02",
+      "pid": 97338,
+      "parentPid": 97333,
+      "status": "pass",
+      "startedAt": "2026-10-06T02:32:38.069120+00:00",
+      "endedAt": "2026-10-06T03:12:13.883874+00:00"
+    }
+  ],
+  "method": "Serial exact retries, independent old20 qualification, existing stopped queue, then approved144. No new source enablement or final acceptance.",
+  "failure": "AssertionError('Changed scheduling input: tools/qa/r100-play-qualification.mjs')",
+  "endedAt": "2026-10-06T03:12:13.884610+00:00"
+}

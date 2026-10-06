@@ -1,0 +1,223 @@
+{
+  "scope": "Read-only static reconstruction of frozen3094 medium seed20261005. No browser traversal, no runtime/source changes.",
+  "metadata": {
+    "world": "r100-tendon-shelves",
+    "space": "tendon-shelves-medium",
+    "contentFragmentTypeId": "frag-outdoor",
+    "requestedSeed": 20261005,
+    "effectiveSeed": 20261005,
+    "attempt": 0,
+    "rejected": [],
+    "signature": "22a6b04e",
+    "bodySize": 20,
+    "supportTileSize": 8,
+    "hostTileSize": 32,
+    "reachableBodySeats": 7278,
+    "extractionRoutePx": 91.88225099390857
+  },
+  "instance": {
+    "id": 2,
+    "family": "fibre-knot",
+    "role": "solid",
+    "x": 800,
+    "y": 490,
+    "rotation": 2.75,
+    "length": 280,
+    "width": 220,
+    "height": 72,
+    "thickness": 13,
+    "fold": 0.54,
+    "branches": 2,
+    "opening": 0.88,
+    "distortion": 0.7,
+    "constructionVersion": 3,
+    "shapeProfile": "monolith-buttress"
+  },
+  "points": [
+    {
+      "label": "requested",
+      "x": 795,
+      "y": 479,
+      "nativeSupport": false,
+      "coarseGridSupport": false
+    },
+    {
+      "label": "coarse-route-goal",
+      "x": 780,
+      "y": 412,
+      "nativeSupport": true,
+      "coarseGridSupport": true
+    },
+    {
+      "label": "recorded-actual",
+      "x": 786.390280959375,
+      "y": 413.99990010000005,
+      "nativeSupport": true,
+      "coarseGridSupport": false
+    }
+  ],
+  "turn": [
+    {
+      "x": 749.6207490490922,
+      "y": 367.9920860205148,
+      "nativeSupport": true,
+      "fromPreviousFraction": null
+    },
+    {
+      "x": 795.3819019961668,
+      "y": 478.8159412185472,
+      "nativeSupport": false,
+      "fromPreviousFraction": 0.34295697448503853
+    },
+    {
+      "x": 634.9230090655711,
+      "y": 545.072289438832,
+      "nativeSupport": true,
+      "fromPreviousFraction": 0
+    }
+  ],
+  "requestedFromCornerFraction": 0,
+  "geometryOnlyRequested": true,
+  "nearbyTiles": [
+    {
+      "col": 98,
+      "row": 58,
+      "tile": 3
+    },
+    {
+      "col": 99,
+      "row": 58,
+      "tile": 3
+    },
+    {
+      "col": 100,
+      "row": 58,
+      "tile": 1
+    },
+    {
+      "col": 98,
+      "row": 59,
+      "tile": 1
+    },
+    {
+      "col": 99,
+      "row": 59,
+      "tile": 1
+    },
+    {
+      "col": 100,
+      "row": 59,
+      "tile": 1
+    },
+    {
+      "col": 98,
+      "row": 60,
+      "tile": 1
+    },
+    {
+      "col": 99,
+      "row": 60,
+      "tile": 1
+    },
+    {
+      "col": 100,
+      "row": 60,
+      "tile": 1
+    },
+    {
+      "col": 98,
+      "row": 61,
+      "tile": 1
+    },
+    {
+      "col": 99,
+      "row": 61,
+      "tile": 0
+    },
+    {
+      "col": 100,
+      "row": 61,
+      "tile": 0
+    }
+  ],
+  "passage": {
+    "scope": "2px local-frame search, full world-axis-aligned body, each diagonal/cardinal edge continuously swept. Starts outside front foot at local(0,132), ends outside side at local(174,12).",
+    "samples": [
+      {
+        "pass": false,
+        "reason": "disconnected",
+        "reached": 1455,
+        "start": {
+          "x": 749.6207490490922,
+          "y": 367.9920860205148,
+          "u": 0,
+          "v": 132
+        },
+        "end": {
+          "x": 634.5914542133233,
+          "y": 545.3173840735162,
+          "u": 174,
+          "v": 12
+        }
+      }
+    ]
+  },
+  "crossSections": [
+    {
+      "v": 20,
+      "fullBodyCenterIntervals": []
+    },
+    {
+      "v": 30,
+      "fullBodyCenterIntervals": []
+    },
+    {
+      "v": 40,
+      "fullBodyCenterIntervals": []
+    },
+    {
+      "v": 50,
+      "fullBodyCenterIntervals": []
+    },
+    {
+      "v": 60,
+      "fullBodyCenterIntervals": []
+    },
+    {
+      "v": 70,
+      "fullBodyCenterIntervals": [
+        [
+          -14,
+          -14
+        ]
+      ]
+    },
+    {
+      "v": 80,
+      "fullBodyCenterIntervals": [
+        [
+          -18,
+          -5.5
+        ]
+      ]
+    },
+    {
+      "v": 90,
+      "fullBodyCenterIntervals": [
+        [
+          -29.5,
+          -2.5
+        ]
+      ]
+    },
+    {
+      "v": 100,
+      "fullBodyCenterIntervals": [
+        [
+          -41.5,
+          17
+        ]
+      ]
+    }
+  ]
+}

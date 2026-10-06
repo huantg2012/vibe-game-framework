@@ -1,0 +1,13 @@
+{
+  "status": "invalid-for-canonical-six",
+  "cause": "QA local async function plan(target) shadowed capture plan. URL seed=undefined normalized by Gym to20261004, viewport undefined used default1280×720; output806×538. Original result lacked case seed field.",
+  "confirmedActualSeed": 20261004,
+  "evidence": "Each journey.jsonl records initial seed=undefined and redirected seed=20261004.",
+  "sourceUnchanged": true,
+  "rawReportPreserved": true,
+  "fix": "Rename route function planRoute; assert final URL, actual generated recipe requestedSeed/world/grade, actual runtime grade, Playwright and actual page viewport before movement.",
+  "newOutput": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed",
+  "originalScript": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/capture-invalid-shadowed.mjs",
+  "fixedScript": "docs/qa/artifacts/r100-i07-i09/gallery-browser/capture-current-shapes.mjs",
+  "fixedScriptSha256": "d885b859d6af2ca6e1c956ede668402b5d529c246db379983e19cb47c4250b08"
+}

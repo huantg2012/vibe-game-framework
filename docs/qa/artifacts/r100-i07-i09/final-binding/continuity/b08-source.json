@@ -1,0 +1,55 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b08-source/source-snapshot.json",
+    "sha256": "b9d215892a0b4487ed640cd9f493a17177e302ba222e3a341d94dc8b1640146e"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "quilted-scars",
+      "contentSha256": "d4a3dab8ac6d4b46a7743007f5e9bb6596c2c86115793cddc7285d39c5d4fb74",
+      "enabledBefore": false,
+      "enabledAfter": true
+    },
+    {
+      "worldId": "shell-causeway",
+      "contentSha256": "c09ace820a8d44ad7e490efcb1772a65c8af337d7e2fb267277c759cf3c0b47c",
+      "enabledBefore": false,
+      "enabledAfter": true
+    },
+    {
+      "worldId": "silt-colonnade",
+      "contentSha256": "ffe3b4a98ceb2bff7122920c0a36bb60d92497f086bad6cd59cc8d8da3f6192f",
+      "enabledBefore": false,
+      "enabledAfter": true
+    },
+    {
+      "worldId": "splinter-rotunda",
+      "contentSha256": "7c2bf70c00e2301ead2fb7f94586e4898158191eff57412fd93f75a8354b12cd",
+      "enabledBefore": false,
+      "enabledAfter": true
+    }
+  ],
+  "unchangedFiles": 1367,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-package-manifest.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

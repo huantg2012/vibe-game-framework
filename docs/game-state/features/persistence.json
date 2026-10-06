@@ -3,7 +3,7 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "正式出发先存意图，运行保存版本化世界身份和完整帧；继续同一趟不重抽、不离线推进，已结算回执阻止重复归来收益。I31出发账本可选保存整趟被动收益事实，随同一库存事务持久化；旧active记录可由仍在的已消费绑定派生，旧settled记录缺字段保持历史未知。 本轮新Rift冻结v2条件/支流及后备候选，身份涵盖最终布局与Host；v1和无generation旧局原样恢复，未知版本或篡改签名拒绝。 冷续局异步预热前只读快照，恢复前复核原始字节；取消/失焦/销毁不改存档，损坏出行仍可明确放弃本趟保留基地。旧v1/v2/无generation金样保持。",
+    "summary": "正式出发冻结身份，继续同趟不重抽、不离线推进；库存schema4保存最近8次世界，旧1–3迁移为空历史。beginRun与访问记录同事务，拒写回滚。修订4生成/校验/表面独立封存，旧修订1–3及v1/v2保留。156正式进入/冷续、174跨运行时身份和48实际存档接续通过限定E161验证。",
     "delivery": "production",
     "work": "settled",
     "entryPoints": [
@@ -135,6 +135,30 @@
       {
         "path": "tools/recovery/check-async-destroy.ts",
         "role": "test"
+      },
+      {
+        "path": "src/generation/legacy-r100-v4/manifest.json",
+        "role": "code"
+      },
+      {
+        "path": "tools/recovery/freeze-native-r100-revision4.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-r100-revision4.ts",
+        "role": "test"
+      },
+      {
+        "path": "tools/inventory/check-world-history.ts",
+        "role": "test"
+      },
+      {
+        "path": "docs/qa/rift-r100-i07-i09.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/art/rift-r100-i07-i09.md",
+        "role": "art"
       }
     ],
     "dependsOn": [],
@@ -150,12 +174,15 @@
       "COH-E101",
       "COH-E102",
       "COH-E120",
-      "COH-E129"
+      "COH-E129",
+      "COH-E160",
+      "COH-E161"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",
       "最终交互站位版本恢复20组通过，含4份不可变v1金样、3份v2冷JSON及生产套件5次随机新出击冷恢复；隔离浏览器一趟真实新建/出击/暂停/刷新同身份同位置/搜取/撤离/首归通过。开发中v2算法变化曾使测试entry签名失配，中间失败保留，不代表已发布v1迁移；未穷尽所有在途异常与长期恢复组合。",
-      "生产烟测发现既有v2精确签名会受不同V8运行时的atan2末位差异影响（R100-P05）。当前浏览器DEV与dist等价不代表跨引擎/升级后的旧档恢复保证，冻结执行器与严格签名未放宽。"
+      "生产烟测发现既有v2精确签名会受不同V8运行时的atan2末位差异影响（R100-P05）。当前浏览器DEV与dist等价不代表跨引擎/升级后的旧档恢复保证，冻结执行器与严格签名未放宽。",
+      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14及长期收益I13独立保留。"
     ]
   },
   {

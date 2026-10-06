@@ -1,0 +1,58 @@
+{
+  "createdAt": "2026-10-05T15:52:32.900635+00:00",
+  "status": "offline-controller-contract-pass-browser-pending",
+  "policyRevision": 14,
+  "sourceFiles": [
+    {
+      "file": "tools/qa/r100-i09-journey.mjs",
+      "sha256": "ed743a996c3be604b96a57476d8488cbde02ef8b9e09e3190f4e356ee37a0298",
+      "copy": "docs/qa/artifacts/r100-i09/controller-v14/sources/tools/qa/r100-i09-journey.mjs"
+    },
+    {
+      "file": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "180f8ce4147b0085bb0d9202c8a34c8fc96f5df275f410d840da79abddcddad9",
+      "copy": "docs/qa/artifacts/r100-i09/controller-v14/sources/tools/qa/r100-i09-costed-encounters.mjs"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c",
+      "copy": "docs/qa/artifacts/r100-i09/controller-v14/sources/tools/qa/r100-i09-tool-slots.mjs"
+    },
+    {
+      "file": "tools/qa/check-r100-i09-tool-slots.mjs",
+      "sha256": "34d7fba9ca80ae20e18ae75f6c2a8741fa81a79b5c12bc9ad8b0f781c25f2147",
+      "copy": "docs/qa/artifacts/r100-i09/controller-v14/sources/tools/qa/check-r100-i09-tool-slots.mjs"
+    },
+    {
+      "file": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "b0c2db1fda62c7c8b33d1eef356288377c0277c105c2544cb44dbf56e76e6664",
+      "copy": "docs/qa/artifacts/r100-i09/controller-v14/sources/tools/qa/r100-i09-continuous.mjs"
+    }
+  ],
+  "scope": "Only runtime Q/F/G bindings and true last passive slot. Existing visible threat, cooldown, search, economy, return movement and risk policies unchanged. No runtime or balance changes.",
+  "provenance": [
+    {
+      "file": "tools/qa/r100-i07-i09-journey.mjs",
+      "sha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f"
+    },
+    {
+      "file": "tools/world-study/r100-p13-costed-encounters.mjs",
+      "sha256": "8850a30414e72f0465304fc3c90e38a0e08406b9e442b9b8ea7bfaea80ae3715"
+    }
+  ],
+  "checks": {
+    "nodeSyntax": "pass all four runtime/orchestration mjs files",
+    "slotContract": "pass: 3/4-slot equipment labels, no item mutation, missing or malformed binding rejected; actual copied encounter policy mock calls Q/F/G, refuses both passive positions and exhausted G, retains 8000ms cooldown, handles G last use 1->0",
+    "continuousSelfCheck": "pass: original byte/identity/history/grade/resource guards",
+    "returnPolicySelfCheck": "pass: existing threats/evasion bounds unchanged",
+    "typecheck": "pass tsc --noEmit",
+    "diffWhitespace": "pass",
+    "lint": "No configured lint script",
+    "devSmoke": "User running 3027 HTTP200; production runtime unchanged. Previous own npm run dev smoke retained in I09 implementation record."
+  },
+  "limitations": [
+    "Controlled offline public-scene mock tests do not claim real game ability execution, game success or visual review.",
+    "Natural 48 and formal 156 await final qualified 52-world source and allocated single-browser window.",
+    "Original policy13 coverage and original P13 source bytes unchanged; previous failures and empty returns retained."
+  ]
+}

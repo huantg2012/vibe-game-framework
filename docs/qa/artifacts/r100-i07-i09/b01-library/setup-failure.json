@@ -1,0 +1,12 @@
+{
+  "stage": "before any qualification case",
+  "worlds": [
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues"
+  ],
+  "error": "Cannot resolve tsconfig at path: /private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-iagw9u/tools/contam-preview/tsconfig.json",
+  "cause": "Frozen browser root omits QA tooling; first launch exited before world generation.",
+  "correction": "Copied the exact existing QA script, CPU Phaser stub and tsconfig under tools/ in the frozen directory; no captured runtime source changed."
+}

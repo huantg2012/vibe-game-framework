@@ -10,6 +10,7 @@ import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { collectI09SearchReceipts } from './r100-i09-search-receipts.mjs';
+import { verifyServedSourceFile } from './r100-i09-final-probe.mjs';
 
 const ROUNDS = 12;
 const GRADES = ['low', 'medium', 'severe'];
@@ -19,6 +20,7 @@ const HARNESS = 'tools/qa/r100-i09-journey.mjs';
 const REVIEW_POLICY = 'tools/qa/r100-i09-review-policy.json';
 const REVIEW_TOOL = 'tools/qa/r100-i09-review-continuous.mjs';
 const DEPENDENCIES = ['tools/qa/r100-i09-costed-encounters.mjs', 'tools/qa/r100-i09-tool-slots.mjs', 'tools/qa/r100-i09-search-receipts.mjs', 'tools/qa/r100-observed-searches.mjs', 'tools/qa/i27-journey-driver.mjs',
+  'tools/qa/r100-i09-final-probe.mjs', 'package-lock.json',
   'src/systems/last-light-locomotion.ts', 'src/systems/last-light-layout.ts', 'tools/contam-preview/tsconfig.json', 'tools/contam-preview/phaser-stub.ts'];
 const ANCHORS = ['src/generated/r100-native-worlds.ts', 'src/generated/r100-world-appearance.ts', 'src/generated/r100-world-selection.ts',
   'src/generation/world-study/native-volume-expansion.ts', 'src/generation/world-study/r100-package.ts',
@@ -135,7 +137,7 @@ function selfCheck() {
   assert.throws(() => verifyJourney(refilled, 'low', 0, null, initial), 'earned starting resources cannot be refilled');
   console.log('PASS I09 orchestration: origin-only byte preservation, fixed/alternating plans, empty or controlled reports rejected, one-trip accounting, duplicate history, silent grade downgrade and resource refill rejected');
 }
-async function verifySources(source, gameUrl) {
+async function verifySources(source, gameUrl, failureDirectory) {
   const url = new URL(gameUrl);
   assert(['127.0.0.1', 'localhost'].includes(url.hostname)); assert.equal(Number(url.port), source.port, 'server and source manifest must identify the same port');
   assert.equal(source.verifiedCopyHashes, true); assert.deepEqual(source.patches, []);
@@ -143,11 +145,8 @@ async function verifySources(source, gameUrl) {
   const served = {};
   for (const file of ANCHORS) {
     assert(source.sources[file], `Missing required source: ${file}`);
-    const response = await fetch(new URL(`/${file}?raw`, url), { signal: AbortSignal.timeout(30000) });
-    assert(response.ok, `${file}: HTTP ${response.status}`);
-    const sourceModule = await response.text(), match = /^export default ("(?:[^"\\]|\\.)*");?/.exec(sourceModule);
-    assert(match, `Expected Vite raw source response: ${file}`);
-    served[file] = hashBytes(JSON.parse(match[1])); assert.equal(served[file], source.sources[file], `Wrong server source: ${file}`);
+    served[file] = (await verifyServedSourceFile({ file, expected: source.sources[file],
+      url: new URL(`/${file}?raw`, url), failureDirectory })).sha256;
   }
   return served;
 }
@@ -189,7 +188,7 @@ async function main() {
   const manifest = process.env.QA_SOURCE_MANIFEST, gameUrl = process.env.GAME_URL, selectionReport = process.env.QA_SELECTION_REPORT;
   assert(manifest && gameUrl && selectionReport, 'Declare frozen source manifest, GAME_URL and final selection report');
   assert(!fs.existsSync(policyPath), 'An existing frozen attempt cannot be overwritten or rerolled');
-  const source = read(manifest), anchors = await verifySources(source, gameUrl);
+  const source = read(manifest), anchors = await verifySources(source, gameUrl, path.join(out, 'source-audit-failures', 'initial'));
   for (const file of DEPENDENCIES.filter(file => file.startsWith('src/'))) assert.equal(sha(file), source.sources[file], `Node route helper differs from frozen game: ${file}`);
   const catalogSource = fs.readFileSync(path.join(source.temporaryRoot, 'src/generated/r100-native-worlds.ts'), 'utf8');
   const declaration = 'R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = ';
@@ -231,7 +230,7 @@ async function main() {
   try {
     for (const branch of policy.branches) {
       assert(!interrupted, 'Explicitly interrupted; no further departures');
-      assertStable(policy); await verifySources(source, gameUrl);
+      assertStable(policy); await verifySources(source, gameUrl, path.join(out, 'source-audit-failures', branch.policy));
       const row = { policy: branch.policy, startedAt: new Date().toISOString(), status: 'running' }; run.branches.push(row); save();
       const folder = path.join(out, branch.folder); fs.mkdirSync(folder, { recursive: true });
       const env = { ...process.env, GAME_URL: gameUrl, QA_GRADES: branch.policy, QA_RUNS: String(ROUNDS), QA_SEARCH_LIMIT: '3', QA_POST_RETURN_MANAGEMENT: '1', QA_ENTRY_WAIT: '600', QA_ORDINAL_START: '1', QA_STORAGE_STATE: storage, QA_OUTPUT_DIR: folder, TSX_TSCONFIG_PATH: 'tools/contam-preview/tsconfig.json' };
@@ -246,7 +245,7 @@ async function main() {
       });
       assertStable(policy); row.endedAt = new Date().toISOString(); row.status = row.exitCode === 0 ? 'completed-script' : 'failed-script'; save();
     }
-    run.finalServedSourceAnchors = await verifySources(source, gameUrl); run.status = 'completed-attempts-pending-summary';
+    run.finalServedSourceAnchors = await verifySources(source, gameUrl, path.join(out, 'source-audit-failures', 'final')); run.status = 'completed-attempts-pending-summary';
   } catch (error) { run.status = 'failed'; run.failure = String(error); process.exitCode = 1; }
   finally { process.off('SIGINT', onInterrupt); process.off('SIGTERM', onTerminate); run.endedAt = new Date().toISOString(); save(); }
   // Explicit accounting is separate from the journey child exit status.

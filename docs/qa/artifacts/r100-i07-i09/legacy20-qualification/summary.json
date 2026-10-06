@@ -1,0 +1,26 @@
+{
+  "status": "pass-after-exact-recheck",
+  "scope": "Complete native generation, real Host, body paths, full CPU cold reconstruction and transferable ownership. No GPU/art/play approval.",
+  "worlds": 20,
+  "grades": 60,
+  "fixedSeedsPerGrade": 40,
+  "independentHoldoutSeedsPerGrade": 8,
+  "uniqueCases": 2880,
+  "executorSha256": "3d5b02ff07c69b41513add8c85d6c6d5a0462ffcf15855c04a1a9130c21e4ce7",
+  "originalFull": {
+    "path": "full/report.json",
+    "pass": 2397,
+    "failed": 3
+  },
+  "sameSeedRecheck": {
+    "path": "recheck/aggregate.json",
+    "pass": 3,
+    "retainedOriginalFailures": 3
+  },
+  "holdout": {
+    "path": "holdout/report.json",
+    "pass": 480,
+    "failed": 0
+  },
+  "qualificationIsNotArtPlayOrPerformanceApproval": true
+}

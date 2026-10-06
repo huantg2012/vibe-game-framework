@@ -1,0 +1,376 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-06T07:38:47.261873+00:00",
+  "status": "bounded-severe-static-review-no-new-confirmed-blocker",
+  "reviewer": "world_loot_pixels",
+  "reviewerRole": "知情美术审查者；参与过来源外观制作，非真人盲测。",
+  "method": "仅查看完成的重污染链中第1/7/10/11趟各2张既有原PNG，总计8张。选择探索、搜取/继续探索及第1趟实际返程后结算；没有浏览器、重新截图、增亮、裁图、源码或策略改动。",
+  "input": {
+    "report": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/report.json",
+      "sha256": "f8aa03cf8e87fa481433fda2fae1a8547dfada47452bd01161e01e2934026c8c"
+    },
+    "journey": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/journey.jsonl",
+      "sha256": "df0cc161934ba08e3aab399a0421c24207f1e01273e07f728b4462d8f548060b"
+    },
+    "policy": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/policy-freeze.json",
+      "sha256": "f8415fd5b9d1a3292d4487d72a590d4b34495334697af80cddb652376262f99e"
+    },
+    "serverManifest": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/server-manifest.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    "originalFinalSource": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    }
+  },
+  "scope": {
+    "selectedOrdinals": [
+      1,
+      7,
+      10,
+      11
+    ],
+    "viewedPngCount": 8,
+    "unobstructedGameplayPngCount": 7,
+    "settlementPngCount": 1,
+    "dynamicVideoReviewed": false,
+    "audioHeard": false,
+    "allTwelveReviewed": false,
+    "collisionRevalidated": false,
+    "humanReview": false
+  },
+  "selectionNote": "第1趟没有搜取图；现有探索/field-result/return中，return为净化点，故第二张用实际field-result保留空返状态。该结算蒙层削弱场景信息，明确不计场内边界证明，不额外生成证据补洞。",
+  "selectedReportedOutcomes": [
+    {
+      "ordinal": 1,
+      "worldId": "grain-laminate",
+      "requestedSeed": 3740568142,
+      "outcome": "extract",
+      "searchAttempts": 0,
+      "fieldHp": 130,
+      "fieldChaos": 131.19704270956953
+    },
+    {
+      "ordinal": 7,
+      "worldId": "flake-thicket",
+      "requestedSeed": 2216461123,
+      "outcome": "death",
+      "searchAttempts": 3,
+      "fieldHp": 0,
+      "fieldChaos": 150
+    },
+    {
+      "ordinal": 10,
+      "worldId": "wax-tongues",
+      "requestedSeed": 1023312545,
+      "outcome": "death",
+      "searchAttempts": 1,
+      "fieldHp": 0,
+      "fieldChaos": 150
+    },
+    {
+      "ordinal": 11,
+      "worldId": "draped-bay",
+      "requestedSeed": 2502029448,
+      "outcome": "extract",
+      "searchAttempts": 3,
+      "fieldHp": 130,
+      "fieldChaos": 130.8573001441394
+    }
+  ],
+  "worldConclusions": [
+    {
+      "worldId": "grain-laminate",
+      "ordinal": 1,
+      "judgment": "仅有地床和局部边缘的有限正常视图；不足以判断巨构全貌。没有发现清楚可归因的美术阻断，也不能给该世界整体新通过。",
+      "outcomeSeparation": "空返在结算中可确认；未据空返推断地图或画面失败。"
+    },
+    {
+      "worldId": "flake-thicket",
+      "ordinal": 7,
+      "judgment": "探索帧的折片厚边/夹道可读；后续聚敌受压帧仍能分残骸与污染体，但敌体重叠信息需动态范围保留未验。",
+      "outcomeSeparation": "终局死亡在raw成立；这两静帧不能建立死亡与画法的因果。"
+    },
+    {
+      "worldId": "wax-tongues",
+      "ordinal": 10,
+      "judgment": "早段蜡叶厚断面与侵蚀分开；混乱105的红色反馈里局部材料/污染体仍可辨，重叠敌体是观察项。",
+      "outcomeSeparation": "不因为死亡要求削弱色调/黑暗，不以零engine错误签高压画面全部合格。"
+    },
+    {
+      "worldId": "draped-bay",
+      "ordinal": 11,
+      "judgment": "混乱61的折面/厚沿与混乱90的地床/污染体保持局部区分，未见新的明确边界消失。",
+      "outcomeSeparation": "真实搜撤成功不是未照见巨块、所有外壁或整条返程可读的证明。"
+    }
+  ],
+  "newConfirmedBlockers": [],
+  "observationsNotBlockers": [
+    {
+      "id": "severe-overlapping-actors",
+      "frames": [
+        "7-search-4",
+        "10-continued-exploration-3"
+      ],
+      "observation": "高压力并伴随道具效果时，角色/假身/多名敌体重叠，单张画面无法可靠数清全部威胁。",
+      "limit": "只观察到静态重叠；未看动态、声音或反应输入，不能认定其持续、导致死亡或要求马上改游戏。",
+      "nextReview": "如后续既有片段同样出现且与失去目标方向相关，再作有限动态审查；本任务不新抽样、不改源。"
+    },
+    {
+      "id": "grain-insufficient-structure-view",
+      "frames": [
+        "1-far-exploration",
+        "1-field-result"
+      ],
+      "observation": "地床之外的构造信息不足，第二帧已有结算蒙层。",
+      "limit": "不把证据缺口升级成未见墙体的缺陷，也不以当前结算替代正常画面。"
+    }
+  ],
+  "materialAndDarkness": "所见褐折片、蜡叶黄顶粉断面、蓝灰大折面有各自的表面方向和厚度；青绿侵蚀局部附着、暗绿污染体与普通材料不同。压力阶段绿/红屏幕反馈会降低颜色纯度，本审查没有把效果帧当标准色板对照。黑区仍可能是视野/吞光/VOID/遮挡，静帧不逐块归因；黑处范围未签。",
+  "i10Implication": "本批支持继续保留近距局部结构辨识候选，尤其grain仅见床面和其他世界搜取帧主体离开视口。新增敌体重叠只是有限动态复核候选，不是本轮确认的新玩法/美术修改需求。不得用两次死亡作为新增世界或削暗依据。",
+  "limitations": [
+    "7张实际场内帧+1张实际结算帧，仅4个世界/4种子，未审全部重12或全部返程。",
+    "设备/装备/视距被动、当前能力、站位、朝向和光照时间不同；不能作同机位像素或色彩对照。",
+    "附近snapshot不与截图曝光严格同步；保留精确记录而不伪称相机同帧。",
+    "未听音频/未看视频/非本人连续操作；不能签长期疲劳、动态反馈或真人可玩性。",
+    "美术无新确认阻断，不等于无任何风险或全场景通过；技术0错误和结局另由raw/根审查负责。"
+  ],
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/1-far-exploration.png",
+      "sha256": "f6265d59b3ab4e9599b40d539c060510a62e64bedaf78fa1bc969ca2de65d6b0",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "1-far-exploration",
+      "ordinal": 1,
+      "worldId": "grain-laminate",
+      "requestedSeed": 3740568142,
+      "grade": "severe",
+      "settlementOverlayPresent": false,
+      "snapshot": {
+        "at": "2026-10-06T07:05:43.802Z",
+        "position": {
+          "x": 707.8393483845355,
+          "y": 379.9826806406174
+        },
+        "elapsedMs": 14982.739999999989,
+        "hp": 145,
+        "chaos": 30.97946946543551,
+        "ended": false,
+        "exactShutterSynchronization": false
+      },
+      "finding": "大部分所见是带宽走向的紫褐地床，底部边缘被黑区切去且有青绿痕迹；右边一个角色形体仍可见。没有完整板体进入画面。",
+      "limitation": "只审照见的床面与边界提示，不能签此世界巨构或从一个黑切口判断它必然属于吞光/VOID/实体遮挡。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/1-field-result.png",
+      "sha256": "0767e0d10d0ccce495970c4ea166b9b6a36a9d3fe2440a29144bac080a815b0a",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "1-field-result",
+      "ordinal": 1,
+      "worldId": "grain-laminate",
+      "requestedSeed": 3740568142,
+      "grade": "severe",
+      "settlementOverlayPresent": true,
+      "snapshot": {
+        "at": "2026-10-06T07:06:29.772Z",
+        "position": {
+          "x": 179.36539123452127,
+          "y": 676.5264778824721
+        },
+        "elapsedMs": 59980.960000000065,
+        "hp": 130,
+        "chaos": 131.19704270956953,
+        "ended": true,
+        "exactShutterSynchronization": false
+      },
+      "finding": "结算明示撤离成功、0薪柴、0残渣、峰值混乱131；绿色压力与结算蒙层叠加，背景只剩一小片床面。",
+      "limitation": "这是实际返程后的结算帧，不是无遮挡场内基准；不用于评价高压力巨构边界或断言空返的视觉原因。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/7-far-exploration.png",
+      "sha256": "864106865089ddd9f868d7d7edb425f09f84665f1df0748f6592ed86c4f6e4de",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "7-far-exploration",
+      "ordinal": 7,
+      "worldId": "flake-thicket",
+      "requestedSeed": 2216461123,
+      "grade": "severe",
+      "settlementOverlayPresent": false,
+      "snapshot": {
+        "at": "2026-10-06T07:19:34.017Z",
+        "position": {
+          "x": 398.5901995762558,
+          "y": 302.52194142088314
+        },
+        "elapsedMs": 11266.230000000056,
+        "hp": 145,
+        "chaos": 30.285502233088405,
+        "ended": false,
+        "exactShutterSynchronization": false
+      },
+      "finding": "左右褐色折片具有不等折坡、浅冷色厚断沿和内凹折角，中间紫/暖地床与实体明确分层；局部绕行空隙可以看见。",
+      "limitation": "所见只有部分折片，未审完整三组，黑暗处边界未签；此时混乱约30，尚非高压峰值。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/7-search-4.png",
+      "sha256": "ad06744883a60e88070be286fdb07ce5d91aece358d2a84eb280bbb003fec6d5",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "7-search-4",
+      "ordinal": 7,
+      "worldId": "flake-thicket",
+      "requestedSeed": 2216461123,
+      "grade": "severe",
+      "settlementOverlayPresent": false,
+      "snapshot": {
+        "at": "2026-10-06T07:19:59.342Z",
+        "position": {
+          "x": 851.3198105455643,
+          "y": 61.602100204772746
+        },
+        "elapsedMs": 36581.86999999925,
+        "hp": 115,
+        "chaos": 76.036472514047,
+        "ended": false,
+        "exactShutterSynchronization": false
+      },
+      "finding": "混乱76/完整度115且银背袖镜1秒提示下，画面可见多个人形/敌体聚在上缘，浅色残骸与右侧暗绿污染体仍区别于灰紫地床。",
+      "limitation": "敌体与角色或假身局部重叠，单帧难数清；这里不推断具体AI状态、下一次命中或死亡因果。绿色压力反馈影响全图颜色，不作同光材质校准。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/10-far-exploration.png",
+      "sha256": "777e88c351d4d6a7c8cc635bfa1dfe0d81d7d05605812d77c8c561e5c95804ac",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "10-far-exploration",
+      "ordinal": 10,
+      "worldId": "wax-tongues",
+      "requestedSeed": 1023312545,
+      "grade": "severe",
+      "settlementOverlayPresent": false,
+      "snapshot": {
+        "at": "2026-10-06T07:26:57.170Z",
+        "position": {
+          "x": 505.25243291859346,
+          "y": 386.37686884092216
+        },
+        "elapsedMs": 12749.52999999986,
+        "hp": 145,
+        "chaos": 31.081913395712178,
+        "ended": false,
+        "exactShutterSynchronization": false
+      },
+      "finding": "黄粗顶、粉色厚断面、紫低床形成连续通路边；青绿侵蚀附在局部裂纹/结构位置，没有覆盖成统一绿材质。",
+      "limitation": "只看到蜡叶中段和一截另一叶；不签全叶端或所有通行口。此时混乱约31，不能称死亡前峰值画面。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/10-continued-exploration-3.png",
+      "sha256": "851cdcfe7a274f5b83341824913ee72623d4f8002c75cf7a85ce00919a1746a1",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "10-continued-exploration-3",
+      "ordinal": 10,
+      "worldId": "wax-tongues",
+      "requestedSeed": 1023312545,
+      "grade": "severe",
+      "settlementOverlayPresent": false,
+      "snapshot": {
+        "at": "2026-10-06T07:27:47.091Z",
+        "position": {
+          "x": 785.8461489825186,
+          "y": 73.42237912207088
+        },
+        "elapsedMs": 62597.51000000399,
+        "hp": 115,
+        "chaos": 105.75212197001423,
+        "ended": false,
+        "exactShutterSynchronization": false
+      },
+      "finding": "混乱105/完整度115、铅字印章1秒提示，红色受击/压力反馈中仍可见黄叶端、紫地床和右侧暗绿污染体；上缘角色与几名敌体紧密重叠。",
+      "limitation": "这张提供真实受压读图样本，但没录动态，无法判断红边持续时间及敌体分离速度；不由终局死亡倒推这张图的画法必有缺陷。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/11-continued-exploration-1.png",
+      "sha256": "2af4121cf46394437730ba5c9ef8b5239ed4c5ed9b3da3cb793f6da708c159c7",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "11-continued-exploration-1",
+      "ordinal": 11,
+      "worldId": "draped-bay",
+      "requestedSeed": 2502029448,
+      "grade": "severe",
+      "settlementOverlayPresent": false,
+      "snapshot": {
+        "at": "2026-10-06T07:30:08.655Z",
+        "position": {
+          "x": 462.5598072845577,
+          "y": 361.3290050678941
+        },
+        "elapsedMs": 53947.850000002734,
+        "hp": 145,
+        "chaos": 61.974776635944316,
+        "ended": false,
+        "exactShutterSynchronization": false
+      },
+      "finding": "混乱61时，蓝灰大折面、不等折坡和浅粉断边清楚地压住暖褐床；角色近旁沿断边留下可见低床，不会只读作同层贴色。",
+      "limitation": "这是幕片附近的局部关系，完整巨块/幕片之间全部路线未同时在画，不能代替既有组合专项审查。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/11-search-4.png",
+      "sha256": "9c3a69702ae225da4687a1c473f7bd500cbf6b84e3039f1d0b5b43fe89789b83",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "11-search-4",
+      "ordinal": 11,
+      "worldId": "draped-bay",
+      "requestedSeed": 2502029448,
+      "grade": "severe",
+      "settlementOverlayPresent": false,
+      "snapshot": {
+        "at": "2026-10-06T07:30:41.502Z",
+        "position": {
+          "x": 488.00965323974987,
+          "y": 75.07615942199364
+        },
+        "elapsedMs": 86796.55000000387,
+        "hp": 145,
+        "chaos": 90.22377882148085,
+        "ended": false,
+        "exactShutterSynchronization": false
+      },
+      "finding": "混乱90仍保留紫褐底纹，右方大片暗绿侵蚀体与左下局部蓝色实体、下方敌体分开；角色位置没有被压力反馈完全淹没。",
+      "limitation": "主要高体已出画，只能审这段床面/危险体信息；成功结局不能把未见墙体变成已通过。"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "status": "serial-scheduler-contract-checked-not-gameplay-evidence",
+  "createdAt": "2026-10-06T02:32:35.887896+00:00",
+  "files": [
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/play-continuation/continue.py",
+      "sha256": "e4b832221d4859343be1bbca0096911927de0142b7a74b12c119c13079d8c491"
+    },
+    {
+      "path": "tools/qa/r100-i07-i09-play-queue.mjs",
+      "sha256": "b7a885b68b52e0e6a48ee98e200e8b4912743b46bc955b261f8bc10f4ef69133"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/play-queue/plan.json",
+      "sha256": "f1612fe86fa65daa159ad52f3c6b59ab1e59d2beeb65754987af34ea3e2aba71"
+    }
+  ],
+  "checks": [
+    "Python and Node syntax",
+    "Queue self-check: fixed two seeds, one browser, no duplicate worlds, no pending source/running predecessor",
+    "Plan preflight: six exact frozen batches,144 journeys",
+    "Continuation live preflight:120 original complete, whole016 identity exact, stopped owned97338/parent97333, no QA Chrome",
+    "Isolated completed-batch guard: pass accepts, running/failed/missing reject"
+  ],
+  "limitation": "Only scheduler preconditions. Actual reruns, all later journeys and independent qualification remain recorded in their own immutable folders.",
+  "independentReview": {
+    "reviewer": "identity_shapes",
+    "result": "No new blocking findings in actual handoff. Checks stopped process PPID/command, no QA browser, all predecessor children complete, original output preservation, and per-batch nonzero stops. No generalized process birth-time guarantee claimed."
+  }
+}

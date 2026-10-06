@@ -1,0 +1,653 @@
+{
+  "policy": {
+    "version": 1,
+    "historyLimit": 8,
+    "repeatWeight": 0.2,
+    "neighborWeight": 0.55,
+    "neighborDistance": 0.28
+  },
+  "policySourceHash": "520f1869c819c27f44f5e6022a09db05dd2414c2206bd913a98c238b0ecc0869",
+  "worldIds": [
+    "ash-strata",
+    "cinder-ridge",
+    "crystal-fibre",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "grain-laminate",
+    "ivory-basin",
+    "laminate-shell",
+    "pallid-membrane",
+    "pressed-dunes",
+    "reversed-flow",
+    "ruptured-film",
+    "schist-shear",
+    "shell-chain",
+    "shell-gel-delta",
+    "shell-grit",
+    "silt-gel",
+    "splayed-fibres",
+    "tension-membrane"
+  ],
+  "descriptors": [
+    {
+      "id": "ash-strata",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "folded-slab"
+      ],
+      "organization": "bands",
+      "solidCount": 1,
+      "meanHeight": 24,
+      "aspectRatio": 2.1363636363636362
+    },
+    {
+      "id": "crystal-fibre",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "fibre-knot"
+      ],
+      "organization": "clusters",
+      "solidCount": 1,
+      "meanHeight": 43,
+      "aspectRatio": 2.6
+    },
+    {
+      "id": "ivory-basin",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "broken-shell"
+      ],
+      "organization": "patches",
+      "solidCount": 1,
+      "meanHeight": 48,
+      "aspectRatio": 1.1578947368421053
+    },
+    {
+      "id": "cinder-ridge",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "granular-ridge"
+      ],
+      "shapes": [
+        "granular-ridge"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 51.944136291600636,
+      "aspectRatio": 1.558538034865293
+    },
+    {
+      "id": "pallid-membrane",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "membrane-rim"
+      ],
+      "organization": "patches",
+      "solidCount": 2,
+      "meanHeight": 24.745677325705504,
+      "aspectRatio": 2.1555308884429834
+    },
+    {
+      "id": "silt-gel",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "gel-flow"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 26.568073019722984,
+      "aspectRatio": 2.189336397097934
+    },
+    {
+      "id": "schist-shear",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "folded-slab"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 44.42763836369887,
+      "aspectRatio": 2.4310759711240975
+    },
+    {
+      "id": "splayed-fibres",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "fibre-knot"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 51.12714416655755,
+      "aspectRatio": 1.7734712583475187
+    },
+    {
+      "id": "shell-chain",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "broken-shell"
+      ],
+      "organization": "patches",
+      "solidCount": 4,
+      "meanHeight": 40.948396523879104,
+      "aspectRatio": 1.3091017457509806
+    },
+    {
+      "id": "grain-laminate",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "folded-slab",
+        "granular-ridge"
+      ],
+      "shapes": [
+        "folded-slab",
+        "granular-ridge"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 36.375630822981364,
+      "aspectRatio": 2.3215013586956523
+    },
+    {
+      "id": "tension-membrane",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "fibre-knot",
+        "membrane-rim"
+      ],
+      "shapes": [
+        "fibre-knot",
+        "membrane-rim"
+      ],
+      "organization": "clusters",
+      "solidCount": 3,
+      "meanHeight": 43.69769083392155,
+      "aspectRatio": 2.912029847736211
+    },
+    {
+      "id": "shell-gel-delta",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "broken-shell",
+        "gel-flow"
+      ],
+      "shapes": [
+        "broken-shell",
+        "gel-flow"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 41.1085072977845,
+      "aspectRatio": 1.6664340679575895
+    },
+    {
+      "id": "pressed-dunes",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "granular-ridge"
+      ],
+      "shapes": [
+        "granular-ridge"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 34.31667422313675,
+      "aspectRatio": 5.410560457573327
+    },
+    {
+      "id": "ruptured-film",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "membrane-rim"
+      ],
+      "organization": "patches",
+      "solidCount": 2,
+      "meanHeight": 24.081127875340094,
+      "aspectRatio": 1.7501855058125158
+    },
+    {
+      "id": "reversed-flow",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "gel-flow"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 40.39891424550115,
+      "aspectRatio": 1.868000402131296
+    },
+    {
+      "id": "laminate-shell",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "broken-shell",
+        "folded-slab"
+      ],
+      "shapes": [
+        "broken-shell",
+        "folded-slab"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 36.94031876916889,
+      "aspectRatio": 2.0478488946989124
+    },
+    {
+      "id": "fibre-silt",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot",
+        "granular-ridge"
+      ],
+      "shapes": [
+        "fibre-knot",
+        "granular-ridge"
+      ],
+      "organization": "clusters",
+      "solidCount": 3,
+      "meanHeight": 38.71461835116059,
+      "aspectRatio": 2.862184384777705
+    },
+    {
+      "id": "film-laminate",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab",
+        "membrane-rim"
+      ],
+      "shapes": [
+        "folded-slab",
+        "membrane-rim"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 33.09882659713168,
+      "aspectRatio": 1.78748370273794
+    },
+    {
+      "id": "gel-fibre",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "fibre-knot",
+        "gel-flow"
+      ],
+      "shapes": [
+        "fibre-knot",
+        "gel-flow"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 34.059820269427256,
+      "aspectRatio": 2.4080693294667093
+    },
+    {
+      "id": "shell-grit",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell",
+        "granular-ridge"
+      ],
+      "shapes": [
+        "broken-shell",
+        "granular-ridge"
+      ],
+      "organization": "patches",
+      "solidCount": 3,
+      "meanHeight": 35.49811169483301,
+      "aspectRatio": 1.7033356541553264
+    },
+    {
+      "id": "rib-vault",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "rib-vault"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 67.87220680590039,
+      "aspectRatio": 1.3446034759748795
+    },
+    {
+      "id": "pleated-hide",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "pleated-sheet"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 61.829443447037704,
+      "aspectRatio": 2.764466233945588
+    },
+    {
+      "id": "blister-field",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "cellular-shell"
+      ],
+      "organization": "patches",
+      "solidCount": 1,
+      "meanHeight": 58,
+      "aspectRatio": 1.8156424581005586
+    },
+    {
+      "id": "wax-tongues",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "lobed-cushion"
+      ],
+      "organization": "patches",
+      "solidCount": 2,
+      "meanHeight": 45.10204458160715,
+      "aspectRatio": 1.7706680532027306
+    }
+  ],
+  "neighbors": {
+    "ash-strata": [
+      "film-laminate",
+      "schist-shear"
+    ],
+    "crystal-fibre": [
+      "fibre-silt",
+      "splayed-fibres"
+    ],
+    "ivory-basin": [
+      "shell-chain"
+    ],
+    "cinder-ridge": [
+      "pressed-dunes"
+    ],
+    "pallid-membrane": [
+      "ruptured-film"
+    ],
+    "silt-gel": [
+      "gel-fibre",
+      "reversed-flow",
+      "shell-gel-delta"
+    ],
+    "schist-shear": [
+      "ash-strata",
+      "film-laminate",
+      "laminate-shell"
+    ],
+    "splayed-fibres": [
+      "crystal-fibre",
+      "fibre-silt"
+    ],
+    "shell-chain": [
+      "ivory-basin",
+      "shell-grit"
+    ],
+    "grain-laminate": [],
+    "tension-membrane": [],
+    "shell-gel-delta": [
+      "gel-fibre",
+      "reversed-flow",
+      "silt-gel"
+    ],
+    "pressed-dunes": [
+      "cinder-ridge"
+    ],
+    "ruptured-film": [
+      "pallid-membrane"
+    ],
+    "reversed-flow": [
+      "gel-fibre",
+      "shell-gel-delta",
+      "silt-gel"
+    ],
+    "laminate-shell": [
+      "film-laminate",
+      "schist-shear"
+    ],
+    "fibre-silt": [
+      "crystal-fibre",
+      "splayed-fibres"
+    ],
+    "film-laminate": [
+      "ash-strata",
+      "laminate-shell",
+      "schist-shear"
+    ],
+    "gel-fibre": [
+      "reversed-flow",
+      "shell-gel-delta",
+      "silt-gel"
+    ],
+    "shell-grit": [
+      "shell-chain"
+    ]
+  },
+  "uniform": {
+    "counts": {
+      "ash-strata": 1611,
+      "crystal-fibre": 1634,
+      "ivory-basin": 1622,
+      "cinder-ridge": 1642,
+      "pallid-membrane": 1652,
+      "silt-gel": 1603,
+      "schist-shear": 1653,
+      "splayed-fibres": 1630,
+      "shell-chain": 1595,
+      "grain-laminate": 1709,
+      "tension-membrane": 1652,
+      "shell-gel-delta": 1617,
+      "pressed-dunes": 1595,
+      "ruptured-film": 1695,
+      "reversed-flow": 1622,
+      "laminate-shell": 1581,
+      "fibre-silt": 1698,
+      "film-laminate": 1619,
+      "gel-fibre": 1644,
+      "shell-grit": 1694
+    },
+    "perGrade": [
+      {
+        "ash-strata": 542,
+        "crystal-fibre": 541,
+        "ivory-basin": 560,
+        "cinder-ridge": 573,
+        "pallid-membrane": 530,
+        "silt-gel": 562,
+        "schist-shear": 542,
+        "splayed-fibres": 567,
+        "shell-chain": 526,
+        "grain-laminate": 573,
+        "tension-membrane": 516,
+        "shell-gel-delta": 534,
+        "pressed-dunes": 533,
+        "ruptured-film": 548,
+        "reversed-flow": 554,
+        "laminate-shell": 510,
+        "fibre-silt": 576,
+        "film-laminate": 541,
+        "gel-fibre": 527,
+        "shell-grit": 568
+      },
+      {
+        "ash-strata": 561,
+        "crystal-fibre": 565,
+        "ivory-basin": 556,
+        "cinder-ridge": 523,
+        "pallid-membrane": 577,
+        "silt-gel": 521,
+        "schist-shear": 549,
+        "splayed-fibres": 544,
+        "shell-chain": 520,
+        "grain-laminate": 582,
+        "tension-membrane": 568,
+        "shell-gel-delta": 525,
+        "pressed-dunes": 539,
+        "ruptured-film": 543,
+        "reversed-flow": 520,
+        "laminate-shell": 539,
+        "fibre-silt": 545,
+        "film-laminate": 530,
+        "gel-fibre": 568,
+        "shell-grit": 548
+      },
+      {
+        "ash-strata": 508,
+        "crystal-fibre": 528,
+        "ivory-basin": 506,
+        "cinder-ridge": 546,
+        "pallid-membrane": 545,
+        "silt-gel": 520,
+        "schist-shear": 562,
+        "splayed-fibres": 519,
+        "shell-chain": 549,
+        "grain-laminate": 554,
+        "tension-membrane": 568,
+        "shell-gel-delta": 558,
+        "pressed-dunes": 523,
+        "ruptured-film": 604,
+        "reversed-flow": 548,
+        "laminate-shell": 532,
+        "fibre-silt": 577,
+        "film-laminate": 548,
+        "gel-fibre": 549,
+        "shell-grit": 578
+      }
+    ],
+    "repeats": 1595,
+    "near": 2872,
+    "samples": 32768
+  },
+  "recent": {
+    "counts": {
+      "ash-strata": 1577,
+      "crystal-fibre": 1569,
+      "ivory-basin": 1732,
+      "cinder-ridge": 1735,
+      "pallid-membrane": 1690,
+      "silt-gel": 1516,
+      "schist-shear": 1525,
+      "splayed-fibres": 1588,
+      "shell-chain": 1635,
+      "grain-laminate": 1864,
+      "tension-membrane": 1863,
+      "shell-gel-delta": 1473,
+      "pressed-dunes": 1695,
+      "ruptured-film": 1743,
+      "reversed-flow": 1496,
+      "laminate-shell": 1580,
+      "fibre-silt": 1645,
+      "film-laminate": 1540,
+      "gel-fibre": 1559,
+      "shell-grit": 1743
+    },
+    "perGrade": [
+      {
+        "ash-strata": 512,
+        "crystal-fibre": 547,
+        "ivory-basin": 590,
+        "cinder-ridge": 603,
+        "pallid-membrane": 572,
+        "silt-gel": 519,
+        "schist-shear": 484,
+        "splayed-fibres": 561,
+        "shell-chain": 555,
+        "grain-laminate": 596,
+        "tension-membrane": 593,
+        "shell-gel-delta": 470,
+        "pressed-dunes": 566,
+        "ruptured-film": 594,
+        "reversed-flow": 482,
+        "laminate-shell": 512,
+        "fibre-silt": 563,
+        "film-laminate": 518,
+        "gel-fibre": 498,
+        "shell-grit": 588
+      },
+      {
+        "ash-strata": 549,
+        "crystal-fibre": 520,
+        "ivory-basin": 584,
+        "cinder-ridge": 570,
+        "pallid-membrane": 582,
+        "silt-gel": 508,
+        "schist-shear": 503,
+        "splayed-fibres": 519,
+        "shell-chain": 509,
+        "grain-laminate": 651,
+        "tension-membrane": 642,
+        "shell-gel-delta": 490,
+        "pressed-dunes": 569,
+        "ruptured-film": 566,
+        "reversed-flow": 501,
+        "laminate-shell": 523,
+        "fibre-silt": 522,
+        "film-laminate": 509,
+        "gel-fibre": 549,
+        "shell-grit": 557
+      },
+      {
+        "ash-strata": 516,
+        "crystal-fibre": 502,
+        "ivory-basin": 558,
+        "cinder-ridge": 562,
+        "pallid-membrane": 536,
+        "silt-gel": 489,
+        "schist-shear": 538,
+        "splayed-fibres": 508,
+        "shell-chain": 571,
+        "grain-laminate": 617,
+        "tension-membrane": 628,
+        "shell-gel-delta": 513,
+        "pressed-dunes": 560,
+        "ruptured-film": 583,
+        "reversed-flow": 513,
+        "laminate-shell": 545,
+        "fibre-silt": 560,
+        "film-laminate": 513,
+        "gel-fibre": 512,
+        "shell-grit": 598
+      }
+    ],
+    "repeats": 455,
+    "near": 2093,
+    "samples": 32768
+  },
+  "scope": "Seed sampling and policy invariants only; not actual journey, performance or visual acceptance."
+}

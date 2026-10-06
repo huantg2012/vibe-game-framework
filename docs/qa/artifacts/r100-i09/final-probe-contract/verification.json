@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "status": "offline-contract-pass-not-final-runtime-evidence",
+  "createdAt": "2026-10-06T01:11:36.813099+00:00",
+  "files": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "e7939ef7b38c7b82876dc30ca00e8a148be1263d6a443a7d37538085de6f6064"
+    },
+    {
+      "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+      "sha256": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc"
+    }
+  ],
+  "checks": [
+    "Synthetic formal coverage accepts exactly three grades and rejects duplicate/missing case, extra history visit, missing cold history, revision4, and absent source audit",
+    "Equivalence rejects duplicate grade, changed requested seed, signature mismatch",
+    "Local HTTP fixture verifies Vite raw source, plain CSV and binary assets; wrong hash and missing HTTP source rejected",
+    "node --check and scoped git diff --check pass",
+    "Actual frozen3098 source LICENSE and source PNG HTTP bytes match snapshot hashes; no browser opened"
+  ],
+  "scope": "Only offline wrapper contract and actual local HTTP fixture. No final52 browser probe has run. Original v13 journey bytes are unchanged.",
+  "independentReview": {
+    "reviewer": "identity_shapes",
+    "status": "no-blocking-findings",
+    "scope": [
+      "52x3 exact unique matrix",
+      "174 =156 revision5 requestedSeed20261004 +18 original revision1 fixture identities",
+      "child nonzero prevents pass",
+      "repository, frozen-source and actual HTTP bytes checked before and after"
+    ],
+    "limitations": [
+      "Formal recovery reloads the whole page inside the same isolated browser context, then uses MainMenu Enter; it is not a new browser/network cold start",
+      "174 equivalence rows do not validate revision2/3/4; those require separate legacy closure evidence"
+    ],
+    "method": "Read-only source review; no runtime/browser test performed"
+  }
+}

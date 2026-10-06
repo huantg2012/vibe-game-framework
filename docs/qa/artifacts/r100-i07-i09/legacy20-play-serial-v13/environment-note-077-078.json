@@ -1,0 +1,69 @@
+{
+  "status": "pre-departure-startup-failures-retained",
+  "evidence": [
+    {
+      "case": "077-pressed-dunes-severe-20261005",
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261005,
+      "committedJourneyCount": 0,
+      "savedLocalStorageUnchanged": true,
+      "changedStorageKeys": [],
+      "consoleErrors": {},
+      "raw": [
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/077-pressed-dunes-severe-20261005/report.json",
+          "sha256": "715296549b6a61cc27534f5df0b0a7f93975833be5800d7fcdcabfd63bf85e62"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/077-pressed-dunes-severe-20261005/runner.log",
+          "sha256": "124f1c12600866a474f97c925024f4337ecc029783753120c6db75f356467baa"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/077-pressed-dunes-severe-20261005/severe/browser-storage.json",
+          "sha256": "128b9ed0e723b1c45488f2105f89c4d15a82ab793c471cd28816a14c5ddfc6b1"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/077-pressed-dunes-severe-20261005/severe/console.json",
+          "sha256": "3535411d663205fdb908662508338c796f8afec0f1c05a23385c3ee780ddf3e7"
+        }
+      ]
+    },
+    {
+      "case": "078-pressed-dunes-severe-3075192741",
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 3075192741,
+      "committedJourneyCount": 0,
+      "savedLocalStorageUnchanged": true,
+      "changedStorageKeys": [],
+      "consoleErrors": {
+        "Failed to load resource: net::ERR_NETWORK_CHANGED": 55
+      },
+      "raw": [
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/078-pressed-dunes-severe-3075192741/report.json",
+          "sha256": "715296549b6a61cc27534f5df0b0a7f93975833be5800d7fcdcabfd63bf85e62"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/078-pressed-dunes-severe-3075192741/runner.log",
+          "sha256": "6a7a27ae8981ea7f938e033b3fefc0b24890508e094a7f88c0aba77fd123b1f7"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/078-pressed-dunes-severe-3075192741/severe/browser-storage.json",
+          "sha256": "128b9ed0e723b1c45488f2105f89c4d15a82ab793c471cd28816a14c5ddfc6b1"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/078-pressed-dunes-severe-3075192741/severe/console.json",
+          "sha256": "c0ee325e0fe0640365f8ab3e20b0ed68ec148297a0bb89c4bb5bd70a8f0f0ce8"
+        }
+      ]
+    }
+  ],
+  "diagnosis": {
+    "077": "page.goto load timeout before the journey loop. No map identity was committed. The recorded wall interval is much longer than the 30s timeout, but sleep/host suspension is only an unproven hypothesis. No runtime console error was captured.",
+    "078": "MainMenu activation timeout before the journey loop. 55 ERR_NETWORK_CHANGED resource errors establish a browser/network environment failure; no map identity was committed."
+  },
+  "limitations": "Neither failure evaluates severe pressed-dunes geometry or controller combat/navigation. The exact cause of077 is unconfirmed; no screenshots/trace were collected before startup failed.",
+  "nextAction": "After the original120 finish, repeat these exact two planned world/grade/seeds once on the same3089 snapshot with the same immutablev13 harness and earned save; use a new output folder, keep originals, do not change game/timeouts/seed."
+}

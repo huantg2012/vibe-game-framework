@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "author": "identity_pipeline",
+  "createdAt": "2026-10-06T08:09:44.028Z",
+  "status": "pass",
+  "method": "Read-only reviewer correction; no new browser runs, no changes to original reviewer, frozen policy, source, raw runs or save receipts.",
+  "sourceRule": "src/systems/inventory-store.ts:512–532: death removes carried items and equipment references, independently of exhaustion destroyedIds.",
+  "checks": {
+    "syntaxExitCode": 0,
+    "selfCheckExitCode": 0,
+    "originalAccountingAndInputCases": "pass",
+    "validDeathLoss": "pass; final logged charges retained, consumed only actual input1, destroyed false, deathLost true",
+    "negativeCases": [
+      "extract missing tool",
+      "death non-carried",
+      "not carried out",
+      "different run",
+      "not settled",
+      "not base settled",
+      "death returned items",
+      "death returned kindling",
+      "not dead",
+      "not ended",
+      "uncleared equipment",
+      "uncleared defense reference"
+    ],
+    "actualReviewExitCode": 0
+  },
+  "inputs": [
+    {
+      "path": "tools/qa/r100-i09-review-continuous.mjs",
+      "sha256": "3e626ef26bc10eb3bcd5967225049af16cf4f244d637eb85337c998616fba8d9"
+    },
+    {
+      "path": "tools/qa/r100-i09-review-continuous-death-loss.mjs",
+      "sha256": "ecdeb748031d5ba0fe31a8240831271ce9b63e79170b01db5498ebf595c00707"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/policy-freeze.json",
+      "sha256": "f8415fd5b9d1a3292d4487d72a590d4b34495334697af80cddb652376262f99e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/summary.json",
+      "sha256": "0b120eb65f081cb11590c71dc6cb7910e04017b552c4c8e76b1c2407302a0be5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/review.json",
+      "sha256": "1d2fa01e7b2fd7a94748182e5221b9995ae1af358caf9e6765e5332e074bd546"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/review-death-loss-v2.json",
+      "sha256": "aeb68ba8218b924fbb396be93f357f73d9654e900927e0126f385e53f09fe477"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-v2.diff",
+      "sha256": "2d7928e72542710bb0e32741e6bfc6743b36d2c2b584d88fdc06125cd1999407"
+    },
+    {
+      "path": "src/systems/inventory-store.ts",
+      "sha256": "b68d2daa85f4b291dcd86e52b890d865146098430ae31da73ac7dcff5e974782"
+    }
+  ],
+  "actualResult": {
+    "status": "complete-valid-data-pending-experience-review",
+    "validatedTrips": 48,
+    "gradeCounts": {
+      "low": 16,
+      "medium": 16,
+      "severe": 16
+    },
+    "metrics": {
+      "trips": 48,
+      "searchedRemains": 105,
+      "actualPickups": 106,
+      "nearEntryPickups": 1,
+      "fieldMs": 3585689.950000086,
+      "searchesPerFieldMinute": 1.7569840359453972,
+      "extractedRemains": 104,
+      "extractedRemainsPerFieldMinute": 1.740250854650679,
+      "searchAndExtract": 44,
+      "emptyReturns": 2,
+      "nearEntryOnlyReturns": 0,
+      "deaths": 2,
+      "reserveDelta": 16,
+      "repairSpent": 287,
+      "growthSpent": 256,
+      "returnedItems": 50,
+      "destroyedItems": 50,
+      "deathLostActiveTools": 5,
+      "tools": {
+        "Q": {
+          "attempts": 62,
+          "consumed": 55,
+          "noConsumption": 7
+        },
+        "F": {
+          "attempts": 52,
+          "consumed": 43,
+          "noConsumption": 9
+        },
+        "G": {
+          "attempts": 69,
+          "consumed": 53,
+          "noConsumption": 16
+        }
+      }
+    },
+    "mandatoryDiagnosis": [],
+    "experienceApproval": "pending"
+  },
+  "previousCheck": {
+    "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-check.json",
+    "sha256": "bf352a18a8ae4de99ce87f3f1bfddb5bb9b288869c6f1ec207b6ab4e349c5e07"
+  },
+  "previousDerivedSource": {
+    "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-v1.mjs",
+    "sha256": "2b1ab770eaf5fa2e51b85b5b9b45b2750979dd50fede78e4c713cf7bfd3353eb"
+  },
+  "peerFinding": "identity_shapes confirmed source/spec and five real legal active-tool death losses. Added missing defenseIds reference rejection; actual statistics unchanged."
+}

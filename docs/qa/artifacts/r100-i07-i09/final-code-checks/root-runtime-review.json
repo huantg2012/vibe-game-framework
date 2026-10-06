@@ -1,0 +1,57 @@
+{
+  "status": "bounded-runtime-pass",
+  "reviewer": "root",
+  "at": "2026-10-06T09:16:17.416781+00:00",
+  "method": "Independently read actual raw report fields and source-binding receipts; no rerun and no threshold change. Counted all52 budget cases and12 retained lifecycle samples, including ungated Shader live/active.",
+  "evidence": [
+    {
+      "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/report.json",
+      "sha256": "a3b0f5a09966d3fb30759417b53a40be561376ab4df12089e76403ad63d0e5bd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/source-binding.json",
+      "sha256": "1c0dfa6f5bce7c4dc411ea73730f71de688a0cf1733d63cf7d34ba857564ef9a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/report.json",
+      "sha256": "7ec895bc5da391c81632c4a27f7e1020a41ccc474a1a7f727ab3d8979c295438"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/source-binding.json",
+      "sha256": "40c48d6b88e849e2ab14880d19aef9518bc50a0401341180076230d10cb030e2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/shader-lifetime-review.json",
+      "sha256": "868bcaa490eb5f66c05a213d44d5fd2fbeb1d7374f370ffd88c9f8b478ad47ec"
+    }
+  ],
+  "performance": {
+    "cases": 52,
+    "minActiveMs": 61264.17000000014,
+    "maxFrameP95": 18.40000009536743,
+    "maxFrameP99": 18.600000381469727,
+    "maxCpuP95": 7,
+    "maxMaterialP95": 3,
+    "headroomConcern": [
+      "quilted-scars material P95 exactly3ms",
+      "shell-chain material P95 2.9ms"
+    ]
+  },
+  "lifecycle": {
+    "retainedSamples": 12,
+    "sameRebuilds": 10,
+    "mixedRebuilds": 156,
+    "maxCombinedGrowth": 1863736,
+    "shaderLive": 64,
+    "shaderActive": 62
+  },
+  "limitations": [
+    "Reference macOS/Chrome, severe seed20261004, fixed normal held-key route; not every route, weak device or maximal encounter load.",
+    "CPU/material-submit timings are not GPU timing; retained main-isolate and GL wrapper ownership are not GPU driver bytes or whole-process RSS.",
+    "Near-limit material samples retained; weak hardware remains I14 scope."
+  ]
+}

@@ -1,0 +1,231 @@
+/** Read completed continuous receipts; no browser or game writes. This produces
+ * review inputs and mandatory diagnosis flags, never experience approval.
+ * node --import tsx ... --input <continuous folder> --output <new review.json>
+ * --self-check validates accounting and streak guards without runtime imports. */
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+import { collectI09SearchReceipts } from './r100-i09-search-receipts.mjs';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const sha = file => createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const read = file => JSON.parse(fs.readFileSync(file, 'utf8'));
+const POLICIES = ['low', 'medium', 'severe', 'alternating'];
+const gradeAt = (policy, index) => policy === 'alternating' ? POLICIES[index % 3] : policy;
+const sum = (rows, value) => rows.reduce((total, row) => total + value(row), 0);
+const uses = item => item?.kind === 'weapon' ? item.weapon.usesRemaining : item?.kind === 'contaminant' ? item.contaminant.usesRemaining : null;
+const longest = (rows, key) => { let length = 0, maximum = 0, previous; for (const row of rows) {
+  const value = key(row); length = value === previous ? length + 1 : 1; previous = value; maximum = Math.max(maximum, length);
+} return maximum; };
+function pressureStreaks(rows) {
+  const flags = []; let start = null;
+  for (const [index, row] of rows.entries()) {
+    const failedSearch = row.outcome === 'death' || (row.outcome === 'extract' && row.collected === 0);
+    if (failedSearch && start === null) start = index;
+    if (start !== null && (!failedSearch || index === rows.length - 1)) {
+      const end = failedSearch ? index + 1 : index;
+      if (end - start >= 3) flags.push({ kind: 'three-or-more-consecutive-without-non-entry-extraction', ordinals: rows.slice(start, end).map(row => row.ordinal) });
+      start = null;
+    }
+  }
+  return flags;
+}
+function costs(receipt) {
+  const before = receipt.before.state, returned = receipt.afterReturn.state, prepared = receipt.afterPreparation.state;
+  const actions = receipt.management?.actions ?? [];
+  const repairSpent = sum(actions.filter(row => row.kind === 'repair'), row => row.spent);
+  const growthSpent = sum(actions.filter(row => row.kind === 'growth'), row => row.cost);
+  assert(actions.every(row => ['repair', 'growth'].includes(row.kind)));
+  assert(Number.isSafeInteger(repairSpent) && repairSpent >= 0); assert(Number.isSafeInteger(growthSpent) && growthSpent >= 0);
+  assert.equal(returned.kindlingReserve - prepared.kindlingReserve, repairSpent + growthSpent, 'preparation payments reconcile to actual reserve');
+  return { beforeReserve: before.kindlingReserve, returnedReserve: returned.kindlingReserve, preparedReserve: prepared.kindlingReserve,
+    reserveDelta: prepared.kindlingReserve - before.kindlingReserve, beforeManagementDelta: returned.kindlingReserve - before.kindlingReserve,
+    repairSpent, growthSpent, kindlingGained: returned.inventory.run.kindlingGained ?? 0,
+    modulesBefore: before.modules, modulesReturned: returned.modules, modulesPrepared: prepared.modules,
+    growthBefore: before.growth, growthPrepared: prepared.growth,
+    returnedIds: returned.inventory.run.returnedIds ?? [], destroyedIds: returned.inventory.run.destroyedIds ?? [], offeredIds: receipt.offered ?? [] };
+}
+function toolsForTrip(receipt, log, constants) {
+  const begin = log.findIndex(row => row.event === 'snapshot' && row.label === `${receipt.ordinal}-entry`);
+  const end = log.findIndex((row, index) => index > begin && row.event === 'snapshot' && row.label === `${receipt.ordinal}-field-result`);
+  assert(begin >= 0 && end > begin, 'Actual field input interval required');
+  const events = log.slice(begin + 1, end).filter(row => row.event === 'known-tool-context-input');
+  const entry = receipt.entrySave.state, returned = receipt.afterReturn.state, remaining = new Map();
+  const passiveSlot = constants.SORTIE_SLOTS + entry.growth.upgrades.growth_sortie_slot - 1;
+  const activeIds = entry.inventory.equipment.toolIds.slice(0, passiveSlot).filter(Boolean);
+  for (const id of activeIds) remaining.set(id, uses(entry.inventory.items.find(item => item.id === id)));
+  for (const event of events) {
+    assert(Number.isInteger(event.slot) && event.slot >= 0 && event.slot < passiveSlot, 'Passive slot must not be pressed');
+    assert.equal(event.key, constants.SORTIE_ACTIVE_KEYS[event.slot]);
+    assert.equal(entry.inventory.equipment.toolIds[event.slot], event.item.id);
+    assert(event.item.uses > 0, 'Do not press an exhausted tool');
+    assert.equal(event.item.uses, remaining.get(event.item.id), 'Tool uses continue from actual prior inventory');
+    assert([0, 1].includes(event.used)); assert.equal(event.used, event.item.uses - event.remaining);
+    remaining.set(event.item.id, event.remaining);
+  }
+  for (const [id, expected] of remaining) {
+    const item = returned.inventory.items.find(row => row.id === id);
+    if (item) assert.equal(uses(item), expected, `Returned active-tool charges disagree with input log: ${id}`);
+    else assert(expected === 0 || returned.inventory.run.destroyedIds?.includes(id), `Tool disappeared without exhaustion/destruction: ${id}`);
+  }
+  return { inputLog: { first: begin + 1, last: end + 1 }, events: events.map(row => ({ at: row.at, key: row.key, slot: row.slot,
+    itemId: row.item.id, reason: row.label, beforeUses: row.item.uses, afterUses: row.remaining, used: row.used })),
+    passiveSlot, actualInventoryUses: [...remaining].map(([id, finalLoggedUses]) => ({ id, finalLoggedUses,
+      returnedUses: uses(returned.inventory.items.find(item => item.id === id)), destroyed: returned.inventory.run.destroyedIds?.includes(id) ?? false })) };
+}
+function collected(receipt) {
+  return collectI09SearchReceipts(receipt);
+}
+function aggregate(rows) {
+  const events = rows.flatMap(row => row.tools.events), fieldMs = sum(rows, row => row.elapsedMs);
+  const extractedRemains = sum(rows.filter(row => row.outcome === 'extract'), row => row.collected);
+  return { trips: rows.length, searchedRemains: sum(rows, row => row.collected),
+    actualPickups: sum(rows, row => row.actualPickups), nearEntryPickups: sum(rows, row => row.nearEntryPickups), fieldMs,
+    searchesPerFieldMinute: fieldMs ? sum(rows, row => row.collected) * 60000 / fieldMs : null,
+    extractedRemains, extractedRemainsPerFieldMinute: fieldMs ? extractedRemains * 60000 / fieldMs : null,
+    searchAndExtract: rows.filter(row => row.outcome === 'extract' && row.collected > 0).length,
+    emptyReturns: rows.filter(row => row.outcome === 'extract' && row.actualPickups === 0).length,
+    nearEntryOnlyReturns: rows.filter(row => row.outcome === 'extract' && row.actualPickups > 0 && row.collected === 0).length,
+    deaths: rows.filter(row => row.outcome === 'death').length,
+    reserveDelta: sum(rows, row => row.economy.reserveDelta), repairSpent: sum(rows, row => row.economy.repairSpent), growthSpent: sum(rows, row => row.economy.growthSpent),
+    returnedItems: sum(rows, row => row.economy.returnedIds.length), destroyedItems: sum(rows, row => row.economy.destroyedIds.length),
+    tools: Object.fromEntries(['Q', 'F', 'G'].map(key => [key, { attempts: events.filter(row => row.key === key).length,
+      consumed: sum(events.filter(row => row.key === key), row => row.used), noConsumption: events.filter(row => row.key === key && row.used === 0).length }])) };
+}
+function selfCheck() {
+  const row = (ordinal, outcome, collected) => ({ ordinal, outcome, collected });
+  assert.deepEqual(pressureStreaks([row(1, 'death', 0), row(2, 'extract', 0)]), []);
+  assert.deepEqual(pressureStreaks([row(1, 'death', 0), row(2, 'extract', 0), row(3, 'death', 1), row(4, 'extract', 1)]),
+    [{ kind: 'three-or-more-consecutive-without-non-entry-extraction', ordinals: [1, 2, 3] }]);
+  assert.equal(pressureStreaks([1, 2, 3].map(ordinal => ({ ordinal, outcome: 'extract', collected: 0, actualPickups: 1, nearEntryPickups: 1 }))).length, 1);
+  assert.equal(longest(['a', 'a', 'b', 'b', 'b', 'a'], value => value), 3);
+  const receipt = { before: { state: { kindlingReserve: 20 } }, afterReturn: { state: { kindlingReserve: 25, inventory: { run: {} } } },
+    afterPreparation: { state: { kindlingReserve: 18 } }, management: { actions: [{ kind: 'repair', spent: 3 }, { kind: 'growth', cost: 4 }] } };
+  assert.equal(costs(receipt).reserveDelta, -2); assert.equal(costs(receipt).growthSpent, 4);
+  const bad = structuredClone(receipt); bad.afterPreparation.state.kindlingReserve++; assert.throws(() => costs(bad));
+  const toolReceipt = { ordinal: 1, entrySave: { state: { growth: { upgrades: { growth_sortie_slot: 1 } }, inventory: {
+    equipment: { toolIds: [null, null, 'active', 'passive'] }, items: [{ id: 'active', kind: 'contaminant', contaminant: { usesRemaining: 2 } }] } } },
+    afterReturn: { state: { inventory: { items: [{ id: 'active', kind: 'contaminant', contaminant: { usesRemaining: 1 } }], run: { destroyedIds: [] } } } } };
+  const log = [{ event: 'snapshot', label: '1-entry' }, { event: 'known-tool-context-input', key: 'G', slot: 2, item: { id: 'active', uses: 2 }, remaining: 1, used: 1 }, { event: 'snapshot', label: '1-field-result' }];
+  const constants = { SORTIE_SLOTS: 3, SORTIE_ACTIVE_KEYS: ['Q', 'F', 'G'] };
+  assert.equal(toolsForTrip(toolReceipt, log, constants).events[0].used, 1);
+  for (const mutate of [rows => rows[1].slot = 3, rows => rows[1].key = 'Q', rows => rows[1].remaining = 2, rows => rows[1].item.uses = 0]) {
+    const copy = structuredClone(log); mutate(copy); assert.throws(() => toolsForTrip(toolReceipt, copy, constants));
+  }
+  console.log('PASS continuous review: three-pressure streaks, exact actual preparation cost accounting, no automatic experience approval');
+}
+async function main() {
+  if (process.argv.includes('--self-check')) { selfCheck(); return; }
+  const arg = name => { const index = process.argv.indexOf(name); assert(index >= 0 && process.argv[index + 1], `${name} required`); return process.argv[index + 1]; };
+  const folder = path.resolve(arg('--input')), output = path.resolve(arg('--output')); assert(!fs.existsSync(output), 'Keep previous review results');
+  const summaryFile = path.join(folder, 'summary.json'), summary = read(summaryFile), policy = read(summary.policy), plan = read(policy.review.policy);
+  assert.equal(sha(policy.review.policy), policy.review.policySha256); assert.equal(sha(summary.policy), summary.policySha256);
+  assert.equal(sha(fileURLToPath(import.meta.url)), policy.review.toolSha256, 'Use the review implementation frozen before the trips');
+  for (const row of policy.fixedFiles) assert.equal(sha(row.file), row.sha256, `Frozen continuous input changed: ${row.file}`);
+  const storage = read(policy.storage); assert.equal(storage.origins.length, 1);
+  const saves = storage.origins[0].localStorage.filter(row => row.name === 'coh-save-v1'); assert.equal(saves.length, 1);
+  const initial = JSON.parse(saves[0].value);
+  const manifest = read(policy.sourceManifest);
+  assert.equal(manifest.verifiedCopyHashes, true); assert.deepEqual(manifest.patches, []);
+  for (const [file, expected] of Object.entries(manifest.sources)) assert.equal(sha(path.join(ROOT, file)), expected, `Review must use the frozen runtime: ${file}`);
+  const { selectR100WorldId, r100WorldSelectionWeights, describeR100World, r100WorldNeighborDistance } = await import('../../src/generation/world-study/r100-world-selection.ts');
+  const { R100_NATIVE_WORLDS } = await import('../../src/generated/r100-native-worlds.ts');
+  const { R100_WORLD_SELECTION_POLICY: selectionPolicy } = await import('../../src/generated/r100-world-selection.ts');
+  const { GAME_CONSTANTS } = await import('../../src/config/constants.ts');
+  const { mix32 } = await import('../../src/generation/seed-fork.ts');
+  const descriptors = new Map(R100_NATIVE_WORLDS.map(row => [row.id, describeR100World(row)]));
+  const branches = [], issues = [], diagnosis = [], runIds = new Set(), inputs = [{ path: summaryFile, sha256: sha(summaryFile) }, { path: summary.policy, sha256: sha(summary.policy) }];
+  for (const policyName of POLICIES) {
+    const branch = summary.branches.find(row => row.policy === policyName); assert(branch);
+    if (!branch.report || !fs.existsSync(branch.report)) {
+      issues.push({ policy: policyName, failure: 'No recorded branch report; the planned chain did not complete' });
+      branches.push({ policy: policyName, rows: [], metrics: aggregate([]), recurrence: { transitions: 0, same: 0, near: 0 } }); continue;
+    }
+    const rawFile = branch.report, data = read(rawFile); assert.equal(sha(rawFile), branch.reportSha256);
+    assert.equal(data.controlledWorld, null); assert.equal(data.controlledBuild, null); assert.equal(data.fixedDefectIdentity, null);
+    assert.equal(data.policyRevision, 15);
+    if (data.realJourneyAttempts.length !== 12) issues.push({ policy: policyName, failure: `Expected exactly 12 trips in this branch, recorded ${data.realJourneyAttempts.length}` });
+    const logFile = path.join(folder, policyName, policyName, 'journey.jsonl');
+    const log = fs.existsSync(logFile) ? fs.readFileSync(logFile, 'utf8').trim().split('\n').filter(Boolean).map(line => JSON.parse(line)) : [];
+    inputs.push({ path: rawFile, sha256: sha(rawFile) }); if (fs.existsSync(logFile)) inputs.push({ path: logFile, sha256: sha(logFile) });
+    const rows = [];
+    for (const [index, trip] of data.realJourneyAttempts.entries()) {
+      try {
+        assert.equal(trip.grade, gradeAt(policyName, index)); assert.equal(trip.status, 'completed-real-input');
+        assert.equal(trip.ordinal, index + 1);
+        assert.equal(trip.noStateInjection, true); assert.equal(trip.fixedDefectIdentity, false);
+        assert.equal(trip.navigationWarning, null); assert.deepEqual(trip.errors, []); assert.deepEqual(trip.consoleErrors, []);
+        for (const [key, label] of [['before', 'before'], ['entrySave', 'entry'], ['afterReturn', 'returned'], ['afterPreparation', 'after-preparation']]) {
+          const file = path.join(folder, policyName, policyName, `${trip.ordinal}-${label}.save.json`);
+          assert.equal(sha(file), trip[key].sha256); assert.deepEqual(read(file), trip[key].state);
+        }
+        const history = trip.before.state.inventory.riftWorldHistory, generation = trip.identity.generation;
+        const world = generation.package.id.slice('r100-'.length); assert.equal(selectR100WorldId(generation.requestedSeed, history), world);
+        const matchingGenerationAttempts = Array.from({ length: 8 }, (_, attempt) => ({ attempt,
+          seed: attempt === 0 ? generation.requestedSeed : mix32(generation.requestedSeed, `r100-native-v3-attempt-${attempt}`) }))
+          .filter(row => row.seed === trip.identity.seed).map(row => row.attempt);
+        assert(matchingGenerationAttempts.length > 0, 'Effective generation seed must belong to the frozen bounded attempt schedule');
+        assert.equal(generation.package.algorithmRevision, 5); assert.equal(generation.package.grade, trip.grade);
+        const before = trip.before.state, entry = trip.entrySave.state, returned = trip.afterReturn.state, prepared = trip.afterPreparation.state;
+        if (index > 0) assert.deepEqual(before, data.realJourneyAttempts[index - 1].afterPreparation.state, 'Same branch must continue its actual previous save');
+        else {
+          for (const key of ['cycle', 'kindlingReserve', 'modules', 'growth', 'tide']) assert.deepEqual(before[key], initial[key], `Preserve earned initial ${key}`);
+          for (const key of ['items', 'equipment', 'run']) assert.deepEqual(before.inventory[key], initial.inventory[key], `Preserve earned initial inventory ${key}`);
+        }
+        assert.equal(before.inventory.version, 4); assert.equal(entry.inventory.version, 4);
+        assert.equal(entry.cycle, before.cycle + 1); assert(entry.inventory.run.id && !runIds.has(entry.inventory.run.id)); runIds.add(entry.inventory.run.id);
+        assert.equal(returned.inventory.run.id, entry.inventory.run.id); assert.equal(prepared.inventory.run.id, entry.inventory.run.id);
+        assert.equal(returned.inventory.run.status, 'settled'); assert.equal(returned.inventory.run.baseSettled, true);
+        assert.equal(returned.inventory.run.outcome, trip.outcome);
+        const expectedHistory = { version: 1, visits: [...history.visits.slice(-7), { worldId: world, grade: trip.grade }] };
+        for (const value of [entry, returned, prepared]) assert.deepEqual(value.inventory.riftWorldHistory, expectedHistory);
+        const weights = r100WorldSelectionWeights(history), total = sum(weights, row => row.weight), previous = history.visits.at(-1)?.worldId;
+        const isNear = id => previous && id !== previous && r100WorldNeighborDistance(descriptors.get(previous), descriptors.get(id)) <= selectionPolicy.neighborDistance;
+        const collectedNodes = collected(trip), descriptor = descriptors.get(world);
+        rows.push({ ordinal: trip.ordinal, grade: trip.grade, world, seed: generation.requestedSeed, effectiveSeed: trip.identity.seed,
+          matchingGenerationAttempts, rejectedGenerationReasons: 'not-recorded-by-journey', selectedWorldReplayed: true,
+          outcome: trip.outcome, collected: collectedNodes.filter(row => row.eligibleNonEntry).length,
+          actualPickups: collectedNodes.length, nearEntryPickups: collectedNodes.filter(row => !row.eligibleNonEntry).length,
+          collectedNodes, elapsedMs: trip.fieldResult.elapsedMs,
+          finalHp: trip.fieldResult.hp, finalChaos: trip.fieldResult.chaos, explorationStop: trip.explorationStop ?? null,
+          primaryMaterial: descriptor.primaryMaterial, shapes: descriptor.shapes.join(','), history,
+          recurrence: { hasPrevious: Boolean(previous), same: world === previous, near: Boolean(isNear(world)),
+            inPreviousEight: history.visits.some(row => row.worldId === world),
+            sameProbability: previous ? weights.find(row => row.worldId === previous)?.weight / total : null,
+            neighborProbability: previous ? sum(weights.filter(row => isNear(row.worldId)), row => row.weight) / total : null },
+          economy: costs(trip), tools: toolsForTrip(trip, log, GAME_CONSTANTS.CONTAMINANT) });
+      } catch (error) { issues.push({ policy: policyName, ordinal: trip.ordinal, failure: String(error), actualFailure: trip.failure ?? null }); }
+    }
+    const transitions = rows.filter(row => row.ordinal > 1), metrics = aggregate(rows);
+    diagnosis.push(...pressureStreaks(rows).map(row => ({ policy: policyName, ...row })));
+    if (data.realJourneyAttempts.length === 12 && metrics.searchAndExtract === 0) diagnosis.push({ policy: policyName, kind: 'whole-branch-without-actual-search-and-extract' });
+    const incomplete = data.realJourneyAttempts.filter(row => row.status !== 'completed-real-input');
+    if (incomplete.length) diagnosis.push({ policy: policyName, kind: 'prepare-or-depart-or-process-interruption-needs-diagnosis', attempts: incomplete.map(row => ({ ordinal: row.ordinal, failure: row.failure ?? null, entered: Boolean(row.entrySave) })),
+      repeatedFailures: incomplete.filter(row => !row.entrySave).length >= 2, note: 'The controller stops at its first failed trip; a single stop cannot prove repeated inability.' });
+    branches.push({ policy: policyName, rows, metrics, distinctWorlds: new Set(rows.map(row => row.world)).size,
+      recurrence: { transitions: transitions.length, same: transitions.filter(row => row.recurrence.same).length,
+        near: transitions.filter(row => row.recurrence.near).length,
+        sameRate: transitions.length ? transitions.filter(row => row.recurrence.same).length / transitions.length : null,
+        nearRate: transitions.length ? transitions.filter(row => row.recurrence.near).length / transitions.length : null,
+        withinEight: rows.filter(row => row.recurrence.inPreviousEight).length,
+        expectedSameFromActualWeights: sum(transitions, row => row.recurrence.sameProbability),
+        expectedNearFromActualWeights: sum(transitions, row => row.recurrence.neighborProbability),
+        longestSameMaterial: longest(rows, row => row.primaryMaterial), longestSameShapes: longest(rows, row => row.shapes) } });
+  }
+  const all = branches.flatMap(branch => branch.rows), metrics = aggregate(all);
+  const gradeCounts = Object.fromEntries(POLICIES.slice(0, 3).map(grade => [grade, all.filter(row => row.grade === grade).length]));
+  const valid = summary.sourceValid && summary.validatedTrips === 48 && all.length === 48 && branches.every(branch => branch.rows.length === 12)
+    && issues.length === 0 && Object.values(gradeCounts).every(count => count === 16);
+  const result = { version: 1, status: valid ? 'complete-valid-data-pending-experience-review' : 'incomplete-or-invalid-data',
+    experienceApproval: 'pending', reviewPolicy: { path: policy.review.policy, sha256: sha(policy.review.policy) },
+    reviewTool: { path: policy.review.tool, sha256: policy.review.toolSha256 }, inputs,
+    validatedTrips: all.length, gradeCounts, metrics, byGrade: Object.fromEntries(POLICIES.slice(0, 3).map(grade => [grade, aggregate(all.filter(row => row.grade === grade))])),
+    uncoveredToolKeys: Object.entries(metrics.tools).filter(([, value]) => value.consumed === 0).map(([key]) => key),
+    mandatoryDiagnosis: [...diagnosis, ...issues.map(row => ({ kind: 'contract-failure', ...row }))], branches, review: plan.review };
+  fs.mkdirSync(path.dirname(output), { recursive: true }); fs.writeFileSync(output, JSON.stringify(result, null, 2) + '\n');
+  console.log(JSON.stringify({ status: result.status, experienceApproval: result.experienceApproval, validatedTrips: all.length, mandatoryDiagnosis: result.mandatoryDiagnosis.length, output }));
+  if (!valid) process.exitCode = 1;
+}
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

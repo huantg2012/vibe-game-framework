@@ -1,0 +1,877 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-06T02:54:12.429Z",
+  "status": "pass",
+  "plan": "docs/qa/artifacts/r100-i07-i09/b01-play-complete/plan.json",
+  "planSha256": "6f0d51d0fae1b68b8af46ceefe5869cba9d3f6f4affb27810e846d33c55e4092",
+  "method": "Both originally fixed seeds must retain a completed real process; at least one must actually collect a non-entry remain and extract to a settled base. Late/adjacent pickups require entry-to-terminal node changes and matching settled loot receipts. Empty returns and deaths never count as successful searches. All attempts, including original environment errors, remain in the record.",
+  "limitations": "Controlled world/seed with copies of an actually earned save, geometry-assisted expert navigation. Does not establish novice usability, natural continuous economy, visual acceptance, performance, or source continuity to a later catalog; those need separate evidence.",
+  "expectedGradePairs": 12,
+  "qualifiedGradePairs": 12,
+  "expectedSeeds": 24,
+  "scheduledSeeds": 24,
+  "completedSeedProcesses": 24,
+  "actualAttempts": 24,
+  "searchAndExtractAttempts": 22,
+  "emptyReturns": 1,
+  "deaths": 1,
+  "invalidOrIncompleteProcesses": 0,
+  "sources": [
+    {
+      "folder": "docs/qa/artifacts/r100-i07-i09/calibration-v13",
+      "policy": "docs/qa/artifacts/r100-i07-i09/calibration-v13/policy-freeze.json",
+      "policySha256": "3bb6aa5bbc5e1bdde51656a74213ccdec041b1146cd11f3b0fba6f36f38ad426",
+      "reportSha256": "b6d8563b2c1f0b3949a65e147bd186a505a72f1cf8ca07edfdbbaab6aad1f6e8",
+      "sourceManifest": "docs/qa/artifacts/r100-i07-i09/b01-final-source/source-snapshot.json",
+      "sourceManifestSha256": "fb7ab6d89cc1ef182af49b36b034759e036d97007c922d56b14cec3af329e8a9",
+      "harnessSha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f",
+      "status": "completed-fixed-attempts-pending-review",
+      "planned": 2,
+      "attempted": 2
+    },
+    {
+      "folder": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13",
+      "policy": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/policy-freeze.json",
+      "policySha256": "96dfbe89e1bccb2ed70418db7189f4492354da5df18c8bbbeedd197e620f43c4",
+      "reportSha256": "de480307f5d1e12fafccc1e2c42490839d0630238271905f33f7ceec054d5171",
+      "sourceManifest": "docs/qa/artifacts/r100-i07-i09/b01-final-source/source-snapshot.json",
+      "sourceManifestSha256": "fb7ab6d89cc1ef182af49b36b034759e036d97007c922d56b14cec3af329e8a9",
+      "harnessSha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f",
+      "status": "completed-fixed-attempts-pending-review",
+      "planned": 18,
+      "attempted": 18
+    },
+    {
+      "folder": "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13",
+      "policy": "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/policy-freeze.json",
+      "policySha256": "acaeebe41dd0cd66a39af494b9dea9cc769a821c6793cd02033c53f9e3f64fff",
+      "reportSha256": "b07c59d073bdc494529bc1269bc759782fb80c65d36b90afd2c40999b47f7af5",
+      "sourceManifest": "docs/qa/artifacts/r100-i07-i09/b01-final-source/source-snapshot.json",
+      "sourceManifestSha256": "fb7ab6d89cc1ef182af49b36b034759e036d97007c922d56b14cec3af329e8a9",
+      "harnessSha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f",
+      "status": "completed-fixed-attempts-pending-review",
+      "planned": 4,
+      "attempted": 4
+    }
+  ],
+  "pairs": [
+    {
+      "world": "blister-field",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/007-blister-field-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/008-blister-field-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "blister-field",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/009-blister-field-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/010-blister-field-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "blister-field",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": false,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/011-blister-field-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/012-blister-field-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": false,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/001-pleated-hide-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/002-pleated-hide-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/003-pleated-hide-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/004-pleated-hide-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/005-pleated-hide-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/006-pleated-hide-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/calibration-v13/001-rib-vault-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/calibration-v13/002-rib-vault-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "rib-vault",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/001-rib-vault-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/002-rib-vault-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "rib-vault",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/003-rib-vault-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/004-rib-vault-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/013-wax-tongues-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/014-wax-tongues-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/015-wax-tongues-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/016-wax-tongues-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/017-wax-tongues-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/018-wax-tongues-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    }
+  ],
+  "attempts": [
+    {
+      "key": "rib-vault/low/20261005",
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/calibration-v13/001-rib-vault-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 501.4538862148742,
+          "elapsedMs": 36981.83999999976
+        }
+      ],
+      "problems": [],
+      "reportSha256": "243b77676fa0852dc7aab6395c12e74999bf794d4c97667a17a397e45fbba751",
+      "outcome": "extract",
+      "elapsedMs": 50014.65999999999
+    },
+    {
+      "key": "rib-vault/low/3075192741",
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/calibration-v13/002-rib-vault-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 578.7158197250185,
+          "elapsedMs": 11632.859999999991
+        }
+      ],
+      "problems": [],
+      "reportSha256": "ebcbe1472cbecd9e6dabe188bce0db0867586657a18c5c5be458484cf911383c",
+      "outcome": "extract",
+      "elapsedMs": 23532.399999999787
+    },
+    {
+      "key": "pleated-hide/low/20261005",
+      "world": "pleated-hide",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/001-pleated-hide-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": false,
+      "collected": [],
+      "problems": [],
+      "reportSha256": "2edb4c8685b914cca2dce9fd70ca48f21349e338946d0d83df820010117dd1b1",
+      "outcome": "death",
+      "elapsedMs": 126894.86000000099
+    },
+    {
+      "key": "pleated-hide/low/3075192741",
+      "world": "pleated-hide",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/002-pleated-hide-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 822.6007537074106,
+          "elapsedMs": 79363.48999999986
+        }
+      ],
+      "problems": [],
+      "reportSha256": "7ae8f93b18516e76105762e3043c66c9d5cbc8259ae5acc091e3bd3c14e32b44",
+      "outcome": "extract",
+      "elapsedMs": 105079.16000000057
+    },
+    {
+      "key": "pleated-hide/medium/20261005",
+      "world": "pleated-hide",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/003-pleated-hide-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 646.0216714631174,
+          "elapsedMs": 14466.099999999988
+        }
+      ],
+      "problems": [],
+      "reportSha256": "2bd86f5eea56a58b859d0c24af05632358785ac79b224e4b927e9923330de717",
+      "outcome": "extract",
+      "elapsedMs": 27682.249999999713
+    },
+    {
+      "key": "pleated-hide/medium/3075192741",
+      "world": "pleated-hide",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/004-pleated-hide-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 646.0216714631174,
+          "elapsedMs": 16449.349999999984
+        }
+      ],
+      "problems": [],
+      "reportSha256": "44df868791f619a51e64caa3f6974a76eeb1d88d3d531965b79b7022f14a3902",
+      "outcome": "extract",
+      "elapsedMs": 30298.789999999633
+    },
+    {
+      "key": "pleated-hide/severe/20261005",
+      "world": "pleated-hide",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/005-pleated-hide-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 480.06666203767986,
+          "elapsedMs": 36098.55999999965
+        }
+      ],
+      "problems": [],
+      "reportSha256": "affa545a3b4dc7047a954f7ced1f5cf24da808147e1f75d7b7c63524f7e6d8c6",
+      "outcome": "extract",
+      "elapsedMs": 51564.57999999993
+    },
+    {
+      "key": "pleated-hide/severe/3075192741",
+      "world": "pleated-hide",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/006-pleated-hide-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 324.86304806795124,
+          "elapsedMs": 8266.359999999993
+        }
+      ],
+      "problems": [],
+      "reportSha256": "b5488b1d4aec284e930fda2e055643120e5006e070ab98f093d2a2c7468f41e1",
+      "outcome": "extract",
+      "elapsedMs": 15916.049999999987
+    },
+    {
+      "key": "blister-field/low/20261005",
+      "world": "blister-field",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/007-blister-field-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 588.3672322623006,
+          "elapsedMs": 14099.44999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "61bc28dbb8402b102fb125518235c7c52da3c1eafd85553963d9873ccb39108c",
+      "outcome": "extract",
+      "elapsedMs": 26015.62999999973
+    },
+    {
+      "key": "blister-field/low/3075192741",
+      "world": "blister-field",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/008-blister-field-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 11599.509999999991
+        }
+      ],
+      "problems": [],
+      "reportSha256": "c736f13887b660e184097b8cc5e44f2e4a0119749f3d4d0bb5ff3a6ca724297b",
+      "outcome": "extract",
+      "elapsedMs": 22099.109999999833
+    },
+    {
+      "key": "blister-field/medium/20261005",
+      "world": "blister-field",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/009-blister-field-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 607.420776727303,
+          "elapsedMs": 14382.77999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "f4e388d6c7cb000d18af46b81c9f0ff2cee944639ed5d48f51a729c3860e10b7",
+      "outcome": "extract",
+      "elapsedMs": 24232.37999999978
+    },
+    {
+      "key": "blister-field/medium/3075192741",
+      "world": "blister-field",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/010-blister-field-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.09998437988094,
+          "elapsedMs": 7166.359999999996
+        }
+      ],
+      "problems": [],
+      "reportSha256": "d80e8b7a5b1e5eb47cac73f219ae8a6889e957d4e69dc317881a6abb82f60e8f",
+      "outcome": "extract",
+      "elapsedMs": 13716.109999999991
+    },
+    {
+      "key": "blister-field/severe/20261005",
+      "world": "blister-field",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/011-blister-field-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": false,
+      "collected": [],
+      "problems": [],
+      "reportSha256": "c6e2f7dca1e386e5a037884e8930ac05e3b9fc94ba2accdf3586bc8edc894e59",
+      "outcome": "extract",
+      "elapsedMs": 98812.72000000044
+    },
+    {
+      "key": "blister-field/severe/3075192741",
+      "world": "blister-field",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/012-blister-field-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 562.3379766652791,
+          "elapsedMs": 18449.239999999925
+        }
+      ],
+      "problems": [],
+      "reportSha256": "988a516057b8a4954b055ec44077ff6a7859d973d3858aef36d3742737dcf265",
+      "outcome": "extract",
+      "elapsedMs": 35265.22999999969
+    },
+    {
+      "key": "wax-tongues/low/20261005",
+      "world": "wax-tongues",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/013-wax-tongues-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 551.5360369005818,
+          "elapsedMs": 15532.699999999988
+        }
+      ],
+      "problems": [],
+      "reportSha256": "b7ce097fa7ae39708a6b7c557453f12e8f21f9f170e1a7135e66191119729be0",
+      "outcome": "extract",
+      "elapsedMs": 30482.139999999697
+    },
+    {
+      "key": "wax-tongues/low/3075192741",
+      "world": "wax-tongues",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/014-wax-tongues-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 569.5752803624821,
+          "elapsedMs": 47281.43999999987
+        }
+      ],
+      "problems": [],
+      "reportSha256": "0690a3cba1b54a3da2cb0ba6232d538092aa5952762beae493f47519834ced2f",
+      "outcome": "extract",
+      "elapsedMs": 58947.65000000005
+    },
+    {
+      "key": "wax-tongues/medium/20261005",
+      "world": "wax-tongues",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/015-wax-tongues-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 486.4236836339283,
+          "elapsedMs": 25648.97999999973
+        }
+      ],
+      "problems": [],
+      "reportSha256": "762fe183b6a308a4a69095eece90b36fc1731858a22e77bed83c2204045f550f",
+      "outcome": "extract",
+      "elapsedMs": 39115.09999999974
+    },
+    {
+      "key": "wax-tongues/medium/3075192741",
+      "world": "wax-tongues",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/016-wax-tongues-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 486.4236836339283,
+          "elapsedMs": 26048.95999999974
+        }
+      ],
+      "problems": [],
+      "reportSha256": "19de89174b59ed74846ce1f486d10c61baed9f076b7a80b98211c6cc5e7801d6",
+      "outcome": "extract",
+      "elapsedMs": 40098.429999999775
+    },
+    {
+      "key": "wax-tongues/severe/20261005",
+      "world": "wax-tongues",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/017-wax-tongues-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 791.8383673452555,
+          "elapsedMs": 22882.41999999981
+        }
+      ],
+      "problems": [],
+      "reportSha256": "073e88a44eabd03413e80200d2a14d113099407d5f09dcaf8f352fdfa4764642",
+      "outcome": "extract",
+      "elapsedMs": 46114.79999999986
+    },
+    {
+      "key": "wax-tongues/severe/3075192741",
+      "world": "wax-tongues",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/018-wax-tongues-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-deep-2",
+          "distanceFromEntry": 805.7791260637123,
+          "elapsedMs": 38731.789999999746
+        }
+      ],
+      "problems": [],
+      "reportSha256": "d2ae0d47b6a5a40e488e1aabb06ebde315095a535c20898e2bf3cb67c3f64929",
+      "outcome": "extract",
+      "elapsedMs": 64580.76999999977
+    },
+    {
+      "key": "rib-vault/medium/20261005",
+      "world": "rib-vault",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/001-rib-vault-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-deep-1",
+          "distanceFromEntry": 790.7060136359153,
+          "elapsedMs": 67847.29999999983
+        }
+      ],
+      "problems": [],
+      "reportSha256": "eb977aadd33541e4c720f0ab54d66473371c53ef7a645f272d8dd26a59aedc85",
+      "outcome": "extract",
+      "elapsedMs": 88463.14000000038
+    },
+    {
+      "key": "rib-vault/medium/3075192741",
+      "world": "rib-vault",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/002-rib-vault-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 798.1177857935506,
+          "elapsedMs": 42531.63999999981
+        }
+      ],
+      "problems": [],
+      "reportSha256": "c42b59e1eaab57b43360b16d4b6fd25f8ef831b8f054164b4e103d6c21f2aa04",
+      "outcome": "extract",
+      "elapsedMs": 64714.07999999978
+    },
+    {
+      "key": "rib-vault/severe/20261005",
+      "world": "rib-vault",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/003-rib-vault-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 501.4538862148742,
+          "elapsedMs": 16049.359999999988
+        }
+      ],
+      "problems": [],
+      "reportSha256": "88f843ca992eeea8a72ecfde66adfd74fa9e35c0b2105f64f23375e19ce839ab",
+      "outcome": "extract",
+      "elapsedMs": 30765.459999999686
+    },
+    {
+      "key": "rib-vault/severe/3075192741",
+      "world": "rib-vault",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i07-i09/b01-rib-upper-play-v13/004-rib-vault-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 541.9372657420782,
+          "elapsedMs": 16665.989999999994
+        }
+      ],
+      "problems": [],
+      "reportSha256": "bffaa02c2a553b57d34df2ae57654b6bab73607ecf9750703b574f3c2e429fb2",
+      "outcome": "extract",
+      "elapsedMs": 32415.359999999724
+    }
+  ]
+}

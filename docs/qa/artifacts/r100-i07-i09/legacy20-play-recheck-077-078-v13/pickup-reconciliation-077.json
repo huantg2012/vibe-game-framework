@@ -1,0 +1,76 @@
+{
+  "status": "actual-pickups-omitted-by-target-telemetry",
+  "createdAt": "2026-10-06T02:35:27.967713+00:00",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-recheck-077-078-v13/001-pressed-dunes-severe-20261005/report.json",
+    "sha256": "278009c4467d243dc05ae403e3dcb8dedbf1d6b908fb1a7d2aba853b4e9f71e4"
+  },
+  "runId": "48dac475-50eb-492b-9a62-b3aead01ca2c",
+  "nodes": [
+    {
+      "id": "r100-kindling-deep-1",
+      "kind": "kindling",
+      "position": {
+        "x": 916,
+        "y": 196
+      },
+      "entryCollected": false,
+      "terminalCollected": true,
+      "distanceFromEntry": 819.7950963503014,
+      "targetReceipt": {
+        "searchDecision": {
+          "attempted": true,
+          "reason": "channel-not-completed"
+        },
+        "id": "r100-kindling-deep-1",
+        "kind": "kindling",
+        "tier": "deep",
+        "collected": false,
+        "hp": 130,
+        "chaos": 67.51361990355409,
+        "carried": 0,
+        "elapsedMs": 49748.02999999996
+      },
+      "revealedIds": []
+    },
+    {
+      "id": "r100-contaminant-deep-2",
+      "kind": "contaminant",
+      "position": {
+        "x": 948,
+        "y": 244
+      },
+      "entryCollected": false,
+      "terminalCollected": true,
+      "distanceFromEntry": 826.9461893013354,
+      "targetReceipt": null,
+      "revealedIds": [
+        "CAT_48dac475-50eb-492b-9a62-b3aead01ca2c_r100-contaminant-deep-2"
+      ]
+    }
+  ],
+  "sameRunSettled": true,
+  "outcome": "extract",
+  "carriedBefore": 0,
+  "carriedTerminal": 12,
+  "kindlingGained": 12,
+  "reserveBefore": 20,
+  "reserveAfter": 32,
+  "returnedIds": [
+    "CAT_48dac475-50eb-492b-9a62-b3aead01ca2c_r100-contaminant-deep-2"
+  ],
+  "newStoredItems": [
+    {
+      "id": "CAT_48dac475-50eb-492b-9a62-b3aead01ca2c_r100-contaminant-deep-2",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-deep-2",
+        "runId": "48dac475-50eb-492b-9a62-b3aead01ca2c"
+      },
+      "location": {
+        "kind": "stash"
+      }
+    }
+  ],
+  "interpretation": "This is a real non-entry pickup/extraction. The two target-attempt rows recorded false and cannot alone classify an empty return. Exact late/neighbor selection timing is not inferred here. Original raw report and first summary are preserved; reconciled summary is separate."
+}

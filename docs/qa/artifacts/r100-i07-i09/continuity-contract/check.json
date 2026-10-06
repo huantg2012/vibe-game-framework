@@ -1,0 +1,70 @@
+{
+  "status": "pass",
+  "scope": "Evidence continuity gate fixtures only; no new game, art or play qualification.",
+  "harness": {
+    "path": "tools/qa/r100-source-continuity.mjs",
+    "sha256": "361b050fdf6aa2462750ec523c3b39ccd2921850517fbdd8799b02195b1b2e94"
+  },
+  "checks": [
+    {
+      "name": "identical-source",
+      "expected": "pass",
+      "actualExitCode": 0
+    },
+    {
+      "name": "unused-profile-body",
+      "expected": "pass",
+      "actualExitCode": 0
+    },
+    {
+      "name": "strict-mode-rejects-body-change",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "used-profile-cannot-be-ignored",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "shared-dispatch-change",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "used-body-change",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "appearance-change",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "remains-change",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "material-dependency-change",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "new-runtime-file",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "deleted-runtime-file",
+      "expected": "reject",
+      "actualExitCode": 1
+    },
+    {
+      "name": "enabled-only-and-catalog-append",
+      "expected": "pass",
+      "actualExitCode": 0
+    }
+  ]
+}

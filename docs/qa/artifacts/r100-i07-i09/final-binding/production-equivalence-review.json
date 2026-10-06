@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "status": "pass-bounded-production-and-equivalence-review",
+  "reviewer": "identity_shapes",
+  "reviewedAt": "2026-10-06T06:11:39.787331+00:00",
+  "method": "Read actual final reports and source bindings, independently enumerate every required case, compare full HTTP hash maps and file counts, and verify receipt/source hashes. No browser, replay, game generation or policy change.",
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "reviews": {
+    "production": {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i09/production-final52-recheck/report.json",
+        "sha256": "50808d3cbe54cfa9a2a9dbb8f1585821af79ddc2302e9b634e4fdba7f2484cc1"
+      },
+      "sourceBinding": {
+        "path": "docs/qa/artifacts/r100-i09/production-final52-recheck/source-binding.json",
+        "sha256": "c3f79340ba4da9530cdfa6420bea8411c32112021596cf0655ec4ba8232d9ea2"
+      },
+      "scopeCheck": {
+        "uniqueWorldGrades": 156,
+        "passed": 156,
+        "errors": 0,
+        "coldIdentityPreserved": 156,
+        "coldBodyPreserved": 156,
+        "fullBodyCheckpointAdmitted": 156,
+        "singleHistoryCommitPreserved": 156,
+        "requestedSeedMatchesPredepartureSelection": 156,
+        "scope": "Controlled predeparture selection from the enabled pool, formal entry and cold Continue. Not natural distribution or an exclusive performance result."
+      },
+      "diskFilesBeforeAfter": 1370,
+      "httpHashesBeforeAfter": 1366,
+      "observedLoadedModuleUrls": 355,
+      "exitCode": 0
+    },
+    "equivalence": {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i09/equivalence-final52/browser-equivalence.json",
+        "sha256": "8f3d4e46952bb71e200901fb4ea4c74726fead530699c4f5e3c7e2321614ed60"
+      },
+      "sourceBinding": {
+        "path": "docs/qa/artifacts/r100-i09/equivalence-final52/source-binding.json",
+        "sha256": "6ad304051e0fec85c69a9956453b03698633009b5297ecef3f8ec50a8fac4271"
+      },
+      "scopeCheck": {
+        "total": 174,
+        "currentRevision5": 156,
+        "originalRevision1": 18,
+        "exact": 174,
+        "differences": 0,
+        "currentRequestedSeed": 20261004,
+        "scope": "156 current recipe Node/Chromium identities plus18 original revision1 golden browser identities. Revision2/3/4 inherit their separate explicit compatibility evidence, not this174 count."
+      },
+      "diskFilesBeforeAfter": 1370,
+      "httpHashesBeforeAfter": 1366,
+      "observedLoadedModuleUrls": 340,
+      "exitCode": 0
+    }
+  },
+  "findings": [],
+  "preservedOriginalProductionFailure": {
+    "receipt": {
+      "path": "docs/qa/artifacts/r100-i09/production-final52/source-binding.json",
+      "sha256": "093969f138546889b401528608bdde2782a1c55b36ca1cd70a1344c781cf8b86"
+    },
+    "cases": 0,
+    "status": "failed-before-browser",
+    "replacementPath": "docs/qa/artifacts/r100-i09/production-final52-recheck/report.json"
+  },
+  "pendingSeparateEvidence": [
+    "Final technical report",
+    "Exclusive runtime budget52",
+    "Bounded lifecycle10 same-world/156 mixed",
+    "Actual continuous48 experience review owned by root"
+  ],
+  "limitations": [
+    "A passed source-bound production/equivalence matrix does not imply performance, all-seed compatibility or natural experience approval.",
+    "No aggregate technical pass is granted by this partial review."
+  ]
+}

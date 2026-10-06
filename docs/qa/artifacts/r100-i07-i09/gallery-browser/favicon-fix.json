@@ -1,0 +1,23 @@
+{
+  "status": "favicon-request-removed-final-browser-recheck-pending",
+  "observations": [
+    "Original page omitted an explicit favicon.",
+    "GET http://127.0.0.1:3027/favicon.ico returned404.",
+    "Original browser report recorded one resource404 console error, no tracked page/PNG/JSON HTTPerrors and no pageerror; four functional checks completed.",
+    "The first console record lacked location, so its exact request URL was not captured. Favicon is a supported diagnosis, not retroactively invented network evidence."
+  ],
+  "change": "Meta review page alone now declares empty inline data favicon; no console error ignored. Next capture includes console locations and writes a fresh output directory.",
+  "initialPage": {
+    "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/page-before-favicon.html",
+    "sha256": "9b0ef44e99468dfded21f4615939b4436b70d4cd7d43d0ee25aab2b2b8f9c950"
+  },
+  "initialScript": {
+    "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/check.initial.mjs",
+    "sha256": "94bda237b9764d2777adab9fe4cf0bfe1b677c596cab93fd8c8d45ebf0f3b7a9"
+  },
+  "originalReport": {
+    "path": "docs/qa/artifacts/r100-i07-i09/gallery-browser/report.json",
+    "sha256": "cc07977d7cb2c26bc390c26740af2a4c139e9ca09c51f56929c4bc1215981168"
+  },
+  "currentPageSha256": "73fd5754e09a62d0b98e066b1844b3ac1c7781ef378ce7a258af62501c74868e"
+}

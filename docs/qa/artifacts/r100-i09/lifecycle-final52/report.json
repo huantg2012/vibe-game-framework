@@ -1,0 +1,1421 @@
+{
+  "scope": "One persistent Phaser Game; source-family warmups then configured identical and mixed native reconstructions. Two actual GC calls before each retained sample. Weak references never retain scene objects. No GPU driver byte/RSS claim; retained WebGL object/context ownership and main-isolate memory only.",
+  "samples": [
+    {
+      "label": "warmed-baseline",
+      "usage": {
+        "usedSize": 73746516,
+        "totalSize": 75350016,
+        "embedderHeapUsedSize": 3627064,
+        "backingStorageSize": 103723829
+      },
+      "objects": {
+        "Texture": {
+          "created": 761,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 39,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 78,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 18,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 8,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 0,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-1",
+      "usage": {
+        "usedSize": 74089216,
+        "totalSize": 75087872,
+        "embedderHeapUsedSize": 3520624,
+        "backingStorageSize": 103723829
+      },
+      "objects": {
+        "Texture": {
+          "created": 812,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 40,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 80,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 19,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 9,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 342700,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-2",
+      "usage": {
+        "usedSize": 74238068,
+        "totalSize": 75350016,
+        "embedderHeapUsedSize": 3653616,
+        "backingStorageSize": 103723829
+      },
+      "objects": {
+        "Texture": {
+          "created": 863,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 41,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 82,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 20,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 10,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 491552,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-3",
+      "usage": {
+        "usedSize": 74458304,
+        "totalSize": 75350016,
+        "embedderHeapUsedSize": 3644552,
+        "backingStorageSize": 103723829
+      },
+      "objects": {
+        "Texture": {
+          "created": 914,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 86,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 86,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 42,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 84,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 21,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 11,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 711788,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-4",
+      "usage": {
+        "usedSize": 74562524,
+        "totalSize": 75874304,
+        "embedderHeapUsedSize": 3597240,
+        "backingStorageSize": 103723829
+      },
+      "objects": {
+        "Texture": {
+          "created": 965,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 87,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 87,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 43,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 86,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 22,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 12,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 816008,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-5",
+      "usage": {
+        "usedSize": 74558868,
+        "totalSize": 75612160,
+        "embedderHeapUsedSize": 3567824,
+        "backingStorageSize": 103723844
+      },
+      "objects": {
+        "Texture": {
+          "created": 1016,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 88,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 88,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 44,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 88,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 23,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 13,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 812352,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-6",
+      "usage": {
+        "usedSize": 74632576,
+        "totalSize": 75874304,
+        "embedderHeapUsedSize": 3695744,
+        "backingStorageSize": 103723844
+      },
+      "objects": {
+        "Texture": {
+          "created": 1067,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 89,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 89,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 45,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 90,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 24,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 14,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 886060,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-7",
+      "usage": {
+        "usedSize": 74704116,
+        "totalSize": 76136448,
+        "embedderHeapUsedSize": 3649336,
+        "backingStorageSize": 103723844
+      },
+      "objects": {
+        "Texture": {
+          "created": 1118,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 90,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 90,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 46,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 92,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 25,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 15,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 957600,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-8",
+      "usage": {
+        "usedSize": 74800300,
+        "totalSize": 75874304,
+        "embedderHeapUsedSize": 3683984,
+        "backingStorageSize": 103723844
+      },
+      "objects": {
+        "Texture": {
+          "created": 1169,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 91,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 91,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 47,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 94,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 26,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 16,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1053784,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-9",
+      "usage": {
+        "usedSize": 74963188,
+        "totalSize": 75874304,
+        "embedderHeapUsedSize": 3685792,
+        "backingStorageSize": 103723844
+      },
+      "objects": {
+        "Texture": {
+          "created": 1220,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 92,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 92,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 48,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 96,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 27,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 17,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1216672,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-10",
+      "usage": {
+        "usedSize": 74947324,
+        "totalSize": 75874304,
+        "embedderHeapUsedSize": 3667400,
+        "backingStorageSize": 103723844
+      },
+      "objects": {
+        "Texture": {
+          "created": 1271,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 93,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 93,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 49,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 98,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 28,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 18,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1200808,
+      "backingGrowth": 15
+    },
+    {
+      "label": "after-mixed-156",
+      "usage": {
+        "usedSize": 75610252,
+        "totalSize": 76922880,
+        "embedderHeapUsedSize": 3760112,
+        "backingStorageSize": 103723548
+      },
+      "objects": {
+        "Texture": {
+          "created": 8320,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 252,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 252,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 208,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 416,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 187,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 177,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1863736,
+      "backingGrowth": -281
+    }
+  ],
+  "mixedCoverage": [
+    {
+      "world": "ash-strata",
+      "grade": "low",
+      "seed": 20261004
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "low",
+      "seed": 20261005
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "low",
+      "seed": 20261006
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "low",
+      "seed": 20261007
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "low",
+      "seed": 20261008
+    },
+    {
+      "world": "silt-gel",
+      "grade": "low",
+      "seed": 20261009
+    },
+    {
+      "world": "schist-shear",
+      "grade": "low",
+      "seed": 20261010
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "low",
+      "seed": 20261011
+    },
+    {
+      "world": "shell-chain",
+      "grade": "low",
+      "seed": 20261012
+    },
+    {
+      "world": "grain-laminate",
+      "grade": "low",
+      "seed": 20261013
+    },
+    {
+      "world": "tension-membrane",
+      "grade": "low",
+      "seed": 20261014
+    },
+    {
+      "world": "shell-gel-delta",
+      "grade": "low",
+      "seed": 20261015
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "low",
+      "seed": 20261016
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "low",
+      "seed": 20261017
+    },
+    {
+      "world": "reversed-flow",
+      "grade": "low",
+      "seed": 20261018
+    },
+    {
+      "world": "laminate-shell",
+      "grade": "low",
+      "seed": 20261019
+    },
+    {
+      "world": "fibre-silt",
+      "grade": "low",
+      "seed": 20261020
+    },
+    {
+      "world": "film-laminate",
+      "grade": "low",
+      "seed": 20261021
+    },
+    {
+      "world": "gel-fibre",
+      "grade": "low",
+      "seed": 20261022
+    },
+    {
+      "world": "shell-grit",
+      "grade": "low",
+      "seed": 20261023
+    },
+    {
+      "world": "rib-vault",
+      "grade": "low",
+      "seed": 20261024
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "low",
+      "seed": 20261025
+    },
+    {
+      "world": "blister-field",
+      "grade": "low",
+      "seed": 20261026
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "low",
+      "seed": 20261027
+    },
+    {
+      "world": "monolith-sill",
+      "grade": "low",
+      "seed": 20261028
+    },
+    {
+      "world": "bleached-court",
+      "grade": "low",
+      "seed": 20261029
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "low",
+      "seed": 20261030
+    },
+    {
+      "world": "satin-fan",
+      "grade": "low",
+      "seed": 20261031
+    },
+    {
+      "world": "chalk-steps",
+      "grade": "low",
+      "seed": 20261032
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "low",
+      "seed": 20261033
+    },
+    {
+      "world": "amber-ribs",
+      "grade": "low",
+      "seed": 20261034
+    },
+    {
+      "world": "pale-sail",
+      "grade": "low",
+      "seed": 20261035
+    },
+    {
+      "world": "root-cistern",
+      "grade": "low",
+      "seed": 20261036
+    },
+    {
+      "world": "scab-islands",
+      "grade": "low",
+      "seed": 20261037
+    },
+    {
+      "world": "foam-trenches",
+      "grade": "low",
+      "seed": 20261038
+    },
+    {
+      "world": "resin-fall",
+      "grade": "low",
+      "seed": 20261039
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "low",
+      "seed": 20261040
+    },
+    {
+      "world": "felt-basin",
+      "grade": "low",
+      "seed": 20261041
+    },
+    {
+      "world": "cork-shelves",
+      "grade": "low",
+      "seed": 20261042
+    },
+    {
+      "world": "lacquer-court",
+      "grade": "low",
+      "seed": 20261043
+    },
+    {
+      "world": "ribbed-delta",
+      "grade": "low",
+      "seed": 20261044
+    },
+    {
+      "world": "bladder-weave",
+      "grade": "low",
+      "seed": 20261045
+    },
+    {
+      "world": "flake-thicket",
+      "grade": "low",
+      "seed": 20261046
+    },
+    {
+      "world": "resin-hollows",
+      "grade": "low",
+      "seed": 20261047
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "low",
+      "seed": 20261048
+    },
+    {
+      "world": "stepped-bowl",
+      "grade": "low",
+      "seed": 20261049
+    },
+    {
+      "world": "draped-bay",
+      "grade": "low",
+      "seed": 20261050
+    },
+    {
+      "world": "ember-cushions",
+      "grade": "low",
+      "seed": 20261051
+    },
+    {
+      "world": "splinter-rotunda",
+      "grade": "low",
+      "seed": 20261052
+    },
+    {
+      "world": "quilted-scars",
+      "grade": "low",
+      "seed": 20261053
+    },
+    {
+      "world": "silt-colonnade",
+      "grade": "low",
+      "seed": 20261054
+    },
+    {
+      "world": "shell-causeway",
+      "grade": "low",
+      "seed": 20261055
+    },
+    {
+      "world": "ash-strata",
+      "grade": "medium",
+      "seed": 20261056
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "medium",
+      "seed": 20261057
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "medium",
+      "seed": 20261058
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "medium",
+      "seed": 20261059
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "medium",
+      "seed": 20261060
+    },
+    {
+      "world": "silt-gel",
+      "grade": "medium",
+      "seed": 20261061
+    },
+    {
+      "world": "schist-shear",
+      "grade": "medium",
+      "seed": 20261062
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "medium",
+      "seed": 20261063
+    },
+    {
+      "world": "shell-chain",
+      "grade": "medium",
+      "seed": 20261064
+    },
+    {
+      "world": "grain-laminate",
+      "grade": "medium",
+      "seed": 20261065
+    },
+    {
+      "world": "tension-membrane",
+      "grade": "medium",
+      "seed": 20261066
+    },
+    {
+      "world": "shell-gel-delta",
+      "grade": "medium",
+      "seed": 20261067
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "medium",
+      "seed": 20261068
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "medium",
+      "seed": 20261069
+    },
+    {
+      "world": "reversed-flow",
+      "grade": "medium",
+      "seed": 20261070
+    },
+    {
+      "world": "laminate-shell",
+      "grade": "medium",
+      "seed": 20261071
+    },
+    {
+      "world": "fibre-silt",
+      "grade": "medium",
+      "seed": 20261072
+    },
+    {
+      "world": "film-laminate",
+      "grade": "medium",
+      "seed": 20261073
+    },
+    {
+      "world": "gel-fibre",
+      "grade": "medium",
+      "seed": 20261074
+    },
+    {
+      "world": "shell-grit",
+      "grade": "medium",
+      "seed": 20261075
+    },
+    {
+      "world": "rib-vault",
+      "grade": "medium",
+      "seed": 20261076
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "medium",
+      "seed": 20261077
+    },
+    {
+      "world": "blister-field",
+      "grade": "medium",
+      "seed": 20261078
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "medium",
+      "seed": 20261079
+    },
+    {
+      "world": "monolith-sill",
+      "grade": "medium",
+      "seed": 20261080
+    },
+    {
+      "world": "bleached-court",
+      "grade": "medium",
+      "seed": 20261081
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "medium",
+      "seed": 20261082
+    },
+    {
+      "world": "satin-fan",
+      "grade": "medium",
+      "seed": 20261083
+    },
+    {
+      "world": "chalk-steps",
+      "grade": "medium",
+      "seed": 20261084
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "medium",
+      "seed": 20261085
+    },
+    {
+      "world": "amber-ribs",
+      "grade": "medium",
+      "seed": 20261086
+    },
+    {
+      "world": "pale-sail",
+      "grade": "medium",
+      "seed": 20261087
+    },
+    {
+      "world": "root-cistern",
+      "grade": "medium",
+      "seed": 20261088
+    },
+    {
+      "world": "scab-islands",
+      "grade": "medium",
+      "seed": 20261089
+    },
+    {
+      "world": "foam-trenches",
+      "grade": "medium",
+      "seed": 20261090
+    },
+    {
+      "world": "resin-fall",
+      "grade": "medium",
+      "seed": 20261091
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "medium",
+      "seed": 20261092
+    },
+    {
+      "world": "felt-basin",
+      "grade": "medium",
+      "seed": 20261093
+    },
+    {
+      "world": "cork-shelves",
+      "grade": "medium",
+      "seed": 20261094
+    },
+    {
+      "world": "lacquer-court",
+      "grade": "medium",
+      "seed": 20261095
+    },
+    {
+      "world": "ribbed-delta",
+      "grade": "medium",
+      "seed": 20261096
+    },
+    {
+      "world": "bladder-weave",
+      "grade": "medium",
+      "seed": 20261097
+    },
+    {
+      "world": "flake-thicket",
+      "grade": "medium",
+      "seed": 20261098
+    },
+    {
+      "world": "resin-hollows",
+      "grade": "medium",
+      "seed": 20261099
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "medium",
+      "seed": 20261100
+    },
+    {
+      "world": "stepped-bowl",
+      "grade": "medium",
+      "seed": 20261101
+    },
+    {
+      "world": "draped-bay",
+      "grade": "medium",
+      "seed": 20261102
+    },
+    {
+      "world": "ember-cushions",
+      "grade": "medium",
+      "seed": 20261103
+    },
+    {
+      "world": "splinter-rotunda",
+      "grade": "medium",
+      "seed": 20261104
+    },
+    {
+      "world": "quilted-scars",
+      "grade": "medium",
+      "seed": 20261105
+    },
+    {
+      "world": "silt-colonnade",
+      "grade": "medium",
+      "seed": 20261106
+    },
+    {
+      "world": "shell-causeway",
+      "grade": "medium",
+      "seed": 20261107
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261108
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "severe",
+      "seed": 20261109
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "severe",
+      "seed": 20261110
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "severe",
+      "seed": 20261111
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "severe",
+      "seed": 20261112
+    },
+    {
+      "world": "silt-gel",
+      "grade": "severe",
+      "seed": 20261113
+    },
+    {
+      "world": "schist-shear",
+      "grade": "severe",
+      "seed": 20261114
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "severe",
+      "seed": 20261115
+    },
+    {
+      "world": "shell-chain",
+      "grade": "severe",
+      "seed": 20261116
+    },
+    {
+      "world": "grain-laminate",
+      "grade": "severe",
+      "seed": 20261117
+    },
+    {
+      "world": "tension-membrane",
+      "grade": "severe",
+      "seed": 20261118
+    },
+    {
+      "world": "shell-gel-delta",
+      "grade": "severe",
+      "seed": 20261119
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "severe",
+      "seed": 20261120
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "severe",
+      "seed": 20261121
+    },
+    {
+      "world": "reversed-flow",
+      "grade": "severe",
+      "seed": 20261122
+    },
+    {
+      "world": "laminate-shell",
+      "grade": "severe",
+      "seed": 20261123
+    },
+    {
+      "world": "fibre-silt",
+      "grade": "severe",
+      "seed": 20261124
+    },
+    {
+      "world": "film-laminate",
+      "grade": "severe",
+      "seed": 20261125
+    },
+    {
+      "world": "gel-fibre",
+      "grade": "severe",
+      "seed": 20261126
+    },
+    {
+      "world": "shell-grit",
+      "grade": "severe",
+      "seed": 20261127
+    },
+    {
+      "world": "rib-vault",
+      "grade": "severe",
+      "seed": 20261128
+    },
+    {
+      "world": "pleated-hide",
+      "grade": "severe",
+      "seed": 20261129
+    },
+    {
+      "world": "blister-field",
+      "grade": "severe",
+      "seed": 20261130
+    },
+    {
+      "world": "wax-tongues",
+      "grade": "severe",
+      "seed": 20261131
+    },
+    {
+      "world": "monolith-sill",
+      "grade": "severe",
+      "seed": 20261132
+    },
+    {
+      "world": "bleached-court",
+      "grade": "severe",
+      "seed": 20261133
+    },
+    {
+      "world": "split-rib-causeway",
+      "grade": "severe",
+      "seed": 20261134
+    },
+    {
+      "world": "satin-fan",
+      "grade": "severe",
+      "seed": 20261135
+    },
+    {
+      "world": "chalk-steps",
+      "grade": "severe",
+      "seed": 20261136
+    },
+    {
+      "world": "porcelain-maw",
+      "grade": "severe",
+      "seed": 20261137
+    },
+    {
+      "world": "amber-ribs",
+      "grade": "severe",
+      "seed": 20261138
+    },
+    {
+      "world": "pale-sail",
+      "grade": "severe",
+      "seed": 20261139
+    },
+    {
+      "world": "root-cistern",
+      "grade": "severe",
+      "seed": 20261140
+    },
+    {
+      "world": "scab-islands",
+      "grade": "severe",
+      "seed": 20261141
+    },
+    {
+      "world": "foam-trenches",
+      "grade": "severe",
+      "seed": 20261142
+    },
+    {
+      "world": "resin-fall",
+      "grade": "severe",
+      "seed": 20261143
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "severe",
+      "seed": 20261144
+    },
+    {
+      "world": "felt-basin",
+      "grade": "severe",
+      "seed": 20261145
+    },
+    {
+      "world": "cork-shelves",
+      "grade": "severe",
+      "seed": 20261146
+    },
+    {
+      "world": "lacquer-court",
+      "grade": "severe",
+      "seed": 20261147
+    },
+    {
+      "world": "ribbed-delta",
+      "grade": "severe",
+      "seed": 20261148
+    },
+    {
+      "world": "bladder-weave",
+      "grade": "severe",
+      "seed": 20261149
+    },
+    {
+      "world": "flake-thicket",
+      "grade": "severe",
+      "seed": 20261150
+    },
+    {
+      "world": "resin-hollows",
+      "grade": "severe",
+      "seed": 20261151
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "severe",
+      "seed": 20261152
+    },
+    {
+      "world": "stepped-bowl",
+      "grade": "severe",
+      "seed": 20261153
+    },
+    {
+      "world": "draped-bay",
+      "grade": "severe",
+      "seed": 20261154
+    },
+    {
+      "world": "ember-cushions",
+      "grade": "severe",
+      "seed": 20261155
+    },
+    {
+      "world": "splinter-rotunda",
+      "grade": "severe",
+      "seed": 20261156
+    },
+    {
+      "world": "quilted-scars",
+      "grade": "severe",
+      "seed": 20261157
+    },
+    {
+      "world": "silt-colonnade",
+      "grade": "severe",
+      "seed": 20261158
+    },
+    {
+      "world": "shell-causeway",
+      "grade": "severe",
+      "seed": 20261159
+    }
+  ],
+  "errors": [],
+  "catalogWorldIds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway"
+  ],
+  "repetitions": 10,
+  "mixedRebuilds": 156,
+  "status": "passed-bounded-lifecycle"
+}

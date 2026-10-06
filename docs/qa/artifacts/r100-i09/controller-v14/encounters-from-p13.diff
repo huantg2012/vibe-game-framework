@@ -1,0 +1,50 @@
+--- tools/world-study/r100-p13-costed-encounters.mjs	2026-10-04 17:13:11
++++ tools/qa/r100-i09-costed-encounters.mjs	2026-10-05 23:50:23
+@@ -1,3 +1,10 @@
++/** Local I09 slot adapter copied from tools/world-study/r100-p13-costed-encounters.mjs.
++ * Original SHA256: 8850a30414e72f0465304fc3c90e38a0e08406b9e442b9b8ea7bfaea80ae3715.
++ * Only differences: runtime active slot enumeration and matching key dispatch;
++ * contextual tool logs include the actual slot/key. Original P13 stays unchanged.
++ * Threat observations, item predicates, cooldowns and movement rules are identical.
++ */
++import { activeToolSlots } from './r100-i09-tool-slots.mjs';
+ /** QA input policy: observations expose only currently rendered opponents/hosts.
+  * Full geometry may be used by caller for route planning; hidden AI state,
+  * detection meters, patrol futures and unrevealed item identities are never read.
+@@ -67,14 +74,14 @@
+  async function face(point,ms=65){const s=await driver.state(),dx=point.x-s.pos.x,dy=point.y-s.pos.y,keys=[];if(Math.abs(dx)>.42*Math.abs(dy))keys.push(dx>0?'d':'a');if(Math.abs(dy)>.42*Math.abs(dx))keys.push(dy>0?'s':'w');if(keys.length)await driver.hold(keys,ms);}
+  async function useKnown(predicate,label,facePoint,cooldownMs){
+   const owned=await ownedForPreparation(),s=await driver.state();
+-  for(let slot=0;slot<2;slot++){
+-   const item=owned.items.find(item=>item.id===owned.equipment.toolIds[slot]&&item.canEquip);if(!item||!predicate(item))continue;
++  for(const slot of activeToolSlots(owned)){
++   const item=owned.items.find(item=>item.id===owned.equipment.toolIds[slot.index]&&item.canEquip);if(!item||!predicate(item))continue;
+    if(s.elapsedMs-(toolTimes.get(item.id)??-Infinity)<cooldownMs)continue;
+-   if(facePoint)await face(facePoint);await driver.press(slot===0?'q':'f');
++   if(facePoint)await face(facePoint);await driver.press(slot.key.toLowerCase());
+    const after=await ownedForPreparation(),next=after.items.find(candidate=>candidate.id===item.id);
+    const used=(item.usesRemaining??0)-(next?.usesRemaining??0);toolTimes.set(item.id,s.elapsedMs);
+    if(used>0&&/罗盘|探查/.test(item.name+' '+item.description))await driver.snap(`survey-${Math.round(s.elapsedMs)}`);
+-   driver.log({event:'known-tool-context-input',label,item:{id:item.id,name:item.name,description:item.description,uses:item.usesRemaining},remaining:next?.usesRemaining??0,used,facePoint});return used>0;
++   driver.log({event:'known-tool-context-input',label,slot:slot.index,key:slot.key,item:{id:item.id,name:item.name,description:item.description,uses:item.usesRemaining},remaining:next?.usesRemaining??0,used,facePoint});return used>0;
+   }return false;
+  }
+  async function prepare(target){
+@@ -96,7 +103,7 @@
+  }
+  async function beforeMove(point,target){
+   const state=await driver.state();if(state.elapsedMs-lastMoveCheck<400||target.id==='exit')return;lastMoveCheck=state.elapsedMs;
+-  const owned=await ownedForPreparation();if(!owned.items.some(item=>owned.equipment.toolIds.slice(0,2).includes(item.id)&&item.canEquip&&/压制|烟斗|压住.*污染源/.test(item.name+' '+item.description)))return;
++  const owned=await ownedForPreparation();if(!owned.items.some(item=>activeToolSlots(owned).some(slot=>owned.equipment.toolIds[slot.index]===item.id)&&item.canEquip&&/压制|烟斗|压住.*污染源/.test(item.name+' '+item.description)))return;
+   const facts=await observe(),length=distance(facts.position,point);if(length<1)return;
+   const end={x:facts.position.x+(point.x-facts.position.x)/length*Math.min(36,length),y:facts.position.y+(point.y-facts.position.y)/length*Math.min(36,length)};
+   const green=facts.visiblePollutionCells?.filter(cell=>[0,.5,1].some(t=>distance(cell,{x:facts.position.x+(end.x-facts.position.x)*t,y:facts.position.y+(end.y-facts.position.y)*t})<20))??[];
+@@ -112,7 +119,7 @@
+  async function lure(target,facts){
+   if(!facts.enemies.length||facts.enemies.some(e=>distance(e.position,facts.position)<80&&facingPlayer(e,facts.position)))return false;
+   if(facts.enemies.every(e=>facts.elapsedMs-(luredEnemies.get(e.id)??-Infinity)<12000))return false;
+-  const owned=await ownedForPreparation();if(!owned.items.some(item=>owned.equipment.toolIds.slice(0,2).includes(item.id)&&item.canEquip&&/声诱|铜铃|声音.*引|引.*声音/.test(item.name+' '+item.description)))return false;
++  const owned=await ownedForPreparation();if(!owned.items.some(item=>activeToolSlots(owned).some(slot=>owned.equipment.toolIds[slot.index]===item.id)&&item.canEquip&&/声诱|铜铃|声音.*引|引.*声音/.test(item.name+' '+item.description)))return false;
+   const grid=await geometry(),points=[];
+   for(let i=0;i<8;i++){const a=i*Math.PI/4,p={x:facts.position.x+Math.cos(a)*88,y:facts.position.y+Math.sin(a)*88};if(!clearSegment(grid,facts.position,p))continue;
+    const nearest=Math.min(...facts.enemies.map(e=>distance(e.position,p)));if(nearest>94||distance(p,target.pos)<75)continue;

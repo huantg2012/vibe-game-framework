@@ -1,0 +1,15 @@
+{
+  "status": "interrupted-before-further-dispatch",
+  "reason": "Concurrent 5 CPU workers and 3 headless browser journeys caused 60s CPU timeouts, 30s screenshots and actual in-game damage while waiting. Existing records retained, no outcome replaced. All precommitted B01 cases will be rerun in a serial browser window on identical source, seed and earned save.",
+  "casePolicy": "docs/qa/artifacts/r100-i07-i09/b01-play-final/policy-freeze.json",
+  "pendingReport": "batch-report.json may show running because scheduler was stopped while children completed; the per-case reports are authoritative.",
+  "performedCases": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "resourceChange": "At most one active browser, bounded CPU workers; no concurrent performance certification."
+}

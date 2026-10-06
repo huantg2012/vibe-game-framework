@@ -3,7 +3,7 @@
   "project": {
     "id": "coh",
     "title": "COH · 游戏现状地图",
-    "summary": "核心搜撤—归来—维护闭环、5世界×2空间、污染物目录与22步成长已接正式流程。I30 Last Light A已正式接入，94faa33包含1035帧全身步态、西坡顶全宽承接及贴边速度修复；最近专项为限定自动检查与正式Renderer受控回放，整体美术、动态和手感仍待用户完整验收。I31修复整数收益、整趟被动回执与受损记录替换保护已接入，验证范围见迭代31 QA；I28长期采样继续挂起，四B不解锁。 本轮Rift新出击接入有界3过程条件v2、语义与原生材料地标，实际交互站位成本、94例资格、恢复/生成和一趟正式搜撤有限验证通过；完整24维与人审/长期体验仍未完成。 R100 I01/I02人审与I03—I06修订3内部结案、6/14历史进度保留；2400+480生成、旧入口/冷续、90趟经营和有限完整搜撤均维持原证据范围。2026-10-05世界区分度重构已接正式修订4：当前仍20世界/60等级，逐世界材料色阶、非周期地表与17派生构造共同进入正常视野，旧修订3封存恢复。修订4仅按本批有限生成、兼容、实帧及操作范围登记，不继承旧几何完整搜撤资格；2026-10-05用户针对5ba918a5对本批20世界视觉明确“pass”。完整新几何玩法、实际听感、弱设备及长期体验仍待验，I07数量扩产未完成。"
+    "summary": "核心搜撤—归来—维护闭环、物品与成长系统已接正式，既有专项验收和挂起项由各feature证据保留。R100 I01/I02人审与I03–I06历史内部结案、6/14保持；原20世界修订4美术基线获用户pass。当前用户授权连续推进I07/08/09，按36/52/52目标扩产、审核并完善连续出击；实现数量、当前资格、正式池和用户认可分别见R100台账，不能相互替代。新出发使用修订5及近期回避，旧修订1–4封存恢复；当前开发与有限验证见E160，整轮仍在执行。"
   },
   "domains": [
     {
@@ -22,7 +22,7 @@
       "id": "world",
       "title": "地图、地表与探索",
       "coverage": "mapped",
-      "note": "正式新出击为20原生世界×低中重、v3修订4；逐世界外观和构造与内容一并冻结，旧修订1/2/3及v1/v2独立恢复。当前生成、兼容和正常视野证据单列E158；修订3的2400+480准入与完整搜撤保持历史范围。I07扩至36世界未完成，108/324总目标不变；本批世界视觉已获用户针对5ba918a5明确“pass”（E159）；新几何完整自然搜撤与全种子未继承。"
+      "note": "正式新出发为修订5，现有20池与新增DEV候选分开；I07/I08完整资格逐世界逐级复验，I09近期选择及持久记录已实现。原20视觉人审保留；实际数量和剩余验证见R100活台账。"
     },
     {
       "id": "encounters",
@@ -64,7 +64,7 @@
       "id": "persistence",
       "title": "存档、失败与恢复",
       "coverage": "mapped",
-      "note": "已登记正式2D整帧恢复、拒写、坏包与弃局。I31新记录先按bytes存在性明确替换，首完整保存前保留旧bytes，拒写冻结新候选重试；整趟被动回执随原账本保存，旧active可凭绑定派生、旧settled缺字段保持未知。限定检查与历史证据分开。 R100修订4新包冻结外观与构造；修订3另封存生成/校验/表面预烤，旧修订1/2继续原执行器。跨运行时与当前60格入口/冷续为有限专项证据（E158），不改旧保存内容。"
+      "note": "正式完整帧、拒写回滚、坏包处理与弃局保持；库存schema4新增近期世界访问，同beginRun原子提交，旧schema迁移空历史。修订4已独立封存，新修订5与旧在途恢复各自验证，最终52库冷续待本轮统一执行。"
     },
     {
       "id": "accessibility",
@@ -76,7 +76,7 @@
       "id": "development",
       "title": "开发入口与退役方向",
       "coverage": "mapped",
-      "note": "旧v2巡览30组合与历史母版入口保持隔离；当前r100-gym以正式修订4运行20世界×三级，新增修订3/4正常实帧对照页。开发定向查看、内存存储及受控取景不代表正式自然供给或完整旅程；本批视觉的明确用户认可独立登记E159。"
+      "note": "r100-gym定向查看当前修订5全部已实现候选、三级和正常原生场景；内存存储隔离。开发查看不等于正式启用，限定取景不等于完整搜撤，用户人审另列。"
     }
   ],
   "featureFiles": [
@@ -470,6 +470,45 @@
         "tools/qa/diagnose-r100-menu-recovery.mjs"
       ],
       "exclude": []
+    },
+    {
+      "id": "r100-i07-i09",
+      "include": [
+        "data/rift-world-selection.csv",
+        "src/generated/r100-world-selection.ts",
+        "src/types/rift-world-history.ts",
+        "src/generation/legacy-r100-v4/*",
+        "src/generation/world-study/native-volume-expansion.ts",
+        "src/generation/world-study/native-volume-cellular.ts",
+        "src/generation/world-study/r100-world-selection.ts",
+        "tools/qa/r100-i07-i09-*.mjs",
+        "tools/qa/r100-i09-*.mjs",
+        "tools/qa/r100-qualification-summary.mjs",
+        "tools/qa/r100-play-qualification.mjs",
+        "tools/qa/r100-source-continuity.mjs",
+        "tools/qa/check-r100-i09-tool-slots.mjs",
+        "tools/world-study/check-native-expansion-contract.ts",
+        "tools/world-study/check-native-world-expansion.ts",
+        "tools/world-study/check-r100-library-resume.mjs",
+        "tools/world-study/check-r100-revision4.ts",
+        "tools/world-study/check-r100-world-selection.ts",
+        "tools/world-study/codegen-r100-selection.mjs",
+        "tools/inventory/check-world-history.ts",
+        "tools/recovery/freeze-native-r100-revision4.mjs",
+        "tools/qa/check-r100-play-qualification.mjs",
+        "tools/qa/r100-bind-i07-i09.mjs",
+        "tools/qa/check-r100-final-binding.mjs",
+        "tools/qa/check-r100-source-continuity.mjs",
+        "tools/qa/r100-i09-final-probe.mjs",
+        "tools/qa/r100-i09-review-continuous.mjs",
+        "tools/qa/r100-i09-review-policy.json",
+        "tools/qa/check-r100-i09-review.mjs",
+        "tools/qa/r100-observed-searches.mjs",
+        "tools/qa/check-r100-observed-searches.mjs",
+        "tools/qa/r100-i09-search-receipts.mjs"
+      ],
+      "exclude": [],
+      "title": "R100 I07–I09 世界扩产、选择与恢复"
     }
   ]
 }

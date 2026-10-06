@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "reviewer": "root",
+  "reviewedAt": "2026-10-06T03:00:13.976858+00:00",
+  "scope": "B01原24个固定游玩过程的非成功结果复查；真实v13熟练控制器，非初见玩家、非连续经济或声音审听。",
+  "summary": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b01-play-complete/summary.json",
+    "sha256": "346e77da6063d9ed15174be5ec7017dfa4abd7d92b2054f41a55e2fd1b5455d4"
+  },
+  "status": "bounded-process-review-complete",
+  "cases": [
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/001-pleated-hide-low-20261005/report.json",
+        "sha256": "2edb4c8685b914cca2dce9fd70ca48f21349e338946d0d83df820010117dd1b1"
+      },
+      "viewedFrame": {
+        "path": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/001-pleated-hide-low-20261005/low/1-continued-exploration-2.png",
+        "sha256": "2d1fd7e388be9e97f570774ca01374d9daa45f33e1005c8abe9a23975adfda44"
+      },
+      "judgment": "低污染仍在追索深处路线中遭遇风险：31秒完整度145、混乱29；100秒因持续危险放弃靠近，完整度85、混乱60；返程于126.9秒死亡。原节点全部未取，未发现运行错误。保留失败，不用另一次成功掩盖这次代价；这不足以证明初见者的低档可持续性。"
+    },
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/011-blister-field-severe-20261005/report.json",
+        "sha256": "c6e2f7dca1e386e5a037884e8930ac05e3b9fc94ba2accdf3586bc8edc894e59"
+      },
+      "viewedFrame": {
+        "path": "docs/qa/artifacts/r100-i07-i09/b01-other-play-v13/011-blister-field-severe-20261005/severe/1-field-result.png",
+        "sha256": "91d3c997033e3315139ac75e22a321d547660499390df7e071beb334d108ddc2"
+      },
+      "judgment": "重污染47秒尝试深处节点但未完成，完整度100、混乱75.6；98.8秒以完整度10、混乱150空返，全部节点未取。截图及结算一致，能观察到放弃收获保命的代价；不记作成功搜撤。"
+    }
+  ],
+  "limitations": [
+    "另22次搜撤满足固定档位验证，但不抵消上述实际失败。",
+    "I09仍须用v15和自然连续存档检验低/中档准备成本、连续失败及净储备。"
+  ],
+  "newBlockingDefect": null
+}

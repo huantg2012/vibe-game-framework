@@ -1,0 +1,1518 @@
+{
+  "status": "pass-candidate52-preflight-only",
+  "scope": "All52 authored candidates enabled in an in-memory copy only. Original CSV and generated registry remain unchanged. Not final52 enabled-pool statistics or gameplay evidence.",
+  "actualEnabledCount": 20,
+  "worldIds": [
+    "amber-ribs",
+    "ash-strata",
+    "bladder-weave",
+    "bleached-court",
+    "blister-field",
+    "chalk-steps",
+    "cinder-ridge",
+    "cork-shelves",
+    "crystal-fibre",
+    "draped-bay",
+    "ember-cushions",
+    "felt-basin",
+    "fibre-silt",
+    "film-laminate",
+    "flake-thicket",
+    "foam-trenches",
+    "gel-fibre",
+    "grain-laminate",
+    "ivory-basin",
+    "lacquer-court",
+    "laminate-shell",
+    "monolith-sill",
+    "pale-sail",
+    "pallid-membrane",
+    "pleated-hide",
+    "porcelain-maw",
+    "pressed-dunes",
+    "quilted-scars",
+    "resin-fall",
+    "resin-hollows",
+    "reversed-flow",
+    "rib-vault",
+    "ribbed-delta",
+    "root-cistern",
+    "ruptured-film",
+    "satin-fan",
+    "scab-islands",
+    "schist-shear",
+    "sentinel-mass",
+    "shell-causeway",
+    "shell-chain",
+    "shell-gel-delta",
+    "shell-grit",
+    "silt-colonnade",
+    "silt-gel",
+    "splayed-fibres",
+    "splinter-rotunda",
+    "split-rib-causeway",
+    "stepped-bowl",
+    "tendon-shelves",
+    "tension-membrane",
+    "wax-tongues"
+  ],
+  "policy": {
+    "version": 1,
+    "historyLimit": 8,
+    "repeatWeight": 0.2,
+    "neighborWeight": 0.55,
+    "neighborDistance": 0.28
+  },
+  "catalogSourceHash": "0226b4e234b58429cf31411f8042d5fb6bf52dfdb246decf625c28907474deec",
+  "policySourceHash": "520f1869c819c27f44f5e6022a09db05dd2414c2206bd913a98c238b0ecc0869",
+  "sourcesBeforeAndAfter": [
+    {
+      "file": "data/rift-native-worlds.csv",
+      "sha256": "0226b4e234b58429cf31411f8042d5fb6bf52dfdb246decf625c28907474deec"
+    },
+    {
+      "file": "data/rift-world-selection.csv",
+      "sha256": "520f1869c819c27f44f5e6022a09db05dd2414c2206bd913a98c238b0ecc0869"
+    },
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "sha256": "2b92e4d0569063cc119435c4d969ea065d3b418a66c479c9f4f4d520701f8570"
+    },
+    {
+      "file": "src/generated/r100-world-selection.ts",
+      "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+    },
+    {
+      "file": "src/generation/world-study/r100-world-selection.ts",
+      "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+    },
+    {
+      "file": "src/types/rift-world-history.ts",
+      "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+    },
+    {
+      "file": "src/generation/seed-fork.ts",
+      "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+    }
+  ],
+  "descriptors": [
+    {
+      "id": "ash-strata",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "folded-slab"
+      ],
+      "organization": "bands",
+      "solidCount": 1,
+      "meanHeight": 24,
+      "aspectRatio": 2.1363636363636362
+    },
+    {
+      "id": "crystal-fibre",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "fibre-knot"
+      ],
+      "organization": "clusters",
+      "solidCount": 1,
+      "meanHeight": 43,
+      "aspectRatio": 2.6
+    },
+    {
+      "id": "ivory-basin",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "broken-shell"
+      ],
+      "organization": "patches",
+      "solidCount": 1,
+      "meanHeight": 48,
+      "aspectRatio": 1.1578947368421053
+    },
+    {
+      "id": "cinder-ridge",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "granular-ridge"
+      ],
+      "shapes": [
+        "granular-ridge"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 51.944136291600636,
+      "aspectRatio": 1.558538034865293
+    },
+    {
+      "id": "pallid-membrane",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "membrane-rim"
+      ],
+      "organization": "patches",
+      "solidCount": 2,
+      "meanHeight": 24.745677325705504,
+      "aspectRatio": 2.1555308884429834
+    },
+    {
+      "id": "silt-gel",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "gel-flow"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 26.568073019722984,
+      "aspectRatio": 2.189336397097934
+    },
+    {
+      "id": "schist-shear",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "folded-slab"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 44.42763836369887,
+      "aspectRatio": 2.4310759711240975
+    },
+    {
+      "id": "splayed-fibres",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "fibre-knot"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 51.12714416655755,
+      "aspectRatio": 1.7734712583475187
+    },
+    {
+      "id": "shell-chain",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "broken-shell"
+      ],
+      "organization": "patches",
+      "solidCount": 4,
+      "meanHeight": 40.948396523879104,
+      "aspectRatio": 1.3091017457509806
+    },
+    {
+      "id": "grain-laminate",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "folded-slab",
+        "granular-ridge"
+      ],
+      "shapes": [
+        "folded-slab",
+        "granular-ridge"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 36.375630822981364,
+      "aspectRatio": 2.3215013586956523
+    },
+    {
+      "id": "tension-membrane",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "fibre-knot",
+        "membrane-rim"
+      ],
+      "shapes": [
+        "fibre-knot",
+        "membrane-rim"
+      ],
+      "organization": "clusters",
+      "solidCount": 3,
+      "meanHeight": 43.69769083392155,
+      "aspectRatio": 2.912029847736211
+    },
+    {
+      "id": "shell-gel-delta",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "broken-shell",
+        "gel-flow"
+      ],
+      "shapes": [
+        "broken-shell",
+        "gel-flow"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 41.1085072977845,
+      "aspectRatio": 1.6664340679575895
+    },
+    {
+      "id": "pressed-dunes",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "granular-ridge"
+      ],
+      "shapes": [
+        "granular-ridge"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 34.31667422313675,
+      "aspectRatio": 5.410560457573327
+    },
+    {
+      "id": "ruptured-film",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "membrane-rim"
+      ],
+      "organization": "patches",
+      "solidCount": 2,
+      "meanHeight": 24.081127875340094,
+      "aspectRatio": 1.7501855058125158
+    },
+    {
+      "id": "reversed-flow",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "gel-flow"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 40.39891424550115,
+      "aspectRatio": 1.868000402131296
+    },
+    {
+      "id": "laminate-shell",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "broken-shell",
+        "folded-slab"
+      ],
+      "shapes": [
+        "broken-shell",
+        "folded-slab"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 36.94031876916889,
+      "aspectRatio": 2.0478488946989124
+    },
+    {
+      "id": "fibre-silt",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot",
+        "granular-ridge"
+      ],
+      "shapes": [
+        "fibre-knot",
+        "granular-ridge"
+      ],
+      "organization": "clusters",
+      "solidCount": 3,
+      "meanHeight": 38.71461835116059,
+      "aspectRatio": 2.862184384777705
+    },
+    {
+      "id": "film-laminate",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab",
+        "membrane-rim"
+      ],
+      "shapes": [
+        "folded-slab",
+        "membrane-rim"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 33.09882659713168,
+      "aspectRatio": 1.78748370273794
+    },
+    {
+      "id": "gel-fibre",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "fibre-knot",
+        "gel-flow"
+      ],
+      "shapes": [
+        "fibre-knot",
+        "gel-flow"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 34.059820269427256,
+      "aspectRatio": 2.4080693294667093
+    },
+    {
+      "id": "shell-grit",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell",
+        "granular-ridge"
+      ],
+      "shapes": [
+        "broken-shell",
+        "granular-ridge"
+      ],
+      "organization": "patches",
+      "solidCount": 3,
+      "meanHeight": 35.49811169483301,
+      "aspectRatio": 1.7033356541553264
+    },
+    {
+      "id": "rib-vault",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "rib-vault"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 67.87220680590039,
+      "aspectRatio": 1.3446034759748795
+    },
+    {
+      "id": "pleated-hide",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "pleated-sheet"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 61.829443447037704,
+      "aspectRatio": 2.764466233945588
+    },
+    {
+      "id": "blister-field",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "cellular-shell"
+      ],
+      "organization": "patches",
+      "solidCount": 1,
+      "meanHeight": 58,
+      "aspectRatio": 1.8156424581005586
+    },
+    {
+      "id": "wax-tongues",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "lobed-cushion"
+      ],
+      "organization": "patches",
+      "solidCount": 2,
+      "meanHeight": 45.10204458160715,
+      "aspectRatio": 1.7706680532027306
+    },
+    {
+      "id": "monolith-sill",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "monolith-buttress"
+      ],
+      "organization": "patches",
+      "solidCount": 1,
+      "meanHeight": 105,
+      "aspectRatio": 1.236842105263158
+    },
+    {
+      "id": "bleached-court",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "terrace-shelf"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 80.26907807675342,
+      "aspectRatio": 2.5147772386413765
+    },
+    {
+      "id": "split-rib-causeway",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "rib-vault"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 65.30864197530865,
+      "aspectRatio": 1.1615520282186949
+    },
+    {
+      "id": "satin-fan",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "lobed-cushion"
+      ],
+      "organization": "patches",
+      "solidCount": 1,
+      "meanHeight": 45,
+      "aspectRatio": 1.4705882352941178
+    },
+    {
+      "id": "chalk-steps",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "granular-ridge"
+      ],
+      "shapes": [
+        "terrace-shelf"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 82.70188679245283,
+      "aspectRatio": 2.125
+    },
+    {
+      "id": "porcelain-maw",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "cellular-shell"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 82.4494382022472,
+      "aspectRatio": 1.4630149812734083
+    },
+    {
+      "id": "amber-ribs",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "rib-vault"
+      ],
+      "organization": "clusters",
+      "solidCount": 1,
+      "meanHeight": 68,
+      "aspectRatio": 1.325
+    },
+    {
+      "id": "pale-sail",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "pleated-sheet"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 100.91245622811405,
+      "aspectRatio": 2.073536768384192
+    },
+    {
+      "id": "root-cistern",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "rib-vault"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 73.2718204488778,
+      "aspectRatio": 1.7211138819617622
+    },
+    {
+      "id": "scab-islands",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "lobed-cushion"
+      ],
+      "organization": "patches",
+      "solidCount": 3,
+      "meanHeight": 46.37614678899082,
+      "aspectRatio": 1.4128440366972477
+    },
+    {
+      "id": "foam-trenches",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "cellular-shell"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 70.63333333333334,
+      "aspectRatio": 1.4314814814814816
+    },
+    {
+      "id": "resin-fall",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "terrace-shelf"
+      ],
+      "organization": "bands",
+      "solidCount": 1,
+      "meanHeight": 98,
+      "aspectRatio": 2.142857142857143
+    },
+    {
+      "id": "tendon-shelves",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "monolith-buttress"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 109.46073298429319,
+      "aspectRatio": 1.3369823893384103
+    },
+    {
+      "id": "felt-basin",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "cellular-shell",
+        "pleated-sheet"
+      ],
+      "organization": "clusters",
+      "solidCount": 3,
+      "meanHeight": 49.161417322834644,
+      "aspectRatio": 1.3562992125984252
+    },
+    {
+      "id": "cork-shelves",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "granular-ridge"
+      ],
+      "shapes": [
+        "terrace-shelf"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 81.31756756756756,
+      "aspectRatio": 2.4464285714285716
+    },
+    {
+      "id": "lacquer-court",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "pleated-sheet",
+        "terrace-shelf"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 41.134835903519175,
+      "aspectRatio": 2.8726769474100435
+    },
+    {
+      "id": "ribbed-delta",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "fibre-knot",
+        "gel-flow"
+      ],
+      "shapes": [
+        "rib-vault"
+      ],
+      "organization": "clusters",
+      "solidCount": 1,
+      "meanHeight": 76,
+      "aspectRatio": 1.6571428571428573
+    },
+    {
+      "id": "bladder-weave",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "fibre-knot",
+        "membrane-rim"
+      ],
+      "shapes": [
+        "cellular-shell",
+        "rib-vault"
+      ],
+      "organization": "clusters",
+      "solidCount": 4,
+      "meanHeight": 53.07027768255057,
+      "aspectRatio": 1.7997943092218032
+    },
+    {
+      "id": "flake-thicket",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "pleated-sheet"
+      ],
+      "organization": "bands",
+      "solidCount": 3,
+      "meanHeight": 71.24394565859421,
+      "aspectRatio": 2.2900177200236267
+    },
+    {
+      "id": "resin-hollows",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "cellular-shell"
+      ],
+      "organization": "clusters",
+      "solidCount": 3,
+      "meanHeight": 64.15308641975308,
+      "aspectRatio": 1.251440329218107
+    },
+    {
+      "id": "sentinel-mass",
+      "primaryMaterial": "folded-slab",
+      "materials": [
+        "folded-slab"
+      ],
+      "shapes": [
+        "monolith-buttress"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 130.99854967367656,
+      "aspectRatio": 1.7857142857142858
+    },
+    {
+      "id": "stepped-bowl",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell"
+      ],
+      "shapes": [
+        "terrace-shelf"
+      ],
+      "organization": "clusters",
+      "solidCount": 2,
+      "meanHeight": 68.6679462571977,
+      "aspectRatio": 2.0062380038387717
+    },
+    {
+      "id": "draped-bay",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "folded-slab",
+        "membrane-rim"
+      ],
+      "shapes": [
+        "monolith-buttress",
+        "pleated-sheet"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 101.34375,
+      "aspectRatio": 2.34375
+    },
+    {
+      "id": "ember-cushions",
+      "primaryMaterial": "gel-flow",
+      "materials": [
+        "gel-flow"
+      ],
+      "shapes": [
+        "lobed-cushion"
+      ],
+      "organization": "patches",
+      "solidCount": 4,
+      "meanHeight": 47.32770745428973,
+      "aspectRatio": 1.5194561650257852
+    },
+    {
+      "id": "splinter-rotunda",
+      "primaryMaterial": "fibre-knot",
+      "materials": [
+        "fibre-knot"
+      ],
+      "shapes": [
+        "rib-vault"
+      ],
+      "organization": "clusters",
+      "solidCount": 3,
+      "meanHeight": 77.30833004342676,
+      "aspectRatio": 1.6052112120015791
+    },
+    {
+      "id": "quilted-scars",
+      "primaryMaterial": "membrane-rim",
+      "materials": [
+        "membrane-rim"
+      ],
+      "shapes": [
+        "lobed-cushion"
+      ],
+      "organization": "patches",
+      "solidCount": 4,
+      "meanHeight": 39.95482546201232,
+      "aspectRatio": 1.549794661190965
+    },
+    {
+      "id": "silt-colonnade",
+      "primaryMaterial": "granular-ridge",
+      "materials": [
+        "granular-ridge"
+      ],
+      "shapes": [
+        "monolith-buttress"
+      ],
+      "organization": "clusters",
+      "solidCount": 3,
+      "meanHeight": 100.74096385542168,
+      "aspectRatio": 1.1204819277108433
+    },
+    {
+      "id": "shell-causeway",
+      "primaryMaterial": "broken-shell",
+      "materials": [
+        "broken-shell",
+        "folded-slab"
+      ],
+      "shapes": [
+        "cellular-shell"
+      ],
+      "organization": "bands",
+      "solidCount": 2,
+      "meanHeight": 65.62645914396887,
+      "aspectRatio": 1.4202334630350195
+    }
+  ],
+  "neighbors": {
+    "ash-strata": [
+      "film-laminate",
+      "schist-shear"
+    ],
+    "crystal-fibre": [
+      "fibre-silt",
+      "splayed-fibres"
+    ],
+    "ivory-basin": [
+      "blister-field",
+      "shell-chain"
+    ],
+    "cinder-ridge": [
+      "chalk-steps",
+      "cork-shelves",
+      "pressed-dunes"
+    ],
+    "pallid-membrane": [
+      "ruptured-film"
+    ],
+    "silt-gel": [
+      "gel-fibre",
+      "reversed-flow",
+      "shell-gel-delta"
+    ],
+    "schist-shear": [
+      "ash-strata",
+      "film-laminate",
+      "flake-thicket",
+      "lacquer-court",
+      "laminate-shell"
+    ],
+    "splayed-fibres": [
+      "crystal-fibre",
+      "fibre-silt",
+      "rib-vault",
+      "root-cistern",
+      "splinter-rotunda",
+      "split-rib-causeway",
+      "tendon-shelves"
+    ],
+    "shell-chain": [
+      "ivory-basin",
+      "shell-grit"
+    ],
+    "grain-laminate": [],
+    "tension-membrane": [
+      "bladder-weave"
+    ],
+    "shell-gel-delta": [
+      "gel-fibre",
+      "reversed-flow",
+      "silt-gel"
+    ],
+    "pressed-dunes": [
+      "cinder-ridge"
+    ],
+    "ruptured-film": [
+      "pallid-membrane"
+    ],
+    "reversed-flow": [
+      "gel-fibre",
+      "shell-gel-delta",
+      "silt-gel"
+    ],
+    "laminate-shell": [
+      "film-laminate",
+      "schist-shear"
+    ],
+    "fibre-silt": [
+      "crystal-fibre",
+      "splayed-fibres"
+    ],
+    "film-laminate": [
+      "ash-strata",
+      "laminate-shell",
+      "schist-shear"
+    ],
+    "gel-fibre": [
+      "reversed-flow",
+      "shell-gel-delta",
+      "silt-gel"
+    ],
+    "shell-grit": [
+      "shell-chain"
+    ],
+    "rib-vault": [
+      "root-cistern",
+      "splayed-fibres",
+      "splinter-rotunda",
+      "split-rib-causeway",
+      "tendon-shelves"
+    ],
+    "pleated-hide": [
+      "draped-bay",
+      "pale-sail"
+    ],
+    "blister-field": [
+      "foam-trenches",
+      "ivory-basin"
+    ],
+    "wax-tongues": [
+      "ember-cushions"
+    ],
+    "monolith-sill": [],
+    "bleached-court": [
+      "foam-trenches",
+      "stepped-bowl"
+    ],
+    "split-rib-causeway": [
+      "rib-vault",
+      "root-cistern",
+      "splayed-fibres",
+      "splinter-rotunda",
+      "tendon-shelves"
+    ],
+    "satin-fan": [
+      "quilted-scars"
+    ],
+    "chalk-steps": [
+      "cinder-ridge",
+      "cork-shelves"
+    ],
+    "porcelain-maw": [
+      "foam-trenches",
+      "shell-causeway",
+      "stepped-bowl"
+    ],
+    "amber-ribs": [
+      "resin-hollows",
+      "ribbed-delta"
+    ],
+    "pale-sail": [
+      "draped-bay",
+      "pleated-hide"
+    ],
+    "root-cistern": [
+      "rib-vault",
+      "splayed-fibres",
+      "splinter-rotunda",
+      "split-rib-causeway",
+      "tendon-shelves"
+    ],
+    "scab-islands": [],
+    "foam-trenches": [
+      "bleached-court",
+      "blister-field",
+      "porcelain-maw",
+      "shell-causeway"
+    ],
+    "resin-fall": [],
+    "tendon-shelves": [
+      "rib-vault",
+      "root-cistern",
+      "splayed-fibres",
+      "splinter-rotunda",
+      "split-rib-causeway"
+    ],
+    "felt-basin": [
+      "bladder-weave"
+    ],
+    "cork-shelves": [
+      "chalk-steps",
+      "cinder-ridge"
+    ],
+    "lacquer-court": [
+      "flake-thicket",
+      "schist-shear"
+    ],
+    "ribbed-delta": [
+      "amber-ribs"
+    ],
+    "bladder-weave": [
+      "felt-basin",
+      "tension-membrane"
+    ],
+    "flake-thicket": [
+      "lacquer-court",
+      "schist-shear"
+    ],
+    "resin-hollows": [
+      "amber-ribs"
+    ],
+    "sentinel-mass": [],
+    "stepped-bowl": [
+      "bleached-court",
+      "porcelain-maw"
+    ],
+    "draped-bay": [
+      "pale-sail",
+      "pleated-hide"
+    ],
+    "ember-cushions": [
+      "wax-tongues"
+    ],
+    "splinter-rotunda": [
+      "rib-vault",
+      "root-cistern",
+      "splayed-fibres",
+      "split-rib-causeway",
+      "tendon-shelves"
+    ],
+    "quilted-scars": [
+      "satin-fan"
+    ],
+    "silt-colonnade": [],
+    "shell-causeway": [
+      "foam-trenches",
+      "porcelain-maw"
+    ]
+  },
+  "uniform": {
+    "counts": {
+      "ash-strata": 611,
+      "crystal-fibre": 634,
+      "ivory-basin": 611,
+      "cinder-ridge": 619,
+      "pallid-membrane": 616,
+      "silt-gel": 605,
+      "schist-shear": 621,
+      "splayed-fibres": 608,
+      "shell-chain": 605,
+      "grain-laminate": 674,
+      "tension-membrane": 646,
+      "shell-gel-delta": 629,
+      "pressed-dunes": 604,
+      "ruptured-film": 602,
+      "reversed-flow": 616,
+      "laminate-shell": 624,
+      "fibre-silt": 621,
+      "film-laminate": 654,
+      "gel-fibre": 660,
+      "shell-grit": 635,
+      "rib-vault": 691,
+      "pleated-hide": 624,
+      "blister-field": 640,
+      "wax-tongues": 635,
+      "monolith-sill": 630,
+      "bleached-court": 642,
+      "split-rib-causeway": 613,
+      "satin-fan": 611,
+      "chalk-steps": 635,
+      "porcelain-maw": 645,
+      "amber-ribs": 625,
+      "pale-sail": 609,
+      "root-cistern": 652,
+      "scab-islands": 673,
+      "foam-trenches": 612,
+      "resin-fall": 612,
+      "tendon-shelves": 629,
+      "felt-basin": 623,
+      "cork-shelves": 623,
+      "lacquer-court": 620,
+      "ribbed-delta": 607,
+      "bladder-weave": 623,
+      "flake-thicket": 629,
+      "resin-hollows": 638,
+      "sentinel-mass": 607,
+      "stepped-bowl": 637,
+      "draped-bay": 659,
+      "ember-cushions": 649,
+      "splinter-rotunda": 629,
+      "quilted-scars": 626,
+      "silt-colonnade": 673,
+      "shell-causeway": 652
+    },
+    "perGrade": [
+      {
+        "ash-strata": 203,
+        "crystal-fibre": 222,
+        "ivory-basin": 198,
+        "cinder-ridge": 204,
+        "pallid-membrane": 204,
+        "silt-gel": 219,
+        "schist-shear": 199,
+        "splayed-fibres": 214,
+        "shell-chain": 217,
+        "grain-laminate": 206,
+        "tension-membrane": 186,
+        "shell-gel-delta": 200,
+        "pressed-dunes": 212,
+        "ruptured-film": 209,
+        "reversed-flow": 213,
+        "laminate-shell": 221,
+        "fibre-silt": 207,
+        "film-laminate": 209,
+        "gel-fibre": 244,
+        "shell-grit": 226,
+        "rib-vault": 217,
+        "pleated-hide": 200,
+        "blister-field": 225,
+        "wax-tongues": 191,
+        "monolith-sill": 206,
+        "bleached-court": 232,
+        "split-rib-causeway": 215,
+        "satin-fan": 192,
+        "chalk-steps": 216,
+        "porcelain-maw": 206,
+        "amber-ribs": 215,
+        "pale-sail": 185,
+        "root-cistern": 211,
+        "scab-islands": 236,
+        "foam-trenches": 197,
+        "resin-fall": 205,
+        "tendon-shelves": 228,
+        "felt-basin": 214,
+        "cork-shelves": 209,
+        "lacquer-court": 219,
+        "ribbed-delta": 195,
+        "bladder-weave": 199,
+        "flake-thicket": 205,
+        "resin-hollows": 209,
+        "sentinel-mass": 197,
+        "stepped-bowl": 226,
+        "draped-bay": 227,
+        "ember-cushions": 200,
+        "splinter-rotunda": 206,
+        "quilted-scars": 208,
+        "silt-colonnade": 214,
+        "shell-causeway": 205
+      },
+      {
+        "ash-strata": 212,
+        "crystal-fibre": 199,
+        "ivory-basin": 215,
+        "cinder-ridge": 204,
+        "pallid-membrane": 205,
+        "silt-gel": 192,
+        "schist-shear": 198,
+        "splayed-fibres": 201,
+        "shell-chain": 190,
+        "grain-laminate": 224,
+        "tension-membrane": 226,
+        "shell-gel-delta": 195,
+        "pressed-dunes": 208,
+        "ruptured-film": 197,
+        "reversed-flow": 196,
+        "laminate-shell": 211,
+        "fibre-silt": 202,
+        "film-laminate": 231,
+        "gel-fibre": 225,
+        "shell-grit": 198,
+        "rib-vault": 244,
+        "pleated-hide": 227,
+        "blister-field": 203,
+        "wax-tongues": 226,
+        "monolith-sill": 212,
+        "bleached-court": 200,
+        "split-rib-causeway": 199,
+        "satin-fan": 208,
+        "chalk-steps": 231,
+        "porcelain-maw": 224,
+        "amber-ribs": 225,
+        "pale-sail": 211,
+        "root-cistern": 213,
+        "scab-islands": 204,
+        "foam-trenches": 207,
+        "resin-fall": 205,
+        "tendon-shelves": 210,
+        "felt-basin": 200,
+        "cork-shelves": 207,
+        "lacquer-court": 211,
+        "ribbed-delta": 183,
+        "bladder-weave": 209,
+        "flake-thicket": 219,
+        "resin-hollows": 200,
+        "sentinel-mass": 213,
+        "stepped-bowl": 213,
+        "draped-bay": 218,
+        "ember-cushions": 214,
+        "splinter-rotunda": 208,
+        "quilted-scars": 202,
+        "silt-colonnade": 225,
+        "shell-causeway": 223
+      },
+      {
+        "ash-strata": 196,
+        "crystal-fibre": 213,
+        "ivory-basin": 198,
+        "cinder-ridge": 211,
+        "pallid-membrane": 207,
+        "silt-gel": 194,
+        "schist-shear": 224,
+        "splayed-fibres": 193,
+        "shell-chain": 198,
+        "grain-laminate": 244,
+        "tension-membrane": 234,
+        "shell-gel-delta": 234,
+        "pressed-dunes": 184,
+        "ruptured-film": 196,
+        "reversed-flow": 207,
+        "laminate-shell": 192,
+        "fibre-silt": 212,
+        "film-laminate": 214,
+        "gel-fibre": 191,
+        "shell-grit": 211,
+        "rib-vault": 230,
+        "pleated-hide": 197,
+        "blister-field": 212,
+        "wax-tongues": 218,
+        "monolith-sill": 212,
+        "bleached-court": 210,
+        "split-rib-causeway": 199,
+        "satin-fan": 211,
+        "chalk-steps": 188,
+        "porcelain-maw": 215,
+        "amber-ribs": 185,
+        "pale-sail": 213,
+        "root-cistern": 228,
+        "scab-islands": 233,
+        "foam-trenches": 208,
+        "resin-fall": 202,
+        "tendon-shelves": 191,
+        "felt-basin": 209,
+        "cork-shelves": 207,
+        "lacquer-court": 190,
+        "ribbed-delta": 229,
+        "bladder-weave": 215,
+        "flake-thicket": 205,
+        "resin-hollows": 229,
+        "sentinel-mass": 197,
+        "stepped-bowl": 198,
+        "draped-bay": 214,
+        "ember-cushions": 235,
+        "splinter-rotunda": 215,
+        "quilted-scars": 216,
+        "silt-colonnade": 234,
+        "shell-causeway": 224
+      }
+    ],
+    "repeats": 644,
+    "near": 1402,
+    "samples": 32768
+  },
+  "recent": {
+    "counts": {
+      "ash-strata": 606,
+      "crystal-fibre": 643,
+      "ivory-basin": 646,
+      "cinder-ridge": 612,
+      "pallid-membrane": 678,
+      "silt-gel": 626,
+      "schist-shear": 587,
+      "splayed-fibres": 549,
+      "shell-chain": 632,
+      "grain-laminate": 672,
+      "tension-membrane": 678,
+      "shell-gel-delta": 599,
+      "pressed-dunes": 660,
+      "ruptured-film": 641,
+      "reversed-flow": 607,
+      "laminate-shell": 619,
+      "fibre-silt": 645,
+      "film-laminate": 605,
+      "gel-fibre": 670,
+      "shell-grit": 643,
+      "rib-vault": 566,
+      "pleated-hide": 625,
+      "blister-field": 623,
+      "wax-tongues": 647,
+      "monolith-sill": 646,
+      "bleached-court": 642,
+      "split-rib-causeway": 555,
+      "satin-fan": 643,
+      "chalk-steps": 656,
+      "porcelain-maw": 559,
+      "amber-ribs": 622,
+      "pale-sail": 616,
+      "root-cistern": 599,
+      "scab-islands": 697,
+      "foam-trenches": 577,
+      "resin-fall": 679,
+      "tendon-shelves": 578,
+      "felt-basin": 617,
+      "cork-shelves": 598,
+      "lacquer-court": 640,
+      "ribbed-delta": 649,
+      "bladder-weave": 630,
+      "flake-thicket": 631,
+      "resin-hollows": 671,
+      "sentinel-mass": 661,
+      "stepped-bowl": 643,
+      "draped-bay": 667,
+      "ember-cushions": 686,
+      "splinter-rotunda": 588,
+      "quilted-scars": 638,
+      "silt-colonnade": 676,
+      "shell-causeway": 625
+    },
+    "perGrade": [
+      {
+        "ash-strata": 195,
+        "crystal-fibre": 214,
+        "ivory-basin": 223,
+        "cinder-ridge": 211,
+        "pallid-membrane": 211,
+        "silt-gel": 214,
+        "schist-shear": 190,
+        "splayed-fibres": 191,
+        "shell-chain": 209,
+        "grain-laminate": 210,
+        "tension-membrane": 215,
+        "shell-gel-delta": 200,
+        "pressed-dunes": 253,
+        "ruptured-film": 233,
+        "reversed-flow": 201,
+        "laminate-shell": 202,
+        "fibre-silt": 214,
+        "film-laminate": 195,
+        "gel-fibre": 226,
+        "shell-grit": 223,
+        "rib-vault": 188,
+        "pleated-hide": 208,
+        "blister-field": 213,
+        "wax-tongues": 188,
+        "monolith-sill": 213,
+        "bleached-court": 244,
+        "split-rib-causeway": 196,
+        "satin-fan": 202,
+        "chalk-steps": 220,
+        "porcelain-maw": 176,
+        "amber-ribs": 215,
+        "pale-sail": 207,
+        "root-cistern": 198,
+        "scab-islands": 220,
+        "foam-trenches": 194,
+        "resin-fall": 225,
+        "tendon-shelves": 205,
+        "felt-basin": 221,
+        "cork-shelves": 206,
+        "lacquer-court": 217,
+        "ribbed-delta": 210,
+        "bladder-weave": 193,
+        "flake-thicket": 197,
+        "resin-hollows": 234,
+        "sentinel-mass": 213,
+        "stepped-bowl": 216,
+        "draped-bay": 241,
+        "ember-cushions": 209,
+        "splinter-rotunda": 203,
+        "quilted-scars": 185,
+        "silt-colonnade": 229,
+        "shell-causeway": 207
+      },
+      {
+        "ash-strata": 208,
+        "crystal-fibre": 209,
+        "ivory-basin": 194,
+        "cinder-ridge": 204,
+        "pallid-membrane": 233,
+        "silt-gel": 202,
+        "schist-shear": 195,
+        "splayed-fibres": 187,
+        "shell-chain": 213,
+        "grain-laminate": 242,
+        "tension-membrane": 224,
+        "shell-gel-delta": 200,
+        "pressed-dunes": 209,
+        "ruptured-film": 194,
+        "reversed-flow": 206,
+        "laminate-shell": 229,
+        "fibre-silt": 218,
+        "film-laminate": 206,
+        "gel-fibre": 224,
+        "shell-grit": 201,
+        "rib-vault": 189,
+        "pleated-hide": 204,
+        "blister-field": 194,
+        "wax-tongues": 233,
+        "monolith-sill": 216,
+        "bleached-court": 192,
+        "split-rib-causeway": 179,
+        "satin-fan": 216,
+        "chalk-steps": 242,
+        "porcelain-maw": 201,
+        "amber-ribs": 224,
+        "pale-sail": 199,
+        "root-cistern": 194,
+        "scab-islands": 234,
+        "foam-trenches": 216,
+        "resin-fall": 216,
+        "tendon-shelves": 196,
+        "felt-basin": 196,
+        "cork-shelves": 181,
+        "lacquer-court": 226,
+        "ribbed-delta": 212,
+        "bladder-weave": 225,
+        "flake-thicket": 214,
+        "resin-hollows": 208,
+        "sentinel-mass": 216,
+        "stepped-bowl": 226,
+        "draped-bay": 213,
+        "ember-cushions": 234,
+        "splinter-rotunda": 188,
+        "quilted-scars": 238,
+        "silt-colonnade": 208,
+        "shell-causeway": 195
+      },
+      {
+        "ash-strata": 203,
+        "crystal-fibre": 220,
+        "ivory-basin": 229,
+        "cinder-ridge": 197,
+        "pallid-membrane": 234,
+        "silt-gel": 210,
+        "schist-shear": 202,
+        "splayed-fibres": 171,
+        "shell-chain": 210,
+        "grain-laminate": 220,
+        "tension-membrane": 239,
+        "shell-gel-delta": 199,
+        "pressed-dunes": 198,
+        "ruptured-film": 214,
+        "reversed-flow": 200,
+        "laminate-shell": 188,
+        "fibre-silt": 213,
+        "film-laminate": 204,
+        "gel-fibre": 220,
+        "shell-grit": 219,
+        "rib-vault": 189,
+        "pleated-hide": 213,
+        "blister-field": 216,
+        "wax-tongues": 226,
+        "monolith-sill": 217,
+        "bleached-court": 206,
+        "split-rib-causeway": 180,
+        "satin-fan": 225,
+        "chalk-steps": 194,
+        "porcelain-maw": 182,
+        "amber-ribs": 183,
+        "pale-sail": 210,
+        "root-cistern": 207,
+        "scab-islands": 243,
+        "foam-trenches": 167,
+        "resin-fall": 238,
+        "tendon-shelves": 177,
+        "felt-basin": 200,
+        "cork-shelves": 211,
+        "lacquer-court": 197,
+        "ribbed-delta": 227,
+        "bladder-weave": 212,
+        "flake-thicket": 220,
+        "resin-hollows": 229,
+        "sentinel-mass": 232,
+        "stepped-bowl": 201,
+        "draped-bay": 213,
+        "ember-cushions": 243,
+        "splinter-rotunda": 197,
+        "quilted-scars": 215,
+        "silt-colonnade": 239,
+        "shell-causeway": 223
+      }
+    ],
+    "repeats": 139,
+    "near": 788,
+    "samples": 32768
+  },
+  "repeatRate": [
+    0.0196533203125,
+    0.004241943359375
+  ],
+  "nearRate": [
+    0.04278564453125,
+    0.0240478515625
+  ]
+}

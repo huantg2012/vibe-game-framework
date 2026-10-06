@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import { createR100ProductionMap } from '../../../../../src/generation/world-study/r100-production-map';
+import { hydrateR100MasterWorld } from '../../../../../src/generation/world-study/r100-native-data';
+import { NativeBodyCollision } from '../../../../../src/generation/world-study/native-body-collision';
+const capture=JSON.parse(fs.readFileSync('docs/qa/artifacts/r100-i07-i09/b03-normal/report.json','utf8'));
+const recipe=capture.cases.find((c:any)=>c.id==='chalk-steps-medium').before.recipe;
+const deep=JSON.parse(fs.readFileSync('docs/qa/artifacts/r100-i07-i09/b03-deep/report.json','utf8'));
+const seat=deep.cases.find((c:any)=>c.world==='chalk-steps').steps[1].state.pos;
+const map=createR100ProductionMap(recipe),native=map.native!,world=hydrateR100MasterWorld(native,map.layout),body=new NativeBodyCollision(native,map.layout.tileMap);
+const sample=(x:number,y:number)=>{const i=Math.floor(y)*native.raster.width+Math.floor(x);return{x,y,matter:world.matterAt(x,y),role:world.roleAt(x,y),objectId:native.raster.objectId[i],height:native.raster.heightField[i]};};
+const samples=[];for(let dy=-10;dy<=10;dy+=5)for(let dx=-10;dx<=10;dx+=5)samples.push(sample(seat.x+dx,seat.y+dy));
+const result={scope:'Read-only regeneration of the exact recipe captured on 3092. No browser edits; actual post-west-input position from original report.',world:'chalk-steps',grade:'medium',seed:20261005,seat,body20Supported:body.supports(seat,10,10),samples,instances:native.definition.instances};
+assert(result.body20Supported);assert(samples.every(s=>s.role===null&&s.objectId===-1&&s.height===0));
+fs.writeFileSync('docs/qa/artifacts/r100-i07-i09/b03-deep/chalk-seat-diagnostic.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({seat,body20Supported:result.body20Supported,all25GroundWithoutVolume:true}));

@@ -1,0 +1,93 @@
+{
+  "status": "pass-bounded-six-current-views",
+  "at": "2026-10-06T05:28:21.760Z",
+  "reviewer": "root",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "captureReport": {
+    "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/report.json",
+    "sha256": "15e95f8cb3070072eaebe7edfe9384ee38ef91e4609d3d5868d3231b6eefeae3"
+  },
+  "images": [
+    {
+      "world": "tendon-shelves",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/tendon-shelves-low/current-shape.png",
+      "sha256": "ca55460fd382a80751379158120346b05473c91def66065e261aa0d23b842d99",
+      "actualDimensions": [
+        806,
+        538
+      ],
+      "verdict": "pass-bounded-current-view",
+      "observed": "Red-brown longitudinal fibrous side face, thick light foot edge and turning floor read as distinct surfaces."
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/tendon-shelves-medium/current-shape.png",
+      "sha256": "71b61e5db4fe3850ae4eb7d640f50968dd0c0934653aef1255695474c05159bd",
+      "actualDimensions": [
+        806,
+        538
+      ],
+      "verdict": "pass-bounded-current-view",
+      "observed": "Red-brown longitudinal fibrous side face, thick light foot edge and turning floor read as distinct surfaces."
+    },
+    {
+      "world": "tendon-shelves",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/tendon-shelves-severe/current-shape.png",
+      "sha256": "4e95146781d46d7bd8306f079b4986261a9c120543e128011bb6601bcac17d7f",
+      "actualDimensions": [
+        806,
+        538
+      ],
+      "verdict": "pass-bounded-current-view",
+      "observed": "Near foot edge and supported inner floor remain visible; actual light-eating shadow covers most upper wall, not accepted as full wall evidence."
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/sentinel-mass-low/current-shape.png",
+      "sha256": "448830b2aa5a758ba4d4ba8503a1df7cab2637c7a931c7411f4c9a3ae3cfc584",
+      "actualDimensions": [
+        806,
+        538
+      ],
+      "verdict": "pass-bounded-current-view",
+      "observed": "Blue-black high sloping mass joins a lower shoulder/front wall; inner corner has a different facing. Upper silhouette is partly hidden at medium/severe; this is not all-sides visibility proof."
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/sentinel-mass-medium/current-shape.png",
+      "sha256": "a44dd2eb41b3d7c3a01a6881d51bcb93dfb8933350fd8df7aefe8a217daf5970",
+      "actualDimensions": [
+        806,
+        538
+      ],
+      "verdict": "pass-bounded-current-view",
+      "observed": "Blue-black high sloping mass joins a lower shoulder/front wall; inner corner has a different facing. Upper silhouette is partly hidden at medium/severe; this is not all-sides visibility proof."
+    },
+    {
+      "world": "sentinel-mass",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final/sentinel-mass-severe/current-shape.png",
+      "sha256": "39593a30e665461708fdccc0dfa16a44c4c04773734968dc8fe7dd84c7363172",
+      "actualDimensions": [
+        806,
+        538
+      ],
+      "verdict": "pass-bounded-current-view",
+      "observed": "Blue-black high sloping mass joins a lower shoulder/front wall; inner corner has a different facing. Upper silhouette is partly hidden at medium/severe; this is not all-sides visibility proof."
+    }
+  ],
+  "scope": "Personally inspected all six unedited normal-engine PNGs from final52 source and seed20261005. Approve their use as current repaired views with stated occlusion limits.",
+  "limitations": [
+    "Actual browser captures806x538, not native960x640 or a pixel-exact shared camera.",
+    "Real movement leaves about1–16px per-frame position difference; call these comparable views.",
+    "Finite art views do not independently approve gameplay, performance, sound or human acceptance."
+  ]
+}

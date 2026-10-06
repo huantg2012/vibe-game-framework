@@ -1,0 +1,17 @@
+{
+  "status": "no-blocking-findings-in-read-only-scheduler-review",
+  "reviewer": "identity_shapes",
+  "at": "2026-10-06T03:07:46.353235+00:00",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i07-i09/play-continuation/after-reconciliation.mjs",
+    "sha256": "11c61d08e8257477b32c1a39e43a0a6a1c4a5c3c6ac8b3d1359ef555abeb0251"
+  },
+  "scope": [
+    "Exact prior accounting-SHA failure required, not arbitrary failure",
+    "Original18/4/24 complete and exit0, no144 started",
+    "Original process exits and other frozen inputs unchanged",
+    "Pure old20 recomputation compares all fields exceptcreatedAt including source/raw/plan hashes",
+    "No QA Chrome or old parent; same plan/new immutable outputs; batch nonzero stopsnext"
+  ],
+  "limitation": "No browser/check execution by reviewer; scheduler was stillwaiting, so this is code review only."
+}

@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b01-refined-source/source-snapshot.json",
+    "sha256": "f3f46ab8b2c6f01942d2183a0e897dce03a6a325d5fd20a5e754dd93ea9a42a9"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b01-final-source/source-snapshot.json",
+    "sha256": "fb7ab6d89cc1ef182af49b36b034759e036d97007c922d56b14cec3af329e8a9"
+  },
+  "mode": "unused-profiles",
+  "worlds": [
+    {
+      "worldId": "rib-vault",
+      "contentSha256": "b236550026043410a597d4158b58cdee1ae9cbc77913a567d6a5eb4241da2f55",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "wax-tongues",
+      "contentSha256": "c0a067c4f9bc7de86dbee029ade77ffcb0bd2b940f25ec07afe4a549e6e7f341",
+      "enabledBefore": false,
+      "enabledAfter": false
+    }
+  ],
+  "unchangedFiles": 1368,
+  "reviewedChanges": [
+    {
+      "file": "src/generation/world-study/native-volume-cellular.ts",
+      "reason": "Only unused unused-profiles shape function bodies changed; dispatch and selected instance versions unchanged"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-expansion.ts",
+      "reason": "Only unused unused-profiles shape function bodies changed; dispatch and selected instance versions unchanged"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

@@ -1,0 +1,107 @@
+{
+  "status": "pass",
+  "checks": 18,
+  "scope": "Read-only QA accounting contract, not additional gameplay. Original raw source remains unchanged.",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i07-i09/legacy20-play-recheck-077-078-v13/001-pressed-dunes-severe-20261005/report.json",
+    "sha256": "278009c4467d243dc05ae403e3dcb8dedbf1d6b908fb1a7d2aba853b4e9f71e4"
+  },
+  "actual": [
+    {
+      "id": "r100-kindling-deep-1",
+      "distanceFromEntry": 819.7950963503013,
+      "elapsedMs": 103762.51000000071,
+      "timing": "terminal upper bound; exact completion time was not captured",
+      "evidence": "entry-uncollected / terminal-collected / same-run-settled",
+      "settledProof": {
+        "kindlingGained": 12
+      }
+    },
+    {
+      "id": "r100-contaminant-deep-2",
+      "distanceFromEntry": 826.9461893013354,
+      "elapsedMs": 103762.51000000071,
+      "timing": "terminal upper bound; exact completion time was not captured",
+      "evidence": "entry-uncollected / terminal-collected / same-run-settled",
+      "settledProof": {
+        "returnedIds": [
+          "CAT_48dac475-50eb-492b-9a62-b3aead01ca2c_r100-contaminant-deep-2"
+        ]
+      }
+    }
+  ],
+  "results": [
+    {
+      "name": "actual-late-and-adjacent-pickups",
+      "status": "pass"
+    },
+    {
+      "name": "no-actual-E-attempt",
+      "status": "pass"
+    },
+    {
+      "name": "different-run",
+      "status": "pass"
+    },
+    {
+      "name": "already-settled-at-entry",
+      "status": "pass"
+    },
+    {
+      "name": "unsettled-return",
+      "status": "pass"
+    },
+    {
+      "name": "death-is-not-a-return",
+      "status": "pass"
+    },
+    {
+      "name": "missing-terminal-transition",
+      "status": "pass"
+    },
+    {
+      "name": "relocated-node-does-not-match-entry",
+      "status": "pass"
+    },
+    {
+      "name": "entry-pickup-does-not-qualify",
+      "status": "pass"
+    },
+    {
+      "name": "duplicate-node-id",
+      "status": "pass"
+    },
+    {
+      "name": "no-kindling-credit",
+      "status": "pass"
+    },
+    {
+      "name": "existing-kindling-cannot-be-recredited",
+      "status": "pass"
+    },
+    {
+      "name": "no-reveal",
+      "status": "pass"
+    },
+    {
+      "name": "revealed-but-not-returned",
+      "status": "pass"
+    },
+    {
+      "name": "returned-id-without-stash-item",
+      "status": "pass"
+    },
+    {
+      "name": "stash-item-from-other-run",
+      "status": "pass"
+    },
+    {
+      "name": "existing-item-not-new-loot",
+      "status": "pass"
+    },
+    {
+      "name": "already-recorded-pickup-not-counted-twice",
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,343 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-06T06:09:26.963Z",
+  "gameUrl": "http://127.0.0.1:3100",
+  "sourceManifest": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/server-manifest.json",
+  "sourceManifestOriginal": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+  "servedSourceAnchors": {
+    "src/generated/r100-native-worlds.ts": "a4c35a8751271a052edb72475058705fe6977cfbf3aa2f8a99b867e56b009fe3",
+    "src/generated/r100-world-appearance.ts": "509e6b807f2f62385b7ccc0cccd672e0272d2bbf532f36251bee81f02e46a88d",
+    "src/generated/r100-world-selection.ts": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182",
+    "src/generation/world-study/native-volume-expansion.ts": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6",
+    "src/generation/world-study/r100-package.ts": "47fe6158ac41a4df332460de5be8355adeb58830b56246014c9b67dcf7cf5bd7",
+    "src/generation/world-study/r100-world-selection.ts": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40",
+    "src/systems/r100-world/surface-bake.ts": "7536bd4b7282cde4dfdfecbf1b98bd771ec2f817588d0a6070cbb41469c57ff4",
+    "src/scenes/purification-scene.ts": "f5b94d1083a7a8b37992dc76892400ad621e3cef167de906d6f42fa7adf39a5e",
+    "src/scenes/rift-scene.ts": "6f39cad6e744c5de2985a21631dbb782f62a1c0a86652a2206ef29c195eaa43b",
+    "src/config/constants.ts": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91",
+    "src/systems/contaminant-system.ts": "d0b42b355052401b60c0ed954a55bb5d6cfc8b5bcaaa2a7f47c423ab3ca3f23c",
+    "src/ui/inventory-presenter.ts": "598447af95b15e261ce758f6a1632d2d0de619156acaa93d07785eb895892e61",
+    "src/managers/save-manager.ts": "245d98e29dcfd87f7155fe7ae046adbe925aba834d4fa7cfc9eaa0e5272dd19f",
+    "src/systems/inventory-store.ts": "b68d2daa85f4b291dcd86e52b890d865146098430ae31da73ac7dcff5e974782"
+  },
+  "storageSource": "docs/qa/artifacts/r100-p13/natural-low-final/low-growth/browser-storage.json",
+  "storage": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+  "review": {
+    "policy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/review-policy.json",
+    "policySha256": "c4fe4c3a84131753d845cfc5680183f77c4003001648a3f594e9f368e92375b4",
+    "tool": "tools/qa/r100-i09-review-continuous.mjs",
+    "toolSha256": "3e626ef26bc10eb3bcd5967225049af16cf4f244d637eb85337c998616fba8d9",
+    "status": "requires-independent-review-of-actual-results",
+    "completionIsExperienceApproval": false
+  },
+  "sourceSaveSha256": "a1fa28ddb6eaf9f042c22fd62ffa2f4b144d55936dc3c8b07bc0e3f98201d88e",
+  "initialCycle": 30,
+  "initialReserve": 20,
+  "selectionReport": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/sampling-evidence.json",
+  "selectionReportOriginal": "docs/qa/artifacts/r100-i09/selection-final52/selection.json",
+  "harnessCopies": [
+    {
+      "original": "tools/qa/r100-i09-journey.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-i09-journey.mjs",
+      "sha256": "dfde2f7429261bb81008e1f341c7e862ee6d0f71bc8c629f553b948066022bb3"
+    },
+    {
+      "original": "tools/qa/r100-i09-review-policy.json",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-i09-review-policy.json",
+      "sha256": "c4fe4c3a84131753d845cfc5680183f77c4003001648a3f594e9f368e92375b4"
+    },
+    {
+      "original": "tools/qa/r100-i09-review-continuous.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-i09-review-continuous.mjs",
+      "sha256": "3e626ef26bc10eb3bcd5967225049af16cf4f244d637eb85337c998616fba8d9"
+    },
+    {
+      "original": "tools/qa/r100-i09-costed-encounters.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "original": "tools/qa/r100-i09-tool-slots.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "original": "tools/qa/r100-i09-search-receipts.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "original": "tools/qa/r100-observed-searches.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "original": "tools/qa/i27-journey-driver.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "original": "tools/qa/r100-i09-final-probe.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "71b04a770d8863060b6f325c4c286c5f31e39e68c8f813cca159ee3832b10f75"
+    },
+    {
+      "original": "package-lock.json",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "original": "src/systems/last-light-locomotion.ts",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "original": "src/systems/last-light-layout.ts",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    },
+    {
+      "original": "tools/contam-preview/tsconfig.json",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "original": "tools/contam-preview/phaser-stub.ts",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/contam-preview/phaser-stub.ts",
+      "sha256": "3c2cd48b23caf46274ce924d5b36ae161159534ca60aef916c3dcc069fc21be7"
+    },
+    {
+      "original": "/Users/yilungao/coh/tools/qa/r100-i09-continuous.mjs",
+      "copy": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/harness-sources/tools/qa/r100-i09-continuous.mjs",
+      "sha256": "f41e6a49c35eb6158e7152dcf878c2feacc8165b1425cb7de5e919bca14084b5"
+    }
+  ],
+  "worldIds": [
+    "amber-ribs",
+    "ash-strata",
+    "bladder-weave",
+    "bleached-court",
+    "blister-field",
+    "chalk-steps",
+    "cinder-ridge",
+    "cork-shelves",
+    "crystal-fibre",
+    "draped-bay",
+    "ember-cushions",
+    "felt-basin",
+    "fibre-silt",
+    "film-laminate",
+    "flake-thicket",
+    "foam-trenches",
+    "gel-fibre",
+    "grain-laminate",
+    "ivory-basin",
+    "lacquer-court",
+    "laminate-shell",
+    "monolith-sill",
+    "pale-sail",
+    "pallid-membrane",
+    "pleated-hide",
+    "porcelain-maw",
+    "pressed-dunes",
+    "quilted-scars",
+    "resin-fall",
+    "resin-hollows",
+    "reversed-flow",
+    "rib-vault",
+    "ribbed-delta",
+    "root-cistern",
+    "ruptured-film",
+    "satin-fan",
+    "scab-islands",
+    "schist-shear",
+    "sentinel-mass",
+    "shell-causeway",
+    "shell-chain",
+    "shell-gel-delta",
+    "shell-grit",
+    "silt-colonnade",
+    "silt-gel",
+    "splayed-fibres",
+    "splinter-rotunda",
+    "split-rib-causeway",
+    "stepped-bowl",
+    "tendon-shelves",
+    "tension-membrane",
+    "wax-tongues"
+  ],
+  "fixedFiles": [
+    {
+      "file": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/server-manifest.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i09/selection-final52/selection.json",
+      "sha256": "9a433c250e76b35fdd4038edcc483aa04787b31f4e935cbef324610c2e535354"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/sampling-evidence.json",
+      "sha256": "9a433c250e76b35fdd4038edcc483aa04787b31f4e935cbef324610c2e535354"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-p13/natural-low-final/low-growth/browser-storage.json",
+      "sha256": "aeae24a71449f19d7e3278b553db7f261056ccef05a7b618fd7f1f4b1840524b"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+      "sha256": "965a98687e87690f71115472384fba50578ff9618aed328793c3a3bd1cf33b6e"
+    },
+    {
+      "file": "tools/qa/r100-i09-review-policy.json",
+      "sha256": "c4fe4c3a84131753d845cfc5680183f77c4003001648a3f594e9f368e92375b4"
+    },
+    {
+      "file": "tools/qa/r100-i09-review-continuous.mjs",
+      "sha256": "3e626ef26bc10eb3bcd5967225049af16cf4f244d637eb85337c998616fba8d9"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i09/continuous-final52/review-policy.json",
+      "sha256": "c4fe4c3a84131753d845cfc5680183f77c4003001648a3f594e9f368e92375b4"
+    },
+    {
+      "file": "tools/qa/r100-i09-journey.mjs",
+      "sha256": "dfde2f7429261bb81008e1f341c7e862ee6d0f71bc8c629f553b948066022bb3"
+    },
+    {
+      "file": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "71b04a770d8863060b6f325c4c286c5f31e39e68c8f813cca159ee3832b10f75"
+    },
+    {
+      "file": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    },
+    {
+      "file": "tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "file": "tools/contam-preview/phaser-stub.ts",
+      "sha256": "3c2cd48b23caf46274ce924d5b36ae161159534ca60aef916c3dcc069fc21be7"
+    },
+    {
+      "file": "/Users/yilungao/coh/tools/qa/r100-i09-continuous.mjs",
+      "sha256": "f41e6a49c35eb6158e7152dcf878c2feacc8165b1425cb7de5e919bca14084b5"
+    }
+  ],
+  "branches": [
+    {
+      "policy": "low",
+      "folder": "low",
+      "rounds": 12,
+      "grades": [
+        "low",
+        "low",
+        "low",
+        "low",
+        "low",
+        "low",
+        "low",
+        "low",
+        "low",
+        "low",
+        "low",
+        "low"
+      ]
+    },
+    {
+      "policy": "medium",
+      "folder": "medium",
+      "rounds": 12,
+      "grades": [
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium",
+        "medium"
+      ]
+    },
+    {
+      "policy": "severe",
+      "folder": "severe",
+      "rounds": 12,
+      "grades": [
+        "severe",
+        "severe",
+        "severe",
+        "severe",
+        "severe",
+        "severe",
+        "severe",
+        "severe",
+        "severe",
+        "severe",
+        "severe",
+        "severe"
+      ]
+    },
+    {
+      "policy": "alternating",
+      "folder": "alternating",
+      "rounds": 12,
+      "grades": [
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe"
+      ]
+    }
+  ],
+  "searchLimit": 3,
+  "postReturnManagement": true,
+  "entryWaitMs": 600,
+  "concurrency": 1,
+  "method": "Four earned-save branches, each12 consecutive actual departures. Natural world/seed, no gear grants or selected world, no replacement after death. Same mature ancestor; every branch mutates its own save through real search/return/repair/growth/offering.",
+  "limitation": "I09 selection persistence and finite continuous experience. Does not repeat I06/I13 three supply stages or establish final economic efficiency; 48 trips do not estimate all-world probabilities."
+}

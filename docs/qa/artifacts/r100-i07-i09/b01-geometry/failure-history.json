@@ -1,0 +1,17 @@
+{
+  "failures": [
+    {
+      "attempt": 1,
+      "assertion": "cellular-shell: source light is on actual material",
+      "cause": "A narrow triangle-local source mark did not occupy a visible native raster pixel.",
+      "action": "Widened the mark within the same actual face; subsequent check passed this assertion."
+    },
+    {
+      "attempt": 2,
+      "assertion": "Two cushion leaves retain a body-width floor between them",
+      "cause": "The test demanded a horizontal crossing, while the art contract and leaf geometry specify a diagonal lane.",
+      "action": "Stopped retries and escalated. Director reviewed geometry and authorized two adjacent complete-body diagonal sweeps. No geometry or body threshold was changed for this correction."
+    }
+  ],
+  "subsequentResult": "32 expansion cases pass after reviewed test correction; 48 legacy geometry hashes and 20 world hashes unchanged."
+}

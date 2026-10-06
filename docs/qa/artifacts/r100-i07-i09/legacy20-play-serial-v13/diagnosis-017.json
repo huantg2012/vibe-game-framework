@@ -1,0 +1,58 @@
+{
+  "status": "fixed-attempt-search-not-achieved-paired-grade-verification-pending",
+  "case": "017-ivory-basin-severe-20261005",
+  "method": "Read-only report/JSONL/controller audit; no new game run or hidden actor/loot knowledge fed to the controller.",
+  "reportedOutcome": "extract",
+  "collected": 0,
+  "errors": [],
+  "timeline": [
+    {
+      "simulationMs": 51317.95,
+      "event": "One eligible observed contested remain at(788,596), player(609.59,509.67);HP145,chaos48.07. Current return route445.83px, speed80, reservedChaos17.32,stop=false."
+    },
+    {
+      "simulationMs": [
+        57301.04,
+        60967.58,
+        63617.47,
+        66550.68
+      ],
+      "event": "Four actual voluntary approach-policy swings at the same currently observed ENM_INF_03. During51–77s the player ranged x432.62–626.90/y509.67–576.24, never reaching the target."
+    },
+    {
+      "simulationMs": 77000,
+      "event": "The25s observed-target approach cap expires; target is deferred for the rest of the trip. Driver resumes its original geometry goal."
+    },
+    {
+      "simulationMs": 96216.16,
+      "event": "After another19s exploration the player returns near(600.61,507.16),HP115,chaos120.86. The existing search-chaos cutoff120 stops further approach; immediately preceding return-budget calculation still hadstop=false."
+    },
+    {
+      "simulationMs": 121215.14,
+      "event": "Actual empty extraction completes;HP115,chaos138.91,baseSettled true."
+    }
+  ],
+  "physicalEvidence": "Existing body routes were found and executed, including the eventual return. There was no no-path/body-support error. This does not prove the guarded target could be safely searched under every timing.",
+  "interpretation": "The observed failure is a specific controller approach/engagement and deferral outcome which consumed the trip risk margin. Initial and late return estimates do not establish an inherently impossible return budget. This fixed attempt remains an empty return, not search/extraction evidence. The original acceptance contract is assessed across both original fixed seeds per world/grade: at least one actual search/extraction plus the other different-seed pressure/route/failure process. Runner primary/secondary intent labels do not override that contract.",
+  "performance": {
+    "activeSimulationMs": 121171.81000000091,
+    "frames": 7247,
+    "intervalCount": 7247,
+    "frameIntervalP95": 18.90000009536743,
+    "frameIntervalP99": 21.299999713897705,
+    "over50Count": 0,
+    "over50Fraction": 0,
+    "cpuDispatchP95": 14.5,
+    "lastRenderMsP95": 2.1999998092651367,
+    "referenceContext": "Local macOS Chrome headless 1440x960, game logical 960x640; other QA browser/CPU tasks may run concurrently. CPU dispatch and queued render time are not GPU timing. Active scene/non-ended only; read-only scene snapshot after CPU timestamp.",
+    "meets60SecondDuration": true
+  },
+  "sourceHashes": {
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/017-ivory-basin-severe-20261005/report.json": "56f8f23e4668d44ea9a442c62bd434453a2223cb9eb6dd7540ca14301f86a719",
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/017-ivory-basin-severe-20261005/severe/journey.jsonl": "21bf8bf962e9555b69e05cc6bda2b9e0799bf00c5c97d6c3baffba26c8ce8de9",
+    "tools/qa/r100-i07-i09-journey.mjs": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f",
+    "tools/world-study/r100-p13-costed-encounters.mjs": "8850a30414e72f0465304fc3c90e38a0e08406b9e442b9b8ea7bfaea80ae3715"
+  },
+  "changesMade": "None to gameplay, harness, seed, thresholds or equipment.",
+  "harnessSlotLimitation": "The unchanged earned inventory has Q ash tooth, F blind needle compass, G empty photo frame with4 real remaining uses, and an empty passive slot. Original P13 useKnown only considers Q/F, so its current escape/search controller cannot use the known G image lure. Journey equipOwned also assumes slot2 is passive; this is a harness compatibility issue to resolve separately before the continuous I09 chain, without editing historical P13 or this frozen120-case run."
+}

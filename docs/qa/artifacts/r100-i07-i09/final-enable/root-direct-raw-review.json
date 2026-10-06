@@ -1,0 +1,37 @@
+{
+  "status": "pass-bounded-source-and-recorded-check-review",
+  "reviewer": "root",
+  "at": "2026-10-06T05:40:49.454813+00:00",
+  "scope": "QA HTTP transport verifier only, not gameplay qualification",
+  "inputs": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "71b04a770d8863060b6f325c4c286c5f31e39e68c8f813cca159ee3832b10f75"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "f41e6a49c35eb6158e7152dcf878c2feacc8165b1425cb7de5e919bca14084b5"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    }
+  ],
+  "reviewed": [
+    "direct-raw.diff",
+    "direct-raw-verification.json",
+    "direct-raw-check.log",
+    "direct-raw-continuous-check.log"
+  ],
+  "findings": [],
+  "confirmed": [
+    "Original HTTP body is accepted only when its SHA exactly matches the frozen source SHA.",
+    "Otherwise AST requires exactly one non-executing literal export and decoded bytes must match the same original SHA.",
+    "Both wrappers call the same verifier; wrong responses preserve body, file and URL.",
+    "Captured 342 direct responses and logged rejection cases pass; root independently recomputed current tool and policy hashes.",
+    "Original production-final52 failed before gameplay; new production-final52-recheck is a distinct attempt."
+  ],
+  "supersedesOnlyToolHashScope": "root-raw-wrapper-review.json",
+  "gameplayPolicyChanged": false,
+  "runtimeSourceChanged": false
+}

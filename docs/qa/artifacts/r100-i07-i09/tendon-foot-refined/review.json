@@ -1,0 +1,195 @@
+{
+  "source": "../b07-refined-source/source-snapshot.json",
+  "scope": "Actual real-keyboard second mouth transit at original medium 20261005; no state/fog edits. Geometry routing is diagnostic, not novice play.",
+  "status": "bounded-body-transit-and-visible-edge-pass",
+  "reportSha256": "3c818b22e20b895ff3674ab82448b7b2ef214b780d92009dc9fa73f6c7ab28a6",
+  "checks": [
+    {
+      "at": "2026-10-06T00:42:24.628Z",
+      "event": "precise-segment-validation",
+      "start": {
+        "x": 668.1973177544637,
+        "y": 521.0594542500451
+      },
+      "goal": {
+        "label": "02-front-mouth",
+        "x": 670.1138550126403,
+        "y": 526.471520654267,
+        "precise": true,
+        "faces": [
+          [
+            "d",
+            "east"
+          ]
+        ]
+      },
+      "validation": {
+        "halfWidth": 10,
+        "halfHeight": 10,
+        "start": true,
+        "end": true,
+        "fraction": 1
+      }
+    },
+    {
+      "at": "2026-10-06T00:42:25.245Z",
+      "event": "precise-segment-validation",
+      "start": {
+        "x": 672.8335535276418,
+        "y": 527.6512538943626
+      },
+      "goal": {
+        "label": "03-inner-turn",
+        "x": 788.0937700428253,
+        "y": 547.8432227266411,
+        "precise": true,
+        "faces": [
+          [
+            "w",
+            "north"
+          ]
+        ]
+      },
+      "validation": {
+        "halfWidth": 10,
+        "halfHeight": 10,
+        "start": true,
+        "end": true,
+        "fraction": 1
+      }
+    },
+    {
+      "at": "2026-10-06T00:42:30.344Z",
+      "event": "precise-segment-validation",
+      "start": {
+        "x": 788.0435702469248,
+        "y": 544.1049780219307
+      },
+      "goal": {
+        "label": "04-side-exit",
+        "x": 757.1502547820735,
+        "y": 718.6631831039566,
+        "precise": true,
+        "faces": [
+          [
+            "w",
+            "north"
+          ]
+        ]
+      },
+      "validation": {
+        "halfWidth": 10,
+        "halfHeight": 10,
+        "start": true,
+        "end": true,
+        "fraction": 1
+      }
+    }
+  ],
+  "completedSegments": [
+    {
+      "at": "2026-10-06T00:42:24.932Z",
+      "event": "precise-segment-complete",
+      "goal": {
+        "label": "02-front-mouth",
+        "x": 670.1138550126403,
+        "y": 526.471520654267,
+        "precise": true,
+        "faces": [
+          [
+            "d",
+            "east"
+          ]
+        ]
+      },
+      "actual": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 669.8774919523538,
+          "y": 527.02936578573
+        },
+        "hp": 100,
+        "chaos": 21.107741657999814,
+        "elapsedMs": 8716.3
+      },
+      "supported": true
+    },
+    {
+      "at": "2026-10-06T00:42:29.997Z",
+      "event": "precise-segment-complete",
+      "goal": {
+        "label": "03-inner-turn",
+        "x": 788.0937700428253,
+        "y": 547.8432227266411,
+        "precise": true,
+        "faces": [
+          [
+            "w",
+            "north"
+          ]
+        ]
+      },
+      "actual": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 787.7864893796597,
+          "y": 546.9279359467831
+        },
+        "hp": 85,
+        "chaos": 24.46984451399978,
+        "elapsedMs": 13782.8
+      },
+      "supported": true
+    },
+    {
+      "at": "2026-10-06T00:42:36.994Z",
+      "event": "precise-segment-complete",
+      "goal": {
+        "label": "04-side-exit",
+        "x": 757.1502547820735,
+        "y": 718.6631831039566,
+        "precise": true,
+        "faces": [
+          [
+            "w",
+            "north"
+          ]
+        ]
+      },
+      "actual": {
+        "scene": "rift",
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 757.2860742966162,
+          "y": 719.0826988544194
+        },
+        "hp": 85,
+        "chaos": 29.11486534199955,
+        "elapsedMs": 20782.5
+      },
+      "supported": true
+    }
+  ],
+  "pageErrors": [],
+  "authorViewed": [
+    "02-front-mouth-east.png",
+    "03-inner-turn-north.png",
+    "04-side-exit-north.png"
+  ],
+  "independentReviewer": "root",
+  "independentViewed": [
+    "02-front-mouth-east.png",
+    "03-inner-turn-north.png",
+    "04-side-exit-north.png"
+  ],
+  "limits": [
+    "Side exit outer upper wall is obscured by actual light-eater; not a complete outer-wall visual pass.",
+    "Original B05 evidence remains unchanged.",
+    "Not natural full search/extraction or all seeds."
+  ]
+}

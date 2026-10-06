@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "completedAt": "2026-10-06T09:31:42.976441+00:00",
+  "action": "SIGTERM only verified owned frozen QA server",
+  "pid": 25997,
+  "port": 3100,
+  "command": "node tools/world-study/r100-frozen-server.mjs",
+  "observedCwd": "/Users/yilungao/coh",
+  "configuredViteRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-I0v2gE",
+  "cwdNote": "Launcher stays in repository; Vite root is explicitly the frozen temporary source directory.",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "before": {
+    "pidCommandVerified": true,
+    "solePortListenerVerified": true,
+    "manifestPidPortRootVerified": true
+  },
+  "after": {
+    "pidExited": true,
+    "portHasNoListener": true,
+    "frozenDirectoryPreserved": true,
+    "sourceManifestUnchanged": true
+  },
+  "scope": "No signal sent to 3027 or any other process. No directories deleted; no browser or tests started."
+}

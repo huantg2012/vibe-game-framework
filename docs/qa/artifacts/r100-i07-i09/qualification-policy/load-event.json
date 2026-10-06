@@ -1,0 +1,96 @@
+{
+  "recordedAt": "2026-10-05T14:49:12.213Z",
+  "observed": "Simultaneous 60s timeouts across old and new worlds while shell reads and tsc were also delayed. Original logs retained.",
+  "action": "Director stopped B01 runner and all browser scheduling. B02 had completed before stop; tsc had completed. Only old20 two workers continued.",
+  "cause": "Load-related execution interruption inferred from simultaneous cohorts and recovery after reducing scheduling; individual failures still require exact executor/seed recheck.",
+  "originalFailures": {
+    "legacy20-qualification/full": [
+      {
+        "world": "tension-membrane",
+        "grade": "low",
+        "seed": 2342709434,
+        "cohort": "ordinary",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60228.87079199997
+      },
+      {
+        "world": "tension-membrane",
+        "grade": "low",
+        "seed": 2472859958,
+        "cohort": "ordinary",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60256.59362499998
+      },
+      {
+        "world": "tension-membrane",
+        "grade": "low",
+        "seed": 2603010482,
+        "cohort": "ordinary",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60065.64216699998
+      }
+    ],
+    "b01-qualification/full": [
+      {
+        "world": "rib-vault",
+        "grade": "medium",
+        "seed": 1171354717,
+        "cohort": "ordinary",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60084.42333300001
+      },
+      {
+        "world": "rib-vault",
+        "grade": "medium",
+        "seed": 1301505241,
+        "cohort": "ordinary",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60117.32970899998
+      },
+      {
+        "world": "rib-vault",
+        "grade": "medium",
+        "seed": 1431655765,
+        "cohort": "ordinary",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60071.39799999999
+      },
+      {
+        "world": "rib-vault",
+        "grade": "medium",
+        "seed": 1561806289,
+        "cohort": "ordinary",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60369.840790999995
+      }
+    ],
+    "b02-library": [
+      {
+        "world": "bleached-court",
+        "grade": "medium",
+        "seed": 20261002,
+        "cohort": "smoke",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60546.31816699999
+      },
+      {
+        "world": "bleached-court",
+        "grade": "medium",
+        "seed": 20261003,
+        "cohort": "smoke",
+        "error": "Case exceeded 60000ms; no replacement seed",
+        "durationMs": 60002.864375000005
+      }
+    ]
+  },
+  "recoveryWindow": {
+    "completed": 2047,
+    "count": 50,
+    "failures": 0,
+    "minMs": 821.8063330000732,
+    "medianMs": 1060.0830000001006,
+    "p95Ms": 1555.9645000000019,
+    "maxMs": 1657.1007919998374
+  },
+  "performanceClaim": false
+}

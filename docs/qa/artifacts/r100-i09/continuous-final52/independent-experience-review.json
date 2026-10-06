@@ -1,0 +1,519 @@
+{
+  "version": 1,
+  "status": "bounded-experience-pass",
+  "reviewer": "root",
+  "at": "2026-10-06T08:13:31.266315+00:00",
+  "scope": "I09最终52世界池、四条各12趟自然连续存档的独立有限体验判断。用户终审分开。",
+  "method": [
+    "根直接核四份原报告的实际拾取、连续存档、结算和准备支付，与派生复审交叉比较。",
+    "逐趟核同run世界历史及工具归来余次，死亡遗失和耗尽分开；逐事件选池重放/输入检查由已读复审工具完成，不冒充根亲自操纵全部48趟。",
+    "根亲看已登记11张正常原帧，其他有限视觉证据由独立美术复核支持。"
+  ],
+  "metrics": {
+    "trips": 48,
+    "searchedRemains": 105,
+    "actualPickups": 106,
+    "nearEntryPickups": 1,
+    "fieldMs": 3585689.950000086,
+    "searchesPerFieldMinute": 1.7569840359453972,
+    "extractedRemains": 104,
+    "extractedRemainsPerFieldMinute": 1.740250854650679,
+    "searchAndExtract": 44,
+    "emptyReturns": 2,
+    "nearEntryOnlyReturns": 0,
+    "deaths": 2,
+    "reserveDelta": 16,
+    "repairSpent": 287,
+    "growthSpent": 256,
+    "returnedItems": 50,
+    "destroyedItems": 50,
+    "deathLostActiveTools": 5,
+    "tools": {
+      "Q": {
+        "attempts": 62,
+        "consumed": 55,
+        "noConsumption": 7
+      },
+      "F": {
+        "attempts": 52,
+        "consumed": 43,
+        "noConsumption": 9
+      },
+      "G": {
+        "attempts": 69,
+        "consumed": 53,
+        "noConsumption": 16
+      }
+    }
+  },
+  "distinctWorlds": 33,
+  "transitions": {
+    "count": 44,
+    "sameWorld": 0,
+    "nearWorld": 1
+  },
+  "branches": [
+    {
+      "policy": "low",
+      "metrics": {
+        "trips": 12,
+        "searchedRemains": 24,
+        "actualPickups": 24,
+        "nearEntryPickups": 0,
+        "fieldMs": 855398.9900000258,
+        "searchesPerFieldMinute": 1.6834249476959944,
+        "extractedRemains": 24,
+        "extractedRemainsPerFieldMinute": 1.6834249476959944,
+        "searchAndExtract": 12,
+        "emptyReturns": 0,
+        "nearEntryOnlyReturns": 0,
+        "deaths": 0,
+        "reserveDelta": 10,
+        "repairSpent": 81,
+        "growthSpent": 50,
+        "returnedItems": 11,
+        "destroyedItems": 13,
+        "deathLostActiveTools": 0,
+        "tools": {
+          "Q": {
+            "attempts": 11,
+            "consumed": 8,
+            "noConsumption": 3
+          },
+          "F": {
+            "attempts": 17,
+            "consumed": 17,
+            "noConsumption": 0
+          },
+          "G": {
+            "attempts": 20,
+            "consumed": 14,
+            "noConsumption": 6
+          }
+        }
+      },
+      "recurrence": {
+        "transitions": 11,
+        "same": 0,
+        "near": 0,
+        "sameRate": 0,
+        "nearRate": 0,
+        "withinEight": 1,
+        "expectedSameFromActualWeights": 0.0465358840242343,
+        "expectedNearFromActualWeights": 0.17356673469776154,
+        "longestSameMaterial": 2,
+        "longestSameShapes": 1
+      }
+    },
+    {
+      "policy": "medium",
+      "metrics": {
+        "trips": 12,
+        "searchedRemains": 30,
+        "actualPickups": 31,
+        "nearEntryPickups": 1,
+        "fieldMs": 878031.5200000117,
+        "searchesPerFieldMinute": 2.0500402992366107,
+        "extractedRemains": 30,
+        "extractedRemainsPerFieldMinute": 2.0500402992366107,
+        "searchAndExtract": 12,
+        "emptyReturns": 0,
+        "nearEntryOnlyReturns": 0,
+        "deaths": 0,
+        "reserveDelta": 6,
+        "repairSpent": 66,
+        "growthSpent": 78,
+        "returnedItems": 14,
+        "destroyedItems": 11,
+        "deathLostActiveTools": 0,
+        "tools": {
+          "Q": {
+            "attempts": 16,
+            "consumed": 15,
+            "noConsumption": 1
+          },
+          "F": {
+            "attempts": 8,
+            "consumed": 5,
+            "noConsumption": 3
+          },
+          "G": {
+            "attempts": 15,
+            "consumed": 11,
+            "noConsumption": 4
+          }
+        }
+      },
+      "recurrence": {
+        "transitions": 11,
+        "same": 0,
+        "near": 0,
+        "sameRate": 0,
+        "nearRate": 0,
+        "withinEight": 0,
+        "expectedSameFromActualWeights": 0.046854497366441344,
+        "expectedNearFromActualWeights": 0.22696585019078214,
+        "longestSameMaterial": 2,
+        "longestSameShapes": 1
+      }
+    },
+    {
+      "policy": "severe",
+      "metrics": {
+        "trips": 12,
+        "searchedRemains": 23,
+        "actualPickups": 23,
+        "nearEntryPickups": 0,
+        "fieldMs": 948595.4300000226,
+        "searchesPerFieldMinute": 1.4547824671682923,
+        "extractedRemains": 22,
+        "extractedRemainsPerFieldMinute": 1.3915310555522795,
+        "searchAndExtract": 8,
+        "emptyReturns": 2,
+        "nearEntryOnlyReturns": 0,
+        "deaths": 2,
+        "reserveDelta": -8,
+        "repairSpent": 70,
+        "growthSpent": 50,
+        "returnedItems": 12,
+        "destroyedItems": 13,
+        "deathLostActiveTools": 5,
+        "tools": {
+          "Q": {
+            "attempts": 19,
+            "consumed": 18,
+            "noConsumption": 1
+          },
+          "F": {
+            "attempts": 14,
+            "consumed": 12,
+            "noConsumption": 2
+          },
+          "G": {
+            "attempts": 15,
+            "consumed": 11,
+            "noConsumption": 4
+          }
+        }
+      },
+      "recurrence": {
+        "transitions": 11,
+        "same": 0,
+        "near": 0,
+        "sameRate": 0,
+        "nearRate": 0,
+        "withinEight": 1,
+        "expectedSameFromActualWeights": 0.0474391837798729,
+        "expectedNearFromActualWeights": 0.2647534781183998,
+        "longestSameMaterial": 1,
+        "longestSameShapes": 2
+      }
+    },
+    {
+      "policy": "alternating",
+      "metrics": {
+        "trips": 12,
+        "searchedRemains": 28,
+        "actualPickups": 28,
+        "nearEntryPickups": 0,
+        "fieldMs": 903664.0100000249,
+        "searchesPerFieldMinute": 1.8590980512767723,
+        "extractedRemains": 28,
+        "extractedRemainsPerFieldMinute": 1.8590980512767723,
+        "searchAndExtract": 12,
+        "emptyReturns": 0,
+        "nearEntryOnlyReturns": 0,
+        "deaths": 0,
+        "reserveDelta": 8,
+        "repairSpent": 70,
+        "growthSpent": 78,
+        "returnedItems": 13,
+        "destroyedItems": 13,
+        "deathLostActiveTools": 0,
+        "tools": {
+          "Q": {
+            "attempts": 16,
+            "consumed": 14,
+            "noConsumption": 2
+          },
+          "F": {
+            "attempts": 13,
+            "consumed": 9,
+            "noConsumption": 4
+          },
+          "G": {
+            "attempts": 19,
+            "consumed": 17,
+            "noConsumption": 2
+          }
+        }
+      },
+      "recurrence": {
+        "transitions": 11,
+        "same": 0,
+        "near": 1,
+        "sameRate": 0,
+        "nearRate": 0.09090909090909091,
+        "withinEight": 0,
+        "expectedSameFromActualWeights": 0.04732901231995927,
+        "expectedNearFromActualWeights": 0.2792136465651987,
+        "longestSameMaterial": 2,
+        "longestSameShapes": 2
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/summary.json",
+      "sha256": "0b120eb65f081cb11590c71dc6cb7910e04017b552c4c8e76b1c2407302a0be5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/review-death-loss-v2.json",
+      "sha256": "aeb68ba8218b924fbb396be93f357f73d9654e900927e0126f385e53f09fe477"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/review.json",
+      "sha256": "1d2fa01e7b2fd7a94748182e5221b9995ae1af358caf9e6765e5332e074bd546"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/policy-freeze.json",
+      "sha256": "f8415fd5b9d1a3292d4487d72a590d4b34495334697af80cddb652376262f99e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-check-v2.json",
+      "sha256": "53f60b648977716e437efa7f2c746514b4cddfaebc3dd908f387548f26665fa3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-v2.diff",
+      "sha256": "2d7928e72542710bb0e32741e6bfc6743b36d2c2b584d88fdc06125cd1999407"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/report.json",
+      "sha256": "11ec48306fc0aa1e70d2e5755b3f8580f98a77be6d1f0adf792c3c45eb9bf883"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low-root-review.json",
+      "sha256": "bc5ac65d56c11ace07cf733cff35d46a87ad25bc351379a66fb3e126ce10e767"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low-root-visual-review.json",
+      "sha256": "e59cbf45efeaa061435ec27830e0f677ef21246b977ee583f1c96b1360778d97"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low-visual-review.json",
+      "sha256": "5b42d26cc28760bf1adbfcd6408abc4b688620985af7014b91c6c5a4b0c0edbc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/4-far-exploration.png",
+      "sha256": "2d279696b2360a936422d312c9823be7261f01311135620e902fa44ccd6d954e",
+      "world": "fibre-silt",
+      "ordinal": 4
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/5-far-exploration.png",
+      "sha256": "624289244afb2c7033432a78ec171f25f21e5e3b74aa3349a2d8c96039c5fd4b",
+      "world": "pale-sail",
+      "ordinal": 5
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/11-far-exploration.png",
+      "sha256": "ddc3a09dc145dd6a8753247e76031a31cd660363828cfb216be3c29f59b0b763",
+      "world": "resin-hollows",
+      "ordinal": 11
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/12-far-exploration.png",
+      "sha256": "a3645097e49bd0b7b81f05987cd50c0cce9dacb310e709a79666c65ac07ccd6e",
+      "world": "gel-fibre",
+      "ordinal": 12
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/report.json",
+      "sha256": "b21069ac71ccf8936822abb6a2d7d13715996ace44464cb562d3fbeb9a130662"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium-root-review.json",
+      "sha256": "2a0cc204531d30f6414dbfea13b5b12b8ccb1fc4887ab41e7764663b90e158ff"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium-root-visual-review.json",
+      "sha256": "bd8824a7ba8266d5b4f42b7dbe22f35fc9fb29ce823d9a653b4c5f4e8f4eaa13"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium-visual-review.json",
+      "sha256": "363be57ce996099af028a9780b5aa03962052e5700a0b8787b648b19c97b201b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/9-search-1.png",
+      "sha256": "aa74d35e5662df1398e81e05e1fcd7cdba618574aa3dadd851529a546ec15973"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/medium/medium/10-search-1.png",
+      "sha256": "dd01cf4736e73f99f91aed153a1a1676972b504bab49716c60f7aab6c32f232f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/report.json",
+      "sha256": "f8aa03cf8e87fa481433fda2fae1a8547dfada47452bd01161e01e2934026c8c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe-root-review.json",
+      "sha256": "b616e86e49fc430c9e41f84408ff3ee9539cd2db88a1356a10d5b42faf8bc1cf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe-root-visual-review.json",
+      "sha256": "530113b6e1dbb1aa79ed60eaddfb3d3291ee8fa83c6e2629c6f615eddb6028e9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe-visual-review.json",
+      "sha256": "36460023bef62b1285a3d6a76d7832cffa460f7aa8b5f723f623a6b26aff7780"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/7-search-4.png",
+      "sha256": "ad06744883a60e88070be286fdb07ce5d91aece358d2a84eb280bbb003fec6d5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/10-continued-exploration-3.png",
+      "sha256": "851cdcfe7a274f5b83341824913ee72623d4f8002c75cf7a85ce00919a1746a1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/report.json",
+      "sha256": "dab45f8413805270ebd711db83a68e242b1005328d9d7446c269c851d37375d5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating-root-review.json",
+      "sha256": "2808cf7c7daba12d5eeacfe34e164518f1cf5b4addc6aa08c2e4c986d664621b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating-root-visual-review.json",
+      "sha256": "3cfd04c2d3150108297ef184c871ed4092f8e654b4a6b539cb2299e4857f5fc6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating-visual-review.json",
+      "sha256": "070419033f4f288b0682f9f7602748cfd2eee4c5d0a633cd242babfdba0f2e06"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/7-far-exploration.png",
+      "sha256": "6be6f3ed9cded1152f69d321dcbce056f942a659e92e841768f92e4c3444b116"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/8-far-exploration.png",
+      "sha256": "7448055945a1c1f57d45070c1cb357c0d25fb47d4ec444c063f3c06356e8f135"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/8-search-2.png",
+      "sha256": "839895882a893adb9086c75a82c7e8c9c952a67bd7498a71442e34897194da44"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe-observation-correction.json",
+      "sha256": "2df5f6ab3f0aac44d7e889c4471ae9928b1b4ab2e1bfa648edbe959e620c860b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/journey.jsonl",
+      "sha256": "df0cc161934ba08e3aab399a0421c24207f1e01273e07f728b4462d8f548060b"
+    }
+  ],
+  "diagnoses": [
+    {
+      "originalFlag": {
+        "kind": "contract-failure",
+        "policy": "severe",
+        "ordinal": 7,
+        "failure": "AssertionError [ERR_ASSERTION]: Tool disappeared without exhaustion/destruction: CAT_53f7d5c9-fbe2-42cd-a263-d71c567511f6_r100-contaminant-safe-1",
+        "actualFailure": null
+      },
+      "decision": "resolved",
+      "reason": "原复审漏分同趟已结算死亡的携带工具遗失；独立源审、原存档与12反例确认。五件主动工具deathLost独列，不增加实际使用或销毁数，原失败和48趟保留。",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-check-v2.json",
+          "sha256": "53f60b648977716e437efa7f2c746514b4cddfaebc3dd908f387548f26665fa3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/report.json",
+          "sha256": "f8aa03cf8e87fa481433fda2fae1a8547dfada47452bd01161e01e2934026c8c"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/review-death-loss-v2.json",
+          "sha256": "aeb68ba8218b924fbb396be93f357f73d9654e900927e0126f385e53f09fe477"
+        }
+      ]
+    },
+    {
+      "originalFlag": {
+        "kind": "contract-failure",
+        "policy": "severe",
+        "ordinal": 10,
+        "failure": "AssertionError [ERR_ASSERTION]: Tool disappeared without exhaustion/destruction: CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-safe-1",
+        "actualFailure": null
+      },
+      "decision": "resolved",
+      "reason": "原复审漏分同趟已结算死亡的携带工具遗失；独立源审、原存档与12反例确认。五件主动工具deathLost独列，不增加实际使用或销毁数，原失败和48趟保留。",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-check-v2.json",
+          "sha256": "53f60b648977716e437efa7f2c746514b4cddfaebc3dd908f387548f26665fa3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/report.json",
+          "sha256": "f8aa03cf8e87fa481433fda2fae1a8547dfada47452bd01161e01e2934026c8c"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/review-death-loss-v2.json",
+          "sha256": "aeb68ba8218b924fbb396be93f357f73d9654e900927e0126f385e53f09fe477"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "topic": "连续出征",
+      "decision": "bounded-pass",
+      "reason": "四条12趟存档接续完整；44次相邻转移无完全重复、一次相似世界相邻，48趟覆盖33世界。软权重降低机会而不禁止相似抽取，48趟不推断总体概率。"
+    },
+    {
+      "topic": "搜取与风险",
+      "decision": "bounded-pass",
+      "reason": "44次非入口搜取后撤离、2空返、2死亡。105次非入口拾取中104带回，另1处近入口拾取单列。没有连续3次无非入口搜撤，也没有整支无搜撤。"
+    },
+    {
+      "topic": "重档空返与死亡",
+      "decision": "bounded-nonblocking",
+      "reason": "第1/4因危险接近与撤退预算空返；7/10实际追击中污染到150后死亡。保留死亡前搜取损失。输入与帧记录不支持卡死或掉帧导致失败，不声称路线最优或地图不可解；后续同存档能继续准备并搜撤。",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe-root-review.json",
+          "sha256": "b616e86e49fc430c9e41f84408ff3ee9539cd2db88a1356a10d5b42faf8bc1cf"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe-observation-correction.json",
+          "sha256": "2df5f6ab3f0aac44d7e889c4471ae9928b1b4ab2e1bfa648edbe959e620c860b"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/severe/severe/journey.jsonl",
+          "sha256": "df0cc161934ba08e3aab399a0421c24207f1e01273e07f728b4462d8f548060b"
+        }
+      ]
+    },
+    {
+      "topic": "准备成本",
+      "decision": "bounded-pass",
+      "reason": "修复287、成长256均由真实储备支付；四支储备20→30/26/12/28。重档减8保留为高风险事实，本组不证明高档长期最优收益，长期经济仍归I13。"
+    },
+    {
+      "topic": "美术可读性",
+      "decision": "bounded-pass",
+      "reason": "照见部分的来源材质、厚面和残骸可分；实际相邻7/8有局部材料/露出结构差别，但不同站位不足重签整套形体。完整身份引用此前专项；未确认新增不可辨碰撞边界。高压拥挤及未照见部分如实保留。"
+    }
+  ],
+  "limitations": [
+    "真实挣得的共同祖先存档分成四支，控制器使用宏观静态几何辅助路线和真实键盘输入；不是新手/完全初见。",
+    "48趟没有遍历52世界全部种子/路线/装备。",
+    "静帧可见高压敌人/假身重叠，不签动态识别完美，不由死亡推断美术失败。",
+    "主观声音、长期疲劳、弱设备与发布/用户认可分开。",
+    "独占性能和生命周期是单独仍在执行的检查，本记录不代替。"
+  ]
+}

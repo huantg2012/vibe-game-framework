@@ -1,0 +1,64 @@
+{
+  "status": "implemented-offline-checks-pass-browser-calibration-pending",
+  "recordedAt": "2026-10-05T15:01:11.408077+00:00",
+  "policyBefore": 12,
+  "policyAfter": 13,
+  "oldHarness": "docs/qa/artifacts/r100-i07-i09/legacy20-play/journey-source.mjs",
+  "oldHarnessSha256": "69ea8ffd7118105605430683a4d98ae8da5664b4b74ecb989734600e384bf984",
+  "newHarness": "tools/qa/r100-i07-i09-journey.mjs",
+  "newHarnessSha256": "6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f",
+  "unchangedP13": {
+    "file": "tools/world-study/r100-p13-costed-encounters.mjs",
+    "sha256": "8850a30414e72f0465304fc3c90e38a0e08406b9e442b9b8ea7bfaea80ae3715"
+  },
+  "diagnosis": [
+    {
+      "issue": "Exit target was renamed return-route for P13 caution and beforeMove",
+      "consequence": "This removed the P13 exit guard against voluntary approach-to-fight and activated search-approach policies during retreat. P13 default caution also requested rerouting for nearby opponents even without a present blocking attack."
+    },
+    {
+      "issue": "Return budget recomputes a full body-supported route each 750ms",
+      "consequence": "Frequent full graph/geometry work occurs while the live game clock continues. Exact read/Node cost was not measured in revision12, so log gaps do not by themselves prove a Node CPU attribution."
+    }
+  ],
+  "originalExamples": [
+    {
+      "case": "b01-play-final/001-rib-vault-low-20261005",
+      "fieldSeconds": 82.58,
+      "actualHoldSeconds": 6.335478,
+      "routePlans": 48,
+      "returnBudgetPlans": 44,
+      "note": "Death after continued exploration. The observed voluntary swing occurred before exit retreat; this death cannot be entirely attributed to the exit alias."
+    },
+    {
+      "case": "b01-play-final/002-rib-vault-low-3075192741",
+      "fieldSeconds": 165.07672,
+      "actualHoldSeconds": 18.23561,
+      "routePlans": 77,
+      "returnBudgetPlans": 59,
+      "note": "Actual empty extraction with a60s retreat fallback; no voluntary swing was logged."
+    }
+  ],
+  "changes": [
+    "Return keeps exit identity and uses current visible observations rather than search-approach caution. Behind/non-attacking pursuers do not trigger voluntary approach or attack.",
+    "Only visible short-leg facing threats or a nearby visible windup/active attack permit a floor-supported escape segment; no voluntary melee input. Eight candidate directions match the eight actual keyboard directions.",
+    "At most4 evade commands of280ms (1120ms total commanded input); no further attempt starts after measured evasion work reaches4000ms. Real game clock, damage and collision continue normally.",
+    "Return movement resumes on its supported route; existing60s return cap and fallback retained.",
+    "Every route log now records total/read/Node planning times. Return-budget formula, cadence and full fresh route query remain unchanged; no potentially optimistic cache introduced."
+  ],
+  "unchanged": [
+    "Original P13 implementation and historical evidence",
+    "Strict >320px observed non-entry remains requirement",
+    "Actually owned equipment and paid tools",
+    "Search HP/chaos thresholds and return-risk budget",
+    "Natural world/seed selection when not an explicitly controlled case",
+    "Live simulation time and gameplay difficulty"
+  ],
+  "offlineChecks": [
+    "node --check tools/qa/r100-i07-i09-journey.mjs PASS",
+    "--check-return-policy PASS: facing short-leg threat, pursuer behind, back-facing opponent, distant windup, nearby windup, attempt/time caps",
+    "git diff --check PASS",
+    "P13 SHA equals original revision12 batch dependency SHA"
+  ],
+  "next": "Await root single-browser window; calibrate rib-vault/low with both original fixed seeds and identical earned saves in fresh directories. No browser run has used revision13 yet."
+}

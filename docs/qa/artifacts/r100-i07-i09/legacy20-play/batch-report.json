@@ -1,0 +1,49 @@
+{
+  "status": "running",
+  "startedAt": "2026-10-05T14:35:50.605Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "ash-strata",
+      "grade": "low",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-ash-strata-low-20261005",
+      "status": "failed-script",
+      "startedAt": "2026-10-05T14:35:50.609Z",
+      "exitCode": 1,
+      "signal": null,
+      "endedAt": "2026-10-05T14:39:53.273Z",
+      "journeys": [
+        {
+          "status": "failed",
+          "outcome": null,
+          "world": "ash-strata",
+          "grade": "low",
+          "revision": 5,
+          "requestedSeed": 20261005,
+          "matchesPlan": true,
+          "collected": 0,
+          "elapsedMs": 49364.70999999919,
+          "entryPosition": {
+            "x": 260,
+            "y": 380
+          },
+          "failure": "TimeoutError: page.screenshot: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n",
+          "baseSettled": false
+        }
+      ]
+    },
+    {
+      "world": "ash-strata",
+      "grade": "low",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 2,
+      "dir": "002-ash-strata-low-3075192741",
+      "status": "running",
+      "startedAt": "2026-10-05T14:39:53.277Z"
+    }
+  ]
+}

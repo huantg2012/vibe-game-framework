@@ -1,0 +1,110 @@
+{
+  "status": "pass",
+  "unchangedLegacyCases": 48,
+  "unchangedWorlds": 20,
+  "expansionCases": 48,
+  "metrics": [
+    {
+      "shapeProfile": "rib-vault",
+      "triangles": 1346,
+      "occupiedPixels": 22592,
+      "sides": 19350,
+      "jointPixels": 9,
+      "sourceDistance": 0.4965492562354726
+    },
+    {
+      "shapeProfile": "pleated-sheet",
+      "triangles": 2722,
+      "occupiedPixels": 48093,
+      "sides": 15522,
+      "jointPixels": 4,
+      "sourceDistance": 0.3172349182165745
+    },
+    {
+      "shapeProfile": "cellular-shell",
+      "triangles": 1802,
+      "occupiedPixels": 21315,
+      "sides": 15589,
+      "jointPixels": 6,
+      "sourceDistance": 0.27004784886919214
+    },
+    {
+      "shapeProfile": "lobed-cushion",
+      "triangles": 1066,
+      "occupiedPixels": 41380,
+      "sides": 12642,
+      "jointPixels": 23,
+      "sourceDistance": 0.6507935918680141
+    },
+    {
+      "shapeProfile": "monolith-buttress",
+      "triangles": 77,
+      "occupiedPixels": 53523,
+      "sides": 13531,
+      "jointPixels": 23,
+      "sourceDistance": 0.48826119795807094
+    },
+    {
+      "shapeProfile": "terrace-shelf",
+      "triangles": 142,
+      "occupiedPixels": 62790,
+      "sides": 15200,
+      "jointPixels": 20,
+      "sourceDistance": 0.5108323762227273
+    }
+  ],
+  "passageEvidence": [
+    {
+      "shapeProfile": "lobed-cushion",
+      "body": [
+        20,
+        20
+      ],
+      "adjacentTrackSeparation": 2,
+      "tracks": [
+        {
+          "start": {
+            "x": 40,
+            "y": 174
+          },
+          "end": {
+            "x": 440,
+            "y": 214
+          },
+          "minimumBodyEdgeClearance": 11
+        },
+        {
+          "start": {
+            "x": 40,
+            "y": 176
+          },
+          "end": {
+            "x": 440,
+            "y": 216
+          },
+          "minimumBodyEdgeClearance": 13
+        }
+      ]
+    },
+    {
+      "shapeProfile": "monolith-buttress",
+      "route": [
+        {
+          "x": 240,
+          "y": 350
+        },
+        {
+          "x": 240,
+          "y": 214
+        },
+        {
+          "x": 450,
+          "y": 214
+        }
+      ],
+      "minimumBodyEdgeClearance": 8
+    }
+  ],
+  "reviewedProbeCorrection": "The original horizontal-only cushion assertion failed; the design specifies a diagonal lane. Director reviewed this mismatch before authorizing complete-body diagonal sweep probes. No geometry/body threshold was changed for this correction.",
+  "scope": "Same-mesh surfaces, full-body openings and legacy fingerprints; not world/art qualification."
+}

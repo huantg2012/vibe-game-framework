@@ -1,0 +1,55 @@
+{
+  "frozenSource": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-dCqlbY",
+  "sourceSnapshot": "../b01-refined-source/source-snapshot.json",
+  "sourceFilesVerified": 1370,
+  "worlds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit"
+  ],
+  "runnerInputs": [
+    {
+      "path": "tools/world-study/check-r100-library.ts",
+      "sha256": "03b8b3b8fe98eb74da45f164d13eb96cf1c8b6df20f2badd192b271a04b57d76"
+    },
+    {
+      "path": "tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "path": "tools/contam-preview/phaser-stub.ts",
+      "sha256": "3c2cd48b23caf46274ce924d5b36ae161159534ca60aef916c3dcc069fc21be7"
+    }
+  ],
+  "holdout": {
+    "declaredAt": "2026-10-05T13:59:44.532Z",
+    "seeds": [
+      3924699420,
+      3660982857,
+      2355342267,
+      4102882983,
+      4051696150,
+      3156191193,
+      1205391731,
+      447052351
+    ],
+    "scope": "Independent seed set fixed before final qualification executor compilation; unselected random uint32; use same executor as full matrix."
+  }
+}

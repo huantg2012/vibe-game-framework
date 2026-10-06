@@ -1,0 +1,45 @@
+{
+  "status": "interrupted-due-to-concurrent-browser-load",
+  "recordedAt": "2026-10-05T14:48:26.791565+00:00",
+  "schedulerPid": 58337,
+  "schedulerStoppedBeforeTermination": true,
+  "terminationSignal": "SIGKILL",
+  "childProcessesAllowedToFinish": true,
+  "scope": "Own legacy20-play parent scheduler only. No user or other QA browser was killed.",
+  "reason": "Root suspended concurrent actual-play scheduling after screenshot timeouts under three-browser load. Both dispatched children ended before parent termination.",
+  "originalEvidencePreserved": true,
+  "cases": [
+    {
+      "directory": "docs/qa/artifacts/r100-i07-i09/legacy20-play/001-ash-strata-low-20261005",
+      "reportSha256": "96336b7a117a7a0e2621263872bc1ba2e5bf9b892c297775263d678f7d1cf33d",
+      "status": "failed",
+      "attempts": [
+        {
+          "ordinal": 1,
+          "status": "failed",
+          "outcome": null,
+          "collectedSearches": 0,
+          "failure": "TimeoutError: page.screenshot: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\u001b[2m  - waiting for fonts to load...\u001b[22m\n\u001b[2m  - fonts loaded\u001b[22m\n",
+          "errors": []
+        }
+      ]
+    },
+    {
+      "directory": "docs/qa/artifacts/r100-i07-i09/legacy20-play/002-ash-strata-low-3075192741",
+      "reportSha256": "43d332617ec0abcf5bca3f6770ab099dd0006ab65fdf28952e3cd8dba4bda07b",
+      "status": "completed-limited-real-input",
+      "attempts": [
+        {
+          "ordinal": 1,
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "collectedSearches": 0,
+          "failure": null,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "interpretation": "Case 001 screenshot timeout interrupted return handling; its rejected-state shows actual death. Case 002 performed an actual empty extraction. Neither proves non-entry search/extraction qualification. Concurrency is a suspected environment influence, not proof that gameplay pressure or deaths were caused by load.",
+  "nextStep": "Repeat the same fixed world/grade/seed/save/harness cases in a fresh evidence directory under a single-browser window, retaining every original result. Await root scheduling."
+}

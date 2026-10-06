@@ -1,0 +1,189 @@
+--- before/r100-i09-final-probe.mjs
++++ after/r100-i09-final-probe.mjs
+@@ -6,6 +6,7 @@
+ import assert from 'node:assert/strict';
+ import fs from 'node:fs';
+ import path from 'node:path';
++import os from 'node:os';
+ import { createHash } from 'node:crypto';
+ import { spawn } from 'node:child_process';
+ import { createServer } from 'node:http';
+@@ -92,7 +93,39 @@
+     'Raw module must export a literal string without interpolation or execution');
+   return Buffer.from(assignment.expression.text, 'utf8');
+ }
+-async function verifyServed(source, gameUrl) {
++export function exactRawSource(bytes, expected) {
++  // Some Vite responses contain the original file directly. Exact bytes also
++  // disambiguate a source file whose own content is an export-default string.
++  const directHash = hashBytes(bytes);
++  if (directHash === expected) return { sha256: directHash, encoding: 'direct-raw' };
++  const decodedHash = hashBytes(rawModuleBytes(bytes));
++  assert.equal(decodedHash, expected, 'Wrong decoded source bytes');
++  return { sha256: decodedHash, encoding: 'literal-module' };
++}
++export async function verifyServedSourceFile({ file, expected, url, literalModule = true, failureDirectory }) {
++  let response, bytes;
++  try {
++    response = await fetch(url, { signal: AbortSignal.timeout(30000) });
++    bytes = Buffer.from(await response.arrayBuffer());
++    assert(response.ok, `HTTP ${response.status}`);
++    if (literalModule) return exactRawSource(bytes, expected);
++    const actual = hashBytes(bytes);
++    assert.equal(actual, expected, 'Wrong direct source bytes');
++    return { sha256: actual, encoding: 'direct-raw' };
++  } catch (error) {
++    if (failureDirectory) {
++      const name = hashBytes(Buffer.from(`${file}\n${url}`));
++      fs.mkdirSync(failureDirectory, { recursive: true });
++      const body = bytes && path.join(failureDirectory, `${name}.body`);
++      if (body) fs.writeFileSync(body, bytes);
++      fs.writeFileSync(path.join(failureDirectory, `${name}.json`), JSON.stringify({ file, url: String(url),
++        expected, httpStatus: response?.status, headers: response && Object.fromEntries(response.headers),
++        body, bodySha256: bytes && hashBytes(bytes), failure: String(error) }, null, 2) + '\n');
++    }
++    throw new Error(`${file} (${url}): ${error}`);
++  }
++}
++async function verifyServed(source, gameUrl, failureDirectory) {
+   const hashes = {};
+   // Vite transforms HTML entry files even with ?raw; their disk bytes are
+   // checked above. Verify all runtime/data/public bytes over HTTP separately.
+@@ -103,11 +136,8 @@
+       const file = files[cursor++], isPublic = file.startsWith('public/');
+       const binary = /\.(?:png|jpe?g|webp|gif|ico|woff2?|ttf|mp3|ogg|wav|wasm)$/i.test(file);
+       const url = new URL(isPublic ? `/${file.slice(7)}` : binary ? `/${file}` : `/${file}?raw&import`, gameUrl);
+-      const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+-      assert(response.ok, `${file}: HTTP ${response.status}`);
+-      let bytes = Buffer.from(await response.arrayBuffer());
+-      if (!isPublic && !binary) bytes = rawModuleBytes(bytes);
+-      hashes[file] = hashBytes(bytes); assert.equal(hashes[file], source.sources[file], `Wrong served source: ${file}`);
++      hashes[file] = (await verifyServedSourceFile({ file, expected: source.sources[file], url,
++        literalModule: !isPublic && !binary, failureDirectory })).sha256;
+     }
+   }));
+   return Object.fromEntries(Object.entries(hashes).sort(([a], [b]) => a.localeCompare(b)));
+@@ -141,24 +171,40 @@
+     'export default "text"; globalThis.doNotExecute();', 'export default "one"; export default "two";',
+     'export { value as default };', 'export default ("text");', 'export default `unterminated'])
+     assert.throws(() => rawModuleBytes(Buffer.from(module)), /Raw module|Invalid raw module/);
++  for (const value of ['export const value: number = 1;\n', 'id,value\na,1\n', 'export default "original source";']) {
++    const bytes = Buffer.from(value), expected = hashBytes(bytes);
++    assert.deepEqual(exactRawSource(bytes, expected), { sha256: expected, encoding: 'direct-raw' });
++    assert.deepEqual(exactRawSource(Buffer.from(templateModule(value)), expected), { sha256: expected, encoding: 'literal-module' });
++    assert.throws(() => exactRawSource(Buffer.from(value + '\n'), expected));
++    assert.throws(() => exactRawSource(Buffer.from('export default ' + JSON.stringify(value) + '; globalThis.doNotExecute();'), expected));
++  }
+   const fixture = { 'src/example.ts': Buffer.from('export const value = 1;\n'), 'src/example.png': Buffer.from([137, 80, 78, 71, 128, 255]), 'data/example.csv': Buffer.from('id,value\na,1\n'),
++    'src/direct.ts': Buffer.from('export const direct: number = 2;\n'), 'data/direct.csv': Buffer.from('id,value\nb,2\n'),
++    'src/literal-source.ts': Buffer.from('export default "original source";'),
+     'public/example.bin': Buffer.from([0, 1, 128, 255]) };
+   const source = { sources: Object.fromEntries(Object.entries(fixture).map(([file, bytes]) => [file, hashBytes(bytes)])) };
+   const server = createServer((request, response) => {
+     const file = new URL(request.url, 'http://localhost').pathname.slice(1);
+     const value = fixture[file] ?? fixture[`public/${file}`];
+     if (!value) { response.writeHead(404).end(); return; }
+-    response.end(file.endsWith('.ts') ? `export default ${JSON.stringify(value.toString('utf8'))};`
+-      : file.endsWith('.csv') ? templateModule(value.toString('utf8')) : value);
++    response.end(file === 'src/example.ts' ? `export default ${JSON.stringify(value.toString('utf8'))};`
++      : file === 'data/example.csv' ? templateModule(value.toString('utf8')) : value);
+   });
+   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
++  const failureDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'r100-raw-check-'));
+   try {
+     const url = `http://127.0.0.1:${server.address().port}`;
+     assert.deepEqual(await verifyServed(source, url), Object.fromEntries(Object.entries(source.sources).sort(([a], [b]) => a.localeCompare(b))));
+-    await assert.rejects(() => verifyServed({ sources: { 'src/example.ts': 'wrong-hash' } }, url), /Wrong served source/);
++    await assert.rejects(() => verifyServed({ sources: { 'src/example.ts': 'wrong-hash' } }, url), /Wrong decoded source/);
+     await assert.rejects(() => verifyServed({ sources: { 'src/missing.ts': 'missing' } }, url), /HTTP 404/);
+-  } finally { await new Promise(resolve => server.close(resolve)); }
+-  console.log('PASS final probe: unique scope, exact revisions/seeds, one committed history, cold preservation, strict literal raw decoding including escapes/Unicode/newlines, interpolation/execution rejected, HTTP hashes, wrong/missing source rejected');
++    await assert.rejects(() => verifyServedSourceFile({ file: 'src/direct.ts', expected: 'wrong',
++      url: new URL('/src/direct.ts?raw&import', url), failureDirectory }), /src\/direct.ts.*Raw module/);
++    const failure = JSON.parse(fs.readFileSync(path.join(failureDirectory, fs.readdirSync(failureDirectory).find(file => file.endsWith('.json'))), 'utf8'));
++    assert.equal(failure.file, 'src/direct.ts'); assert.equal(failure.httpStatus, 200);
++    assert.equal(failure.url, `${url}/src/direct.ts?raw&import`);
++    assert.deepEqual(fs.readFileSync(failure.body), fixture['src/direct.ts']);
++  } finally { await new Promise(resolve => server.close(resolve)); fs.rmSync(failureDirectory, { recursive: true }); }
++  console.log('PASS final probe: unique scope, exact revisions/seeds, one committed history, cold preservation, exact direct TS/CSV/literal-source bytes, strict literal wrapper decoding including escapes/Unicode/newlines, wrong direct bytes/interpolation/execution rejected, HTTP hashes, wrong/missing source rejected with exact failure body/file/URL');
+ }
+ 
+ async function main() {
+@@ -185,7 +231,7 @@
+     fs.copyFileSync(path.resolve(ROOT, item.path), target, fs.constants.COPYFILE_EXCL);
+   }
+   try {
+-    binding.beforeFiles = verifyFiles(source); binding.beforeServedHashes = await verifyServed(source, gameUrl); binding.beforeRuntimeVerified = true; save();
++    binding.beforeFiles = verifyFiles(source); binding.beforeServedHashes = await verifyServed(source, gameUrl, path.join(out, 'source-audit-failures', 'before')); binding.beforeRuntimeVerified = true; save();
+     const env = { ...process.env, GAME_URL: gameUrl, QA_OUTPUT_DIR: out, QA_WORLDS: ids.join(','), QA_GRADES: grades.join(','),
+       QA_REQUIRE_BODY_VERSION: '1', QA_REBUILDS: '10', QA_MIXED_REBUILDS: String(ids.length * 3), QA_SCREENSHOTS: '0', QA_DEFER_AUDIT: '1' };
+     for (const key of ['QA_STOP_ON_FAILURE', 'QA_CPU_PROFILE', 'QA_STAGE_TIMING', 'QA_P01_STRICT', 'QA_WORLD_ID', 'QA_SEED', 'QA_CONTROLLED_BUILD', 'QA_REPRO_IDENTITY_FILE']) delete env[key];
+@@ -196,7 +242,7 @@
+       child.once('close', (code, signal) => { fs.closeSync(fd); binding.exitCode = code; binding.signal = signal; resolve(); });
+     });
+     binding.afterFiles = verifyFiles(source); binding.afterRuntimeVerified = true;
+-    binding.afterServedHashes = await verifyServed(source, gameUrl);
++    binding.afterServedHashes = await verifyServed(source, gameUrl, path.join(out, 'source-audit-failures', 'after'));
+     assert.deepEqual(binding.afterServedHashes, binding.beforeServedHashes); binding.servedSourceVerified = true;
+     for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) assert.equal(sha(item.path), item.sha256, `Probe input changed: ${item.path}`);
+     binding.report = receipt(path.join(out, config.report)); assert.equal(binding.exitCode, 0, 'Original probe failed; preserve it before any diagnosis');
+--- before/r100-i09-continuous.mjs
++++ after/r100-i09-continuous.mjs
+@@ -10,7 +10,7 @@
+ import { createHash } from 'node:crypto';
+ import { fileURLToPath } from 'node:url';
+ import { collectI09SearchReceipts } from './r100-i09-search-receipts.mjs';
+-import { rawModuleBytes } from './r100-i09-final-probe.mjs';
++import { verifyServedSourceFile } from './r100-i09-final-probe.mjs';
+ 
+ const ROUNDS = 12;
+ const GRADES = ['low', 'medium', 'severe'];
+@@ -137,7 +137,7 @@
+   assert.throws(() => verifyJourney(refilled, 'low', 0, null, initial), 'earned starting resources cannot be refilled');
+   console.log('PASS I09 orchestration: origin-only byte preservation, fixed/alternating plans, empty or controlled reports rejected, one-trip accounting, duplicate history, silent grade downgrade and resource refill rejected');
+ }
+-async function verifySources(source, gameUrl) {
++async function verifySources(source, gameUrl, failureDirectory) {
+   const url = new URL(gameUrl);
+   assert(['127.0.0.1', 'localhost'].includes(url.hostname)); assert.equal(Number(url.port), source.port, 'server and source manifest must identify the same port');
+   assert.equal(source.verifiedCopyHashes, true); assert.deepEqual(source.patches, []);
+@@ -145,10 +145,8 @@
+   const served = {};
+   for (const file of ANCHORS) {
+     assert(source.sources[file], `Missing required source: ${file}`);
+-    const response = await fetch(new URL(`/${file}?raw`, url), { signal: AbortSignal.timeout(30000) });
+-    assert(response.ok, `${file}: HTTP ${response.status}`);
+-    served[file] = hashBytes(rawModuleBytes(Buffer.from(await response.arrayBuffer())));
+-    assert.equal(served[file], source.sources[file], `Wrong server source: ${file}`);
++    served[file] = (await verifyServedSourceFile({ file, expected: source.sources[file],
++      url: new URL(`/${file}?raw`, url), failureDirectory })).sha256;
+   }
+   return served;
+ }
+@@ -190,7 +188,7 @@
+   const manifest = process.env.QA_SOURCE_MANIFEST, gameUrl = process.env.GAME_URL, selectionReport = process.env.QA_SELECTION_REPORT;
+   assert(manifest && gameUrl && selectionReport, 'Declare frozen source manifest, GAME_URL and final selection report');
+   assert(!fs.existsSync(policyPath), 'An existing frozen attempt cannot be overwritten or rerolled');
+-  const source = read(manifest), anchors = await verifySources(source, gameUrl);
++  const source = read(manifest), anchors = await verifySources(source, gameUrl, path.join(out, 'source-audit-failures', 'initial'));
+   for (const file of DEPENDENCIES.filter(file => file.startsWith('src/'))) assert.equal(sha(file), source.sources[file], `Node route helper differs from frozen game: ${file}`);
+   const catalogSource = fs.readFileSync(path.join(source.temporaryRoot, 'src/generated/r100-native-worlds.ts'), 'utf8');
+   const declaration = 'R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = ';
+@@ -232,7 +230,7 @@
+   try {
+     for (const branch of policy.branches) {
+       assert(!interrupted, 'Explicitly interrupted; no further departures');
+-      assertStable(policy); await verifySources(source, gameUrl);
++      assertStable(policy); await verifySources(source, gameUrl, path.join(out, 'source-audit-failures', branch.policy));
+       const row = { policy: branch.policy, startedAt: new Date().toISOString(), status: 'running' }; run.branches.push(row); save();
+       const folder = path.join(out, branch.folder); fs.mkdirSync(folder, { recursive: true });
+       const env = { ...process.env, GAME_URL: gameUrl, QA_GRADES: branch.policy, QA_RUNS: String(ROUNDS), QA_SEARCH_LIMIT: '3', QA_POST_RETURN_MANAGEMENT: '1', QA_ENTRY_WAIT: '600', QA_ORDINAL_START: '1', QA_STORAGE_STATE: storage, QA_OUTPUT_DIR: folder, TSX_TSCONFIG_PATH: 'tools/contam-preview/tsconfig.json' };
+@@ -247,7 +245,7 @@
+       });
+       assertStable(policy); row.endedAt = new Date().toISOString(); row.status = row.exitCode === 0 ? 'completed-script' : 'failed-script'; save();
+     }
+-    run.finalServedSourceAnchors = await verifySources(source, gameUrl); run.status = 'completed-attempts-pending-summary';
++    run.finalServedSourceAnchors = await verifySources(source, gameUrl, path.join(out, 'source-audit-failures', 'final')); run.status = 'completed-attempts-pending-summary';
+   } catch (error) { run.status = 'failed'; run.failure = String(error); process.exitCode = 1; }
+   finally { process.off('SIGINT', onInterrupt); process.off('SIGTERM', onTerminate); run.endedAt = new Date().toISOString(); save(); }
+   // Explicit accounting is separate from the journey child exit status.

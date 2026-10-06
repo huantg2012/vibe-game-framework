@@ -1,0 +1,70 @@
+{
+  "status": "pass",
+  "scope": "One authorized QA-only correction: future revision is current+1, and PASS copy names revision5. Preserve initial whole-suite failure; rerun failed item30 and previously unexecuted item31, without rerunning original29 passes.",
+  "startedAt": "2026-10-06T01:26:33.443Z",
+  "checks": [
+    {
+      "name": "native-generation-revision",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "tsx",
+        "--import",
+        "./tools/recovery/register-css.mjs",
+        "tools/recovery/check-native-generation-revision.ts"
+      ],
+      "sources": [
+        {
+          "path": "tools/recovery/check-native-generation-revision.ts",
+          "sha256": "984769e2575e1225b7322132e3f98be63daca3e159aaf2071ee3387c0aeb29ec"
+        },
+        {
+          "path": "tools/recovery/register-css.mjs",
+          "sha256": "519d7aa6b48434790f50ac4f7c95cee02c9396d33abf153d046b5219d104dfa8"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:26:33.445Z",
+      "log": "12-native-generation-revision.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:29:10.932Z",
+      "logSha256": "e5d78a30cb895a21f421724e1d579db1d9e1076c9e8b257ef1d995697ea9837c"
+    },
+    {
+      "name": "generation-worker",
+      "command": [
+        "/usr/local/bin/node",
+        "--import",
+        "tsx",
+        "--import",
+        "./tools/recovery/register-css.mjs",
+        "tools/recovery/check-generation-worker.ts"
+      ],
+      "sources": [
+        {
+          "path": "tools/recovery/check-generation-worker.ts",
+          "sha256": "b444a126aba181469e3d8581923fba6a22f23ec9429b7a58af0ef1257b95f59b"
+        },
+        {
+          "path": "tools/recovery/register-css.mjs",
+          "sha256": "519d7aa6b48434790f50ac4f7c95cee02c9396d33abf153d046b5219d104dfa8"
+        },
+        {
+          "path": "tools/contam-preview/tsconfig.json",
+          "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+        }
+      ],
+      "startedAt": "2026-10-06T01:29:10.934Z",
+      "log": "12-generation-worker.log",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-06T01:29:38.331Z",
+      "logSha256": "0cb660de69ff414d0b54d0df88887c5bffa4231ae08b8a9a87e7c20ed70cee23"
+    }
+  ],
+  "endedAt": "2026-10-06T01:29:38.720Z"
+}

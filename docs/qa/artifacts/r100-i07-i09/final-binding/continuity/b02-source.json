@@ -1,0 +1,69 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b02-source/source-snapshot.json",
+    "sha256": "69c1884acd847fd506e353830a1767a8a1815c5411f117e604bb9254f1d42d5f"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+    "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+  },
+  "mode": "terrace-only",
+  "worlds": [
+    {
+      "worldId": "monolith-sill",
+      "contentSha256": "c453d451e67efb1ce70c3a75bfeee2ed7b385c221054d9fe4a420b73fdb428a8",
+      "enabledBefore": false,
+      "enabledAfter": true
+    },
+    {
+      "worldId": "satin-fan",
+      "contentSha256": "8ccd6f4a31b69d6c08d1b28701ccc0e1a963d08f65aae2ffd4289c2ede389d40",
+      "enabledBefore": false,
+      "enabledAfter": true
+    },
+    {
+      "worldId": "split-rib-causeway",
+      "contentSha256": "36ab9cd0cc3d2601c844cb51692d0525f4a05900599d34e66bd8dd00ac928ac5",
+      "enabledBefore": false,
+      "enabledAfter": true
+    }
+  ],
+  "unchangedFiles": 1362,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-package-manifest.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-expansion.ts",
+      "reason": "Only unused terrace-only shape function bodies changed; dispatch and selected instance versions unchanged"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

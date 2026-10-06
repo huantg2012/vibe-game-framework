@@ -1,0 +1,61 @@
+{
+  "status": "pass-bounded-source-review",
+  "reviewer": "root",
+  "at": "2026-10-06T05:28:21.758Z",
+  "scope": "Independent read of final-probe AST raw decoder, continuous wrapper import/dependency diff, actual self-check logs and saved final3100 literal response receipt. No new browser run or gameplay approval.",
+  "reviewed": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "22d3ad406dd73020447ee15cf26d3f244d5aa09ea7bd35174c186e6574e7c852"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "0bfff3e2b033cf2dba5f766acebdb378f62e1c6e494b8f1673ee75e1327a913e"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "path": "tools/qa/r100-i09-journey.mjs",
+      "sha256": "dfde2f7429261bb81008e1f341c7e862ee6d0f71bc8c629f553b948066022bb3"
+    },
+    {
+      "path": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    }
+  ],
+  "checks": [
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-enable/raw-decoding-check.log",
+      "sha256": "d221298e09c4f68c41fdda5f73fc82809e986d9fd4ee184d0ed40e9cbe6ce826"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-enable/raw-continuous-check.log",
+      "sha256": "f308a8415d7bb6a2a9d595365866b49fbd6c9d0ff074703d244de7fb11496eca"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-enable/raw-wrapper-verification.json",
+      "sha256": "fdab3299dc7aff59a8ce242647a496d393f26ee1a7346515be0a6c852e1ae1ff"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-enable/raw-decoding.diff",
+      "sha256": "851bf7a4f3d1b3805483fc8756c84734cdea6a2728147018b385c74dd7150225"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-enable/raw-continuous.diff",
+      "sha256": "37b4fcd4bed0f9a0882eb5b8fa2db6ab4764a28559dc05a19fb8f75af891eaca"
+    }
+  ],
+  "findings": [],
+  "conclusions": [
+    "Exactly one export default; only string literal or no-substitution template literal, never eval. Interpolation, calls, extra statements and invalid syntax rejected.",
+    "Decoded UTF-8 bytes must still match original frozen source SHA; no comparison relaxation. Tests include escaped backticks/backslashes/literal interpolation text/Unicode/newlines.",
+    "Importing final-probe does not run main; final-probe and package-lock are included in continuous frozen dependencies.",
+    "Journey15 and costed-encounters byte hashes match the previously reviewed input policy."
+  ],
+  "limitations": [
+    "First readiness response with five statements was not saved; cause remains unknown and failed receipt remains.",
+    "Full before/after served-source verification is still required on each actual final probe."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "status": "environment-failure-retained-pending-single-browser-recheck",
+  "case": "016-ivory-basin-medium-3075192741",
+  "world": "ivory-basin",
+  "grade": "medium",
+  "seed": 3075192741,
+  "observedError": "R100 WebGL2 material context was lost",
+  "secondaryHarnessAssertion": "visible-policy movement failed at body edge",
+  "evidence": [
+    "Console recorded CONTEXT_LOST_WEBGL twice, Renderer disabled, lost-context texture upload and restoration.",
+    "Between15:35:52.201Z and15:35:55.629Z real d/w holds continued but observed simulation time stayed71447.159999ms and position stayed(637.5414033943872,171.4912351099791).",
+    "Player retained130/145HP. Rejected-state capture and inventory read succeeded; original saved state remains.",
+    "Frame intervalp95 was18.3ms, with1/4282 intervals over50ms. This alone does not exclude a GPU failure."
+  ],
+  "interpretation": "Movement-stuck assertion occurred with a stopped simulation after graphics-context loss; it does not establish a geometry collision defect. Two browsers were scheduled on the host, but this is correlation, not a controlled proof of the precise driver cause.",
+  "action": "Root restored a permanent single-browser schedule. Current journeys finished naturally before pausing; no world time was frozen by QA. A future exact world/grade/seed/save recheck must use a fresh directory and retain this original failure.",
+  "sourceHashes": {
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/016-ivory-basin-medium-3075192741/report.json": "c2766b2b20f42a02ec595c67d4e54cc48d18e5f07611b87f47a1d81968484c0e",
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/016-ivory-basin-medium-3075192741/runner.log": "a95e85947ad5a6a4f7d2cb550243fe66ab920dd751c605ee31185829741a379d",
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/016-ivory-basin-medium-3075192741/medium/console.json": "aeb1e64004c35b2e011d1d0f0362cbb557a7ff2c6d8582a80efd9dab6169e630",
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/016-ivory-basin-medium-3075192741/medium/journey.jsonl": "36637dd8c93f1233fa6cbdc807fda680fc2b7d57c118e6464249b964eb447d5e",
+    "docs/qa/artifacts/r100-i07-i09/legacy20-play-serial-v13/016-ivory-basin-medium-3075192741/medium/1-rejected-state.json": "19ada338a8895f3e7b57ddcf713051dd61bee5d79347712f657353af0d7cf643"
+  }
+}

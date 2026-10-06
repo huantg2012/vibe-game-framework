@@ -1,0 +1,2978 @@
+{
+  "version": 1,
+  "status": "independent-technical-pass",
+  "createdAt": "2026-10-06T09:19:11.092070+00:00",
+  "reviewer": "identity_shapes",
+  "features": [
+    "COH-F052",
+    "COH-F011",
+    "COH-F012",
+    "COH-F013",
+    "COH-F049",
+    "COH-F044",
+    "COH-F003",
+    "COH-F023"
+  ],
+  "finalSourceSha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04",
+  "scope": "Final revision5/52-enabled technical review: previously reviewed source and author-bounded cross-review, direct source continuity, exact final entry/recovery and equivalence, completed fixed generation/play, actual natural48 receipts, and reference performance/lifecycle. No rerun of gameplay or creation of user approval.",
+  "independence": {
+    "independentFor": [
+      "selection",
+      "history",
+      "save migration",
+      "frozen revision4 closure and dispatch"
+    ],
+    "originalAuthorFor": [
+      "native construction version3 expansion profiles except cellular",
+      "native world CSV layouts and codegen"
+    ],
+    "geometryCrossReview": "Author-side geometry reread is supported by the separately hash-bound root source review and independent clipping/SAT oracle. Independence is per module: root reviews identity_shapes expansion and integration work; identity_shapes reviews root-authored cellular and legacy routing. Neither author claims independent approval of their own module, and neither source review substitutes for art or actual-play acceptance.",
+    "geometryCrossReviewReceipt": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/root-geometry-source-review.json",
+      "sha256": "15510982609b7c3a4f84bc46594cb4cb82279df61b0834c9ce09752c448ba787"
+    },
+    "geometryCrossReviewBoundaries": [
+      {
+        "area": "native-volume-expansion and author-side geometry/type integration",
+        "author": "identity_shapes",
+        "independentSourceReviewer": "root",
+        "evidence": {
+          "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/root-geometry-source-review.json",
+          "sha256": "15510982609b7c3a4f84bc46594cb4cb82279df61b0834c9ce09752c448ba787"
+        }
+      },
+      {
+        "area": "native-volume-cellular and frozen legacy routing",
+        "author": "root",
+        "independentSourceReviewer": "identity_shapes",
+        "evidence": "This technical source review; root report is contextual for root-authored code."
+      },
+      {
+        "area": "native world CSV layouts and codegen",
+        "author": "identity_shapes",
+        "limitation": "Author review plus independent contract/qualification/normal-frame evidence; not mislabeled as wholly independent source authorship."
+      }
+    ]
+  },
+  "criteria": [
+    {
+      "path": "docs/tasks/rift-r100-i07.md",
+      "sha256": "59a290e64d0d9fd4cda81e455e42a9a7548c94fbfb0fa8a62dbd919d52516515"
+    },
+    {
+      "path": "docs/tasks/rift-r100-i08.md",
+      "sha256": "e61eddb72471d7eb878a94f1fa13faa576be96c40070a76da820a58ca22eae08"
+    },
+    {
+      "path": "docs/tasks/rift-r100-i09.md",
+      "sha256": "00493c1aadfc4d8c7e13531e6294c86d10775790d4154477d8d4a38844ceb19e"
+    },
+    {
+      "path": "docs/tasks/rift-r100.md",
+      "sha256": "1e04b3ef370cd98144e648b18374b9ddcc8c42bb5c50699bbcd55a2604841663"
+    },
+    {
+      "path": "docs/specs/system-map-generation.md",
+      "sha256": "db6064ce37de3900d9c1697d4584733ee26bc6e1331e43afc813ef9f85c596ef"
+    },
+    {
+      "path": "docs/specs/system-field-inventory.md",
+      "sha256": "d411893d1d424146e4d02ff7274fe1f8fe4472aa4aeb9035a847cfc56c142e71"
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha256": "089a6f30bcdc19a734c383a729c949b6b206b390232a40fde67ddc624de7631c"
+    }
+  ],
+  "criteriaChangedSinceDraft": [
+    {
+      "path": "docs/tasks/rift-r100-i09.md",
+      "previousSha256": "2768e848df704479085128d1c316b5c8430e22302f6b55a3ab094b065d9cdc77",
+      "currentSha256": "00493c1aadfc4d8c7e13531e6294c86d10775790d4154477d8d4a38844ceb19e"
+    }
+  ],
+  "originalSourceReview": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-technical-review.draft.json",
+    "sha256": "ee6585d0a8b8e657ea93a7cbbfe67a2d86f23d46c80199ce5ed7669b5575d88c"
+  },
+  "sourceBinding": {
+    "finalSource": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    "packages": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-packages/index.json",
+      "sha256": "a038a38d0c658df18a5cfa9387d282bf1343dc032a9883344f235dab25ca65a6"
+    },
+    "candidateWorlds": 52,
+    "enabled": 52,
+    "disabled": 0,
+    "algorithmRevision": 5,
+    "currentAndFrozenFilesMatched": 1370,
+    "servedFilesMatchedBeforeAndAfterEachRuntimeProbe": 1366,
+    "mismatches": [],
+    "reviewed": [
+      {
+        "path": "data/rift-native-worlds.csv",
+        "sha256": "cb8aef6a6a386f37a130cb68c7e800f6d3dfc013b895c099a0902485a004baa2"
+      },
+      {
+        "path": "data/rift-world-selection.csv",
+        "sha256": "520f1869c819c27f44f5e6022a09db05dd2414c2206bd913a98c238b0ecc0869"
+      },
+      {
+        "path": "data/rift-world-appearance.csv",
+        "sha256": "0cb840245bf2fd0e5878aa18ee2a8dc1ffe5907640bbbb21b39983becc20fefa"
+      },
+      {
+        "path": "data/rift-search-remains.csv",
+        "sha256": "15cffbdf6f219c5105bd97480437ba36b6deb9f2d9471b293b60f6daf934b8d3"
+      },
+      {
+        "path": "src/generated/r100-native-worlds.ts",
+        "sha256": "a4c35a8751271a052edb72475058705fe6977cfbf3aa2f8a99b867e56b009fe3"
+      },
+      {
+        "path": "src/generated/r100-world-selection.ts",
+        "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+      },
+      {
+        "path": "src/generated/r100-package-manifest.ts",
+        "sha256": "cd5b455dd0bb66fe2ecc728b4bcc6de1e1addafa92b17d13c3334a9df12f8668"
+      },
+      {
+        "path": "src/generated/r100-world-appearance.ts",
+        "sha256": "509e6b807f2f62385b7ccc0cccd672e0272d2bbf532f36251bee81f02e46a88d"
+      },
+      {
+        "path": "src/generated/rift-search-remains.ts",
+        "sha256": "16a840301a2de3df812cecc6a0b7550046d7fb7c63ec6f32d3e7d58beb739ab9"
+      },
+      {
+        "path": "src/types/rift-world-history.ts",
+        "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+      },
+      {
+        "path": "src/types/inventory-types.ts",
+        "sha256": "db77f7f5f4a05dc9fb3763741a91c3b90e8b28c733712b89524d7d23f702c109"
+      },
+      {
+        "path": "src/systems/inventory-store.ts",
+        "sha256": "b68d2daa85f4b291dcd86e52b890d865146098430ae31da73ac7dcff5e974782"
+      },
+      {
+        "path": "src/managers/save-manager.ts",
+        "sha256": "245d98e29dcfd87f7155fe7ae046adbe925aba834d4fa7cfc9eaa0e5272dd19f"
+      },
+      {
+        "path": "src/managers/rift-recovery.ts",
+        "sha256": "dbe9ac569320c6c3df6680f13c61913d2901b30da287d9e8adf185882810dfa4"
+      },
+      {
+        "path": "src/scenes/purification-scene.ts",
+        "sha256": "f5b94d1083a7a8b37992dc76892400ad621e3cef167de906d6f42fa7adf39a5e"
+      },
+      {
+        "path": "src/generation/world-study/r100-world-selection.ts",
+        "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "sha256": "47fe6158ac41a4df332460de5be8355adeb58830b56246014c9b67dcf7cf5bd7"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "sha256": "1bf77d3bbf437c3a86f797e8a1e5e550d83c27c0c1585e7ea29535122bd659e9"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "sha256": "64c932e103212cf9866d96b98a82d945361ffa9397ec04a29ebb9b3ec8a51893"
+      },
+      {
+        "path": "src/generation/world-study/r100-native-data.ts",
+        "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-geometry.ts",
+        "sha256": "9d5925d2fbd47f31e4f6ed60d24c3b48b1ab57949a0acc53c6d647abfe17af06"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-expansion.ts",
+        "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-cellular.ts",
+        "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+      },
+      {
+        "path": "src/generation/world-study/native-body-collision.ts",
+        "sha256": "c011a3298bbcd6609166615ddd15430259f4017d4ea4a709ed6d30ce37ce8e4e"
+      },
+      {
+        "path": "src/systems/r100-world/surface-bake.ts",
+        "sha256": "7536bd4b7282cde4dfdfecbf1b98bd771ec2f817588d0a6070cbb41469c57ff4"
+      },
+      {
+        "path": "src/generation/world-study/search-remains.ts",
+        "sha256": "d44aec31cd09e10d00ccca5b9a45f72ea420d8655ebe1b6f999601ae056fb872"
+      },
+      {
+        "path": "src/systems/world-search-presentation.ts",
+        "sha256": "22dafa0bf5684bca2e0bbbeede658f81608c13c708112efd87a00d67fde8aef5"
+      },
+      {
+        "path": "src/generation/rift-generation-execute.ts",
+        "sha256": "73b0882b47c2b040c11f1f021125c7ce44d1f5d0be5c9785c69adbcad1c36cfc"
+      },
+      {
+        "path": "src/generation/rift-generation-identity.ts",
+        "sha256": "3dc102724053672adc37d32b7f8aa3b502a229dbbe3f5508b8149d74cc654afd"
+      },
+      {
+        "path": "src/generation/rift-generation-protocol.ts",
+        "sha256": "e2d463a46c37f022434d6405e70fa2cac3cc50d791100c90290903981b8fea43"
+      },
+      {
+        "path": "src/generation/legacy-r100-v4/executor.js",
+        "sha256": "90a5a6e4c122923c872ebaa623461b6f7217b37fc41c2c1854d2f07c049399f7"
+      },
+      {
+        "path": "src/generation/legacy-r100-v4/manifest.json",
+        "sha256": "5d2ac35f6cc87d2a579817e648e7415423e93fd4c7caeeb6154efe46f7133d5b"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-worlds.mjs",
+        "sha256": "3fbcb4f98db3b2208f0f5ef87a95c8e41eb2582aa7c5db7b8c8ec7a9cec54db5"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-selection.mjs",
+        "sha256": "b989159d19295878bfcf35fcb83d4d4a5c34aeeaa0d25a35b798b39ab21a492f"
+      },
+      {
+        "path": "tools/world-study/codegen-r100-packages.mjs",
+        "sha256": "3367064890f2402ecd8ad68a2ee601960dfd700c4a3be912e420e410cf0dd702"
+      },
+      {
+        "path": "tools/inventory/check-world-history.ts",
+        "sha256": "7346089d4cc61a5001e2f44f68f7abaaad6587d1a68ba987553c8811dd79a226"
+      },
+      {
+        "path": "tools/inventory/check-save-migration.ts",
+        "sha256": "d454572fa0f62142ec629762281724689fef3357a25cfd1bf966a8fae637bb1d"
+      },
+      {
+        "path": "tools/world-study/check-native-expansion-contract.ts",
+        "sha256": "61fc1e733d7edc8b0699dc69f4213c448abfa21675b04aa772047c389f5f245a"
+      },
+      {
+        "path": "tools/world-study/check-r100-revision4.ts",
+        "sha256": "e86428cbd4cbaee3e9023be0df71b61aef9ed57de8e3668617c45c77c3b46ae3"
+      },
+      {
+        "path": "tools/recovery/check-native-generation-revision.ts",
+        "sha256": "984769e2575e1225b7322132e3f98be63daca3e159aaf2071ee3387c0aeb29ec"
+      }
+    ],
+    "enablingScope": [
+      "src/generated/r100-native-worlds.ts",
+      "src/generated/r100-package-manifest.ts",
+      "data/rift-native-worlds.csv"
+    ],
+    "enablingProof": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-binding/final-source-precheck.json",
+      "sha256": "47b1eb05546e8f0e28dc719c1237b10ad0e7a970557c2087adc37f7e4b479883"
+    },
+    "directContinuityReports": [
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b01-refined-source.json",
+        "sha256": "bdec9fb97387a10618341b5e799fe79ab2cf63e50d188034dc4d57eeb1b9bfb0"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b01-final-source.json",
+        "sha256": "485106102c386fb6f57018df8375dee79eabc3aba29a312c50949703450134dc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b02-refined-source.json",
+        "sha256": "2017380a1799c752fee7f5c33ebfbeb4a2281aaa563fadb3cf95ed781f9f8748"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b03-source.json",
+        "sha256": "b015fc186ae2e25fb36ca543914d0638532789f1cb74bacbc549e695eca8295e"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b04-source.json",
+        "sha256": "9f85cfa2b2818520f4a81c524ea0326acedb18676bff28b65de7504f9f301d02"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b05-source.json",
+        "sha256": "c29951087b017b3d4a9c80a9a9b3bbef28edd541bdcf9d0f6e625b757410a99c"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b06-source.json",
+        "sha256": "d112097c765deacdc10c13d6d113b5bc943195f85678492494b3ebbf5f5e4b8b"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b07-refined-source.json",
+        "sha256": "a46a8c005a6e7ebbdf83c003c182641c137e28620451af29ff33db7a1619fa46"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b07-identity-source.json",
+        "sha256": "37aaa329731bbc708f520e796c1024973a0c53327958cce4f10b2c67bb93c812"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b08-source.json",
+        "sha256": "eb5dadb1ee9d662e83bc6f58e4c3af5bbdd67b031793e3253b3f543fb1e94e71"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity/b02-source.json",
+        "sha256": "0a97d3f7cf7e9419c6bfa5b2ef87a17f8ee41dd9cbdc174c89b8f1ef50fb526f"
+      }
+    ],
+    "materialDependencySuffixByteIdentical": true
+  },
+  "evidence": {
+    "generation": {
+      "path": "docs/qa/artifacts/r100-i07-i09/qualification-policy/final52-summary.json",
+      "sha256": "1d66b70fa3e6ec73f812b3d8e3eb48551480be033591df6b3ffc022798692159"
+    },
+    "play": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json",
+      "sha256": "d29784aba32287105f99b1c55be076017ddd857de10b16f7ed6f4c0972034a52"
+    },
+    "production": {
+      "path": "docs/qa/artifacts/r100-i09/production-final52-recheck/report.json",
+      "sha256": "50808d3cbe54cfa9a2a9dbb8f1585821af79ddc2302e9b634e4fdba7f2484cc1"
+    },
+    "equivalence": {
+      "path": "docs/qa/artifacts/r100-i09/equivalence-final52/browser-equivalence.json",
+      "sha256": "8f3d4e46952bb71e200901fb4ea4c74726fead530699c4f5e3c7e2321614ed60"
+    },
+    "art": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-art-review.json",
+      "sha256": "b31ca47ede7a2126babae5420a8d39e518a41fe072af273fe72d8dfef7997cfb"
+    },
+    "packages": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-packages/index.json",
+      "sha256": "a038a38d0c658df18a5cfa9387d282bf1343dc032a9883344f235dab25ca65a6"
+    },
+    "finalSource": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    "runtimeBudget": {
+      "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/report.json",
+      "sha256": "a3b0f5a09966d3fb30759417b53a40be561376ab4df12089e76403ad63d0e5bd"
+    },
+    "lifecycle": {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/report.json",
+      "sha256": "7ec895bc5da391c81632c4a27f7e1020a41ccc474a1a7f727ab3d8979c295438"
+    },
+    "shaderLifetime": {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/shader-lifetime-review.json",
+      "sha256": "868bcaa490eb5f66c05a213d44d5fd2fbeb1d7374f370ffd88c9f8b478ad47ec"
+    },
+    "independentRootRuntime": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/root-runtime-review.json",
+      "sha256": "28aaa868e69c99fad383e3351cff28d7388af51d68f067602284df1c37845af7"
+    },
+    "continuousSummary": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/summary.json",
+      "sha256": "0b120eb65f081cb11590c71dc6cb7910e04017b552c4c8e76b1c2407302a0be5"
+    },
+    "continuousAutomaticReview": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/review-death-loss-v2.json",
+      "sha256": "aeb68ba8218b924fbb396be93f357f73d9654e900927e0126f385e53f09fe477"
+    },
+    "originalFailedContinuousReview": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/review.json",
+      "sha256": "1d2fa01e7b2fd7a94748182e5221b9995ae1af358caf9e6765e5332e074bd546"
+    },
+    "continuousCorrection": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-check-v2.json",
+      "sha256": "53f60b648977716e437efa7f2c746514b4cddfaebc3dd908f387548f26665fa3"
+    },
+    "rootExperience": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/independent-experience-review.json",
+      "sha256": "c9d7d9eeddb47837d5cc1f995a0a6817249d65a07b88db7fd885c6451788f734"
+    },
+    "selection": {
+      "path": "docs/qa/artifacts/r100-i09/selection-final52/selection.json",
+      "sha256": "9a433c250e76b35fdd4038edcc483aa04787b31f4e935cbef324610c2e535354"
+    },
+    "sourcePrecheck": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-binding/final-source-precheck.json",
+      "sha256": "47b1eb05546e8f0e28dc719c1237b10ad0e7a970557c2087adc37f7e4b479883"
+    },
+    "continuityExecution": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-binding/continuity-execution.json",
+      "sha256": "20ae91063945e07fe5c2350ebedf1b280dcd658bd0a85be229e6f7acd651e90a"
+    },
+    "productionEquivalenceReview": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-binding/production-equivalence-review.json",
+      "sha256": "a572cb5b49a3e3005c76be8aeb0b99eea6d51746cd3a521fa6529a999e0f72a1"
+    },
+    "directRawWrapperReview": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-binding/direct-raw-source-review.json",
+      "sha256": "5ad701a8d7baa093f5524baa8085f15aa7cac0eebba0d462874f7165db69c8de"
+    },
+    "correctedGalleryRootReview": {
+      "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/independent-root-review.json",
+      "sha256": "228046629f456de8d414647b9103d03eafa8e4ead378b7518937803e276b473d"
+    },
+    "originalPrebrowserProductionFailure": {
+      "path": "docs/qa/artifacts/r100-i09/production-final52/source-binding.json",
+      "sha256": "093969f138546889b401528608bdde2782a1c55b36ca1cd70a1344c781cf8b86"
+    },
+    "generationCounts": {
+      "unique": 7488,
+      "successful": 7488,
+      "attempts": 7783,
+      "originalFailures": 7,
+      "supersededAttempts": 288
+    },
+    "bodyPorts": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-geometry-gates/actual-effective-ports.json",
+      "sha256": "e48c53840c43126b87957f9fd9f2619db8812d4b69ee8559105143275acbe6ed"
+    },
+    "geometryContract": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-geometry-gates/expansion-contract.json",
+      "sha256": "d26c7d10509ff90c615de59029d20c526b5ce8a0ee5a5aec32dfb7f8f3c15937"
+    },
+    "independentGeometry": {
+      "path": "docs/qa/artifacts/r100-i07-i09/b02-terrace-refined/independent-contract.json",
+      "sha256": "000c961cf6c3ed742644482bdfb6f71fda5e6a57a8268f7b6eed51082071622b"
+    },
+    "legacy4": {
+      "path": "docs/qa/artifacts/r100-i07-i09/legacy4-exact/report.json",
+      "sha256": "afda725b07abd9da158f401765d7b0d9663615e4e5e606a02bca9ea25d300f11"
+    },
+    "codeChecks": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/summary.json",
+      "sha256": "a60180d0c4a5dc6f71878b62ff495e771261205233977dd8925b37fae92def64"
+    },
+    "independentRootGeometrySource": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/root-geometry-source-review.json",
+      "sha256": "15510982609b7c3a4f84bc46594cb4cb82279df61b0834c9ce09752c448ba787"
+    }
+  },
+  "runtimeSourceBindings": {
+    "production": {
+      "path": "docs/qa/artifacts/r100-i09/production-final52-recheck/source-binding.json",
+      "sha256": "c3f79340ba4da9530cdfa6420bea8411c32112021596cf0655ec4ba8232d9ea2"
+    },
+    "equivalence": {
+      "path": "docs/qa/artifacts/r100-i09/equivalence-final52/source-binding.json",
+      "sha256": "6ad304051e0fec85c69a9956453b03698633009b5297ecef3f8ec50a8fac4271"
+    },
+    "budget": {
+      "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/source-binding.json",
+      "sha256": "1c0dfa6f5bce7c4dc411ea73730f71de688a0cf1733d63cf7d34ba857564ef9a"
+    },
+    "lifecycle": {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/source-binding.json",
+      "sha256": "40c48d6b88e849e2ab14880d19aef9518bc50a0401341180076230d10cb030e2"
+    }
+  },
+  "findings": [],
+  "reviewedConclusions": [
+    {
+      "area": "CSV and explicit construction contracts",
+      "result": "no blocking defect found",
+      "reason": "Native CSV provides version3 and one known shape per instance; old rows retain construction1/2. Compiler rejects unknown profile/version/material/role and shape-count mismatch. Runtime validates role, unique id, known geometry keys, finite/ranged dimensions and controls, and rejects profile injection into old construction versions. Current codegen receipts were already checked; final enabling changed only native enabled flags, their generated catalog and global package receipt, as verified by the source precheck and direct continuity."
+    },
+    {
+      "area": "Natural world selection",
+      "result": "no blocking defect found",
+      "reason": "Only enabled identities are drawn; stable ID sorting makes row order irrelevant. The frozen request seed selects once using positive CSV weights. History is shared across grades, recent influence takes the minimum rather than compounding, and absent retired catalog identities do not prevent history load. Seven-field neighbor distance is a coarse hint; it does not claim exact connection topology or art approval."
+    },
+    {
+      "area": "Departure transaction and migration",
+      "result": "no blocking defect found",
+      "reason": "Preparation captures a copy of current history and guards unchanged inventory/cycle/grade and save bytes after async work. Only the production beginRun candidate appends one visit; missing weapon/overweight/cancel/failure do not append. World save refusal holds exact pending bytes and the same prepared identity; Retry does not beginRun or redraw. Schema1/2/3 without history migrate empty; schema4 missing/invalid history is rejected before live state distribution. Active old records retain old persisted bytes until a complete transaction; base migration is durable without inventing past visits."
+    },
+    {
+      "area": "Geometry and role integration",
+      "result": "no blocking defect found",
+      "reason": "Construction3 dispatch is explicit; old1/2 builder bodies remain isolated. Pleated skin uses a two-dimensional folded surface, cellular walls join separate inner/outer contours without a hollow cap, lobes retain a diagonal open bed, monolith uses an XY turn-out mouth, and terrace uses convex disconnected cut sections rather than spanning concavities. Feet end at ground. Solid collision consumes all same-mesh XY triangles plus actual VOID; relief cannot erase underlying solid. No new height traversal, body size reduction or erosion exception was introduced."
+    },
+    {
+      "area": "Revision4 backward compatibility",
+      "result": "no blocking defect found",
+      "reason": "Recipe validation and map generation dispatch revision4 to its immutable bundled executor before current-v5 rules. The legacy executor has zero external imports and matches its manifest. Serialized old native payloads omit algorithmRevision; appearance plus absent marker routes to frozen revision4 bake, while current generation explicitly writes5. Material dependency suffix remains byte-identical. Existing60 old/current comparisons cover one fixed seed per grade, not all-seed play."
+    },
+    {
+      "area": "Material and remains mapping",
+      "result": "no blocking defect found",
+      "reason": "Primary/secondary material identity follows actual instance family; surface role and actual material slots drive skin/cut mapping. Source remains registry appends new world identities while retaining old mappings. No new per-world rendering branch, reward change or contamination-green ownership change was introduced."
+    }
+  ],
+  "knownIssueReview": [
+    {
+      "id": "R100-P14",
+      "technicalAssessment": "Terrace-only repair replaces concentric closed scaled layers with a recessed lower bank and local offset upper sections. Existing old20/B01/monolith protection retained.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/b02-terrace-refined/protected-before.json",
+          "sha256": "e370561da3e4c227503e1f0535b1e0dafa40b5e48b1ef016d81f14bb576fffed"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/b02-terrace-refined/protected-after.json",
+          "sha256": "d5962fd28d06a3c275dd3ea2b7d172e5c1642d41cf67a2f8fe17c0864b0a27bc"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/b02-terrace-refined/geometry-report.json",
+          "sha256": "d26c7d10509ff90c615de59029d20c526b5ce8a0ee5a5aec32dfb7f8f3c15937"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/b02-deep-refined/report.json",
+          "sha256": "69be2e30e10d1e3fb1e1fd544542480f4ab06d427f5910ac0e93089789fd306a"
+        }
+      ],
+      "closure": "Final-source continuity and current qualification are verified; ledger resolution is reserved for root and is not performed by this report."
+    },
+    {
+      "id": "R100-P15",
+      "technicalAssessment": "Original load/time-out/controller failures remain evidence. Technical success is aggregated from exact same seed/executor retries, never replacement seeds. CPU/performance and actual-play conclusions remain separate.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/qualification-policy/final52-summary.json",
+          "sha256": "1d66b70fa3e6ec73f812b3d8e3eb48551480be033591df6b3ffc022798692159"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/report.json",
+          "sha256": "cb4176439b3b847e4de406ccf156b6716cf4743385476f7e296b163f54a3fa37"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/recovery-recheck-report.json",
+          "sha256": "9eedc9e131d1a55bbf916e93072b2aff7b275ee0fea8d38cdd56ff4f33974bc4"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json",
+          "sha256": "d29784aba32287105f99b1c55be076017ddd857de10b16f7ed6f4c0972034a52"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/report.json",
+          "sha256": "a3b0f5a09966d3fb30759417b53a40be561376ab4df12089e76403ad63d0e5bd"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/report.json",
+          "sha256": "7ec895bc5da391c81632c4a27f7e1020a41ccc474a1a7f727ab3d8979c295438"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i09/continuous-final52/death-loss-review-check-v2.json",
+          "sha256": "53f60b648977716e437efa7f2c746514b4cddfaebc3dd908f387548f26665fa3"
+        }
+      ],
+      "closure": "Final-source continuity and current qualification are verified; ledger resolution is reserved for root and is not performed by this report."
+    },
+    {
+      "id": "R100-P16",
+      "technicalAssessment": "Only tendon second instance y/rotation changed; first instance, dimensions, other43 worlds and shared runtime were preserved. Old144 whole-world records were superseded, not mixed with passing old seeds.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/tendon-repair/authoring-protection.json",
+          "sha256": "eac4a6f9133a5501a449b0c309cc72f448097b464c80bf21c250070124ef9bb2"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/tendon-repaired-qualification/summary.json",
+          "sha256": "437a41938a82365e3bebcadb0e2ee42ba09c6a8b76390b86cbf32cf9496dfe03"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/tendon-foot-refined/report.json",
+          "sha256": "3c818b22e20b895ff3674ab82448b7b2ef214b780d92009dc9fa73f6c7ab28a6"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/final-geometry-gates/actual-effective-ports.json",
+          "sha256": "e48c53840c43126b87957f9fd9f2619db8812d4b69ee8559105143275acbe6ed"
+        }
+      ],
+      "closure": "Final-source continuity and current qualification are verified; ledger resolution is reserved for root and is not performed by this report."
+    },
+    {
+      "id": "R100-P17",
+      "technicalAssessment": "Only three unaccepted B07 world poses were revised; the original3096 source and blocked mouth/court evidence are preserved. No shared collision or erosion change. Later sentinel identity repair is separate.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/b07-geometry/refinement-protection.json",
+          "sha256": "0a5864745b438d9eeb790edde8938ee9e86dd3d31ff919781dfdeb9f0f59d43e"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/b07-geometry/refined-route-summary.json",
+          "sha256": "4c3cb0221fc89b32b6a9cfea7608ef24ce68f139c3e54a2f668174156234eb06"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/b07-geometry/refined-production-probe.json",
+          "sha256": "02aee81872b43ffd37ba555824c382b4c85b48bb9be2447714037dec2de20774"
+        }
+      ],
+      "closure": "Final-source continuity and current qualification are verified; ledger resolution is reserved for root and is not performed by this report."
+    },
+    {
+      "id": "R100-P18",
+      "technicalAssessment": "Sentinel adds one physically connected same-material low shoulder with a differently facing second port; primary instance and other47 worlds remain exact. Old144 sentinel samples were superseded as a whole. Identity/art approval belongs to root/art bounded normal-frame review.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/sentinel-repair/authoring-protection.json",
+          "sha256": "856eb580f3d9efab0d56fda10567560be35fa4064f3cdfd84183fbf23991eae4"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/sentinel-repair/source-protection.json",
+          "sha256": "58ee06cd2b6c1c5db4bda8bb5f06bfd4ce4cd1faabfb5ab53639f41457cbe01e"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/sentinel-repair/joined-shoulders.json",
+          "sha256": "0e9c2851d668241d3607d92fefb03308340cc6d3d844e80d4e96551acb557076"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/sentinel-repaired-qualification/summary.json",
+          "sha256": "c333a66a0a0531862aa762e5ce122d7688000dc779fd22d1c2677f3072b54b7c"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i07-i09/b07-identity-followup/report.json",
+          "sha256": "4732f63a74fe511629c8cb14d9b4d97f4a5cb88686cd550c3497c57f17ebb62c"
+        }
+      ],
+      "closure": "Final-source continuity and current qualification are verified; ledger resolution is reserved for root and is not performed by this report."
+    }
+  ],
+  "qualification": {
+    "generation": {
+      "worlds": 52,
+      "grades": 156,
+      "expectedCases": 7488,
+      "uniqueCases": 7488,
+      "successful": 7488,
+      "attempts": 7783,
+      "supersededAttempts": [
+        {
+          "id": "tendon-shelves/low/130150524",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/260301048",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/390451572",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/520602096",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/650752620",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/780903144",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/911053668",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1041204192",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1171354717",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1301505241",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1431655765",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1561806289",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1691956813",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1822107337",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1952257861",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2082408385",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2212558910",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2342709434",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2472859958",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2603010482",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2733161006",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2863311530",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2993462054",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3123612578",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3253763103",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3383913627",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3514064151",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3644214675",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3774365199",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3904515723",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/4034666247",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/4164816771",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/0",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/28",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/65535",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/65536",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2147483647",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/4294967295",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3390232493",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/130150524",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/260301048",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/390451572",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/520602096",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/650752620",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/780903144",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/911053668",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1041204192",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1171354717",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1301505241",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1431655765",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1561806289",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1691956813",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1822107337",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1952257861",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2082408385",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2212558910",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2342709434",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2472859958",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2603010482",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2733161006",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2863311530",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2993462054",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3123612578",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3253763103",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3383913627",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3514064151",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3644214675",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3774365199",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3904515723",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/4034666247",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/4164816771",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/0",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/28",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/65535",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/65536",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2147483647",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/4294967295",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3390232493",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/130150524",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/260301048",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/390451572",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/520602096",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/650752620",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/780903144",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/911053668",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1041204192",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1171354717",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1301505241",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1431655765",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1561806289",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1691956813",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1822107337",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1952257861",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2082408385",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2212558910",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2342709434",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2472859958",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2603010482",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2733161006",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2863311530",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2993462054",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3123612578",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3253763103",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3383913627",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3514064151",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3644214675",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3774365199",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3904515723",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/4034666247",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/4164816771",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/0",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/28",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/65535",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/65536",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2147483647",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/4294967295",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3390232493",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/full/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3924699420",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3660982857",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/2355342267",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/4102882983",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/4051696150",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/3156191193",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/1205391731",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/low/447052351",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3924699420",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3660982857",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/2355342267",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/4102882983",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/4051696150",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/3156191193",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/1205391731",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/medium/447052351",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3924699420",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3660982857",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/2355342267",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/4102882983",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/4051696150",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/3156191193",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/1205391731",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "tendon-shelves/severe/447052351",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b05-qualification/holdout/cases.jsonl",
+          "executorSha256": "c57b03a2884c5f0370a11936a58b126b69f61df061b2bb3ba36d28500318d72c",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/130150524",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/260301048",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/390451572",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/520602096",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/650752620",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/780903144",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/911053668",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1041204192",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1171354717",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1301505241",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1431655765",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1561806289",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1691956813",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1822107337",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1952257861",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2082408385",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2212558910",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2342709434",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2472859958",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2603010482",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2733161006",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2863311530",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2993462054",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3123612578",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3253763103",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3383913627",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3514064151",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3644214675",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3774365199",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3904515723",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/4034666247",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/4164816771",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/0",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/28",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/65535",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/65536",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2147483647",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/4294967295",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3390232493",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/130150524",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/260301048",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/390451572",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/520602096",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/650752620",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/780903144",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/911053668",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1041204192",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1171354717",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1301505241",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1431655765",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1561806289",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1691956813",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1822107337",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1952257861",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2082408385",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2212558910",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2342709434",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2472859958",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2603010482",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2733161006",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2863311530",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2993462054",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3123612578",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3253763103",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3383913627",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3514064151",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3644214675",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3774365199",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3904515723",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/4034666247",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/4164816771",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/0",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/28",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/65535",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/65536",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2147483647",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/4294967295",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3390232493",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/130150524",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/260301048",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/390451572",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/520602096",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/650752620",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/780903144",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/911053668",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1041204192",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1171354717",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1301505241",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1431655765",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1561806289",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1691956813",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1822107337",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1952257861",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2082408385",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2212558910",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2342709434",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2472859958",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2603010482",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2733161006",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2863311530",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2993462054",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3123612578",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3253763103",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3383913627",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3514064151",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3644214675",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3774365199",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3904515723",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/4034666247",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/4164816771",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/0",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/28",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/65535",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/65536",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2147483647",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/4294967295",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3390232493",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/full/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3924699420",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3660982857",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/2355342267",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/4102882983",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/4051696150",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/3156191193",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/1205391731",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/low/447052351",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3924699420",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3660982857",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/2355342267",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/4102882983",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/4051696150",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/3156191193",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/1205391731",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/medium/447052351",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3924699420",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3660982857",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/2355342267",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/4102882983",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/4051696150",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/3156191193",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/1205391731",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        },
+        {
+          "id": "sentinel-mass/severe/447052351",
+          "ok": true,
+          "source": "/Users/yilungao/coh/docs/qa/artifacts/r100-i07-i09/b07-qualification/holdout/cases.jsonl",
+          "executorSha256": "b7418dd2d795917951647a14f591e10be500bbb8ab6b79b73772ee4b16a005c4",
+          "error": null
+        }
+      ],
+      "originalFailures": [
+        {
+          "world": "tension-membrane",
+          "grade": "low",
+          "seed": 2342709434,
+          "cohort": "ordinary",
+          "ok": false,
+          "error": "Case exceeded 60000ms; no replacement seed",
+          "durationMs": 60228.87079199997,
+          "source": "docs/qa/artifacts/r100-i07-i09/legacy20-qualification/full/cases.jsonl",
+          "executorSha256": "3d5b02ff07c69b41513add8c85d6c6d5a0462ffcf15855c04a1a9130c21e4ce7"
+        },
+        {
+          "world": "tension-membrane",
+          "grade": "low",
+          "seed": 2472859958,
+          "cohort": "ordinary",
+          "ok": false,
+          "error": "Case exceeded 60000ms; no replacement seed",
+          "durationMs": 60256.59362499998,
+          "source": "docs/qa/artifacts/r100-i07-i09/legacy20-qualification/full/cases.jsonl",
+          "executorSha256": "3d5b02ff07c69b41513add8c85d6c6d5a0462ffcf15855c04a1a9130c21e4ce7"
+        },
+        {
+          "world": "tension-membrane",
+          "grade": "low",
+          "seed": 2603010482,
+          "cohort": "ordinary",
+          "ok": false,
+          "error": "Case exceeded 60000ms; no replacement seed",
+          "durationMs": 60065.64216699998,
+          "source": "docs/qa/artifacts/r100-i07-i09/legacy20-qualification/full/cases.jsonl",
+          "executorSha256": "3d5b02ff07c69b41513add8c85d6c6d5a0462ffcf15855c04a1a9130c21e4ce7"
+        },
+        {
+          "world": "rib-vault",
+          "grade": "medium",
+          "seed": 1171354717,
+          "cohort": "ordinary",
+          "ok": false,
+          "error": "Case exceeded 60000ms; no replacement seed",
+          "durationMs": 60084.42333300001,
+          "source": "docs/qa/artifacts/r100-i07-i09/b01-qualification/full/cases.jsonl",
+          "executorSha256": "9ba86c153628a7010fc41fa078fabf75ff9854cda6bde37a411ecb948b8daf1b"
+        },
+        {
+          "world": "rib-vault",
+          "grade": "medium",
+          "seed": 1301505241,
+          "cohort": "ordinary",
+          "ok": false,
+          "error": "Case exceeded 60000ms; no replacement seed",
+          "durationMs": 60117.32970899998,
+          "source": "docs/qa/artifacts/r100-i07-i09/b01-qualification/full/cases.jsonl",
+          "executorSha256": "9ba86c153628a7010fc41fa078fabf75ff9854cda6bde37a411ecb948b8daf1b"
+        },
+        {
+          "world": "rib-vault",
+          "grade": "medium",
+          "seed": 1431655765,
+          "cohort": "ordinary",
+          "ok": false,
+          "error": "Case exceeded 60000ms; no replacement seed",
+          "durationMs": 60071.39799999999,
+          "source": "docs/qa/artifacts/r100-i07-i09/b01-qualification/full/cases.jsonl",
+          "executorSha256": "9ba86c153628a7010fc41fa078fabf75ff9854cda6bde37a411ecb948b8daf1b"
+        },
+        {
+          "world": "rib-vault",
+          "grade": "medium",
+          "seed": 1561806289,
+          "cohort": "ordinary",
+          "ok": false,
+          "error": "Case exceeded 60000ms; no replacement seed",
+          "durationMs": 60369.840790999995,
+          "source": "docs/qa/artifacts/r100-i07-i09/b01-qualification/full/cases.jsonl",
+          "executorSha256": "9ba86c153628a7010fc41fa078fabf75ff9854cda6bde37a411ecb948b8daf1b"
+        }
+      ],
+      "missing": [],
+      "unresolved": []
+    },
+    "fixedPlay": {
+      "qualifiedGradePairs": 156,
+      "completedSeedProcesses": 312,
+      "actualAttempts": 315,
+      "searchAndExtractAttempts": 300,
+      "emptyReturns": 9,
+      "deaths": 3,
+      "invalidOrIncompleteProcesses": 3
+    },
+    "formalEntryAndColdContinuation": 156,
+    "crossEngine": {
+      "currentRevision5": 156,
+      "originalRevision1": 18,
+      "allExact": true
+    }
+  },
+  "runtimePerformance": {
+    "status": "bounded-reference-pass",
+    "environment": {
+      "platform": "darwin",
+      "cpus": "Apple M4 Pro",
+      "cores": 14,
+      "memory": 51539607552,
+      "browser": "154.0.8037.98"
+    },
+    "worlds": 52,
+    "grade": "severe",
+    "requestedSeed": 20261004,
+    "exclusiveWindow": true,
+    "minimumRequiredActiveMs": 60000,
+    "minActualActiveMs": 61264.17000000014,
+    "maxActualActiveMs": 61280.90999999996,
+    "worstSamplesAndThresholds": [
+      {
+        "metric": "frames.p95",
+        "world": "pallid-membrane",
+        "actual": 18.40000009536743,
+        "limit": 20,
+        "remainingMargin": 1.5999999046325684
+      },
+      {
+        "metric": "frames.p99",
+        "world": "ivory-basin",
+        "actual": 18.600000381469727,
+        "limit": 33.4,
+        "remainingMargin": 14.799999618530272
+      },
+      {
+        "metric": "frames.over50",
+        "world": "splayed-fibres",
+        "actual": 0.00027247956403269756,
+        "limit": 0.005,
+        "remainingMargin": 0.004727520435967303
+      },
+      {
+        "metric": "cpu.p95",
+        "world": "crystal-fibre",
+        "actual": 7,
+        "limit": 12,
+        "remainingMargin": 5
+      },
+      {
+        "metric": "materialSubmit.p95",
+        "world": "quilted-scars",
+        "actual": 3,
+        "limit": 3,
+        "remainingMargin": 0
+      }
+    ],
+    "nearLimitSamples": [
+      {
+        "world": "shell-chain",
+        "materialSubmitP95": 2.9000000953674316,
+        "remainingMarginMs": 0.09999990463256836
+      },
+      {
+        "world": "quilted-scars",
+        "materialSubmitP95": 3,
+        "remainingMarginMs": 0
+      }
+    ],
+    "measurement": "frame wall interval; prestep-to-poststep main-thread interval; materialSubmit from presentation CPU submission. These are not GPU timestamps.",
+    "boundary": "quilted-scars reaches the existing 3ms material P95 threshold exactly; no positive measured headroom at that threshold. shell-chain is also near the limit. Reference route/hardware only."
+  },
+  "runtimeLifecycle": {
+    "status": "bounded-retention-pass",
+    "identicalRebuilds": 10,
+    "mixedRebuilds": 156,
+    "worldGradePairs": 156,
+    "retainedSamples": 12,
+    "realGcCallsBeforeEachSample": 2,
+    "activeResourcesEqualAtEveryRetainedSample": {
+      "WebGL2": 1,
+      "Texture": 384,
+      "Buffer": 11,
+      "Program": 32,
+      "Framebuffer": 69,
+      "Renderbuffer": 69
+    },
+    "shader": {
+      "originalHarnessHardAssertion": false,
+      "independentAllSamplesReread": true,
+      "createdFirst": 78,
+      "createdLast": 416,
+      "liveEverySample": 64,
+      "activeEverySample": 62,
+      "evidence": {
+        "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/shader-lifetime-review.json",
+        "sha256": "868bcaa490eb5f66c05a213d44d5fd2fbeb1d7374f370ffd88c9f8b478ad47ec"
+      }
+    },
+    "combinedGrowthFormula": "usedSize delta + max(0, backingStorageSize delta)",
+    "strictCombinedGrowthLimitBytes": 10485760,
+    "maxCombinedGrowthBytes": 1863736,
+    "remainingMarginBytes": 8622024,
+    "boundary": "Retained main-isolate heap/backing storage and owned GL object/context observations after warmup; no GPU-driver bytes, process RSS, unbounded time or weak-device claim."
+  },
+  "continuous": {
+    "status": "actual-data-and-root-bounded-experience-reviewed",
+    "automaticReview": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/review-death-loss-v2.json",
+      "sha256": "aeb68ba8218b924fbb396be93f357f73d9654e900927e0126f385e53f09fe477"
+    },
+    "experienceReview": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/independent-experience-review.json",
+      "sha256": "c9d7d9eeddb47837d5cc1f995a0a6817249d65a07b88db7fd885c6451788f734"
+    },
+    "metrics": {
+      "trips": 48,
+      "searchedRemains": 105,
+      "actualPickups": 106,
+      "nearEntryPickups": 1,
+      "fieldMs": 3585689.950000086,
+      "searchesPerFieldMinute": 1.7569840359453972,
+      "extractedRemains": 104,
+      "extractedRemainsPerFieldMinute": 1.740250854650679,
+      "searchAndExtract": 44,
+      "emptyReturns": 2,
+      "nearEntryOnlyReturns": 0,
+      "deaths": 2,
+      "reserveDelta": 16,
+      "repairSpent": 287,
+      "growthSpent": 256,
+      "returnedItems": 50,
+      "destroyedItems": 50,
+      "deathLostActiveTools": 5,
+      "tools": {
+        "Q": {
+          "attempts": 62,
+          "consumed": 55,
+          "noConsumption": 7
+        },
+        "F": {
+          "attempts": 52,
+          "consumed": 43,
+          "noConsumption": 9
+        },
+        "G": {
+          "attempts": 69,
+          "consumed": 53,
+          "noConsumption": 16
+        }
+      }
+    },
+    "distinctWorlds": 33,
+    "transitions": {
+      "count": 44,
+      "sameWorld": 0,
+      "nearWorld": 1
+    },
+    "selectionSamplesPerPolicy": 32768,
+    "remainingAutomaticMandatoryDiagnosis": [],
+    "oldContractFailuresRetained": 2,
+    "deathLossCorrection": "Five active tools were lost on same-run settled death, separately from actual charge consumption and destroyedIds; original failed review retained and each original flag diagnosed by root."
+  },
+  "preservedFailureAccounting": {
+    "recoveryFirstAttempt": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/report.json",
+      "sha256": "cb4176439b3b847e4de406ccf156b6716cf4743385476f7e296b163f54a3fa37"
+    },
+    "firstSuiteExitCode": 1,
+    "originalPassed": 29,
+    "originalFailure": "native-generation-revision: future negative case used the now-current revision5",
+    "correction": "Future revision is current.package.algorithmRevision + 1; no product behavior change.",
+    "correctionSource": {
+      "path": "tools/recovery/check-native-generation-revision.ts",
+      "sha256": "984769e2575e1225b7322132e3f98be63daca3e159aaf2071ee3387c0aeb29ec"
+    },
+    "recheck": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-code-checks/recovery-recheck-report.json",
+      "sha256": "9eedc9e131d1a55bbf916e93072b2aff7b275ee0fea8d38cdd56ff4f33974bc4"
+    },
+    "uniqueRecoveryPasses": 31,
+    "claim": "29 original passes + corrected item30 + first execution item31; original failure remains failed."
+  },
+  "additionalPreservedFailures": [
+    {
+      "evidence": {
+        "path": "docs/qa/artifacts/r100-i09/production-final52/source-binding.json",
+        "sha256": "093969f138546889b401528608bdde2782a1c55b36ca1cd70a1344c781cf8b86"
+      },
+      "scope": "Source raw-response decoding rejected before browser execution; zero game cases, not counted as successful runtime."
+    },
+    {
+      "evidence": {
+        "path": "docs/qa/artifacts/r100-i09/continuous-final52/review.json",
+        "sha256": "1d2fa01e7b2fd7a94748182e5221b9995ae1af358caf9e6765e5332e074bd546"
+      },
+      "scope": "Original frozen reviewer omitted existing carried-item death loss at severe7/10; derived review/correction receipt retains original48/policy/source and all failures."
+    },
+    {
+      "evidence": {
+        "path": "docs/qa/artifacts/r100-i07-i09/gallery-current-shapes-final-fixed/independent-root-review.json",
+        "sha256": "228046629f456de8d414647b9103d03eafa8e4ead378b7518937803e276b473d"
+      },
+      "scope": "Only the corrected final-fixed six-image gallery is current standard evidence; the earlier wrong-seed/viewport gallery and withdrawn review remain historical."
+    }
+  ],
+  "remainingFinalIntegration": [],
+  "outsideTechnicalApproval": [
+    "Root will run binder write and I07→I08→I09 closure separately.",
+    "Human acceptance of new52 and final release remain independent; original20 human approval is preserved as historical.",
+    "Actual subjective listening, weak hardware, all routes/all seeds and long-term economy remain outside these bounded results."
+  ],
+  "limitations": [
+    "No all-seed or all-device guarantee.",
+    "Geometry author reread is supported by independent oracle/root evidence; it is not a new art acceptance.",
+    "No new lint pipeline was introduced; existing missing lint script and build chunk warning remain recorded in the original code-check report.",
+    "The geometry author is not claimed to independently approve their own module; root cross-review and clipping/SAT oracle preserve module-specific independence.",
+    "Binder runtimeBindings cover production/equivalence. Budget/lifecycle bindings and raw thresholds are additionally verified in this technical report, not claimed as binder-owned gates."
+  ],
+  "reviewAction": "Read and recomputed existing final report fields and source receipts; no browser, no game state or runtime edits, no ledger write, no qualification rerun."
+}

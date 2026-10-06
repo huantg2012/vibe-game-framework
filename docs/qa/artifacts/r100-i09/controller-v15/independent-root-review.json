@@ -1,0 +1,71 @@
+{
+  "status": "bounded-input-and-accounting-review-pass",
+  "reviewer": "root",
+  "at": "2026-10-06T02:47:38.179807+00:00",
+  "policyRevision": 15,
+  "evidence": {
+    "path": "docs/qa/artifacts/r100-i09/controller-v15/verification.json",
+    "sha256": "cbfc72f20ce6820a7dbbec73c66c11d87051ba262eadd9144029ea811ad54b92"
+  },
+  "sourceFiles": [
+    {
+      "path": "tools/qa/r100-i09-journey.mjs",
+      "sha256": "dfde2f7429261bb81008e1f341c7e862ee6d0f71bc8c629f553b948066022bb3"
+    },
+    {
+      "path": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "path": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "path": "tools/qa/check-r100-i09-search-input.mjs",
+      "sha256": "9bdb80b827c26957d88a09ac73ac7f70cc95e1f6cd492ad4fb2c38bd36a37d94"
+    },
+    {
+      "path": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "dad79f034834fd8f145659365743286abe0c5205d156e3ad53cb4b540e9016fd"
+    },
+    {
+      "path": "tools/qa/r100-i09-review-continuous.mjs",
+      "sha256": "3e626ef26bc10eb3bcd5967225049af16cf4f244d637eb85337c998616fba8d9"
+    },
+    {
+      "path": "tools/qa/check-r100-i09-review.mjs",
+      "sha256": "5c362c277c46ce96e07abde5a74ec3a2b8071847c89323805cf494bf798e0ec8"
+    },
+    {
+      "path": "tools/qa/r100-i09-review-policy.json",
+      "sha256": "c4fe4c3a84131753d845cfc5680183f77c4003001648a3f594e9f368e92375b4"
+    }
+  ],
+  "findings": [
+    {
+      "issue": "Target-only observations can miss a delayed or adjacent pickup.",
+      "resolution": "Actual entry/node transitions stop the real E input and cap total pickups before a new keydown; actor clocks/health/loot are not mutated."
+    },
+    {
+      "issue": "A legal nearby pickup must count toward cap without becoming non-entry qualification.",
+      "resolution": "Actual total, eligible >320 and near-entry counts are separated; near-only returns are not empty and do not qualify search/extract."
+    },
+    {
+      "issue": "Logging exception after E-down could leave E held.",
+      "resolution": "Keydown and its log now share the existing try/finally key-up path."
+    }
+  ],
+  "reviewed": [
+    "v14-to-v15 journey/encounter diffs",
+    "ID/completion-only observations, duplicate rejection, three-input allowance",
+    "same-frame hit/completion preserved by main actual-node receipt",
+    "entry-to-terminal transition plus same-run settlement reconciliation",
+    "near-only diagnostic and success filters in continuous collector and independent reviewer",
+    "source SHA matches all reported offline checks"
+  ],
+  "limits": "Only source and offline behavior contracts independently reviewed. No actual policy15 browser journey, natural48 outcome, visual fatigue or economy approval is claimed."
+}

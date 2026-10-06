@@ -1,0 +1,378 @@
+{
+  "scope": "Normal finite FOV and camera; controlled candidate world/training loadout, actual keyboard from original spawn. Full floor geometry read for diagnostic body routing, not novice navigation; no position/HP/clock/fog edits. Enemy and pollution simulation stays active.",
+  "cases": [
+    {
+      "world": "resin-hollows",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-lower-mouth",
+            "x": 616,
+            "y": 543,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "01-lower-mouth",
+              "x": 616,
+              "y": 543,
+              "faces": [
+                [
+                  "s",
+                  "south"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 612,
+              "y": 540
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 420,
+                "y": 588
+              },
+              {
+                "x": 420,
+                "y": 580
+              },
+              {
+                "x": 428,
+                "y": 580
+              },
+              {
+                "x": 428,
+                "y": 564
+              },
+              {
+                "x": 436,
+                "y": 564
+              },
+              {
+                "x": 436,
+                "y": 556
+              },
+              {
+                "x": 444,
+                "y": 556
+              },
+              {
+                "x": 444,
+                "y": 548
+              },
+              {
+                "x": 460,
+                "y": 548
+              },
+              {
+                "x": 460,
+                "y": 540
+              },
+              {
+                "x": 540,
+                "y": 540
+              },
+              {
+                "x": 540,
+                "y": 532
+              },
+              {
+                "x": 612,
+                "y": 532
+              },
+              {
+                "x": 612,
+                "y": 540
+              }
+            ],
+            "length": 480
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 612.0898487613929,
+              "y": 550.184146677398
+            },
+            "hp": 100,
+            "chaos": 18.207268385999683,
+            "elapsedMs": 9749.599999999999
+          }
+        },
+        {
+          "goal": {
+            "label": "02-west-mouth",
+            "x": 352,
+            "y": 337,
+            "faces": [
+              [
+                "w",
+                "north"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-west-mouth",
+              "x": 352,
+              "y": 337,
+              "faces": [
+                [
+                  "w",
+                  "north"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 356,
+              "y": 340
+            },
+            "points": [
+              {
+                "x": 612,
+                "y": 548
+              },
+              {
+                "x": 580,
+                "y": 548
+              },
+              {
+                "x": 580,
+                "y": 532
+              },
+              {
+                "x": 388,
+                "y": 532
+              },
+              {
+                "x": 388,
+                "y": 372
+              },
+              {
+                "x": 364,
+                "y": 372
+              },
+              {
+                "x": 364,
+                "y": 364
+              },
+              {
+                "x": 356,
+                "y": 364
+              },
+              {
+                "x": 356,
+                "y": 340
+              }
+            ],
+            "length": 464
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 354.8652180411716,
+              "y": 330.2566996899345
+            },
+            "hp": 100,
+            "chaos": 21.032989997999366,
+            "elapsedMs": 18266
+          }
+        },
+        {
+          "goal": {
+            "label": "03-east-mouth",
+            "x": 689,
+            "y": 267,
+            "faces": [
+              [
+                "d",
+                "east"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-east-mouth",
+              "x": 689,
+              "y": 267,
+              "faces": [
+                [
+                  "d",
+                  "east"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 692,
+              "y": 268
+            },
+            "points": [
+              {
+                "x": 356,
+                "y": 332
+              },
+              {
+                "x": 692,
+                "y": 332
+              },
+              {
+                "x": 692,
+                "y": 268
+              }
+            ],
+            "length": 400
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 698.5628694505994,
+              "y": 264.93855302419456
+            },
+            "hp": 100,
+            "chaos": 23.150899259999367,
+            "elapsedMs": 24649.100000000002
+          }
+        },
+        {
+          "goal": {
+            "label": "04-rear-wall",
+            "x": 755,
+            "y": 110,
+            "faces": [
+              [
+                "s",
+                "south"
+              ]
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "04-rear-wall",
+              "x": 755,
+              "y": 110,
+              "faces": [
+                [
+                  "s",
+                  "south"
+                ]
+              ]
+            },
+            "actual": {
+              "x": 756,
+              "y": 108
+            },
+            "points": [
+              {
+                "x": 700,
+                "y": 268
+              },
+              {
+                "x": 644,
+                "y": 268
+              },
+              {
+                "x": 644,
+                "y": 284
+              },
+              {
+                "x": 580,
+                "y": 284
+              },
+              {
+                "x": 580,
+                "y": 228
+              },
+              {
+                "x": 588,
+                "y": 228
+              },
+              {
+                "x": 588,
+                "y": 204
+              },
+              {
+                "x": 596,
+                "y": 204
+              },
+              {
+                "x": 596,
+                "y": 196
+              },
+              {
+                "x": 604,
+                "y": 196
+              },
+              {
+                "x": 604,
+                "y": 180
+              },
+              {
+                "x": 612,
+                "y": 180
+              },
+              {
+                "x": 612,
+                "y": 172
+              },
+              {
+                "x": 628,
+                "y": 172
+              },
+              {
+                "x": 628,
+                "y": 164
+              },
+              {
+                "x": 644,
+                "y": 164
+              },
+              {
+                "x": 644,
+                "y": 156
+              },
+              {
+                "x": 756,
+                "y": 156
+              },
+              {
+                "x": 756,
+                "y": 108
+              }
+            ],
+            "length": 488
+          },
+          "state": {
+            "scene": "rift",
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 756.6007961813265,
+              "y": 108.0538803937367
+            },
+            "hp": 85,
+            "chaos": 35.67602828999934,
+            "elapsedMs": 34548.7
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "status": "captured"
+}

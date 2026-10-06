@@ -1,0 +1,67 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b03-source/source-snapshot.json",
+    "sha256": "3fcbe00f47cbe70921eae6a39a77bb0e1530304a93dadf553516315e291cd422"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i07-i09/b08-source/source-snapshot.json",
+    "sha256": "b9d215892a0b4487ed640cd9f493a17177e302ba222e3a341d94dc8b1640146e"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "amber-ribs",
+      "contentSha256": "1288bb7aecd3f161bedc4bf677879f33c44603217fa653ffa724b86f53804c1b",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "chalk-steps",
+      "contentSha256": "ce910a93ecd5056d2ad991848ff1d8a5dc70c3e96f7e2c8e8deee297afe5a40e",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "pale-sail",
+      "contentSha256": "976cbd2f2cd5d97e34ca5cbf10f03b2ffc06684b5760de6a3812470fe8e4397e",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "porcelain-maw",
+      "contentSha256": "896664dec1acfbec977250ad24ec2dee531cf014a6082d54100de0b4433e4241",
+      "enabledBefore": false,
+      "enabledAfter": false
+    }
+  ],
+  "unchangedFiles": 1364,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

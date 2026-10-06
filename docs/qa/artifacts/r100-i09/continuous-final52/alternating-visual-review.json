@@ -1,0 +1,336 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-06T08:06:25.128476+00:00",
+  "status": "bounded-alternating-static-review-no-new-confirmed-blocker",
+  "reviewer": "world_loot_pixels",
+  "reviewerRole": "知情美术审查者，参与过世界外观制作；非真人/盲测。",
+  "method": "只读身份和快照摘要并直接查看已有正常原始PNG。初看5张后，根任务指出实际连续近邻第7→8趟与中档后期压力，限定追加这两趟搜取帧及第11趟受压探索帧，共8张。没有浏览器、全图库扫描、截图、改色、源码或策略修改。",
+  "input": {
+    "report": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/report.json",
+      "sha256": "dab45f8413805270ebd711db83a68e242b1005328d9d7446c269c851d37375d5"
+    },
+    "journey": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/journey.jsonl",
+      "sha256": "f5bd2cb2cf214edf2e958d36975c31e868a606f938c9947f8ed8ea369187b2a9"
+    },
+    "policy": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/policy-freeze.json",
+      "sha256": "f8415fd5b9d1a3292d4487d72a590d4b34495334697af80cddb652376262f99e"
+    },
+    "serverManifest": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/server-manifest.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    },
+    "originalFinalSource": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-source/source-snapshot.json",
+      "sha256": "803db74579cea533c0c50f93c35d32c7026aa15e3787b9e3703f5a0d4c1c1b04"
+    }
+  },
+  "scope": {
+    "viewedPngCount": 8,
+    "selectedOrdinals": [
+      1,
+      10,
+      11,
+      12,
+      6,
+      7,
+      8
+    ],
+    "grades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "allAlternatingTwelveReviewed": false,
+    "whole48VisualReview": false,
+    "dynamicVideoReviewed": false,
+    "audioHeard": false,
+    "humanReview": false
+  },
+  "newConfirmedBlockers": [],
+  "conclusions": [
+    {
+      "topic": "pleated-hide / pale-sail 局部近邻",
+      "frames": [
+        "1-far-exploration",
+        "10-far-exploration"
+      ],
+      "judgment": "已有局部都保住折端/折坡与地床分界；第10趟明确露出高折面，第1趟只露断端。没有足够同视角证据重新签整张世界的差别或认定两者重复。"
+    },
+    {
+      "topic": "monolith-sill / sentinel-mass 局部近邻",
+      "frames": [
+        "11-far-exploration",
+        "12-far-exploration"
+      ],
+      "judgment": "两帧主要只见床面、污染体/残骸和少量蓝灰厚边，无法看到单体与高低连肩的完整关系。这是本次视图覆盖限制，不撤销此前修后专项，也不以这两帧再确认专项通过。"
+    },
+    {
+      "topic": "blister-field 高压局部可读性",
+      "frames": [
+        "6-search-4"
+      ],
+      "judgment": "混乱83时黄褐弧壁、壳残骸、紫灰地床与近敌仍可分，未见近壁在受光处消失或画面完全被压力反馈盖住。只签这一照见区域；不推断全程动态和成功结局的成因。"
+    },
+    {
+      "topic": "实际连续第7 film-laminate / 第8 laminate-shell",
+      "frames": [
+        "7-search-1",
+        "8-search-2"
+      ],
+      "judgment": "第7照见直板尖端、定向层理和厚下沿，第8照见弧形短壳壁、细颗粒床面与独立残骸；所见局部有非颜色差别。两者照见部位及档位不同，不能据此认定完整混合构造差异充分或重复。"
+    },
+    {
+      "topic": "monolith-sill 中档后期高压力",
+      "frames": [
+        "11-continued-exploration-7"
+      ],
+      "judgment": "约120混乱时受光范围很小，角色/脚边床面仍可见，但近敌暗轮廓的辨识余量较低；本帧没有足够实体面可评估其脚线。保留压力下信息损失这一实际观察，不把它单独判为美术或碰撞阻断，也不推断后续伤害原因。"
+    }
+  ],
+  "boundaryAndDarkness": "所见受光实体以厚边/内外侧明暗与床面分开；黑暗中的边界不重新签。sentinel中央黑区的规则成因不能只看颜色归属。第11趟约120混乱帧仅剩小片受光地床，近敌辨识余量降低，不等于已证明其全程不可见或产生隐形碰撞。",
+  "i10Implication": "继续保留小视野内可读的真实材料交会候选：第7→8有板端/短壳弧差别，但数张巨体场景未露完整主体。约120混乱帧进一步限制可见信息，不据此要求提高全场亮度或削弱潜行黑暗。不是迷路、伤害原因或长期疲劳的实证，其他I10候选不因这8帧追加结论。",
+  "limitations": [
+    "8张非同机位原图，随机种子、站位、朝向、装备/被动/能力效果、污染档位不同；不作像素同条件比较。",
+    "第6趟搜取帧混乱约83，第11趟追加帧约120；第12趟虽然重污染，所选截图时混乱约25，不冒充高压峰值。",
+    "第7→8虽是连续抽取的相邻世界，截图并非相同部位；一幅片体顶面与另一幅地床的材质差别不当作等价表面对照。",
+    "没有看全部旅程视频或听音频；不能签整体动态、连续真人体验、长期视听疲劳或52世界完整辨识。",
+    "终局extract/技术0错误不用于推导画面通过；本报告无新确认阻断，不等于所有未见范围已验证。"
+  ],
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/1-far-exploration.png",
+      "sha256": "b39f0be1984b3aaf414e98d19b205779bee4f96dd288eeefaf3d200ae2245b0d",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "1-far-exploration",
+      "ordinal": 1,
+      "worldId": "pleated-hide",
+      "requestedSeed": 1903144037,
+      "grade": "low",
+      "snapshot": {
+        "at": "2026-10-06T07:34:39.550Z",
+        "position": {
+          "x": 609.8133799999991,
+          "y": 588
+        },
+        "elapsedMs": 7733.039999999996,
+        "hp": 145,
+        "chaos": 25.350867311861318,
+        "exactShutterSynchronization": false
+      },
+      "finding": "宽褐紫地床的流向与右上/右侧两截黄褐折端不同；折端有粉色厚断边，没有全部化成同层地面。",
+      "limitation": "褶皮主体只露局部断端，不能从这一张证明整片连续折坡组织。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/10-far-exploration.png",
+      "sha256": "6db391b4c797355d3273a9ea35e1a6dd00e34ebf539c6392b7eb2fc7df6f23a8",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "10-far-exploration",
+      "ordinal": 10,
+      "worldId": "pale-sail",
+      "requestedSeed": 4179411049,
+      "grade": "low",
+      "snapshot": {
+        "at": "2026-10-06T07:56:07.282Z",
+        "position": {
+          "x": 527.8824485443462,
+          "y": 435.6044780455703
+        },
+        "elapsedMs": 9349.619999999994,
+        "hp": 145,
+        "chaos": 26.644874906751507,
+        "exactShutterSynchronization": false
+      },
+      "finding": "蓝灰地床前方照见一大片白灰不等折坡、暗折谷和粉红厚边；局部高折片与第1趟仅露折端的画面观感不同。",
+      "limitation": "两个世界照见的部位、站位、朝向差异很大；不能把构图差别全部归于设计，更不能据此重签全地图近邻差异。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/11-far-exploration.png",
+      "sha256": "661ed6e002ee122565d67a77d5649ceaeee143a4287e790e4b0bd66cb8c02558",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "11-far-exploration",
+      "ordinal": 11,
+      "worldId": "monolith-sill",
+      "requestedSeed": 921695056,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T07:58:57.957Z",
+        "position": {
+          "x": 421.0107030759039,
+          "y": 208.38908291752847
+        },
+        "elapsedMs": 13182.839999999807,
+        "hp": 145,
+        "chaos": 29.058690594111447,
+        "exactShutterSynchronization": false
+      },
+      "finding": "粉灰粗地与上方暗绿污染体分开，角色右下露一截有纹理的蓝灰实体端；地床和这个端部的边界可见。",
+      "limitation": "主体几乎未照入视野，不能用本帧识别整件monolith或将它与sentinel完整双肩作公平比较。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/12-far-exploration.png",
+      "sha256": "b0579623cfa9bd2bb121d5d62578ba05e4924d79da1266c8eaede465f3b9f185",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "12-far-exploration",
+      "ordinal": 12,
+      "worldId": "sentinel-mass",
+      "requestedSeed": 1525204427,
+      "grade": "severe",
+      "snapshot": {
+        "at": "2026-10-06T08:01:57.833Z",
+        "position": {
+          "x": 352.7604351637841,
+          "y": 602.912352707576
+        },
+        "elapsedMs": 3999.840000000007,
+        "hp": 145,
+        "chaos": 25.86988436963337,
+        "exactShutterSynchronization": false
+      },
+      "finding": "灰紫地床、近处蓝色翻找残骸和上方一截蓝黑面/浅厚沿可见；中央大黑区保留，未用整体描边透出隐藏体。",
+      "limitation": "有盲针罗盘3秒HUD提示且视角不同；大黑区不只凭静图判成吞光、VOID或实体遮挡。高低双肩关系没露全，保留未验证。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/6-search-4.png",
+      "sha256": "1cb370fbd8ebafa9358c8dfcc26f4c9f524e87d28405bdd2e0c721912031f81a",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "6-search-4",
+      "ordinal": 6,
+      "worldId": "blister-field",
+      "requestedSeed": 1487246673,
+      "grade": "severe",
+      "snapshot": {
+        "at": "2026-10-06T07:46:11.527Z",
+        "position": {
+          "x": 929.2386530464798,
+          "y": 331.5423392102068
+        },
+        "elapsedMs": 47498.09999999949,
+        "hp": 130,
+        "chaos": 83.0168712109022,
+        "exactShutterSynchronization": false
+      },
+      "finding": "重污染、混乱83/完整度130的实际搜取帧中，左侧黄褐弧壁/暗内侧、浅黄小壳、紫灰粗床和角色/前方敌体仍各自可辨；绿色压力反馈没有把近处几类物体抹成同一色块。",
+      "limitation": "这处高压囊壁样本只有一帧，没有审动态持续或敌人反应；弧壁大部分与完整囊体在黑暗外，不签整圈边界。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/7-search-1.png",
+      "sha256": "662ecbfe093f1aff2cb02b41bebf1eb7ea4c54b9bff710994f59e68246e709d9",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "7-search-1",
+      "ordinal": 7,
+      "worldId": "film-laminate",
+      "requestedSeed": 3190248398,
+      "grade": "low",
+      "snapshot": {
+        "at": "2026-10-06T07:48:06.036Z",
+        "position": {
+          "x": 673.2926193665811,
+          "y": 220.5913758378261
+        },
+        "elapsedMs": 20865.83999999977,
+        "hp": 145,
+        "chaos": 45.28500651626538,
+        "exactShutterSynchronization": false
+      },
+      "finding": "片体右端有明确尖角，褐色顶面保留定向层理，前侧暗厚沿与紫灰粗地分开；少量青绿侵蚀没有包办材料颜色。",
+      "limitation": "仅照见板端和附近地床，未照见整片膜与板的关系；不能据此验整张地图或所有脚沿。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/8-search-2.png",
+      "sha256": "839895882a893adb9086c75a82c7e8c9c952a67bd7498a71442e34897194da44",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "8-search-2",
+      "ordinal": 8,
+      "worldId": "laminate-shell",
+      "requestedSeed": 3698225327,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T07:51:13.264Z",
+        "position": {
+          "x": 788.5388313505349,
+          "y": 151.46299802909363
+        },
+        "elapsedMs": 46431.45999999931,
+        "hp": 130,
+        "chaos": 74.13300446997141,
+        "exactShutterSynchronization": false
+      },
+      "finding": "蓝灰细颗粒地床上角色、近敌、浅蓝残骸与右上暗绿污染体仍分开；左下照见一段粉褐弧壁及暗绿内侧。这个局部弧面与第7趟的直板尖端是实际非颜色差别。",
+      "limitation": "弧壁只露短段，站位、朝向、污染档位和受压程度与第7趟不同；床面与片体顶面也不是同类表面的严格对照，不能重签整世界身份。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/alternating/alternating/11-continued-exploration-7.png",
+      "sha256": "e897693c96be071c887e4835bfd4e87af3742e9a7f10568a745cddb616babdbe",
+      "personallyViewedOriginalPng": true,
+      "dimensions": {
+        "width": 1440,
+        "height": 960
+      },
+      "label": "11-continued-exploration-7",
+      "ordinal": 11,
+      "worldId": "monolith-sill",
+      "requestedSeed": 921695056,
+      "grade": "medium",
+      "snapshot": {
+        "at": "2026-10-06T08:00:23.920Z",
+        "position": {
+          "x": 539.7879592922374,
+          "y": 683.3073512146889
+        },
+        "elapsedMs": 99129.41000000367,
+        "hp": 40,
+        "chaos": 120.1188502932454,
+        "exactShutterSynchronization": false
+      },
+      "finding": "混乱临界时绿色压力画面占据大部屏幕，仅下方小片床面受灯照；角色和脚边地面仍可辨，左侧近敌的暗轮廓与绿色暗背景接近，辨识余量明显较小。",
+      "limitation": "未照见足够巨构面，不能签实体外沿或世界身份。PNG显示40HP/混乱119，邻近快照40HP/120.11885；不是该趟最终10HP/133的帧，也不能据单帧断言受伤原因或动态持续遮蔽。",
+      "observedHud": {
+        "hp": 40,
+        "chaos": 119,
+        "note": "PNG数值与邻近状态快照分别登记，不伪称精确同一时刻。"
+      }
+    }
+  ],
+  "updatedAt": "2026-10-06T08:11:36.848487+00:00",
+  "scopeExpansion": {
+    "initialFiveReviewSha256": "6d5558a3d4c198440d4615266b47bcf4f038e5179da46bb07054475968fdeab5",
+    "reason": "根任务要求把实际相邻的第7 film-laminate→第8 laminate-shell及一张中档后期压力帧纳入；最多8张，不扩大到全库。",
+    "addedLabels": [
+      "7-search-1",
+      "8-search-2",
+      "11-continued-exploration-7"
+    ],
+    "rawEvidenceChanged": false
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "status": "pass-bounded-four-frame-independent-review",
+  "reviewer": "root",
+  "at": "2026-10-06T06:44:07.806853+00:00",
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/4-far-exploration.png",
+      "sha256": "2d279696b2360a936422d312c9823be7261f01311135620e902fa44ccd6d954e",
+      "world": "fibre-silt",
+      "ordinal": 4
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/5-far-exploration.png",
+      "sha256": "624289244afb2c7033432a78ec171f25f21e5e3b74aa3349a2d8c96039c5fd4b",
+      "world": "pale-sail",
+      "ordinal": 5
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/11-far-exploration.png",
+      "sha256": "ddc3a09dc145dd6a8753247e76031a31cd660363828cfb216be3c29f59b0b763",
+      "world": "resin-hollows",
+      "ordinal": 11
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/low/low/12-far-exploration.png",
+      "sha256": "a3645097e49bd0b7b81f05987cd50c0cce9dacb310e709a79666c65ac07ccd6e",
+      "world": "gel-fibre",
+      "ordinal": 12
+    }
+  ],
+  "findings": [
+    "fibre-silt and gel-fibre share a forked linear silhouette, but the first has a granular continuous floor and narrow bare fibres; the second has a broad raised infill face and visible cleaved depth. They are locally distinguishable beyond hue, while remaining a weak neighbor pair.",
+    "pale-sail shows folded angular facets and a continuous jagged lip; resin-hollows shows concave floor channels and a thick curved rim. These views clearly differ in visible geometry.",
+    "Illuminated near edges remain legible in the four sampled views. Black off-view regions were not identified as erosion from appearance alone."
+  ],
+  "limitations": [
+    "Four static actual-play frames, not all12 trips or full world routes. Positions, seeds, facing and equipment differ.",
+    "No dynamic, sound, novice-readability or fatigue approval.",
+    "This review does not turn the unfinished48-trip matrix into a pass."
+  ],
+  "newBlockers": []
+}

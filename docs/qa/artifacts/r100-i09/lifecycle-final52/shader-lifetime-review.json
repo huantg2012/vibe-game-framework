@@ -1,0 +1,248 @@
+{
+  "version": 1,
+  "author": "identity_pipeline",
+  "createdAt": "2026-10-06T09:14:35.818Z",
+  "status": "pass-bounded-shader-lifetime-review",
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/report.json",
+      "sha256": "7ec895bc5da391c81632c4a27f7e1020a41ccc474a1a7f727ab3d8979c295438"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/source-binding.json",
+      "sha256": "40c48d6b88e849e2ab14880d19aef9518bc50a0401341180076230d10cb030e2"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "7977116bc77c5b4611adb92139ad4e2443c25a52daeb4cdcaa53e2d720a78d54"
+    },
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "sha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd"
+    }
+  ],
+  "scope": "One persistent Phaser Game after six-family warmup, ten identical returns and 156 mixed world/grade rebuilds followed by same-world return. Weak-reference wrapper/resource ownership and main-isolate heap/backing storage only; no GPU driver bytes/RSS or unbounded-duration claim.",
+  "sourceEvidence": [
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "lines": "13–24",
+      "observation": "Tracks each resource by WeakRef; records create/delete calls, and only counts a dereferenceable resource active when it has no delete/lost mark."
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "lines": "35–37",
+      "observation": "Two real HeapProfiler.collectGarbage calls precede every retained sample."
+    },
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "lines": "100–102",
+      "observation": "Compile failure deletes its shader; successful linking marks both vertex and fragment shaders for deletion."
+    },
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "lines": "126",
+      "observation": "Renderer destroy explicitly deletes textures, buffer and program, then loses its owned context."
+    }
+  ],
+  "shaderSamples": [
+    {
+      "label": "warmed-baseline",
+      "created": 78,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 14,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-1",
+      "created": 80,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 16,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-2",
+      "created": 82,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 18,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-3",
+      "created": 84,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 20,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-4",
+      "created": 86,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 22,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-5",
+      "created": 88,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 24,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-6",
+      "created": 90,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 26,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-7",
+      "created": 92,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 28,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-8",
+      "created": 94,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 30,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-9",
+      "created": 96,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 32,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "identical-10",
+      "created": 98,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 34,
+      "liveDeletedWrappers": 2
+    },
+    {
+      "label": "after-mixed-156",
+      "created": 416,
+      "live": 64,
+      "active": 62,
+      "collectedWrappers": 352,
+      "liveDeletedWrappers": 2
+    }
+  ],
+  "conclusion": {
+    "created": {
+      "baseline": 78,
+      "final": 416
+    },
+    "live": {
+      "baseline": 64,
+      "final": 64,
+      "min": 64,
+      "max": 64
+    },
+    "active": {
+      "baseline": 62,
+      "final": 62,
+      "min": 62,
+      "max": 62
+    },
+    "statement": "Cumulative shader creation grows with real rebuilds; GC-surviving wrappers and nondeleted active shaders stay exactly at the warmed baseline across all twelve retained samples. No observed shader retention growth in this bounded run."
+  },
+  "otherResourceCounts": {
+    "baseline": {
+      "Texture": {
+        "created": 761,
+        "live": 384,
+        "active": 384
+      },
+      "Framebuffer": {
+        "created": 83,
+        "live": 69,
+        "active": 69
+      },
+      "Renderbuffer": {
+        "created": 83,
+        "live": 69,
+        "active": 69
+      },
+      "Program": {
+        "created": 39,
+        "live": 32,
+        "active": 32
+      },
+      "Shader": {
+        "created": 78,
+        "live": 64,
+        "active": 62
+      },
+      "Buffer": {
+        "created": 18,
+        "live": 11,
+        "active": 11
+      },
+      "WebGL2": {
+        "created": 8,
+        "live": 1,
+        "active": 1
+      }
+    },
+    "final": {
+      "Texture": {
+        "created": 8320,
+        "live": 384,
+        "active": 384
+      },
+      "Framebuffer": {
+        "created": 252,
+        "live": 69,
+        "active": 69
+      },
+      "Renderbuffer": {
+        "created": 252,
+        "live": 69,
+        "active": 69
+      },
+      "Program": {
+        "created": 208,
+        "live": 32,
+        "active": 32
+      },
+      "Shader": {
+        "created": 416,
+        "live": 64,
+        "active": 62
+      },
+      "Buffer": {
+        "created": 187,
+        "live": 11,
+        "active": 11
+      },
+      "WebGL2": {
+        "created": 177,
+        "live": 1,
+        "active": 1
+      }
+    }
+  },
+  "memory": {
+    "finalUsedHeapGrowth": 1863736,
+    "finalBackingGrowth": -281,
+    "maxUsedHeapGrowth": 1863736,
+    "maxBackingGrowth": 15,
+    "maxCombinedGrowth": 1863736,
+    "limitBytes": 10485760
+  }
+}

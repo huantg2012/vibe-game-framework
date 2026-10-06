@@ -1,0 +1,67 @@
+--- frozen-policy14/r100-i09-journey.mjs
++++ policy15/r100-i09-journey.mjs
+@@ -1,9 +1,11 @@
+ /** I09 bounded real-input journey. Slot-aware copy of I07-I09 policy13.
+  * Source: tools/qa/r100-i07-i09-journey.mjs, SHA256
+  * 6e2b8d76a7e03a08e7b774d2465954e51636f8ceb2467dfdc880702541e3587f.
+- * Policy14 changes only public active/passive slot discovery, matching keys and
+- * equipment labels. Threat, movement, time, preparation and search budgets stay13.
+- * Stops after the declared number of actually collected non-entry remains.
++ * Policy14 changes public active/passive slot discovery, matching keys and labels.
++ * Policy15 counts actual pickup transitions and releases E on any completed node,
++ * fixing delayed/nearby pickup telemetry. Threat, time and search budgets stay13.
++ * Stops after the declared total actual pickups, including nearby incidental
++ * pickups; only non-entry remains are targeted and qualify for the search goal.
+  * Full static terrain is used for macro routing; hidden loot/enemy identities are not.
+  * Geometry-aided expert evidence, never novice play or natural economy when world/build is fixed.
+  * Preparation alone is opened by its scene method (integration exception). Other actions are actual keys.
+@@ -15,7 +17,7 @@
+ import path from 'node:path';
+ import { createHash } from 'node:crypto';
+ import { createJourneyDriver } from '../qa/i27-journey-driver.mjs';
+-import { createVisibleEncounterPolicy } from './r100-i09-costed-encounters.mjs';
++import { createVisibleEncounterPolicy, newlyCollectedNodeIds } from './r100-i09-costed-encounters.mjs';
+ import { activeToolSlots, planOwnedToolEquipment } from './r100-i09-tool-slots.mjs';
+ import { createLastLightMovementState, stepLastLightMovement, lastLightProjectedWalkingSpeed,
+   canInteractLastLight, getLastLightInteractionDistance } from '../../src/systems/last-light-locomotion.ts';
+@@ -72,7 +74,7 @@
+   harnessSha256:createHash('sha256').update(fs.readFileSync(new URL(import.meta.url))).digest('hex'),
+   harnessDependencies:['tools/qa/r100-i09-costed-encounters.mjs','tools/qa/r100-i09-tool-slots.mjs','tools/qa/i27-journey-driver.mjs','src/systems/last-light-locomotion.ts','src/systems/last-light-layout.ts'].map(file=>({file,sha256:createHash('sha256').update(fs.readFileSync(file)).digest('hex')})),
+   encounters:tacticalEnabled?'Current visible opponents/hosts and 5s last-seen memory; observed positions/facing, no hidden detection or patrol futures. Contextual known tools, evasion and guarded search.':'Original straight nearest-node policy with on-arrival tool keys',
+-  offeringPreference,normalManagement,postReturnManagement, policyRevision:14, slotPolicy:'Runtime public slot count and last passive index; active keys from GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS. Never press a passive slot.', returnEvasion:RETURN_EVASION, strategy:'Follow one fixed far physical direction, interrupt travel for actually observed uncollected non-deferred remains farther than320px from entry, search, then resume that direction while the observed return budget permits. Never inspect hidden content kind/tier/value. Return preserves the exit identity and responds only to currently seen short-leg threats with at most four280ms supported evade inputs; it then continues a body-supported path without voluntary pursuit or search-window fighting. Cumulative evade-input budget is1120ms and no further evasion starts after4000ms measured evasion work. The existing60s return-route cap remains. Current effective movement speed informs the estimated return budget; future pressure/speed degradation is not forecast.', surveyKnowledge: 'Only paid, currently displayed six-second position snapshots; no enemy identity, facing or live positions beyond visibility.', searchChaosLimit, searchHealthLimit, returnChaosBudget,
++  offeringPreference,normalManagement,postReturnManagement, policyRevision:15, slotPolicy:'Runtime public slot count and last passive index; active keys from GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS. Never press a passive slot.', returnEvasion:RETURN_EVASION, strategy:'Follow one fixed far physical direction, interrupt travel for actually observed uncollected non-deferred remains farther than320px from entry, search, then resume that direction while the observed return budget permits. Never inspect hidden content kind/tier/value. Return preserves the exit identity and responds only to currently seen short-leg threats with at most four280ms supported evade inputs; it then continues a body-supported path without voluntary pursuit or search-window fighting. Cumulative evade-input budget is1120ms and no further evasion starts after4000ms measured evasion work. The existing60s return-route cap remains. Current effective movement speed informs the estimated return budget; future pressure/speed degradation is not forecast.', surveyKnowledge: 'Only paid, currently displayed six-second position snapshots; no enemy identity, facing or live positions beyond visibility.', searchChaosLimit, searchHealthLimit, returnChaosBudget,
+   managementPolicy:'Keep core/purifier/storage at least 50, pay currently public growth with 2 kindling retained before storage100; afterward keep a recent actual maintenance reserve and invest current nodes. No unseen future item or growth reads.',
+   observedWindowPolicy:observedWindows?'Permit a 28px body-supported short approach behind currently observed non-approaching enemies; reobserve every350ms. No AI state or future patrol access.':'No back-facing approach permission; original conservative rerouting retained.',
+   status: 'running', fixedDefectIdentity:fixedIdentity,controlledBuild,controlledWorld,
+@@ -474,7 +476,7 @@
+     try{const exploration=await goRift([explorationGoal]);receipt.exploration={ended:exploration.ended,abandoned:exploration.abandoned,reason:exploration.reason,state:exploration.state};}catch(error){failedNavigation=String(error);receipt.exploration={reason:'initial-navigation-warning'};}
+     await tactical.observe();await logState(`${ordinal}-far-exploration`);
+     for(let n=0;!failedNavigation&&n<(tacticalEnabled?limit+6:limit);n++){
+-     const s=await driver.state();if(s.ended||s.chaos>=searchChaosLimit||s.hp<=searchHealthLimit||receipt.searches.filter(row=>row.collected).length>=limit)break;
++     const s=await driver.state();if(s.ended||s.chaos>=searchChaosLimit||s.hp<=searchHealthLimit||newlyCollectedNodeIds(receipt.entryState,s).length>=limit)break;
+      if((await returnBudget(s,true)).stop){driver.log({event:'return-with-reserve',reason:'observed-chaos-and-known-return-distance'});break;}
+      await tactical.observe();
+      const targets=eligibleObservedTargets(await driver.state());
+@@ -491,9 +493,11 @@
+       }catch(error){failedNavigation=String(error);receipt.explorationStop='exploration-navigation-warning';break;}
+      }
+      try{const travel=await goRift(targets);if(travel.ended)break;if(travel.abandoned){driver.log({event:'abandoned-observed-approach',reason:travel.reason,target:travel.target});if(travel.target?.id)deferredTargets.add(travel.target.id);if(travel.reason==='return-reserve-threshold')break;continue;}
+-      let searchDecision=null;if(tacticalEnabled)searchDecision=await tactical.search(travel.target);else{if(naturalPreparation&&travel.target.tier!=='safe')await useOwnedTools(`before-${travel.target.id}`);await driver.hold(['e'],1450);}
++      const beforeSearch=await driver.state();if(newlyCollectedNodeIds(receipt.entryState,beforeSearch).length>=limit)break;
++      let searchDecision=null;if(tacticalEnabled)searchDecision=await tactical.search(travel.target,{entryState:receipt.entryState,limit});else{if(naturalPreparation&&travel.target.tier!=='safe')await useOwnedTools(`before-${travel.target.id}`);await driver.hold(['e'],1450);}
+       const after=await driver.state();const collected=after.nodes.find(x=>x.id===travel.target.id)?.collected;
+-      receipt.searches.push({searchDecision,id:travel.target.id,kind:travel.target.kind,tier:travel.target.tier,collected,hp:after.hp,chaos:after.chaos,carried:after.carried,elapsedMs:after.elapsedMs});await logState(`${ordinal}-search-${n+1}`);if(!collected){if(tacticalEnabled){deferredTargets.add(travel.target.id);await tactical.evade(travel.target,await tactical.observe());continue;}break;}
++      const actualCollectedNodeIds=newlyCollectedNodeIds(beforeSearch,after);
++      receipt.searches.push({searchDecision,id:travel.target.id,kind:travel.target.kind,tier:travel.target.tier,collected,actualCollectedNodeIds,hp:after.hp,chaos:after.chaos,carried:after.carried,elapsedMs:after.elapsedMs});await logState(`${ordinal}-search-${n+1}`);if(!actualCollectedNodeIds.length){if(tacticalEnabled){deferredTargets.add(travel.target.id);await tactical.evade(travel.target,await tactical.observe());continue;}break;}
+      }catch(e){failedNavigation=String(e);break;}
+     }
+     let s=await driver.state();if(!s.ended){const travel=await goRift([{id:'exit',pos:s.exit.position}]);if(!travel.ended){await driver.press('e');await page.waitForTimeout(650);}}
+@@ -509,7 +513,7 @@
+       await driver.press('Enter');await page.waitForTimeout(850);receipt.afterRepair=await storage(`${ordinal}-repaired-${n+1}`);repairState=receipt.afterRepair.state;await logState(`${ordinal}-repair-${n+1}`);
+     }
+     if(postReturnManagement&&naturalPreparation){receipt.offered=await offerOwned();receipt.afterPreparation=await storage(`${ordinal}-after-preparation`);}
+-    receipt.status='completed-real-input';receipt.outcome=base.inventory.run.outcome;receipt.noStateInjection=!(fixedIdentity||controlledWorld||controlledBuild);receipt.fixedDefectIdentity=!!fixedIdentity;receipt.consoleErrors=consoleMessages.filter(row=>row.type==='error');assert.deepEqual(errors,[]);assert.deepEqual(receipt.consoleErrors,[]);console.log(grade,ordinal,receipt.outcome,'searches',receipt.searches.filter(x=>x.collected).length,'reserve',base.kindlingReserve);
++    receipt.status='completed-real-input';receipt.outcome=base.inventory.run.outcome;receipt.noStateInjection=!(fixedIdentity||controlledWorld||controlledBuild);receipt.fixedDefectIdentity=!!fixedIdentity;receipt.consoleErrors=consoleMessages.filter(row=>row.type==='error');assert.deepEqual(errors,[]);assert.deepEqual(receipt.consoleErrors,[]);console.log(grade,ordinal,receipt.outcome,'searches',newlyCollectedNodeIds(receipt.entryState,receipt.fieldResult).length,'reserve',base.kindlingReserve);
+    }catch(error){receipt.status='failed';receipt.failure=String(error);receipt.performance=await endPerformance(String(ordinal)).catch(()=>null);await captureRejected(String(ordinal));await page.screenshot({path:path.join(folder,`${ordinal}-failure.png`)}).catch(()=>{});console.error(grade,ordinal,error);process.exitCode=1;break;}finally{save();}
+   }
+  }finally{await context.storageState({path:path.join(folder,'browser-storage.json')});await context.close();}

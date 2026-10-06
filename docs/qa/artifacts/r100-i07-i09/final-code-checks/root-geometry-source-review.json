@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "reviewer": "root",
+  "reviewedAt": "2026-10-06T03:08:15.058046+00:00",
+  "status": "bounded-source-review-pass",
+  "sources": [
+    {
+      "path": "src/generation/world-study/native-volume-expansion.ts",
+      "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-cellular.ts",
+      "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "9d5925d2fbd47f31e4f6ed60d24c3b48b1ab57949a0acc53c6d647abfe17af06"
+    },
+    {
+      "path": "src/generation/world-study/r100-master-world.ts",
+      "sha256": "64c932e103212cf9866d96b98a82d945361ffa9397ec04a29ebb9b3ec8a51893"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "1bf77d3bbf437c3a86f797e8a1e5e550d83c27c0c1585e7ea29535122bd659e9"
+    }
+  ],
+  "authorOverlap": "Reviewed geometry expansion authored by identity_shapes; root owns legacy routing, so routing diff is only contextual here. This is not a self-granted final technical or gameplay qualification.",
+  "findings": [],
+  "checks": [
+    "V3 dispatch requires a known shape profile and finite bounded numeric parameters; V1/V2 geometry builders remain in their previous branches.",
+    "Cellular shell joins independent outer/inner contours without triangulating across the opening; broken-end caps terminate on ground.",
+    "Pleated gap remains split into two meshes, footprint skirts derive from each outline rather than a rectangle spanning the gap.",
+    "Rib and lobed forms share explicit grounded sections with real cut ends.",
+    "Terrace/buttress masses are composed from convex filled pieces, leaving authored notches unfilled; upper terrace solids extend within supporting banks rather than adding invisible bridges.",
+    "Fracture/light samples stay barycentric within the emitting face."
+  ],
+  "limitations": [
+    "Source review does not itself establish legibility, all seed connectivity, performance or continuous economy.",
+    "R100 low/medium/severe seed gates and actual fixed trips remain separate evidence; final enabled52 runtime binding pending."
+  ]
+}
