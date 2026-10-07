@@ -1,0 +1,470 @@
+{
+  "status": "bounded-low-severe-author-pass",
+  "reviewer": "world_loot_pixels",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+    "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/report.json",
+    "sha256": "fd66b096f2273b925f56cc11702b85715f7d9dc1d3cc52413aa5524ef0382d5e"
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "worlds": [
+    {
+      "worldId": "buried-lamellae",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "buried-lamellae",
+        "grade": "low",
+        "package": {
+          "id": "r100-buried-lamellae",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "b06f3f67",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3110/r100-gym.html?world=buried-lamellae&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/recipe.json",
+        "sha256": "1a7ec36b1dd5ebb50691811fe9142212fbc579faf623f29b9de580220975c336"
+      },
+      "status": "bounded-grade-art-pass",
+      "finding": "近灯可见24px红褐颗粒堆的连续南侧厚边，短蓝露片从其后方/侧端伸出；02北与03北的上下遮盖关系成立。01北保留原高蓝断端的亮切面。02东南绕床宽度与脚边可分，03西只证明裸床及局部脚沿。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/01-high-end-north.png",
+          "sha256": "a1a780c5a39f51f6289e9f8f21be52ab44cd1b92efeb1de84d917fabe652c4ac",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 293.14306069836647,
+              "y": 443.2138057186289
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.726767135999987,
+            "elapsedMs": 3916.5
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 293.14306069836647,
+              "y": 443.2138057186289
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.745729031999987,
+            "elapsedMs": 4016.5
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/02-south-raised-contact-north.png",
+          "sha256": "73aabed828566a4b7d2810818b918e540f08e6df760e6714efac363db648ac02",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 493.6609609612296,
+              "y": 477.1660988369497
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.681052375999972,
+            "elapsedMs": 8949.6
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 493.6609609612296,
+              "y": 477.1660988369497
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.69684795199997,
+            "elapsedMs": 9032.9
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/02-south-raised-contact-east.png",
+          "sha256": "6ea1b818e15c4868c161b7e6c1b84eb8d805bbeee672a607aa68ef6a2100f401",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 507.12800909015453,
+              "y": 477.79923288796897
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.77584858399997,
+            "elapsedMs": 9449.6
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 507.12800909015453,
+              "y": 477.79923288796897
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.79164984799997,
+            "elapsedMs": 9533
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/03-low-tail-south-north.png",
+          "sha256": "e1e721fa3a42a68c7917f198e6237401d17fb46f2b739639ebb59b2840621ea3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 653.8132809745871,
+              "y": 543.4291698254915
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.65428623999995,
+            "elapsedMs": 14082.7
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 653.8132809745871,
+              "y": 543.4291698254915
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.67008750399995,
+            "elapsedMs": 14166.099999999999
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/03-low-tail-south-west.png",
+          "sha256": "ad9961373a8905617332b26a8d679bbc1b27e140d2c291bdd2a58968a33439d5",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 646.3690809745871,
+              "y": 543.4291698254915
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.72380687199995,
+            "elapsedMs": 14449.5
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 646.3690809745871,
+              "y": 543.4291698254915
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.73960434399995,
+            "elapsedMs": 14532.7
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "buried-lamellae",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "buried-lamellae",
+        "grade": "severe",
+        "package": {
+          "id": "r100-buried-lamellae",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "0d34d0b7",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3110/r100-gym.html?world=buried-lamellae&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/recipe.json",
+        "sha256": "bc45b2242ba93df907291bf31eacab5df00420d99e51ccf9e13ed82dd023c669"
+      },
+      "status": "bounded-grade-art-pass",
+      "finding": "颗粒堆与短蓝露层在较窄照明内仍分出高低，连续南脚线没有被污染绿取代；02北和03北可辨厚堆压住低蓝片，01北近旁活动污染体局部遮挡角色，因此不作完整角色/高体轮廓证据。03西仍只见局部脚边与裸床，未照见外墙不签。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/01-high-end-north.png",
+          "sha256": "7c7cc01c99f9c680fdab4f09eabc1160f281242dfd813b2d517317faab8b5ca7",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 291.6182543743639,
+              "y": 439.4054963148677
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 22.929607231999917,
+            "elapsedMs": 3899.8
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 291.6182543743639,
+              "y": 439.4054963148677
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 22.98018239999991,
+            "elapsedMs": 3999.8999999999996
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/02-south-raised-contact-north.png",
+          "sha256": "9a72c9ab56fe479ff068f96bebe73ca07be88ac91656cbe996c2c3924f15d72e",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5702936719703287,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 493.23981745125155,
+              "y": 483.4531558207208
+            },
+            "facingAngle": -1.5702936719703287,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 25.794569407999802,
+            "elapsedMs": 9566.3
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 493.23981745125155,
+              "y": 483.4531558207208
+            },
+            "facingAngle": -1.5702936719703287,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 25.8451294079998,
+            "elapsedMs": 9666.3
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/02-south-raised-contact-east.png",
+          "sha256": "54e67cee39ad8f972f1f9a97a1a8d5e144edad9168e0ed0ef3428d62703f307b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 500.6853174512515,
+              "y": 483.4531558207208
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 25.99680940799979,
+            "elapsedMs": 9966.3
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 500.6853174512515,
+              "y": 483.4531558207208
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 26.06422105599979,
+            "elapsedMs": 10099.599999999999
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/03-low-tail-south-north.png",
+          "sha256": "0c37f4ecf4080452646c300d18d5215483676720985fb1afa0960c1438bce6c6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 652.8930938096717,
+              "y": 540.8562930877196
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 28.625813119999698,
+            "elapsedMs": 15166
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 652.8930938096717,
+              "y": 540.8562930877196
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 28.667939711999697,
+            "elapsedMs": 15249.400000000001
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/03-low-tail-south-west.png",
+          "sha256": "b9e8ce6e48d208b5309f89e6848690b4036b6a3ad77eb62be87f5cbd8481e1c8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 645.4486938096717,
+              "y": 540.8562930877196
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 28.81962982399969,
+            "elapsedMs": 15549.400000000001
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 645.4486938096717,
+              "y": 540.8562930877196
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 28.86176147199969,
+            "elapsedMs": 15632.7
+          }
+        }
+      ]
+    }
+  ],
+  "scope": "Actual WASD; unchanged body, finite FOV, material/light/clock. Bare training loadout, enemies active. These are local art routes, not completed gameplay/extraction qualification or human approval.",
+  "limitations": [
+    "Same requested seed 20261005; actual fine-body stopping positions differ by small amounts and are logged, not pixel-identical viewpoints.",
+    "Only captured lit faces and south route are reviewed; dark/occluded back walls, all routes/seeds, sustained pressure and listening are not covered.",
+    "Original two rejected low-relief arrangements remain archived; the raised-bank body change is not treated as unchanged old collision."
+  ],
+  "relatedMedium": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-medium/author-art-review.json"
+}

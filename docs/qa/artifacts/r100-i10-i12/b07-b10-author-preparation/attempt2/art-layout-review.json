@@ -1,0 +1,145 @@
+{
+  "status": "bounded-layout-review-only",
+  "reviewer": "world_loot_pixels",
+  "createdAt": "2026-10-07T01:19:49.177097+00:00",
+  "scope": "亲看四幅灰色占地图并读对应intent；仅核实例组织、相接和空间意图，不是游戏正常FOV，不是正式美术通过。",
+  "source": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/attempt2/b07-plan-atlas.png",
+      "sha256": "db755b2f58e40f053d53ba9476102b2945ecce6029acf2dd01962364c178c4e0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/attempt2/b08-plan-atlas.png",
+      "sha256": "c04eb14ccdd8e31658df1de1b375f6cf217c5dd50dd7d94e137c7cf5d5566ebc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/attempt2/b09-plan-atlas.png",
+      "sha256": "46b1164b8ca6a4a2cf8b20da67e51f687558831b6226f341aa64fab5fb8c1d5f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/attempt2/b10-plan-atlas.png",
+      "sha256": "71f22ed85001430de4478bd2df7524b78d656b01bccc96bc281175bed3c1e5fe"
+    }
+  ],
+  "intentSources": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/attempt2/b07-intent.json",
+      "sha256": "c3654e49156d723ce8c4efe1f7e97d25b3377890d1c7483e565dcb8d50b623a1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/attempt2/b08-intent.json",
+      "sha256": "7870a9925133fc097c4545e81c743a6922063adfecc7184c615faffec265d705"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/attempt2/b09-intent.json",
+      "sha256": "cb649d3503093b7e7f9a7f939453b45e3ea6794a380c54a8aec805786c1d0213"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/attempt2/b10-intent.json",
+      "sha256": "6c5ffa57d7ca1db65bb1fbce90d9d17551cf78cac2cbd92c123efe9e3b02acae"
+    }
+  ],
+  "limitations": [
+    "未新开浏览器；未查看本批正常灯光、污染三档或动态。",
+    "32px规划余量结果由作者单独负责；图中的彩线不等于本审核者验证了实际通行。",
+    "现有38/48规划通过、四项余量待修，不提升为全部合格。"
+  ],
+  "worlds": [
+    {
+      "worldId": "staggered-cups",
+      "status": "layout-supported",
+      "finding": "两件主腔及各自较低残弧沿折线换向，外床连续；与同侧口长沟的组织不同。",
+      "requiredNormalReviewOrAdjustment": "应写两主腔加两次残口，不能把四口写成四个等大独立器皿；正常灯光还需看主次与进入方向。"
+    },
+    {
+      "worldId": "split-tows",
+      "status": "layout-supported",
+      "finding": "西粗东细的两列断束，中段横向开口与纵路交叉，区别于连续肋墙。",
+      "requiredNormalReviewOrAdjustment": "低纤横带不应在灯下变成横挡；需证实粗头与细尾材质。"
+    },
+    {
+      "worldId": "curled-flats",
+      "status": "layout-supported-with-risk",
+      "finding": "三处离散卷端围裸床，低膜分布与中央空隙可辨。",
+      "requiredNormalReviewOrAdjustment": "低片轮廓在占图中仍多边形化；正常图不能再次出现整床平直切色。"
+    },
+    {
+      "worldId": "pitch-forks",
+      "status": "layout-supported-with-risk",
+      "finding": "共头少臂形成一个盲袋、两侧外绕，与多肋槽不同。",
+      "requiredNormalReviewOrAdjustment": "顶视近门架；正常图必须读出一件厚料的曲面相接，不能靠颜色区别机械Π形。"
+    },
+    {
+      "worldId": "grain-weld",
+      "status": "layout-supported-with-risk",
+      "finding": "高挤出缝和低横路有层级，两大片只在缝边受压。",
+      "requiredNormalReviewOrAdjustment": "大低片仍需防offset-pan旧版的贴地多边形读法；主高缝须在可见面上接触。"
+    },
+    {
+      "worldId": "silk-catch",
+      "status": "layout-supported",
+      "finding": "一件断束被单侧高卷皮与低皮接住，不是两高楔夹皮。",
+      "requiredNormalReviewOrAdjustment": "正常视野需同时见粗束、卷根和露出低端；只见单件不能验证相接关系。"
+    },
+    {
+      "worldId": "resin-sleeve",
+      "status": "layout-supported-with-risk",
+      "finding": "三段高体围一个东向开口，两个低皮断开。",
+      "requiredNormalReviewOrAdjustment": "与pitch-forks/clamped-shore相近；必须证明壳核与胶套不同厚薄与偏侧包覆，不能只把C形转向。"
+    },
+    {
+      "worldId": "shell-threads",
+      "status": "layout-supported",
+      "finding": "两处分离的低壳穿纤点、中间纵路和北侧绕路，区别于一个密集喉口。",
+      "requiredNormalReviewOrAdjustment": "需正常图证明壳是低面可走而纤是实体，避免误读全部为障碍。"
+    },
+    {
+      "worldId": "chalk-divide",
+      "status": "local-author-adjustment-needed",
+      "finding": "四段之间的横穿口与背后长床方向成立。",
+      "requiredNormalReviewOrAdjustment": "四件近同形三叉体齐排，大小变化不足以消除克隆排布；建议局部改变前后错断、断段长度和端向，使其读成被切开的岸而非四个同款摆件。此结论是构图整改建议，不涉及共享profile。"
+    },
+    {
+      "worldId": "red-vault-fragments",
+      "status": "layout-supported",
+      "finding": "北侧长弧背与东侧分离短残端围出一片内庭。",
+      "requiredNormalReviewOrAdjustment": "与hollow-wreckage共享壳语法，正常图须见长连续背与缺口层级，不能仅拍一段弯墙。"
+    },
+    {
+      "worldId": "blue-fault",
+      "status": "layout-supported-with-risk",
+      "finding": "单斜裂地分两床，南短横接与北长绕有区别。",
+      "requiredNormalReviewOrAdjustment": "最近邻须加入cleft-tableland；双大片+黑缝容易重复，需把单斜断线、两端肩与走法作为比较依据。"
+    },
+    {
+      "worldId": "pale-pressure",
+      "status": "layout-supported-with-risk",
+      "finding": "低膜逐渐接到五处中体，东侧宽床保持。",
+      "requiredNormalReviewOrAdjustment": "五卷块在占图中仍有相似轮廓；需真实高低与聚压关系，避免只将torn-reservoir改成一排小卷块。"
+    },
+    {
+      "worldId": "notched-backwater",
+      "status": "layout-supported-with-risk",
+      "finding": "三湾只有中路贯通、两侧回头，路由区别于单浅袋。",
+      "requiredNormalReviewOrAdjustment": "两组近相同门架很醒目；正常图必须确认两背深浅、端臂和曲率差别，若仍像复制双门应局部拆开齐头关系。"
+    },
+    {
+      "worldId": "crossed-casings",
+      "status": "layout-supported",
+      "finding": "两不同朝向壳背相接形成内转，另有低内皮与离断片。",
+      "requiredNormalReviewOrAdjustment": "必须看弯壳内面与剥离关系，不能只看L形轮廓而等同sentinel连体巨块。"
+    },
+    {
+      "worldId": "fibre-stumpfield",
+      "status": "layout-supported",
+      "finding": "西侧六不等短粗头加两条低根，东侧宽静床，区别于长倒束错段。",
+      "requiredNormalReviewOrAdjustment": "原生光下短头不能缩成六个同样尖锥；层理/断端需被看见。"
+    },
+    {
+      "worldId": "sloughed-court",
+      "status": "layout-supported",
+      "finding": "两大片低皮缺出裸庭，仅西南一处高卷端，南侧真实缺地迫使外绕。",
+      "requiredNormalReviewOrAdjustment": "庭内有真实VOID，不能把全部内庭叙述为连续通行；低皮与地床材质线仍待normal审。"
+    }
+  ]
+}

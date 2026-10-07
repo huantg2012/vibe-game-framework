@@ -1,0 +1,140 @@
+{
+  "status": "completed-observed-rechecks-cause-not-inferred",
+  "startedAt": "2026-10-07T05:12:06.896Z",
+  "pid": 71635,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+    "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d"
+  },
+  "anchors": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+      "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d"
+    },
+    {
+      "path": "tools/qa/r100-revision6-journey.mjs",
+      "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+    },
+    {
+      "path": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "path": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "path": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "path": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "path": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    },
+    {
+      "path": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "2e621ab1367a30c471099715cc3fbe6c0321b924be032d806c4a1eda1b0c30e1"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "b0f77509b1122c742f4f818e1b9777a55cc6d4c9226c34bda4678069d3826f71"
+    },
+    {
+      "path": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "path": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload.mjs",
+      "sha256": "1063bb2d1db45923836c3145130c0d2c9f94482faee9d0eed708c9da59413a31"
+    },
+    {
+      "path": "tools/qa/r100-i07-i09-coverage.mjs",
+      "sha256": "d58977d6e36b2bfd5adf6e523107db0e495f6eb3bc8a3f0eea64176836cbbfe2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/preparation/commands.json",
+      "sha256": "cb3a2213b99c593a14c6630699497b517d92c58cdae1235c0b0f5fa860875ed9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/original-three-failures.json",
+      "sha256": "41bbba1753fd3619bb2cdaed8f03490d2c43771667919c9b786fe48ca2beac55"
+    }
+  ],
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/run-observed-rechecks.mjs",
+    "sha256": "60b97db897e3637eee64e9c3660167e4ec8c93ee01fa1841019eea38d2a65eb0"
+  },
+  "originalFailures": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/original-three-failures.json",
+    "sha256": "41bbba1753fd3619bb2cdaed8f03490d2c43771667919c9b786fe48ca2beac55"
+  },
+  "cases": [
+    {
+      "world": "buried-lamellae",
+      "grade": "severe",
+      "seed": 3075192741,
+      "originalRole": "second-seed-process",
+      "folder": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe",
+      "observations": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe-observations",
+      "log": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe-runner.log",
+      "status": "completed-original-input",
+      "startedAt": "2026-10-07T05:12:07.027Z",
+      "environment": {
+        "NODE_OPTIONS": "--import /Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload.mjs",
+        "DEBUG": "pw:browser"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-07T05:12:34.335Z",
+      "logSha256": "a1cbaad5a6bc11e952ffc33740ce9c4b8b39eafd49fb5957e575a56ea3187b01"
+    },
+    {
+      "world": "wedged-hide",
+      "grade": "low",
+      "seed": 3075192741,
+      "originalRole": "second-seed-process",
+      "folder": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low",
+      "observations": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low-observations",
+      "log": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low-runner.log",
+      "status": "completed-original-input",
+      "startedAt": "2026-10-07T05:12:34.611Z",
+      "environment": {
+        "NODE_OPTIONS": "--import /Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload.mjs",
+        "DEBUG": "pw:browser"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-07T05:13:56.694Z",
+      "logSha256": "3bdb76c211023a80465f14040b3fde434a2dedec49a9d8168731891e82fe8c5e"
+    },
+    {
+      "world": "wedged-hide",
+      "grade": "severe",
+      "seed": 3075192741,
+      "originalRole": "second-seed-process",
+      "folder": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe",
+      "observations": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe-observations",
+      "log": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe-runner.log",
+      "status": "completed-original-input",
+      "startedAt": "2026-10-07T05:13:56.973Z",
+      "environment": {
+        "NODE_OPTIONS": "--import /Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload.mjs",
+        "DEBUG": "pw:browser"
+      },
+      "exitCode": 0,
+      "signal": null,
+      "finishedAt": "2026-10-07T05:14:24.050Z",
+      "logSha256": "88ee9aedf335ef86d855a59e16bbd956704cdd0382d29757dc8aee4d8b143bde"
+    }
+  ],
+  "method": "Original same-source same-world/grade/seed earned-save controller; unchanged policy15/r6 adapter. External Node preload only records existing network/worker events; DEBUG pw:browser preserves browser process logs. Earlier idle-server cleanup is disclosed separately. A later pass does not establish the cause of the historical error.",
+  "finishedAt": "2026-10-07T05:14:24.194Z"
+}

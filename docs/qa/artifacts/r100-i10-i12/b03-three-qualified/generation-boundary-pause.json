@@ -1,0 +1,24 @@
+{
+  "status": "resumed-after-author-window",
+  "createdAt": "2026-10-07T01:35:29.450549+00:00",
+  "parentPid": 53901,
+  "observedParent": "53901 88685 Ss   node docs/qa/artifacts/r100-i10-i12/b03-three-qualified/run-generation.mjs",
+  "childPidAtPause": 53911,
+  "reason": "Root requested natural full360\u2192holdout72 boundary for buried3 and shard author checks; only scheduler is stopped, active fixed CPU child continues unchanged.",
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/commands.json",
+    "sha256": "c0a4e4321db53f0ec742f8fd4a031f7f6c2efc1a3b35a11ec4550e305c53f236"
+  },
+  "noBrowserOrGameClockPaused": true,
+  "observedStoppedParent": "53901 88685 Ts   node docs/qa/artifacts/r100-i10-i12/b03-three-qualified/run-generation.mjs",
+  "fullCases": 360,
+  "fullFailures": 0,
+  "observedAt": "2026-10-07T01:40:03.963401+00:00",
+  "childAtBoundary": "53911 53901 Z    <defunct>",
+  "activeWorkerChildren": 0,
+  "exitCodeStillPendingParentReap": true,
+  "resumedAt": "2026-10-07T01:43:20.068410+00:00",
+  "observedParentBeforeResume": "53901 88685 Ts   node docs/qa/artifacts/r100-i10-i12/b03-three-qualified/run-generation.mjs",
+  "authorWindow": "root buried3 completed; shapes shard baseline diagnosis and authorized revised3 completed; both explicitly returned CPU",
+  "timingScope": "Full-stage scheduler elapsed includes this author pause; raw case durations remain unchanged. Not a performance claim."
+}

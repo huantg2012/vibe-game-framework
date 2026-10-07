@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "worlds": [
+    "fibre-choke",
+    "buried-lamellae",
+    "pressed-rim",
+    "wedged-hide"
+  ],
+  "groups": [
+    {
+      "id": "B04-original-three",
+      "worlds": [
+        "fibre-choke",
+        "pressed-rim",
+        "wedged-hide"
+      ],
+      "attempts": [
+        "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-full",
+        "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-holdout"
+      ]
+    },
+    {
+      "id": "B04-raised-buried",
+      "worlds": [
+        "buried-lamellae"
+      ],
+      "attempts": [
+        "docs/qa/artifacts/r100-i10-i12/b04-buried-qualified/generation-full",
+        "docs/qa/artifacts/r100-i10-i12/b04-buried-qualified/generation-holdout"
+      ]
+    }
+  ]
+}

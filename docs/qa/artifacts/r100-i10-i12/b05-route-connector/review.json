@@ -1,0 +1,50 @@
+{
+  "status": "qa-connector-browser-execution-pass",
+  "scope": "QA movement planning only; product source/20px physical body/coarse22px route margin unchanged. No scene, health or clock mutation.",
+  "originalFailure": {
+    "report": "docs/qa/artifacts/r100-i10-i12/b05-medium/report.json",
+    "sha256": "4fe7849d05f7f434d7ae46a0ecc52fe3e6875aed86bd0b993f03e790f46dbe7e",
+    "status": "failed",
+    "engineErrors": [],
+    "browserClosed": true
+  },
+  "diagnostic": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-author-preflight/split-final-seat-diagnostic.json",
+    "sha256": "18094cf2653b0f1e1fdfd5b4a4ece2d7bf6d8ea167d42d97b8e2b58ea093bdc5",
+    "finding": "Actual20 body supported; padded22 support false. All four coarse neighbors unsafe. Actual short line to572484 has forward/reverse fraction1 and101 supported samples."
+  },
+  "change": "Select only an exact whole-body direct connector from the actual position to a coarse safe center within32px. Start and endpoint require native support; displacementFraction must equal1. No connector remains a hard failure. Execute with existing real WASD.",
+  "beforeHarness": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-route-connector/frozen-before/capture-r100-expansion-art.mjs",
+    "sha256": "761e0de5c6c11d698ef605ffb093e527e1a413fe6aa19e5887f127ef4ea23cc8"
+  },
+  "afterHarness": {
+    "path": "tools/qa/capture-r100-expansion-art.mjs",
+    "sha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08"
+  },
+  "checks": [
+    "node --check PASS",
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-route-connector/checks.json",
+      "sha256": "f2dc4313322cb725ca5a53ef3f1386f48e86c6dcce6dbd0ea5b215f4af7866cb",
+      "status": "PASS8",
+      "scope": "Exact capture callback + actual NativeBodyCollision in VM; positive original corner and7rejection cases. No browser claim."
+    }
+  ],
+  "limitations": [
+    "Original rejected split source/failed capture preserved; exact original corner mechanically checked, not re-teleported for browser reproduction.",
+    "Does not change game geometry or width."
+  ],
+  "browserChecks": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/report.json",
+      "sha256": "99165965ed0ca697ffc1068296c2dcc2477458115762610a4bc168b5b80d5750",
+      "scope": "Actual successful new-route cases, not a fresh reproduction of rejected split old fourth station."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-medium/report.json",
+      "sha256": "2c2a72231cef8f7a3c35cd6ccacb7ef328ea099327ac6cbe1cf5ea363e8758e3",
+      "scope": "Actual successful new-route cases, not a fresh reproduction of rejected split old fourth station."
+    }
+  ]
+}

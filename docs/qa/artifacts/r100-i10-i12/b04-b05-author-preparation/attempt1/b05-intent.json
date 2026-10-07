@@ -1,0 +1,302 @@
+{
+  "quiet-spur": {
+    "batch": "b05",
+    "routes": [
+      {
+        "name": "quiet-long",
+        "points": [
+          [
+            577,
+            584
+          ],
+          [
+            860,
+            496
+          ],
+          [
+            934,
+            401
+          ],
+          [
+            911,
+            311
+          ],
+          [
+            662,
+            236
+          ]
+        ],
+        "bounds": [
+          550,
+          215,
+          960,
+          620
+        ]
+      },
+      {
+        "name": "dense-short",
+        "points": [
+          [
+            577,
+            584
+          ],
+          [
+            543,
+            473
+          ],
+          [
+            538,
+            365
+          ],
+          [
+            519,
+            279
+          ],
+          [
+            662,
+            236
+          ]
+        ],
+        "bounds": [
+          350,
+          200,
+          680,
+          630
+        ]
+      }
+    ],
+    "relations": {
+      "nearest": "cinder-ridge",
+      "difference": [
+        "真缺地将东侧床收成偏心岬，外侧长返路有实际长度",
+        "四小粒块只形成内侧短密段，无贯穿全图的粒脊"
+      ],
+      "routeLengthOrder": [
+        "dense-short",
+        "quiet-long"
+      ]
+    }
+  },
+  "split-fall": {
+    "batch": "b05",
+    "routes": [
+      {
+        "name": "collision-gap",
+        "points": [
+          [
+            415,
+            636
+          ],
+          [
+            404,
+            472
+          ],
+          [
+            574,
+            492
+          ],
+          [
+            582,
+            338
+          ],
+          [
+            572,
+            231
+          ]
+        ],
+        "bounds": [
+          280,
+          200,
+          780,
+          670
+        ]
+      },
+      {
+        "name": "west-outer",
+        "points": [
+          [
+            242,
+            641
+          ],
+          [
+            220,
+            255
+          ],
+          [
+            410,
+            183
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "quiet-back",
+        "points": [
+          [
+            325,
+            161
+          ],
+          [
+            834,
+            166
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "nearest": "shard-switchback",
+      "difference": [
+        "两股相反斜向的片序只在前段交会",
+        "穿出交会处后是横贯后部的宽静床，不沿全路重复断片"
+      ]
+    }
+  },
+  "three-shelves": {
+    "batch": "b05",
+    "routes": [
+      {
+        "name": "southwest-mouth",
+        "points": [
+          [
+            356,
+            603
+          ],
+          [
+            431,
+            537
+          ],
+          [
+            535,
+            462
+          ]
+        ],
+        "bounds": [
+          320,
+          400,
+          590,
+          660
+        ]
+      },
+      {
+        "name": "southeast-mouth",
+        "points": [
+          [
+            780,
+            592
+          ],
+          [
+            686,
+            571
+          ],
+          [
+            590,
+            512
+          ],
+          [
+            535,
+            462
+          ]
+        ],
+        "bounds": [
+          510,
+          430,
+          820,
+          650
+        ]
+      },
+      {
+        "name": "wide-north",
+        "points": [
+          [
+            535,
+            462
+          ],
+          [
+            535,
+            284
+          ]
+        ],
+        "bounds": [
+          450,
+          240,
+          610,
+          500
+        ]
+      }
+    ],
+    "relations": {
+      "nearest": "stepped-bowl",
+      "difference": [
+        "三件独立短弯岸形成三种大小开口，不是两道长对岸",
+        "低庭向北完全敞开，近处能同时看到两岸断端"
+      ],
+      "disjointSolidObjects": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "frayed-outwash": {
+    "batch": "b05",
+    "routes": [
+      {
+        "name": "root-through-outwash",
+        "points": [
+          [
+            566,
+            147
+          ],
+          [
+            570,
+            284
+          ],
+          [
+            548,
+            386
+          ],
+          [
+            604,
+            517
+          ],
+          [
+            602,
+            662
+          ]
+        ],
+        "bounds": [
+          350,
+          110,
+          790,
+          700
+        ]
+      },
+      {
+        "name": "quiet-cross-bed",
+        "points": [
+          [
+            276,
+            684
+          ],
+          [
+            858,
+            684
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "nearest": "splayed-fibres",
+      "difference": [
+        "分离的实体按北到南降高，末段真实变成可踩低痕",
+        "密根口与南端宽横床形成回程方向，不是完整放射叉"
+      ],
+      "walkableSurfaceObjects": [
+        6,
+        7
+      ]
+    }
+  }
+}

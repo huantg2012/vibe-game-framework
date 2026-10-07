@@ -1,0 +1,30 @@
+{
+  "status": "failed",
+  "pid": 45970,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+    "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d"
+  },
+  "readiness": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/readiness.json",
+    "sha256": "b08fbd80ab72c198f314fa442419c9b13699dc6ced146114f82bf2cc7c6c00ba"
+  },
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/preparation/commands.json",
+    "sha256": "cb3a2213b99c593a14c6630699497b517d92c58cdae1235c0b0f5fa860875ed9"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/run-play.mjs",
+    "sha256": "8f6a65bd403269178a6448db77de82e2ef8241ebd177bc8db2782ff40f3818ff"
+  },
+  "startedAt": "2026-10-07T04:44:03.896Z",
+  "cases": 24,
+  "log": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play-execution.log",
+  "method": "Original two-seed real keyboard controller on3110; one browser; resource pause only between complete trips.",
+  "exitCode": 1,
+  "signal": null,
+  "elapsedSeconds": 934.736,
+  "logSha256": "a6145ab28c8fabff9d722e20e7ff099ddb4d36b04333eb7028b1593dced2b88d",
+  "finishedAt": "2026-10-07T04:59:38.632Z",
+  "error": "AssertionError [ERR_ASSERTION]: Original failure retained; no automatic seed retry\n\n1 !== 0\n\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/run-play.mjs:27:18\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+}

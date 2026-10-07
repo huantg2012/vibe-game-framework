@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "observer": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload.mjs",
+    "sha256": "4f70a02bf22aac7c8a7621d71167c8990b5c51dc9403d26b49a70275bb5ef36c"
+  },
+  "assertions": [
+    "Original launch this/argument identity preserved",
+    "Original context this/argument identity preserved",
+    "Only CDP Target.setDiscoverTargets requested",
+    "Worker creation and close recorded",
+    "Network request failure preserved",
+    "Target crash status/errorCode preserved",
+    "Undo restores original launch"
+  ],
+  "scope": "Fake EventEmitter forwarding contract only; no browser execution or actual failure reproduction."
+}

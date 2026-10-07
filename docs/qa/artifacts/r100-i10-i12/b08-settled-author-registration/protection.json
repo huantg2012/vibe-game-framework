@@ -1,0 +1,55 @@
+{
+  "status": "PASS-explicit-profile-selector-protection",
+  "changedWorlds": [
+    "grain-weld",
+    "silk-catch"
+  ],
+  "otherWorldRowsByteExact": 102,
+  "otherWorldObjectsDeepExact": 102,
+  "otherGradeDefinitionsDeepExact": 306,
+  "fields": {
+    "grain-weld": {
+      "instances": [
+        1,
+        2
+      ],
+      "shapeProfile": [
+        "fracture-fan",
+        "settled-fan"
+      ]
+    },
+    "silk-catch": {
+      "instances": [
+        3
+      ],
+      "shapeProfile": [
+        "torn-sheet",
+        "settled-sheet"
+      ]
+    }
+  },
+  "otherFieldsDeepExactAcrossThreeGrades": true,
+  "receipts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-settled-author-registration/native104-before.csv",
+      "sha256": "c6f5346b0331ed76f86dcc4a02694254c776df4b51010463eabda962d5660785"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-settled-author-registration/native104-before.ts.txt",
+      "sha256": "3e9c4a465d8a2d5efcd46d58380722d84793804884312700ccb642cd413619d6"
+    },
+    {
+      "path": "data/rift-native-worlds.csv",
+      "sha256": "ffdd20cb2257ce6e89ab7bd00b070c8e2db1e3d5f46487e41fbb3b68768807b5"
+    },
+    {
+      "path": "src/generated/r100-native-worlds.ts",
+      "sha256": "a3d9da5acc86b7960335ae8792f7ed3f092d13aa10de1994da48d934b53c205c"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-settled-sheet.ts",
+      "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
+    }
+  ],
+  "limits": "Author selectors only; root owns actual3+3 and normal view. No prior failed evidence overwritten."
+}

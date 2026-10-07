@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "status": "authorized-generation-only",
+  "worlds": [
+    "notched-backwater",
+    "crossed-casings",
+    "fibre-stumpfield",
+    "sloughed-court"
+  ],
+  "wholeBatchReady": false,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-current-qualified/preparation/qualification-ee0cd3465fa2.mjs",
+    "sha256": "ee0cd3465fa2de3d52ff130012751de7e6b027ca4de26f4b53f2656ceae21cd5"
+  },
+  "rootReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/cpu-authorization.json",
+    "sha256": "85f056b6b96289e57ff1ce3111d02c3421de3bbeb3c188a2e1b5264bb234acf8"
+  },
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/preparation/commands.json",
+    "sha256": "42e5750d36cf1e5ae7649ada49a6db2f7c98449d8fbb7134eed48be98903c5a8"
+  },
+  "generation": [
+    {
+      "cases": 480,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-current-qualified/preparation/qualification-ee0cd3465fa2.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-current-qualified/preparation/qualification-ee0cd3465fa2.mjs",
+        "--worlds",
+        "notched-backwater,crossed-casings,fibre-stumpfield,sloughed-court",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-current-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 96,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-current-qualified/preparation/qualification-ee0cd3465fa2.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-current-qualified/preparation/qualification-ee0cd3465fa2.mjs",
+        "--worlds",
+        "notched-backwater,crossed-casings,fibre-stumpfield,sloughed-court",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-current-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "Original B10 fixed576, current3120. CPU generation is distinct from completed art/play qualification."
+}

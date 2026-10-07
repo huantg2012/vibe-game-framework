@@ -1,0 +1,895 @@
+{
+  "status": "original-body9-pass-normal-view-pending",
+  "changes": [
+    {
+      "world": "blue-fault",
+      "column": "shape_profiles",
+      "before": "fracture-fan|fracture-fan|fracture-fan|fracture-fan",
+      "after": "settled-fan|settled-fan|fracture-fan|fracture-fan"
+    },
+    {
+      "world": "pale-pressure",
+      "column": "shape_profiles",
+      "before": "torn-sheet|torn-sheet|torn-sheet|torn-sheet|torn-sheet|torn-sheet",
+      "after": "settled-sheet|torn-sheet|torn-sheet|compressed-wedge|torn-sheet|clamp-bank"
+    },
+    {
+      "world": "sloughed-court",
+      "column": "shape_profiles",
+      "before": "torn-sheet|torn-sheet|torn-sheet",
+      "after": "settled-sheet|settled-sheet|torn-sheet"
+    }
+  ],
+  "protectedWorlds": 105,
+  "protectedDefinitions": 315,
+  "otherFieldsOfChangedWorldsDeepExact": true,
+  "source": {
+    "native": {
+      "path": "data/rift-native-worlds.csv",
+      "sha256": "d56a3711dd2d005e2f8cfa697c415ce2550b6262c7de1457e3599e43bc100a60"
+    },
+    "generated": {
+      "path": "src/generated/r100-native-worlds.ts",
+      "sha256": "3d5bf2ef485269a043a431407c58fb5550f508a33333302d9791b2afe0646158"
+    }
+  },
+  "reports": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-profile-refined/blue-body3/report.json",
+      "sha256": "8e609308fb72492b616091c1751cdef8b3230c2d56505f3138c946266891ad62"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-profile-refined/pale-body3/report.json",
+      "sha256": "a9d611d5a738ebc6923168ff3f4e138e6dc066e23aaa97462bf69ac68d3bba70"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-profile-refined/sloughed-body3/report.json",
+      "sha256": "1a88d3bbf9245e6a6d5c3cc83beb3d036c836ccf037d6e0bee6a0edaad089bb9"
+    }
+  ],
+  "originalReports": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-author-preflight/body12/report.json",
+      "sha256": "ba77dcd4e3caf78b9bc1b065b4ffb8d45a4474deec41b04cdd8aac924282f68d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-author-preflight/body12/report.json",
+      "sha256": "b403a0d66a696b3017f0d19cada631a0e8332f918370fd8ca4148f645ebd4717"
+    }
+  ],
+  "checks": {
+    "uniqueCases": 9,
+    "allOriginalStationsAndIntentRoutes": true,
+    "seed": 20261005,
+    "bodySide": 20,
+    "stationDistanceExclusiveLimit": 24,
+    "minimumVisibleCut": 345,
+    "minimumVisibleJoint": 8,
+    "diagnosticDurationMs": 4522.268043
+  },
+  "rows": [
+    {
+      "world": "blue-fault",
+      "grade": "low",
+      "stations": [
+        {
+          "cell": 9402,
+          "requested": {
+            "x": 467,
+            "y": 589
+          },
+          "actual": {
+            "x": 468,
+            "y": 588
+          },
+          "distance": 1.4142135623730951
+        },
+        {
+          "cell": 9684,
+          "requested": {
+            "x": 673,
+            "y": 604
+          },
+          "actual": {
+            "x": 676,
+            "y": 604
+          },
+          "distance": 3
+        },
+        {
+          "cell": 8552,
+          "requested": {
+            "x": 836,
+            "y": 530
+          },
+          "actual": {
+            "x": 836,
+            "y": 532
+          },
+          "distance": 2
+        },
+        {
+          "cell": 6832,
+          "requested": {
+            "x": 386,
+            "y": 432
+          },
+          "actual": {
+            "x": 388,
+            "y": 428
+          },
+          "distance": 4.47213595499958
+        },
+        {
+          "cell": 2353,
+          "requested": {
+            "x": 393,
+            "y": 149
+          },
+          "actual": {
+            "x": 396,
+            "y": 148
+          },
+          "distance": 3.1622776601683795
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 3,
+          "cut": 750,
+          "joint": 95
+        },
+        {
+          "id": 4,
+          "cut": 750,
+          "joint": 98
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "south-cross",
+          "lengthPx": 456
+        },
+        {
+          "name": "north-return",
+          "lengthPx": 1056
+        }
+      ]
+    },
+    {
+      "world": "blue-fault",
+      "grade": "medium",
+      "stations": [
+        {
+          "cell": 9402,
+          "requested": {
+            "x": 467,
+            "y": 589
+          },
+          "actual": {
+            "x": 468,
+            "y": 588
+          },
+          "distance": 1.4142135623730951
+        },
+        {
+          "cell": 9684,
+          "requested": {
+            "x": 673,
+            "y": 604
+          },
+          "actual": {
+            "x": 676,
+            "y": 604
+          },
+          "distance": 3
+        },
+        {
+          "cell": 8552,
+          "requested": {
+            "x": 836,
+            "y": 530
+          },
+          "actual": {
+            "x": 836,
+            "y": 532
+          },
+          "distance": 2
+        },
+        {
+          "cell": 6832,
+          "requested": {
+            "x": 386,
+            "y": 432
+          },
+          "actual": {
+            "x": 388,
+            "y": 428
+          },
+          "distance": 4.47213595499958
+        },
+        {
+          "cell": 2353,
+          "requested": {
+            "x": 393,
+            "y": 149
+          },
+          "actual": {
+            "x": 396,
+            "y": 148
+          },
+          "distance": 3.1622776601683795
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 3,
+          "cut": 750,
+          "joint": 95
+        },
+        {
+          "id": 4,
+          "cut": 750,
+          "joint": 98
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "south-cross",
+          "lengthPx": 456
+        },
+        {
+          "name": "north-return",
+          "lengthPx": 1056
+        }
+      ]
+    },
+    {
+      "world": "blue-fault",
+      "grade": "severe",
+      "stations": [
+        {
+          "cell": 9402,
+          "requested": {
+            "x": 467,
+            "y": 589
+          },
+          "actual": {
+            "x": 468,
+            "y": 588
+          },
+          "distance": 1.4142135623730951
+        },
+        {
+          "cell": 9684,
+          "requested": {
+            "x": 673,
+            "y": 604
+          },
+          "actual": {
+            "x": 676,
+            "y": 604
+          },
+          "distance": 3
+        },
+        {
+          "cell": 8552,
+          "requested": {
+            "x": 836,
+            "y": 530
+          },
+          "actual": {
+            "x": 836,
+            "y": 532
+          },
+          "distance": 2
+        },
+        {
+          "cell": 6832,
+          "requested": {
+            "x": 386,
+            "y": 432
+          },
+          "actual": {
+            "x": 388,
+            "y": 428
+          },
+          "distance": 4.47213595499958
+        },
+        {
+          "cell": 2353,
+          "requested": {
+            "x": 393,
+            "y": 149
+          },
+          "actual": {
+            "x": 396,
+            "y": 148
+          },
+          "distance": 3.1622776601683795
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 3,
+          "cut": 750,
+          "joint": 95
+        },
+        {
+          "id": 4,
+          "cut": 750,
+          "joint": 98
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "south-cross",
+          "lengthPx": 456
+        },
+        {
+          "name": "north-return",
+          "lengthPx": 1056
+        }
+      ]
+    },
+    {
+      "world": "pale-pressure",
+      "grade": "low",
+      "stations": [
+        {
+          "cell": 10166,
+          "requested": {
+            "x": 439,
+            "y": 636
+          },
+          "actual": {
+            "x": 436,
+            "y": 636
+          },
+          "distance": 3
+        },
+        {
+          "cell": 7099,
+          "requested": {
+            "x": 475,
+            "y": 443
+          },
+          "actual": {
+            "x": 476,
+            "y": 444
+          },
+          "distance": 1.4142135623730951
+        },
+        {
+          "cell": 4666,
+          "requested": {
+            "x": 468,
+            "y": 295
+          },
+          "actual": {
+            "x": 468,
+            "y": 292
+          },
+          "distance": 3
+        },
+        {
+          "cell": 5716,
+          "requested": {
+            "x": 678,
+            "y": 358
+          },
+          "actual": {
+            "x": 676,
+            "y": 356
+          },
+          "distance": 2.8284271247461903
+        },
+        {
+          "cell": 5479,
+          "requested": {
+            "x": 827,
+            "y": 341
+          },
+          "actual": {
+            "x": 828,
+            "y": 340
+          },
+          "distance": 1.4142135623730951
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 2,
+          "cut": 372,
+          "joint": 28
+        },
+        {
+          "id": 3,
+          "cut": 345,
+          "joint": 28
+        },
+        {
+          "id": 4,
+          "cut": 829,
+          "joint": 10
+        },
+        {
+          "id": 5,
+          "cut": 427,
+          "joint": 32
+        },
+        {
+          "id": 6,
+          "cut": 806,
+          "joint": 11
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "density-path",
+          "lengthPx": 1024
+        },
+        {
+          "name": "outer-clear-bed",
+          "lengthPx": 896
+        }
+      ]
+    },
+    {
+      "world": "pale-pressure",
+      "grade": "medium",
+      "stations": [
+        {
+          "cell": 10166,
+          "requested": {
+            "x": 439,
+            "y": 636
+          },
+          "actual": {
+            "x": 436,
+            "y": 636
+          },
+          "distance": 3
+        },
+        {
+          "cell": 7099,
+          "requested": {
+            "x": 475,
+            "y": 443
+          },
+          "actual": {
+            "x": 476,
+            "y": 444
+          },
+          "distance": 1.4142135623730951
+        },
+        {
+          "cell": 4666,
+          "requested": {
+            "x": 468,
+            "y": 295
+          },
+          "actual": {
+            "x": 468,
+            "y": 292
+          },
+          "distance": 3
+        },
+        {
+          "cell": 5716,
+          "requested": {
+            "x": 678,
+            "y": 358
+          },
+          "actual": {
+            "x": 676,
+            "y": 356
+          },
+          "distance": 2.8284271247461903
+        },
+        {
+          "cell": 5479,
+          "requested": {
+            "x": 827,
+            "y": 341
+          },
+          "actual": {
+            "x": 828,
+            "y": 340
+          },
+          "distance": 1.4142135623730951
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 2,
+          "cut": 372,
+          "joint": 28
+        },
+        {
+          "id": 3,
+          "cut": 345,
+          "joint": 28
+        },
+        {
+          "id": 4,
+          "cut": 829,
+          "joint": 10
+        },
+        {
+          "id": 5,
+          "cut": 427,
+          "joint": 32
+        },
+        {
+          "id": 6,
+          "cut": 806,
+          "joint": 8
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "density-path",
+          "lengthPx": 1024
+        },
+        {
+          "name": "outer-clear-bed",
+          "lengthPx": 896
+        }
+      ]
+    },
+    {
+      "world": "pale-pressure",
+      "grade": "severe",
+      "stations": [
+        {
+          "cell": 10166,
+          "requested": {
+            "x": 439,
+            "y": 636
+          },
+          "actual": {
+            "x": 436,
+            "y": 636
+          },
+          "distance": 3
+        },
+        {
+          "cell": 7099,
+          "requested": {
+            "x": 475,
+            "y": 443
+          },
+          "actual": {
+            "x": 476,
+            "y": 444
+          },
+          "distance": 1.4142135623730951
+        },
+        {
+          "cell": 4666,
+          "requested": {
+            "x": 468,
+            "y": 295
+          },
+          "actual": {
+            "x": 468,
+            "y": 292
+          },
+          "distance": 3
+        },
+        {
+          "cell": 5716,
+          "requested": {
+            "x": 678,
+            "y": 358
+          },
+          "actual": {
+            "x": 676,
+            "y": 356
+          },
+          "distance": 2.8284271247461903
+        },
+        {
+          "cell": 5479,
+          "requested": {
+            "x": 827,
+            "y": 341
+          },
+          "actual": {
+            "x": 828,
+            "y": 340
+          },
+          "distance": 1.4142135623730951
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 2,
+          "cut": 372,
+          "joint": 28
+        },
+        {
+          "id": 3,
+          "cut": 345,
+          "joint": 28
+        },
+        {
+          "id": 4,
+          "cut": 829,
+          "joint": 10
+        },
+        {
+          "id": 5,
+          "cut": 427,
+          "joint": 32
+        },
+        {
+          "id": 6,
+          "cut": 806,
+          "joint": 10
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "density-path",
+          "lengthPx": 1024
+        },
+        {
+          "name": "outer-clear-bed",
+          "lengthPx": 896
+        }
+      ]
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "low",
+      "stations": [
+        {
+          "cell": 6566,
+          "requested": {
+            "x": 312,
+            "y": 410
+          },
+          "actual": {
+            "x": 308,
+            "y": 412
+          },
+          "distance": 4.47213595499958
+        },
+        {
+          "cell": 6076,
+          "requested": {
+            "x": 483,
+            "y": 380
+          },
+          "actual": {
+            "x": 484,
+            "y": 380
+          },
+          "distance": 1
+        },
+        {
+          "cell": 6096,
+          "requested": {
+            "x": 645,
+            "y": 378
+          },
+          "actual": {
+            "x": 644,
+            "y": 380
+          },
+          "distance": 2.23606797749979
+        },
+        {
+          "cell": 4309,
+          "requested": {
+            "x": 685,
+            "y": 271
+          },
+          "actual": {
+            "x": 684,
+            "y": 268
+          },
+          "distance": 3.1622776601683795
+        },
+        {
+          "cell": 10537,
+          "requested": {
+            "x": 335,
+            "y": 662
+          },
+          "actual": {
+            "x": 332,
+            "y": 660
+          },
+          "distance": 3.6055512754639896
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 3,
+          "cut": 447,
+          "joint": 32
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "open-court",
+          "lengthPx": 520
+        },
+        {
+          "name": "outside-tear",
+          "lengthPx": 784
+        }
+      ]
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "medium",
+      "stations": [
+        {
+          "cell": 6566,
+          "requested": {
+            "x": 312,
+            "y": 410
+          },
+          "actual": {
+            "x": 308,
+            "y": 412
+          },
+          "distance": 4.47213595499958
+        },
+        {
+          "cell": 6076,
+          "requested": {
+            "x": 483,
+            "y": 380
+          },
+          "actual": {
+            "x": 484,
+            "y": 380
+          },
+          "distance": 1
+        },
+        {
+          "cell": 6096,
+          "requested": {
+            "x": 645,
+            "y": 378
+          },
+          "actual": {
+            "x": 644,
+            "y": 380
+          },
+          "distance": 2.23606797749979
+        },
+        {
+          "cell": 4309,
+          "requested": {
+            "x": 685,
+            "y": 271
+          },
+          "actual": {
+            "x": 684,
+            "y": 268
+          },
+          "distance": 3.1622776601683795
+        },
+        {
+          "cell": 10537,
+          "requested": {
+            "x": 335,
+            "y": 662
+          },
+          "actual": {
+            "x": 332,
+            "y": 660
+          },
+          "distance": 3.6055512754639896
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 3,
+          "cut": 447,
+          "joint": 32
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "open-court",
+          "lengthPx": 520
+        },
+        {
+          "name": "outside-tear",
+          "lengthPx": 784
+        }
+      ]
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "severe",
+      "stations": [
+        {
+          "cell": 6566,
+          "requested": {
+            "x": 312,
+            "y": 410
+          },
+          "actual": {
+            "x": 308,
+            "y": 412
+          },
+          "distance": 4.47213595499958
+        },
+        {
+          "cell": 6076,
+          "requested": {
+            "x": 483,
+            "y": 380
+          },
+          "actual": {
+            "x": 484,
+            "y": 380
+          },
+          "distance": 1
+        },
+        {
+          "cell": 6096,
+          "requested": {
+            "x": 645,
+            "y": 378
+          },
+          "actual": {
+            "x": 644,
+            "y": 380
+          },
+          "distance": 2.23606797749979
+        },
+        {
+          "cell": 4309,
+          "requested": {
+            "x": 685,
+            "y": 271
+          },
+          "actual": {
+            "x": 684,
+            "y": 268
+          },
+          "distance": 3.1622776601683795
+        },
+        {
+          "cell": 10537,
+          "requested": {
+            "x": 335,
+            "y": 662
+          },
+          "actual": {
+            "x": 332,
+            "y": 660
+          },
+          "distance": 3.6055512754639896
+        }
+      ],
+      "fractureEvidence": [
+        {
+          "id": 3,
+          "cut": 447,
+          "joint": 32
+        }
+      ],
+      "routeLengths": [
+        {
+          "name": "open-court",
+          "lengthPx": 520
+        },
+        {
+          "name": "outside-tear",
+          "lengthPx": 784
+        }
+      ]
+    }
+  ],
+  "scope": "Author profile fields only. Pale two solid footprints are allowed to differ; this certifies original actual body routes, not exact collision fields or unchanged runtime saved identity. No art/gameplay qualification implied."
+}

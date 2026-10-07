@@ -1,0 +1,1228 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+    "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+    "sourceManifestSha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d",
+    "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b04-buried-refined/raised-bank/body3/report.json",
+    "cameraInputSha256": "90007b5a7285b8326e02768bf2f8c8cda70be30294e1d107d1e6f5c60530baa2",
+    "scope": "New24px solid grain bank: actual WASD around south side. Old02/03inside-footpoints not reused. Ordinary finite FOV/light/clock/health. No qualification claim. Same requested seed and original material-facing stations in low/severe; actual runtime identity/body/facing logged. No full-run claim.",
+    "cases": [
+      {
+        "world": "buried-lamellae",
+        "grade": "low",
+        "goals": [
+          {
+            "label": "01-high-end",
+            "x": 296,
+            "y": 440,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 292,
+              "y": 436
+            },
+            "lookAtMaterialPoint": {
+              "x": 365,
+              "y": 299
+            }
+          },
+          {
+            "label": "02-south-raised-contact",
+            "x": 493,
+            "y": 495,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 492,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 419
+            }
+          },
+          {
+            "label": "03-low-tail-south",
+            "x": 652,
+            "y": 551,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 652,
+              "y": 548
+            },
+            "lookAtMaterialPoint": {
+              "x": 625,
+              "y": 442
+            }
+          }
+        ]
+      },
+      {
+        "world": "buried-lamellae",
+        "grade": "severe",
+        "goals": [
+          {
+            "label": "01-high-end",
+            "x": 296,
+            "y": 440,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 292,
+              "y": 436
+            },
+            "lookAtMaterialPoint": {
+              "x": 365,
+              "y": 299
+            }
+          },
+          {
+            "label": "02-south-raised-contact",
+            "x": 493,
+            "y": 495,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 492,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 419
+            }
+          },
+          {
+            "label": "03-low-tail-south",
+            "x": 652,
+            "y": 551,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 652,
+              "y": 548
+            },
+            "lookAtMaterialPoint": {
+              "x": 625,
+              "y": 442
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "buried-lamellae",
+      "grade": "low",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-high-end",
+            "x": 296,
+            "y": 440,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 292,
+              "y": 436
+            },
+            "lookAtMaterialPoint": {
+              "x": 365,
+              "y": 299
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-high-end",
+              "x": 296,
+              "y": 440,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 292,
+                "y": 436
+              },
+              "lookAtMaterialPoint": {
+                "x": 365,
+                "y": 299
+              }
+            },
+            "actual": {
+              "x": 292,
+              "y": 444
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 292,
+                "y": 588
+              },
+              {
+                "x": 292,
+                "y": 444
+              }
+            ],
+            "length": 240,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/01-high-end-north.png",
+              "sha256": "a1a780c5a39f51f6289e9f8f21be52ab44cd1b92efeb1de84d917fabe652c4ac",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 293.14306069836647,
+                  "y": 443.2138057186289
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.726767135999987,
+                "elapsedMs": 3916.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 293.14306069836647,
+                  "y": 443.2138057186289
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.745729031999987,
+                "elapsedMs": 4016.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-south-raised-contact",
+            "x": 493,
+            "y": 495,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 492,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 419
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-south-raised-contact",
+              "x": 493,
+              "y": 495,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 492,
+                "y": 492
+              },
+              "lookAtMaterialPoint": {
+                "x": 520,
+                "y": 419
+              }
+            },
+            "actual": {
+              "x": 492,
+              "y": 492
+            },
+            "points": [
+              {
+                "x": 292,
+                "y": 444
+              },
+              {
+                "x": 428,
+                "y": 444
+              },
+              {
+                "x": 428,
+                "y": 452
+              },
+              {
+                "x": 444,
+                "y": 452
+              },
+              {
+                "x": 444,
+                "y": 460
+              },
+              {
+                "x": 460,
+                "y": 460
+              },
+              {
+                "x": 460,
+                "y": 468
+              },
+              {
+                "x": 476,
+                "y": 468
+              },
+              {
+                "x": 476,
+                "y": 476
+              },
+              {
+                "x": 492,
+                "y": 476
+              },
+              {
+                "x": 492,
+                "y": 492
+              }
+            ],
+            "length": 248,
+            "originConnector": {
+              "origin": {
+                "x": 293.14306069836647,
+                "y": 443.2138057186289
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7076,
+                "x": 292,
+                "y": 444,
+                "distance": 1.3873316864436676
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/02-south-raised-contact-north.png",
+              "sha256": "73aabed828566a4b7d2810818b918e540f08e6df760e6714efac363db648ac02",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 493.6609609612296,
+                  "y": 477.1660988369497
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.681052375999972,
+                "elapsedMs": 8949.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 493.6609609612296,
+                  "y": 477.1660988369497
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.69684795199997,
+                "elapsedMs": 9032.9
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/02-south-raised-contact-east.png",
+              "sha256": "6ea1b818e15c4868c161b7e6c1b84eb8d805bbeee672a607aa68ef6a2100f401",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 507.12800909015453,
+                  "y": 477.79923288796897
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.77584858399997,
+                "elapsedMs": 9449.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 507.12800909015453,
+                  "y": 477.79923288796897
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.79164984799997,
+                "elapsedMs": 9533
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-low-tail-south",
+            "x": 652,
+            "y": 551,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 652,
+              "y": 548
+            },
+            "lookAtMaterialPoint": {
+              "x": 625,
+              "y": 442
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-low-tail-south",
+              "x": 652,
+              "y": 551,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 652,
+                "y": 548
+              },
+              "lookAtMaterialPoint": {
+                "x": 625,
+                "y": 442
+              }
+            },
+            "actual": {
+              "x": 652,
+              "y": 548
+            },
+            "points": [
+              {
+                "x": 508,
+                "y": 484
+              },
+              {
+                "x": 516,
+                "y": 484
+              },
+              {
+                "x": 516,
+                "y": 492
+              },
+              {
+                "x": 532,
+                "y": 492
+              },
+              {
+                "x": 532,
+                "y": 500
+              },
+              {
+                "x": 556,
+                "y": 500
+              },
+              {
+                "x": 556,
+                "y": 508
+              },
+              {
+                "x": 580,
+                "y": 508
+              },
+              {
+                "x": 580,
+                "y": 516
+              },
+              {
+                "x": 604,
+                "y": 516
+              },
+              {
+                "x": 604,
+                "y": 524
+              },
+              {
+                "x": 652,
+                "y": 524
+              },
+              {
+                "x": 652,
+                "y": 548
+              }
+            ],
+            "length": 208,
+            "originConnector": {
+              "origin": {
+                "x": 507.12800909015453,
+                "y": 477.79923288796897
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7743,
+                "x": 508,
+                "y": 484,
+                "distance": 6.26177937366838
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/03-low-tail-south-north.png",
+              "sha256": "e1e721fa3a42a68c7917f198e6237401d17fb46f2b739639ebb59b2840621ea3",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 653.8132809745871,
+                  "y": 543.4291698254915
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.65428623999995,
+                "elapsedMs": 14082.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 653.8132809745871,
+                  "y": 543.4291698254915
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.67008750399995,
+                "elapsedMs": 14166.099999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/03-low-tail-south-west.png",
+              "sha256": "ad9961373a8905617332b26a8d679bbc1b27e140d2c291bdd2a58968a33439d5",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 646.3690809745871,
+                  "y": 543.4291698254915
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.72380687199995,
+                "elapsedMs": 14449.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 646.3690809745871,
+                  "y": 543.4291698254915
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.73960434399995,
+                "elapsedMs": 14532.7
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "buried-lamellae",
+        "grade": "low",
+        "package": {
+          "id": "r100-buried-lamellae",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "b06f3f67",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3110/r100-gym.html?world=buried-lamellae&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-low/recipe.json",
+        "sha256": "1a7ec36b1dd5ebb50691811fe9142212fbc579faf623f29b9de580220975c336"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 646.3690809745871,
+          "y": 543.4291698254915
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 17.73960434399995,
+        "elapsedMs": 14532.7
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 646.3690809745871,
+          "y": 543.4291698254915
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 17.97028307999995,
+        "elapsedMs": 15749.400000000001
+      }
+    },
+    {
+      "world": "buried-lamellae",
+      "grade": "severe",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-high-end",
+            "x": 296,
+            "y": 440,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 292,
+              "y": 436
+            },
+            "lookAtMaterialPoint": {
+              "x": 365,
+              "y": 299
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-high-end",
+              "x": 296,
+              "y": 440,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 292,
+                "y": 436
+              },
+              "lookAtMaterialPoint": {
+                "x": 365,
+                "y": 299
+              }
+            },
+            "actual": {
+              "x": 292,
+              "y": 444
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 292,
+                "y": 588
+              },
+              {
+                "x": 292,
+                "y": 444
+              }
+            ],
+            "length": 240,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/01-high-end-north.png",
+              "sha256": "7c7cc01c99f9c680fdab4f09eabc1160f281242dfd813b2d517317faab8b5ca7",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 291.6182543743639,
+                  "y": 439.4054963148677
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 22.929607231999917,
+                "elapsedMs": 3899.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 291.6182543743639,
+                  "y": 439.4054963148677
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 22.98018239999991,
+                "elapsedMs": 3999.8999999999996
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-south-raised-contact",
+            "x": 493,
+            "y": 495,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 492,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 419
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-south-raised-contact",
+              "x": 493,
+              "y": 495,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 492,
+                "y": 492
+              },
+              "lookAtMaterialPoint": {
+                "x": 520,
+                "y": 419
+              }
+            },
+            "actual": {
+              "x": 492,
+              "y": 492
+            },
+            "points": [
+              {
+                "x": 292,
+                "y": 436
+              },
+              {
+                "x": 412,
+                "y": 436
+              },
+              {
+                "x": 412,
+                "y": 444
+              },
+              {
+                "x": 428,
+                "y": 444
+              },
+              {
+                "x": 428,
+                "y": 452
+              },
+              {
+                "x": 444,
+                "y": 452
+              },
+              {
+                "x": 444,
+                "y": 460
+              },
+              {
+                "x": 460,
+                "y": 460
+              },
+              {
+                "x": 460,
+                "y": 468
+              },
+              {
+                "x": 468,
+                "y": 468
+              },
+              {
+                "x": 468,
+                "y": 476
+              },
+              {
+                "x": 492,
+                "y": 476
+              },
+              {
+                "x": 492,
+                "y": 492
+              }
+            ],
+            "length": 256,
+            "originConnector": {
+              "origin": {
+                "x": 291.6182543743639,
+                "y": 439.4054963148677
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 6948,
+                "x": 292,
+                "y": 436,
+                "distance": 3.4268257722373194
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/02-south-raised-contact-north.png",
+              "sha256": "9a72c9ab56fe479ff068f96bebe73ca07be88ac91656cbe996c2c3924f15d72e",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5702936719703287,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 493.23981745125155,
+                  "y": 483.4531558207208
+                },
+                "facingAngle": -1.5702936719703287,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 25.794569407999802,
+                "elapsedMs": 9566.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 493.23981745125155,
+                  "y": 483.4531558207208
+                },
+                "facingAngle": -1.5702936719703287,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 25.8451294079998,
+                "elapsedMs": 9666.3
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/02-south-raised-contact-east.png",
+              "sha256": "54e67cee39ad8f972f1f9a97a1a8d5e144edad9168e0ed0ef3428d62703f307b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 500.6853174512515,
+                  "y": 483.4531558207208
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 25.99680940799979,
+                "elapsedMs": 9966.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 500.6853174512515,
+                  "y": 483.4531558207208
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 26.06422105599979,
+                "elapsedMs": 10099.599999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-low-tail-south",
+            "x": 652,
+            "y": 551,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 652,
+              "y": 548
+            },
+            "lookAtMaterialPoint": {
+              "x": 625,
+              "y": 442
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-low-tail-south",
+              "x": 652,
+              "y": 551,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 652,
+                "y": 548
+              },
+              "lookAtMaterialPoint": {
+                "x": 625,
+                "y": 442
+              }
+            },
+            "actual": {
+              "x": 652,
+              "y": 548
+            },
+            "points": [
+              {
+                "x": 500,
+                "y": 484
+              },
+              {
+                "x": 508,
+                "y": 484
+              },
+              {
+                "x": 508,
+                "y": 492
+              },
+              {
+                "x": 532,
+                "y": 492
+              },
+              {
+                "x": 532,
+                "y": 500
+              },
+              {
+                "x": 556,
+                "y": 500
+              },
+              {
+                "x": 556,
+                "y": 508
+              },
+              {
+                "x": 580,
+                "y": 508
+              },
+              {
+                "x": 580,
+                "y": 516
+              },
+              {
+                "x": 596,
+                "y": 516
+              },
+              {
+                "x": 596,
+                "y": 524
+              },
+              {
+                "x": 652,
+                "y": 524
+              },
+              {
+                "x": 652,
+                "y": 548
+              }
+            ],
+            "length": 216,
+            "originConnector": {
+              "origin": {
+                "x": 500.6853174512515,
+                "y": 483.4531558207208
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7742,
+                "x": 500,
+                "y": 484,
+                "distance": 0.8767545639467098
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/03-low-tail-south-north.png",
+              "sha256": "0c37f4ecf4080452646c300d18d5215483676720985fb1afa0960c1438bce6c6",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 652.8930938096717,
+                  "y": 540.8562930877196
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 28.625813119999698,
+                "elapsedMs": 15166
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 652.8930938096717,
+                  "y": 540.8562930877196
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 28.667939711999697,
+                "elapsedMs": 15249.400000000001
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/03-low-tail-south-west.png",
+              "sha256": "b9e8ce6e48d208b5309f89e6848690b4036b6a3ad77eb62be87f5cbd8481e1c8",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 645.4486938096717,
+                  "y": 540.8562930877196
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 28.81962982399969,
+                "elapsedMs": 15549.400000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 645.4486938096717,
+                  "y": 540.8562930877196
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 28.86176147199969,
+                "elapsedMs": 15632.7
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "buried-lamellae",
+        "grade": "severe",
+        "package": {
+          "id": "r100-buried-lamellae",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "0d34d0b7",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3110/r100-gym.html?world=buried-lamellae&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades/buried-lamellae-severe/recipe.json",
+        "sha256": "bc45b2242ba93df907291bf31eacab5df00420d99e51ccf9e13ed82dd023c669"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 645.4486938096717,
+          "y": 540.8562930877196
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 28.86176147199969,
+        "elapsedMs": 15632.7
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 645.4486938096717,
+          "y": 540.8562930877196
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 29.476874431999647,
+        "elapsedMs": 16849.4
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

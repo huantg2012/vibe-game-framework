@@ -1,0 +1,13 @@
+{
+  "status": "rejected-before-browser-or-qualification",
+  "reason": "Native CSV/generated were updated during source preparation; snapshot copied stable new bytes but package dependency receipt was still stale. Current tree and copied CSV/generated matched. Repository package --check explicitly rejected stale receipt.",
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b05-source-attempt1/source-snapshot.json",
+  "sourceManifestSha256": "a0afbf812c3bf993e4c9cd60eb2557e8b9c54f81cf00b8754fbc58e06e625e02",
+  "nativeCsvSha256": "2a776913899f32eb5f447ec366c3f6690abc2b2263a3ac9cc7780091cf0c683f",
+  "staleManifestSha256": "02732aae9d8fc0056d1a9fc8604b34a2096a18b0fd3cc815281fa1f73ce811e6",
+  "serverStopped": true,
+  "browserLaunched": false,
+  "qualificationRun": false,
+  "diagnosticToolNote": "First attempted package --check within frozen copy failed because tools are intentionally not copied; later repository check (identical source bytes) produced Stale v3 package dependency receipt. Neither is a gameplay failure.",
+  "recordedAt": "2026-10-07T01:36:54.815880+00:00"
+}

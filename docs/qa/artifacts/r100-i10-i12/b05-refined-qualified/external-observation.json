@@ -1,0 +1,26 @@
+{
+  "status": "prepared-for-original24-with-external-observation",
+  "createdAt": "2026-10-07T05:21:04.205045+00:00",
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/run-play.mjs",
+    "sha256": "30a1706ab42c45c941c39bbc8c78cc9f85b3247b1e98b27e00c88f1f591cdb87"
+  },
+  "observer": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload-v2.mjs",
+    "sha256": "7320404fc7d6cffc80d504ecba9b06b67ba1e042ce5ec82a7823e2432d95e1d5"
+  },
+  "observerContract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observer-v2-contract.json",
+    "sha256": "221053b279a700552908cff529cab7059f7ba433c619ec3e12f10bdfd8761631"
+  },
+  "observerDerivation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observer-v2-derivation.json",
+    "sha256": "8b2e6bb078295afa38a032c608f1edb75b3084b8fc0745b9561145764cf61249"
+  },
+  "environment": {
+    "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/worker-observations",
+    "NODE_OPTIONS": "--import /Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload-v2.mjs",
+    "DEBUG": "pw:browser"
+  },
+  "scope": "Original3112 source, two seeds, earned storage, policy15/r6 adapter and one-browser wrapper unchanged. Only external network/Worker/console/process event recording is added. P36 stays open and a recurrence requires diagnosis; these runs are not exclusive performance evidence."
+}

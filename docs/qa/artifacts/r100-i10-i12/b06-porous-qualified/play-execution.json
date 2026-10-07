@@ -1,0 +1,31 @@
+{
+  "status": "failed",
+  "pid": 83186,
+  "startedAt": "2026-10-07T06:08:27.961Z",
+  "cases": 12,
+  "worlds": [
+    "marrow-break",
+    "pore-bank"
+  ],
+  "wholeBatchReady": false,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play-commands.json",
+    "sha256": "de4de7ecf256fe6214f5a34faa20d592fdafce093218ef109a4cf989bb20bd84"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/run-play.mjs",
+    "sha256": "11188a41657cffe07e47b76013727610268909e361ad3965c76bc18ad4b78a72"
+  },
+  "log": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play-execution.log",
+  "method": "Original earned save, policy15 revision6 guard-only adapter, three original grades, two original seeds. Explicit two-world subset leaves B06 specified and excludes rejected short-fibre worlds. Read-only Worker events plus failure-stop only after child closes; no clock/field/input alteration.",
+  "exitCode": 1,
+  "signal": null,
+  "elapsedSeconds": 74.49,
+  "logSha256": "a75f133ffadbf042dc633a3b34a97d0c8a0347f68c152db33e1eadfd945ef19e",
+  "finishedAt": "2026-10-07T06:09:42.453Z",
+  "error": "AssertionError [ERR_ASSERTION]: Original failure retained; no automatic seed retry\n\n1 !== 0\n\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/run-play.mjs:41:20\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+}

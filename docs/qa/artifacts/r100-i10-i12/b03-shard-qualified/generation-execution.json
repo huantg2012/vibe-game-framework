@@ -1,0 +1,42 @@
+{
+  "status": "pass",
+  "pid": 72835,
+  "startedAt": "2026-10-07T04:11:54.973Z",
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/run-generation.mjs",
+    "sha256": "fe78c0cf6388184960bd01ccd011342a84c7c6f837543bf42f8ca7e791568ed0"
+  },
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/commands.json",
+    "sha256": "6b8d79965c6029bc4f97d5cc49c97b5872cae339c3d4b520ff904aa8557919ef"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+    "sha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8"
+  },
+  "worlds": [
+    "shard-switchback"
+  ],
+  "wholeBatchReady": true,
+  "stages": [
+    {
+      "stage": "full",
+      "cases": 120,
+      "exitCode": 0,
+      "signal": null,
+      "elapsedSeconds": 67.63,
+      "log": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-full.log",
+      "logSha256": "5dbc1dbe1b76c6a139824c5c6a59468f0ab11517c2a01337c3eedfa18424a296"
+    },
+    {
+      "stage": "holdout",
+      "cases": 24,
+      "exitCode": 0,
+      "signal": null,
+      "elapsedSeconds": 12.475,
+      "log": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-holdout.log",
+      "logSha256": "3d9607181c2b7b315c4b15778b643555f60647d9f3fa3b147be2d9e6af3f950f"
+    }
+  ],
+  "finishedAt": "2026-10-07T04:13:16.345Z"
+}

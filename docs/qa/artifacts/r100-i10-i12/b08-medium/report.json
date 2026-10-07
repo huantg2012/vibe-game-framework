@@ -1,0 +1,2903 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b08-source/source-snapshot.json",
+    "sha256": "a4ce388a6eb12ce9031f942b384ecc41ba6876bfd31dd938f6e0e8d9892ba3dc"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b08-source/source-snapshot.json",
+    "sourceManifestSha256": "a4ce388a6eb12ce9031f942b384ecc41ba6876bfd31dd938f6e0e8d9892ba3dc",
+    "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b08-author-preflight/camera-supported.json",
+    "cameraInputSha256": "a5eca348a0faee96d54426e9ec510d651e2e6bcf636574f7c03a0110085faab0",
+    "scope": "Four medium world cases, four author-supported approaches each; real WASD, actual cardinal facing verified, unchanged normal lighting/FOV/HP/clock. Author route support does not imply visual pass.",
+    "cases": [
+      {
+        "world": "grain-weld",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-layer-contact",
+            "x": 391,
+            "y": 536,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 388,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 485,
+              "y": 320
+            }
+          },
+          {
+            "label": "02-low-granular-contact",
+            "x": 591,
+            "y": 495,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 588,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 630,
+              "y": 486
+            }
+          },
+          {
+            "label": "03-east-broken-end",
+            "x": 715,
+            "y": 464,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 716,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 790,
+              "y": 522
+            }
+          },
+          {
+            "label": "04-north-grain-shoulder",
+            "x": 626,
+            "y": 379,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 628,
+              "y": 380
+            },
+            "lookAtMaterialPoint": {
+              "x": 485,
+              "y": 320
+            }
+          }
+        ]
+      },
+      {
+        "world": "silk-catch",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-low-caught-sheet",
+            "x": 360,
+            "y": 556,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 356,
+              "y": 556
+            },
+            "lookAtMaterialPoint": {
+              "x": 501,
+              "y": 495
+            }
+          },
+          {
+            "label": "02-fold-fibre-contact",
+            "x": 479,
+            "y": 509,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 476,
+              "y": 508
+            },
+            "lookAtMaterialPoint": {
+              "x": 598,
+              "y": 381
+            }
+          },
+          {
+            "label": "03-south-open-tail",
+            "x": 668,
+            "y": 571,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 668,
+              "y": 572
+            },
+            "lookAtMaterialPoint": {
+              "x": 598,
+              "y": 381
+            }
+          },
+          {
+            "label": "04-north-torn-contact",
+            "x": 713,
+            "y": 246,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 716,
+              "y": 244
+            },
+            "lookAtMaterialPoint": {
+              "x": 598,
+              "y": 381
+            }
+          }
+        ]
+      },
+      {
+        "world": "resin-sleeve",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-east-thin-tail",
+            "x": 803,
+            "y": 420,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 804,
+              "y": 420
+            },
+            "lookAtMaterialPoint": {
+              "x": 722,
+              "y": 326
+            }
+          },
+          {
+            "label": "02-shell-gel-contact",
+            "x": 650,
+            "y": 363,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 652,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 554,
+              "y": 295
+            }
+          },
+          {
+            "label": "03-inner-thick-sleeve",
+            "x": 592,
+            "y": 376,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 588,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 582,
+              "y": 445
+            }
+          },
+          {
+            "label": "04-west-high-gel",
+            "x": 307,
+            "y": 368,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 308,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 459,
+              "y": 358
+            }
+          }
+        ]
+      },
+      {
+        "world": "shell-threads",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-open-bed",
+            "x": 565,
+            "y": 628,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 628
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 439
+            }
+          },
+          {
+            "label": "02-left-fibre-over-shell",
+            "x": 555,
+            "y": 459,
+            "faces": [
+              "west",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 439
+            }
+          },
+          {
+            "label": "03-upper-between-threads",
+            "x": 555,
+            "y": 289,
+            "faces": [
+              "south",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 292
+            },
+            "lookAtMaterialPoint": {
+              "x": 718,
+              "y": 430
+            }
+          },
+          {
+            "label": "04-right-fibre-contact",
+            "x": 868,
+            "y": 251,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 868,
+              "y": 252
+            },
+            "lookAtMaterialPoint": {
+              "x": 718,
+              "y": 430
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "grain-weld",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-layer-contact",
+            "x": 391,
+            "y": 536,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 388,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 485,
+              "y": 320
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-layer-contact",
+              "x": 391,
+              "y": 536,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 388,
+                "y": 532
+              },
+              "lookAtMaterialPoint": {
+                "x": 485,
+                "y": 320
+              }
+            },
+            "actual": {
+              "x": 388,
+              "y": 540
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 388,
+                "y": 588
+              },
+              {
+                "x": 388,
+                "y": 540
+              }
+            ],
+            "length": 240,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/01-south-layer-contact-north.png",
+              "sha256": "8f1bfc6bf86d27c68bd5b72a4f846a1d20e479035c941306c635e03df1fd2822",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 387.6773950741917,
+                  "y": 535.7418886621454
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.26079354799991,
+                "elapsedMs": 3883.1000000000004
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 387.6773950741917,
+                  "y": 535.7418886621454
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.293973547999904,
+                "elapsedMs": 3983.2
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-low-granular-contact",
+            "x": 591,
+            "y": 495,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 588,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 630,
+              "y": 486
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-low-granular-contact",
+              "x": 591,
+              "y": 495,
+              "faces": [
+                "east",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 588,
+                "y": 492
+              },
+              "lookAtMaterialPoint": {
+                "x": 630,
+                "y": 486
+              }
+            },
+            "actual": {
+              "x": 588,
+              "y": 492
+            },
+            "points": [
+              {
+                "x": 388,
+                "y": 532
+              },
+              {
+                "x": 588,
+                "y": 532
+              },
+              {
+                "x": 588,
+                "y": 492
+              }
+            ],
+            "length": 240,
+            "originConnector": {
+              "origin": {
+                "x": 387.6773950741917,
+                "y": 535.7418886621454
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 8496,
+                "x": 388,
+                "y": 532,
+                "distance": 3.755769521422708
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/02-low-granular-contact-east.png",
+              "sha256": "d9fd980d2bcd0a1bf72533c1af19284e68ba3380caeaaf5d25766a0433b8dbbd",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 597.7651867181519,
+                  "y": 489.389897966338
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.621117141999758,
+                "elapsedMs": 7983
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 597.7651867181519,
+                  "y": 489.389897966338
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.654290505999754,
+                "elapsedMs": 8082.9
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/02-low-granular-contact-north.png",
+              "sha256": "552e4d3b30178696195c10d6b1cfdda8c476308f9a5dc8a6f84da406e51d3c3d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 597.7651867181519,
+                  "y": 481.9455646330047
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.753833823999745,
+                "elapsedMs": 8383
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 597.7651867181519,
+                  "y": 481.9455646330047
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.787013823999747,
+                "elapsedMs": 8483
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-east-broken-end",
+            "x": 715,
+            "y": 464,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 716,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 790,
+              "y": 522
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-east-broken-end",
+              "x": 715,
+              "y": 464,
+              "faces": [
+                "east",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 716,
+                "y": 460
+              },
+              "lookAtMaterialPoint": {
+                "x": 790,
+                "y": 522
+              }
+            },
+            "actual": {
+              "x": 716,
+              "y": 468
+            },
+            "points": [
+              {
+                "x": 596,
+                "y": 484
+              },
+              {
+                "x": 700,
+                "y": 484
+              },
+              {
+                "x": 700,
+                "y": 476
+              },
+              {
+                "x": 708,
+                "y": 476
+              },
+              {
+                "x": 708,
+                "y": 468
+              },
+              {
+                "x": 716,
+                "y": 468
+              }
+            ],
+            "length": 136,
+            "originConnector": {
+              "origin": {
+                "x": 597.7651867181519,
+                "y": 481.9455646330047
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7754,
+                "x": 596,
+                "y": 484,
+                "distance": 2.7086138202225936
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/03-east-broken-end-east.png",
+              "sha256": "60fe2250f1f2e447cb1fc25ca7a991dca18b6b02e1e0bb5c0e93c032880406da",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 726.4617407674474,
+                  "y": 469.7505167327664
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.787905113999656,
+                "elapsedMs": 11499.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 726.4617407674474,
+                  "y": 469.7505167327664
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.82107847799965,
+                "elapsedMs": 11599.5
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/03-east-broken-end-south.png",
+              "sha256": "b8acfb06051a974769ac6b566018e8a6f56ddf73b0d3054f5819329d9e277457",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707334949418232,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 726.2225011950234,
+                  "y": 471.9686633103145
+                },
+                "facingAngle": 1.5707334949418232,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.915087371999633,
+                "elapsedMs": 11882.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 726.2225011950234,
+                  "y": 471.9686633103145
+                },
+                "facingAngle": 1.5707334949418232,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.948264053999633,
+                "elapsedMs": 11982.8
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-north-grain-shoulder",
+            "x": 626,
+            "y": 379,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 628,
+              "y": 380
+            },
+            "lookAtMaterialPoint": {
+              "x": 485,
+              "y": 320
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-north-grain-shoulder",
+              "x": 626,
+              "y": 379,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 628,
+                "y": 380
+              },
+              "lookAtMaterialPoint": {
+                "x": 485,
+                "y": 320
+              }
+            },
+            "actual": {
+              "x": 628,
+              "y": 380
+            },
+            "points": [
+              {
+                "x": 724,
+                "y": 468
+              },
+              {
+                "x": 628,
+                "y": 468
+              },
+              {
+                "x": 628,
+                "y": 380
+              }
+            ],
+            "length": 184,
+            "originConnector": {
+              "origin": {
+                "x": 726.2225011950234,
+                "y": 471.9686633103145
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7514,
+                "x": 724,
+                "y": 468,
+                "distance": 4.548604185078863
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/04-north-grain-shoulder-west.png",
+              "sha256": "8fe675ee33b7656e131dd13ca212af590d3eb25e2d0a0bc421286523fc884491",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.1415298217367207,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 623.7276843385957,
+                  "y": 376.7062472282846
+                },
+                "facingAngle": -3.1415298217367207,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 19.987866449999505,
+                "elapsedMs": 15116.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 623.7276843385957,
+                  "y": 376.7062472282846
+                },
+                "facingAngle": -3.1415298217367207,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 20.021046449999503,
+                "elapsedMs": 15216.099999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/04-north-grain-shoulder-north.png",
+              "sha256": "59780dbf809c120ecb3ecd4393bf28bcd0fe06ad3d134ed829cf91b322c9de09",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5709848223541028,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 623.7276843385957,
+                  "y": 369.2627472282847
+                },
+                "facingAngle": -1.5709848223541028,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.11504870799949,
+                "elapsedMs": 15499.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 623.7276843385957,
+                  "y": 369.2627472282847
+                },
+                "facingAngle": -1.5709848223541028,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.15375981399949,
+                "elapsedMs": 15616
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "grain-weld",
+        "grade": "medium",
+        "package": {
+          "id": "r100-grain-weld",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "ac09314b",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3113/r100-gym.html?world=grain-weld&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/recipe.json",
+        "sha256": "84531060335d9d09d41a2fcbb579dc19ec6443eb63bb51df4390a38ead3e65ff"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 623.7276843385957,
+          "y": 369.2627472282847
+        },
+        "facingAngle": -1.5709848223541028,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 20.15375981399949,
+        "elapsedMs": 15616
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 623.7276843385957,
+          "y": 369.2627472282847
+        },
+        "facingAngle": -1.5709848223541028,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 20.551903223999453,
+        "elapsedMs": 16816
+      }
+    },
+    {
+      "world": "silk-catch",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-low-caught-sheet",
+            "x": 360,
+            "y": 556,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 356,
+              "y": 556
+            },
+            "lookAtMaterialPoint": {
+              "x": 501,
+              "y": 495
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-low-caught-sheet",
+              "x": 360,
+              "y": 556,
+              "faces": [
+                "east",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 356,
+                "y": 556
+              },
+              "lookAtMaterialPoint": {
+                "x": 501,
+                "y": 495
+              }
+            },
+            "actual": {
+              "x": 356,
+              "y": 556
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 356,
+                "y": 588
+              },
+              {
+                "x": 356,
+                "y": 556
+              }
+            ],
+            "length": 192,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/01-low-caught-sheet-east.png",
+              "sha256": "afc36d342e50e295a504ad3e476ebf34860dfbf63d81df0f2112f64499debf6c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 365.85680967152933,
+                  "y": 554.1495197569661
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.122539123999942,
+                "elapsedMs": 3466.6000000000004
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 365.85680967152933,
+                  "y": 554.1495197569661
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.155712487999935,
+                "elapsedMs": 3566.6000000000004
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/01-low-caught-sheet-north.png",
+              "sha256": "d3fc1dee379778b1d7316cc947cf462b2dc7cadc872ecc9fd27b92b939c00108",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707334949418235,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 365.85680967152933,
+                  "y": 546.7059197569663
+                },
+                "facingAngle": -1.5707334949418235,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.249724699999923,
+                "elapsedMs": 3849.9000000000005
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 365.85680967152933,
+                  "y": 546.7059197569663
+                },
+                "facingAngle": -1.5707334949418235,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.282901381999917,
+                "elapsedMs": 3949.9000000000005
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-fold-fibre-contact",
+            "x": 479,
+            "y": 509,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 476,
+              "y": 508
+            },
+            "lookAtMaterialPoint": {
+              "x": 598,
+              "y": 381
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-fold-fibre-contact",
+              "x": 479,
+              "y": 509,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 476,
+                "y": 508
+              },
+              "lookAtMaterialPoint": {
+                "x": 598,
+                "y": 381
+              }
+            },
+            "actual": {
+              "x": 476,
+              "y": 508
+            },
+            "points": [
+              {
+                "x": 364,
+                "y": 548
+              },
+              {
+                "x": 476,
+                "y": 548
+              },
+              {
+                "x": 476,
+                "y": 508
+              }
+            ],
+            "length": 152,
+            "originConnector": {
+              "origin": {
+                "x": 365.85680967152933,
+                "y": 546.7059197569663
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 8749,
+                "x": 364,
+                "y": 548,
+                "distance": 2.263268837698041
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/02-fold-fibre-contact-north.png",
+              "sha256": "e9d5dc1ad0f3e13e377e1353846c7aa233658ee9592d323073849b57110d9f11",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 475.1073641817061,
+                  "y": 498.6461211406306
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.151075989999814,
+                "elapsedMs": 6566.500000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 475.1073641817061,
+                  "y": 498.6461211406306
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.184252671999815,
+                "elapsedMs": 6666.500000000001
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/02-fold-fibre-contact-east.png",
+              "sha256": "f88217be2e7d7b0eabe5fce99eb9ea56537a802548f05b4e40c536b00437f6d0",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185307287553,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 482.551264181706,
+                  "y": 498.6461211406306
+                },
+                "facingAngle": -0.00006283185307287553,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.2782615659998,
+                "elapsedMs": 6949.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 482.551264181706,
+                  "y": 498.6461211406306
+                },
+                "facingAngle": -0.00006283185307287553,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.311448201999795,
+                "elapsedMs": 7049.8
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-south-open-tail",
+            "x": 668,
+            "y": 571,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 668,
+              "y": 572
+            },
+            "lookAtMaterialPoint": {
+              "x": 598,
+              "y": 381
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-south-open-tail",
+              "x": 668,
+              "y": 571,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 668,
+                "y": 572
+              },
+              "lookAtMaterialPoint": {
+                "x": 598,
+                "y": 381
+              }
+            },
+            "actual": {
+              "x": 668,
+              "y": 572
+            },
+            "points": [
+              {
+                "x": 484,
+                "y": 500
+              },
+              {
+                "x": 668,
+                "y": 500
+              },
+              {
+                "x": 668,
+                "y": 572
+              }
+            ],
+            "length": 256,
+            "originConnector": {
+              "origin": {
+                "x": 482.551264181706,
+                "y": 498.6461211406306
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7996,
+                "x": 484,
+                "y": 500,
+                "distance": 1.9828826079864867
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/03-south-open-tail-north.png",
+              "sha256": "879ef170cdab60b98659054aad2f6741a4763f120ae75acaa876a3dbbd745c1f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.570482167529538,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 666.8959194870184,
+                  "y": 563.8787678818966
+                },
+                "facingAngle": -1.570482167529538,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.771301841999644,
+                "elapsedMs": 11449.599999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 666.8959194870184,
+                  "y": 563.8787678818966
+                },
+                "facingAngle": -1.570482167529538,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.81001626599964,
+                "elapsedMs": 11566.3
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-north-torn-contact",
+            "x": 713,
+            "y": 246,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 716,
+              "y": 244
+            },
+            "lookAtMaterialPoint": {
+              "x": 598,
+              "y": 381
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-north-torn-contact",
+              "x": 713,
+              "y": 246,
+              "faces": [
+                "west",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 716,
+                "y": 244
+              },
+              "lookAtMaterialPoint": {
+                "x": 598,
+                "y": 381
+              }
+            },
+            "actual": {
+              "x": 716,
+              "y": 244
+            },
+            "points": [
+              {
+                "x": 668,
+                "y": 564
+              },
+              {
+                "x": 732,
+                "y": 564
+              },
+              {
+                "x": 732,
+                "y": 380
+              },
+              {
+                "x": 724,
+                "y": 380
+              },
+              {
+                "x": 724,
+                "y": 356
+              },
+              {
+                "x": 716,
+                "y": 356
+              },
+              {
+                "x": 716,
+                "y": 244
+              }
+            ],
+            "length": 400,
+            "originConnector": {
+              "origin": {
+                "x": 666.8959194870184,
+                "y": 563.8787678818966
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9043,
+                "x": 668,
+                "y": 564,
+                "distance": 1.1107164379829284
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/04-north-torn-contact-west.png",
+              "sha256": "84d3d6e174c0ae39b60ed5edca9c6869b07de308e1153f146baa8b4fd49c7acc",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.1415298217367207,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 707.7569354500479,
+                  "y": 238.8393870001447
+                },
+                "facingAngle": -3.1415298217367207,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 24.32053451399939,
+                "elapsedMs": 19115.899999999998
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 707.7569354500479,
+                  "y": 238.8393870001447
+                },
+                "facingAngle": -3.1415298217367207,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 24.386881241999387,
+                "elapsedMs": 19216
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/04-north-torn-contact-south.png",
+              "sha256": "890af1f2fd60aa525517fef3cabf5345e0493bbc8137433e1d97d232ef44e2d8",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5709219905010414,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 707.7569354500479,
+                  "y": 246.28322033347803
+                },
+                "facingAngle": 1.5709219905010414,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 24.574885757999372,
+                "elapsedMs": 19499.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 707.7569354500479,
+                  "y": 246.28322033347803
+                },
+                "facingAngle": 1.5709219905010414,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 24.663363545999367,
+                "elapsedMs": 19632.6
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "silk-catch",
+        "grade": "medium",
+        "package": {
+          "id": "r100-silk-catch",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            },
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "01f551d7",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3113/r100-gym.html?world=silk-catch&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/recipe.json",
+        "sha256": "560c9884a235a0a8c28a4fa851c8445e8b55098801220d7dee93836610ecb6ed"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 707.7569354500479,
+          "y": 246.28322033347803
+        },
+        "facingAngle": 1.5709219905010414,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 24.663363545999367,
+        "elapsedMs": 19632.6
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 707.7569354500479,
+          "y": 246.28322033347803
+        },
+        "facingAngle": 1.5709219905010414,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 25.459650365999288,
+        "elapsedMs": 20832.5
+      }
+    },
+    {
+      "world": "resin-sleeve",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-east-thin-tail",
+            "x": 803,
+            "y": 420,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 804,
+              "y": 420
+            },
+            "lookAtMaterialPoint": {
+              "x": 722,
+              "y": 326
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-east-thin-tail",
+              "x": 803,
+              "y": 420,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 804,
+                "y": 420
+              },
+              "lookAtMaterialPoint": {
+                "x": 722,
+                "y": 326
+              }
+            },
+            "actual": {
+              "x": 804,
+              "y": 420
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 804,
+                "y": 588
+              },
+              {
+                "x": 804,
+                "y": 420
+              }
+            ],
+            "length": 776,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/01-east-thin-tail-north.png",
+              "sha256": "135aba795d484b185c4f56c8296658d29336dfca1137ba4d9763fb9fefd4495d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 803.1763898978621,
+                  "y": 412.62479922194984
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 85,
+                "chaos": 23.22563875399977,
+                "elapsedMs": 11299.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 803.1763898978621,
+                  "y": 412.62479922194984
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 85,
+                "chaos": 23.29200538999977,
+                "elapsedMs": 11399.4
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/01-east-thin-tail-west.png",
+              "sha256": "4dd688ed1dc10c254ef32b78dbc2eaf206b2434303fbe0b55511d5621a3c915b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.1415298217367207,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 795.7305565645287,
+                  "y": 412.62479922194984
+                },
+                "facingAngle": -3.1415298217367207,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 23.49107875399977,
+                "elapsedMs": 11699.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 795.7305565645287,
+                  "y": 412.62479922194984
+                },
+                "facingAngle": -3.1415298217367207,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 23.55743211799977,
+                "elapsedMs": 11799.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-shell-gel-contact",
+            "x": 650,
+            "y": 363,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 652,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 554,
+              "y": 295
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-shell-gel-contact",
+              "x": 650,
+              "y": 363,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 652,
+                "y": 364
+              },
+              "lookAtMaterialPoint": {
+                "x": 554,
+                "y": 295
+              }
+            },
+            "actual": {
+              "x": 652,
+              "y": 364
+            },
+            "points": [
+              {
+                "x": 796,
+                "y": 412
+              },
+              {
+                "x": 660,
+                "y": 412
+              },
+              {
+                "x": 660,
+                "y": 404
+              },
+              {
+                "x": 652,
+                "y": 404
+              },
+              {
+                "x": 652,
+                "y": 364
+              }
+            ],
+            "length": 192,
+            "originConnector": {
+              "origin": {
+                "x": 795.7305565645287,
+                "y": 412.62479922194984
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 6627,
+                "x": 796,
+                "y": 412,
+                "distance": 0.6804218049619769
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/02-shell-gel-contact-west.png",
+              "sha256": "507b7c25ae1c4d0536a2f2c7370401ede96c7ebddb843df53e7e51a4b8b0b749",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 644.481777015661,
+                  "y": 358.350318124921
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 25.581325849999743,
+                "elapsedMs": 14849.400000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 644.481777015661,
+                  "y": 358.350318124921
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 25.65874806199974,
+                "elapsedMs": 14966
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/02-shell-gel-contact-north.png",
+              "sha256": "0182f20fce1a2a66ed9d148a9a85babbfb81d5eb5952ae4e7f6c7c2163c30478",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5708591586479623,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 644.481777015661,
+                  "y": 350.90528479158763
+                },
+                "facingAngle": -1.5708591586479623,
+                "facing4": "up",
+                "hp": 85,
+                "chaos": 25.846745941999743,
+                "elapsedMs": 15249.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 644.481777015661,
+                  "y": 350.90528479158763
+                },
+                "facingAngle": -1.5708591586479623,
+                "facing4": "up",
+                "hp": 85,
+                "chaos": 25.913125849999737,
+                "elapsedMs": 15349.400000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-inner-thick-sleeve",
+            "x": 592,
+            "y": 376,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 588,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 582,
+              "y": 445
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-inner-thick-sleeve",
+              "x": 592,
+              "y": 376,
+              "faces": [
+                "south",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 588,
+                "y": 372
+              },
+              "lookAtMaterialPoint": {
+                "x": 582,
+                "y": 445
+              }
+            },
+            "actual": {
+              "x": 596,
+              "y": 372
+            },
+            "points": [
+              {
+                "x": 644,
+                "y": 348
+              },
+              {
+                "x": 612,
+                "y": 348
+              },
+              {
+                "x": 612,
+                "y": 356
+              },
+              {
+                "x": 596,
+                "y": 356
+              },
+              {
+                "x": 596,
+                "y": 372
+              }
+            ],
+            "length": 72,
+            "originConnector": {
+              "origin": {
+                "x": 644.481777015661,
+                "y": 350.90528479158763
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5584,
+                "x": 644,
+                "y": 348,
+                "distance": 2.9449599000749775
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/03-inner-thick-sleeve-south.png",
+              "sha256": "a6deb37aed2c26764bed321da9e9732ecf8fb3275442061de1bf302029514892",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 596.9951081621091,
+                  "y": 384.0295066217006
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 85,
+                "chaos": 27.0633105499997,
+                "elapsedMs": 17082.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 596.9951081621091,
+                  "y": 384.0295066217006
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 85,
+                "chaos": 27.140732761999693,
+                "elapsedMs": 17199.2
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/03-inner-thick-sleeve-west.png",
+              "sha256": "311887979ff78587c19634c540a62a3f1799c00c90b055b1ef8707f6e3e61f86",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141152830618295,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 590.5333041273065,
+                  "y": 382.7925003512872
+                },
+                "facingAngle": 3.141152830618295,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 27.32873727799968,
+                "elapsedMs": 17482.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 590.5333041273065,
+                  "y": 382.7925003512872
+                },
+                "facingAngle": 3.141152830618295,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 27.384035065999676,
+                "elapsedMs": 17565.9
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-west-high-gel",
+            "x": 307,
+            "y": 368,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 308,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 459,
+              "y": 358
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-west-high-gel",
+              "x": 307,
+              "y": 368,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 308,
+                "y": 364
+              },
+              "lookAtMaterialPoint": {
+                "x": 459,
+                "y": 358
+              }
+            },
+            "actual": {
+              "x": 308,
+              "y": 372
+            },
+            "points": [
+              {
+                "x": 596,
+                "y": 380
+              },
+              {
+                "x": 692,
+                "y": 380
+              },
+              {
+                "x": 692,
+                "y": 476
+              },
+              {
+                "x": 684,
+                "y": 476
+              },
+              {
+                "x": 684,
+                "y": 500
+              },
+              {
+                "x": 676,
+                "y": 500
+              },
+              {
+                "x": 676,
+                "y": 508
+              },
+              {
+                "x": 660,
+                "y": 508
+              },
+              {
+                "x": 660,
+                "y": 516
+              },
+              {
+                "x": 612,
+                "y": 516
+              },
+              {
+                "x": 612,
+                "y": 524
+              },
+              {
+                "x": 308,
+                "y": 524
+              },
+              {
+                "x": 308,
+                "y": 372
+              }
+            ],
+            "length": 776,
+            "originConnector": {
+              "origin": {
+                "x": 590.5333041273065,
+                "y": 382.7925003512872
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 6090,
+                "x": 596,
+                "y": 380,
+                "distance": 6.138633559389555
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/04-west-high-gel-east.png",
+              "sha256": "f22e406d0d0e73aa7f631d15c5b49c85c24f783e93b570915b099c36d6a68414",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185307986994,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 312.95791613231563,
+                  "y": 367.17602376751125
+                },
+                "facingAngle": -0.00006283185307986994,
+                "facing4": "right",
+                "hp": 70,
+                "chaos": 35.98837884199923,
+                "elapsedMs": 30532.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 312.95791613231563,
+                  "y": 367.17602376751125
+                },
+                "facingAngle": -0.00006283185307986994,
+                "facing4": "right",
+                "hp": 70,
+                "chaos": 36.04367662999924,
+                "elapsedMs": 30615.4
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "resin-sleeve",
+        "grade": "medium",
+        "package": {
+          "id": "r100-resin-sleeve",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "007d2ce9",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3113/r100-gym.html?world=resin-sleeve&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/recipe.json",
+        "sha256": "8f7330bbd3d3a354643f4227832f1de00911b977da49f62d7c120238fce39555"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 312.95791613231563,
+          "y": 367.17602376751125
+        },
+        "facingAngle": -0.00006283185307986994,
+        "facing4": "right",
+        "hp": 70,
+        "chaos": 36.04367662999924,
+        "elapsedMs": 30615.4
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 312.95791613231563,
+          "y": 367.17602376751125
+        },
+        "facingAngle": -0.00006283185307986994,
+        "facing4": "right",
+        "hp": 70,
+        "chaos": 36.851025661999266,
+        "elapsedMs": 31832
+      }
+    },
+    {
+      "world": "shell-threads",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-open-bed",
+            "x": 565,
+            "y": 628,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 628
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 439
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-open-bed",
+              "x": 565,
+              "y": 628,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 564,
+                "y": 628
+              },
+              "lookAtMaterialPoint": {
+                "x": 398,
+                "y": 439
+              }
+            },
+            "actual": {
+              "x": 564,
+              "y": 628
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 436,
+                "y": 588
+              },
+              {
+                "x": 436,
+                "y": 596
+              },
+              {
+                "x": 564,
+                "y": 596
+              },
+              {
+                "x": 564,
+                "y": 628
+              }
+            ],
+            "length": 408,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/01-south-open-bed-north.png",
+              "sha256": "3e80c9fc60a61aa94af1eff60e4420173d3566d8e8a7e29c83483ddcb9f4352c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 564.7850821995717,
+                  "y": 614.1091510589048
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.156610413999804,
+                "elapsedMs": 6583.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 564.7850821995717,
+                  "y": 614.1091510589048
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.200845989999806,
+                "elapsedMs": 6716.500000000001
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/01-south-open-bed-west.png",
+              "sha256": "761544002b739a8842724b7e117c2dfd168daba99c03d7b5697ba2b2d66935f9",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 557.3406488662384,
+                  "y": 614.1091510589048
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.2948648379998,
+                "elapsedMs": 6999.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 557.3406488662384,
+                  "y": 614.1091510589048
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.328044837999794,
+                "elapsedMs": 7099.8
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-left-fibre-over-shell",
+            "x": 555,
+            "y": 459,
+            "faces": [
+              "west",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 439
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-left-fibre-over-shell",
+              "x": 555,
+              "y": 459,
+              "faces": [
+                "west",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 556,
+                "y": 460
+              },
+              "lookAtMaterialPoint": {
+                "x": 398,
+                "y": 439
+              }
+            },
+            "actual": {
+              "x": 556,
+              "y": 460
+            },
+            "points": [
+              {
+                "x": 556,
+                "y": 612
+              },
+              {
+                "x": 556,
+                "y": 460
+              }
+            ],
+            "length": 152,
+            "originConnector": {
+              "origin": {
+                "x": 557.3406488662384,
+                "y": 614.1091510589048
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9797,
+                "x": 556,
+                "y": 612,
+                "distance": 2.499171377041917
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/02-left-fibre-over-shell-west.png",
+              "sha256": "db7ed5be2934253ef18b8dd203e4314e98840ecee14f9355e251b8f02ab90f56",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.14152982173672,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 551.4118356666935,
+                  "y": 454.9458319425404
+                },
+                "facingAngle": -3.14152982173672,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.140915021999714,
+                "elapsedMs": 9549.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 551.4118356666935,
+                  "y": 454.9458319425404
+                },
+                "facingAngle": -3.14152982173672,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.174088385999713,
+                "elapsedMs": 9649.7
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/02-left-fibre-over-shell-east.png",
+              "sha256": "932c873af751273ef8820c004d4ca69d520c47d7afb1377b3206e31a599b5470",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 567.6909023333603,
+                  "y": 454.9458319425404
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.312346127999696,
+                "elapsedMs": 10066.400000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 567.6909023333603,
+                  "y": 454.9458319425404
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.345526127999694,
+                "elapsedMs": 10166.400000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-upper-between-threads",
+            "x": 555,
+            "y": 289,
+            "faces": [
+              "south",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 292
+            },
+            "lookAtMaterialPoint": {
+              "x": 718,
+              "y": 430
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-upper-between-threads",
+              "x": 555,
+              "y": 289,
+              "faces": [
+                "south",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 556,
+                "y": 292
+              },
+              "lookAtMaterialPoint": {
+                "x": 718,
+                "y": 430
+              }
+            },
+            "actual": {
+              "x": 556,
+              "y": 292
+            },
+            "points": [
+              {
+                "x": 564,
+                "y": 452
+              },
+              {
+                "x": 556,
+                "y": 452
+              },
+              {
+                "x": 556,
+                "y": 292
+              }
+            ],
+            "length": 168,
+            "originConnector": {
+              "origin": {
+                "x": 567.6909023333603,
+                "y": 454.9458319425404
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7238,
+                "x": 564,
+                "y": 452,
+                "distance": 4.722360201011356
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/03-upper-between-threads-south.png",
+              "sha256": "f88ec5fab38c66b357aa4e5da743776b84b159376b99b0acf9082a299fc2ed8c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 554.1130541525267,
+                  "y": 296.6388537277094
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 19.357469675999564,
+                "elapsedMs": 13216.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 554.1130541525267,
+                  "y": 296.6388537277094
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 19.39064967599956,
+                "elapsedMs": 13316.2
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/03-upper-between-threads-east.png",
+              "sha256": "c03cb3e04ff3ab1b63f7a124191845ad5c0c3e4ef047853e73c737089e12bedc",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0.00006283185306943384,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 561.5578874858601,
+                  "y": 296.6388537277094
+                },
+                "facingAngle": 0.00006283185306943384,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.48465856999955,
+                "elapsedMs": 13599.599999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 561.5578874858601,
+                  "y": 296.6388537277094
+                },
+                "facingAngle": 0.00006283185306943384,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.517831933999545,
+                "elapsedMs": 13699.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-right-fibre-contact",
+            "x": 868,
+            "y": 251,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 868,
+              "y": 252
+            },
+            "lookAtMaterialPoint": {
+              "x": 718,
+              "y": 430
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-right-fibre-contact",
+              "x": 868,
+              "y": 251,
+              "faces": [
+                "south",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 868,
+                "y": 252
+              },
+              "lookAtMaterialPoint": {
+                "x": 718,
+                "y": 430
+              }
+            },
+            "actual": {
+              "x": 868,
+              "y": 252
+            },
+            "points": [
+              {
+                "x": 564,
+                "y": 300
+              },
+              {
+                "x": 868,
+                "y": 300
+              },
+              {
+                "x": 868,
+                "y": 252
+              }
+            ],
+            "length": 352,
+            "originConnector": {
+              "origin": {
+                "x": 561.5578874858601,
+                "y": 296.6388537277094
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 4806,
+                "x": 564,
+                "y": 300,
+                "distance": 4.154662175851603
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/04-right-fibre-contact-south.png",
+              "sha256": "ee7d1e4c23ba2734a50e15fd8daac3dd4396e31bd54e0d24aaed842e97873564",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 869.7951314522139,
+                  "y": 260.8478556949582
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 28.852295849999354,
+                "elapsedMs": 19082.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 869.7951314522139,
+                  "y": 260.8478556949582
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 28.91866248599935,
+                "elapsedMs": 19182.7
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/04-right-fibre-contact-west.png",
+              "sha256": "724c843ca0d1d19a0d226ac166cc042bfdd2914cbc3afda31957c94fcc8dfdce",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.1413413261775145,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 862.350631452214,
+                  "y": 260.8478556949582
+                },
+                "facingAngle": 3.1413413261775145,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 29.11772921399933,
+                "elapsedMs": 19482.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 862.350631452214,
+                  "y": 260.8478556949582
+                },
+                "facingAngle": 3.1413413261775145,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 29.184082577999323,
+                "elapsedMs": 19582.7
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shell-threads",
+        "grade": "medium",
+        "package": {
+          "id": "r100-shell-threads",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "1df77d06",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3113/r100-gym.html?world=shell-threads&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/recipe.json",
+        "sha256": "f88d93ef9f615e7e7aaa529876e00d5613f596d4fe226c101b5d66124ce66f51"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 862.350631452214,
+          "y": 260.8478556949582
+        },
+        "facingAngle": 3.1413413261775145,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 29.184082577999323,
+        "elapsedMs": 19582.7
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 862.350631452214,
+          "y": 260.8478556949582
+        },
+        "facingAngle": 3.1413413261775145,
+        "facing4": "left",
+        "hp": 70,
+        "chaos": 29.980376033999242,
+        "elapsedMs": 20782.6
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

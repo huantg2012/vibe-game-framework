@@ -1,0 +1,85 @@
+{
+  "status": "ready-for-explicit-two-world-play",
+  "worlds": [
+    "marrow-break",
+    "pore-bank"
+  ],
+  "notAdmitted": [
+    "short-fibre-mat",
+    "felt-wedges"
+  ],
+  "wholeBatchReady": false,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/partial-execution-plan.json",
+    "sha256": "a0fb3721e0c0e2a0f2df854c79335a8736314d23f09b92273a06bad19f3a8506"
+  },
+  "rootReviews": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium-independent-art-review.json",
+      "sha256": "5f82907d16d858d2de5f214265301d0dce4fb0376ce78ffaa5de185d3cbb30a2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades-independent-art-review.json",
+      "sha256": "98e2b36e30d2ece33dba6cbd4092c9d12fb90e085f321fd0f7603626d22eaa2e"
+    }
+  ],
+  "generationSummary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-summary.json",
+    "sha256": "d685e75d2cc6d3d17b4dee4dc20d13e8c1fdcc6a613fef54335216eb812a9d39"
+  },
+  "partialPlanContract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/partial-plan-contract.json",
+    "sha256": "5ddff764681b8eda9acefa181e5cbd484debdfa20ab03f02e3fc97de79f4a2e6"
+  },
+  "dependencies": [
+    {
+      "path": "tools/qa/r100-i07-i09-coverage.mjs",
+      "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8"
+    },
+    {
+      "path": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "46f93fbee706a09ca9a35a0df52ca6053ac8d59904fcb602917137906a3b482c"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "93bccf1021f8b1fd65631c1da9e358d3a2169e40592664c2d8ed213bd821c4f8"
+    }
+  ],
+  "play": {
+    "cases": 12,
+    "command": "/usr/local/bin/node",
+    "args": [
+      "tools/qa/r100-i07-i09-coverage.mjs"
+    ],
+    "env": {
+      "GAME_URL": "http://127.0.0.1:3111/",
+      "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+      "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/partial-execution-plan.json",
+      "QA_BATCH_ID": "B06",
+      "QA_WORLDS": "marrow-break,pore-bank",
+      "QA_GRADES": "low,medium,severe",
+      "QA_SEEDS": "20261005,3075192741",
+      "QA_CONCURRENCY": "1",
+      "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+      "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play",
+      "QA_STOP_ON_FAILURE": "1",
+      "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/worker-observations",
+      "QA_WORKER_OBSERVER_FAILURE_FILE": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/worker-observation-first-error.json",
+      "NODE_OPTIONS": "--import /Users/yilungao/coh/tools/qa/r100-worker-observer.mjs",
+      "DEBUG": "pw:browser"
+    }
+  },
+  "method": "Original earned save, policy15 revision6 guard-only adapter, three original grades, two original seeds. Explicit two-world subset leaves B06 specified and excludes rejected short-fibre worlds. Read-only Worker events plus failure-stop only after child closes; no clock/field/input alteration."
+}

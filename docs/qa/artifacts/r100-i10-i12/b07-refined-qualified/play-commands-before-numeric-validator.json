@@ -1,0 +1,87 @@
+{
+  "status": "prepared-ready-awaiting-exclusive-browser",
+  "worlds": [
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks"
+  ],
+  "wholeBatchReady": true,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/execution-plan.json",
+    "sha256": "5c62a6cba160a4061a0df8789593a4fa71d2e876364d37b88847adfbca798cbc"
+  },
+  "rootReviews": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium-independent-art-review.json",
+      "sha256": "03d258b20774339d73c3ba1a8d4b903f62c793169de6da36467ec6a3d9859430"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/independent-review.json",
+      "sha256": "cb006e0438704f642ae9467ce3437f3585ee65fa6ba5f92d2fff302af42b3b8b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/independent-review.json",
+      "sha256": "b09f67a4b50c1d27577497af54b6e17c97a857a02d79b28a86983bd2127fc095"
+    }
+  ],
+  "generationSummary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-summary.json",
+    "sha256": "5192a05164fb137a9bd30d1abb449238595059cc80bca3346ba7a303b4c58ab6"
+  },
+  "executionPlanCheck": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/execution-plan-check.json",
+    "sha256": "3d00d96d4b627b7f2ddb0dd82394c8312b1ebc53b3c29eda2127733f67877c38"
+  },
+  "dependencies": [
+    {
+      "path": "tools/qa/r100-i07-i09-coverage.mjs",
+      "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8"
+    },
+    {
+      "path": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "46f93fbee706a09ca9a35a0df52ca6053ac8d59904fcb602917137906a3b482c"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "93bccf1021f8b1fd65631c1da9e358d3a2169e40592664c2d8ed213bd821c4f8"
+    }
+  ],
+  "play": {
+    "cases": 24,
+    "command": "/usr/local/bin/node",
+    "args": [
+      "tools/qa/r100-i07-i09-coverage.mjs"
+    ],
+    "env": {
+      "GAME_URL": "http://127.0.0.1:3120/",
+      "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/execution-plan.json",
+      "QA_BATCH_ID": "B07",
+      "QA_WORLDS": "staggered-cups,split-tows,curled-flats,pitch-forks",
+      "QA_GRADES": "low,medium,severe",
+      "QA_SEEDS": "20261005,3075192741",
+      "QA_CONCURRENCY": "1",
+      "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+      "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play",
+      "QA_STOP_ON_FAILURE": "1",
+      "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/worker-observations",
+      "QA_WORKER_OBSERVER_FAILURE_FILE": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/worker-observation-first-error.json",
+      "NODE_OPTIONS": "--import /Users/yilungao/coh/tools/qa/r100-worker-observer.mjs",
+      "DEBUG": "pw:browser"
+    }
+  },
+  "method": "Original earned save, policy15 revision6 guard-only adapter, all three grades and two original seeds. Current3120; Worker/network errors remain observable and stop future cases only after the active child closes. Does not grant gameplay/entry/performance/P36 approval."
+}

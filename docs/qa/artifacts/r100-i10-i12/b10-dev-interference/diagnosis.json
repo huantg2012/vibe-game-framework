@@ -1,0 +1,51 @@
+{
+  "status": "identified-owned-dev-auto-open-interference",
+  "observer": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl",
+    "sha256": "49667fd4e9ab5967acb42ef94cc2356a97a937d0616b83e8f50be68b66b1e41e"
+  },
+  "events": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/events.json",
+    "sha256": "a3c7435f33681875a78bf816033fcda80d82d5dab2ce371812f03791cc11bb72"
+  },
+  "viteConfig": {
+    "path": "vite.config.ts",
+    "sha256": "723ffde4258e0bc99939ada4be4b6f813204963efbff077e830a414747e1bf77"
+  },
+  "devSmoke": {
+    "path": "docs/qa/artifacts/r100-i10-i12/near-entry-accounting-repair/dev-smoke.json",
+    "sha256": "6705606cbfca6a05c1009a0fecef647eb556cc0045a0c584e274f7777528728d"
+  },
+  "command": "npm run dev -- --host 127.0.0.1 --port 3188 --strictPort",
+  "ownedDevPid": 40991,
+  "devSession": 81976,
+  "stop": "Ctrl-C of owned exec session after urllib HTTP200; lsof then confirmed port3188 closed",
+  "configuration": "server.open=true in project vite.config.ts",
+  "observed": "same browser1/context1 gained pageId2 at08:51:42.003Z; CDP target identified3188 at08:51:42.005Z. After owned server close,8 refused fetches on3188 and8 page2 console errors. Original3120 page1 report errors and consoleErrors remained empty.",
+  "attribution": "The development command opened a second dev page in the active QA browser; after server closure that page produced Vite reconnect requests. This is owned test-environment interference, not evidence that frozen3120 requested an external dependency.",
+  "correction": "Original dev-smoke scope claiming no additional browser was inaccurate: no browser launch tool was called, but Vite auto-open created a page. Keep that original receipt and this correction.",
+  "originalGameReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/report.json",
+    "sha256": "b1d4619e578ac7935b52df0fd5b8a48afd131e93d9f4ce19d625530e01ef7821"
+  },
+  "originalBatch": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/batch-report.json",
+    "sha256": "9be004236650cb4b41c785ea1ca4c580c454b50e40ab6115fd6bde57e764bba7"
+  },
+  "originalExecution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play-execution.json",
+    "sha256": "50798d3b1e34c11a951477b823df7f5e4ba1ec5205f5bc50c5de34166f3f1a7e"
+  },
+  "stoppedQueues": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining60.json",
+      "sha256": "839d67b62a68dcad3c59facbb96a2ec97749b484eef176607fe8d1236d7d5c94"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuation-after-current60.json",
+      "sha256": "e21b38618676bf081dd3c65fe9631a3e59e88145487394e4925723fe47e4d050"
+    }
+  ],
+  "disposition": "Preserve actual012 extraction and all observer failures; repeat only012 same source/seed/save/policy, then unexecuted13\u201324. No observation filter, game change, or threshold change. No unrelated dev server startup during active QA Chrome.",
+  "p36": "Original intermittent preentry issue remains separately open; this new3188 incident does not establish its cause."
+}

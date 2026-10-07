@@ -1,0 +1,135 @@
+{
+  "status": "shard-repair-low-severe-bounded-author-pass",
+  "reviewer": "world_loot_pixels",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+    "sha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/report.json",
+    "sha256": "9af795962e87713feceb25978869537539b583f98a9e79d93291df7c81356c97"
+  },
+  "viewedImageCount": 6,
+  "cases": [
+    {
+      "worldId": "shard-switchback",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-pass",
+      "finding": "短厚宽头、分叉母片、切层压块三种局部轮廓在原四站仍分开，近脚亮切口与暗床分离。未把原六件箭头的拒绝改写。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/01-west-shoulder-north.png",
+          "sha256": "dba33be5bc8f0426c4c33fc05c13fc7838282f7f1d90e5caf1f15b03fee0c1a8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "position": {
+            "x": 267.23268546821043,
+            "y": 371.37260374282755
+          },
+          "hp": 100,
+          "chaos": 16.064875127999983
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/02-first-switch-north.png",
+          "sha256": "f6dd34999761e0936aea4df14de1b23377bb776e1ada519fd2da36684adb5580",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "position": {
+            "x": 452.1870175598715,
+            "y": 385.3277686325833
+          },
+          "hp": 100,
+          "chaos": 17.060237207999965
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/04-last-tip-north.png",
+          "sha256": "9f4293608c88ddc65c1c9ed607d44fbb472f7e940b08b6fced04ae542499d2b5",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "position": {
+            "x": 860.6482710102842,
+            "y": 388.56669194959954
+          },
+          "hp": 85,
+          "chaos": 23.542423223999897
+        }
+      ]
+    },
+    {
+      "worldId": "shard-switchback",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-pass",
+      "finding": "短厚宽头、分叉母片、切层压块三种局部轮廓在原四站仍分开，近脚亮切口与暗床分离。未把原六件箭头的拒绝改写。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/01-west-shoulder-north.png",
+          "sha256": "94218d88c7b42e03a807c4b1765eabbe9d476962daff291dc74681ec73350c73",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "position": {
+            "x": 267.84986930343547,
+            "y": 362.7271108771814
+          },
+          "hp": 100,
+          "chaos": 20.41265843199986
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/02-first-switch-north.png",
+          "sha256": "2dcbe65feed8be953a0cd21f23c728b5b8151537a808a37244101a89ec90c4c6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "position": {
+            "x": 450.66614646908516,
+            "y": 393.42324231313427
+          },
+          "hp": 100,
+          "chaos": 23.378720383999774
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/04-last-tip-north.png",
+          "sha256": "fb138852a7a9239d61cac5a24407b4fc6f0b71a5c34cf9f0f672b39278388927",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "position": {
+            "x": 861.5914694588619,
+            "y": 384.09651738726046
+          },
+          "hp": 100,
+          "chaos": 36.47347436799931
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Only6 listed PNG personally viewed; all14 captured images preserved in raw report.",
+    "Actual WASD and original finite FOV; not full map/complete search-extract, dynamic or audio approval.",
+    "Differences in actual body positions and enemy encounters mean comparable subject views, not identical pixels.",
+    "Independent root review still needed for complete batch disposition."
+  ]
+}

@@ -1,0 +1,485 @@
+{
+  "status": "bounded-author-visual-pass",
+  "reviewer": "world_loot_pixels",
+  "scope": "Personally inspected 8 original normal-light frames, 2 per world/grade. Captured 4 real-keyboard cases; other captured frames are not counted as personally reviewed.",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/report.json",
+    "sha256": "edc809d70632809b4398e813b7d224d4f5c75df7752cfc310cf7d9d624c1b791"
+  },
+  "limitations": [
+    "Not full-world, all-route or natural-search qualification.",
+    "Grades are sampled early in a short approach, not maximum accumulated pressure.",
+    "Unlit/back faces are not approved; no audio or human acceptance claimed.",
+    "Short-fibre worlds remain rejected separately."
+  ],
+  "worlds": [
+    {
+      "world": "marrow-break",
+      "grade": "low",
+      "seed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "marrow-break",
+        "grade": "low",
+        "package": {
+          "id": "r100-marrow-break",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            },
+            "organization:porous-marrow": {
+              "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+              "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+              "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+            }
+          },
+          "dependencyHash": "97a4e261",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3111/r100-gym.html?world=marrow-break&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-low/recipe.json",
+        "sha256": "3c979f8e81be5418ff8316f21de5a13f90a16d803a41eaa8139ca7b3965ce0ca"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 799.3391676245213,
+          "y": 369.1982087164644
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 22.139436311999926,
+        "elapsedMs": 17816
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 799.3391676245213,
+          "y": 369.1982087164644
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 22.594445975999914,
+        "elapsedMs": 19015.9
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-low/02-east-inner-cut-east.png",
+          "sha256": "78d2f3922f4d5bc9c9f0fc5178535fa122c64ec4ab803534b92d7d4d8c453193",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 570.7613013965715,
+              "y": 383.59628682275746
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.785322895999975,
+            "elapsedMs": 9499.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-low/03-west-inner-cut-west.png",
+          "sha256": "65ce2c070475022770d9be31d5c882d53023fa19a254f7675e47e768c5401ae3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": -3.1415298217367233,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.6091130972088,
+              "y": 247.25623398202356
+            },
+            "facingAngle": -3.1415298217367233,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.240343935999967,
+            "elapsedMs": 11899.5
+          }
+        }
+      ],
+      "status": "bounded-author-visual-pass",
+      "finding": "左右相向髓断面在正常近灯下有不等小孔、孔壁与封底，浅黄断面和红褐外皮分离；冷蓝中道连续。重档侵蚀绿加强但未替代本色或孔口轮廓。小孔是实体凹陷，不作为可通行孔。"
+    },
+    {
+      "world": "marrow-break",
+      "grade": "severe",
+      "seed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "marrow-break",
+        "grade": "severe",
+        "package": {
+          "id": "r100-marrow-break",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            },
+            "organization:porous-marrow": {
+              "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+              "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+              "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+            }
+          },
+          "dependencyHash": "9e1eafea",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3111/r100-gym.html?world=marrow-break&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-severe/recipe.json",
+        "sha256": "d07eacc78777976bdae33899f0c90c591f527a16b4ad382b2c315897e0fdcbd3"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 796.3027451944431,
+          "y": 366.08497448140787
+        },
+        "facingAngle": 3.141529821736727,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 36.251813802666206,
+        "elapsedMs": 18732.600000000002
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 796.3027451944431,
+          "y": 366.08497448140787
+        },
+        "facingAngle": 3.141529821736727,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 37.48208017066612,
+        "elapsedMs": 19949.2
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-severe/02-east-inner-cut-east.png",
+          "sha256": "a1895d3c36ce7cab4cb62e1f3f7e9ebe7438034ff905a3b4193bb63a1ca0b3f4",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": -0.0006283185307145445,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 571.8951885938967,
+              "y": 382.66210139530654
+            },
+            "facingAngle": -0.0006283185307145445,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.861943978666464,
+            "elapsedMs": 9699.599999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-severe/03-west-inner-cut-west.png",
+          "sha256": "8a9003f3725a23551ccff18671e511f9c2aaa72d65b629b3dd367e29561c1d92",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 547.1201136048984,
+              "y": 250.34037334156352
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 21.336556714666404,
+            "elapsedMs": 12616.2
+          }
+        }
+      ],
+      "status": "bounded-author-visual-pass",
+      "finding": "左右相向髓断面在正常近灯下有不等小孔、孔壁与封底，浅黄断面和红褐外皮分离；冷蓝中道连续。重档侵蚀绿加强但未替代本色或孔口轮廓。小孔是实体凹陷，不作为可通行孔。"
+    },
+    {
+      "world": "pore-bank",
+      "grade": "low",
+      "seed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "pore-bank",
+        "grade": "low",
+        "package": {
+          "id": "r100-pore-bank",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            },
+            "organization:porous-marrow": {
+              "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+              "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+              "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+            }
+          },
+          "dependencyHash": "cf7cd024",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3111/r100-gym.html?world=pore-bank&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-low/recipe.json",
+        "sha256": "6419405073a41c1fd0871ff4df1341726bbbed1082945dfc23ecd41235c2d3af"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 829.7914307788648,
+          "y": 565.8566168919357
+        },
+        "facingAngle": 3.141466989883654,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 22.003555679999934,
+        "elapsedMs": 17482.7
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 829.7914307788648,
+          "y": 565.8566168919357
+        },
+        "facingAngle": 3.141466989883654,
+        "facing4": "left",
+        "hp": 85,
+        "chaos": 22.458576719999915,
+        "elapsedMs": 18682.600000000002
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-low/02-south-porous-cut-north.png",
+          "sha256": "61bb2b7b485e4fad63eeb62dd01f5625c2508fe1e9b0b4620d5116a762690d17",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 420.2966857389883,
+              "y": 486.5185171739697
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.453536167999985,
+            "elapsedMs": 7749.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-low/03-low-connection-east.png",
+          "sha256": "41040ca9344abfeac15bf2031c7079b9b64f420646ea6827e19863069c52d190",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": -0.0004398229715050772,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 603.4636771835978,
+              "y": 481.90295959677576
+            },
+            "facingAngle": -0.0004398229715050772,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 17.24350267199997,
+            "elapsedMs": 11916.2
+          }
+        }
+      ],
+      "status": "bounded-author-visual-pass",
+      "finding": "高头孔断面有不等凹孔与厚底沿，紫皮/浅断面/暖床可分；东侧低连接与裸床关系可读。重档近孔面绿侵蚀更强，低连接东帧偏暗，但近脚裸床与低面边界仍能分开。"
+    },
+    {
+      "world": "pore-bank",
+      "grade": "severe",
+      "seed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "pore-bank",
+        "grade": "severe",
+        "package": {
+          "id": "r100-pore-bank",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            },
+            "organization:porous-marrow": {
+              "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+              "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+              "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+            }
+          },
+          "dependencyHash": "0eb57899",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3111/r100-gym.html?world=pore-bank&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-severe/recipe.json",
+        "sha256": "d0c897d8bf7d378c92e68ccbb6c4049dde22890bd79bb05e9ad699cdb5267fd0"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 829.3261396987244,
+          "y": 569.7299760754157
+        },
+        "facingAngle": 3.141341326177508,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 27.24364716799966,
+        "elapsedMs": 16982.6
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 829.3261396987244,
+          "y": 569.7299760754157
+        },
+        "facingAngle": 3.141341326177508,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 28.457016383999566,
+        "elapsedMs": 18182.6
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-severe/02-south-porous-cut-north.png",
+          "sha256": "b6bb3be2371b2f9af29971edba17718f16a25961f0a4962f296929381527e483",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5702936719703182,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 420.39710598953354,
+              "y": 483.89629373148284
+            },
+            "facingAngle": -1.5702936719703182,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.977186111999828,
+            "elapsedMs": 7949.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-severe/03-low-connection-east.png",
+          "sha256": "d6b667bea72280a7cfb80493d36bea550896240983766a369bc56f8306353625",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 603.8004894507142,
+              "y": 486.6365644221087
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 20.948945215999778,
+            "elapsedMs": 11849.599999999999
+          }
+        }
+      ],
+      "status": "bounded-author-visual-pass",
+      "finding": "高头孔断面有不等凹孔与厚底沿，紫皮/浅断面/暖床可分；东侧低连接与裸床关系可读。重档近孔面绿侵蚀更强，低连接东帧偏暗，但近脚裸床与低面边界仍能分开。"
+    }
+  ]
+}

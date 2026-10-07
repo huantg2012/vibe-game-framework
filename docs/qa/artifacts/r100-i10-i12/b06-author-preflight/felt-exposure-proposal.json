@@ -1,0 +1,113 @@
+{
+  "status": "bounded-author-adjustment-proposal-not-applied",
+  "method": "Clip every marker triangle against all other XY surface triangles. Minimum linear Z gap occurs at intersection vertices. Solve only south translation of object2 until both object2 marker faces are clear by0.2px; round upward to authored4px. No world sampling, no threshold relaxation or raised marker.",
+  "world": "felt-wedges",
+  "instance": 2,
+  "beforeY": 445,
+  "minimumSouthTranslation": 15.6436767578125,
+  "selectedSouthTranslation": 16,
+  "afterY": 461,
+  "initialGlobalProbe": {
+    "at0": {
+      "minimumZClearance": -4.765721865748056,
+      "limiter": {
+        "markerOwner": 2,
+        "coveringObject": 1,
+        "point": {
+          "x": 550.9693603515625,
+          "y": 423.1020812988281,
+          "z": 34.570823669433594
+        },
+        "margin": -4.765721865748056
+      }
+    },
+    "at64": {
+      "minimumZClearance": -2.4168690151354077,
+      "limiter": {
+        "markerOwner": 3,
+        "coveringObject": 1,
+        "point": {
+          "x": 511.74029541015625,
+          "y": 390.75738525390625,
+          "z": 27.123064041137695
+        },
+        "margin": -2.4168690151354077
+      }
+    },
+    "scope": "Initial helper demanded every green triangle entirely uncovered, exceeding the actual per-object minimum4 visible pixels; retained as diagnostic, not a product requirement."
+  },
+  "before": {
+    "minimumZClearance": -4.765721865748056,
+    "limiter": {
+      "markerOwner": 2,
+      "coveringObject": 1,
+      "point": {
+        "x": 550.9693603515625,
+        "y": 423.1020812988281,
+        "z": 34.570823669433594
+      },
+      "margin": -4.765721865748056
+    }
+  },
+  "after": {
+    "minimumZClearance": 0.36266186895151264,
+    "limiter": {
+      "markerOwner": 2,
+      "coveringObject": 1,
+      "point": {
+        "x": 550.9693603515625,
+        "y": 439.1020812988281,
+        "z": 34.570823669433594
+      },
+      "margin": 0.36266186895151264
+    }
+  },
+  "allMarkersAfter": {
+    "minimumZClearance": -2.4168690151354077,
+    "limiter": {
+      "markerOwner": 3,
+      "coveringObject": 1,
+      "point": {
+        "x": 511.74029541015625,
+        "y": 390.75738525390625,
+        "z": 27.123064041137695
+      },
+      "margin": -2.4168690151354077
+    }
+  },
+  "contactsBefore": [
+    {
+      "a": 1,
+      "b": 2,
+      "estimatedOverlapAreaPx2": 11408
+    },
+    {
+      "a": 2,
+      "b": 3,
+      "estimatedOverlapAreaPx2": 8256
+    },
+    {
+      "a": 1,
+      "b": 3,
+      "estimatedOverlapAreaPx2": 9088
+    }
+  ],
+  "contactsAfter": [
+    {
+      "a": 1,
+      "b": 2,
+      "estimatedOverlapAreaPx2": 10160
+    },
+    {
+      "a": 2,
+      "b": 3,
+      "estimatedOverlapAreaPx2": 6560
+    },
+    {
+      "a": 1,
+      "b": 3,
+      "estimatedOverlapAreaPx2": 9088
+    }
+  ],
+  "unchanged": "Other2 shapes, x/angle/size/height/material unchanged; original route/station validation pending actual3."
+}

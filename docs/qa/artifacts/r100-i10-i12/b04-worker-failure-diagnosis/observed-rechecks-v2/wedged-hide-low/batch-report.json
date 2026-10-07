@@ -1,0 +1,45 @@
+{
+  "status": "completed-fixed-attempts-pending-review",
+  "startedAt": "2026-10-07T05:12:35.060Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "wedged-hide",
+      "grade": "low",
+      "seed": 3075192741,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-wedged-hide-low-3075192741",
+      "status": "completed-script",
+      "startedAt": "2026-10-07T05:12:35.061Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-07T05:13:56.688Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "wedged-hide",
+          "grade": "low",
+          "revision": 6,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 70063.87999999984,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 178.88107025933698,
+            "y": 644.2902672349342
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    }
+  ],
+  "endedAt": "2026-10-07T05:13:56.690Z"
+}

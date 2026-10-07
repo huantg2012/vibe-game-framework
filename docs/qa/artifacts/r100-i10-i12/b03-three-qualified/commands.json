@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "status": "ready-for-three-world-cpu-only",
+  "worlds": [
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments"
+  ],
+  "notAdmitted": [
+    "shard-switchback"
+  ],
+  "wholeBatchReady": false,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-source/source-snapshot.json",
+    "sha256": "8161b87497c223b903b07d6fbd68c3afcbf46995487f7c2cd35cb2058af3b4e8"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "rootReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-three-independent-art-review.json",
+    "sha256": "87c09dc5f446a4957c131e5ae798741777204295ee4f3f6ae91c95f14a604d44"
+  },
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-qualified/preparation/commands.json",
+    "sha256": "2c84591bf64cdc092d87e3fb55b780766a6681c4b242edc307f61084394eaa39"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-qualified/preparation/qualification-a385402d2afd.mjs",
+    "sha256": "a385402d2afd3587eed188ddf77fac43c17184fb97917dde43cded35f4cb712d"
+  },
+  "generation": [
+    {
+      "cases": 360,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-qualified/preparation/qualification-a385402d2afd.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-qualified/preparation/qualification-a385402d2afd.mjs",
+        "--worlds",
+        "hollow-wreckage,knotted-run,rolled-fragments",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 72,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-qualified/preparation/qualification-a385402d2afd.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-qualified/preparation/qualification-a385402d2afd.mjs",
+        "--worlds",
+        "hollow-wreckage,knotted-run,rolled-fragments",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "Explicit root three-world approval only; original four-world plan remains unchanged and shard remains rejected. Fixed original48 seeds, grades, runtime, executor and contracts unchanged. New source needs strict per-world continuity. No browser authorization or completed outcome inferred."
+}

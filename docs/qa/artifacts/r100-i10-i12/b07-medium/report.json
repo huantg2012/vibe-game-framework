@@ -1,0 +1,2901 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sourceManifestSha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b",
+    "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b07-author-preflight/camera-supported.json",
+    "cameraInputSha256": "30cdddf6c02224d07522eabcdaadb903a03b8be8d62da7938b6f1fa2e3f49468",
+    "scope": "Four medium world cases, four author-supported approaches each; real WASD, actual cardinal facing verified, unchanged normal lighting/FOV/HP/clock. Author route support does not imply visual pass.",
+    "cases": [
+      {
+        "world": "staggered-cups",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-first-mouth",
+            "x": 286,
+            "y": 590,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 284,
+              "y": 588
+            },
+            "lookAtMaterialPoint": {
+              "x": 426,
+              "y": 462
+            }
+          },
+          {
+            "label": "02-first-inner-wall",
+            "x": 359,
+            "y": 503,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 356,
+              "y": 500
+            },
+            "lookAtMaterialPoint": {
+              "x": 426,
+              "y": 462
+            }
+          },
+          {
+            "label": "03-between-staggered-mouths",
+            "x": 554,
+            "y": 508,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 508
+            },
+            "lookAtMaterialPoint": {
+              "x": 426,
+              "y": 462
+            }
+          },
+          {
+            "label": "04-second-mouth",
+            "x": 642,
+            "y": 264,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 644,
+              "y": 260
+            },
+            "lookAtMaterialPoint": {
+              "x": 701,
+              "y": 300
+            }
+          }
+        ]
+      },
+      {
+        "world": "split-tows",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-alternating-bundles",
+            "x": 560,
+            "y": 634,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 410,
+              "y": 514
+            }
+          },
+          {
+            "label": "02-first-crossing",
+            "x": 552,
+            "y": 460,
+            "faces": [
+              "west",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 548,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 410,
+              "y": 514
+            }
+          },
+          {
+            "label": "03-low-middle-link",
+            "x": 565,
+            "y": 361,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 585,
+              "y": 370
+            }
+          },
+          {
+            "label": "04-west-upper-break",
+            "x": 310,
+            "y": 366,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 308,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 424,
+              "y": 266
+            }
+          }
+        ]
+      },
+      {
+        "world": "curled-flats",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-low-sheet",
+            "x": 470,
+            "y": 640,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 468,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 472,
+              "y": 520
+            }
+          },
+          {
+            "label": "02-west-rolled-edge",
+            "x": 539,
+            "y": 454,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 452
+            },
+            "lookAtMaterialPoint": {
+              "x": 340,
+              "y": 491
+            }
+          },
+          {
+            "label": "03-north-high-lip",
+            "x": 537,
+            "y": 292,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 292
+            },
+            "lookAtMaterialPoint": {
+              "x": 701,
+              "y": 206
+            }
+          },
+          {
+            "label": "04-east-high-lip",
+            "x": 708,
+            "y": 400,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 708,
+              "y": 396
+            },
+            "lookAtMaterialPoint": {
+              "x": 810,
+              "y": 500
+            }
+          }
+        ]
+      },
+      {
+        "world": "pitch-forks",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-open-entry",
+            "x": 571,
+            "y": 579,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 580
+            },
+            "lookAtMaterialPoint": {
+              "x": 567,
+              "y": 257
+            }
+          },
+          {
+            "label": "02-offset-inner-arms",
+            "x": 568,
+            "y": 443,
+            "faces": [
+              "west",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 444
+            },
+            "lookAtMaterialPoint": {
+              "x": 454,
+              "y": 360
+            }
+          },
+          {
+            "label": "03-thick-head",
+            "x": 570,
+            "y": 353,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 567,
+              "y": 257
+            }
+          },
+          {
+            "label": "04-head-outside",
+            "x": 765,
+            "y": 171,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 764,
+              "y": 172
+            },
+            "lookAtMaterialPoint": {
+              "x": 567,
+              "y": 257
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "staggered-cups",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-first-mouth",
+            "x": 286,
+            "y": 590,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 284,
+              "y": 588
+            },
+            "lookAtMaterialPoint": {
+              "x": 426,
+              "y": 462
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-first-mouth",
+              "x": 286,
+              "y": 590,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 284,
+                "y": 588
+              },
+              "lookAtMaterialPoint": {
+                "x": 426,
+                "y": 462
+              }
+            },
+            "actual": {
+              "x": 284,
+              "y": 588
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 284,
+                "y": 588
+              }
+            ],
+            "length": 88,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/01-south-first-mouth-north.png",
+              "sha256": "4e8f2f5ba0ad32ff516898019bd62e6db4c1d50cf56930cd515ed9e2c6f0ee75",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.570356503823393,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 288.18994417434754,
+                  "y": 581.3963334737348
+                },
+                "facingAngle": -1.570356503823393,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.53636133599998,
+                "elapsedMs": 1699.9000000000005
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 288.18994417434754,
+                  "y": 581.3963334737348
+                },
+                "facingAngle": -1.570356503823393,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.569551289999978,
+                "elapsedMs": 1799.9000000000005
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/01-south-first-mouth-east.png",
+              "sha256": "4e55f19af8816787b3f3af4bdada0986983d7f4e468b697fe41ece9d4e1406ad",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 293.59464466085456,
+                  "y": 582.3026469143557
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 15.663550229999975,
+                "elapsedMs": 2083.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 293.59464466085456,
+                  "y": 582.3026469143557
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 15.696726911999974,
+                "elapsedMs": 2183.3
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-first-inner-wall",
+            "x": 359,
+            "y": 503,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 356,
+              "y": 500
+            },
+            "lookAtMaterialPoint": {
+              "x": 426,
+              "y": 462
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-first-inner-wall",
+              "x": 359,
+              "y": 503,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 356,
+                "y": 500
+              },
+              "lookAtMaterialPoint": {
+                "x": 426,
+                "y": 462
+              }
+            },
+            "actual": {
+              "x": 356,
+              "y": 500
+            },
+            "points": [
+              {
+                "x": 292,
+                "y": 588
+              },
+              {
+                "x": 292,
+                "y": 596
+              },
+              {
+                "x": 300,
+                "y": 596
+              },
+              {
+                "x": 300,
+                "y": 604
+              },
+              {
+                "x": 324,
+                "y": 604
+              },
+              {
+                "x": 324,
+                "y": 612
+              },
+              {
+                "x": 380,
+                "y": 612
+              },
+              {
+                "x": 380,
+                "y": 548
+              },
+              {
+                "x": 364,
+                "y": 548
+              },
+              {
+                "x": 364,
+                "y": 540
+              },
+              {
+                "x": 356,
+                "y": 540
+              },
+              {
+                "x": 356,
+                "y": 500
+              }
+            ],
+            "length": 248,
+            "originConnector": {
+              "origin": {
+                "x": 293.59464466085456,
+                "y": 582.3026469143557
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9380,
+                "x": 292,
+                "y": 588,
+                "distance": 5.916309979784064
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/02-first-inner-wall-east.png",
+              "sha256": "d94ee44b0c0fc3128784f5043079edab2a85b40975fbf4054e2f6127d30c3869",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.0002513274122823428,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 360.74920640920953,
+                  "y": 494.5536196196132
+                },
+                "facingAngle": -0.0002513274122823428,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.289297233999797,
+                "elapsedMs": 6983.000000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 360.74920640920953,
+                  "y": 494.5536196196132
+                },
+                "facingAngle": -0.0002513274122823428,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.32247391599979,
+                "elapsedMs": 7083.000000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-between-staggered-mouths",
+            "x": 554,
+            "y": 508,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 508
+            },
+            "lookAtMaterialPoint": {
+              "x": 426,
+              "y": 462
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-between-staggered-mouths",
+              "x": 554,
+              "y": 508,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 556,
+                "y": 508
+              },
+              "lookAtMaterialPoint": {
+                "x": 426,
+                "y": 462
+              }
+            },
+            "actual": {
+              "x": 556,
+              "y": 508
+            },
+            "points": [
+              {
+                "x": 364,
+                "y": 492
+              },
+              {
+                "x": 396,
+                "y": 492
+              },
+              {
+                "x": 396,
+                "y": 500
+              },
+              {
+                "x": 404,
+                "y": 500
+              },
+              {
+                "x": 404,
+                "y": 508
+              },
+              {
+                "x": 412,
+                "y": 508
+              },
+              {
+                "x": 412,
+                "y": 516
+              },
+              {
+                "x": 556,
+                "y": 516
+              },
+              {
+                "x": 556,
+                "y": 508
+              }
+            ],
+            "length": 224,
+            "originConnector": {
+              "origin": {
+                "x": 360.74920640920953,
+                "y": 494.5536196196132
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7853,
+                "x": 364,
+                "y": 492,
+                "distance": 4.133839877353472
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/03-between-staggered-mouths-west.png",
+              "sha256": "6fdad88ed770436641af8dcaf4700716fdd157e0711632783215800cf0666b38",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 548.0514679013118,
+                  "y": 503.20317248095364
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.793399721999627,
+                "elapsedMs": 11516.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 548.0514679013118,
+                  "y": 503.20317248095364
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.82657972199962,
+                "elapsedMs": 11616.2
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/03-between-staggered-mouths-north.png",
+              "sha256": "0aed5f9255ca9fd6e5e0f780ccd345493672fb7639669d0850150b0641d9caf1",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 548.0514679013118,
+                  "y": 495.75937248095363
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.92059193399961,
+                "elapsedMs": 11899.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 548.0514679013118,
+                  "y": 495.75937248095363
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.953775251999605,
+                "elapsedMs": 11999.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-second-mouth",
+            "x": 642,
+            "y": 264,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 644,
+              "y": 260
+            },
+            "lookAtMaterialPoint": {
+              "x": 701,
+              "y": 300
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-second-mouth",
+              "x": 642,
+              "y": 264,
+              "faces": [
+                "east",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 644,
+                "y": 260
+              },
+              "lookAtMaterialPoint": {
+                "x": 701,
+                "y": 300
+              }
+            },
+            "actual": {
+              "x": 644,
+              "y": 268
+            },
+            "points": [
+              {
+                "x": 548,
+                "y": 492
+              },
+              {
+                "x": 620,
+                "y": 492
+              },
+              {
+                "x": 620,
+                "y": 412
+              },
+              {
+                "x": 628,
+                "y": 412
+              },
+              {
+                "x": 628,
+                "y": 404
+              },
+              {
+                "x": 644,
+                "y": 404
+              },
+              {
+                "x": 644,
+                "y": 268
+              }
+            ],
+            "length": 320,
+            "originConnector": {
+              "origin": {
+                "x": 548.0514679013118,
+                "y": 495.75937248095363
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7876,
+                "x": 548,
+                "y": 492,
+                "distance": 3.75972477655172
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/04-second-mouth-east.png",
+              "sha256": "bc2dca6ace8f9468cf9ea13e96cb09c5b77cf5f5a26a7795e9639e155d663b9a",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185307298655,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 650.3119204536065,
+                  "y": 262.3900973835903
+                },
+                "facingAngle": -0.00006283185307298655,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.872601195999415,
+                "elapsedMs": 17782.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 650.3119204536065,
+                  "y": 262.3900973835903
+                },
+                "facingAngle": -0.00006283185307298655,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.905771241999417,
+                "elapsedMs": 17882.5
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/04-second-mouth-south.png",
+              "sha256": "93482e6d7cafab6823929936afbdf4416f0d5e57a15efe2fc93e087bebc17be1",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5706706630887504,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 650.3119204536065,
+                  "y": 269.8335307169235
+                },
+                "facingAngle": 1.5706706630887504,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.010839029999417,
+                "elapsedMs": 18199.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 650.3119204536065,
+                  "y": 269.8335307169235
+                },
+                "facingAngle": 1.5706706630887504,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.044022347999416,
+                "elapsedMs": 18299.3
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "staggered-cups",
+        "grade": "medium",
+        "package": {
+          "id": "r100-staggered-cups",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "2e000701",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3112/r100-gym.html?world=staggered-cups&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/recipe.json",
+        "sha256": "9777b5c4546fb97dd4ecc4c0690af094400ac3dba842676c56bc6e996633624c"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 650.3119204536065,
+          "y": 269.8335307169235
+        },
+        "facingAngle": 1.5706706630887504,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 21.044022347999416,
+        "elapsedMs": 18299.3
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 650.3119204536065,
+          "y": 269.8335307169235
+        },
+        "facingAngle": 1.5706706630887504,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 21.442169075999406,
+        "elapsedMs": 19499.2
+      }
+    },
+    {
+      "world": "split-tows",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-alternating-bundles",
+            "x": 560,
+            "y": 634,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 410,
+              "y": 514
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-alternating-bundles",
+              "x": 560,
+              "y": 634,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 556,
+                "y": 636
+              },
+              "lookAtMaterialPoint": {
+                "x": 410,
+                "y": 514
+              }
+            },
+            "actual": {
+              "x": 556,
+              "y": 636
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 364,
+                "y": 588
+              },
+              {
+                "x": 364,
+                "y": 596
+              },
+              {
+                "x": 372,
+                "y": 596
+              },
+              {
+                "x": 372,
+                "y": 604
+              },
+              {
+                "x": 380,
+                "y": 604
+              },
+              {
+                "x": 380,
+                "y": 612
+              },
+              {
+                "x": 388,
+                "y": 612
+              },
+              {
+                "x": 388,
+                "y": 620
+              },
+              {
+                "x": 396,
+                "y": 620
+              },
+              {
+                "x": 396,
+                "y": 628
+              },
+              {
+                "x": 404,
+                "y": 628
+              },
+              {
+                "x": 404,
+                "y": 644
+              },
+              {
+                "x": 556,
+                "y": 644
+              },
+              {
+                "x": 556,
+                "y": 636
+              }
+            ],
+            "length": 424,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/01-south-alternating-bundles-west.png",
+              "sha256": "15e430abec3d988f5087914a1a120966288e1cf6dfcdd6caf0cde99da4e6a607",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.1415298217367202,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 552.4856737372958,
+                  "y": 634.2299091773309
+                },
+                "facingAngle": -3.1415298217367202,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.427567141999795,
+                "elapsedMs": 7399.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 552.4856737372958,
+                  "y": 634.2299091773309
+                },
+                "facingAngle": -3.1415298217367202,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.46074714199979,
+                "elapsedMs": 7499.8
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/01-south-alternating-bundles-north.png",
+              "sha256": "bda80143c456f04226d94f18effae18f0d97e63e6e88e558ce78fa0f3c75c2d8",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 552.4856737372958,
+                  "y": 626.7845425106642
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.554759353999778,
+                "elapsedMs": 7783.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 552.4856737372958,
+                  "y": 626.7845425106642
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.587936035999775,
+                "elapsedMs": 7883.099999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-first-crossing",
+            "x": 552,
+            "y": 460,
+            "faces": [
+              "west",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 548,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 410,
+              "y": 514
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-first-crossing",
+              "x": 552,
+              "y": 460,
+              "faces": [
+                "west",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 548,
+                "y": 460
+              },
+              "lookAtMaterialPoint": {
+                "x": 410,
+                "y": 514
+              }
+            },
+            "actual": {
+              "x": 556,
+              "y": 460
+            },
+            "points": [
+              {
+                "x": 556,
+                "y": 628
+              },
+              {
+                "x": 556,
+                "y": 460
+              }
+            ],
+            "length": 168,
+            "originConnector": {
+              "origin": {
+                "x": 552.4856737372958,
+                "y": 626.7845425106642
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 10053,
+                "x": 556,
+                "y": 628,
+                "distance": 3.718578490379778
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/02-first-crossing-west.png",
+              "sha256": "63ca871d5d826b497faa7d299655c569f08837db3a26c260cd050d01c5806bcd",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 549.0339808325391,
+                  "y": 458.7848658025653
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.46716953799967,
+                "elapsedMs": 10533
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 549.0339808325391,
+                  "y": 458.7848658025653
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.500349537999664,
+                "elapsedMs": 10632.900000000001
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/02-first-crossing-east.png",
+              "sha256": "54b07a9c0f62e67d3f20b8da2fcaf7303a6cb9b5a62927641078ef87604f6103",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0.00012566370614203182,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 564.9788808325393,
+                  "y": 458.7848658025653
+                },
+                "facingAngle": 0.00012566370614203182,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.633066219999645,
+                "elapsedMs": 11033
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 564.9788808325393,
+                  "y": 458.7848658025653
+                },
+                "facingAngle": 0.00012566370614203182,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.67177400799964,
+                "elapsedMs": 11149.599999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-low-middle-link",
+            "x": 565,
+            "y": 361,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 585,
+              "y": 370
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-low-middle-link",
+              "x": 565,
+              "y": 361,
+              "faces": [
+                "east",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 564,
+                "y": 364
+              },
+              "lookAtMaterialPoint": {
+                "x": 585,
+                "y": 370
+              }
+            },
+            "actual": {
+              "x": 564,
+              "y": 364
+            },
+            "points": [
+              {
+                "x": 564,
+                "y": 460
+              },
+              {
+                "x": 564,
+                "y": 364
+              }
+            ],
+            "length": 96,
+            "originConnector": {
+              "origin": {
+                "x": 564.9788808325393,
+                "y": 458.7848658025653
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7366,
+                "x": 564,
+                "y": 460,
+                "distance": 1.5603713667226893
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/03-low-middle-link-east.png",
+              "sha256": "3b27947489896aedf9bff2ea0d838211f0b1551a8c430f45d2fa582197f2d096",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00025132741228911515,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 570.906343994301,
+                  "y": 357.9536195757469
+                },
+                "facingAngle": -0.00025132741228911515,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.224745251999575,
+                "elapsedMs": 12816.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 570.906343994301,
+                  "y": 357.9536195757469
+                },
+                "facingAngle": -0.00025132741228911515,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.25792856999957,
+                "elapsedMs": 12916.3
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/03-low-middle-link-north.png",
+              "sha256": "fdf8022b9471229b00313c841cdf233cc31327a0e07d0aea2006142c573f693e",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 570.906343994301,
+                  "y": 350.5076862424137
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.35193746399956,
+                "elapsedMs": 13199.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 570.906343994301,
+                  "y": 350.5076862424137
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.385117463999553,
+                "elapsedMs": 13299.599999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-west-upper-break",
+            "x": 310,
+            "y": 366,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 308,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 424,
+              "y": 266
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-west-upper-break",
+              "x": 310,
+              "y": 366,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 308,
+                "y": 364
+              },
+              "lookAtMaterialPoint": {
+                "x": 424,
+                "y": 266
+              }
+            },
+            "actual": {
+              "x": 308,
+              "y": 364
+            },
+            "points": [
+              {
+                "x": 572,
+                "y": 348
+              },
+              {
+                "x": 460,
+                "y": 348
+              },
+              {
+                "x": 460,
+                "y": 372
+              },
+              {
+                "x": 452,
+                "y": 372
+              },
+              {
+                "x": 452,
+                "y": 380
+              },
+              {
+                "x": 436,
+                "y": 380
+              },
+              {
+                "x": 436,
+                "y": 388
+              },
+              {
+                "x": 308,
+                "y": 388
+              },
+              {
+                "x": 308,
+                "y": 364
+              }
+            ],
+            "length": 328,
+            "originConnector": {
+              "origin": {
+                "x": 570.906343994301,
+                "y": 350.5076862424137
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5575,
+                "x": 572,
+                "y": 348,
+                "distance": 2.7357949026183204
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/04-west-upper-break-north.png",
+              "sha256": "a8ed9c249d2f3bcbe70556746286ecc56d8a766a406a3f13422646145c4d1617",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 305.58955091624125,
+                  "y": 351.10054883614544
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 21.619143453999374,
+                "elapsedMs": 20032.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 305.58955091624125,
+                  "y": 351.10054883614544
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 21.652326771999373,
+                "elapsedMs": 20132.6
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/04-west-upper-break-east.png",
+              "sha256": "fba4bfa32686c5196063cd1e4992816f7ee274c39f3b0a5ba935b443315a0bb4",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185307287553,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 313.0338842495745,
+                  "y": 351.10054883614544
+                },
+                "facingAngle": -0.00006283185307287553,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.746335665999375,
+                "elapsedMs": 20415.899999999998
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 313.0338842495745,
+                  "y": 351.10054883614544
+                },
+                "facingAngle": -0.00006283185307287553,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.79056792399938,
+                "elapsedMs": 20549.2
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "split-tows",
+        "grade": "medium",
+        "package": {
+          "id": "r100-split-tows",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "108b13a6",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3112/r100-gym.html?world=split-tows&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/recipe.json",
+        "sha256": "3b92ec0bd993676c10585e2eebd6176eea02c72ca0e933fd35f0009a7873a622"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 313.0338842495745,
+          "y": 351.10054883614544
+        },
+        "facingAngle": -0.00006283185307287553,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 21.79056792399938,
+        "elapsedMs": 20549.2
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 313.0338842495745,
+          "y": 351.10054883614544
+        },
+        "facingAngle": -0.00006283185307287553,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 22.188711333999382,
+        "elapsedMs": 21749.2
+      }
+    },
+    {
+      "world": "curled-flats",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-low-sheet",
+            "x": 470,
+            "y": 640,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 468,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 472,
+              "y": 520
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-low-sheet",
+              "x": 470,
+              "y": 640,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 468,
+                "y": 636
+              },
+              "lookAtMaterialPoint": {
+                "x": 472,
+                "y": 520
+              }
+            },
+            "actual": {
+              "x": 468,
+              "y": 636
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 468,
+                "y": 588
+              },
+              {
+                "x": 468,
+                "y": 636
+              }
+            ],
+            "length": 320,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/01-south-low-sheet-north.png",
+              "sha256": "26d4cdc54499d65eed8c43cf9aee2a033e5bab1d390632a7a12c3fd3e6d07a3f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5702936719703218,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 469.6863016430826,
+                  "y": 631.4659775531303
+                },
+                "facingAngle": -1.5702936719703218,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.620192671999856,
+                "elapsedMs": 4966.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 469.6863016430826,
+                  "y": 631.4659775531303
+                },
+                "facingAngle": -1.5702936719703218,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.658907095999854,
+                "elapsedMs": 5083.1
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-west-rolled-edge",
+            "x": 539,
+            "y": 454,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 452
+            },
+            "lookAtMaterialPoint": {
+              "x": 340,
+              "y": 491
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-west-rolled-edge",
+              "x": 539,
+              "y": 454,
+              "faces": [
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 540,
+                "y": 452
+              },
+              "lookAtMaterialPoint": {
+                "x": 340,
+                "y": 491
+              }
+            },
+            "actual": {
+              "x": 540,
+              "y": 452
+            },
+            "points": [
+              {
+                "x": 468,
+                "y": 628
+              },
+              {
+                "x": 540,
+                "y": 628
+              },
+              {
+                "x": 540,
+                "y": 452
+              }
+            ],
+            "length": 248,
+            "originConnector": {
+              "origin": {
+                "x": 469.6863016430826,
+                "y": 631.4659775531303
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 10042,
+                "x": 468,
+                "y": 628,
+                "distance": 3.8544277954407313
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/02-west-rolled-edge-west.png",
+              "sha256": "fc80aa658ca5a69343d12954d8fbc999d1192358a67372b13b81513ad1b739a2",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 523.5587505678894,
+                  "y": 453.8079739034864
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.31783741799971,
+                "elapsedMs": 10083
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 523.5587505678894,
+                  "y": 453.8079739034864
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.351024053999705,
+                "elapsedMs": 10183
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-north-high-lip",
+            "x": 537,
+            "y": 292,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 292
+            },
+            "lookAtMaterialPoint": {
+              "x": 701,
+              "y": 206
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-north-high-lip",
+              "x": 537,
+              "y": 292,
+              "faces": [
+                "east",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 540,
+                "y": 292
+              },
+              "lookAtMaterialPoint": {
+                "x": 701,
+                "y": 206
+              }
+            },
+            "actual": {
+              "x": 540,
+              "y": 292
+            },
+            "points": [
+              {
+                "x": 524,
+                "y": 452
+              },
+              {
+                "x": 540,
+                "y": 452
+              },
+              {
+                "x": 540,
+                "y": 292
+              }
+            ],
+            "length": 176,
+            "originConnector": {
+              "origin": {
+                "x": 523.5587505678894,
+                "y": 453.8079739034864
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7233,
+                "x": 524,
+                "y": 452,
+                "distance": 1.861040219077975
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/03-north-high-lip-east.png",
+              "sha256": "0760dc1b4d08eff7e2cf750280aa48c001003e12f2deb78190956467819e94d5",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.0006283185307144334,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 546.5615725199323,
+                  "y": 291.40381709773146
+                },
+                "facingAngle": -0.0006283185307144334,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.36296760199957,
+                "elapsedMs": 13232.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 546.5615725199323,
+                  "y": 291.40381709773146
+                },
+                "facingAngle": -0.0006283185307144334,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.396147601999566,
+                "elapsedMs": 13332.8
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/03-north-high-lip-north.png",
+              "sha256": "310725c2989af7fe07302a0cfccec0f27d3a359fb966b7926815261ddbf60f1a",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 546.5615725199323,
+                  "y": 283.9597504310648
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.49014985999955,
+                "elapsedMs": 13616.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 546.5615725199323,
+                  "y": 283.9597504310648
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.523323223999547,
+                "elapsedMs": 13716.1
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-east-high-lip",
+            "x": 708,
+            "y": 400,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 708,
+              "y": 396
+            },
+            "lookAtMaterialPoint": {
+              "x": 810,
+              "y": 500
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-east-high-lip",
+              "x": 708,
+              "y": 400,
+              "faces": [
+                "east",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 708,
+                "y": 396
+              },
+              "lookAtMaterialPoint": {
+                "x": 810,
+                "y": 500
+              }
+            },
+            "actual": {
+              "x": 708,
+              "y": 396
+            },
+            "points": [
+              {
+                "x": 548,
+                "y": 284
+              },
+              {
+                "x": 628,
+                "y": 284
+              },
+              {
+                "x": 628,
+                "y": 300
+              },
+              {
+                "x": 668,
+                "y": 300
+              },
+              {
+                "x": 668,
+                "y": 308
+              },
+              {
+                "x": 708,
+                "y": 308
+              },
+              {
+                "x": 708,
+                "y": 396
+              }
+            ],
+            "length": 272,
+            "originConnector": {
+              "origin": {
+                "x": 546.5615725199323,
+                "y": 283.9597504310648
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 4548,
+                "x": 548,
+                "y": 284,
+                "distance": 1.4389904944833625
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/04-east-high-lip-east.png",
+              "sha256": "242b5729fd86d8042824beab00660684a0264d9ea8f26f33c90afad10a20a71b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0.00012566370614530697,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 714.2094923146868,
+                  "y": 398.8830701898851
+                },
+                "facingAngle": 0.00012566370614530697,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.364746863999418,
+                "elapsedMs": 19265.9
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 714.2094923146868,
+                  "y": 398.8830701898851
+                },
+                "facingAngle": 0.00012566370614530697,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.397923545999422,
+                "elapsedMs": 19365.800000000003
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/04-east-high-lip-south.png",
+              "sha256": "0d6f7939dc4556490b6104b9e0171a08fe36416e6894e6271152768853fa5c7c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5706706630887495,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 714.2094923146868,
+                  "y": 406.32820352321846
+                },
+                "facingAngle": 1.5706706630887495,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.49192912199942,
+                "elapsedMs": 19649.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 714.2094923146868,
+                  "y": 406.32820352321846
+                },
+                "facingAngle": 1.5706706630887495,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.52511243999942,
+                "elapsedMs": 19749.2
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "curled-flats",
+        "grade": "medium",
+        "package": {
+          "id": "r100-curled-flats",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "9e6d1ad6",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3112/r100-gym.html?world=curled-flats&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/recipe.json",
+        "sha256": "ab21b5646da1938f73a2c14ae3fb570b570975b728f0ee0af6ff1f9c5efc11dd"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 714.2094923146868,
+          "y": 406.32820352321846
+        },
+        "facingAngle": 1.5706706630887495,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 21.52511243999942,
+        "elapsedMs": 19749.2
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 714.2094923146868,
+          "y": 406.32820352321846
+        },
+        "facingAngle": 1.5706706630887495,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 21.923242577999417,
+        "elapsedMs": 20949.100000000002
+      }
+    },
+    {
+      "world": "pitch-forks",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-open-entry",
+            "x": 571,
+            "y": 579,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 580
+            },
+            "lookAtMaterialPoint": {
+              "x": 567,
+              "y": 257
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-open-entry",
+              "x": 571,
+              "y": 579,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 572,
+                "y": 580
+              },
+              "lookAtMaterialPoint": {
+                "x": 567,
+                "y": 257
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 580
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 572,
+                "y": 588
+              },
+              {
+                "x": 572,
+                "y": 580
+              }
+            ],
+            "length": 384,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/01-south-open-entry-north.png",
+              "sha256": "16a6afe1458ebc9b7eb921de3922bafada0c3916a569315633118b3de02a4256",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 572.0092834130021,
+                  "y": 571.3013032235724
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.88012036799984,
+                "elapsedMs": 5749.699999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 572.0092834130021,
+                  "y": 571.3013032235724
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.913300367999838,
+                "elapsedMs": 5849.699999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-offset-inner-arms",
+            "x": 568,
+            "y": 443,
+            "faces": [
+              "west",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 444
+            },
+            "lookAtMaterialPoint": {
+              "x": 454,
+              "y": 360
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-offset-inner-arms",
+              "x": 568,
+              "y": 443,
+              "faces": [
+                "west",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 564,
+                "y": 444
+              },
+              "lookAtMaterialPoint": {
+                "x": 454,
+                "y": 360
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 444
+            },
+            "points": [
+              {
+                "x": 572,
+                "y": 572
+              },
+              {
+                "x": 572,
+                "y": 444
+              }
+            ],
+            "length": 128,
+            "originConnector": {
+              "origin": {
+                "x": 572.0092834130021,
+                "y": 571.3013032235724
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9159,
+                "x": 572,
+                "y": 572,
+                "distance": 0.698758446923743
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/02-offset-inner-arms-west.png",
+              "sha256": "737298ed4416b99de47219ce3d0ecfb6acd0c0d0e1c12fe74a18d312e2285d10",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.14152982173672,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.0804525357562,
+                  "y": 438.8021907098242
+                },
+                "facingAngle": -3.14152982173672,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.604526035999772,
+                "elapsedMs": 7932.9
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.0804525357562,
+                  "y": 438.8021907098242
+                },
+                "facingAngle": -3.14152982173672,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.637702717999773,
+                "elapsedMs": 8033
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/02-offset-inner-arms-east.png",
+              "sha256": "cf330158eb1015e4e30323fdf37e12c80422a6dcea5ef8447aa2d799da63c359",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185306960037,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 582.0256858690897,
+                  "y": 438.8021907098242
+                },
+                "facingAngle": -0.00006283185306960037,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.77041608199976,
+                "elapsedMs": 8433
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 582.0256858690897,
+                  "y": 438.8021907098242
+                },
+                "facingAngle": -0.00006283185306960037,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.809127187999756,
+                "elapsedMs": 8549.6
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-thick-head",
+            "x": 570,
+            "y": 353,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 364
+            },
+            "lookAtMaterialPoint": {
+              "x": 567,
+              "y": 257
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-thick-head",
+              "x": 570,
+              "y": 353,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 572,
+                "y": 364
+              },
+              "lookAtMaterialPoint": {
+                "x": 567,
+                "y": 257
+              }
+            },
+            "actual": {
+              "x": 580,
+              "y": 364
+            },
+            "points": [
+              {
+                "x": 580,
+                "y": 436
+              },
+              {
+                "x": 580,
+                "y": 364
+              }
+            ],
+            "length": 72,
+            "originConnector": {
+              "origin": {
+                "x": 582.0256858690897,
+                "y": 438.8021907098242
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 6984,
+                "x": 580,
+                "y": 436,
+                "distance": 3.457698080291928
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/03-thick-head-north.png",
+              "sha256": "9039800557d44afa87cd2afdb94557433d202fe975596df9ac732bce700c197c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 581.1227105095145,
+                  "y": 363.1203153502498
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.240443961999702,
+                "elapsedMs": 9849.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 581.1227105095145,
+                  "y": 363.1203153502498
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.284672901999695,
+                "elapsedMs": 9982.8
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-head-outside",
+            "x": 765,
+            "y": 171,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 764,
+              "y": 172
+            },
+            "lookAtMaterialPoint": {
+              "x": 567,
+              "y": 257
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-head-outside",
+              "x": 765,
+              "y": 171,
+              "faces": [
+                "west",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 764,
+                "y": 172
+              },
+              "lookAtMaterialPoint": {
+                "x": 567,
+                "y": 257
+              }
+            },
+            "actual": {
+              "x": 764,
+              "y": 172
+            },
+            "points": [
+              {
+                "x": 580,
+                "y": 364
+              },
+              {
+                "x": 604,
+                "y": 364
+              },
+              {
+                "x": 604,
+                "y": 420
+              },
+              {
+                "x": 612,
+                "y": 420
+              },
+              {
+                "x": 612,
+                "y": 436
+              },
+              {
+                "x": 620,
+                "y": 436
+              },
+              {
+                "x": 620,
+                "y": 452
+              },
+              {
+                "x": 636,
+                "y": 452
+              },
+              {
+                "x": 636,
+                "y": 460
+              },
+              {
+                "x": 772,
+                "y": 460
+              },
+              {
+                "x": 772,
+                "y": 228
+              },
+              {
+                "x": 764,
+                "y": 228
+              },
+              {
+                "x": 764,
+                "y": 172
+              }
+            ],
+            "length": 584,
+            "originConnector": {
+              "origin": {
+                "x": 581.1227105095145,
+                "y": 363.1203153502498
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5832,
+                "x": 580,
+                "y": 364,
+                "distance": 1.4262972941082008
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/04-head-outside-west.png",
+              "sha256": "3a269d5958e870742b739442abf150d80fb6bfe6323e4942edbaa83e5606eb55",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 756.3709836231415,
+                  "y": 169.36846549903984
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 28.53707147199924,
+                "elapsedMs": 20015.800000000003
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 756.3709836231415,
+                  "y": 169.36846549903984
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 28.614500319999234,
+                "elapsedMs": 20132.5
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/04-head-outside-south.png",
+              "sha256": "ae275dc165b8ebac68927fd39c025b4015780bcf4ae60f9c0752581cd66e2d18",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5708591586479694,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 756.3709836231415,
+                  "y": 176.81306549903985
+                },
+                "facingAngle": 1.5708591586479694,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 28.80253137999922,
+                "elapsedMs": 20415.800000000003
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 756.3709836231415,
+                  "y": 176.81306549903985
+                },
+                "facingAngle": 1.5708591586479694,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 28.857815895999217,
+                "elapsedMs": 20499.100000000002
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "pitch-forks",
+        "grade": "medium",
+        "package": {
+          "id": "r100-pitch-forks",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "3bb78dc8",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3112/r100-gym.html?world=pitch-forks&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/recipe.json",
+        "sha256": "c776e37804e439ac05eabe6e4a0d4d0a2bb17e5734cee2fc9c7ffcd737a9b226"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 756.3709836231415,
+          "y": 176.81306549903985
+        },
+        "facingAngle": 1.5708591586479694,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 28.857815895999217,
+        "elapsedMs": 20499.100000000002
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 756.3709836231415,
+          "y": 176.81306549903985
+        },
+        "facingAngle": 1.5708591586479694,
+        "facing4": "down",
+        "hp": 85,
+        "chaos": 29.654089443999137,
+        "elapsedMs": 21699.100000000002
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

@@ -1,0 +1,51 @@
+{
+  "status": "partial-medium-review-split-rejected",
+  "reviewer": "root",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+    "sha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598"
+  },
+  "reviewedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/01-south-fragments-north.png",
+      "sha256": "06f9cde1a05c3c8ad4af2e977a63dcc4ae8c63004891f98b177e582cf7c4ae2b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/02-west-dense-band-north.png",
+      "sha256": "91ecf60d365e4e4a0a9dc163c5da00ba9f4dcc7f1c15699db4f29910837acd7b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/03-middle-crossing-west.png",
+      "sha256": "58017b67035c630565f1be45a6bf6f62a069bccb0fcde636a17400ff4552f7b9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/03-middle-crossing-south.png",
+      "sha256": "aa29227abac899031ab6f2d33b2e36d85a257982ae012acbaba36211b6337d57"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/01-south-short-shoulder-north.png",
+      "sha256": "56a15cff95f65b75dcc80ac07a08131a19c64bccba55c6ad77816ee5c7ec85fe"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/02-inner-short-turn-west.png",
+      "sha256": "2438ef31bc16f2acd97cb4b2d2662c0d5620d69ca765c08407005da12e8bcd6d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/03-east-long-bypass-west.png",
+      "sha256": "1328edc395958fe28af448340d90aba81f1778eecbbbac61d5fe16e781bc779d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/04-north-quiet-bed-west.png",
+      "sha256": "ca9e4162714883db1e127103ef835f475a5b8ef3f93fe2e850f0a95b40e2ad51"
+    }
+  ],
+  "findings": {
+    "quiet-spur": "四张中档原图中短内转和真缺地外长绕成立；两小肩可复用同类轮廓，其自身不算新的形态差异。尚缺低重及完整资格。",
+    "split-fall": "四张中档原图中六件相同分叉箭头/斜肩反复出现，与已拒绝的shard同类。两斜向路线本身成立，但普通构造须改为少量交会破片配合完整层片/断端，不能以通路PASS抵消画面重复。"
+  },
+  "limitations": [
+    "仅列明8张静帧；B05其它两world尚未root查看，不签全批。",
+    "split第4站QA导航失败已另交只读调查；视觉拒绝与该导航错误独立。原输入、视频、错误和前3站帧保留。",
+    "无全角度/完整动态/人审/声音/完整生成与实际过程通过声明。"
+  ]
+}

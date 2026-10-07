@@ -1,0 +1,1586 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b05-split-refined/body3-routes/report.json",
+    "cameraInputSha256": "a7ba600199d89004ba2ac034dd4aa97920e86b043b1be5396deeb62461f40635",
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sourceManifestSha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b",
+    "scope": "Repaired split-fall same four goals, original requested seed and actual WASD. Outer objects now blunt/short broken bodies; only two central forks retained. Actual requested/effective identity and facing required. Old rejection/failing QA route preserved. Low/severe follow-up after author/root medium review; no full-run qualification.",
+    "cases": [
+      {
+        "world": "split-fall",
+        "grade": "low",
+        "goals": [
+          {
+            "label": "01-south-fragments",
+            "x": 415,
+            "y": 636,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 412,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 577
+            }
+          },
+          {
+            "label": "02-west-dense-band",
+            "x": 404,
+            "y": 472,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 404,
+              "y": 468
+            },
+            "lookAtMaterialPoint": {
+              "x": 343,
+              "y": 347
+            }
+          },
+          {
+            "label": "03-middle-crossing",
+            "x": 574,
+            "y": 492,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 507,
+              "y": 554
+            }
+          },
+          {
+            "label": "04-east-facing-fall",
+            "x": 582,
+            "y": 338,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 340
+            },
+            "lookAtMaterialPoint": {
+              "x": 667,
+              "y": 357
+            }
+          }
+        ]
+      },
+      {
+        "world": "split-fall",
+        "grade": "severe",
+        "goals": [
+          {
+            "label": "01-south-fragments",
+            "x": 415,
+            "y": 636,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 412,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 577
+            }
+          },
+          {
+            "label": "02-west-dense-band",
+            "x": 404,
+            "y": 472,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 404,
+              "y": 468
+            },
+            "lookAtMaterialPoint": {
+              "x": 343,
+              "y": 347
+            }
+          },
+          {
+            "label": "03-middle-crossing",
+            "x": 574,
+            "y": 492,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 507,
+              "y": 554
+            }
+          },
+          {
+            "label": "04-east-facing-fall",
+            "x": 582,
+            "y": 338,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 340
+            },
+            "lookAtMaterialPoint": {
+              "x": 667,
+              "y": 357
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "split-fall",
+      "grade": "low",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-fragments",
+            "x": 415,
+            "y": 636,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 412,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 577
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-fragments",
+              "x": 415,
+              "y": 636,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 412,
+                "y": 636
+              },
+              "lookAtMaterialPoint": {
+                "x": 338,
+                "y": 577
+              }
+            },
+            "actual": {
+              "x": 412,
+              "y": 636
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 236,
+                "y": 588
+              },
+              {
+                "x": 236,
+                "y": 628
+              },
+              {
+                "x": 252,
+                "y": 628
+              },
+              {
+                "x": 252,
+                "y": 636
+              },
+              {
+                "x": 260,
+                "y": 636
+              },
+              {
+                "x": 260,
+                "y": 644
+              },
+              {
+                "x": 268,
+                "y": 644
+              },
+              {
+                "x": 268,
+                "y": 652
+              },
+              {
+                "x": 276,
+                "y": 652
+              },
+              {
+                "x": 276,
+                "y": 660
+              },
+              {
+                "x": 412,
+                "y": 660
+              },
+              {
+                "x": 412,
+                "y": 636
+              }
+            ],
+            "length": 312,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-low/01-south-fragments-west.png",
+              "sha256": "d8e680a74b13e724cf449c75cc78bacc2fb30007b1ab49ed927289e0ab9d86cc",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 401.66077246496656,
+                  "y": 631.7029305805578
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 16.19127196799998,
+                "elapsedMs": 6366.400000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 401.66077246496656,
+                  "y": 631.7029305805578
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 16.21339259999998,
+                "elapsedMs": 6483.099999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-low/01-south-fragments-north.png",
+              "sha256": "2de94455513908c4d8af8db09dce5a38430c3e069aa9493a09c51bae7373aef2",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5710476542071827,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 401.66077246496656,
+                  "y": 624.2580639138912
+                },
+                "facingAngle": -1.5710476542071827,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.26710817599998,
+                "elapsedMs": 6766.400000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 401.66077246496656,
+                  "y": 624.2580639138912
+                },
+                "facingAngle": -1.5710476542071827,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.28922501599998,
+                "elapsedMs": 6883.000000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-west-dense-band",
+            "x": 404,
+            "y": 472,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 404,
+              "y": 468
+            },
+            "lookAtMaterialPoint": {
+              "x": 343,
+              "y": 347
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-west-dense-band",
+              "x": 404,
+              "y": 472,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 404,
+                "y": 468
+              },
+              "lookAtMaterialPoint": {
+                "x": 343,
+                "y": 347
+              }
+            },
+            "actual": {
+              "x": 404,
+              "y": 476
+            },
+            "points": [
+              {
+                "x": 404,
+                "y": 628
+              },
+              {
+                "x": 420,
+                "y": 628
+              },
+              {
+                "x": 420,
+                "y": 564
+              },
+              {
+                "x": 428,
+                "y": 564
+              },
+              {
+                "x": 428,
+                "y": 540
+              },
+              {
+                "x": 436,
+                "y": 540
+              },
+              {
+                "x": 436,
+                "y": 500
+              },
+              {
+                "x": 404,
+                "y": 500
+              },
+              {
+                "x": 404,
+                "y": 476
+              }
+            ],
+            "length": 216,
+            "originConnector": {
+              "origin": {
+                "x": 401.66077246496656,
+                "y": 624.2580639138912
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 10034,
+                "x": 404,
+                "y": 628,
+                "distance": 4.412943590527977
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-low/02-west-dense-band-north.png",
+              "sha256": "2317212f3ea8fb8fb741feeb38ab44f3ff68f45f1025e843c438a8d6131a28e3",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 405.1238318908372,
+                  "y": 471.8411615617581
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.161352783999963,
+                "elapsedMs": 11482.900000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 405.1238318908372,
+                  "y": 471.8411615617581
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.18030709599996,
+                "elapsedMs": 11582.8
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-middle-crossing",
+            "x": 574,
+            "y": 492,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 507,
+              "y": 554
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-middle-crossing",
+              "x": 574,
+              "y": 492,
+              "faces": [
+                "west",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 580,
+                "y": 492
+              },
+              "lookAtMaterialPoint": {
+                "x": 507,
+                "y": 554
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 484
+            },
+            "points": [
+              {
+                "x": 404,
+                "y": 468
+              },
+              {
+                "x": 244,
+                "y": 468
+              },
+              {
+                "x": 244,
+                "y": 292
+              },
+              {
+                "x": 252,
+                "y": 292
+              },
+              {
+                "x": 252,
+                "y": 276
+              },
+              {
+                "x": 260,
+                "y": 276
+              },
+              {
+                "x": 260,
+                "y": 260
+              },
+              {
+                "x": 268,
+                "y": 260
+              },
+              {
+                "x": 268,
+                "y": 244
+              },
+              {
+                "x": 556,
+                "y": 244
+              },
+              {
+                "x": 556,
+                "y": 388
+              },
+              {
+                "x": 564,
+                "y": 388
+              },
+              {
+                "x": 564,
+                "y": 404
+              },
+              {
+                "x": 572,
+                "y": 404
+              },
+              {
+                "x": 572,
+                "y": 484
+              }
+            ],
+            "length": 952,
+            "originConnector": {
+              "origin": {
+                "x": 405.1238318908372,
+                "y": 471.8411615617581
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7474,
+                "x": 404,
+                "y": 468,
+                "distance": 4.002189433596398
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-low/03-middle-crossing-west.png",
+              "sha256": "4d68e6ec87fc616978ae5441b64c0506f83fb8cbfff3f5cd90d42005084e9040",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.2610047336469,
+                  "y": 487.42905579861264
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 20.934713855999956,
+                "elapsedMs": 28132.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.2610047336469,
+                  "y": 487.42905579861264
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 20.953677647999957,
+                "elapsedMs": 28232.2
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-low/03-middle-crossing-south.png",
+              "sha256": "54d5869b338a95ada315414fd5bbdb11320e20ec55ef35b254a75140e21fad21",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5708591586479694,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 567.1026062343273,
+                  "y": 488.23044783971386
+                },
+                "facingAngle": 1.5708591586479694,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.007395119999956,
+                "elapsedMs": 28515.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 567.1026062343273,
+                  "y": 488.23044783971386
+                },
+                "facingAngle": 1.5708591586479694,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.026353223999955,
+                "elapsedMs": 28615.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-east-facing-fall",
+            "x": 582,
+            "y": 338,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 340
+            },
+            "lookAtMaterialPoint": {
+              "x": 667,
+              "y": 357
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-east-facing-fall",
+              "x": 582,
+              "y": 338,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 580,
+                "y": 340
+              },
+              "lookAtMaterialPoint": {
+                "x": 667,
+                "y": 357
+              }
+            },
+            "actual": {
+              "x": 580,
+              "y": 332
+            },
+            "points": [
+              {
+                "x": 572,
+                "y": 484
+              },
+              {
+                "x": 572,
+                "y": 420
+              },
+              {
+                "x": 564,
+                "y": 420
+              },
+              {
+                "x": 564,
+                "y": 404
+              },
+              {
+                "x": 556,
+                "y": 404
+              },
+              {
+                "x": 556,
+                "y": 340
+              },
+              {
+                "x": 572,
+                "y": 340
+              },
+              {
+                "x": 572,
+                "y": 332
+              },
+              {
+                "x": 580,
+                "y": 332
+              }
+            ],
+            "length": 192,
+            "originConnector": {
+              "origin": {
+                "x": 567.1026062343273,
+                "y": 488.23044783971386
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7751,
+                "x": 572,
+                "y": 484,
+                "distance": 6.471565082774796
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-low/04-east-facing-fall-east.png",
+              "sha256": "d83fc1c6f9bcf215d239b2cd5e0eb68eb80200f05b430594f4c1c5d72b94716c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 579.941624756978,
+                  "y": 330.0586565578383
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.77839972799994,
+                "elapsedMs": 32581.999999999996
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 579.941624756978,
+                  "y": 330.0586565578383
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.79736162399994,
+                "elapsedMs": 32682.100000000002
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "split-fall",
+        "grade": "low",
+        "package": {
+          "id": "r100-split-fall",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "83fab2f1",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3112/r100-gym.html?world=split-fall&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-low/recipe.json",
+        "sha256": "156f5242cd02f9e4f913f963f66983da695b1c0fcb522d8c37a2d75e2bf733ae"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 579.941624756978,
+          "y": 330.0586565578383
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 21.79736162399994,
+        "elapsedMs": 32682.100000000002
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 579.941624756978,
+          "y": 330.0586565578383
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 22.024874039999965,
+        "elapsedMs": 33882
+      }
+    },
+    {
+      "world": "split-fall",
+      "grade": "severe",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-fragments",
+            "x": 415,
+            "y": 636,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 412,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 577
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-fragments",
+              "x": 415,
+              "y": 636,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 412,
+                "y": 636
+              },
+              "lookAtMaterialPoint": {
+                "x": 338,
+                "y": 577
+              }
+            },
+            "actual": {
+              "x": 412,
+              "y": 636
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 236,
+                "y": 588
+              },
+              {
+                "x": 236,
+                "y": 628
+              },
+              {
+                "x": 252,
+                "y": 628
+              },
+              {
+                "x": 252,
+                "y": 636
+              },
+              {
+                "x": 260,
+                "y": 636
+              },
+              {
+                "x": 260,
+                "y": 644
+              },
+              {
+                "x": 268,
+                "y": 644
+              },
+              {
+                "x": 268,
+                "y": 652
+              },
+              {
+                "x": 276,
+                "y": 652
+              },
+              {
+                "x": 276,
+                "y": 660
+              },
+              {
+                "x": 412,
+                "y": 660
+              },
+              {
+                "x": 412,
+                "y": 636
+              }
+            ],
+            "length": 312,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-severe/01-south-fragments-west.png",
+              "sha256": "10154a2f17906c13cf3731893c2fbb93a8139e90eeae7afc6519c87c4e992041",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 401.74132565616674,
+                  "y": 631.9076118401854
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.38738854399985,
+                "elapsedMs": 6783.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 401.74132565616674,
+                  "y": 631.9076118401854
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.446376895999848,
+                "elapsedMs": 6899.8
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-severe/01-south-fragments-north.png",
+              "sha256": "ee112faa1758507c1e2f53646e08b69bfa6636a054522cd32ce3d11659fafa87",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5708591586479694,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 401.74132565616674,
+                  "y": 624.463678506852
+                },
+                "facingAngle": -1.5708591586479694,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.589618431999845,
+                "elapsedMs": 7183.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 401.74132565616674,
+                  "y": 624.463678506852
+                },
+                "facingAngle": -1.5708591586479694,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.640173375999844,
+                "elapsedMs": 7283.099999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-west-dense-band",
+            "x": 404,
+            "y": 472,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 404,
+              "y": 468
+            },
+            "lookAtMaterialPoint": {
+              "x": 343,
+              "y": 347
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-west-dense-band",
+              "x": 404,
+              "y": 472,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 404,
+                "y": 468
+              },
+              "lookAtMaterialPoint": {
+                "x": 343,
+                "y": 347
+              }
+            },
+            "actual": {
+              "x": 404,
+              "y": 476
+            },
+            "points": [
+              {
+                "x": 404,
+                "y": 628
+              },
+              {
+                "x": 420,
+                "y": 628
+              },
+              {
+                "x": 420,
+                "y": 564
+              },
+              {
+                "x": 428,
+                "y": 564
+              },
+              {
+                "x": 428,
+                "y": 540
+              },
+              {
+                "x": 436,
+                "y": 540
+              },
+              {
+                "x": 436,
+                "y": 500
+              },
+              {
+                "x": 404,
+                "y": 500
+              },
+              {
+                "x": 404,
+                "y": 476
+              }
+            ],
+            "length": 216,
+            "originConnector": {
+              "origin": {
+                "x": 401.74132565616674,
+                "y": 624.463678506852
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 10034,
+                "x": 404,
+                "y": 628,
+                "distance": 4.196090977849608
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-severe/02-west-dense-band-north.png",
+              "sha256": "742762231c9b57721f8a99a418183330ff139474859e8a404a86f317cf1aa9b7",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 403.1127927271715,
+                  "y": 472.5904129404662
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.89843577599975,
+                "elapsedMs": 11749.599999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 403.1127927271715,
+                  "y": 472.5904129404662
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.949000831999747,
+                "elapsedMs": 11849.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-middle-crossing",
+            "x": 574,
+            "y": 492,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 507,
+              "y": 554
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-middle-crossing",
+              "x": 574,
+              "y": 492,
+              "faces": [
+                "west",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 580,
+                "y": 492
+              },
+              "lookAtMaterialPoint": {
+                "x": 507,
+                "y": 554
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 484
+            },
+            "points": [
+              {
+                "x": 404,
+                "y": 476
+              },
+              {
+                "x": 244,
+                "y": 476
+              },
+              {
+                "x": 244,
+                "y": 292
+              },
+              {
+                "x": 252,
+                "y": 292
+              },
+              {
+                "x": 252,
+                "y": 276
+              },
+              {
+                "x": 260,
+                "y": 276
+              },
+              {
+                "x": 260,
+                "y": 260
+              },
+              {
+                "x": 268,
+                "y": 260
+              },
+              {
+                "x": 268,
+                "y": 244
+              },
+              {
+                "x": 556,
+                "y": 244
+              },
+              {
+                "x": 556,
+                "y": 388
+              },
+              {
+                "x": 564,
+                "y": 388
+              },
+              {
+                "x": 564,
+                "y": 404
+              },
+              {
+                "x": 572,
+                "y": 404
+              },
+              {
+                "x": 572,
+                "y": 484
+              }
+            ],
+            "length": 960,
+            "originConnector": {
+              "origin": {
+                "x": 403.1127927271715,
+                "y": 472.5904129404662
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7602,
+                "x": 404,
+                "y": 476,
+                "distance": 3.52312654633639
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-severe/03-middle-crossing-west.png",
+              "sha256": "fa458d0f8bb42817257490e251c21ed4eba26c286e94293139a40d14a35f52e7",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 565.58246842805,
+                  "y": 485.70014103187134
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 35.0719754879994,
+                "elapsedMs": 27915.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 565.58246842805,
+                  "y": 485.70014103187134
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 35.1225253759994,
+                "elapsedMs": 28015.6
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-severe/03-middle-crossing-south.png",
+              "sha256": "476c47a262ca05cbaa3348dea842678a1b74f40e8eda1a3e59cd9413b30ed12f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.2146647155771,
+                  "y": 487.95988326918626
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 35.274205375999394,
+                "elapsedMs": 28315.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.2146647155771,
+                  "y": 487.95988326918626
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 35.33319878399938,
+                "elapsedMs": 28432.3
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-east-facing-fall",
+            "x": 582,
+            "y": 338,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 340
+            },
+            "lookAtMaterialPoint": {
+              "x": 667,
+              "y": 357
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-east-facing-fall",
+              "x": 582,
+              "y": 338,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 580,
+                "y": 340
+              },
+              "lookAtMaterialPoint": {
+                "x": 667,
+                "y": 357
+              }
+            },
+            "actual": {
+              "x": 580,
+              "y": 332
+            },
+            "points": [
+              {
+                "x": 572,
+                "y": 484
+              },
+              {
+                "x": 572,
+                "y": 420
+              },
+              {
+                "x": 564,
+                "y": 420
+              },
+              {
+                "x": 564,
+                "y": 404
+              },
+              {
+                "x": 556,
+                "y": 404
+              },
+              {
+                "x": 556,
+                "y": 340
+              },
+              {
+                "x": 572,
+                "y": 340
+              },
+              {
+                "x": 572,
+                "y": 332
+              },
+              {
+                "x": 580,
+                "y": 332
+              }
+            ],
+            "length": 192,
+            "originConnector": {
+              "origin": {
+                "x": 566.2146647155771,
+                "y": 487.95988326918626
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7751,
+                "x": 572,
+                "y": 484,
+                "distance": 7.010761717443397
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-severe/04-east-facing-fall-east.png",
+              "sha256": "ce1b1a1086f257136281770951fedde26f4fd886e9a78f4f0f4f0140564cdace",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 589.137588070893,
+                  "y": 333.65315207711933
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 42.1081802879992,
+                "elapsedMs": 33115.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 589.137588070893,
+                  "y": 333.65315207711933
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 42.1924334719992,
+                "elapsedMs": 33198.700000000004
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "split-fall",
+        "grade": "severe",
+        "package": {
+          "id": "r100-split-fall",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "8bbe3f76",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3112/r100-gym.html?world=split-fall&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades/split-fall-severe/recipe.json",
+        "sha256": "922fbb666334946ba5044932653f56e6b7f7faddf60b1c3c0050f0b41b526ca5"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 589.137588070893,
+          "y": 333.65315207711933
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 100,
+        "chaos": 42.1924334719992,
+        "elapsedMs": 33198.700000000004
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 589.137588070893,
+          "y": 333.65315207711933
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 85,
+        "chaos": 46.4227301759992,
+        "elapsedMs": 34415.4
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

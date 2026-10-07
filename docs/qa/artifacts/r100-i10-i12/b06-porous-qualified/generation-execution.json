@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "pid": 67738,
+  "startedAt": "2026-10-07T05:50:10.765Z",
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/run-generation.mjs",
+    "sha256": "29c42441e4729c66231e44fc11cd1f561515ea9c8e640a0ee13155f9f826b5ac"
+  },
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/commands.json",
+    "sha256": "70274105e5c40c8fabff30aab5c0ef9ca559f8bc15bb167aec1a6a97f1e992ea"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "worlds": [
+    "marrow-break",
+    "pore-bank"
+  ],
+  "wholeBatchReady": false,
+  "stages": [
+    {
+      "stage": "full",
+      "cases": 240,
+      "exitCode": 0,
+      "signal": null,
+      "elapsedSeconds": 115.194,
+      "log": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-full.log",
+      "logSha256": "674874512ba3ca93ea43f30761b4800b08076666cd6ccf5eb826d5484d851533"
+    },
+    {
+      "stage": "holdout",
+      "cases": 48,
+      "exitCode": 0,
+      "signal": null,
+      "elapsedSeconds": 26.433,
+      "log": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-holdout.log",
+      "logSha256": "3a4e92433eef0f6733f42ef797e216e75398d73be431a94c49a9cf05e9537d7a"
+    }
+  ],
+  "finishedAt": "2026-10-07T05:52:32.934Z"
+}

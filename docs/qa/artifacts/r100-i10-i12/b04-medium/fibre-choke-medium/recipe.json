@@ -1,0 +1,289 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "fibre-choke",
+    "label": "纤束夹口",
+    "description": "纤束夹口的原生材料与完整搜撤地段",
+    "material": "crystal",
+    "surface": {
+      "substrate": "crystal",
+      "coating": "crystal",
+      "organization": "clusters",
+      "coverage": 0.66,
+      "wear": 0.43,
+      "deposits": 0.42,
+      "scale": 0.95,
+      "relief": 0.58,
+      "contrast": 0.85,
+      "regionScale": 1.1,
+      "quietness": 0.5,
+      "formScale": 1.5,
+      "fragmentation": 0.32,
+      "accentCoverage": 0.18
+    },
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 2106427,
+      "floor": 5395567,
+      "floorLight": 9869748,
+      "materialDark": 2505038,
+      "materialMid": 5405595,
+      "materialLight": 10665684,
+      "faceLight": 14146788,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 5395567,
+      "groundLight": 9869748,
+      "groundDark": 2106427,
+      "wall": 5405595,
+      "wallLight": 10665684,
+      "wallDark": 2505038
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "fibre-choke",
+    "ground": {
+      "dark": 2106427,
+      "mid": 5395567,
+      "light": 9869748
+    },
+    "solid": {
+      "dark": 2505038,
+      "mid": 5405595,
+      "light": 10665684
+    },
+    "cleaved": {
+      "dark": 5462374,
+      "mid": 10923450,
+      "light": 14146788
+    },
+    "secondary": {
+      "dark": 5387075,
+      "mid": 10841480,
+      "light": 13936826
+    },
+    "groundPattern": "veins",
+    "patternScale": 224,
+    "patternStrength": 0.43,
+    "secondaryCoverage": 0.18,
+    "textureContrast": 1.13,
+    "quietCoverage": 0.56
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "fibre-choke-medium",
+    "family": "fibre-knot",
+    "grade": "medium",
+    "label": "纤束夹口",
+    "profile": "fibre-choke",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.42,
+    "light_radius": 136,
+    "emission": 0.55,
+    "motion_period": 18,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 447,
+        "y": 313,
+        "rotation": 1.3,
+        "length": 235,
+        "width": 92,
+        "height": 46,
+        "thickness": 12,
+        "fold": 0.63,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 2,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 718,
+        "y": 404,
+        "rotation": 1.25,
+        "length": 220,
+        "width": 96,
+        "height": 42,
+        "thickness": 11,
+        "fold": 0.52,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 3,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 454,
+        "y": 249,
+        "rotation": 0.1,
+        "length": 175,
+        "width": 94,
+        "height": 54,
+        "thickness": 13,
+        "fold": 0.58,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 4,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 520,
+        "y": 391,
+        "rotation": 0.28,
+        "length": 180,
+        "width": 100,
+        "height": 49,
+        "thickness": 12,
+        "fold": 0.68,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 5,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 739,
+        "y": 508,
+        "rotation": -0.3,
+        "length": 175,
+        "width": 94,
+        "height": 37,
+        "thickness": 10,
+        "fold": 0.46,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "package": {
+    "id": "r100-fibre-choke",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "broken-shell": {
+        "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+        "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+        "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+      },
+      "fibre-knot": {
+        "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+        "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+        "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+      }
+    },
+    "dependencyHash": "39db6de0",
+    "grade": "medium"
+  }
+}

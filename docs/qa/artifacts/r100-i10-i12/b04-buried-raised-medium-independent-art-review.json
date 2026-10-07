@@ -1,0 +1,38 @@
+{
+  "status": "bounded-medium-art-pass",
+  "reviewer": "root",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+    "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d"
+  },
+  "reviewedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-medium/buried-lamellae-medium/01-high-end-north.png",
+      "sha256": "561c691b0239a16c003faa25b99f3f1e4b88744195d892695bbbd5fde1b0b069"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-medium/buried-lamellae-medium/02-south-raised-contact-north.png",
+      "sha256": "fdafb99e828412212e9693601d2a6f148bcb6e9c1798e8e9bb22ea9cccb81753"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-medium/buried-lamellae-medium/02-south-raised-contact-east.png",
+      "sha256": "4ace5a497a932911a663c680ada7231fb6b69fe60230fb0c7f8ab6bc37d45094"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-medium/buried-lamellae-medium/03-low-tail-south-north.png",
+      "sha256": "187411c7d02619272d4f3c31e766827294acce910d7440b1a114d2f8255d88f1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-medium/buried-lamellae-medium/03-low-tail-south-west.png",
+      "sha256": "fbb1dd276ab53ac2d9b3ed43b7f916de96d8c4a0afe2a1dc47107890f68eaab2"
+    }
+  ],
+  "findings": [
+    "24px颗粒堆体已有受光坡面和脚边，短蓝层片在近头与末尾被真实颗粒几何盖住，中档不再读成长贴条或两张薄纸。",
+    "新南侧站位位于实体之外，与真实新增碰撞及绕行一致；不继承旧站可以站在颗粒层内部的结论。"
+  ],
+  "limitations": [
+    "仅列明正常中档静帧，不代替低重图、全角度、动态、实际搜撤、全种子、人审或声音。",
+    "后续必须按原冻结源补低重；之前全部拒绝、QA工具失败和真实受伤原报告保留。"
+  ]
+}

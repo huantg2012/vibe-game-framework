@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-not-ready",
+  "batch": "B05",
+  "worlds": [
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash"
+  ],
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+    "sha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/preparation/qualification-412085c85194.mjs",
+    "sha256": "412085c851947650a35a749b66faf994a48f55ddffe60a63cf1c51acf871791d"
+  },
+  "executionPlan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/execution-plan.json",
+  "readinessGate": "Root normal-view approval must be recorded first. Create a separate exact execution copy with only this batch status ready, then validateExpansionExecutionPlan before any command.",
+  "generation": [
+    {
+      "cases": 480,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/preparation/qualification-412085c85194.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/preparation/qualification-412085c85194.mjs",
+        "--worlds",
+        "quiet-spur,split-fall,three-shelves,frayed-outwash",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 96,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/preparation/qualification-412085c85194.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/preparation/qualification-412085c85194.mjs",
+        "--worlds",
+        "quiet-spur,split-fall,three-shelves,frayed-outwash",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "play": {
+    "cases": 24,
+    "command": "/usr/local/bin/node",
+    "args": [
+      "tools/qa/r100-i07-i09-coverage.mjs"
+    ],
+    "env": {
+      "GAME_URL": "http://127.0.0.1:3108/",
+      "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+      "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/execution-plan.json",
+      "QA_BATCH_ID": "B05",
+      "QA_WORLDS": "quiet-spur,split-fall,three-shelves,frayed-outwash",
+      "QA_GRADES": "low,medium,severe",
+      "QA_SEEDS": "20261005,3075192741",
+      "QA_CONCURRENCY": "1",
+      "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+      "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-qualified/play"
+    }
+  },
+  "resources": "At most one CPU worker during one browser; performance requires exclusive CPU/browser. No command has run.",
+  "tool": {
+    "path": "tools/qa/prepare-r100-expansion-batch.mjs",
+    "sha256": "52584ea3a6bb8abbadbd261ee4c69922f3bf169415f509114f11270e5b7060ba"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "status": "partial-reject",
+  "reviewer": "root",
+  "date": "2026-10-07",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/report.json",
+    "sha256": "13b7f768b8d72e3bc68d3388960dfe7da93b9053f9f11b60c64c26d91de12b58"
+  },
+  "reviewedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/01-west-thick-shoulder-north.png",
+      "sha256": "91b87702b0eb0c81ebf75a49dcf9f9fab8fc355cdb4ed46b346c4e8c4e1765af"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/03-low-pressed-bed-north.png",
+      "sha256": "37acc88e7fe34642ef7abea9e327d78d4bad8403866b6b9ec1eedc0e4bc1de83"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/01-exposed-head-joint-north.png",
+      "sha256": "0b7a526f9dda75e7b8d7b4229538711f37f2bb6bdbe66378bc25145194f76df3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/02-east-thick-head-west.png",
+      "sha256": "0051580b1dfce0c89b08206b6237cff21dacab0327c34b8f417e9604518b4a67"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/02-east-inner-cut-east.png",
+      "sha256": "625b2a7915dcd127c9c352f0b562c3f4a540e3dce50ba25e0388f31d76f25ca6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/pore-bank-medium/02-south-porous-cut-north.png",
+      "sha256": "53ae8f7a1b9fc1555c4ab027e74a19101d8a506c916bcf2c1ba6e10865b7362c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/02-north-torn-end-south.png",
+      "sha256": "f213c26f55409c8e04e2653e58c8f899fec29b5599dcb4557028311ac77884c9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/04-southeast-low-tail-south.png",
+      "sha256": "296406b5b11b6b033758eae489a8c10022a8b0edcc31610fa1a57bb32b4d913a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/03-west-outer-cut-east.png",
+      "sha256": "d22b227bc47fcd9d3efd17250d44eb5bbc443c759fe7af9daf269d1dd3a4cdbb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/04-north-quiet-bed-west.png",
+      "sha256": "3d7b2fa96ef45c6d0cdc3291cf06f746a0d4ab0fa3bc1853e0c7f03a33da87ba"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/03-west-inner-cut-west.png",
+      "sha256": "c1736b47dab2b33e93ea690dc9a861dc7a2c09e0aabe9f290b6ef48639c473cb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/pore-bank-medium/03-low-connection-north.png",
+      "sha256": "cbeacdebbde69a9f446c05f457385f570eeccbb1cd6868dc2382b8bb734478be"
+    }
+  ],
+  "rejectedWorlds": [
+    "short-fibre-mat",
+    "felt-wedges"
+  ],
+  "allowedNextLowSevere": [
+    "marrow-break",
+    "pore-bank"
+  ],
+  "findings": [
+    "Short-fibre-mat thick shoulder, torn end and low bed are dominated by granular/cloudlike mottling. At normal player scale they read as stone-like shells rather than compressed short fibres. Felt-wedges blue thick skin has the same material-identity defect. More random bright specks would not solve it.",
+    "Keep volume, floor support, existing body routes and local material contacts; revise only the explicit new short-fibre material organisation: legible grouped short strands, directional compression/bends and broken fibre ends, using actual surface light rather than decal glows.",
+    "Marrow-break east and west inner cuts show bounded shallow pore depressions with visible floor and thick intact reddish skin. Pore-bank cut shows a pale porous inner mass and a continuous purple outer skin, then low nonblocking return layer. These medium samples may enter low/severe review.",
+    "The exposed felt joint and solid boundary are visible from the inspected side, but material rejection keeps full-world art acceptance open."
+  ],
+  "limitations": [
+    "12 original finite lamp frames viewed; not every angle, complete dynamic material approval or severe pressure.",
+    "B06 body12 and static material contracts remain engineering evidence; neither overrides failed normal-view material identity.",
+    "Original3111 images and failed approval are retained. A shared new-organisation edit must prove old materials unchanged and bind affected later world sources again."
+  ]
+}

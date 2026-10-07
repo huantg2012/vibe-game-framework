@@ -1,0 +1,271 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "pressed-rim",
+    "label": "挤脂壳缘",
+    "description": "挤脂壳缘的原生材料与完整搜撤地段",
+    "material": "gel",
+    "surface": {
+      "substrate": "gel",
+      "coating": "gel",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 3090489,
+      "floor": 6904174,
+      "floorLight": 11178666,
+      "materialDark": 1452095,
+      "materialMid": 3758475,
+      "materialLight": 9284299,
+      "faceLight": 14667741,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 6904174,
+      "groundLight": 11178666,
+      "groundDark": 3090489,
+      "wall": 3758475,
+      "wallLight": 9284299,
+      "wallDark": 1452095
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "pressed-rim",
+    "ground": {
+      "dark": 3090489,
+      "mid": 6904174,
+      "light": 11178666
+    },
+    "solid": {
+      "dark": 1452095,
+      "mid": 3758475,
+      "light": 9284299
+    },
+    "cleaved": {
+      "dark": 6574688,
+      "mid": 12098223,
+      "light": 14667741
+    },
+    "secondary": {
+      "dark": 5064514,
+      "mid": 10128509,
+      "light": 13550000
+    },
+    "groundPattern": "flow",
+    "patternScale": 236,
+    "patternStrength": 0.46,
+    "secondaryCoverage": 0.18,
+    "textureContrast": 1.14,
+    "quietCoverage": 0.59
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "pressed-rim-low",
+    "family": "gel-flow",
+    "grade": "low",
+    "label": "挤脂壳缘",
+    "profile": "pressed-rim",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 22,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 510,
+        "y": 359,
+        "rotation": -0.08,
+        "length": 260,
+        "width": 210,
+        "height": 62,
+        "thickness": 14,
+        "fold": 0.5984,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 2,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 594,
+        "y": 322,
+        "rotation": 1.2,
+        "length": 195,
+        "width": 88,
+        "height": 43,
+        "thickness": 12,
+        "fold": 0.5104,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 3,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 384,
+        "y": 477,
+        "rotation": -0.65,
+        "length": 300,
+        "width": 150,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.5632,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 4,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 650,
+        "y": 488,
+        "rotation": 0.45,
+        "length": 350,
+        "width": 180,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.31679999999999997,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "package": {
+    "id": "r100-pressed-rim",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "broken-shell": {
+        "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+        "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+        "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+      },
+      "gel-flow": {
+        "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+        "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+        "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+      }
+    },
+    "dependencyHash": "cb0ed262",
+    "grade": "low"
+  }
+}

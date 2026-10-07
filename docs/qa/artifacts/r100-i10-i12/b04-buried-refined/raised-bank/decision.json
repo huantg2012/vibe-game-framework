@@ -1,0 +1,170 @@
+{
+  "status": "redesigned-awaiting-author-and-normal",
+  "reason": "3109小露片仍读成地面贴纸，停止缩面重试；改为真实颗粒堆体掩埋短蓝片，材质交接由高低遮蔽表达。",
+  "before": {
+    "world_id": "buried-lamellae",
+    "label": "埋片砂床",
+    "iteration": "10",
+    "enabled": "false",
+    "family": "folded-slab",
+    "base_profile": "ash-strata",
+    "organization": "bands",
+    "construction_version": "4",
+    "instances": "folded-slab:solid:365:299:0.4:240:120:46:12:0.6:3:0.7:0.25|folded-slab:relief:470:366:0.4:136:75:5:2:0.42:3:0.7:0.25|folded-slab:relief:630:441:0.25:126:68:3:1:0.28:3:0.7:0.25|granular-ridge:relief:558:413:0.46:316:170:6:2:0.35:3:0.7:0.25",
+    "shape_profiles": "fracture-fan|fracture-fan|fracture-fan|fallen-bundle",
+    "erosion_polygons": "850:32;935:48;946:96;881:112",
+    "ground_edge_width": ""
+  },
+  "after": {
+    "world_id": "buried-lamellae",
+    "label": "埋片砂床",
+    "iteration": "10",
+    "enabled": "false",
+    "family": "folded-slab",
+    "base_profile": "ash-strata",
+    "organization": "bands",
+    "construction_version": "4",
+    "instances": "folded-slab:solid:365:299:0.4:240:120:46:12:0.6:3:0.7:0.25|folded-slab:relief:470:366:0.4:136:75:5:2:0.42:3:0.7:0.25|folded-slab:relief:630:441:0.25:126:68:3:1:0.28:3:0.7:0.25|granular-ridge:solid:558:413:0.46:316:170:24:6:0.35:3:0.7:0.25",
+    "shape_profiles": "fracture-fan|fracture-fan|fracture-fan|fallen-bundle",
+    "erosion_polygons": "850:32;935:48;946:96;881:112",
+    "ground_edge_width": ""
+  },
+  "beforeIntent": {
+    "batch": "b04",
+    "routes": [
+      {
+        "name": "exposed-end-to-buried-bed",
+        "points": [
+          [
+            296,
+            440
+          ],
+          [
+            493,
+            441
+          ],
+          [
+            642,
+            502
+          ],
+          [
+            816,
+            540
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "high-end-outer",
+        "points": [
+          [
+            265,
+            402
+          ],
+          [
+            247,
+            202
+          ],
+          [
+            487,
+            220
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        2,
+        3,
+        4
+      ],
+      "nearest": "grain-laminate",
+      "difference": [
+        "一个阻挡高端逐步变成两片可走低肩",
+        "颗粒只在一侧堆积并覆盖埋片端，不是两材平行摆放"
+      ]
+    }
+  },
+  "afterIntent": {
+    "batch": "b04",
+    "routes": [
+      {
+        "name": "exposed-end-to-buried-bed",
+        "points": [
+          [
+            296,
+            440
+          ],
+          [
+            493,
+            495
+          ],
+          [
+            652,
+            551
+          ],
+          [
+            816,
+            540
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "high-end-outer",
+        "points": [
+          [
+            265,
+            402
+          ],
+          [
+            247,
+            202
+          ],
+          [
+            487,
+            220
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        2,
+        3
+      ],
+      "nearest": "grain-laminate",
+      "difference": [
+        "高层片旁的真实24px颗粒堆压住两段薄片，中部不可穿过；露出的片尾仍低平可踩",
+        "从高端沿堆体南侧绕到埋片尾部，与颗粒/层片平行带的组织不同"
+      ]
+    }
+  },
+  "collisionChange": "颗粒4由6px relief转24px solid；会挡角色，路线绕南肩。低片2/3仍relief，不能把明亮露片当障碍。",
+  "oldNativeSha256": "e5e882dc3ee07e414d43784f612ac211c1f8717682c445372f63bc5a6f206e02",
+  "newNativeSha256": "11510ed10b36a8147be03b2b83c85a397bd5cf922c661c49326c676f9eee7328",
+  "other75Exact": true,
+  "limitations": "Only this unenabled world author redesign. Original3107/3109 rejected images and route records retained. No qualification inherited for changed body geometry."
+}

@@ -1,0 +1,950 @@
+{
+  "status": "read-only-proposal-awaiting-root-decision",
+  "scope": "源/作者/原正常图只读诊断；未改src/data，未生成地图或浏览器图。",
+  "worlds": [
+    {
+      "world": "blue-fault",
+      "currentCsvRow": {
+        "world_id": "blue-fault",
+        "label": "蓝层斜断",
+        "iteration": "11",
+        "enabled": "false",
+        "family": "folded-slab",
+        "base_profile": "ash-strata",
+        "organization": "bands",
+        "construction_version": "4",
+        "instances": "folded-slab:relief:425:463:-0.55:591:350:4:2:0.4:3:0.7:0.25|folded-slab:relief:729:287:-0.47:324:257:5:2:0.35:3:0.7:0.25|folded-slab:solid:420:276:-0.62:197:102:48:11:0.64:3:0.7:0.25|folded-slab:solid:724:426:-0.62:182:105:57:13:0.56:3:0.7:0.25",
+        "shape_profiles": "fracture-fan|fracture-fan|fracture-fan|fracture-fan",
+        "erosion_polygons": "503:180;544:172;697:505;661:535;614:474;570:383;532:275",
+        "ground_edge_width": "8"
+      },
+      "currentInstances": [
+        {
+          "id": 1,
+          "family": "folded-slab",
+          "role": "relief",
+          "x": 425,
+          "y": 463,
+          "rotation": -0.55,
+          "length": 591,
+          "width": 350,
+          "height": 4,
+          "thickness": 2,
+          "fold": 0.4,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "fracture-fan",
+          "groundEdgeWidth": 8,
+          "blocking": 0
+        },
+        {
+          "id": 2,
+          "family": "folded-slab",
+          "role": "relief",
+          "x": 729,
+          "y": 287,
+          "rotation": -0.47,
+          "length": 324,
+          "width": 257,
+          "height": 5,
+          "thickness": 2,
+          "fold": 0.35,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "fracture-fan",
+          "blocking": 0
+        },
+        {
+          "id": 3,
+          "family": "folded-slab",
+          "role": "solid",
+          "x": 420,
+          "y": 276,
+          "rotation": -0.62,
+          "length": 197,
+          "width": 102,
+          "height": 48,
+          "thickness": 11,
+          "fold": 0.64,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "fracture-fan",
+          "blocking": 1
+        },
+        {
+          "id": 4,
+          "family": "folded-slab",
+          "role": "solid",
+          "x": 724,
+          "y": 426,
+          "rotation": -0.62,
+          "length": 182,
+          "width": 105,
+          "height": 57,
+          "thickness": 13,
+          "fold": 0.56,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "fracture-fan",
+          "blocking": 1
+        }
+      ],
+      "proposedCsvChange": {
+        "column": "shape_profiles",
+        "before": "fracture-fan|fracture-fan|fracture-fan|fracture-fan",
+        "after": "settled-fan|settled-fan|fracture-fan|fracture-fan",
+        "otherColumns": "unchanged; no source edit performed"
+      },
+      "originalRoutes": [
+        {
+          "name": "south-cross",
+          "points": [
+            [
+              467,
+              589
+            ],
+            [
+              673,
+              604
+            ],
+            [
+              836,
+              530
+            ]
+          ],
+          "bounds": null
+        },
+        {
+          "name": "north-return",
+          "points": [
+            [
+              386,
+              432
+            ],
+            [
+              393,
+              149
+            ],
+            [
+              607,
+              112
+            ],
+            [
+              813,
+              259
+            ]
+          ],
+          "bounds": null
+        }
+      ],
+      "originalActualBodyStations": [
+        {
+          "worldId": "blue-fault",
+          "grade": "low",
+          "stations": [
+            {
+              "cell": 9402,
+              "requested": {
+                "x": 467,
+                "y": 589
+              },
+              "actual": {
+                "x": 468,
+                "y": 588
+              },
+              "distance": 1.4142135623730951
+            },
+            {
+              "cell": 9684,
+              "requested": {
+                "x": 673,
+                "y": 604
+              },
+              "actual": {
+                "x": 676,
+                "y": 604
+              },
+              "distance": 3
+            },
+            {
+              "cell": 8552,
+              "requested": {
+                "x": 836,
+                "y": 530
+              },
+              "actual": {
+                "x": 836,
+                "y": 532
+              },
+              "distance": 2
+            },
+            {
+              "cell": 6832,
+              "requested": {
+                "x": 386,
+                "y": 432
+              },
+              "actual": {
+                "x": 388,
+                "y": 428
+              },
+              "distance": 4.47213595499958
+            },
+            {
+              "cell": 2353,
+              "requested": {
+                "x": 393,
+                "y": 149
+              },
+              "actual": {
+                "x": 396,
+                "y": 148
+              },
+              "distance": 3.1622776601683795
+            }
+          ]
+        },
+        {
+          "worldId": "blue-fault",
+          "grade": "medium",
+          "stations": [
+            {
+              "cell": 9402,
+              "requested": {
+                "x": 467,
+                "y": 589
+              },
+              "actual": {
+                "x": 468,
+                "y": 588
+              },
+              "distance": 1.4142135623730951
+            },
+            {
+              "cell": 9684,
+              "requested": {
+                "x": 673,
+                "y": 604
+              },
+              "actual": {
+                "x": 676,
+                "y": 604
+              },
+              "distance": 3
+            },
+            {
+              "cell": 8552,
+              "requested": {
+                "x": 836,
+                "y": 530
+              },
+              "actual": {
+                "x": 836,
+                "y": 532
+              },
+              "distance": 2
+            },
+            {
+              "cell": 6832,
+              "requested": {
+                "x": 386,
+                "y": 432
+              },
+              "actual": {
+                "x": 388,
+                "y": 428
+              },
+              "distance": 4.47213595499958
+            },
+            {
+              "cell": 2353,
+              "requested": {
+                "x": 393,
+                "y": 149
+              },
+              "actual": {
+                "x": 396,
+                "y": 148
+              },
+              "distance": 3.1622776601683795
+            }
+          ]
+        },
+        {
+          "worldId": "blue-fault",
+          "grade": "severe",
+          "stations": [
+            {
+              "cell": 9402,
+              "requested": {
+                "x": 467,
+                "y": 589
+              },
+              "actual": {
+                "x": 468,
+                "y": 588
+              },
+              "distance": 1.4142135623730951
+            },
+            {
+              "cell": 9684,
+              "requested": {
+                "x": 673,
+                "y": 604
+              },
+              "actual": {
+                "x": 676,
+                "y": 604
+              },
+              "distance": 3
+            },
+            {
+              "cell": 8552,
+              "requested": {
+                "x": 836,
+                "y": 530
+              },
+              "actual": {
+                "x": 836,
+                "y": 532
+              },
+              "distance": 2
+            },
+            {
+              "cell": 6832,
+              "requested": {
+                "x": 386,
+                "y": 432
+              },
+              "actual": {
+                "x": 388,
+                "y": 428
+              },
+              "distance": 4.47213595499958
+            },
+            {
+              "cell": 2353,
+              "requested": {
+                "x": 393,
+                "y": 149
+              },
+              "actual": {
+                "x": 396,
+                "y": 148
+              },
+              "distance": 3.1622776601683795
+            }
+          ]
+        }
+      ],
+      "originalMediumShotPlan": {
+        "world": "blue-fault",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-material-approach",
+            "x": 468,
+            "y": 588,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 468,
+              "y": 588
+            },
+            "lookAtMaterialPoint": {
+              "x": 420,
+              "y": 276
+            }
+          },
+          {
+            "label": "02-material-approach",
+            "x": 676,
+            "y": 604,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 676,
+              "y": 604
+            },
+            "lookAtMaterialPoint": {
+              "x": 724,
+              "y": 426
+            }
+          },
+          {
+            "label": "03-material-approach",
+            "x": 836,
+            "y": 532,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 836,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 729,
+              "y": 287
+            }
+          },
+          {
+            "label": "04-material-approach",
+            "x": 388,
+            "y": 428,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 388,
+              "y": 428
+            },
+            "lookAtMaterialPoint": {
+              "x": 425,
+              "y": 463
+            }
+          }
+        ]
+      },
+      "sourceRecipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/blue-fault-medium/recipe.json",
+        "sha256": "7a3f46b270aae9fc9af3d89ea905389c8d0356a70b98c2909ddd00d47c3206e8"
+      },
+      "requiredRecheck": "仅物1/2低层Z、normal与表层边界改变；期望同原outline并保留groundEdgeWidth=8，同源真实缺地不变。复核原三档20px站与两原路线，核物3/4断面和断纹，复拍01/04及真正缺地边。"
+    },
+    {
+      "world": "pale-pressure",
+      "currentCsvRow": {
+        "world_id": "pale-pressure",
+        "label": "白膜压滩",
+        "iteration": "11",
+        "enabled": "false",
+        "family": "membrane-rim",
+        "base_profile": "ivory-basin",
+        "organization": "patches",
+        "construction_version": "4",
+        "instances": "membrane-rim:relief:452:559:0.17:536:252:4:2:0.36:3:0.7:0.25|membrane-rim:solid:372:402:0.17:184:125:29:8:0.44:3:0.7:0.25|membrane-rim:solid:560:359:-0.37:156:130:39:10:0.58:3:0.7:0.25|membrane-rim:solid:370:242:0.41:163:121:48:11:0.64:3:0.7:0.25|membrane-rim:solid:557:181:-0.18:191:155:57:13:0.73:3:0.7:0.25|membrane-rim:solid:717:276:0.64:144:115:43:10:0.53:3:0.7:0.25",
+        "shape_profiles": "torn-sheet|torn-sheet|torn-sheet|torn-sheet|torn-sheet|torn-sheet",
+        "erosion_polygons": "850:32;935:48;946:96;881:112",
+        "ground_edge_width": ""
+      },
+      "currentInstances": [
+        {
+          "id": 1,
+          "family": "membrane-rim",
+          "role": "relief",
+          "x": 452,
+          "y": 559,
+          "rotation": 0.17,
+          "length": 536,
+          "width": 252,
+          "height": 4,
+          "thickness": 2,
+          "fold": 0.36,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "torn-sheet",
+          "blocking": 0
+        },
+        {
+          "id": 2,
+          "family": "membrane-rim",
+          "role": "solid",
+          "x": 372,
+          "y": 402,
+          "rotation": 0.17,
+          "length": 184,
+          "width": 125,
+          "height": 29,
+          "thickness": 8,
+          "fold": 0.44,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "torn-sheet",
+          "blocking": 1
+        },
+        {
+          "id": 3,
+          "family": "membrane-rim",
+          "role": "solid",
+          "x": 560,
+          "y": 359,
+          "rotation": -0.37,
+          "length": 156,
+          "width": 130,
+          "height": 39,
+          "thickness": 10,
+          "fold": 0.58,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "torn-sheet",
+          "blocking": 1
+        },
+        {
+          "id": 4,
+          "family": "membrane-rim",
+          "role": "solid",
+          "x": 370,
+          "y": 242,
+          "rotation": 0.41,
+          "length": 163,
+          "width": 121,
+          "height": 48,
+          "thickness": 11,
+          "fold": 0.64,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "torn-sheet",
+          "blocking": 1
+        },
+        {
+          "id": 5,
+          "family": "membrane-rim",
+          "role": "solid",
+          "x": 557,
+          "y": 181,
+          "rotation": -0.18,
+          "length": 191,
+          "width": 155,
+          "height": 57,
+          "thickness": 13,
+          "fold": 0.73,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "torn-sheet",
+          "blocking": 1
+        },
+        {
+          "id": 6,
+          "family": "membrane-rim",
+          "role": "solid",
+          "x": 717,
+          "y": 276,
+          "rotation": 0.64,
+          "length": 144,
+          "width": 115,
+          "height": 43,
+          "thickness": 10,
+          "fold": 0.53,
+          "branches": 3,
+          "opening": 0.7,
+          "distortion": 0.25,
+          "constructionVersion": 4,
+          "shapeProfile": "torn-sheet",
+          "blocking": 1
+        }
+      ],
+      "proposedCsvChange": {
+        "column": "shape_profiles",
+        "before": "torn-sheet|torn-sheet|torn-sheet|torn-sheet|torn-sheet|torn-sheet",
+        "after": "settled-sheet|torn-sheet|torn-sheet|compressed-wedge|torn-sheet|clamp-bank",
+        "otherColumns": "unchanged; no source edit performed"
+      },
+      "originalRoutes": [
+        {
+          "name": "density-path",
+          "points": [
+            [
+              439,
+              636
+            ],
+            [
+              475,
+              443
+            ],
+            [
+              468,
+              295
+            ],
+            [
+              678,
+              358
+            ],
+            [
+              827,
+              341
+            ]
+          ],
+          "bounds": null
+        },
+        {
+          "name": "outer-clear-bed",
+          "points": [
+            [
+              439,
+              636
+            ],
+            [
+              870,
+              602
+            ],
+            [
+              866,
+              169
+            ]
+          ],
+          "bounds": null
+        }
+      ],
+      "originalActualBodyStations": [
+        {
+          "worldId": "pale-pressure",
+          "grade": "low",
+          "stations": [
+            {
+              "cell": 10166,
+              "requested": {
+                "x": 439,
+                "y": 636
+              },
+              "actual": {
+                "x": 436,
+                "y": 636
+              },
+              "distance": 3
+            },
+            {
+              "cell": 7099,
+              "requested": {
+                "x": 475,
+                "y": 443
+              },
+              "actual": {
+                "x": 476,
+                "y": 444
+              },
+              "distance": 1.4142135623730951
+            },
+            {
+              "cell": 4666,
+              "requested": {
+                "x": 468,
+                "y": 295
+              },
+              "actual": {
+                "x": 468,
+                "y": 292
+              },
+              "distance": 3
+            },
+            {
+              "cell": 5716,
+              "requested": {
+                "x": 678,
+                "y": 358
+              },
+              "actual": {
+                "x": 676,
+                "y": 356
+              },
+              "distance": 2.8284271247461903
+            },
+            {
+              "cell": 5479,
+              "requested": {
+                "x": 827,
+                "y": 341
+              },
+              "actual": {
+                "x": 828,
+                "y": 340
+              },
+              "distance": 1.4142135623730951
+            }
+          ]
+        },
+        {
+          "worldId": "pale-pressure",
+          "grade": "medium",
+          "stations": [
+            {
+              "cell": 10166,
+              "requested": {
+                "x": 439,
+                "y": 636
+              },
+              "actual": {
+                "x": 436,
+                "y": 636
+              },
+              "distance": 3
+            },
+            {
+              "cell": 7099,
+              "requested": {
+                "x": 475,
+                "y": 443
+              },
+              "actual": {
+                "x": 476,
+                "y": 444
+              },
+              "distance": 1.4142135623730951
+            },
+            {
+              "cell": 4666,
+              "requested": {
+                "x": 468,
+                "y": 295
+              },
+              "actual": {
+                "x": 468,
+                "y": 292
+              },
+              "distance": 3
+            },
+            {
+              "cell": 5716,
+              "requested": {
+                "x": 678,
+                "y": 358
+              },
+              "actual": {
+                "x": 676,
+                "y": 356
+              },
+              "distance": 2.8284271247461903
+            },
+            {
+              "cell": 5479,
+              "requested": {
+                "x": 827,
+                "y": 341
+              },
+              "actual": {
+                "x": 828,
+                "y": 340
+              },
+              "distance": 1.4142135623730951
+            }
+          ]
+        },
+        {
+          "worldId": "pale-pressure",
+          "grade": "severe",
+          "stations": [
+            {
+              "cell": 10166,
+              "requested": {
+                "x": 439,
+                "y": 636
+              },
+              "actual": {
+                "x": 436,
+                "y": 636
+              },
+              "distance": 3
+            },
+            {
+              "cell": 7099,
+              "requested": {
+                "x": 475,
+                "y": 443
+              },
+              "actual": {
+                "x": 476,
+                "y": 444
+              },
+              "distance": 1.4142135623730951
+            },
+            {
+              "cell": 4666,
+              "requested": {
+                "x": 468,
+                "y": 295
+              },
+              "actual": {
+                "x": 468,
+                "y": 292
+              },
+              "distance": 3
+            },
+            {
+              "cell": 5716,
+              "requested": {
+                "x": 678,
+                "y": 358
+              },
+              "actual": {
+                "x": 676,
+                "y": 356
+              },
+              "distance": 2.8284271247461903
+            },
+            {
+              "cell": 5479,
+              "requested": {
+                "x": 827,
+                "y": 341
+              },
+              "actual": {
+                "x": 828,
+                "y": 340
+              },
+              "distance": 1.4142135623730951
+            }
+          ]
+        }
+      ],
+      "originalMediumShotPlan": {
+        "world": "pale-pressure",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-material-approach",
+            "x": 436,
+            "y": 636,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 436,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 452,
+              "y": 559
+            }
+          },
+          {
+            "label": "02-material-approach",
+            "x": 476,
+            "y": 444,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 476,
+              "y": 444
+            },
+            "lookAtMaterialPoint": {
+              "x": 372,
+              "y": 402
+            }
+          },
+          {
+            "label": "03-material-approach",
+            "x": 468,
+            "y": 292,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 468,
+              "y": 292
+            },
+            "lookAtMaterialPoint": {
+              "x": 370,
+              "y": 242
+            }
+          },
+          {
+            "label": "04-material-approach",
+            "x": 676,
+            "y": 356,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 676,
+              "y": 356
+            },
+            "lookAtMaterialPoint": {
+              "x": 717,
+              "y": 276
+            }
+          }
+        ]
+      },
+      "sourceRecipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/pale-pressure-medium/recipe.json",
+        "sha256": "9c669438c5a050a1871dc4bfd6e873df264762a80f8aa46fe010713acc7ad2f7"
+      },
+      "requiredRecheck": "物1低层下压；物4和6换真实构造会改变局部足印，不能承诺支持逐点exact。原density-path五节点和outer-clear-bed三节点/24px误差不放宽，三档全身体可达与每solid cut>=16/joint>=4须重新验证；同原01低面、02卷皮、03压皱楔、04弯卷脊各复拍。"
+    }
+  ],
+  "findings": [
+    {
+      "world": "blue-fault",
+      "finding": "01/04跨床直黑边与尖三角来自宽低fracture-fan外沿，不是缺地位置变更。settled-fan已有相同12点域，只低面压入基底，适用H4/5非阻挡。",
+      "notClaimed": "不会承诺所有色分界自动消失；相同材料分区与实际缺地仍需普通灯复审。"
+    },
+    {
+      "world": "pale-pressure",
+      "finding": "原截图02物2、03物4、04物6都是真torn-sheet，其共享凹叉域造成箭头重复。用物4完整厚压褶楔/物6连续弯卷岸/物2保留撕皮，改变局部压片构造而不靠换色。",
+      "alternatives": "fallen-bundle虽可用但刚性断束细端不优先用于这张完整白膜压力卡；settled-*严格不可用于五个solid。",
+      "limits": "compressed-wedge不是宣称短纤材质；仍取现有membrane主材，无新增materialOrganization。"
+    }
+  ],
+  "preservedConstraints": [
+    "blue物1仍唯一地沿持有者，侵蚀多边形/8px地面支持/20px身体尺寸不变",
+    "pale低1不变blocking0，solid2..6保持各H29/39/48/57/43与role1，东侧宽出口仍必要",
+    "旧其他106作者行及共享profile行为不改",
+    "保留原正常图失败，不以新profile名称算视觉通过"
+  ],
+  "evidence": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/blue-fault-medium/01-material-approach-north.png",
+      "sha256": "cd2488376d912f623c27fbd746e56f9903cba585266fed2bf44d23ffb1bc9145"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/blue-fault-medium/04-material-approach-east.png",
+      "sha256": "97a0e5440ae9fe78e69ceb008bd0e6059c14bf12a1e6902388fe6994dba9c4bd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/pale-pressure-medium/02-material-approach-west.png",
+      "sha256": "9486cf931f7572d78ed91d4efcc70b92c3e8fe29e31b90ba217d87e83db15b59"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/pale-pressure-medium/03-material-approach-west.png",
+      "sha256": "a71d46ecb6bb9fbeec0c69196cd0d4b0e8daa440c9cd3f096a43b37aed09bc32"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/pale-pressure-medium/04-material-approach-north.png",
+      "sha256": "b7e9cba4197f38814c505495cdc669e772dd03d902031b0c517d4bb809cd671d"
+    },
+    {
+      "path": "data/rift-native-worlds.csv",
+      "sha256": "0559776364ef853473c2d74105df669e75d2a01119cb04bf190dea4fc5cfd756"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-author-preflight/body12/report.json",
+      "sha256": "ba77dcd4e3caf78b9bc1b065b4ffb8d45a4474deec41b04cdd8aac924282f68d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-isolated-author/intent.json",
+      "sha256": "0160cfc6a39e3ae859de5d3e95e06e716acb8a640312108644ad87f96acd1812"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/plan.json",
+      "sha256": "e3fe3ed293d2ea20d09585c249313fc9fb7a7313939898def55802b7760415af"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-settled-sheet.ts",
+      "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "dd4e4619f2635516f20704dda011a5fccc2805c7389278e97200a835db7067c3"
+    }
+  ]
+}

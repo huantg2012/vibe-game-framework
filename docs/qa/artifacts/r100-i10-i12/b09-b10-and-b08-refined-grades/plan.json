@@ -1,0 +1,468 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+  "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+  "scope": "Low/severe limited local review of three medium-approved world repairs plus resin-sleeve/shell-threads. Original same seed and approved medium body goals, normal light/FOV/pressure and real WASD. Shell uses already captured closer right-contact goals, not previously unlit distant station. No complete-map or gameplay qualification implied.",
+  "priorPlans": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/plan.json",
+      "sha256": "737eda9b205e9190754133cb764c4d384ffa1b794ddedd7d443089c9d1d95387",
+      "worlds": [
+        "short-fibre-mat",
+        "felt-wedges"
+      ]
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/plan.json",
+      "sha256": "e3fe3ed293d2ea20d09585c249313fc9fb7a7313939898def55802b7760415af",
+      "worlds": [
+        "blue-fault",
+        "pale-pressure"
+      ]
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/plan.json",
+      "sha256": "e1823efe350d1fda7572e54b439b7b09db3fd1926e88f4106ff8cb7f292f95dc",
+      "worlds": [
+        "sloughed-court"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "world": "blue-fault",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 468,
+          "y": 588,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 468,
+            "y": 588
+          },
+          "lookAtMaterialPoint": {
+            "x": 420,
+            "y": 276
+          }
+        },
+        {
+          "label": "02-material-approach",
+          "x": 676,
+          "y": 604,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 676,
+            "y": 604
+          },
+          "lookAtMaterialPoint": {
+            "x": 724,
+            "y": 426
+          }
+        },
+        {
+          "label": "04-material-approach",
+          "x": 388,
+          "y": 428,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 388,
+            "y": 428
+          },
+          "lookAtMaterialPoint": {
+            "x": 425,
+            "y": 463
+          }
+        }
+      ]
+    },
+    {
+      "world": "blue-fault",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 468,
+          "y": 588,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 468,
+            "y": 588
+          },
+          "lookAtMaterialPoint": {
+            "x": 420,
+            "y": 276
+          }
+        },
+        {
+          "label": "02-material-approach",
+          "x": 676,
+          "y": 604,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 676,
+            "y": 604
+          },
+          "lookAtMaterialPoint": {
+            "x": 724,
+            "y": 426
+          }
+        },
+        {
+          "label": "04-material-approach",
+          "x": 388,
+          "y": 428,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 388,
+            "y": 428
+          },
+          "lookAtMaterialPoint": {
+            "x": 425,
+            "y": 463
+          }
+        }
+      ]
+    },
+    {
+      "world": "pale-pressure",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 436,
+          "y": 636,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 436,
+            "y": 636
+          },
+          "lookAtMaterialPoint": {
+            "x": 452,
+            "y": 559
+          }
+        },
+        {
+          "label": "03-material-approach",
+          "x": 468,
+          "y": 292,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 468,
+            "y": 292
+          },
+          "lookAtMaterialPoint": {
+            "x": 370,
+            "y": 242
+          }
+        },
+        {
+          "label": "04-material-approach",
+          "x": 676,
+          "y": 356,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 676,
+            "y": 356
+          },
+          "lookAtMaterialPoint": {
+            "x": 717,
+            "y": 276
+          }
+        }
+      ]
+    },
+    {
+      "world": "pale-pressure",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 436,
+          "y": 636,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 436,
+            "y": 636
+          },
+          "lookAtMaterialPoint": {
+            "x": 452,
+            "y": 559
+          }
+        },
+        {
+          "label": "03-material-approach",
+          "x": 468,
+          "y": 292,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 468,
+            "y": 292
+          },
+          "lookAtMaterialPoint": {
+            "x": 370,
+            "y": 242
+          }
+        },
+        {
+          "label": "04-material-approach",
+          "x": 676,
+          "y": 356,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 676,
+            "y": 356
+          },
+          "lookAtMaterialPoint": {
+            "x": 717,
+            "y": 276
+          }
+        }
+      ]
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "02-material-approach",
+          "x": 484,
+          "y": 380,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 484,
+            "y": 380
+          },
+          "lookAtMaterialPoint": {
+            "x": 438,
+            "y": 280
+          }
+        },
+        {
+          "label": "04-material-approach",
+          "x": 332,
+          "y": 660,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 332,
+            "y": 660
+          },
+          "lookAtMaterialPoint": {
+            "x": 391,
+            "y": 546
+          }
+        }
+      ]
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "02-material-approach",
+          "x": 484,
+          "y": 380,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 484,
+            "y": 380
+          },
+          "lookAtMaterialPoint": {
+            "x": 438,
+            "y": 280
+          }
+        },
+        {
+          "label": "04-material-approach",
+          "x": 332,
+          "y": 660,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 332,
+            "y": 660
+          },
+          "lookAtMaterialPoint": {
+            "x": 391,
+            "y": 546
+          }
+        }
+      ]
+    },
+    {
+      "world": "resin-sleeve",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "02-shell-gel-contact",
+          "x": 650,
+          "y": 363,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 652,
+            "y": 364
+          },
+          "lookAtMaterialPoint": {
+            "x": 554,
+            "y": 295
+          }
+        },
+        {
+          "label": "03-inner-thick-sleeve",
+          "x": 592,
+          "y": 376,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 588,
+            "y": 372
+          },
+          "lookAtMaterialPoint": {
+            "x": 582,
+            "y": 445
+          }
+        }
+      ]
+    },
+    {
+      "world": "resin-sleeve",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "02-shell-gel-contact",
+          "x": 650,
+          "y": 363,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 652,
+            "y": 364
+          },
+          "lookAtMaterialPoint": {
+            "x": 554,
+            "y": 295
+          }
+        },
+        {
+          "label": "03-inner-thick-sleeve",
+          "x": 592,
+          "y": 376,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 588,
+            "y": 372
+          },
+          "lookAtMaterialPoint": {
+            "x": 582,
+            "y": 445
+          }
+        }
+      ]
+    },
+    {
+      "world": "shell-threads",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-right-contact-south-approach",
+          "x": 750,
+          "y": 548,
+          "faces": [
+            "north"
+          ],
+          "lookAtMaterialPoint": {
+            "x": 718,
+            "y": 430
+          },
+          "scope": "New requested closer view, not pre-certified exact point; actual nearest conservative route and native-supported arrival recorded."
+        },
+        {
+          "label": "02-right-contact-east-side",
+          "x": 840,
+          "y": 430,
+          "faces": [
+            "west"
+          ],
+          "lookAtMaterialPoint": {
+            "x": 718,
+            "y": 430
+          }
+        }
+      ]
+    },
+    {
+      "world": "shell-threads",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-right-contact-south-approach",
+          "x": 750,
+          "y": 548,
+          "faces": [
+            "north"
+          ],
+          "lookAtMaterialPoint": {
+            "x": 718,
+            "y": 430
+          },
+          "scope": "New requested closer view, not pre-certified exact point; actual nearest conservative route and native-supported arrival recorded."
+        },
+        {
+          "label": "02-right-contact-east-side",
+          "x": 840,
+          "y": 430,
+          "faces": [
+            "west"
+          ],
+          "lookAtMaterialPoint": {
+            "x": 718,
+            "y": 430
+          }
+        }
+      ]
+    }
+  ]
+}

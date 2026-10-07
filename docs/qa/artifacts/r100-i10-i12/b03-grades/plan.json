@@ -1,0 +1,593 @@
+{
+  "status": "ready-awaiting-single-browser-window",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b03-author-preflight/camera-supported.json",
+  "scope": "Actual WASD with normal shoulder lamp. World-space source targets guide cardinal views; actual position/facing must be recorded. No screenshot or art pass exists yet.",
+  "cases": [
+    {
+      "world": "shard-switchback",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-west-shoulder",
+          "x": 270,
+          "y": 380,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 268,
+            "y": 372
+          },
+          "lookAtMaterialPoint": {
+            "x": 338,
+            "y": 262
+          }
+        },
+        {
+          "label": "02-first-switch",
+          "x": 456,
+          "y": 404,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 452,
+            "y": 404
+          },
+          "lookAtMaterialPoint": {
+            "x": 520,
+            "y": 306
+          }
+        },
+        {
+          "label": "03-cross-opening",
+          "x": 574,
+          "y": 529,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 572,
+            "y": 532
+          },
+          "lookAtMaterialPoint": {
+            "x": 654,
+            "y": 452
+          }
+        },
+        {
+          "label": "04-last-tip",
+          "x": 858,
+          "y": 390,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 860,
+            "y": 388
+          },
+          "lookAtMaterialPoint": {
+            "x": 798,
+            "y": 292
+          }
+        }
+      ]
+    },
+    {
+      "world": "hollow-wreckage",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-south-low-shell",
+          "x": 536,
+          "y": 616,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 532,
+            "y": 612
+          },
+          "lookAtMaterialPoint": {
+            "x": 566,
+            "y": 544
+          }
+        },
+        {
+          "label": "02-west-standing-shell",
+          "x": 562,
+          "y": 452,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 564,
+            "y": 452
+          },
+          "lookAtMaterialPoint": {
+            "x": 386,
+            "y": 320
+          }
+        },
+        {
+          "label": "03-east-standing-shell",
+          "x": 540,
+          "y": 326,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 324
+          },
+          "lookAtMaterialPoint": {
+            "x": 708,
+            "y": 370
+          }
+        },
+        {
+          "label": "04-north-low-shell",
+          "x": 532,
+          "y": 180,
+          "faces": [
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 532,
+            "y": 180
+          },
+          "lookAtMaterialPoint": {
+            "x": 526,
+            "y": 228
+          }
+        }
+      ]
+    },
+    {
+      "world": "knotted-run",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-west-crossed-head",
+          "x": 292,
+          "y": 462,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 292,
+            "y": 460
+          },
+          "lookAtMaterialPoint": {
+            "x": 354,
+            "y": 287
+          }
+        },
+        {
+          "label": "02-south-crossed-head",
+          "x": 544,
+          "y": 418,
+          "faces": [
+            "south",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 420
+          },
+          "lookAtMaterialPoint": {
+            "x": 463,
+            "y": 530
+          }
+        },
+        {
+          "label": "03-east-crossed-head",
+          "x": 580,
+          "y": 267,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 268
+          },
+          "lookAtMaterialPoint": {
+            "x": 714,
+            "y": 330
+          }
+        },
+        {
+          "label": "04-south-broken-tail",
+          "x": 540,
+          "y": 630,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 628
+          },
+          "lookAtMaterialPoint": {
+            "x": 463,
+            "y": 530
+          }
+        }
+      ]
+    },
+    {
+      "world": "rolled-fragments",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-first-roll",
+          "x": 388,
+          "y": 468,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 388,
+            "y": 468
+          },
+          "lookAtMaterialPoint": {
+            "x": 300,
+            "y": 370
+          }
+        },
+        {
+          "label": "02-second-roll",
+          "x": 478,
+          "y": 346,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 476,
+            "y": 348
+          },
+          "lookAtMaterialPoint": {
+            "x": 408,
+            "y": 218
+          }
+        },
+        {
+          "label": "03-middle-roll",
+          "x": 642,
+          "y": 340,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 644,
+            "y": 340
+          },
+          "lookAtMaterialPoint": {
+            "x": 610,
+            "y": 228
+          }
+        },
+        {
+          "label": "04-small-roll",
+          "x": 897,
+          "y": 443,
+          "faces": [
+            "south",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 900,
+            "y": 444
+          },
+          "lookAtMaterialPoint": {
+            "x": 794,
+            "y": 563
+          }
+        }
+      ]
+    },
+    {
+      "world": "shard-switchback",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-west-shoulder",
+          "x": 270,
+          "y": 380,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 268,
+            "y": 372
+          },
+          "lookAtMaterialPoint": {
+            "x": 338,
+            "y": 262
+          }
+        },
+        {
+          "label": "02-first-switch",
+          "x": 456,
+          "y": 404,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 452,
+            "y": 404
+          },
+          "lookAtMaterialPoint": {
+            "x": 520,
+            "y": 306
+          }
+        },
+        {
+          "label": "03-cross-opening",
+          "x": 574,
+          "y": 529,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 572,
+            "y": 532
+          },
+          "lookAtMaterialPoint": {
+            "x": 654,
+            "y": 452
+          }
+        },
+        {
+          "label": "04-last-tip",
+          "x": 858,
+          "y": 390,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 860,
+            "y": 388
+          },
+          "lookAtMaterialPoint": {
+            "x": 798,
+            "y": 292
+          }
+        }
+      ]
+    },
+    {
+      "world": "hollow-wreckage",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-south-low-shell",
+          "x": 536,
+          "y": 616,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 532,
+            "y": 612
+          },
+          "lookAtMaterialPoint": {
+            "x": 566,
+            "y": 544
+          }
+        },
+        {
+          "label": "02-west-standing-shell",
+          "x": 562,
+          "y": 452,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 564,
+            "y": 452
+          },
+          "lookAtMaterialPoint": {
+            "x": 386,
+            "y": 320
+          }
+        },
+        {
+          "label": "03-east-standing-shell",
+          "x": 540,
+          "y": 326,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 324
+          },
+          "lookAtMaterialPoint": {
+            "x": 708,
+            "y": 370
+          }
+        },
+        {
+          "label": "04-north-low-shell",
+          "x": 532,
+          "y": 180,
+          "faces": [
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 532,
+            "y": 180
+          },
+          "lookAtMaterialPoint": {
+            "x": 526,
+            "y": 228
+          }
+        }
+      ]
+    },
+    {
+      "world": "knotted-run",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-west-crossed-head",
+          "x": 292,
+          "y": 462,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 292,
+            "y": 460
+          },
+          "lookAtMaterialPoint": {
+            "x": 354,
+            "y": 287
+          }
+        },
+        {
+          "label": "02-south-crossed-head",
+          "x": 544,
+          "y": 418,
+          "faces": [
+            "south",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 420
+          },
+          "lookAtMaterialPoint": {
+            "x": 463,
+            "y": 530
+          }
+        },
+        {
+          "label": "03-east-crossed-head",
+          "x": 580,
+          "y": 267,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 268
+          },
+          "lookAtMaterialPoint": {
+            "x": 714,
+            "y": 330
+          }
+        },
+        {
+          "label": "04-south-broken-tail",
+          "x": 540,
+          "y": 630,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 628
+          },
+          "lookAtMaterialPoint": {
+            "x": 463,
+            "y": 530
+          }
+        }
+      ]
+    },
+    {
+      "world": "rolled-fragments",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-first-roll",
+          "x": 388,
+          "y": 468,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 388,
+            "y": 468
+          },
+          "lookAtMaterialPoint": {
+            "x": 300,
+            "y": 370
+          }
+        },
+        {
+          "label": "02-second-roll",
+          "x": 478,
+          "y": 346,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 476,
+            "y": 348
+          },
+          "lookAtMaterialPoint": {
+            "x": 408,
+            "y": 218
+          }
+        },
+        {
+          "label": "03-middle-roll",
+          "x": 642,
+          "y": 340,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 644,
+            "y": 340
+          },
+          "lookAtMaterialPoint": {
+            "x": 610,
+            "y": 228
+          }
+        },
+        {
+          "label": "04-small-roll",
+          "x": 897,
+          "y": 443,
+          "faces": [
+            "south",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 900,
+            "y": 444
+          },
+          "lookAtMaterialPoint": {
+            "x": 794,
+            "y": 563
+          }
+        }
+      ]
+    }
+  ],
+  "cameraInputSha256": "902eacbc957889661ce862c464ed03d6cc65738f54f13b3ce33ed934b1b1a339",
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b03-source/source-snapshot.json",
+  "sourceManifestSha256": "8161b87497c223b903b07d6fbd68c3afcbf46995487f7c2cd35cb2058af3b4e8"
+}

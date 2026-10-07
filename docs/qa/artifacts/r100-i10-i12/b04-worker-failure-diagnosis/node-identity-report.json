@@ -1,0 +1,590 @@
+{
+  "status": "pass",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+    "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/check-node-identity.mjs",
+    "sha256": "c4d359ee085420ee9614aa1a9efaa4318fdd1a896181206d962aa223edf5dcd6"
+  },
+  "executor": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/node-identity-executor.mjs",
+    "sha256": "535f13c8f37772ae8fb81d6ad6303b45cec24f8ebdf8724382f7b4de5175dfd5"
+  },
+  "dependencies": [
+    {
+      "file": "src/generation/legacy-r100-v2/executor.js",
+      "sha256": "bc5117ae07ff61565a1076b466ed1addf14b67691573a6acefe9fb47af1af06f"
+    },
+    {
+      "file": "src/generation/legacy-r100-v3/executor.js",
+      "sha256": "8aa337fb4687b45206db5db496bbe1a0a5269975b002cb2d1a7880c89870be78"
+    },
+    {
+      "file": "src/generation/legacy-r100-v5/executor-recovery.js",
+      "sha256": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6"
+    },
+    {
+      "file": "src/generation/legacy-r100-v4/executor.js",
+      "sha256": "90a5a6e4c122923c872ebaa623461b6f7217b37fc41c2c1854d2f07c049399f7"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "sha256": "4a012df91d209333bb45c74731b5ca3acdb8c9a2dfb79587e673209e5ebda4a3"
+    },
+    {
+      "file": "src/generation/world-study/r100-world-appearance.ts",
+      "sha256": "019e641e9c7471a6a58d250d44a8341c35fd58ad6f007b5abffc668578c76f4a"
+    },
+    {
+      "file": "src/generated/r100-package-manifest.ts",
+      "sha256": "1398f594becb76d2fa9ead0bca60391c9bf9c7fac6764bc625672612724d9e8a"
+    },
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "sha256": "7f001cf71a968412dc9b071036eb8bac24f61fcb881fbb1193b9b5814ff669b7"
+    },
+    {
+      "file": "src/generated/rift-expedition-grade-data.ts",
+      "sha256": "8abb62cb1d601290e97edede8d190394664075e2ae0219bafe149ae6868daf71"
+    },
+    {
+      "file": "src/generated/rift-pollution-grade-data.ts",
+      "sha256": "b0d255ab0efd5acdb3a5edb2d5b30017a7521b09de3b5a6c6852b77b9a63d69c"
+    },
+    {
+      "file": "src/generated/r100-world-selection.ts",
+      "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+    },
+    {
+      "file": "src/utils/random.ts",
+      "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+    },
+    {
+      "file": "src/generation/seed-fork.ts",
+      "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+    },
+    {
+      "file": "src/generation/world-study/pollution-grade.ts",
+      "sha256": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0"
+    },
+    {
+      "file": "src/types/rift-world-history.ts",
+      "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+    },
+    {
+      "file": "src/generation/world-study/r100-world-selection.ts",
+      "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-cellular.ts",
+      "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-expansion.ts",
+      "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-organization.ts",
+      "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "598e8adbce5fbb968954088141a643f7d01cdcb6fd204486d59bf73da72406a7"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-ground-edge.ts",
+      "sha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "c944df69504841016a09204dfa3db035cf633cc532b5bd58d1e4c7b50a8fdd28"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-erosion.ts",
+      "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+    },
+    {
+      "file": "src/generated/rift-world-space-data.ts",
+      "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+    },
+    {
+      "file": "src/generation/world-study/space-profile.ts",
+      "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+    },
+    {
+      "file": "src/generation/world-study/r100-package.ts",
+      "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+    },
+    {
+      "file": "src/generation/legacy-rift-v2/arithmetic-executor.js",
+      "sha256": "7cb7efec95c81dc35415273b31e90ba6a5847f11225848e9f32c3c7bc2c9d6d5"
+    },
+    {
+      "file": "src/generation/legacy-rift-v2/binary64-fma.ts",
+      "sha256": "a6a356d4b722ac4268e922c5fd576fcda1f3ee77457b5594538a255aa5594ed1"
+    },
+    {
+      "file": "src/generation/legacy-rift-v2/fdlibm-atan2.ts",
+      "sha256": "03f61c093cf96b72763971e1271173564cac7822863486aa5ecf49668bf8199c"
+    },
+    {
+      "file": "src/generation/rift-generation-identity.ts",
+      "sha256": "3dc102724053672adc37d32b7f8aa3b502a229dbbe3f5508b8149d74cc654afd"
+    },
+    {
+      "file": "src/generation/legacy-rift-v2/executor.js",
+      "sha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074"
+    },
+    {
+      "file": "src/generation/legacy-rift-generation.ts",
+      "sha256": "4d77303290a1c083941e9ad38b87d411e6fe9a9142ef745b6eb459f0a1e31b33"
+    },
+    {
+      "file": "src/types/rift-checkpoint.ts",
+      "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+    },
+    {
+      "file": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    {
+      "file": "src/generated/build-lab-data.ts",
+      "sha256": "bdd7c9218b394e9f877207378e1b375138be8b024416f2c38334b7b704cde672"
+    },
+    {
+      "file": "src/entities/form-renderers/d/environment-pixels.ts",
+      "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+    },
+    {
+      "file": "src/entities/form-renderers/d/paint-genome/material.ts",
+      "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+    },
+    {
+      "file": "src/generated/rift-fragment-data.ts",
+      "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+    },
+    {
+      "file": "src/generation/atmosphere.ts",
+      "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+    },
+    {
+      "file": "src/generation/fragment-roll.ts",
+      "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+    },
+    {
+      "file": "src/generation/palette-quantize.ts",
+      "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+    },
+    {
+      "file": "src/generation/preview-paint.ts",
+      "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+    },
+    {
+      "file": "src/entities/form-renderers/d/fragment-ramp.ts",
+      "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+    },
+    {
+      "file": "src/entities/form-renderers/d/paint-genome/topology.ts",
+      "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+    },
+    {
+      "file": "src/entities/form-renderers/d/paint-genome/bake.ts",
+      "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+    },
+    {
+      "file": "src/types/game-types.ts",
+      "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+    },
+    {
+      "file": "src/generation/world-study/r100-pollution.ts",
+      "sha256": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f"
+    },
+    {
+      "file": "src/generation/outline-mask.ts",
+      "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+    },
+    {
+      "file": "src/generation/world-study/master-ground-field.ts",
+      "sha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783"
+    },
+    {
+      "file": "src/generation/world-study/native-volume-raster.ts",
+      "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+    },
+    {
+      "file": "src/generated/rift-world-profile-data.ts",
+      "sha256": "9550a5faca9e262d2ccf7679d29fd4b0306e883785bf352b31f3007c13d39fe8"
+    },
+    {
+      "file": "src/generation/world-study/profiles.ts",
+      "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+    },
+    {
+      "file": "src/systems/ai/physical-grid.ts",
+      "sha256": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+    },
+    {
+      "file": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "file": "src/generation/world-study/r100-generated-scenes.ts",
+      "sha256": "6b3c974c97025874e5cb7fa3e3dd29147a1397616d003852e52cde5685f57d73"
+    },
+    {
+      "file": "src/generation/world-study/r100-master-world.ts",
+      "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+    },
+    {
+      "file": "src/generated/enemy-data.ts",
+      "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+    },
+    {
+      "file": "src/generated/contamination-body-data.ts",
+      "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+    },
+    {
+      "file": "src/generated/contamination-lexicon-data.ts",
+      "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+    },
+    {
+      "file": "src/generated/contamination-family-data.ts",
+      "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+    },
+    {
+      "file": "src/generation/contamination-draw.ts",
+      "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+    },
+    {
+      "file": "src/utils/grid-raycast.ts",
+      "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+    },
+    {
+      "file": "src/utils/math.ts",
+      "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+    },
+    {
+      "file": "src/systems/ai/behaviors.ts",
+      "sha256": "f09a058a249d00a2acbd778f5a56b55ba7c6724d34481600ae705b8cbfc5d11d"
+    },
+    {
+      "file": "src/generation/world-study/r100-patrol-windows.ts",
+      "sha256": "80bd1a32f5e528f416a3d33c28bbe7f9a20fd23c2eb7cb9674c628d145c790f2"
+    },
+    {
+      "file": "src/generation/world-study/r100-expedition.ts",
+      "sha256": "3d62896b06faccee9e902806a8bb71827c84efa2775d5a2f07d69a05a6d771b1"
+    },
+    {
+      "file": "src/generation/world-study/r100-native-data.ts",
+      "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+    },
+    {
+      "file": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "87509365a644732c6783c58390f37488985822b3e5f53639bb62ea2c34f82883"
+    },
+    {
+      "file": "src/generation/rift-generation-protocol.ts",
+      "sha256": "e2d463a46c37f022434d6405e70fa2cac3cc50d791100c90290903981b8fea43"
+    },
+    {
+      "file": "src/generation/rift-generation-execute.ts",
+      "sha256": "73b0882b47c2b040c11f1f021125c7ce44d1f5d0be5c9785c69adbcad1c36cfc"
+    }
+  ],
+  "requested": {
+    "world": "buried-lamellae",
+    "grade": "severe",
+    "seed": 3075192741
+  },
+  "startedAt": "2026-10-07T04:58:27.044Z",
+  "method": "Exact frozen3110 generation and structured-clone ownership transfer in Node. This does not test Chrome module imports, Worker startup/lifecycle or reproduce the historical browser failure.",
+  "generationWallMs": 247.11670800000007,
+  "generationReportedMs": 247.02866600000004,
+  "identity": {
+    "worldId": "procedural-rift",
+    "layoutId": "procedural-rift",
+    "seed": 3075192741,
+    "recipeId": "r100-native-v3:buried-lamellae-severe",
+    "signature": "43208119",
+    "generation": {
+      "version": 3,
+      "requestedSeed": 3075192741,
+      "paintGeometryVersion": 2,
+      "profile": {
+        "id": "buried-lamellae",
+        "label": "埋片砂床",
+        "description": "埋片砂床的原生材料与完整搜撤地段",
+        "material": "strata",
+        "surface": {
+          "substrate": "strata",
+          "coating": "strata",
+          "organization": "bands",
+          "coverage": 0.46,
+          "wear": 0.52,
+          "deposits": 0.52,
+          "scale": 1.1,
+          "relief": 0.52,
+          "contrast": 0.75,
+          "regionScale": 1.15,
+          "quietness": 0.48,
+          "formScale": 1.3,
+          "fragmentation": 0.65,
+          "accentCoverage": 0.02
+        },
+        "palette": {
+          "void": 592137,
+          "shadow": 1381653,
+          "floorDeep": 3024170,
+          "floor": 6377551,
+          "floorLight": 11046535,
+          "materialDark": 3163738,
+          "materialMid": 7248056,
+          "materialLight": 11848409,
+          "faceLight": 14476264,
+          "accentDim": 5395026,
+          "accent": 11184810,
+          "accentLight": 13421772,
+          "peak": 15658734,
+          "actorDark": 1842204,
+          "actorMid": 12237498,
+          "actorLight": 16777215,
+          "ground": 6377551,
+          "groundLight": 11046535,
+          "groundDark": 3024170,
+          "wall": 7248056,
+          "wallLight": 11848409,
+          "wallDark": 3163738
+        }
+      },
+      "appearance": {
+        "version": 1,
+        "worldId": "buried-lamellae",
+        "ground": {
+          "dark": 3024170,
+          "mid": 6377551,
+          "light": 11046535
+        },
+        "solid": {
+          "dark": 3163738,
+          "mid": 7248056,
+          "light": 11848409
+        },
+        "cleaved": {
+          "dark": 6317166,
+          "mid": 11450311,
+          "light": 14476264
+        },
+        "secondary": {
+          "dark": 4729385,
+          "mid": 9851976,
+          "light": 12948095
+        },
+        "groundPattern": "strata",
+        "patternScale": 248,
+        "patternStrength": 0.42,
+        "secondaryCoverage": 0.24,
+        "textureContrast": 1.12,
+        "quietCoverage": 0.62
+      },
+      "space": {
+        "id": "open-scars",
+        "label": "疏落蚀坑",
+        "voidFraction": 0.09,
+        "crackFraction": 0.2,
+        "holeScale": 1,
+        "directionality": 0.2,
+        "clustering": 0.25
+      },
+      "contentFragmentTypeId": "frag-outdoor",
+      "nativeDefinition": {
+        "id": "buried-lamellae-severe",
+        "family": "folded-slab",
+        "grade": "severe",
+        "label": "埋片砂床",
+        "profile": "buried-lamellae",
+        "cols": 32,
+        "rows": 24,
+        "seed": 20261002,
+        "spawn_x": 196,
+        "spawn_y": 588,
+        "exit_x": 148,
+        "exit_y": 664,
+        "search_x": 516,
+        "search_y": 580,
+        "enemy_x": 840,
+        "enemy_y": 172,
+        "axis": -0.28,
+        "light_radius": 154,
+        "emission": 0.72,
+        "motion_period": 14,
+        "ground_quietness": 0.84,
+        "ground_contrast": 0.5,
+        "ground_coverage": 0.26,
+        "ground_material_blend": 0.32,
+        "instances": [
+          {
+            "id": 1,
+            "family": "folded-slab",
+            "role": "solid",
+            "x": 365,
+            "y": 299,
+            "rotation": 0.4,
+            "length": 240,
+            "width": 120,
+            "height": 46,
+            "thickness": 12,
+            "fold": 0.66,
+            "branches": 3,
+            "opening": 0.7,
+            "distortion": 0.275,
+            "constructionVersion": 4,
+            "shapeProfile": "fracture-fan"
+          },
+          {
+            "id": 2,
+            "family": "folded-slab",
+            "role": "relief",
+            "x": 470,
+            "y": 366,
+            "rotation": 0.4,
+            "length": 136,
+            "width": 75,
+            "height": 5,
+            "thickness": 2,
+            "fold": 0.462,
+            "branches": 3,
+            "opening": 0.7,
+            "distortion": 0.275,
+            "constructionVersion": 4,
+            "shapeProfile": "fracture-fan"
+          },
+          {
+            "id": 3,
+            "family": "folded-slab",
+            "role": "relief",
+            "x": 630,
+            "y": 441,
+            "rotation": 0.25,
+            "length": 126,
+            "width": 68,
+            "height": 3,
+            "thickness": 1,
+            "fold": 0.30800000000000005,
+            "branches": 3,
+            "opening": 0.7,
+            "distortion": 0.275,
+            "constructionVersion": 4,
+            "shapeProfile": "fracture-fan"
+          },
+          {
+            "id": 4,
+            "family": "granular-ridge",
+            "role": "solid",
+            "x": 558,
+            "y": 413,
+            "rotation": 0.46,
+            "length": 316,
+            "width": 170,
+            "height": 24,
+            "thickness": 6,
+            "fold": 0.385,
+            "branches": 3,
+            "opening": 0.7,
+            "distortion": 0.275,
+            "constructionVersion": 4,
+            "shapeProfile": "fallen-bundle"
+          }
+        ],
+        "erosion": [
+          [
+            {
+              "x": 850,
+              "y": 32
+            },
+            {
+              "x": 935,
+              "y": 48
+            },
+            {
+              "x": 946,
+              "y": 96
+            },
+            {
+              "x": 881,
+              "y": 112
+            }
+          ]
+        ],
+        "authoredErosion": true
+      },
+      "gradeDefinition": {
+        "id": "severe",
+        "version": 1,
+        "label": "重度污染",
+        "status": "dev-masters",
+        "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+        "paintCount": 6,
+        "paintSubstrate": "oil_film",
+        "paintContinuity": "monolith",
+        "paintCoverage": "overwrite",
+        "volumeCount": 3,
+        "volumeSubstrate": "gas_mass",
+        "volumeCoverage": "overwrite",
+        "volumeCols": 5,
+        "volumeRows": 3,
+        "chaosStartRate": 0.64,
+        "chaosEndRate": 0.96,
+        "chaosRampStartSeconds": 40,
+        "chaosRampEndSeconds": 130
+      },
+      "contentDefinition": {
+        "grade_id": "severe",
+        "version": 2,
+        "status": "production-candidate",
+        "label": "重度污染",
+        "public_risk": "地面与空气受侵占，混乱增长快",
+        "public_preparation": "备好脱身工具，留出归途",
+        "public_reward": "更多收获在深处，入口无加成",
+        "enemy_count": 4,
+        "kindling_safe_count": 1,
+        "kindling_contested_count": 2,
+        "kindling_deep_count": 2,
+        "kindling_safe_value": 1,
+        "kindling_contested_value": 2,
+        "kindling_deep_value": 6,
+        "contaminant_safe_count": 1,
+        "contaminant_contested_count": 1,
+        "contaminant_deep_count": 2
+      },
+      "package": {
+        "id": "r100-buried-lamellae",
+        "algorithm": "r100-native",
+        "version": 3,
+        "algorithmRevision": 6,
+        "materials": {
+          "folded-slab": {
+            "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+            "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+            "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+          },
+          "granular-ridge": {
+            "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+            "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+            "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+          }
+        },
+        "dependencyHash": "0d34d0b7",
+        "grade": "severe"
+      }
+    }
+  },
+  "transferBufferCount": 43,
+  "transferBytes": 28660738,
+  "identitySha256": "dfe003d4ac724c6e640fe19e0622487e24a60717fc5dab8640dedce3015831cb",
+  "transferIdentityExact": true,
+  "sourceBeforeAndAfterExact": true,
+  "finishedAt": "2026-10-07T04:58:27.480Z"
+}

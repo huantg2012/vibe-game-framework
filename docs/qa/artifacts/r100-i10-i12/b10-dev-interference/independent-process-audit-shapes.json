@@ -1,0 +1,2856 @@
+{
+  "status": "bounded-independent-process-data-pass-with-retained-environment-failure",
+  "reviewer": "identity_shapes",
+  "createdAt": "2026-10-07T09:10:39.255878+00:00",
+  "scope": "B10原24固定身份、25实际过程只读独审。012原环境失败与同身份复测分别保留；不改原门槛/种子/数据，不启动地图或浏览器。",
+  "auditScript": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/independent-process-audit-shapes.py",
+    "sha256": "f6f7c4b8fdffcb2cb4ca6ac841854d6ed86105073f80387e9f107d2f3694f685"
+  },
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/play-summary-plan.json",
+      "sha256": "f782edd4308edb32325f1c02d1bfc0c3ca5b1d17094fc6d294084a7e035d358c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/play-summary.json",
+      "sha256": "88b4d1e3e6bafbe5c2e20a97a8bed1ccc926987423423bf346e1a72c5b287e7c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/outcomes.json",
+      "sha256": "a2f71a49799aed20ebd3dd885d29ffdd2acb05e2dd17e1fdfb5577b1d9f9ed64"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/worker-observation-summary.json",
+      "sha256": "a09c66d62b5efb56ecc9d3f5f57bc2320a16800bb103184b815a61c88766bfa3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/reconciliation.json",
+      "sha256": "b97aed7a9e662a4ad7725f4aec1e6c3e3e12e2ce696a2e646487f914ffb106aa"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/independent-attribution-shapes.json",
+      "sha256": "3a4db8ea75dbaddbb8afd3469612c8c5b7d5f5f665a5efaf7deb54cf4ab3509c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/independent-process-draft-error.json",
+      "sha256": "9b671eda0a5d688988a94e12d3c059541dabde916428a093cc41df8a83cb6723"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play-commands.json",
+      "sha256": "232bbf52db15e76db6d2fe4ec4544cb7e03d008e65e9c1bd5de7d06bb677db77"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/batch-report.json",
+      "sha256": "9be004236650cb4b41c785ea1ca4c580c454b50e40ab6115fd6bde57e764bba7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/batch-report.json",
+      "sha256": "40528396df85a5489c8c89ce7559d17568cf6da821c1bd26233b0047b186871a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/batch-report.json",
+      "sha256": "cf3c8a5ec32303f5be9dc013fdc3ef3548de3a3e140e10534734308a72bbe522"
+    }
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "coverage": {
+    "uniqueFixedIdentities": 24,
+    "actualAttempts": 25,
+    "worlds": [
+      "notched-backwater",
+      "crossed-casings",
+      "fibre-stumpfield",
+      "sloughed-court"
+    ],
+    "grades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "requestedSeeds": [
+      20261005,
+      3075192741
+    ],
+    "qualifiedGradePairs": 12,
+    "logicalNonEntrySearchAndExtract": 23,
+    "logicalNearEntryOnlyReturns": 1,
+    "trueEmptyReturns": 0,
+    "deaths": 0,
+    "rawNonEntrySearchAndExtractAttempts": 24,
+    "environmentFailedOriginalAttempts": 1,
+    "sameIdentityRechecks": 1
+  },
+  "integrity": [
+    "原24计划三批对账：原1–12、仅原012复测、原13–24；所有report与policy/batch/来源SHA核对，不按目录数字重新解释原索引。",
+    "三批使用相同3120冻结源、已获得存档字节、policy15及controller依赖；25实际report逐项核完整requested world/grade/seed与revision6身份。",
+    "25 entry/returned实际save与report字段一致，同run active→settled extract/baseSettled；污染物必须同run/node来源在returnedIds/revealedNodes。",
+    "实际收集按entry→field节点变化，而非预定target标签；每趟1实际pickup，013号实际尝试是原012复测而非新增覆盖。",
+    "13主动工具输入逐项used=1，按item对账actionReceipt与存档余次；武器、耗尽销毁及出征被动视野另计。",
+    "28observer JSONL原SHA与全部事件重数：25contexts/75匹配Worker关闭；额外第26页与16异常全部保留并绑定独立归因。"
+  ],
+  "generationSchedule": {
+    "inputs": [
+      {
+        "path": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-af7K2q/src/generation/seed-fork.ts",
+        "relativeSourcePath": "src/generation/seed-fork.ts",
+        "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+      },
+      {
+        "path": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-af7K2q/src/generation/world-study/r100-production-map.ts",
+        "relativeSourcePath": "src/generation/world-study/r100-production-map.ts",
+        "sha256": "87509365a644732c6783c58390f37488985822b3e5f53639bb62ea2c34f82883"
+      }
+    ],
+    "requestedUnchanged": 24,
+    "effectiveEqualsRequestedUnique": 23,
+    "differentEffectiveSeed": {
+      "originalIndex": 16,
+      "world": "fibre-stumpfield",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 4005187222,
+      "matchingFrozenAttempt": 1
+    },
+    "boundary": "有效种子属于固定8次准入序列；原report未保留生成拒绝原因，不猜该原因，也不把它描述成人工换seed或新的游玩重试。"
+  },
+  "observation": {
+    "files": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-32605.jsonl",
+        "sha256": "ec7b7bfaa930806b9ada8b15b8acaf7bd5dd9d2dd8dcfa6c4e5dedff341e5cca"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-32618.jsonl",
+        "sha256": "59f91545d8f27c88f84e14b194293bb0a5c947ee8dcc9fa8e3b698159e4e2941"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-33313.jsonl",
+        "sha256": "c3cf798ded7bf475fae20a676e5ae28778a952c4e07eaeb3df2565727c1f9832"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-34133.jsonl",
+        "sha256": "8bd93d27ffe3491959fbd3537e3eafc2cefd9c0ffefbd0ba2bd7642a0dcb1935"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-35014.jsonl",
+        "sha256": "0c00e69c573948423650493259fe66a21d94ec265721c701be6b5ac6f76d7769"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-35675.jsonl",
+        "sha256": "32f9e12903ff320f619b900497f6fabcfee589ed41a057cc9afab5913189d651"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-36169.jsonl",
+        "sha256": "7c63e8d339b733066733d46a7a50fc0c99d1a02fa0523bd18dd6a2220e5df801"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-36662.jsonl",
+        "sha256": "bbd989a3fefee2a4d8534c8137727aa4cecf2d0bb4e16a7247ae2ab0acf39096"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-37539.jsonl",
+        "sha256": "71c7bf337c857061d6066217105c1068b37661463363de5541c6280d203bb83d"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-38265.jsonl",
+        "sha256": "0344fc81a1cd0a584136e83299a6f0b6744f4180bbb8d9e413d73bcd536babbb"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-38915.jsonl",
+        "sha256": "95df619929493bc3076f33e672e0841d1565057f6572e04bed8eb4a2017c72ed"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40257.jsonl",
+        "sha256": "007b2ef4596ce5f95132f98acc03ad4431f69e4387412070ee067c0e5e6a7641"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl",
+        "sha256": "49667fd4e9ab5967acb42ef94cc2356a97a937d0616b83e8f50be68b66b1e41e"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/worker-observations/observer-44164.jsonl",
+        "sha256": "a9e279f15515817fb3e203f7596ea2f0fdf0644a54c3360fd90fe97e2dc10391"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/worker-observations/observer-44167.jsonl",
+        "sha256": "3854716a02aab4cc7b670edd916460a91bc0619a60ee1c7d825d5a3827bcc61c"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-44669.jsonl",
+        "sha256": "5445d70932ccbb9ff47e3386eddcd3563dfadbba6ed262dbb70734fc731e6734"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-44679.jsonl",
+        "sha256": "cf687b6251f054932433eaf08e2b95f1c1f64c02ee2210ae562c0a621628b609"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-45557.jsonl",
+        "sha256": "98cc872eceba48776464bfcc7a19caeca037af984bfc2e74d097a7253f9e245d"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-46175.jsonl",
+        "sha256": "81708f02c6f9959c473869b9b776795b95205d3b45f7d71741f7c689b967bc19"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-46821.jsonl",
+        "sha256": "25d32d8cf60c2078317f9cf6b07318df8ba08a9e362e27bbb0e2252bd820cdf7"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-47465.jsonl",
+        "sha256": "48910b728d1af0ab1d9539ef78af7097ada9126f722e62d5b4e0b70a6906b107"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-48310.jsonl",
+        "sha256": "f17c53ff4f4d20fcca37f6ef281a0363b3baaaaf0634f8a5dc9f48f153d45a35"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-48772.jsonl",
+        "sha256": "27267336eab2d026f769ce659b42ac534ae5c196f0ab6044cba076bf2e5c0fe2"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-49505.jsonl",
+        "sha256": "86cc4a2b6a57ba2f9be3f57ff84b1a36e33f4c636de0d1d1b5c38bdb5f0ebd61"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-50133.jsonl",
+        "sha256": "af15918fed9a6337bb73481c2aa271460ecc146c8357a005d1ccd4a180080545"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-50785.jsonl",
+        "sha256": "4972020fdae03b84932841d9267247b967bbfda8ec20732e51042d9ba259a204"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-51436.jsonl",
+        "sha256": "35fc87317ebdb062ebc2f9b590e14677e6817cd0e6a7667c61e890fac716f93e"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observations/observer-52157.jsonl",
+        "sha256": "cb37c29f31d516b08da88b3c1128bf34f7f00f9e6677abff1d9ac77fd85a244b"
+      }
+    ],
+    "recountedEventCounts": {
+      "preload-ready": 28,
+      "launch": 25,
+      "browser-ready": 25,
+      "process-snapshot": 100,
+      "Target.targetCreated": 226,
+      "Target.targetInfoChanged": 502,
+      "context-created": 25,
+      "Target.targetDestroyed": 226,
+      "page-created": 26,
+      "network-url": 12210,
+      "page-navigation": 25,
+      "worker-created": 75,
+      "worker-closed": 75,
+      "page-closed": 26,
+      "network-summary": 25,
+      "context-closed": 25,
+      "browser-disconnected": 25,
+      "console": 12,
+      "requestfailed": 8
+    },
+    "contexts": 25,
+    "networkSummaries": 25,
+    "pages": 26,
+    "matchedWorkers": 75,
+    "failedRequests": 8,
+    "consoleErrors": 8,
+    "exceptionEvents": [
+      {
+        "at": "2026-10-07T08:51:58.629Z",
+        "pid": 40826,
+        "event": "requestfailed",
+        "browserId": 1,
+        "contextId": 1,
+        "urlId": 460,
+        "url": "http://127.0.0.1:3188/",
+        "failure": {
+          "errorText": "net::ERR_CONNECTION_REFUSED"
+        },
+        "resourceType": "fetch",
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:51:58.629Z",
+        "pid": 40826,
+        "event": "console",
+        "browserId": 1,
+        "contextId": 1,
+        "pageId": 2,
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://127.0.0.1:3188/",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:51:59.630Z",
+        "pid": 40826,
+        "event": "requestfailed",
+        "browserId": 1,
+        "contextId": 1,
+        "urlId": 460,
+        "url": "http://127.0.0.1:3188/",
+        "failure": {
+          "errorText": "net::ERR_CONNECTION_REFUSED"
+        },
+        "resourceType": "fetch",
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:51:59.630Z",
+        "pid": 40826,
+        "event": "console",
+        "browserId": 1,
+        "contextId": 1,
+        "pageId": 2,
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://127.0.0.1:3188/",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:00.632Z",
+        "pid": 40826,
+        "event": "requestfailed",
+        "browserId": 1,
+        "contextId": 1,
+        "urlId": 460,
+        "url": "http://127.0.0.1:3188/",
+        "failure": {
+          "errorText": "net::ERR_CONNECTION_REFUSED"
+        },
+        "resourceType": "fetch",
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:00.632Z",
+        "pid": 40826,
+        "event": "console",
+        "browserId": 1,
+        "contextId": 1,
+        "pageId": 2,
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://127.0.0.1:3188/",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:01.634Z",
+        "pid": 40826,
+        "event": "requestfailed",
+        "browserId": 1,
+        "contextId": 1,
+        "urlId": 460,
+        "url": "http://127.0.0.1:3188/",
+        "failure": {
+          "errorText": "net::ERR_CONNECTION_REFUSED"
+        },
+        "resourceType": "fetch",
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:01.634Z",
+        "pid": 40826,
+        "event": "console",
+        "browserId": 1,
+        "contextId": 1,
+        "pageId": 2,
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://127.0.0.1:3188/",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:02.637Z",
+        "pid": 40826,
+        "event": "requestfailed",
+        "browserId": 1,
+        "contextId": 1,
+        "urlId": 460,
+        "url": "http://127.0.0.1:3188/",
+        "failure": {
+          "errorText": "net::ERR_CONNECTION_REFUSED"
+        },
+        "resourceType": "fetch",
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:02.638Z",
+        "pid": 40826,
+        "event": "console",
+        "browserId": 1,
+        "contextId": 1,
+        "pageId": 2,
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://127.0.0.1:3188/",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:03.640Z",
+        "pid": 40826,
+        "event": "requestfailed",
+        "browserId": 1,
+        "contextId": 1,
+        "urlId": 460,
+        "url": "http://127.0.0.1:3188/",
+        "failure": {
+          "errorText": "net::ERR_CONNECTION_REFUSED"
+        },
+        "resourceType": "fetch",
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:03.640Z",
+        "pid": 40826,
+        "event": "console",
+        "browserId": 1,
+        "contextId": 1,
+        "pageId": 2,
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://127.0.0.1:3188/",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:04.641Z",
+        "pid": 40826,
+        "event": "requestfailed",
+        "browserId": 1,
+        "contextId": 1,
+        "urlId": 460,
+        "url": "http://127.0.0.1:3188/",
+        "failure": {
+          "errorText": "net::ERR_CONNECTION_REFUSED"
+        },
+        "resourceType": "fetch",
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:04.642Z",
+        "pid": 40826,
+        "event": "console",
+        "browserId": 1,
+        "contextId": 1,
+        "pageId": 2,
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://127.0.0.1:3188/",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:05.644Z",
+        "pid": 40826,
+        "event": "requestfailed",
+        "browserId": 1,
+        "contextId": 1,
+        "urlId": 460,
+        "url": "http://127.0.0.1:3188/",
+        "failure": {
+          "errorText": "net::ERR_CONNECTION_REFUSED"
+        },
+        "resourceType": "fetch",
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      },
+      {
+        "at": "2026-10-07T08:52:05.644Z",
+        "pid": 40826,
+        "event": "console",
+        "browserId": 1,
+        "contextId": 1,
+        "pageId": 2,
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+        "location": {
+          "url": "http://127.0.0.1:3188/",
+          "line": 0,
+          "column": 0,
+          "lineNumber": 0,
+          "columnNumber": 0
+        },
+        "file": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/worker-observations/observer-40826.jsonl"
+      }
+    ],
+    "independentAttribution": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/independent-attribution-shapes.json",
+      "sha256": "3a4db8ea75dbaddbb8afd3469612c8c5b7d5f5f665a5efaf7deb54cf4ab3509c"
+    },
+    "boundary": "原012第二页3188自动打开/关闭后的ping错误，不得过滤为零异常；清洁同identity复测和原13–24没有异常。历史P36因果仍独立。"
+  },
+  "economy": {
+    "logicalSeparateFixtureKindling": 94,
+    "logicalReturnedContaminants": 8,
+    "rawAttemptKindling": 94,
+    "rawAttemptReturnedContaminants": 9,
+    "logicalActiveToolInputs": 13,
+    "logicalConsumingToolInputs": 13,
+    "logicalWithoutActiveToolUse": 16,
+    "logicalWithHpLoss": 1,
+    "perExtractModuleDamage": {
+      "CORE": 4,
+      "STORAGE": 14,
+      "PURIFIER": 4
+    }
+  },
+  "logicalToolConsumption": {
+    "passive-sight-at-departure": 24,
+    "ash_tooth": 9,
+    "crowbar_fine_standard": 5,
+    "empty_photo_frame": 4
+  },
+  "rawAttemptToolConsumption": {
+    "passive-sight-at-departure": 25,
+    "ash_tooth": 9,
+    "crowbar_fine_standard": 5,
+    "empty_photo_frame": 4
+  },
+  "nearEntryOnly": [
+    {
+      "index": 6,
+      "world": "notched-backwater",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "81562b44-6c48-4386-b8b2-e53c28d1096d",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/report.json",
+        "sha256": "c267f1d773780c9b862d73929388f10a3fc0d412d4883db11067a9f0fa6371d8"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/journey.jsonl",
+        "sha256": "deaa15ed42b43fd85f8711ee237a1f384bab3342161482ed1321ac6b35bf98b2"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "c29ab11f7be02d19e89927d05aaeb61abb7658d6d16d9042acd6cd2060418e2f"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "87f035cea7c76655abe2c65bdf2434ca4e0db5e812a8078f0eaadd8139b79a32"
+      },
+      "outcome": "near-entry-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "distanceFromEntry": 272.1176216271192
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 30.88630732697537,
+      "fieldChaos": 30.88630732697537,
+      "elapsedMs": 14782.749999999989,
+      "settledKindling": 4,
+      "returnedLootCount": 0,
+      "reserveDelta": 4,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-search-1.png"
+      ],
+      "originalIndex": 6,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    }
+  ],
+  "highestPressureAndCost": {
+    "index": 10,
+    "world": "crossed-casings",
+    "grade": "medium",
+    "requestedSeed": 3075192741,
+    "effectiveSeed": 3075192741,
+    "runId": "eb38435e-4a27-4cde-aefe-db4407e0abe7",
+    "report": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/report.json",
+      "sha256": "ce44a3f9781f420766cfb19eda74625e04511ab78d0a7fbaccc3f9a0f45a3ba8"
+    },
+    "journey": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/journey.jsonl",
+      "sha256": "78c20d61a89ad9fbdec20bbec45e8035fe08e68820b4de7473c641c53fd8bf65"
+    },
+    "entrySave": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-entry.save.json",
+      "sha256": "b4a9b37b2689204737ed7792947188aa35c6f2f5c3351cd7a16c38bf2a73a64e"
+    },
+    "settledSave": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-returned.save.json",
+      "sha256": "2a78f003360c0f4fb3fa80e4aa2f4cfbddd96010047406c41ce4514b4121df8e"
+    },
+    "outcome": "non-entry-search-and-extract",
+    "actualPickups": [
+      {
+        "id": "r100-contaminant-deep-1",
+        "kind": "contaminant",
+        "tier": "deep",
+        "distanceFromEntry": 883.8099343184597
+      }
+    ],
+    "fieldHp": 70,
+    "minRecordedSnapshotHp": 70,
+    "maxRecordedSnapshotChaos": 93.18018394715456,
+    "fieldChaos": 93.18018394715456,
+    "elapsedMs": 72980.38,
+    "settledKindling": 0,
+    "returnedLootCount": 1,
+    "reserveDelta": 0,
+    "moduleDamage": {
+      "CORE": 4,
+      "STORAGE": 14,
+      "PURIFIER": 4
+    },
+    "toolConsumption": [
+      {
+        "id": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+        "definition": "crowbar_fine_standard",
+        "kind": "weapon",
+        "before": 40,
+        "after": 35,
+        "used": 5,
+        "destroyed": false
+      },
+      {
+        "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+        "definition": "empty_photo_frame",
+        "kind": "contaminant",
+        "before": 4,
+        "after": 0,
+        "used": 4,
+        "destroyed": true
+      },
+      {
+        "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+        "definition": "ash_tooth",
+        "kind": "contaminant",
+        "before": 2,
+        "after": 0,
+        "used": 2,
+        "destroyed": true
+      }
+    ],
+    "activeToolInputs": 6,
+    "consumingToolInputs": 6,
+    "nonConsumingInputs": [],
+    "departurePassiveUses": 1,
+    "searchDecisions": [
+      {
+        "id": "r100-kindling-contested-2",
+        "decision": {
+          "attempted": false,
+          "reason": "visible-opponent-too-close"
+        }
+      },
+      {
+        "id": "r100-kindling-deep-1",
+        "decision": {
+          "attempted": false,
+          "reason": "visible-opponent-too-close"
+        }
+      },
+      {
+        "id": "r100-contaminant-deep-1",
+        "decision": {
+          "attempted": true,
+          "reason": "collected",
+          "completedNodeIds": [
+            "r100-contaminant-deep-1"
+          ]
+        }
+      }
+    ],
+    "abandonedApproaches": [],
+    "frames": [
+      "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-continued-exploration-2.png",
+      "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-entry.png",
+      "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-far-exploration.png",
+      "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-field-result.png",
+      "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-return.png",
+      "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-search-1.png",
+      "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-search-3.png",
+      "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-search-4.png"
+    ],
+    "originalIndex": 10,
+    "environmentFailedOriginal": false,
+    "sameIdentityRecheck": false,
+    "matchingGenerationAttempt": 0
+  },
+  "weakDepthOriginalIndices": [
+    5,
+    6,
+    11,
+    12,
+    14,
+    18
+  ],
+  "allActualProcessRows": [
+    {
+      "index": 1,
+      "world": "notched-backwater",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "13420378-e6ec-446a-b25e-ba5b7f51405c",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/report.json",
+        "sha256": "ad616892f860bd17d2968da787b234f52a0f1c2d598ed2af06802bbb14cbaf83"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/low/journey.jsonl",
+        "sha256": "4f2a80177075ed3e6975e173ba48d8956d348fe8ff9069d4137b1def8c0e68aa"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/low/1-entry.save.json",
+        "sha256": "bb957925a47b200559a1a76d8e478bc82410305c1b4b684aa5a0bcbb94819c97"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/low/1-returned.save.json",
+        "sha256": "57b937a8d5c19d391ea8604fb3fac9356f3935aaa57786fda730f745746e8909"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 526.1178575186362
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 29.362697127996206,
+      "fieldChaos": 29.362697127996206,
+      "elapsedMs": 30698.75999999969,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/001-notched-backwater-low-20261005/low/1-search-1.png"
+      ],
+      "originalIndex": 1,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 2,
+      "world": "notched-backwater",
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "97bc3acd-7677-4d0e-8cc3-c95d45afecac",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/report.json",
+        "sha256": "53e9092df489376350191b46bf2c6b701d6fa3ba0c0436b0ade56b6a5517c9f9"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/low/journey.jsonl",
+        "sha256": "113ad9a60c229a522d6ef9fbdaf93db239f8cd5f5b91bf8b451439a1da9bd5be"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/low/1-entry.save.json",
+        "sha256": "692575af62eabbedad9f704a29a2a8f60ce2dfe12709aae38d1102cab7bd79ad"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/low/1-returned.save.json",
+        "sha256": "59a9f22bb931f7e68ee3732bf25079949f6ec08038a1ba0124757b692ad4ad00"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 597.0058626177803
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 30.09053186649483,
+      "fieldChaos": 30.09053186649483,
+      "elapsedMs": 34865.24999999975,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/002-notched-backwater-low-3075192741/low/1-search-1.png"
+      ],
+      "originalIndex": 2,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 3,
+      "world": "notched-backwater",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "4c0f8de2-b031-491e-a781-dc46d834bdc7",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/report.json",
+        "sha256": "5289ec9c46b736eee3983459187bb8fd210c689cc010edcdb60b181d3e91a9cb"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/medium/journey.jsonl",
+        "sha256": "fd8c8f29bde549c92fae1cbee2c2886d6a4eaac211a215604105402aeaaba065"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/medium/1-entry.save.json",
+        "sha256": "ae5c3d79e65fc0e79cfad427c40c580ef01e34b1db3c17b5068736e826993d8b"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/medium/1-returned.save.json",
+        "sha256": "ce704de3f3be0714ae759e176c108c644d82336a503a375c707cc8dd3be71e5a"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 566.4203386178855
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 33.65984705672453,
+      "fieldChaos": 33.65984705672453,
+      "elapsedMs": 31598.73999999965,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/003-notched-backwater-medium-20261005/medium/1-search-1.png"
+      ],
+      "originalIndex": 3,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 4,
+      "world": "notched-backwater",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "309eadbd-2cc9-482c-b11b-b1a82620ca4d",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/report.json",
+        "sha256": "3e36ec5ca118e82bf57559bcde43f4c4c96dc78c6ff55bd919b089371f34b1c3"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/medium/journey.jsonl",
+        "sha256": "6c21a1e5ce64b1b9bee937cd0a38ec957c08e3bf97f0883f5f40b22489b2b2e4"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/medium/1-entry.save.json",
+        "sha256": "22433628d2b5a725e03f40fa2a3de85898cba9b559be78e71a9256431157b2b8"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/medium/1-returned.save.json",
+        "sha256": "f49b1cf8475d6cece950d42a9242f68ec238937b772b5867d23b98b118f176d5"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 579.378977871997
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 42.927659906211396,
+      "fieldChaos": 42.927659906211396,
+      "elapsedMs": 35881.90999999971,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/004-notched-backwater-medium-3075192741/medium/1-search-1.png"
+      ],
+      "originalIndex": 4,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 5,
+      "world": "notched-backwater",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "917e8a50-2822-4dae-923d-23cad8ebec9d",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/report.json",
+        "sha256": "358f7266e2d39e1b64857fb9803e441e1bd674a902b4f1f8ba63b8eab2bf0a8f"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/journey.jsonl",
+        "sha256": "ea393860116ccef6a1a06bc20493533a03f6e46fb1c17cb90240c4ba353db7bf"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/1-entry.save.json",
+        "sha256": "aac086ddbcb25c627b35a6206a6c3d963a62e672ebaa26b20b1ab0ae10ebfb1f"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/1-returned.save.json",
+        "sha256": "3fd4f67662014aaf5c1aaaf04da755e294b836bedc2d279e63d7857b998d8d38"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.0999843798809
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 30.731044860108174,
+      "fieldChaos": 30.731044860108174,
+      "elapsedMs": 14449.44999999999,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/1-search-1.png"
+      ],
+      "originalIndex": 5,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 6,
+      "world": "notched-backwater",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "81562b44-6c48-4386-b8b2-e53c28d1096d",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/report.json",
+        "sha256": "c267f1d773780c9b862d73929388f10a3fc0d412d4883db11067a9f0fa6371d8"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/journey.jsonl",
+        "sha256": "deaa15ed42b43fd85f8711ee237a1f384bab3342161482ed1321ac6b35bf98b2"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "c29ab11f7be02d19e89927d05aaeb61abb7658d6d16d9042acd6cd2060418e2f"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "87f035cea7c76655abe2c65bdf2434ca4e0db5e812a8078f0eaadd8139b79a32"
+      },
+      "outcome": "near-entry-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "distanceFromEntry": 272.1176216271192
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 30.88630732697537,
+      "fieldChaos": 30.88630732697537,
+      "elapsedMs": 14782.749999999989,
+      "settledKindling": 4,
+      "returnedLootCount": 0,
+      "reserveDelta": 4,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-search-1.png"
+      ],
+      "originalIndex": 6,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 7,
+      "world": "crossed-casings",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "4b332cdb-b54d-4309-84e5-41d1b6bccd86",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/report.json",
+        "sha256": "1768fc54733271d495a6cc7c9d2778a02efb5155069bb9571da45b12b9b634a7"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/low/journey.jsonl",
+        "sha256": "6e8419c8b06eb91e049a6b1636781079b14129b22601865ff02134ad1ea8bef5"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/low/1-entry.save.json",
+        "sha256": "7d87ea8c448ec65c47b410d34756d79817811260a7d785553ed27723fbf6a59a"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/low/1-returned.save.json",
+        "sha256": "af4f97991d1479fa1e08eb36034eca20a2de0583c44808cfd1a406d57789b557"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 526.1178575186362
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 35.193660503530005,
+      "fieldChaos": 35.193660503530005,
+      "elapsedMs": 32315.359999999604,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "consumingToolInputs": 1,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/007-crossed-casings-low-20261005/low/1-search-1.png"
+      ],
+      "originalIndex": 7,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 8,
+      "world": "crossed-casings",
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "87ab4471-8b20-4496-8f48-706168227516",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/report.json",
+        "sha256": "c7c86a1379caa063f367ae33213d55060a5da9a4b63654d78461b969d13c5378"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/low/journey.jsonl",
+        "sha256": "bb6e95b5fc2bf38ac65a133ee72cff45485322652c2ae33eb68386d33e09fa4e"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/low/1-entry.save.json",
+        "sha256": "590f723a1a36e8678065458d8f6322198b3749dc201a66b6dfbdabdacf894d2c"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/low/1-returned.save.json",
+        "sha256": "b0cc7dad83a4bf87d9fb41b2878702d3d7721a47466fe6e8a255ed15c840327a"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 597.0058626177803
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 30.087630303067037,
+      "fieldChaos": 30.087630303067037,
+      "elapsedMs": 34848.63999999971,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "consumingToolInputs": 1,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/008-crossed-casings-low-3075192741/low/1-search-1.png"
+      ],
+      "originalIndex": 8,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 9,
+      "world": "crossed-casings",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "fb3bd656-ac8a-4c80-b87b-26e429bae98a",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/report.json",
+        "sha256": "b582ebe3c3a8aca2cdb72d505d601f8d3d0f77eb0d590c3332e3f9113dfd8648"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/medium/journey.jsonl",
+        "sha256": "35195384959876ddd375efe31606cd44ee2708cb08abad56d22d3ab13d2d9be1"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/medium/1-entry.save.json",
+        "sha256": "0fc0a507de1b5fe168c9bbf645e6e4f6850f387ac62ed1157f5ab3e234484b64"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/medium/1-returned.save.json",
+        "sha256": "ec8799030ad9689d3d2ed9acd933195d96c3ec72aa66a19fbc4466ee9e50a4d5"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 566.4203386178855
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 38.364447451074625,
+      "fieldChaos": 38.364447451074625,
+      "elapsedMs": 34165.279999999664,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "consumingToolInputs": 1,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/009-crossed-casings-medium-20261005/medium/1-search-1.png"
+      ],
+      "originalIndex": 9,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 10,
+      "world": "crossed-casings",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "eb38435e-4a27-4cde-aefe-db4407e0abe7",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/report.json",
+        "sha256": "ce44a3f9781f420766cfb19eda74625e04511ab78d0a7fbaccc3f9a0f45a3ba8"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/journey.jsonl",
+        "sha256": "78c20d61a89ad9fbdec20bbec45e8035fe08e68820b4de7473c641c53fd8bf65"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-entry.save.json",
+        "sha256": "b4a9b37b2689204737ed7792947188aa35c6f2f5c3351cd7a16c38bf2a73a64e"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-returned.save.json",
+        "sha256": "2a78f003360c0f4fb3fa80e4aa2f4cfbddd96010047406c41ce4514b4121df8e"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-deep-1",
+          "kind": "contaminant",
+          "tier": "deep",
+          "distanceFromEntry": 883.8099343184597
+        }
+      ],
+      "fieldHp": 70,
+      "minRecordedSnapshotHp": 70,
+      "maxRecordedSnapshotChaos": 93.18018394715456,
+      "fieldChaos": 93.18018394715456,
+      "elapsedMs": 72980.38,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+          "definition": "crowbar_fine_standard",
+          "kind": "weapon",
+          "before": 40,
+          "after": 35,
+          "used": 5,
+          "destroyed": false
+        },
+        {
+          "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+          "definition": "empty_photo_frame",
+          "kind": "contaminant",
+          "before": 4,
+          "after": 0,
+          "used": 4,
+          "destroyed": true
+        },
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 0,
+          "used": 2,
+          "destroyed": true
+        }
+      ],
+      "activeToolInputs": 6,
+      "consumingToolInputs": 6,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          }
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "decision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          }
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-deep-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-continued-exploration-2.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-search-1.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-search-3.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-search-4.png"
+      ],
+      "originalIndex": 10,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 11,
+      "world": "crossed-casings",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "dfd2ff52-b5f9-4504-a851-35ac9bf78323",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/report.json",
+        "sha256": "2f6ea4bbd274ef71ff9c670b5fd68e9a115939f77608d2656ac8b27c6e562c4b"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/severe/journey.jsonl",
+        "sha256": "0bd1b716879166104e425e05786365ee6ef08009e4574eebe28f67a8a5d1ad4c"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/severe/1-entry.save.json",
+        "sha256": "0b3b2d4f74eecb8e10673f3af159556cd36d89cedb1dc4fa1ba8c7cf2ce892e1"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/severe/1-returned.save.json",
+        "sha256": "8ee2419d416b12c31f970a522f33a48d65039d5a98d94b8978e7f364474fb039"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.0999843798809
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.616092162989382,
+      "fieldChaos": 31.616092162989382,
+      "elapsedMs": 16349.369999999988,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/011-crossed-casings-severe-20261005/severe/1-search-1.png"
+      ],
+      "originalIndex": 11,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 12,
+      "world": "crossed-casings",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "ab52f3f3-3eae-4aaa-b57a-72ca04137692",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/report.json",
+        "sha256": "b1d4619e578ac7935b52df0fd5b8a48afd131e93d9f4ce19d625530e01ef7821"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/severe/journey.jsonl",
+        "sha256": "b3a580eeb66b15bd48027f3eb9fe5f60ba1fa1a0178cd98201b2b29ec0d9fa5d"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "27b22baa5f59e040a185626e3ee1740a51bffcaf02ac4102209aa3b22e67da3c"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "e91f811fe76a740bad83717905a3b234fe23aead3e7e6d4625b30464eabe48d2"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.8987379221053
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.771363946536237,
+      "fieldChaos": 31.771363946536237,
+      "elapsedMs": 16682.68999999998,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/severe/1-search-1.png"
+      ],
+      "originalIndex": 12,
+      "environmentFailedOriginal": true,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 13,
+      "world": "crossed-casings",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "7bb9f6a4-e17c-4e9c-89c2-5f73cd33d001",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/report.json",
+        "sha256": "8f7b144d0d0574aaeffa04043b9f4eb733eb5ee3de75d43bb7bab00b6d7c8ba0"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/severe/journey.jsonl",
+        "sha256": "b78bd714738d9cd1e0e6997ad3816c2286fce3b61cfcb12f96751b1d28a7436e"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "54ad60281bf1293dc0043c5ebcd0789019800d572cdaa365cad82f603ea5a971"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "935c9b9e2c5e921cc664482635dbf10c70b1a39634b6c7b2b3885ce496577621"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.8987379221053
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.662661586369847,
+      "fieldChaos": 31.662661586369847,
+      "elapsedMs": 16449.339999999982,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/severe/1-search-1.png"
+      ],
+      "originalIndex": 12,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": true,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 14,
+      "world": "fibre-stumpfield",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "e6f25b4f-c442-4b61-a0ee-dd432a8fd1dc",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/report.json",
+        "sha256": "3e34d9c3c27f88ed9a2e398d88fecbc2331b334a7d58a898693f0c9ea894506a"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/low/journey.jsonl",
+        "sha256": "000dd87be25a2fd8df60c2ee1c79994663d84251602923ab0546f141f905d418"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/low/1-entry.save.json",
+        "sha256": "1e38aab764dd1bc326652fbe5df03393e5c077b1ea78c9239d5f29014b27515e"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/low/1-returned.save.json",
+        "sha256": "5404c6325792bcf5e06e290725706d54c6af028ffaf75f2fc15f6cf1adba9704"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 501.4538862148742
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 30.527235504598018,
+      "fieldChaos": 30.527235504598018,
+      "elapsedMs": 37365.15999999971,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/001-fibre-stumpfield-low-20261005/low/1-search-1.png"
+      ],
+      "originalIndex": 13,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 15,
+      "world": "fibre-stumpfield",
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "a0ec5fc1-4548-4379-9b27-85e9b856f9ad",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/report.json",
+        "sha256": "9d3ba5e77e1b187eb7e1ba14f5ac06245b028730ce091fe26c2bb93bcc121055"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/journey.jsonl",
+        "sha256": "53afeee2aaaf5c74fa6aec56e0eedacbf4fd648a7c118aba1497a6e504bf4b05"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/1-entry.save.json",
+        "sha256": "bc5fdc368f32387156be52d3d6ebae6c05b440daf13882c93d31f403628987f7"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/1-returned.save.json",
+        "sha256": "dbabf59f4f033c62e7cd2b173ce855fe72f04432c10a1fa02bde2b07ed1bd3f6"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.0999843798809
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 26.72792905093537,
+      "fieldChaos": 26.72792905093537,
+      "elapsedMs": 15616.029999999986,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/1-search-1.png"
+      ],
+      "originalIndex": 14,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 16,
+      "world": "fibre-stumpfield",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "957ac10c-8db4-4da9-8de8-24aebb9b6d4a",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/report.json",
+        "sha256": "98b8555f47f185f411c9ba3dd0d535872c224c3bf89877b0a7efe3a7d597523a"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/medium/journey.jsonl",
+        "sha256": "723718fb97408afb24b34b43f65fbb49d8f79e29631dc50ce0745025444c92ef"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/medium/1-entry.save.json",
+        "sha256": "fb94198ee31151d37fdf34e299084b2e7e87996f139b907f8c2b81fbbf0c0058"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/medium/1-returned.save.json",
+        "sha256": "d6e84f609e6b88c1b297de85fc3e6d6df0bb102e1439d537a2b66e1af7a31a90"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 588.8021739090303
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 35.12206383036681,
+      "fieldChaos": 35.12206383036681,
+      "elapsedMs": 36381.859999999724,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "consumingToolInputs": 1,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/003-fibre-stumpfield-medium-20261005/medium/1-search-1.png"
+      ],
+      "originalIndex": 15,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 17,
+      "world": "fibre-stumpfield",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 4005187222,
+      "runId": "b3ae6193-b16d-4b4f-a448-028fe71d7e19",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/report.json",
+        "sha256": "474387253a98b0a6ad8e3a4f540a96d23b9c9ee60269b68ec45c71084b561076"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/medium/journey.jsonl",
+        "sha256": "ed59d2a223014caae89785979b76149d68f6170b80c63a0c3d72a92f6ef7cccb"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/medium/1-entry.save.json",
+        "sha256": "696b4b2c39a243e9a67fd688c429cbc831677fa538661e81d8f04668a158bdbf"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/medium/1-returned.save.json",
+        "sha256": "40e21b4288b485adb96394342f3a4b3aa05318e2262a6eed2141e6941fa369ad"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 580.9234028682267
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 35.07621441163791,
+      "fieldChaos": 35.07621441163791,
+      "elapsedMs": 36231.879999999685,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/004-fibre-stumpfield-medium-3075192741/medium/1-search-1.png"
+      ],
+      "originalIndex": 16,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 1
+    },
+    {
+      "index": 18,
+      "world": "fibre-stumpfield",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "5debbb42-9c8a-424c-850c-bb8f4e25d5b4",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/report.json",
+        "sha256": "b959502a751576d8e36c5944c8ef828e27c2ff5c02bc5c457ac00132dd54b9c1"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/severe/journey.jsonl",
+        "sha256": "a3f8b2deb015ef2cab1a7744554e4de0e897dfcd2464e94295387aa80279aa9e"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/severe/1-entry.save.json",
+        "sha256": "b265fcb610d9c24f1a5f1ce675bab4039fec497aac41bc68620d9dc0cda26885"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/severe/1-returned.save.json",
+        "sha256": "8afb6f8dfefe1f231be92f1262b0b3185388a46bb3ca422208f2927efcad02bf"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 588.8021739090303
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 55.175574346791144,
+      "fieldChaos": 55.175574346791144,
+      "elapsedMs": 35698.5699999997,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "consumingToolInputs": 1,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/005-fibre-stumpfield-severe-20261005/severe/1-search-1.png"
+      ],
+      "originalIndex": 17,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 19,
+      "world": "fibre-stumpfield",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "025a2eaf-0d8c-45a9-a25b-60dc34e7e17d",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/report.json",
+        "sha256": "fd49d5a0210947878778f2f21be6a8ad7df30e99e10bc69762adf1100394f266"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/journey.jsonl",
+        "sha256": "dec9e18b431198f4f68740bb90187b1a48a80d74efbce373e60599f56b193980"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "4b83d3f4b0bcc05a64eb9f8cf90013ce0e9ca14a3b54d64e8ee4c967ba346f63"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "2c658975c8692851d321fd797a89163394fd957d13aa6bc5ef4b2e3a43ce70d2"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.0999843798809
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.08040171474878,
+      "fieldChaos": 31.08040171474878,
+      "elapsedMs": 15199.409999999987,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/1-search-1.png"
+      ],
+      "originalIndex": 18,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 20,
+      "world": "sloughed-court",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "5d70cbb3-3dcc-4146-96d4-14baea5c7ee5",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/report.json",
+        "sha256": "a21deec035377823bfbad88efe1fd530041f5fb17cb307ca10d82c171fc7c137"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/low/journey.jsonl",
+        "sha256": "e1998dfde4cb75d7be64f7186bf5bf474da6edd7e3207eb9251f42c3ca4fc24d"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/low/1-entry.save.json",
+        "sha256": "23cddff64108c710499152e03cf940f7ec6366aba1665b21ce1ade387be07cdc"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/low/1-returned.save.json",
+        "sha256": "125448a27f3614ebb787411a5ff4d513952828666a284a1be4e6e3eb0547d752"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 557.0780914737179
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 29.141439378323255,
+      "fieldChaos": 29.141439378323255,
+      "elapsedMs": 29432.169999999674,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/007-sloughed-court-low-20261005/low/1-search-1.png"
+      ],
+      "originalIndex": 19,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 21,
+      "world": "sloughed-court",
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "252babc6-ad1d-48de-b0de-9c09646dee66",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/report.json",
+        "sha256": "18104a72180390dd94a1027202e1d1bfe0540fd0c55f039539c2b49d784c3ca8"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/low/journey.jsonl",
+        "sha256": "ac909637c644788b2983cc0503bf612bcbb8938f5159ada971aa673e73407c01"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/low/1-entry.save.json",
+        "sha256": "597767787816571ad66664bcb06ecb100254272e44428ac6d7840f587f363824"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/low/1-returned.save.json",
+        "sha256": "5df9de7dd4bf5790807ff26e1b54ae364dfcace90ee1691017f3469bae355c8c"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 549.4433546781688
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 30.839416496710495,
+      "fieldChaos": 30.839416496710495,
+      "elapsedMs": 27932.21999999971,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "consumingToolInputs": 1,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/008-sloughed-court-low-3075192741/low/1-search-1.png"
+      ],
+      "originalIndex": 20,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 22,
+      "world": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "53881d94-3b90-4088-b472-f1b382512291",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/report.json",
+        "sha256": "5ded903f0801d375f7b5d15f2a0e7acad2328d604a9e061a8bcf0267ad78f747"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/medium/journey.jsonl",
+        "sha256": "6e3bf712b1645a0e5bf34f6db6007a93483617e772ee5d8e3fa7e0a7b49be14a"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/medium/1-entry.save.json",
+        "sha256": "80dcab6791302d95a599e7674a9e2ff54723ed6497c05cc0b94e06ff6f4be32d"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/medium/1-returned.save.json",
+        "sha256": "ce6223acb469024ed253c45215217c4e55342fa946c39f23b1ae0cb677c39194"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 592.4862867611367
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 33.34395134830085,
+      "fieldChaos": 33.34395134830085,
+      "elapsedMs": 30565.39999999968,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/009-sloughed-court-medium-20261005/medium/1-search-1.png"
+      ],
+      "originalIndex": 21,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 23,
+      "world": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "524ef8f6-1449-4c9a-bb9a-351dc5c009ad",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/report.json",
+        "sha256": "7bab26d9923bfe666be14ecb32e2ad42c826c9e46247ba6aea867fbd896dd428"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/medium/journey.jsonl",
+        "sha256": "b9975d401e7e505daafafc671b1cb7442568cddca444e0450c5fb15e5fe72876"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/medium/1-entry.save.json",
+        "sha256": "4997e804f86dc17879a54b74b1d64354ed178a3c760527a1edf42d68099263dc"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/medium/1-returned.save.json",
+        "sha256": "9af68f090bc54dcc8170bd796d14608effe926ec2afb6de9e15c1463bf9afb47"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 610.5735008989499
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 33.25734858905484,
+      "fieldChaos": 33.25734858905484,
+      "elapsedMs": 30282.109999999666,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/010-sloughed-court-medium-3075192741/medium/1-search-1.png"
+      ],
+      "originalIndex": 22,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 24,
+      "world": "sloughed-court",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "f17625b0-1d9d-40a8-87f9-ff8768ce9804",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/report.json",
+        "sha256": "aa3f62dc546189af274531651d6a403952fa2ae57d9bf81ce2c2b846cfaeef2e"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/severe/journey.jsonl",
+        "sha256": "e6243bd518c2dfbe3de7da5805b43a2ef666c65716a6afeab6d9ac2f578766b8"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/severe/1-entry.save.json",
+        "sha256": "698f9d37e404799987b7cdd5938bc7cfbcc50dd7e0307e745db31b4a60c4056d"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/severe/1-returned.save.json",
+        "sha256": "d472a0d294f6bd0d1421e10b4b577d0709cc6f18488434a6b03fba4f06334f6e"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 594.6427498927402
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 45.57438595092438,
+      "fieldChaos": 45.57438595092438,
+      "elapsedMs": 37898.44999999975,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "consumingToolInputs": 0,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/011-sloughed-court-severe-20261005/severe/1-search-1.png"
+      ],
+      "originalIndex": 23,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    },
+    {
+      "index": 25,
+      "world": "sloughed-court",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "db801ec1-062c-4db6-b50a-70f0c952e3c7",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/report.json",
+        "sha256": "6529c3660bbd3c815b84c86679f33afdb2d9aa70e4e964ee805f2ce3906518ea"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/journey.jsonl",
+        "sha256": "400ae2cba7974262a9a715ec4ede6cff91b3bd33ec56d14036bc029ef72ce63e"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "d19a8b05ae3b3c74cad89a507bc7f92687f06c5013cc2375e003b4e6b672e7df"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "92d3786018076c99ccff80add079f2884a220ac7b6867f51a5948678a55e70fc"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 593.9966329870903
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 43.88613952217056,
+      "fieldChaos": 43.88613952217056,
+      "elapsedMs": 38481.819999999745,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "consumingToolInputs": 1,
+      "nonConsumingInputs": [],
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/1-search-1.png"
+      ],
+      "originalIndex": 24,
+      "environmentFailedOriginal": false,
+      "sameIdentityRecheck": false,
+      "matchingGenerationAttempt": 0
+    }
+  ],
+  "logicalProcessSelection": "Use the clean observer replay for original012 current evidence; retain original012 raw successful extraction and environment error as a separate actual attempt, never remove it.",
+  "rootFrameCandidates": [
+    {
+      "originalIndex": 5,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/005-notched-backwater-severe-20261005/severe/1-search-1.png",
+        "sha256": "accee0f92639c39f411d650ff3ac3eca69096fde37025982b1aa921ada48e12b"
+      },
+      "reason": "notched重档第一seed仅safe320.100px/14.45s，HP145/0主动工具；不证明深搜高压。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "originalIndex": 6,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/006-notched-backwater-severe-3075192741/severe/1-return.png",
+        "sha256": "e66be0abc09bb6d9bf84280d62f9925d21297eb271c5f26e625156bd9d0c4322"
+      },
+      "reason": "notched重档第二seed实际safe薪柴272.118px携回4薪，近入口搜撤不是空返，也不能计非入口成功。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "originalIndex": 10,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-search-4.png",
+        "sha256": "48bceb4e97330a8b416d5a62bd4548ecb93809edfd257e38a70c53f93bbf7f07"
+      },
+      "reason": "最大代价：两处接近因visible-opponent-too-close弃选后，取得deep污染物883.810px；72.98s、HP70、chaos93.180。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "originalIndex": 10,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/010-crossed-casings-medium-3075192741/medium/1-return.png",
+        "sha256": "79b9a685e2b3691ed198192484462a1d8487c40508f955abba5a8fec3aff9379"
+      },
+      "reason": "同趟带回1污染物，假身4/灰牙2耗尽销毁，武器5；真实代价不可被整批PASS抹去。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "originalIndex": 14,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/002-fibre-stumpfield-low-3075192741/low/1-search-1.png",
+        "sha256": "585d5e30904820f608f760200b5be48ad2a5ed96885a7f2ff49d40697f968e8a"
+      },
+      "reason": "fibre低档第二seed只有safe320.100px/15.62s，全HP无主动工具。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "originalIndex": 18,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/006-fibre-stumpfield-severe-3075192741/severe/1-search-1.png",
+        "sha256": "d7482e7da32dba1c5f056a7103f35a8e1c6f34037e5ad2edb1f1f6115cfa8187"
+      },
+      "reason": "fibre重档第二seed同为safe320.100px/15.20s；其第一seed有争夺搜取，不把单趟弱证据扩为两趟均深搜。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "originalIndex": 24,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/012-sloughed-court-severe-3075192741/severe/1-return.png",
+        "sha256": "ef00e21a3b56aa6463e7aeb353c136283b46aa6c5f142df9b6ba5b8b789e0daf"
+      },
+      "reason": "后12最长38.48s，争夺薪柴593.997px携回6薪、灰牙1、HP145；是完整有代价返程，但非HP受压证明。",
+      "visuallyReviewedByThisAudit": false
+    }
+  ],
+  "findings": [
+    {
+      "severity": "retained-environment-failure",
+      "originalIndex": 12,
+      "detail": "原012确实搜撤结算，但其context有真实额外开发页错误。通过同source/input身份复测补清洁观察，不能改写原失败或称25过程全无异常。"
+    },
+    {
+      "severity": "evidence-boundary",
+      "originalIndices": [
+        5,
+        6
+      ],
+      "detail": "notched重档两原seed分别只取safe320.100px与近入口272.118px，全HP且无主动工具。既定一seed非入口门槛满足，不证明该world重档深搜压力。"
+    },
+    {
+      "severity": "evidence-boundary",
+      "originalIndices": [
+        11,
+        12,
+        14,
+        18
+      ],
+      "detail": "crossed两重档及fibre低/重第二seed均为safe320.100–320.899px浅部一取一回；保留实际有限深度。"
+    },
+    {
+      "severity": "experience-boundary",
+      "originalIndices": [
+        10
+      ],
+      "detail": "crossed中档第二seed才出现最大损伤/耗尽：损75HP、假身4/灰牙2销毁、武器5，最终取得深部污染物。不能把此一例代替全world全grade压力验证。"
+    }
+  ],
+  "limits": [
+    "所有controlledWorld固定于出发前、geometry辅助专家导航，noStateInjection=false明确披露，controlledBuild=null；不是自然48抽样或新人可用性。",
+    "94薪/8污染物为24独立成熟fixture逻辑总量；25实际多1污染物来自重复012，不是连续经济收益。",
+    "HP/chaos为原snapshot/终态观测值，不声称全帧遥测或性能。",
+    "未打开PNG，原帧建议只由原数据选取供root亲看，不代签材料/画面/体验。",
+    "保留本独审初稿把全部effective/requested强行相等的失败；依真实冻结有界生成规则修正审计，而非修改运行结果。",
+    "只绑定3120原过程；不自动通过3121或最终324入口/冷续、108性能、混合GC，也不据此关闭历史P36。"
+  ]
+}

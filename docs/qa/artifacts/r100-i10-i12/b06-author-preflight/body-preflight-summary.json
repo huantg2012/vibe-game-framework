@@ -1,0 +1,39 @@
+{
+  "status": "bounded-current-author-body-pass-normal-review-pending",
+  "currentCases": 12,
+  "uniqueWorldGrades": 12,
+  "actualAttempts": 15,
+  "retainedFailedAttempts": 3,
+  "standingPoints": 60,
+  "minimumVisibleCutPixels": 708,
+  "minimumVisibleFracturePixels": 4,
+  "reports": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-author-preflight/body12/report.json",
+      "sha256": "33a1d748d66331fa3dddc299782bf8446d24e99f323c79e905e5a9bc1b6c7a5d",
+      "use": "9passed cases; old3 felt failures retained and superseded whole-world"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-author-preflight/felt-refined/body3/report.json",
+      "sha256": "099b65e17e72306fafc8d5126611f01dcd1236d646d18c4d84053d0616501dbe",
+      "use": "3current felt cases"
+    }
+  ],
+  "feltRepair": "Only id2 y445→461, exact clipped marker/surface depth solution, original target/route bounds and20px threshold retained; all3 whole-world grades replaced. Root buried24px retained, other75 definition objects exact at repair.",
+  "shortFibreBareGap": "All3 actual raster objectId0 at590455 and complete20px body supported, after low sheet y570→600; low surfaces still walkable.",
+  "cameraPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-author-preflight/camera-supported.json",
+    "sha256": "27bccfc66fd5985b8c1111b42c5199e6d55da02a7f3c6b6fb858e35d6c41d90f"
+  },
+  "sourceScopes": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-author-preflight/body12/source-snapshot.json",
+      "sha256": "fc8e219c43efd095878112570322bde9e52cd3f9e31a1df7d3531d0be2cd5c76"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-author-preflight/felt-refined/body3/source-snapshot.json",
+      "sha256": "59cd773decf07f5eb1025f90bcb4a3850236d746e108f0b4e44be594b85081c1"
+    }
+  ],
+  "scope": "Only requested seed20261005 actual MasterWorld. Static authored contacts supplement, not runtime play/normal art/full generation admission. Failed original retained; new sources bound separately."
+}

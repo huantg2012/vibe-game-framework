@@ -1,0 +1,62 @@
+{
+  "status": "bounded-pass",
+  "reviewer": "root",
+  "date": "2026-10-07",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "authorReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/author-art-review.json",
+    "sha256": "9e0367a504620b18b0ee58f0084401747d0ad6fb153eaafbfd9fdbf89874b461"
+  },
+  "reviewedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-severe/02-east-inner-cut-east.png",
+      "sha256": "a1895d3c36ce7cab4cb62e1f3f7e9ebe7438034ff905a3b4193bb63a1ca0b3f4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-severe/03-west-inner-cut-west.png",
+      "sha256": "8a9003f3725a23551ccff18671e511f9c2aaa72d65b629b3dd367e29561c1d92"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-severe/02-south-porous-cut-north.png",
+      "sha256": "b6bb3be2371b2f9af29971edba17718f16a25961f0a4962f296929381527e483"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-severe/03-low-connection-east.png",
+      "sha256": "d6b667bea72280a7cfb80493d36bea550896240983766a369bc56f8306353625"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/marrow-break-low/02-east-inner-cut-east.png",
+      "sha256": "78d2f3922f4d5bc9c9f0fc5178535fa122c64ec4ab803534b92d7d4d8c453193"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades/pore-bank-low/02-south-porous-cut-north.png",
+      "sha256": "61bb2b7b485e4fad63eeb62dd01f5625c2508fe1e9b0b4620d5116a762690d17"
+    }
+  ],
+  "scope": {
+    "worlds": [
+      "marrow-break",
+      "pore-bank"
+    ],
+    "grades": [
+      "low",
+      "severe"
+    ],
+    "excludedWorlds": [
+      "short-fibre-mat",
+      "felt-wedges"
+    ]
+  },
+  "findings": [
+    "Viewed exactly six listed original normal-game lamp frames. Marrow has warm pale porous cross-sections versus dark red intact skin and blue substrate; pore-bank has purple intact skin and pale porous cut over a warmer open bed. The perforations remain within matter and do not masquerade as floor access.",
+    "Severe variants retain cut/skin/floor separation and localized green fracture response; the actual illuminated bottom boundaries are readable. Unlit portions and behind-body areas are not independently approved.",
+    "Low versus severe frames preserve morphology without turning the complete object green. Low connection frame is naturally dimmer, and still separates the two banks from the passage."
+  ],
+  "limitations": [
+    "Normal material/edge review only. Not a deep severe-pressure journey, performance, audio or all-angle acceptance.",
+    "B06 short-fibre and felt remain rejected under P34; these two worlds do not confer whole-batch approval."
+  ]
+}

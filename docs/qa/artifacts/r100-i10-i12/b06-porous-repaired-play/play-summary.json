@@ -1,0 +1,538 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-07T07:21:08.490Z",
+  "status": "pass",
+  "algorithmRevisions": [
+    6
+  ],
+  "plan": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/play-summary-plan.json",
+  "planSha256": "6267b825805c0b3485c9652c2aad8455927c4a727c254f6cdf17396e8c8295f7",
+  "method": "Both originally fixed seeds must retain a completed real process; at least one must actually collect a non-entry remain and extract to a settled base. Late/adjacent pickups require entry-to-terminal node changes and matching settled loot receipts. Empty returns and deaths never count as successful searches. All attempts, including original environment errors, remain in the record.",
+  "limitations": "Controlled world/seed with copies of an actually earned save, geometry-assisted expert navigation. Does not establish novice usability, natural continuous economy, visual acceptance, performance, or source continuity to a later catalog; those need separate evidence.",
+  "expectedGradePairs": 6,
+  "qualifiedGradePairs": 6,
+  "expectedSeeds": 12,
+  "scheduledSeeds": 12,
+  "completedSeedProcesses": 12,
+  "actualAttempts": 13,
+  "searchAndExtractAttempts": 12,
+  "emptyReturns": 0,
+  "deaths": 0,
+  "invalidOrIncompleteProcesses": 1,
+  "sources": [
+    {
+      "folder": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play",
+      "policy": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/policy-freeze.json",
+      "policySha256": "1e1ebd234903e78c3f9c781350356dc7c9ff5d75918a00feaa59dccfb619a661",
+      "reportSha256": "b1adf93154b6fc2173202c6f9ca27a0f673e24ef5d146a70742375bb6a791cdf",
+      "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+      "sourceManifestSha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117",
+      "harnessSha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+      "algorithmRevision": 6,
+      "controllerPolicyRevision": 15,
+      "status": "stopped-after-failed-attempt",
+      "planned": 12,
+      "attempted": 2
+    },
+    {
+      "folder": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/original002-low-second",
+      "policy": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/original002-low-second/policy-freeze.json",
+      "policySha256": "db3e032a93921b9f403ef05126b00b85473c0cd94a871d7c8cc764832358d07c",
+      "reportSha256": "0c8be2517fbdfe5584f68e439ec63f13f3d8cf8820316ebd7ec2d40c635f3006",
+      "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+      "harnessSha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+      "algorithmRevision": 6,
+      "controllerPolicyRevision": 15,
+      "status": "completed-fixed-attempts-pending-review",
+      "planned": 1,
+      "attempted": 1
+    },
+    {
+      "folder": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper",
+      "policy": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/policy-freeze.json",
+      "policySha256": "1d46c7cef0b910b83e52a77883712ffbf8223ad032b3af9af95351b3aa852cdf",
+      "reportSha256": "132ae215a20e5dde394cabb9a590a2c9a9bad500500dc10427f888530a0304a5",
+      "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+      "harnessSha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+      "algorithmRevision": 6,
+      "controllerPolicyRevision": 15,
+      "status": "completed-fixed-attempts-pending-review",
+      "planned": 4,
+      "attempted": 4
+    },
+    {
+      "folder": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all",
+      "policy": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/policy-freeze.json",
+      "policySha256": "fc5c28f96b007a030af4f74ca4c978351e753413acdc8bd5098ba7fac5bc9728",
+      "reportSha256": "dc07c21bd724638884bcb4eb4983d3869a291c3b134e6acdd5aa81dc8e36a6b1",
+      "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+      "harnessSha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+      "algorithmRevision": 6,
+      "controllerPolicyRevision": 15,
+      "status": "completed-fixed-attempts-pending-review",
+      "planned": 6,
+      "attempted": 6
+    }
+  ],
+  "pairs": [
+    {
+      "world": "marrow-break",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/001-marrow-break-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 2,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/002-marrow-break-low-3075192741/report.json",
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/original002-low-second/001-marrow-break-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "marrow-break",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/001-marrow-break-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/002-marrow-break-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "marrow-break",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/003-marrow-break-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/004-marrow-break-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pore-bank",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/001-pore-bank-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/002-pore-bank-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pore-bank",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/003-pore-bank-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/004-pore-bank-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pore-bank",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/005-pore-bank-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/006-pore-bank-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    }
+  ],
+  "attempts": [
+    {
+      "key": "marrow-break/low/20261005",
+      "world": "marrow-break",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/001-marrow-break-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 574.9434754825903,
+          "elapsedMs": 33198.68999999965
+        }
+      ],
+      "problems": [],
+      "reportSha256": "07518fc59141b71a8d44c849cb71320eadd25285a45d348d0702c8c548ec2a2e",
+      "outcome": "extract",
+      "elapsedMs": 52797.919999999984,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "marrow-break/low/3075192741",
+      "world": "marrow-break",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/002-marrow-break-low-3075192741/report.json",
+      "exitCode": 1,
+      "processComplete": false,
+      "searchAndExtract": false,
+      "collected": [],
+      "problems": [
+        "No committed field identity"
+      ],
+      "reportSha256": "69f6656b46492090c3f7d42eb5d0dfbbda03866129b5ce648e8e450c82e9e5cd"
+    },
+    {
+      "key": "marrow-break/low/3075192741",
+      "world": "marrow-break",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/original002-low-second/001-marrow-break-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 16816.029999999988
+        }
+      ],
+      "problems": [],
+      "reportSha256": "f30c88ef4a23069a89d4614b53d1914fb6623e2cde3b41dd2ebf534fb4f1305d",
+      "outcome": "extract",
+      "elapsedMs": 29798.83999999974,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "marrow-break/medium/20261005",
+      "world": "marrow-break",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/001-marrow-break-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 607.420776727303,
+          "elapsedMs": 15266.069999999989
+        }
+      ],
+      "problems": [],
+      "reportSha256": "0cd0f26d19ffcdfa9293cb327a730b8ab9c6ad50521369525d4492da64ca757d",
+      "outcome": "extract",
+      "elapsedMs": 25632.299999999796,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "marrow-break/medium/3075192741",
+      "world": "marrow-break",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/002-marrow-break-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 625.2807369494122,
+          "elapsedMs": 13449.43999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "b53a7115e8a6117ca6d6845301266a454bd5d1f8e55da32290493fc4d7b5df37",
+      "outcome": "extract",
+      "elapsedMs": 25215.65999999974,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "marrow-break/severe/20261005",
+      "world": "marrow-break",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/003-marrow-break-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 624.4613679003689,
+          "elapsedMs": 13699.429999999988
+        }
+      ],
+      "problems": [],
+      "reportSha256": "42c7e78724a0f6845f9e3afdc44277e8d84e8199f3ad27003988f125466394ed",
+      "outcome": "extract",
+      "elapsedMs": 25048.99999999978,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "marrow-break/severe/3075192741",
+      "world": "marrow-break",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper/004-marrow-break-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 13866.119999999988
+        }
+      ],
+      "problems": [],
+      "reportSha256": "712d4fbe7d2e9565d28c6963c230dbf00bc9e257c3cdfda4af98bf02c93395e3",
+      "outcome": "extract",
+      "elapsedMs": 26498.939999999777,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pore-bank/low/20261005",
+      "world": "pore-bank",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/001-pore-bank-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 593.3498125052371,
+          "elapsedMs": 12682.82999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "bd17260921e08afc7d6a9d198710ebf898315b94f3f3b094a239b3147d735618",
+      "outcome": "extract",
+      "elapsedMs": 23482.37999999978,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pore-bank/low/3075192741",
+      "world": "pore-bank",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/002-pore-bank-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 11866.189999999991
+        }
+      ],
+      "problems": [],
+      "reportSha256": "752995a38a2771b66aba9c69029949ebd32e7b1aab993f540456470b0d46b6ab",
+      "outcome": "extract",
+      "elapsedMs": 22932.399999999805,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pore-bank/medium/20261005",
+      "world": "pore-bank",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/003-pore-bank-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 610.5735008989499,
+          "elapsedMs": 23865.729999999792
+        }
+      ],
+      "problems": [],
+      "reportSha256": "840210d4e1ad551a1b8fe07f21972b25e2e0194e96ee1960f8cb384301d481ef",
+      "outcome": "extract",
+      "elapsedMs": 33315.349999999664,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pore-bank/medium/3075192741",
+      "world": "pore-bank",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/004-pore-bank-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 12366.169999999991
+        }
+      ],
+      "problems": [],
+      "reportSha256": "96b63b126c34a292fe102dc6679efcd98447b7d97a2f694caa5f4f72a9f60d56",
+      "outcome": "extract",
+      "elapsedMs": 23149.069999999767,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pore-bank/severe/20261005",
+      "world": "pore-bank",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/005-pore-bank-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.4734998338055,
+          "elapsedMs": 13482.78999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "00c1b1d78927eb379d98d15b817dc02aea9c24542c3aae1e125f23cac38f874f",
+      "outcome": "extract",
+      "elapsedMs": 24182.359999999782,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pore-bank/severe/3075192741",
+      "world": "pore-bank",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all/006-pore-bank-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 593.3498125052371,
+          "elapsedMs": 24932.349999999737
+        }
+      ],
+      "problems": [],
+      "reportSha256": "9d8fede582ad0e035adbb0a3d0c8653d06ef87e8c4f6189022ab674979aae1b0",
+      "outcome": "extract",
+      "elapsedMs": 37615.1599999997,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    }
+  ]
+}

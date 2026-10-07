@@ -1,0 +1,9 @@
+{
+  "status": "rejected-before-output",
+  "error": "AssertionError: preparation expected bounded-pass for the medium-only root review; actual reviewed enum is bounded-medium-art-pass. No game execution or admission files were written.",
+  "observedReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-medium-independent-art-review.json",
+    "sha256": "85b9bb25b0c1aa8b365e7e0e70d5f5a564046f3597c2ab3f059c358a1ea33e93"
+  },
+  "correction": "Require the precise reviewed medium status and precise low/severe status separately; source hashes and original policy stay exact."
+}

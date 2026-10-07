@@ -1,0 +1,87 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b05-split-refined/body3-routes/report.json",
+  "cameraInputSha256": "a7ba600199d89004ba2ac034dd4aa97920e86b043b1be5396deeb62461f40635",
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+  "sourceManifestSha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b",
+  "scope": "Repaired split-fall same four goals, original requested seed and actual WASD. Outer objects now blunt/short broken bodies; only two central forks retained. Actual requested/effective identity and facing required. Old rejection/failing QA route preserved.",
+  "cases": [
+    {
+      "world": "split-fall",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-south-fragments",
+          "x": 415,
+          "y": 636,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 412,
+            "y": 636
+          },
+          "lookAtMaterialPoint": {
+            "x": 338,
+            "y": 577
+          }
+        },
+        {
+          "label": "02-west-dense-band",
+          "x": 404,
+          "y": 472,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 404,
+            "y": 468
+          },
+          "lookAtMaterialPoint": {
+            "x": 343,
+            "y": 347
+          }
+        },
+        {
+          "label": "03-middle-crossing",
+          "x": 574,
+          "y": 492,
+          "faces": [
+            "west",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 492
+          },
+          "lookAtMaterialPoint": {
+            "x": 507,
+            "y": 554
+          }
+        },
+        {
+          "label": "04-east-facing-fall",
+          "x": 582,
+          "y": 338,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 340
+          },
+          "lookAtMaterialPoint": {
+            "x": 667,
+            "y": 357
+          }
+        }
+      ]
+    }
+  ]
+}

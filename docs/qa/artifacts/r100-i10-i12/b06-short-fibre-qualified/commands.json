@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "status": "authorized-generation-only",
+  "worlds": [
+    "short-fibre-mat",
+    "felt-wedges"
+  ],
+  "wholeBatchReady": false,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/preparation/qualification-6038b3b433c3.mjs",
+    "sha256": "6038b3b433c332c69b8f634f070737e108a3a9a2361efc73cbc83e1ba444c0d5"
+  },
+  "rootReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/cpu-authorization.json",
+    "sha256": "98f67ac84d4a4ca4e9c1014fc98187921f201e0645d86adce69fc3cc4703e8f1"
+  },
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/preparation/commands.json",
+    "sha256": "27c74fdae54c30cd9c423e39d1b29d060486142cda72b11d70059f1848f93037"
+  },
+  "generation": [
+    {
+      "cases": 240,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/preparation/qualification-6038b3b433c3.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/preparation/qualification-6038b3b433c3.mjs",
+        "--worlds",
+        "short-fibre-mat,felt-wedges",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 48,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/preparation/qualification-6038b3b433c3.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/preparation/qualification-6038b3b433c3.mjs",
+        "--worlds",
+        "short-fibre-mat,felt-wedges",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "Original B06 fixed288, current3120. CPU generation is distinct from completed art/play qualification."
+}

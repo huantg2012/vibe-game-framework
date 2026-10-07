@@ -1,0 +1,1306 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+    "sha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b05-author-preflight/camera-supported.json",
+    "cameraInputSha256": "af20b137ea0dddb0cac4cea86cc41c6ac477138ce716c77e874ee4acb6fd2c5e",
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+    "sourceManifestSha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598",
+    "scope": "Four material-targeted normal-light stations each, actual WASD. Frayed route starts south sparse end and approaches dense head; not full gameplay qualification.",
+    "cases": [
+      {
+        "world": "quiet-spur",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-short-shoulder",
+            "x": 577,
+            "y": 584,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 588
+            },
+            "lookAtMaterialPoint": {
+              "x": 614,
+              "y": 526
+            }
+          },
+          {
+            "label": "02-inner-short-turn",
+            "x": 543,
+            "y": 473,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 476
+            },
+            "lookAtMaterialPoint": {
+              "x": 438,
+              "y": 479
+            }
+          },
+          {
+            "label": "03-east-long-bypass",
+            "x": 934,
+            "y": 401,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 932,
+              "y": 404
+            },
+            "lookAtMaterialPoint": {
+              "x": 796,
+              "y": 392
+            }
+          },
+          {
+            "label": "04-north-quiet-bed",
+            "x": 662,
+            "y": 236,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 660,
+              "y": 236
+            },
+            "lookAtMaterialPoint": {
+              "x": 561,
+              "y": 224
+            }
+          }
+        ]
+      },
+      {
+        "world": "split-fall",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-fragments",
+            "x": 415,
+            "y": 636,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 412,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 577
+            }
+          },
+          {
+            "label": "02-west-dense-band",
+            "x": 404,
+            "y": 472,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 404,
+              "y": 468
+            },
+            "lookAtMaterialPoint": {
+              "x": 343,
+              "y": 347
+            }
+          },
+          {
+            "label": "03-middle-crossing",
+            "x": 574,
+            "y": 492,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 507,
+              "y": 554
+            }
+          },
+          {
+            "label": "04-east-facing-fall",
+            "x": 582,
+            "y": 338,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 332
+            },
+            "lookAtMaterialPoint": {
+              "x": 667,
+              "y": 357
+            }
+          }
+        ]
+      },
+      {
+        "world": "three-shelves",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-west-bank",
+            "x": 356,
+            "y": 603,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 356,
+              "y": 604
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 435
+            }
+          },
+          {
+            "label": "02-south-bank",
+            "x": 431,
+            "y": 537,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 428,
+              "y": 540
+            },
+            "lookAtMaterialPoint": {
+              "x": 541,
+              "y": 651
+            }
+          },
+          {
+            "label": "03-east-bank",
+            "x": 535,
+            "y": 462,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 686,
+              "y": 449
+            }
+          },
+          {
+            "label": "04-north-open-return",
+            "x": 535,
+            "y": 284,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 284
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 435
+            }
+          }
+        ]
+      },
+      {
+        "world": "frayed-outwash",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-quiet-tail",
+            "x": 602,
+            "y": 662,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 604,
+              "y": 660
+            },
+            "lookAtMaterialPoint": {
+              "x": 682,
+              "y": 607
+            }
+          },
+          {
+            "label": "02-middle-short-tail",
+            "x": 604,
+            "y": 517,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 604,
+              "y": 516
+            },
+            "lookAtMaterialPoint": {
+              "x": 531,
+              "y": 516
+            }
+          },
+          {
+            "label": "03-thickening-band",
+            "x": 548,
+            "y": 386,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 548,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 434,
+              "y": 386
+            }
+          },
+          {
+            "label": "04-north-dense-head",
+            "x": 566,
+            "y": 147,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 148
+            },
+            "lookAtMaterialPoint": {
+              "x": 489,
+              "y": 205
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "761e0de5c6c11d698ef605ffb093e527e1a413fe6aa19e5887f127ef4ea23cc8",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "quiet-spur",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-short-shoulder",
+            "x": 577,
+            "y": 584,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 588
+            },
+            "lookAtMaterialPoint": {
+              "x": 614,
+              "y": 526
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-short-shoulder",
+              "x": 577,
+              "y": 584,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 572,
+                "y": 588
+              },
+              "lookAtMaterialPoint": {
+                "x": 614,
+                "y": 526
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 588
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 572,
+                "y": 588
+              }
+            ],
+            "length": 376
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/01-south-short-shoulder-north.png",
+              "sha256": "56a15cff95f65b75dcc80ac07a08131a19c64bccba55c6ad77816ee5c7ec85fe",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.570733494941827,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 572.6796419345152,
+                  "y": 582.0901922253215
+                },
+                "facingAngle": -1.570733494941827,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.007317003999823,
+                "elapsedMs": 6133.000000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 572.6796419345152,
+                  "y": 582.0901922253215
+                },
+                "facingAngle": -1.570733494941827,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.068132625999823,
+                "elapsedMs": 6316.3
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/01-south-short-shoulder-east.png",
+              "sha256": "87a3375711968486b10b841f22a3e3649976c0d9bc49f7cb678a7e74df92c126",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.0001884955592161841,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 575.1497805554906,
+                  "y": 584.4232864293797
+                },
+                "facingAngle": -0.0001884955592161841,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.16214483799982,
+                "elapsedMs": 6599.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 575.1497805554906,
+                  "y": 584.4232864293797
+                },
+                "facingAngle": -0.0001884955592161841,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.195321519999816,
+                "elapsedMs": 6699.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-inner-short-turn",
+            "x": 543,
+            "y": 473,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 476
+            },
+            "lookAtMaterialPoint": {
+              "x": 438,
+              "y": 479
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-inner-short-turn",
+              "x": 543,
+              "y": 473,
+              "faces": [
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 540,
+                "y": 476
+              },
+              "lookAtMaterialPoint": {
+                "x": 438,
+                "y": 479
+              }
+            },
+            "actual": {
+              "x": 540,
+              "y": 476
+            },
+            "points": [
+              {
+                "x": 572,
+                "y": 588
+              },
+              {
+                "x": 532,
+                "y": 588
+              },
+              {
+                "x": 532,
+                "y": 492
+              },
+              {
+                "x": 540,
+                "y": 492
+              },
+              {
+                "x": 540,
+                "y": 476
+              }
+            ],
+            "length": 160
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/02-inner-short-turn-west.png",
+              "sha256": "2438ef31bc16f2acd97cb4b2d2662c0d5620d69ca765c08407005da12e8bcd6d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.141341326177507,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 534.6140224507795,
+                  "y": 472.59202314446884
+                },
+                "facingAngle": -3.141341326177507,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.290218385999708,
+                "elapsedMs": 9999.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 534.6140224507795,
+                  "y": 472.59202314446884
+                },
+                "facingAngle": -3.141341326177507,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.3399850679997,
+                "elapsedMs": 10149.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-east-long-bypass",
+            "x": 934,
+            "y": 401,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 932,
+              "y": 404
+            },
+            "lookAtMaterialPoint": {
+              "x": 796,
+              "y": 392
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-east-long-bypass",
+              "x": 934,
+              "y": 401,
+              "faces": [
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 932,
+                "y": 404
+              },
+              "lookAtMaterialPoint": {
+                "x": 796,
+                "y": 392
+              }
+            },
+            "actual": {
+              "x": 932,
+              "y": 404
+            },
+            "points": [
+              {
+                "x": 532,
+                "y": 476
+              },
+              {
+                "x": 580,
+                "y": 476
+              },
+              {
+                "x": 580,
+                "y": 468
+              },
+              {
+                "x": 932,
+                "y": 468
+              },
+              {
+                "x": 932,
+                "y": 404
+              }
+            ],
+            "length": 472
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/03-east-long-bypass-west.png",
+              "sha256": "1328edc395958fe28af448340d90aba81f1778eecbbbac61d5fe16e781bc779d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 925.3797987539311,
+                  "y": 401.94280297622964
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 21.021931103999442,
+                "elapsedMs": 18232.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 925.3797987539311,
+                  "y": 401.94280297622964
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 21.204411149999437,
+                "elapsedMs": 18782.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-north-quiet-bed",
+            "x": 662,
+            "y": 236,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 660,
+              "y": 236
+            },
+            "lookAtMaterialPoint": {
+              "x": 561,
+              "y": 224
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-north-quiet-bed",
+              "x": 662,
+              "y": 236,
+              "faces": [
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 660,
+                "y": 236
+              },
+              "lookAtMaterialPoint": {
+                "x": 561,
+                "y": 224
+              }
+            },
+            "actual": {
+              "x": 660,
+              "y": 236
+            },
+            "points": [
+              {
+                "x": 924,
+                "y": 404
+              },
+              {
+                "x": 876,
+                "y": 404
+              },
+              {
+                "x": 876,
+                "y": 372
+              },
+              {
+                "x": 868,
+                "y": 372
+              },
+              {
+                "x": 868,
+                "y": 364
+              },
+              {
+                "x": 860,
+                "y": 364
+              },
+              {
+                "x": 860,
+                "y": 348
+              },
+              {
+                "x": 852,
+                "y": 348
+              },
+              {
+                "x": 852,
+                "y": 340
+              },
+              {
+                "x": 844,
+                "y": 340
+              },
+              {
+                "x": 844,
+                "y": 324
+              },
+              {
+                "x": 660,
+                "y": 324
+              },
+              {
+                "x": 660,
+                "y": 236
+              }
+            ],
+            "length": 432
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/04-north-quiet-bed-west.png",
+              "sha256": "ca9e4162714883db1e127103ef835f475a5b8ef3f93fe2e850f0a95b40e2ad51",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 652.9496482500692,
+                  "y": 231.47936128895253
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 70,
+                "chaos": 34.53138464999904,
+                "elapsedMs": 30298.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 652.9496482500692,
+                  "y": 231.47936128895253
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 70,
+                "chaos": 34.66078001399906,
+                "elapsedMs": 30498.7
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "quiet-spur",
+        "grade": "medium",
+        "package": {
+          "id": "r100-quiet-spur",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "d9d7245e",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=quiet-spur&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/quiet-spur-medium/recipe.json",
+        "sha256": "b8f068e736b305d50bd481c68d94b07220a44b20d110a05d2606935dbd16cede"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 652.9496482500692,
+          "y": 231.47936128895253
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 70,
+        "chaos": 34.66078001399906,
+        "elapsedMs": 30498.7
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 652.9496482500692,
+          "y": 231.47936128895253
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 70,
+        "chaos": 35.4603848339991,
+        "elapsedMs": 31698.7
+      }
+    },
+    {
+      "world": "split-fall",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-fragments",
+            "x": 415,
+            "y": 636,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 412,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 577
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-fragments",
+              "x": 415,
+              "y": 636,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 412,
+                "y": 636
+              },
+              "lookAtMaterialPoint": {
+                "x": 338,
+                "y": 577
+              }
+            },
+            "actual": {
+              "x": 412,
+              "y": 636
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 244,
+                "y": 588
+              },
+              {
+                "x": 244,
+                "y": 620
+              },
+              {
+                "x": 276,
+                "y": 620
+              },
+              {
+                "x": 276,
+                "y": 652
+              },
+              {
+                "x": 300,
+                "y": 652
+              },
+              {
+                "x": 300,
+                "y": 660
+              },
+              {
+                "x": 412,
+                "y": 660
+              },
+              {
+                "x": 412,
+                "y": 636
+              }
+            ],
+            "length": 312
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/01-south-fragments-west.png",
+              "sha256": "4382bceab40aa0bbd7cf5ee1fa8da2e80d9f082ae5c8605156a26105e4861d73",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 405.22281506138677,
+                  "y": 633.8276144081644
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.140023731999804,
+                "elapsedMs": 6533.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 405.22281506138677,
+                  "y": 633.8276144081644
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.184255989999798,
+                "elapsedMs": 6666.4
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/01-south-fragments-north.png",
+              "sha256": "06f9cde1a05c3c8ad4af2e977a63dcc4ae8c63004891f98b177e582cf7c4ae2b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5710476542071823,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 405.22281506138677,
+                  "y": 626.3840144081645
+                },
+                "facingAngle": -1.5710476542071823,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.283802625999787,
+                "elapsedMs": 6966.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 405.22281506138677,
+                  "y": 626.3840144081645
+                },
+                "facingAngle": -1.5710476542071823,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.34461492999978,
+                "elapsedMs": 7149.700000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-west-dense-band",
+            "x": 404,
+            "y": 472,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 404,
+              "y": 468
+            },
+            "lookAtMaterialPoint": {
+              "x": 343,
+              "y": 347
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-west-dense-band",
+              "x": 404,
+              "y": 472,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 404,
+                "y": 468
+              },
+              "lookAtMaterialPoint": {
+                "x": 343,
+                "y": 347
+              }
+            },
+            "actual": {
+              "x": 404,
+              "y": 476
+            },
+            "points": [
+              {
+                "x": 404,
+                "y": 628
+              },
+              {
+                "x": 420,
+                "y": 628
+              },
+              {
+                "x": 420,
+                "y": 564
+              },
+              {
+                "x": 428,
+                "y": 564
+              },
+              {
+                "x": 428,
+                "y": 516
+              },
+              {
+                "x": 412,
+                "y": 516
+              },
+              {
+                "x": 412,
+                "y": 508
+              },
+              {
+                "x": 404,
+                "y": 508
+              },
+              {
+                "x": 404,
+                "y": 476
+              }
+            ],
+            "length": 200
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/02-west-dense-band-north.png",
+              "sha256": "91ecf60d365e4e4a0a9dc163c5da00ba9f4dcc7f1c15699db4f29910837acd7b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 403.2062618620088,
+                  "y": 472.03388016701757
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.84318962999963,
+                "elapsedMs": 11666.199999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 403.2062618620088,
+                  "y": 472.03388016701757
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.887421887999626,
+                "elapsedMs": 11799.500000000002
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-middle-crossing",
+            "x": 574,
+            "y": 492,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 492
+            },
+            "lookAtMaterialPoint": {
+              "x": 507,
+              "y": 554
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-middle-crossing",
+              "x": 574,
+              "y": 492,
+              "faces": [
+                "west",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 580,
+                "y": 492
+              },
+              "lookAtMaterialPoint": {
+                "x": 507,
+                "y": 554
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 484
+            },
+            "points": [
+              {
+                "x": 404,
+                "y": 476
+              },
+              {
+                "x": 252,
+                "y": 476
+              },
+              {
+                "x": 252,
+                "y": 292
+              },
+              {
+                "x": 276,
+                "y": 292
+              },
+              {
+                "x": 276,
+                "y": 252
+              },
+              {
+                "x": 564,
+                "y": 252
+              },
+              {
+                "x": 564,
+                "y": 388
+              },
+              {
+                "x": 572,
+                "y": 388
+              },
+              {
+                "x": 572,
+                "y": 484
+              }
+            ],
+            "length": 928
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/03-middle-crossing-west.png",
+              "sha256": "58017b67035c630565f1be45a6bf6f62a069bccb0fcde636a17400ff4552f7b9",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.0987153015883,
+                  "y": 483.1943844401966
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.644820871999467,
+                "elapsedMs": 32165.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.0987153015883,
+                  "y": 483.1943844401966
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.8903462359995,
+                "elapsedMs": 32915.299999999996
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/03-middle-crossing-south.png",
+              "sha256": "aa29227abac899031ab6f2d33b2e36d85a257982ae012acbaba36211b6337d57",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.3872262502038,
+                  "y": 488.01244492750936
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 26.015312069999514,
+                "elapsedMs": 33282
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 566.3872262502038,
+                  "y": 488.01244492750936
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 26.076144281999518,
+                "elapsedMs": 33465.299999999996
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "split-fall",
+        "grade": "medium",
+        "package": {
+          "id": "r100-split-fall",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "e0c169eb",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=split-fall&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/recipe.json",
+        "sha256": "5e1ea3e223b6d0a3573e8978f0d3ae030348fecf4332c651d7a2d7d227d6b230"
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected \"actual\" to be strictly unequal to:\n\nundefined",
+  "stack": "AssertionError [ERR_ASSERTION]: Expected \"actual\" to be strictly unequal to:\n\nundefined\n    at route (file:///Users/yilungao/coh/tools/qa/capture-r100-expansion-art.mjs:53:14)\n    at async file:///Users/yilungao/coh/tools/qa/capture-r100-expansion-art.mjs:58:23"
+}

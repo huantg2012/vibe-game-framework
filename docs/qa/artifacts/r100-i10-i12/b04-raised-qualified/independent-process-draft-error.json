@@ -1,0 +1,7 @@
+{
+  "createdAt": "2026-10-07T09:24:36.314047+00:00",
+  "status": "independent-reader-fixture-correction",
+  "scriptSha256": "e2027d955b866ae1557acddc3c88606f9edef6b54b27b7b3690e5e3e8bb8544d",
+  "error": "Traceback (most recent call last):\n  File \"/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/independent-process-audit-shapes.py\", line 19, in <module>\n    assert policy['manifestSha256']==source['sha256'] and policy['gameUrl']=='http://127.0.0.1:3110'\nAssertionError\n",
+  "cause": "独立审计把gameUrl断言为无尾斜杠；四份原policy实际均为同一http://127.0.0.1:3110/。仅修审计字面预期，未改任何原结果/产品。"
+}

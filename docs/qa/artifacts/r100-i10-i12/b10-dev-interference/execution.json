@@ -1,0 +1,42 @@
+{
+  "status": "completed-recheck-and-original12",
+  "pid": 44116,
+  "startedAt": "2026-10-07T08:55:59.007Z",
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/plan.json",
+    "sha256": "c646b8ea89aa6a9f2a27d964a818913e2b25e6d1628e7b6e218d7841cf4b3e0a"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/run.mjs",
+    "sha256": "1f576970d5767e2fee59ce79cb67a5c19c79dc1c5847c46408730fad4f48fceb"
+  },
+  "stages": [
+    {
+      "id": "012-same-identity-recheck",
+      "code": 0,
+      "signal": null,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/execution.log",
+        "sha256": "22e1283fa6b0932169ab751522c3d5ecad3463f791239f6b2aafd7389c000e42"
+      },
+      "batch": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/batch-report.json",
+        "sha256": "40528396df85a5489c8c89ce7559d17568cf6da821c1bd26233b0047b186871a"
+      }
+    },
+    {
+      "id": "remaining-original12",
+      "code": 0,
+      "signal": null,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/execution.log",
+        "sha256": "71d2a4aa0019377cd00ec2fff2645637ec73efdafc3c735be93db347c85e5283"
+      },
+      "batch": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/batch-report.json",
+        "sha256": "cf3c8a5ec32303f5be9dc013fdc3ef3548de3a3e140e10534734308a72bbe522"
+      }
+    }
+  ],
+  "finishedAt": "2026-10-07T09:04:58.088Z"
+}

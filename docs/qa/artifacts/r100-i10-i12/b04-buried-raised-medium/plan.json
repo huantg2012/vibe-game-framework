@@ -1,0 +1,71 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+  "sourceManifestSha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d",
+  "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b04-buried-refined/raised-bank/body3/report.json",
+  "cameraInputSha256": "90007b5a7285b8326e02768bf2f8c8cda70be30294e1d107d1e6f5c60530baa2",
+  "scope": "New24px solid grain bank: actual WASD around south side. Old02/03inside-footpoints not reused. Ordinary finite FOV/light/clock/health. No qualification claim.",
+  "cases": [
+    {
+      "world": "buried-lamellae",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-high-end",
+          "x": 296,
+          "y": 440,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 292,
+            "y": 436
+          },
+          "lookAtMaterialPoint": {
+            "x": 365,
+            "y": 299
+          }
+        },
+        {
+          "label": "02-south-raised-contact",
+          "x": 493,
+          "y": 495,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 492,
+            "y": 492
+          },
+          "lookAtMaterialPoint": {
+            "x": 520,
+            "y": 419
+          }
+        },
+        {
+          "label": "03-low-tail-south",
+          "x": 652,
+          "y": 551,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 652,
+            "y": 548
+          },
+          "lookAtMaterialPoint": {
+            "x": 625,
+            "y": 442
+          }
+        }
+      ]
+    }
+  ]
+}

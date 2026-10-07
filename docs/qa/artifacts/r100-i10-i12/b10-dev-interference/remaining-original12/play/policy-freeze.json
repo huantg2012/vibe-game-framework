@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "frozenAt": "2026-10-07T08:56:28.093Z",
+  "cases": [
+    {
+      "world": "fibre-stumpfield",
+      "grade": "low",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-fibre-stumpfield-low-20261005"
+    },
+    {
+      "world": "fibre-stumpfield",
+      "grade": "low",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 2,
+      "dir": "002-fibre-stumpfield-low-3075192741"
+    },
+    {
+      "world": "fibre-stumpfield",
+      "grade": "medium",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 3,
+      "dir": "003-fibre-stumpfield-medium-20261005"
+    },
+    {
+      "world": "fibre-stumpfield",
+      "grade": "medium",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 4,
+      "dir": "004-fibre-stumpfield-medium-3075192741"
+    },
+    {
+      "world": "fibre-stumpfield",
+      "grade": "severe",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 5,
+      "dir": "005-fibre-stumpfield-severe-20261005"
+    },
+    {
+      "world": "fibre-stumpfield",
+      "grade": "severe",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 6,
+      "dir": "006-fibre-stumpfield-severe-3075192741"
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "low",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 7,
+      "dir": "007-sloughed-court-low-20261005"
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "low",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 8,
+      "dir": "008-sloughed-court-low-3075192741"
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "medium",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 9,
+      "dir": "009-sloughed-court-medium-20261005"
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "medium",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 10,
+      "dir": "010-sloughed-court-medium-3075192741"
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "severe",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 11,
+      "dir": "011-sloughed-court-severe-20261005"
+    },
+    {
+      "world": "sloughed-court",
+      "grade": "severe",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 12,
+      "dir": "012-sloughed-court-severe-3075192741"
+    }
+  ],
+  "gameUrl": "http://127.0.0.1:3120/",
+  "algorithmRevision": 6,
+  "controllerPolicyRevision": 15,
+  "controllerDerivation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/controller-revision6/derivation.json",
+    "sha256": "51ebe7f6498aeff8d37eb96710b4a182befa72697406402f4496f468bed27341"
+  },
+  "expansion": {
+    "plan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/qualification-plan.json",
+    "sha256": "a3ac0a5800e0b637afe38ae5d91f81ef605ef798ac6f66cbfd3bf70396892d05",
+    "originalPlan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-current-qualified/execution-plan.json",
+    "batch": "B10"
+  },
+  "servedCatalog": {
+    "sha256": "d56a3711dd2d005e2f8cfa697c415ce2550b6262c7de1457e3599e43bc100a60",
+    "encoding": "direct-raw"
+  },
+  "actualPickupLimit": 1,
+  "manifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+  "manifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+  "storageSource": "docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+  "storageSourceSha256": "965a98687e87690f71115472384fba50578ff9618aed328793c3a3bd1cf33b6e",
+  "storage": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/play/earned-storage.json",
+  "storageSha256": "8fbf59ac1f5027fc06341a92dfec8f6dc88e5f89c3b8da93da5d997ad61b8aa6",
+  "harness": "tools/qa/r100-revision6-journey.mjs",
+  "harnessSha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+  "wrapperSha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8",
+  "dependencies": [
+    {
+      "file": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "wrapperDependencies": [
+    {
+      "file": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "46f93fbee706a09ca9a35a0df52ca6053ac8d59904fcb602917137906a3b482c"
+    },
+    {
+      "file": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "file": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    }
+  ],
+  "parallelism": 1,
+  "resourcePauseFile": "/tmp/coh-r100-i10-i12.pause",
+  "stopOnFailure": true,
+  "observationFailureFile": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b10-dev-interference/remaining-original12/worker-observation-first-error.json",
+  "method": "One fixed attempt per world/grade/seed. Actual WASD/E/R with earned equipment. Static terrain assists macro routing; enemies/Hosts only currently observed or 5s memory. No field reward, HP, clock or position injection. One non-entry collected remain (>320px from entry), then actual return. A failed or empty process remains a failure for the primary search-and-extract requirement; no pass is assigned by this runner.",
+  "limitations": "Controlled world and seed on identical earned save branches; not natural continuous economy, novice play, success-rate inference, or exclusive performance measurement."
+}

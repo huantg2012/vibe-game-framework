@@ -1,0 +1,377 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "quiet-spur",
+    "label": "静床窄岬",
+    "description": "静床窄岬的原生材料与完整搜撤地段",
+    "material": "granular",
+    "surface": {
+      "substrate": "granular",
+      "coating": "granular",
+      "organization": "patches",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 3879465,
+      "floor": 9139804,
+      "floorLight": 11969932,
+      "materialDark": 2892343,
+      "materialMid": 6705517,
+      "materialLight": 11309745,
+      "faceLight": 14143444,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 9139804,
+      "groundLight": 11969932,
+      "groundDark": 3879465,
+      "wall": 6705517,
+      "wallLight": 11309745,
+      "wallDark": 2892343
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "quiet-spur",
+    "ground": {
+      "dark": 3879465,
+      "mid": 9139804,
+      "light": 11969932
+    },
+    "solid": {
+      "dark": 2892343,
+      "mid": 6705517,
+      "light": 11309745
+    },
+    "cleaved": {
+      "dark": 6116955,
+      "mid": 11313579,
+      "light": 14143444
+    },
+    "secondary": {
+      "dark": 3357003,
+      "mid": 7240593,
+      "light": 10990272
+    },
+    "groundPattern": "grains",
+    "patternScale": 256,
+    "patternStrength": 0.34,
+    "secondaryCoverage": 0.1,
+    "textureContrast": 1.08,
+    "quietCoverage": 0.65
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "quiet-spur-low",
+    "family": "granular-ridge",
+    "grade": "low",
+    "label": "静床窄岬",
+    "profile": "quiet-spur",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 19,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "granular-ridge",
+        "role": "relief",
+        "x": 796,
+        "y": 392,
+        "rotation": 0,
+        "length": 285,
+        "width": 165,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.308,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan",
+        "groundEdgeWidth": 8
+      },
+      {
+        "id": 2,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 561,
+        "y": 224,
+        "rotation": 0.2,
+        "length": 155,
+        "width": 103,
+        "height": 35,
+        "thickness": 9,
+        "fold": 0.4752,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 3,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 614,
+        "y": 526,
+        "rotation": -0.25,
+        "length": 120,
+        "width": 92,
+        "height": 42,
+        "thickness": 10,
+        "fold": 0.5367999999999999,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 4,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 424,
+        "y": 318,
+        "rotation": 0.48,
+        "length": 115,
+        "width": 90,
+        "height": 30,
+        "thickness": 8,
+        "fold": 0.4048,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 5,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 481,
+        "y": 373,
+        "rotation": -0.35,
+        "length": 108,
+        "width": 82,
+        "height": 35,
+        "thickness": 9,
+        "fold": 0.49280000000000007,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 6,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 403,
+        "y": 427,
+        "rotation": 0.22,
+        "length": 122,
+        "width": 94,
+        "height": 27,
+        "thickness": 7,
+        "fold": 0.35200000000000004,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 7,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 438,
+        "y": 479,
+        "rotation": -0.42,
+        "length": 110,
+        "width": 81,
+        "height": 23,
+        "thickness": 7,
+        "fold": 0.4224,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 660,
+          "y": 0
+        },
+        {
+          "x": 1024,
+          "y": 0
+        },
+        {
+          "x": 1024,
+          "y": 272
+        },
+        {
+          "x": 876,
+          "y": 272
+        },
+        {
+          "x": 794,
+          "y": 224
+        },
+        {
+          "x": 680,
+          "y": 200
+        }
+      ],
+      [
+        {
+          "x": 740,
+          "y": 540
+        },
+        {
+          "x": 908,
+          "y": 492
+        },
+        {
+          "x": 1024,
+          "y": 440
+        },
+        {
+          "x": 1024,
+          "y": 768
+        },
+        {
+          "x": 660,
+          "y": 768
+        },
+        {
+          "x": 660,
+          "y": 616
+        }
+      ],
+      [
+        {
+          "x": 595,
+          "y": 335
+        },
+        {
+          "x": 825,
+          "y": 335
+        },
+        {
+          "x": 862,
+          "y": 390
+        },
+        {
+          "x": 806,
+          "y": 442
+        },
+        {
+          "x": 608,
+          "y": 420
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "package": {
+    "id": "r100-quiet-spur",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "granular-ridge": {
+        "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+        "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+        "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+      }
+    },
+    "dependencyHash": "808854ef",
+    "grade": "low"
+  }
+}

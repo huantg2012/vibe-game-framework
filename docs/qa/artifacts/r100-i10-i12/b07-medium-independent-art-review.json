@@ -1,0 +1,77 @@
+{
+  "status": "partial-pass-curled-flats-rejected",
+  "reviewer": "root",
+  "date": "2026-10-07",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b"
+  },
+  "authorReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/author-art-review.json",
+    "sha256": "e772730b608f1e4b26809fc96db006dad6cef524c4463b966186beb2c8efe442"
+  },
+  "reviewedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/02-first-inner-wall-east.png",
+      "sha256": "d94ee44b0c0fc3128784f5043079edab2a85b40975fbf4054e2f6127d30c3869"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/staggered-cups-medium/04-second-mouth-south.png",
+      "sha256": "93482e6d7cafab6823929936afbdf4416f0d5e57a15efe2fc93e087bebc17be1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/01-south-alternating-bundles-west.png",
+      "sha256": "15e430abec3d988f5087914a1a120966288e1cf6dfcdd6caf0cde99da4e6a607"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/02-first-crossing-east.png",
+      "sha256": "54b07a9c0f62e67d3f20b8da2fcaf7303a6cb9b5a62927641078ef87604f6103"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/split-tows-medium/03-low-middle-link-north.png",
+      "sha256": "fdf8022b9471229b00313c841cdf233cc31327a0e07d0aea2006142c573f693e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/02-offset-inner-arms-east.png",
+      "sha256": "cf330158eb1015e4e30323fdf37e12c80422a6dcea5ef8447aa2d799da63c359"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/pitch-forks-medium/03-thick-head-north.png",
+      "sha256": "9039800557d44afa87cd2afdb94557433d202fe975596df9ac732bce700c197c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/01-south-low-sheet-north.png",
+      "sha256": "26d4cdc54499d65eed8c43cf9aee2a033e5bab1d390632a7a12c3fd3e6d07a3f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/02-west-rolled-edge-west.png",
+      "sha256": "fc80aa658ca5a69343d12954d8fbc999d1192358a67372b13b81513ad1b739a2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/03-north-high-lip-north.png",
+      "sha256": "310725c2989af7fe07302a0cfccec0f27d3a359fb966b7926815261ddbf60f1a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-medium/curled-flats-medium/04-east-high-lip-east.png",
+      "sha256": "242b5729fd86d8042824beab00660684a0264d9ea8f26f33c90afad10a20a71b"
+    }
+  ],
+  "mediumBoundedPass": [
+    "staggered-cups",
+    "split-tows",
+    "pitch-forks"
+  ],
+  "rejected": [
+    "curled-flats"
+  ],
+  "findings": [
+    "Staggered cups retains blue-grey thick exterior and pink inner section, with a visibly usable staggered opening and warm substrate. Does not approve areas outside lamp.",
+    "Split tows has lit pink longitudinal strands, visible uneven torn ends and blue ground; the intermediate low bed allows a discernible change of side.",
+    "Pitch forks has differently sized folded arms and a thick head, dark outer skin versus pale inner section. Routes are evidenced separately by actual body tests.",
+    "Curled-flats low sheets read as polygon overlays: long straight black seam traverses the open bed, pointed triangle end and straight right cut are too geometric and disconnected. Three high curls are not the target of this rejection. A low settled-sheet variant is being tested; not yet accepted."
+  ],
+  "limitations": [
+    "Eleven original normal images at one fixed medium seed, not full gameplay/performance/all-grade qualification.",
+    "No source continuity claim after new settled-sheet geometry until the changed world is retested."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "scope": "Two failed temporary read-only summary assertions. No game execution or original report mutation. Root explicitly authorized schema correction after reading the real fields.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "assertion": "exceptionEvents == 0",
+      "failure": "AssertionError",
+      "actual": "exceptionEvents is an empty array, not a numeric count",
+      "correction": "Compare with [] and keep original array unchanged."
+    },
+    {
+      "attempt": 2,
+      "assertion": "noStateInjection is True",
+      "failure": "AssertionError",
+      "actual": false,
+      "correction": "Original policy15 controller sets this false when controlledWorld is selected before departure. Verify controlledWorld equals planned world and controlledBuild is null; retain the original diagnosticDisclosure. This fixed qualification is not natural selection."
+    }
+  ],
+  "originalController": "tools/qa/r100-i09-journey.mjs:516",
+  "subsequentAudit": "Read original report/schema before root-authorized correction; original24 data check completed without browser or map execution."
+}

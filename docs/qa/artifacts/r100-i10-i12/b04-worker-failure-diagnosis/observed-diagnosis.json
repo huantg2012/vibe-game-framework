@@ -1,0 +1,341 @@
+{
+  "status": "observed-rechecks-complete-original-cause-unresolved",
+  "createdAt": "2026-10-07T05:16:34.075587+00:00",
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/execution.json",
+    "sha256": "a7631cb2a9385f4ae4054a1783c266991fdab48395956f7ced5a7fd2b2175eb1"
+  },
+  "rootLauncherRepair": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/root-launcher-repair.json",
+    "sha256": "0987b3d8ffe340eb6991d739403aef0c5a5fac293ea6a13d27653d7961f69c0b"
+  },
+  "originalFailures": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/original-three-failures.json",
+    "sha256": "41bbba1753fd3619bb2cdaed8f03490d2c43771667919c9b786fe48ca2beac55"
+  },
+  "nodeDiagnostic": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/node-identity-report.json",
+    "sha256": "72fca2d40735441f0478445d661ef2a5842c42a2811a405713352d854b08797f"
+  },
+  "cacheObservation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/cache-isolation.json",
+    "sha256": "9d8fe2bfe787054e068a537c608c1213bb2bcc79ea62644a22acb80fa5158f43"
+  },
+  "rows": [
+    {
+      "world": "buried-lamellae",
+      "grade": "severe",
+      "seed": 3075192741,
+      "batch": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe/batch-report.json",
+        "sha256": "d76bc7ab7a7edfc0c2f448f86d1d953ab3e9f6df0cd024884bae0a7713c9b046"
+      },
+      "policy": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe/policy-freeze.json",
+        "sha256": "e8a566503ac08d989f0a562b1f8c92d4ee42761c9e4178be56d025a84b150dab"
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe/001-buried-lamellae-severe-3075192741/report.json",
+        "sha256": "000a0eb668e64c5fd3b54a328a8d7d94b3b2776082ac2b3572eeb2f04937aa43"
+      },
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe-runner.log",
+        "sha256": "a1cbaad5a6bc11e952ffc33740ce9c4b8b39eafd49fb5957e575a56ea3187b01"
+      },
+      "observations": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe-observations/observer-71666.jsonl",
+          "sha256": "4cadb9a93551f5039f6f02c5c22e12df52ae01b1e0cc1ded586bd0802c8e7906"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe-observations/observer-71667.jsonl",
+          "sha256": "107fa2af62821c5a28dd33c1af6fe595d4f38098efcf0be8af2ea7c83c891e44"
+        }
+      ],
+      "networkResponses": 657,
+      "requestFailures": 0,
+      "httpErrors": 0,
+      "targetCrashes": 0,
+      "pageCrashes": 0,
+      "pageErrors": 0,
+      "workerLifecycle": [
+        {
+          "at": "2026-10-07T05:12:12.512Z",
+          "pid": 71667,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:13.202Z",
+          "pid": 71667,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:13.209Z",
+          "pid": 71667,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:13.793Z",
+          "pid": 71667,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:13.891Z",
+          "pid": 71667,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:14.800Z",
+          "pid": 71667,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+        }
+      ],
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "buried-lamellae",
+          "grade": "severe",
+          "revision": 6,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 0,
+          "actualPickups": 1,
+          "elapsedMs": 15382.699999999988,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 176.24211435961317,
+            "y": 646.4904235566289
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "wedged-hide",
+      "grade": "low",
+      "seed": 3075192741,
+      "batch": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low/batch-report.json",
+        "sha256": "d644a2ca17c398a9642ceb7272277a43ef6ec2bf253d82342b7f9372814593e6"
+      },
+      "policy": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low/policy-freeze.json",
+        "sha256": "bb2a0a05e673ea2c396cdcdb8bc7621ecff63e2ffdea77c13a17436af59519c2"
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low/001-wedged-hide-low-3075192741/report.json",
+        "sha256": "bd47483768be6bfee65843e5be72eb4bfdf26c6ca042ff407ed54adb9eb0aa77"
+      },
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low-runner.log",
+        "sha256": "3bdb76c211023a80465f14040b3fde434a2dedec49a9d8168731891e82fe8c5e"
+      },
+      "observations": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low-observations/observer-72147.jsonl",
+          "sha256": "52341f9619c6817255a3cbcef1104974653f7b740fd503fdacca57ba04eb5852"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low-observations/observer-72158.jsonl",
+          "sha256": "d5b53a4ebdd1fa798615533efd2acaa115dd0e1abacf5edc9ce147904f8911ad"
+        }
+      ],
+      "networkResponses": 657,
+      "requestFailures": 0,
+      "httpErrors": 0,
+      "targetCrashes": 0,
+      "pageCrashes": 0,
+      "pageErrors": 0,
+      "workerLifecycle": [
+        {
+          "at": "2026-10-07T05:12:40.078Z",
+          "pid": 72158,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:40.728Z",
+          "pid": 72158,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:40.735Z",
+          "pid": 72158,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:41.374Z",
+          "pid": 72158,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:41.473Z",
+          "pid": 72158,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:12:42.414Z",
+          "pid": 72158,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+        }
+      ],
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "wedged-hide",
+          "grade": "low",
+          "revision": 6,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 70063.87999999984,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 178.88107025933698,
+            "y": 644.2902672349342
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "wedged-hide",
+      "grade": "severe",
+      "seed": 3075192741,
+      "batch": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe/batch-report.json",
+        "sha256": "5d8db17be261438e6ca7a691a18ab429e0f52332222bbe1d76eb5932c3b3e401"
+      },
+      "policy": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe/policy-freeze.json",
+        "sha256": "fc1735856af96535b1583c944c172e76032489aea91598a0d382772e7632537d"
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe/001-wedged-hide-severe-3075192741/report.json",
+        "sha256": "c0aab9cb00c7e2fab419acbde5a0e0f2bc80d1509043d0d491a4a56803d49e2e"
+      },
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe-runner.log",
+        "sha256": "88ee9aedf335ef86d855a59e16bbd956704cdd0382d29757dc8aee4d8b143bde"
+      },
+      "observations": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe-observations/observer-73584.jsonl",
+          "sha256": "869fcf68a6478650ef76f04ef82ec3c6e7562149a9cfe751ebab4e02d5a727f4"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe-observations/observer-73588.jsonl",
+          "sha256": "bb61947930dba3737b6f6914800fcf9ccaf57b0b9c7af52431060784d0257740"
+        }
+      ],
+      "networkResponses": 657,
+      "requestFailures": 0,
+      "httpErrors": 0,
+      "targetCrashes": 0,
+      "pageCrashes": 0,
+      "pageErrors": 0,
+      "workerLifecycle": [
+        {
+          "at": "2026-10-07T05:14:02.508Z",
+          "pid": 73588,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:14:03.183Z",
+          "pid": 73588,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:14:03.189Z",
+          "pid": 73588,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:14:03.804Z",
+          "pid": 73588,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/generation/rift-generation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:14:03.905Z",
+          "pid": 73588,
+          "event": "worker-created",
+          "url": "http://127.0.0.1:3110/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+        },
+        {
+          "at": "2026-10-07T05:14:04.860Z",
+          "pid": 73588,
+          "event": "worker-closed",
+          "url": "http://127.0.0.1:3110/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+        }
+      ],
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "wedged-hide",
+          "grade": "severe",
+          "revision": 6,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 15032.69999999999,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 170.52524074143435,
+            "y": 636.341143836855
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "cases": 3,
+    "networkResponses": 1971,
+    "workerCreated": 9,
+    "workerClosed": 9,
+    "requestFailures": 0,
+    "httpErrors": 0,
+    "targetCrashes": 0,
+    "pageCrashes": 0,
+    "pageErrors": 0
+  },
+  "disposition": "Root explicitly keeps P36 open as intermittent-preentry. These three original-input observations permit resuming B05; they do not establish the historical cause, prove server cleanup fixed anything, or close P36. Final324 entry/cold must record full lifecycle failures; any recurrence stops its batch for diagnosis.",
+  "limitations": [
+    "Original three worker failures lack full network/target event instrumentation.",
+    "Idle QA server cleanup and observer overhead differ from the original environment; no causal claim follows.",
+    "The fixed controller prepares a controlled identity with one generation Worker, then restores with a second generation Worker, then uses the surface Worker. This differs from natural departure, which uses one generation preparation; no policy was changed.",
+    "No additional retries of these three passed original identities are planned."
+  ]
+}

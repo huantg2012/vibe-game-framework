@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b"
+  },
+  "sourceBeforeAndAfterExact": true,
+  "packageLock": {
+    "path": "package-lock.json",
+    "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88",
+    "exactToCommit": "d194be4cb8f89f37d4ba7f05d17e16f9bed055ee"
+  },
+  "compiler": {
+    "path": "tools/world-study/r100-qualification-manifests.mjs",
+    "sha256": "dc78fd536dab46ce3fa507ce630a3c3628fbe0bc2d78cd0262ffa879d97d88e6"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/build-packages.mjs",
+    "sha256": "10adbad8151c1ffd076ec91f9f5226f73f956fb83d8c1079aad3b83926668c69"
+  },
+  "worlds": [
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash"
+  ],
+  "algorithmRevision": 6,
+  "index": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/packages/index.json",
+    "sha256": "5b7a945ff185e594a6366ba12e91778b77859149efc49aac86ad6bc8f91aad98"
+  },
+  "method": "Existing compiler reads an isolated view of frozen3112 source/assets and baseline-exact package-lock. Mutable workspace catalog is not read. These manifests confer no qualification."
+}

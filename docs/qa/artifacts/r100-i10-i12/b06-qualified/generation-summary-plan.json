@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "worlds": [
+    "short-fibre-mat",
+    "marrow-break",
+    "felt-wedges",
+    "pore-bank"
+  ],
+  "groups": [
+    {
+      "id": "B06-original3111-porous-two",
+      "worlds": [
+        "marrow-break",
+        "pore-bank"
+      ],
+      "attempts": [
+        "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-full",
+        "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-holdout"
+      ]
+    },
+    {
+      "id": "B06-current3120-short-fibre-two",
+      "worlds": [
+        "short-fibre-mat",
+        "felt-wedges"
+      ],
+      "attempts": [
+        "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-full",
+        "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-holdout"
+      ]
+    }
+  ]
+}

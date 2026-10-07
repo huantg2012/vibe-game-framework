@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "source": {
+    "nativeCsvSha256": "20a146b1da4eadfa66492dbcb5be38a95d740f220f7f1ab0bc32a5fb4436326a",
+    "generatedSha256": "c39bb2a624a283fb19c355d77834b56c4fd4156709361bcadfade4400d76b8d7",
+    "packageJsonSha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44"
+  },
+  "lint": "No lint script configured; whitespace and strict TypeScript checked. No broad library matrix repeated.",
+  "results": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "durationMs": 5984.6383749999995
+    },
+    {
+      "name": "native-codegen",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-worlds.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "durationMs": 143.93554100000074
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "data/rift-native-worlds.csv",
+        "src/generated/r100-native-worlds.ts"
+      ],
+      "exitCode": 0,
+      "durationMs": 33.110749999999825
+    },
+    {
+      "name": "owned-dev-http",
+      "command": [
+        "npm",
+        "run",
+        "dev",
+        "--",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "3197",
+        "--strictPort"
+      ],
+      "status": "PASS",
+      "httpRoutes": [
+        "/",
+        "/src/main.ts"
+      ],
+      "durationMs": 558.3967080000002,
+      "scope": "npm run dev real process and Vite module HTTP; no browser or visual/play admission"
+    },
+    {
+      "name": "owned-dev-cleanup",
+      "code": null,
+      "signal": "SIGTERM"
+    }
+  ]
+}

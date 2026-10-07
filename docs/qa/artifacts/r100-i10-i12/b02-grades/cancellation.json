@@ -1,0 +1,39 @@
+{
+  "status": "author-cancelled-at-root-instruction",
+  "report": "docs/qa/artifacts/r100-i10-i12/b02-grades/report.json",
+  "completedCases": [
+    {
+      "world": "braided-seam",
+      "grade": "low",
+      "stations": 3
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "low",
+      "stations": 2
+    },
+    {
+      "world": "offset-pan",
+      "grade": "low",
+      "stations": 2
+    },
+    {
+      "world": "thin-delta",
+      "grade": "low",
+      "stations": 3
+    },
+    {
+      "world": "braided-seam",
+      "grade": "severe",
+      "stations": 3
+    }
+  ],
+  "interruptedCase": {
+    "world": "scalloped-reach",
+    "grade": "severe"
+  },
+  "cause": "Root reviewed 3104 medium frames and rejected the repeated toothed ground edge, directing no further low/severe captures. Owned QA Chrome PID67074 received SIGTERM; Playwright TargetClosed in raw report is this explicit cancellation, not an observed game runtime error.",
+  "rawPreserved": true,
+  "browserClosed": true,
+  "errorsBeforeCancellation": []
+}

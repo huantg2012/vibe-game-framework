@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "appearanceCompilerCheck": "72 identities pass",
+  "remainsCompilerCheck": "74 source mappings pass",
+  "remainsCpu": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-art-authoring/remains-check.json",
+    "sha256": "6db7947857a9c717e61b5144c56133bcaa5f9b0ac6a8a84eacca39ecce6276c3"
+  },
+  "typecheck": {
+    "exitCode": 0,
+    "log": "docs/qa/artifacts/r100-i10-i12/b05-art-authoring/typecheck.log"
+  },
+  "lint": "No separate lint script exists; strict TypeScript/noUnused gate used.",
+  "devSmoke": [
+    {
+      "path": "/r100-gym.html",
+      "status": 200,
+      "bytes": 2608
+    },
+    {
+      "path": "/src/generated/r100-world-appearance.ts",
+      "status": 200,
+      "bytes": 151689
+    },
+    {
+      "path": "/src/generated/rift-search-remains.ts",
+      "status": 200,
+      "bytes": 19614
+    }
+  ],
+  "scope": "Author data append and unchanged existing object checks; no art or full gameplay pass."
+}

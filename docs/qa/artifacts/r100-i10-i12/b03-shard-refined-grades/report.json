@@ -1,0 +1,1476 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+    "sha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+    "sourceManifestSha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8",
+    "scope": "Repaired shard only, same original requested stations and actual WASD. Root accepted limited medium repair; original rejected source retained. Low/severe pending capture and review.",
+    "priorPlans": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/plan.json",
+        "sha256": "b79470289ba40534be2bbcbefb8554c4ff2c7f44ea3759e1b215216351b0a418"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-medium/plan.json",
+        "sha256": "f9b7b7b54ba8a4c76c39a17fe26f2dc2cea6a47e58885be1d2eef6cc6b5bac0c"
+      }
+    ],
+    "cases": [
+      {
+        "world": "shard-switchback",
+        "grade": "low",
+        "goals": [
+          {
+            "label": "01-west-shoulder",
+            "x": 270,
+            "y": 380,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 268,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 262
+            }
+          },
+          {
+            "label": "02-first-switch",
+            "x": 456,
+            "y": 404,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 452,
+              "y": 404
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 306
+            }
+          },
+          {
+            "label": "03-cross-opening",
+            "x": 574,
+            "y": 529,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 654,
+              "y": 452
+            }
+          },
+          {
+            "label": "04-last-tip",
+            "x": 858,
+            "y": 390,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 860,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 798,
+              "y": 292
+            }
+          }
+        ]
+      },
+      {
+        "world": "shard-switchback",
+        "grade": "severe",
+        "goals": [
+          {
+            "label": "01-west-shoulder",
+            "x": 270,
+            "y": 380,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 268,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 262
+            }
+          },
+          {
+            "label": "02-first-switch",
+            "x": 456,
+            "y": 404,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 452,
+              "y": 404
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 306
+            }
+          },
+          {
+            "label": "03-cross-opening",
+            "x": 574,
+            "y": 529,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 654,
+              "y": 452
+            }
+          },
+          {
+            "label": "04-last-tip",
+            "x": 858,
+            "y": 390,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 860,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 798,
+              "y": 292
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "761e0de5c6c11d698ef605ffb093e527e1a413fe6aa19e5887f127ef4ea23cc8",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "shard-switchback",
+      "grade": "low",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-west-shoulder",
+            "x": 270,
+            "y": 380,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 268,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 262
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-west-shoulder",
+              "x": 270,
+              "y": 380,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 268,
+                "y": 372
+              },
+              "lookAtMaterialPoint": {
+                "x": 338,
+                "y": 262
+              }
+            },
+            "actual": {
+              "x": 268,
+              "y": 380
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 260,
+                "y": 588
+              },
+              {
+                "x": 260,
+                "y": 396
+              },
+              {
+                "x": 268,
+                "y": 396
+              },
+              {
+                "x": 268,
+                "y": 380
+              }
+            ],
+            "length": 280
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/01-west-shoulder-north.png",
+              "sha256": "dba33be5bc8f0426c4c33fc05c13fc7838282f7f1d90e5caf1f15b03fee0c1a8",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 267.23268546821043,
+                  "y": 371.37260374282755
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.064875127999983,
+                "elapsedMs": 5699.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 267.23268546821043,
+                  "y": 371.37260374282755
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.090156391999983,
+                "elapsedMs": 5833.099999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/01-west-shoulder-east.png",
+              "sha256": "bfce6505a1a217c03bc9d91b8e8e4efc422de706d2819bc906923dd3beb3e5e1",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185307293104,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 274.6781188015437,
+                  "y": 371.37260374282755
+                },
+                "facingAngle": -0.00006283185307293104,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.15019133599998,
+                "elapsedMs": 6149.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 274.6781188015437,
+                  "y": 371.37260374282755
+                },
+                "facingAngle": -0.00006283185307293104,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.17862943999998,
+                "elapsedMs": 6299.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-first-switch",
+            "x": 456,
+            "y": 404,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 452,
+              "y": 404
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 306
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-first-switch",
+              "x": 456,
+              "y": 404,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 452,
+                "y": 404
+              },
+              "lookAtMaterialPoint": {
+                "x": 520,
+                "y": 306
+              }
+            },
+            "actual": {
+              "x": 452,
+              "y": 404
+            },
+            "points": [
+              {
+                "x": 276,
+                "y": 372
+              },
+              {
+                "x": 276,
+                "y": 364
+              },
+              {
+                "x": 420,
+                "y": 364
+              },
+              {
+                "x": 420,
+                "y": 380
+              },
+              {
+                "x": 436,
+                "y": 380
+              },
+              {
+                "x": 436,
+                "y": 388
+              },
+              {
+                "x": 452,
+                "y": 388
+              },
+              {
+                "x": 452,
+                "y": 404
+              }
+            ],
+            "length": 224
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/02-first-switch-north.png",
+              "sha256": "f6dd34999761e0936aea4df14de1b23377bb776e1ada519fd2da36684adb5580",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 452.1870175598715,
+                  "y": 385.3277686325833
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.060237207999965,
+                "elapsedMs": 10949.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 452.1870175598715,
+                  "y": 385.3277686325833
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.082355943999964,
+                "elapsedMs": 11066.2
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-cross-opening",
+            "x": 574,
+            "y": 529,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 654,
+              "y": 452
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-cross-opening",
+              "x": 574,
+              "y": 529,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 572,
+                "y": 532
+              },
+              "lookAtMaterialPoint": {
+                "x": 654,
+                "y": 452
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 532
+            },
+            "points": [
+              {
+                "x": 452,
+                "y": 388
+              },
+              {
+                "x": 452,
+                "y": 396
+              },
+              {
+                "x": 532,
+                "y": 396
+              },
+              {
+                "x": 532,
+                "y": 500
+              },
+              {
+                "x": 564,
+                "y": 500
+              },
+              {
+                "x": 564,
+                "y": 532
+              },
+              {
+                "x": 572,
+                "y": 532
+              }
+            ],
+            "length": 264
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/03-cross-opening-north.png",
+              "sha256": "98035b549e39bae551fc495b1d19a86c81ee851475d2919196b540bcd19511b1",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 574.2772045954387,
+                  "y": 528.0169890258379
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.039794231999945,
+                "elapsedMs": 16116
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 574.2772045954387,
+                  "y": 528.0169890258379
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.065077391999946,
+                "elapsedMs": 16249.3
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/03-cross-opening-east.png",
+              "sha256": "79865eb4905d20e36f41c3cc339ca53ef00db06ab54bb32548e4f6bca1e8671f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00025132741228561795,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 580.6882407621915,
+                  "y": 529.5252661415511
+                },
+                "facingAngle": -0.00025132741228561795,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.125110439999943,
+                "elapsedMs": 16566
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 580.6882407621915,
+                  "y": 529.5252661415511
+                },
+                "facingAngle": -0.00025132741228561795,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.153550439999943,
+                "elapsedMs": 16715.899999999998
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-last-tip",
+            "x": 858,
+            "y": 390,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 860,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 798,
+              "y": 292
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-last-tip",
+              "x": 858,
+              "y": 390,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 860,
+                "y": 388
+              },
+              "lookAtMaterialPoint": {
+                "x": 798,
+                "y": 292
+              }
+            },
+            "actual": {
+              "x": 860,
+              "y": 388
+            },
+            "points": [
+              {
+                "x": 580,
+                "y": 532
+              },
+              {
+                "x": 580,
+                "y": 540
+              },
+              {
+                "x": 612,
+                "y": 540
+              },
+              {
+                "x": 612,
+                "y": 548
+              },
+              {
+                "x": 676,
+                "y": 548
+              },
+              {
+                "x": 676,
+                "y": 540
+              },
+              {
+                "x": 684,
+                "y": 540
+              },
+              {
+                "x": 684,
+                "y": 532
+              },
+              {
+                "x": 692,
+                "y": 532
+              },
+              {
+                "x": 692,
+                "y": 524
+              },
+              {
+                "x": 708,
+                "y": 524
+              },
+              {
+                "x": 708,
+                "y": 516
+              },
+              {
+                "x": 724,
+                "y": 516
+              },
+              {
+                "x": 724,
+                "y": 508
+              },
+              {
+                "x": 860,
+                "y": 508
+              },
+              {
+                "x": 860,
+                "y": 388
+              }
+            ],
+            "length": 456
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/04-last-tip-north.png",
+              "sha256": "9f4293608c88ddc65c1c9ed607d44fbb472f7e940b08b6fced04ae542499d2b5",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 860.6482710102842,
+                  "y": 388.56669194959954
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 85,
+                "chaos": 23.542423223999897,
+                "elapsedMs": 25532.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 860.6482710102842,
+                  "y": 388.56669194959954
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 85,
+                "chaos": 23.668802999999894,
+                "elapsedMs": 25865.6
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/04-last-tip-west.png",
+              "sha256": "8108ed67fb26e6587252d25553820661fcdabbb2a9db124ce58740466a415427",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 853.2380043436176,
+                  "y": 388.56669194959954
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 23.78888805599989,
+                "elapsedMs": 26182.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 853.2380043436176,
+                  "y": 388.56669194959954
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 85,
+                "chaos": 23.85208552799989,
+                "elapsedMs": 26348.899999999998
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shard-switchback",
+        "grade": "low",
+        "package": {
+          "id": "r100-shard-switchback",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "29c61441",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3109/r100-gym.html?world=shard-switchback&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-low/recipe.json",
+        "sha256": "8efadf901f9df0968f0a30f8f2b2336c91af9db804a131c107ef560032e92d82"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 853.2380043436176,
+          "y": 388.56669194959954
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 85,
+        "chaos": 23.85208552799989,
+        "elapsedMs": 26348.899999999998
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 853.2380043436176,
+          "y": 388.56669194959954
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 70,
+        "chaos": 24.32480762399988,
+        "elapsedMs": 27595.600000000002
+      }
+    },
+    {
+      "world": "shard-switchback",
+      "grade": "severe",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-west-shoulder",
+            "x": 270,
+            "y": 380,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 268,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 262
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-west-shoulder",
+              "x": 270,
+              "y": 380,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 268,
+                "y": 372
+              },
+              "lookAtMaterialPoint": {
+                "x": 338,
+                "y": 262
+              }
+            },
+            "actual": {
+              "x": 268,
+              "y": 380
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 260,
+                "y": 588
+              },
+              {
+                "x": 260,
+                "y": 396
+              },
+              {
+                "x": 268,
+                "y": 396
+              },
+              {
+                "x": 268,
+                "y": 380
+              }
+            ],
+            "length": 280
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/01-west-shoulder-north.png",
+              "sha256": "94218d88c7b42e03a807c4b1765eabbe9d476962daff291dc74681ec73350c73",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 267.84986930343547,
+                  "y": 362.7271108771814
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.41265843199986,
+                "elapsedMs": 6833.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 267.84986930343547,
+                  "y": 362.7271108771814
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.640168319999848,
+                "elapsedMs": 7283.099999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/01-west-shoulder-east.png",
+              "sha256": "1d433548cdaab8278e902c09488b554ac23529ba7b294ad656c1e58ce76c9596",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 277.97086930343534,
+                  "y": 362.7271108771814
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.876111615999854,
+                "elapsedMs": 7749.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 277.97086930343534,
+                  "y": 362.7271108771814
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.01933292799985,
+                "elapsedMs": 8032.999999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-first-switch",
+            "x": 456,
+            "y": 404,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 452,
+              "y": 404
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 306
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-first-switch",
+              "x": 456,
+              "y": 404,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 452,
+                "y": 404
+              },
+              "lookAtMaterialPoint": {
+                "x": 520,
+                "y": 306
+              }
+            },
+            "actual": {
+              "x": 452,
+              "y": 404
+            },
+            "points": [
+              {
+                "x": 276,
+                "y": 364
+              },
+              {
+                "x": 420,
+                "y": 364
+              },
+              {
+                "x": 420,
+                "y": 380
+              },
+              {
+                "x": 436,
+                "y": 380
+              },
+              {
+                "x": 436,
+                "y": 388
+              },
+              {
+                "x": 452,
+                "y": 388
+              },
+              {
+                "x": 452,
+                "y": 404
+              }
+            ],
+            "length": 216
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/02-first-switch-north.png",
+              "sha256": "2dcbe65feed8be953a0cd21f23c728b5b8151537a808a37244101a89ec90c4c6",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 450.66614646908516,
+                  "y": 393.42324231313427
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 23.378720383999774,
+                "elapsedMs": 12699.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 450.66614646908516,
+                  "y": 393.42324231313427
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 23.46297862399977,
+                "elapsedMs": 12866.100000000002
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-cross-opening",
+            "x": 574,
+            "y": 529,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 654,
+              "y": 452
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-cross-opening",
+              "x": 574,
+              "y": 529,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 572,
+                "y": 532
+              },
+              "lookAtMaterialPoint": {
+                "x": 654,
+                "y": 452
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 532
+            },
+            "points": [
+              {
+                "x": 452,
+                "y": 396
+              },
+              {
+                "x": 532,
+                "y": 396
+              },
+              {
+                "x": 532,
+                "y": 500
+              },
+              {
+                "x": 564,
+                "y": 500
+              },
+              {
+                "x": 564,
+                "y": 532
+              },
+              {
+                "x": 572,
+                "y": 532
+              }
+            ],
+            "length": 256
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/03-cross-opening-north.png",
+              "sha256": "287c411e6b68a69aae92646af422262c58000d49e0ab1a23a9e9b4e575b42c9b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 570.3378235840974,
+                  "y": 519.6445514027171
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 26.993623871999567,
+                "elapsedMs": 19849.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 570.3378235840974,
+                  "y": 519.6445514027171
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 27.097261759999565,
+                "elapsedMs": 20065.9
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/03-cross-opening-east.png",
+              "sha256": "b6f6ceefc965db6ff82d23260cbbb6f7f7c343facdbffbef6f34ae1f7189f268",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 572.1452858421875,
+                  "y": 519.6445514027171
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 27.26326035199957,
+                "elapsedMs": 20382.600000000002
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 572.1452858421875,
+                  "y": 519.6445514027171
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 27.389660351999563,
+                "elapsedMs": 20632.600000000002
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-last-tip",
+            "x": 858,
+            "y": 390,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 860,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 798,
+              "y": 292
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-last-tip",
+              "x": 858,
+              "y": 390,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 860,
+                "y": 388
+              },
+              "lookAtMaterialPoint": {
+                "x": 798,
+                "y": 292
+              }
+            },
+            "actual": {
+              "x": 860,
+              "y": 388
+            },
+            "points": [
+              {
+                "x": 572,
+                "y": 516
+              },
+              {
+                "x": 564,
+                "y": 516
+              },
+              {
+                "x": 564,
+                "y": 532
+              },
+              {
+                "x": 580,
+                "y": 532
+              },
+              {
+                "x": 580,
+                "y": 540
+              },
+              {
+                "x": 612,
+                "y": 540
+              },
+              {
+                "x": 612,
+                "y": 548
+              },
+              {
+                "x": 676,
+                "y": 548
+              },
+              {
+                "x": 676,
+                "y": 540
+              },
+              {
+                "x": 684,
+                "y": 540
+              },
+              {
+                "x": 684,
+                "y": 532
+              },
+              {
+                "x": 692,
+                "y": 532
+              },
+              {
+                "x": 692,
+                "y": 524
+              },
+              {
+                "x": 708,
+                "y": 524
+              },
+              {
+                "x": 708,
+                "y": 516
+              },
+              {
+                "x": 724,
+                "y": 516
+              },
+              {
+                "x": 724,
+                "y": 508
+              },
+              {
+                "x": 860,
+                "y": 508
+              },
+              {
+                "x": 860,
+                "y": 388
+              }
+            ],
+            "length": 496
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/04-last-tip-north.png",
+              "sha256": "fb138852a7a9239d61cac5a24407b4fc6f0b71a5c34cf9f0f672b39278388927",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 861.5914694588619,
+                  "y": 384.09651738726046
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 36.47347436799931,
+                "elapsedMs": 32548.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 861.5914694588619,
+                  "y": 384.09651738726046
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 36.62515436799929,
+                "elapsedMs": 32698.8
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/04-last-tip-west.png",
+              "sha256": "f915bbce4636ed77d775595637f26a98acd7dd35d43f8842869eb43ae72c1c6b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 854.1471027921951,
+                  "y": 384.09651738726046
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 36.94534073599929,
+                "elapsedMs": 33015.399999999994
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 854.1471027921951,
+                  "y": 384.09651738726046
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 37.09702073599929,
+                "elapsedMs": 33165.399999999994
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shard-switchback",
+        "grade": "severe",
+        "package": {
+          "id": "r100-shard-switchback",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "71573ed0",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3109/r100-gym.html?world=shard-switchback&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-grades/shard-switchback-severe/recipe.json",
+        "sha256": "e0b9df1d520bd206fb39553d296b8d524ce517d24933ea6e398b204ffe748d44"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 854.1471027921951,
+          "y": 384.09651738726046
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 37.09702073599929,
+        "elapsedMs": 33165.399999999994
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 854.1471027921951,
+          "y": 384.09651738726046
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 41.310420287999314,
+        "elapsedMs": 34365.299999999996
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

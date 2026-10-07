@@ -1,0 +1,111 @@
+{
+  "status": "bounded-author-body-pass",
+  "scope": "B05 four worlds, requested seed20261005, all three grades; actual MasterWorld/raster/native full20px body. Not final generated-library qualification, runtime play or art approval.",
+  "cases": 12,
+  "uniqueWorldGrades": 12,
+  "supportedStandingPoints": 60,
+  "minimumVisibleCutPixels": 229,
+  "minimumVisibleFracturePixels": 13,
+  "bodyReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-author-preflight/body12/report.json",
+    "sha256": "518bef02d8a77cdf7dc3522f89ebf6b2bc130ddc273afda986d2abafbe0a876e"
+  },
+  "sourceSnapshot": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-author-preflight/body12/source-snapshot.json",
+    "sha256": "3e6bb77b8786a482a45b4996a10a3d111875cba59cfcc7eaeef8956b40c48bd7"
+  },
+  "cameraPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-author-preflight/camera-supported.json",
+    "sha256": "af20b137ea0dddb0cac4cea86cc41c6ac477138ce716c77e874ee4acb6fd2c5e"
+  },
+  "quietRoutes": [
+    {
+      "grade": "low",
+      "routes": [
+        {
+          "name": "quiet-long",
+          "lengthPx": 1000,
+          "start": {
+            "x": 572,
+            "y": 588
+          },
+          "end": {
+            "x": 660,
+            "y": 236
+          }
+        },
+        {
+          "name": "dense-short",
+          "lengthPx": 632,
+          "start": {
+            "x": 572,
+            "y": 588
+          },
+          "end": {
+            "x": 660,
+            "y": 236
+          }
+        }
+      ]
+    },
+    {
+      "grade": "medium",
+      "routes": [
+        {
+          "name": "quiet-long",
+          "lengthPx": 1000,
+          "start": {
+            "x": 572,
+            "y": 588
+          },
+          "end": {
+            "x": 660,
+            "y": 236
+          }
+        },
+        {
+          "name": "dense-short",
+          "lengthPx": 632,
+          "start": {
+            "x": 572,
+            "y": 588
+          },
+          "end": {
+            "x": 660,
+            "y": 236
+          }
+        }
+      ]
+    },
+    {
+      "grade": "severe",
+      "routes": [
+        {
+          "name": "quiet-long",
+          "lengthPx": 1000,
+          "start": {
+            "x": 572,
+            "y": 588
+          },
+          "end": {
+            "x": 660,
+            "y": 236
+          }
+        },
+        {
+          "name": "dense-short",
+          "lengthPx": 632,
+          "start": {
+            "x": 572,
+            "y": 588
+          },
+          "end": {
+            "x": 660,
+            "y": 236
+          }
+        }
+      ]
+    }
+  ],
+  "priorFailures": "Quiet initial isolated failures remain in b04-b05-author-preparation/attempt1, attempt2, quiet-root-decision; accepted shape reallocation preserved in quiet-root-shape-reallocation. No failed attempt removed or counted as passing."
+}

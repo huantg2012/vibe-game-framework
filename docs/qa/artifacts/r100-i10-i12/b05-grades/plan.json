@@ -1,0 +1,589 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b05-author-preflight/camera-supported.json",
+  "cameraInputSha256": "af20b137ea0dddb0cac4cea86cc41c6ac477138ce716c77e874ee4acb6fd2c5e",
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+  "sourceManifestSha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598",
+  "scope": "Four material-targeted normal-light stations each, actual WASD. Frayed route starts south sparse end and approaches dense head; not full gameplay qualification.",
+  "cases": [
+    {
+      "world": "quiet-spur",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-south-short-shoulder",
+          "x": 577,
+          "y": 584,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 572,
+            "y": 588
+          },
+          "lookAtMaterialPoint": {
+            "x": 614,
+            "y": 526
+          }
+        },
+        {
+          "label": "02-inner-short-turn",
+          "x": 543,
+          "y": 473,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 476
+          },
+          "lookAtMaterialPoint": {
+            "x": 438,
+            "y": 479
+          }
+        },
+        {
+          "label": "03-east-long-bypass",
+          "x": 934,
+          "y": 401,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 932,
+            "y": 404
+          },
+          "lookAtMaterialPoint": {
+            "x": 796,
+            "y": 392
+          }
+        },
+        {
+          "label": "04-north-quiet-bed",
+          "x": 662,
+          "y": 236,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 660,
+            "y": 236
+          },
+          "lookAtMaterialPoint": {
+            "x": 561,
+            "y": 224
+          }
+        }
+      ]
+    },
+    {
+      "world": "split-fall",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-south-fragments",
+          "x": 415,
+          "y": 636,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 412,
+            "y": 636
+          },
+          "lookAtMaterialPoint": {
+            "x": 338,
+            "y": 577
+          }
+        },
+        {
+          "label": "02-west-dense-band",
+          "x": 404,
+          "y": 472,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 404,
+            "y": 468
+          },
+          "lookAtMaterialPoint": {
+            "x": 343,
+            "y": 347
+          }
+        },
+        {
+          "label": "03-middle-crossing",
+          "x": 574,
+          "y": 492,
+          "faces": [
+            "west",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 492
+          },
+          "lookAtMaterialPoint": {
+            "x": 507,
+            "y": 554
+          }
+        },
+        {
+          "label": "04-east-facing-fall",
+          "x": 582,
+          "y": 338,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 332
+          },
+          "lookAtMaterialPoint": {
+            "x": 667,
+            "y": 357
+          }
+        }
+      ]
+    },
+    {
+      "world": "three-shelves",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-west-bank",
+          "x": 356,
+          "y": 603,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 356,
+            "y": 604
+          },
+          "lookAtMaterialPoint": {
+            "x": 398,
+            "y": 435
+          }
+        },
+        {
+          "label": "02-south-bank",
+          "x": 431,
+          "y": 537,
+          "faces": [
+            "east",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 428,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 541,
+            "y": 651
+          }
+        },
+        {
+          "label": "03-east-bank",
+          "x": 535,
+          "y": 462,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 532,
+            "y": 460
+          },
+          "lookAtMaterialPoint": {
+            "x": 686,
+            "y": 449
+          }
+        },
+        {
+          "label": "04-north-open-return",
+          "x": 535,
+          "y": 284,
+          "faces": [
+            "south",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 532,
+            "y": 284
+          },
+          "lookAtMaterialPoint": {
+            "x": 398,
+            "y": 435
+          }
+        }
+      ]
+    },
+    {
+      "world": "frayed-outwash",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-south-quiet-tail",
+          "x": 602,
+          "y": 662,
+          "faces": [
+            "east",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 604,
+            "y": 660
+          },
+          "lookAtMaterialPoint": {
+            "x": 682,
+            "y": 607
+          }
+        },
+        {
+          "label": "02-middle-short-tail",
+          "x": 604,
+          "y": 517,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 604,
+            "y": 516
+          },
+          "lookAtMaterialPoint": {
+            "x": 531,
+            "y": 516
+          }
+        },
+        {
+          "label": "03-thickening-band",
+          "x": 548,
+          "y": 386,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 548,
+            "y": 388
+          },
+          "lookAtMaterialPoint": {
+            "x": 434,
+            "y": 386
+          }
+        },
+        {
+          "label": "04-north-dense-head",
+          "x": 566,
+          "y": 147,
+          "faces": [
+            "west",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 564,
+            "y": 148
+          },
+          "lookAtMaterialPoint": {
+            "x": 489,
+            "y": 205
+          }
+        }
+      ]
+    },
+    {
+      "world": "quiet-spur",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-south-short-shoulder",
+          "x": 577,
+          "y": 584,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 572,
+            "y": 588
+          },
+          "lookAtMaterialPoint": {
+            "x": 614,
+            "y": 526
+          }
+        },
+        {
+          "label": "02-inner-short-turn",
+          "x": 543,
+          "y": 473,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 476
+          },
+          "lookAtMaterialPoint": {
+            "x": 438,
+            "y": 479
+          }
+        },
+        {
+          "label": "03-east-long-bypass",
+          "x": 934,
+          "y": 401,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 932,
+            "y": 404
+          },
+          "lookAtMaterialPoint": {
+            "x": 796,
+            "y": 392
+          }
+        },
+        {
+          "label": "04-north-quiet-bed",
+          "x": 662,
+          "y": 236,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 660,
+            "y": 236
+          },
+          "lookAtMaterialPoint": {
+            "x": 561,
+            "y": 224
+          }
+        }
+      ]
+    },
+    {
+      "world": "split-fall",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-south-fragments",
+          "x": 415,
+          "y": 636,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 412,
+            "y": 636
+          },
+          "lookAtMaterialPoint": {
+            "x": 338,
+            "y": 577
+          }
+        },
+        {
+          "label": "02-west-dense-band",
+          "x": 404,
+          "y": 472,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 404,
+            "y": 468
+          },
+          "lookAtMaterialPoint": {
+            "x": 343,
+            "y": 347
+          }
+        },
+        {
+          "label": "03-middle-crossing",
+          "x": 574,
+          "y": 492,
+          "faces": [
+            "west",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 492
+          },
+          "lookAtMaterialPoint": {
+            "x": 507,
+            "y": 554
+          }
+        },
+        {
+          "label": "04-east-facing-fall",
+          "x": 582,
+          "y": 338,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 332
+          },
+          "lookAtMaterialPoint": {
+            "x": 667,
+            "y": 357
+          }
+        }
+      ]
+    },
+    {
+      "world": "three-shelves",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-west-bank",
+          "x": 356,
+          "y": 603,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 356,
+            "y": 604
+          },
+          "lookAtMaterialPoint": {
+            "x": 398,
+            "y": 435
+          }
+        },
+        {
+          "label": "02-south-bank",
+          "x": 431,
+          "y": 537,
+          "faces": [
+            "east",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 428,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 541,
+            "y": 651
+          }
+        },
+        {
+          "label": "03-east-bank",
+          "x": 535,
+          "y": 462,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 532,
+            "y": 460
+          },
+          "lookAtMaterialPoint": {
+            "x": 686,
+            "y": 449
+          }
+        },
+        {
+          "label": "04-north-open-return",
+          "x": 535,
+          "y": 284,
+          "faces": [
+            "south",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 532,
+            "y": 284
+          },
+          "lookAtMaterialPoint": {
+            "x": 398,
+            "y": 435
+          }
+        }
+      ]
+    },
+    {
+      "world": "frayed-outwash",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-south-quiet-tail",
+          "x": 602,
+          "y": 662,
+          "faces": [
+            "east",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 604,
+            "y": 660
+          },
+          "lookAtMaterialPoint": {
+            "x": 682,
+            "y": 607
+          }
+        },
+        {
+          "label": "02-middle-short-tail",
+          "x": 604,
+          "y": 517,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 604,
+            "y": 516
+          },
+          "lookAtMaterialPoint": {
+            "x": 531,
+            "y": 516
+          }
+        },
+        {
+          "label": "03-thickening-band",
+          "x": 548,
+          "y": 386,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 548,
+            "y": 388
+          },
+          "lookAtMaterialPoint": {
+            "x": 434,
+            "y": 386
+          }
+        },
+        {
+          "label": "04-north-dense-head",
+          "x": 566,
+          "y": 147,
+          "faces": [
+            "west",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 564,
+            "y": 148
+          },
+          "lookAtMaterialPoint": {
+            "x": 489,
+            "y": 205
+          }
+        }
+      ]
+    }
+  ]
+}

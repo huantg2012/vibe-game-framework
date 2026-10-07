@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "worlds": [
+    "shard-switchback",
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments"
+  ],
+  "groups": [
+    {
+      "id": "B03-original-three",
+      "worlds": [
+        "hollow-wreckage",
+        "knotted-run",
+        "rolled-fragments"
+      ],
+      "attempts": [
+        "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-full",
+        "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-holdout"
+      ]
+    },
+    {
+      "id": "B03-repaired-shard",
+      "worlds": [
+        "shard-switchback"
+      ],
+      "attempts": [
+        "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-full",
+        "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-holdout"
+      ]
+    }
+  ]
+}

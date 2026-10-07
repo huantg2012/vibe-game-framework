@@ -1,0 +1,44 @@
+{
+  "status": "pass",
+  "pid": 5996,
+  "startedAt": "2026-10-07T01:53:22.155Z",
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/run-generation.mjs",
+    "sha256": "a69c07adbae7dbb6f61910d596700da1396ed95a0313547fb56ad18b2aeb3140"
+  },
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/commands.json",
+    "sha256": "501727c717054d3de359f59883f2dcd8c93f20cbb60f50baeebc5a91cbaec63a"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-source/source-snapshot.json",
+    "sha256": "dd74172596cdc18c581c86a0ba42904ade4e32e22b04418083ede98a744ca22d"
+  },
+  "worlds": [
+    "fibre-choke",
+    "pressed-rim",
+    "wedged-hide"
+  ],
+  "wholeBatchReady": false,
+  "stages": [
+    {
+      "stage": "full",
+      "cases": 360,
+      "exitCode": 0,
+      "signal": null,
+      "elapsedSeconds": 7683.728,
+      "log": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-full.log",
+      "logSha256": "2b57972e5e33ac64854bf75d4a994436a665f7796f689b129361b2b1dc7464f6"
+    },
+    {
+      "stage": "holdout",
+      "cases": 72,
+      "exitCode": 0,
+      "signal": null,
+      "elapsedSeconds": 170.131,
+      "log": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-holdout.log",
+      "logSha256": "5c2452ca8eeb3a016b2b581fc8c5d9aeec7abac3ded4c2fa443f3381a3ec18c1"
+    }
+  ],
+  "finishedAt": "2026-10-07T04:04:18.057Z"
+}

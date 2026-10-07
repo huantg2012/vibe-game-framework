@@ -1,0 +1,36 @@
+/** Executes the exact capture callback with real NativeBodyCollision, no browser. */
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+const root=process.cwd(), out=root+'/docs/qa/artifacts/r100-i10-i12/b05-route-connector';
+const source=fs.readFileSync(root+'/tools/qa/capture-r100-expansion-art.mjs','utf8');
+const open='const connector = await page.evaluate(', end='}, { candidates });';
+const start=source.indexOf(open); assert(start>=0);
+const stop=source.indexOf(end,start); assert(stop>start);
+const callback=source.slice(start+open.length,stop+1);
+const {NativeBodyCollision,buildNativeVolume}=await import(root+'/docs/qa/artifacts/r100-i10-i12/b06-author-preflight/felt-refined/body3/executor.mjs');
+const recipe=JSON.parse(fs.readFileSync(root+'/docs/qa/artifacts/r100-i10-i12/b05-medium/split-fall-medium/recipe.json'));
+const definition=recipe.nativeDefinition;
+const inside=(poly,x,y)=>{let yes=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if((a.y>y)!==(b.y>y)&&x<(b.x-a.x)*(y-a.y)/(b.y-a.y)+a.x)yes=!yes;}return yes;};
+const tiles=Array.from({length:96},(_,r)=>Array.from({length:128},(_,c)=>{const x=c*8+4,y=r*8+4,C=Math.floor(x/32),R=Math.floor(y/32);return C>=1&&R>=1&&C<31&&R<23&&!(C<3&&R<3)&&!(C>28&&R>20)&&!definition.erosion.some(p=>inside(p,x,y))?1:3;}));
+const meshes=definition.instances.map(({role,...spec})=>buildNativeVolume({...spec,family:spec.family??definition.family,blocking:role==='solid'?1:0,seed:recipe.requestedSeed^Math.imul(spec.id,104729)}));
+const collision=new NativeBodyCollision({definition,meshes},{cols:128,rows:96,tileSize:8,tiles});
+const origin={x:566.3872262502038,y:488.01244492750936};
+const body={halfWidth:10,halfHeight:10,center:{...origin}};
+let position={...origin},ended=false;
+const scene={nativeBody:collision,player:{getPosition:()=>position,getSprite:()=>({body})},runController:{isRunEnded:()=>ended}};
+const fn=vm.runInNewContext('('+callback+')',{window:{__game:{scene:{getScene:()=>scene}}}});
+const valid={index:1,x:572,y:484},blocked={index:2,x:572,y:492};
+const positive=fn({candidates:[blocked,valid]});assert.equal(positive.selected.index,1);assert.equal(positive.fraction,1);assert.equal(positive.halfX,10);assert.equal(positive.halfY,10);
+const cases=[{id:'real-split-corner-to-conservative-route',status:'PASS'}];
+function reject(id,change,restore,candidates=[valid]){change();assert.throws(()=>fn({candidates}));restore();cases.push({id,status:'PASS'});}
+reject('solid-endpoint',()=>{},()=>{},[blocked]);
+reject('empty-candidates',()=>{},()=>{},[]);
+reject('outside32px',()=>{},()=>{},[{index:4,x:196,y:588}]);
+reject('ended-run',()=>{ended=true;},()=>{ended=false;});
+reject('no-body-width-reduction',()=>{body.halfWidth=9;},()=>{body.halfWidth=10;});
+reject('sprite-body-disagreement',()=>{body.center.x+=1;},()=>{body.center.x-=1;});
+reject('unsupported-actual-position',()=>{position={x:566,y:500};body.center={...position};},()=>{position={...origin};body.center={...origin};});
+const result={status:'pass',scope:'Exact browser-callback code evaluated with real frozen-geometry body queries in a VM. Does not claim Chrome execution.',harnessSha256:createHash('sha256').update(source).digest('hex'),cases,positive,authority:'Physical20px remains unchanged; coarse candidate preparation still22px.'};
+fs.writeFileSync(out+'/checks.json',JSON.stringify(result,null,2)); console.log('PASS 8 exact connector callback cases with real native collision');

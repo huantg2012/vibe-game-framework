@@ -1,0 +1,254 @@
+{
+  "status": "selected-for-independent-review",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+    "sha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8"
+  },
+  "outcomes": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play-outcomes.json",
+    "sha256": "e67b62d74e440263ec00002053d31093c905fc40bb4120b22f55e233cae8dcbe"
+  },
+  "selection": "All three returns with damage plus the distinct highest-chaos/longest-duration process. Original input and images linked; no claim of natural economy or novice usability.",
+  "cases": [
+    {
+      "case": "023-rolled-fragments-severe-20261005",
+      "world": "rolled-fragments",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/023-rolled-fragments-severe-20261005/report.json",
+        "sha256": "1c8ac421dc24e6ad049dd3f1ef8d8ef5ea4ff8db5ffcf2ac398ac8f158f847e3"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 569.5752803624821,
+          "elapsedMs": 33665.29999999971
+        }
+      ],
+      "field": {
+        "elapsedMs": 47548.08999999988,
+        "hp": 115,
+        "chaos": 64.28905854431649,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "a3b3e96a-2605-49d9-8509-d593b8b7f2f8",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      },
+      "reason": "Lowest terminal HP of all24: HP115; actual non-entry kindling search and extraction.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/023-rolled-fragments-severe-20261005/severe/journey.jsonl",
+        "sha256": "a41d006787772c7c9b738f747d7895a896995c65a30ba6466f1962a455259886"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/023-rolled-fragments-severe-20261005/severe/1-far-exploration.png",
+          "sha256": "355450011d44cc175824c8219aa7ff6b53f6cc0b2d809e66f4ef0aad95b22af7"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/023-rolled-fragments-severe-20261005/severe/1-field-result.png",
+          "sha256": "e32511f2f06dc0703d73038952cf2ab301aad251d9644908db3c20fc7b7431e5"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/023-rolled-fragments-severe-20261005/severe/1-return.png",
+          "sha256": "19dddad5bb5b894bf82647fffb3f1d2242bda751ffddd9176ea4fb4a46a6416e"
+        }
+      ],
+      "actualToolInputCounts": {
+        "Q": 1,
+        "F": 0,
+        "G": 1
+      }
+    },
+    {
+      "case": "005-shard-switchback-severe-20261005",
+      "world": "shard-switchback",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/005-shard-switchback-severe-20261005/report.json",
+        "sha256": "1f35bc110d7bef615f6506d2063346792b3877a0665a9863b5b51826d4d8bd53"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 616.8306088384396,
+          "elapsedMs": 69280.54999999996
+        }
+      ],
+      "field": {
+        "elapsedMs": 96612.7800000004,
+        "hp": 145,
+        "chaos": 83.95966125617562,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "96ab4eda-5cea-4290-a8cb-482ca54504a9",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      },
+      "reason": "Highest terminal chaos and longest simulation duration of all24: chaos83.96,96.61s; actual non-entry kindling search and extraction.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/005-shard-switchback-severe-20261005/severe/journey.jsonl",
+        "sha256": "494a3eb526cfd7fbbc5f0605bec84cff762c80abec5dbfb3ed6cecaeea888671"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/005-shard-switchback-severe-20261005/severe/1-far-exploration.png",
+          "sha256": "572c171758dfa54a9e632afb281ace97e4b7006cd480ed1f9ccd505cceaed6a7"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/005-shard-switchback-severe-20261005/severe/1-field-result.png",
+          "sha256": "f6d401ed284353effc4a97d2d708833c83db8dc85f56b3527c9595dc66037c62"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/005-shard-switchback-severe-20261005/severe/1-return.png",
+          "sha256": "2d4c918141b4eec92cb8d57b7b298ceee23242dbede6fc32a3621d8554ddbb94"
+        }
+      ],
+      "actualToolInputCounts": {
+        "Q": 0,
+        "F": 0,
+        "G": 0
+      }
+    },
+    {
+      "case": "003-shard-switchback-medium-20261005",
+      "world": "shard-switchback",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/003-shard-switchback-medium-20261005/report.json",
+        "sha256": "b7e54760608f5ecd281447bff9e3372b279bd9c13cba3ad812db210fd5b623b1"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 601.0657202003788,
+          "elapsedMs": 42598.28999999985
+        }
+      ],
+      "field": {
+        "elapsedMs": 65230.70999999939,
+        "hp": 130,
+        "chaos": 53.92165701482933,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "b041969e-215b-4d8e-8114-a2f91f0f2144",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      },
+      "reason": "One of three damage-bearing returns, HP130,65.23s. Actual contaminant pickup is settled; carried kindling0 is not an empty return.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/003-shard-switchback-medium-20261005/medium/journey.jsonl",
+        "sha256": "b8cd4328f9700917fc2d98819338c671f8ec30ad354b9229c4978d6c144617d2"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/003-shard-switchback-medium-20261005/medium/1-far-exploration.png",
+          "sha256": "6a73135babc0287242ec425eb1820050facabd6b159b21fbdc82a9790eca9be3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/003-shard-switchback-medium-20261005/medium/1-field-result.png",
+          "sha256": "a329f989e18c5c0696e300cd2216bf49f3338ece92f2e3fac7f0aabd3d5bd44f"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/003-shard-switchback-medium-20261005/medium/1-return.png",
+          "sha256": "eee15007a2c79db13d9d26ccc741597c505c191fe736bcc854349a94a48d7f84"
+        }
+      ],
+      "actualToolInputCounts": {
+        "Q": 0,
+        "F": 0,
+        "G": 0
+      }
+    },
+    {
+      "case": "010-hollow-wreckage-medium-3075192741",
+      "world": "hollow-wreckage",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/010-hollow-wreckage-medium-3075192741/report.json",
+        "sha256": "cd46ce7f5ef5ed078f8b0ba5bcda03f2d5b61c14a851017d144dcf66c7e50e87"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 35131.90000000019
+        }
+      ],
+      "field": {
+        "elapsedMs": 48598.06000000036,
+        "hp": 130,
+        "chaos": 55.886479423851114,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "c7cd6f0a-a1e9-4e82-bcc5-760fb02c297d",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      },
+      "reason": "Other damage-bearing return, HP130,48.60s. Actual contaminant pickup is settled; carried kindling0 is not an empty return.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/010-hollow-wreckage-medium-3075192741/medium/journey.jsonl",
+        "sha256": "0a96bcd4bdf4f16c1406941df99cc771b805ca257988c77e73341b310e5e35cf"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/010-hollow-wreckage-medium-3075192741/medium/1-far-exploration.png",
+          "sha256": "4aa60bcad6ffeedae2187f2fb38b8a0abaf32241cdf8017da848cfc02ad12187"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/010-hollow-wreckage-medium-3075192741/medium/1-field-result.png",
+          "sha256": "a507254a955803366275422f0fee191599a89b95b95f49c3cd3dce19d6e78913"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/010-hollow-wreckage-medium-3075192741/medium/1-return.png",
+          "sha256": "d022bb39c5bc0332f1ca32570433883a54c4e057df5a7c1c83a8c7dfe335c4f5"
+        }
+      ],
+      "actualToolInputCounts": {
+        "Q": 1,
+        "F": 0,
+        "G": 2
+      }
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "wedged-hide",
+    "label": "楔间破皮",
+    "description": "楔间破皮的原生材料与完整搜撤地段",
+    "material": "membrane",
+    "surface": {
+      "substrate": "membrane",
+      "coating": "membrane",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 2695223,
+      "floor": 6441321,
+      "floorLight": 10520491,
+      "materialDark": 5515073,
+      "materialMid": 10965393,
+      "materialLight": 14260417,
+      "faceLight": 14273757,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 6441321,
+      "groundLight": 10520491,
+      "groundDark": 2695223,
+      "wall": 10965393,
+      "wallLight": 14260417,
+      "wallDark": 5515073
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "wedged-hide",
+    "ground": {
+      "dark": 2695223,
+      "mid": 6441321,
+      "light": 10520491
+    },
+    "solid": {
+      "dark": 5515073,
+      "mid": 10965393,
+      "light": 14260417
+    },
+    "cleaved": {
+      "dark": 5589337,
+      "mid": 10785960,
+      "light": 14273757
+    },
+    "secondary": {
+      "dark": 4934742,
+      "mid": 10921907,
+      "light": 14014431
+    },
+    "groundPattern": "tension",
+    "patternScale": 228,
+    "patternStrength": 0.41,
+    "secondaryCoverage": 0.15,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.62
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "wedged-hide-medium",
+    "family": "membrane-rim",
+    "grade": "medium",
+    "label": "楔间破皮",
+    "profile": "wedged-hide",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 134,
+    "emission": 0.55,
+    "motion_period": 20,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 382,
+        "y": 350,
+        "rotation": 0.5,
+        "length": 210,
+        "width": 140,
+        "height": 54,
+        "thickness": 12,
+        "fold": 0.48,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 2,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 721,
+        "y": 329,
+        "rotation": -0.4,
+        "length": 230,
+        "width": 145,
+        "height": 48,
+        "thickness": 11,
+        "fold": 0.6,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 3,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 445,
+        "y": 450,
+        "rotation": -0.35,
+        "length": 180,
+        "width": 165,
+        "height": 35,
+        "thickness": 8,
+        "fold": 0.72,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "torn-sheet"
+      },
+      {
+        "id": 4,
+        "family": "membrane-rim",
+        "role": "relief",
+        "x": 698,
+        "y": 453,
+        "rotation": 0.3,
+        "length": 205,
+        "width": 146,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.56,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "torn-sheet"
+      },
+      {
+        "id": 5,
+        "family": "membrane-rim",
+        "role": "relief",
+        "x": 797,
+        "y": 517,
+        "rotation": 0.82,
+        "length": 160,
+        "width": 118,
+        "height": 3,
+        "thickness": 1,
+        "fold": 0.38,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "torn-sheet"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "package": {
+    "id": "r100-wedged-hide",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "folded-slab": {
+        "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+        "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+        "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+      },
+      "membrane-rim": {
+        "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+        "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+        "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+      }
+    },
+    "dependencyHash": "9291d2a4",
+    "grade": "medium"
+  }
+}

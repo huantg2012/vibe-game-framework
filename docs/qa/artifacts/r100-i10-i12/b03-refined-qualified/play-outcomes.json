@@ -1,0 +1,886 @@
+{
+  "status": "pass",
+  "method": "Read-only projection of all original reports after strict play-summary reconciliation. Non-entry pickups require original entry/terminal/settlement proof; zero kindling alone never means an empty return.",
+  "summary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play-summary.json",
+    "sha256": "3f94e963478fec1c7750512bacdd7b9b4f15a50bda62ecb77b7d0913966146dc"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+    "sha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8"
+  },
+  "counts": {
+    "originalProcesses": 24,
+    "nonEntrySearchAndExtract": 24,
+    "nearEntryOnly": 0,
+    "trueEmptyExtract": 0,
+    "deaths": 0,
+    "errors": 0
+  },
+  "rows": [
+    {
+      "case": "001-shard-switchback-low-20261005",
+      "world": "shard-switchback",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/001-shard-switchback-low-20261005/report.json",
+        "sha256": "20c91b5674f514c9a223339a2de4cfaaf40ef160cc9e60eb25d947e84b66fa50"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 559.1422001602097,
+          "elapsedMs": 25415.669999999845
+        }
+      ],
+      "field": {
+        "elapsedMs": 43348.26999999993,
+        "hp": 145,
+        "chaos": 31.57241149260201,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "5ca3b6d9-c450-4c4e-8d9a-f23a747828e6",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "002-shard-switchback-low-3075192741",
+      "world": "shard-switchback",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/002-shard-switchback-low-3075192741/report.json",
+        "sha256": "35f5447544fcd99f7c40471c8a0ac1d0d2cac7bbf1ef8bd940420d3d7e75fd91"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 604.0397337924054,
+          "elapsedMs": 34548.60999999975
+        }
+      ],
+      "field": {
+        "elapsedMs": 61380.8699999998,
+        "hp": 145,
+        "chaos": 34.72248570505683,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "be07e642-01e8-489a-b473-4498d00593a5",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "003-shard-switchback-medium-20261005",
+      "world": "shard-switchback",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/003-shard-switchback-medium-20261005/report.json",
+        "sha256": "b7e54760608f5ecd281447bff9e3372b279bd9c13cba3ad812db210fd5b623b1"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 601.0657202003788,
+          "elapsedMs": 42598.28999999985
+        }
+      ],
+      "field": {
+        "elapsedMs": 65230.70999999939,
+        "hp": 130,
+        "chaos": 53.92165701482933,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "b041969e-215b-4d8e-8114-a2f91f0f2144",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "004-shard-switchback-medium-3075192741",
+      "world": "shard-switchback",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/004-shard-switchback-medium-3075192741/report.json",
+        "sha256": "6b2ec7fa59f667fa9599b8ee911c3b68bcb3bae3dbb003940f3d1ce64cfcddda"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 623.0248791180013,
+          "elapsedMs": 31082.06999999982
+        }
+      ],
+      "field": {
+        "elapsedMs": 44098.20000000001,
+        "hp": 145,
+        "chaos": 41.40097637680689,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "d79cf01a-7a6c-4738-9464-bc0cfd715061",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "005-shard-switchback-severe-20261005",
+      "world": "shard-switchback",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/005-shard-switchback-severe-20261005/report.json",
+        "sha256": "1f35bc110d7bef615f6506d2063346792b3877a0665a9863b5b51826d4d8bd53"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 616.8306088384396,
+          "elapsedMs": 69280.54999999996
+        }
+      ],
+      "field": {
+        "elapsedMs": 96612.7800000004,
+        "hp": 145,
+        "chaos": 83.95966125617562,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "96ab4eda-5cea-4290-a8cb-482ca54504a9",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "006-shard-switchback-severe-3075192741",
+      "world": "shard-switchback",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/006-shard-switchback-severe-3075192741/report.json",
+        "sha256": "a52ad2acb91bd0a98d9f2ebf792cae3a5fce92f26d728319b134fe5d4c1b0f88"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 601.0657202003788,
+          "elapsedMs": 44514.8899999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 77926.9100000001,
+        "hp": 145,
+        "chaos": 62.16233385778329,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "91a2bce4-97bc-41af-b169-f901acef6566",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "007-hollow-wreckage-low-20261005",
+      "world": "hollow-wreckage",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/007-hollow-wreckage-low-20261005/report.json",
+        "sha256": "2bf5de1890ab8ae7a95554e3c905a570b87662057068ddb2063373bb28c7432c"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 593.3498125052371,
+          "elapsedMs": 14199.449999999992
+        }
+      ],
+      "field": {
+        "elapsedMs": 26598.930000000095,
+        "hp": 145,
+        "chaos": 34.06114763103762,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "c229703e-a919-4b78-8693-f53b740a43dc",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "008-hollow-wreckage-low-3075192741",
+      "world": "hollow-wreckage",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/008-hollow-wreckage-low-3075192741/report.json",
+        "sha256": "f716c4079644f8a4151049972ed7ac9d0bc916f3a26a57afa99e9ad1ff0cde22"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 13399.459999999992
+        }
+      ],
+      "field": {
+        "elapsedMs": 24865.670000000086,
+        "hp": 145,
+        "chaos": 28.34372779534881,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "a9cb8e31-f4fb-48dd-bbdf-9ff98409131c",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "009-hollow-wreckage-medium-20261005",
+      "world": "hollow-wreckage",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/009-hollow-wreckage-medium-20261005/report.json",
+        "sha256": "b84102127ae3dfbeef125a929c9d6f95f9a9fcef7a65c0c374366eb6f33a2b77"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 604.0397337924054,
+          "elapsedMs": 18499.250000000022
+        }
+      ],
+      "field": {
+        "elapsedMs": 30865.4500000001,
+        "hp": 145,
+        "chaos": 33.43567769907885,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "0ccd1467-a00f-421b-998b-686524a7cce4",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "010-hollow-wreckage-medium-3075192741",
+      "world": "hollow-wreckage",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/010-hollow-wreckage-medium-3075192741/report.json",
+        "sha256": "cd46ce7f5ef5ed078f8b0ba5bcda03f2d5b61c14a851017d144dcf66c7e50e87"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 35131.90000000019
+        }
+      ],
+      "field": {
+        "elapsedMs": 48598.06000000036,
+        "hp": 130,
+        "chaos": 55.886479423851114,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "c7cd6f0a-a1e9-4e82-bcc5-760fb02c297d",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "011-hollow-wreckage-severe-20261005",
+      "world": "hollow-wreckage",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/011-hollow-wreckage-severe-20261005/report.json",
+        "sha256": "a96c97b3c16bd2208b242104b5ae247fac0c1f96f0a57c2f18f3de886871f140"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 592.4862867611367,
+          "elapsedMs": 13682.76999999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 25932.269999999753,
+        "hp": 145,
+        "chaos": 36.08013264826338,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "b4387dd4-5603-438e-abb4-21b2212765bc",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "012-hollow-wreckage-severe-3075192741",
+      "world": "hollow-wreckage",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/012-hollow-wreckage-severe-3075192741/report.json",
+        "sha256": "0334af3ee0ddf52626fa7bbaaac6205e4f50bb8c891daf0e7d64887d46018f69"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 610.5735008989499,
+          "elapsedMs": 15316.019999999986
+        }
+      ],
+      "field": {
+        "elapsedMs": 25715.62999999974,
+        "hp": 145,
+        "chaos": 35.979214373969526,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "6a706360-2370-4c28-ae85-44b124136639",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "013-knotted-run-low-20261005",
+      "world": "knotted-run",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/013-knotted-run-low-20261005/report.json",
+        "sha256": "29026f87415a7e5290d30cb0f3233fc795788f3d2b032cea2f62ad4a23fef730"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 419.4472553253865,
+          "elapsedMs": 20515.83999999987
+        }
+      ],
+      "field": {
+        "elapsedMs": 35831.90999999974,
+        "hp": 145,
+        "chaos": 30.259395521109948,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "bd27263b-679f-4c7e-bcad-41769d909bd3",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "014-knotted-run-low-3075192741",
+      "world": "knotted-run",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/014-knotted-run-low-3075192741/report.json",
+        "sha256": "28786058aef1d1a10ab3f9b8bc83c2470d10729ef1e686decb42b906524de0e8"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 428.8029850642367,
+          "elapsedMs": 19232.52999999991
+        }
+      ],
+      "field": {
+        "elapsedMs": 35181.899999999674,
+        "hp": 145,
+        "chaos": 30.145846740632486,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "480099c0-cfdd-4428-b28f-2c56b58af8fb",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "015-knotted-run-medium-20261005",
+      "world": "knotted-run",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/015-knotted-run-medium-20261005/report.json",
+        "sha256": "fd614ec7730736509035d9c0fea622746c616a9ec861d48149e5ee9afbb8e69f"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.4734998338055,
+          "elapsedMs": 25632.319999999807
+        }
+      ],
+      "field": {
+        "elapsedMs": 38515.119999999835,
+        "hp": 145,
+        "chaos": 44.668574398635286,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "a5ebef8b-27ab-41ab-b144-36f1f66d00f3",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "016-knotted-run-medium-3075192741",
+      "world": "knotted-run",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/016-knotted-run-medium-3075192741/report.json",
+        "sha256": "83d826d9f852e47e067956a669c0647ef62be4a4b8dd7f18e5b0709c3772f2cb"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 578.7158197250185,
+          "elapsedMs": 17999.279999999955
+        }
+      ],
+      "field": {
+        "elapsedMs": 35565.23999999974,
+        "hp": 145,
+        "chaos": 34.8724201957327,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "4fbe6703-30cd-4157-9d06-937787bbbbfb",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "017-knotted-run-severe-20261005",
+      "world": "knotted-run",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/017-knotted-run-severe-20261005/report.json",
+        "sha256": "2c13675a1e09955daaa0e55fcac9263c4dae0e552d0c66d19ffca0f77ef6785b"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 464.06896039274164,
+          "elapsedMs": 19815.84999999989
+        }
+      ],
+      "field": {
+        "elapsedMs": 37148.479999999705,
+        "hp": 145,
+        "chaos": 41.305024437943906,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "c1f36925-c4ea-4864-aa03-a2beab81de63",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "018-knotted-run-severe-3075192741",
+      "world": "knotted-run",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/018-knotted-run-severe-3075192741/report.json",
+        "sha256": "10674af13ad151340b358c8ed2e1f1e0660e0f37b300f1ec472b6e59b37a2659"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 464.06896039274164,
+          "elapsedMs": 21265.779999999853
+        }
+      ],
+      "field": {
+        "elapsedMs": 36581.86999999976,
+        "hp": 145,
+        "chaos": 41.04107824426971,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "15db743c-5414-470f-9267-cc93e159b054",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "019-rolled-fragments-low-20261005",
+      "world": "rolled-fragments",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/019-rolled-fragments-low-20261005/report.json",
+        "sha256": "920aad36c11ff9eab7b8196904589b6fdc9c3ecfa6e3c39e17f815e3edcb6d15"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 604.0397337924054,
+          "elapsedMs": 13966.08999999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 25698.959999999748,
+        "hp": 145,
+        "chaos": 30.44929334554509,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "3f03b56d-8dc5-4f8b-9b9e-b665b5be0510",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "020-rolled-fragments-low-3075192741",
+      "world": "rolled-fragments",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/020-rolled-fragments-low-3075192741/report.json",
+        "sha256": "2f9a95a4529cd7083705449100ffb2a6b715aeec2dd142ada604041c63d42ef2"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 561.8825500048921,
+          "elapsedMs": 14166.109999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 30082.129999999695,
+        "hp": 145,
+        "chaos": 29.25497942441353,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "f4748745-3d80-4da0-813c-0e37b9c8dd4f",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "021-rolled-fragments-medium-20261005",
+      "world": "rolled-fragments",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/021-rolled-fragments-medium-20261005/report.json",
+        "sha256": "618c51f00ea9fa373f004f8a8df1b3aefd0c9ef17bb8e8d53e59840df9e46693"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 591.8378156218138,
+          "elapsedMs": 14866.109999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 24999.00999999977,
+        "hp": 145,
+        "chaos": 31.6422861534834,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "62ab60c6-fba6-4bf8-a8fc-8e413f6cc63f",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "022-rolled-fragments-medium-3075192741",
+      "world": "rolled-fragments",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/022-rolled-fragments-medium-3075192741/report.json",
+        "sha256": "c63391fb665e9aeb5ee5c916a0f93e3f3d463fa7cb19ea9c47a1abb6c31467ee"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 569.5752803624821,
+          "elapsedMs": 14332.749999999989
+        }
+      ],
+      "field": {
+        "elapsedMs": 26598.92999999976,
+        "hp": 145,
+        "chaos": 38.804391537545776,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "a03eeb20-b193-44ae-a74e-0586c519c224",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "023-rolled-fragments-severe-20261005",
+      "world": "rolled-fragments",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/023-rolled-fragments-severe-20261005/report.json",
+        "sha256": "1c8ac421dc24e6ad049dd3f1ef8d8ef5ea4ff8db5ffcf2ac398ac8f158f847e3"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 569.5752803624821,
+          "elapsedMs": 33665.29999999971
+        }
+      ],
+      "field": {
+        "elapsedMs": 47548.08999999988,
+        "hp": 115,
+        "chaos": 64.28905854431649,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "a3b3e96a-2605-49d9-8509-d593b8b7f2f8",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "024-rolled-fragments-severe-3075192741",
+      "world": "rolled-fragments",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/play/024-rolled-fragments-severe-3075192741/report.json",
+        "sha256": "61757850c686d55ddc3bd29e4795a9a659bea23413049203cd5fc0cc3cf3cb4c"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 569.5752803624821,
+          "elapsedMs": 13866.079999999989
+        }
+      ],
+      "field": {
+        "elapsedMs": 27048.899999999707,
+        "hp": 145,
+        "chaos": 36.60029684981723,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "28c01691-28b9-4a3d-9084-fd9498d3385e",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    }
+  ]
+}

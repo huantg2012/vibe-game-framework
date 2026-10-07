@@ -1,0 +1,279 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "blue-fault",
+    "label": "蓝层斜断",
+    "description": "蓝层斜断的原生材料与完整搜撤地段",
+    "material": "strata",
+    "surface": {
+      "substrate": "strata",
+      "coating": "strata",
+      "organization": "bands",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 3156278,
+      "floor": 6838631,
+      "floorLight": 10850468,
+      "materialDark": 1518416,
+      "materialMid": 3431062,
+      "materialLight": 8298181,
+      "faceLight": 14471347,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 6838631,
+      "groundLight": 10850468,
+      "groundDark": 3156278,
+      "wall": 3431062,
+      "wallLight": 8298181,
+      "wallDark": 1518416
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "blue-fault",
+    "ground": {
+      "dark": 3156278,
+      "mid": 6838631,
+      "light": 10850468
+    },
+    "solid": {
+      "dark": 1518416,
+      "mid": 3431062,
+      "light": 8298181
+    },
+    "cleaved": {
+      "dark": 6642765,
+      "mid": 11575941,
+      "light": 14471347
+    },
+    "secondary": {
+      "dark": 3878972,
+      "mid": 8415101,
+      "light": 12097710
+    },
+    "groundPattern": "strata",
+    "patternScale": 252,
+    "patternStrength": 0.4,
+    "secondaryCoverage": 0.15,
+    "textureContrast": 1.15,
+    "quietCoverage": 0.62
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "blue-fault-severe",
+    "family": "folded-slab",
+    "grade": "severe",
+    "label": "蓝层斜断",
+    "profile": "blue-fault",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": -0.28,
+    "light_radius": 154,
+    "emission": 0.72,
+    "motion_period": 14,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "folded-slab",
+        "role": "relief",
+        "x": 425,
+        "y": 463,
+        "rotation": -0.55,
+        "length": 591,
+        "width": 350,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.44000000000000006,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-fan",
+        "groundEdgeWidth": 8
+      },
+      {
+        "id": 2,
+        "family": "folded-slab",
+        "role": "relief",
+        "x": 729,
+        "y": 287,
+        "rotation": -0.47,
+        "length": 324,
+        "width": 257,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.385,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-fan"
+      },
+      {
+        "id": 3,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 420,
+        "y": 276,
+        "rotation": -0.62,
+        "length": 197,
+        "width": 102,
+        "height": 48,
+        "thickness": 11,
+        "fold": 0.7040000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 4,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 724,
+        "y": 426,
+        "rotation": -0.62,
+        "length": 182,
+        "width": 105,
+        "height": 57,
+        "thickness": 13,
+        "fold": 0.6160000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 503,
+          "y": 180
+        },
+        {
+          "x": 544,
+          "y": 172
+        },
+        {
+          "x": 697,
+          "y": 505
+        },
+        {
+          "x": 661,
+          "y": 535
+        },
+        {
+          "x": 614,
+          "y": 474
+        },
+        {
+          "x": 570,
+          "y": 383
+        },
+        {
+          "x": 532,
+          "y": 275
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "package": {
+    "id": "r100-blue-fault",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "folded-slab": {
+        "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+        "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+        "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+      }
+    },
+    "dependencyHash": "be2024cf",
+    "grade": "severe"
+  }
+}

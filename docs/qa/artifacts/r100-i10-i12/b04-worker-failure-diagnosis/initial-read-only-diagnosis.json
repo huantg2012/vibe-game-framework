@@ -1,0 +1,109 @@
+{
+  "status": "unresolved-pre-entry-worker-error",
+  "createdAt": "2026-10-07T04:57:22.399421+00:00",
+  "requested": {
+    "world": "buried-lamellae",
+    "grade": "severe",
+    "seed": 3075192741,
+    "algorithmRevision": 6
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+    "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d"
+  },
+  "originalAttempt": {
+    "world": "buried-lamellae",
+    "grade": "severe",
+    "seed": 3075192741,
+    "role": "second-seed-process",
+    "index": 12,
+    "dir": "012-buried-lamellae-severe-3075192741",
+    "status": "failed-script",
+    "startedAt": "2026-10-07T04:51:16.004Z",
+    "exitCode": 1,
+    "signal": null,
+    "endedAt": "2026-10-07T04:51:22.700Z",
+    "journeys": [
+      {
+        "status": "failed",
+        "outcome": null,
+        "matchesPlan": false,
+        "collected": 0,
+        "elapsedMs": null,
+        "failure": "Error: page.evaluate: Error: Generation worker failed\n    at worker.onerror (http://127.0.0.1:3110/src/generation/rift-generation-client.ts:53:40)",
+        "baseSettled": false
+      }
+    ]
+  },
+  "raw": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/report.json",
+      "sha256": "f6725170c96a0ad622c03506c09a698bf1b5bd7ba23d0de9d79b942ef95e74f8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/runner.log",
+      "sha256": "ffe767d944fd601d3d89964ca3f9d8b0f522d767a4fe01f64d9c85a7822a0ff5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/severe/console.json",
+      "sha256": "3535411d663205fdb908662508338c796f8afec0f1c05a23385c3ee780ddf3e7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/severe/journey.jsonl",
+      "sha256": "a59fce7ce94df26657cabc527cf2709565503169aaf518bed9fdf6bfac8cdc4c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/severe/1-rejected-state.json",
+      "sha256": "7c5b061c70b7ed5a6f8e0c7d0763692793816c3a0d30a410012794787f23a02c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/severe/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/severe/browser-storage.json",
+      "sha256": "92210682593c5ffdd3169fcad9d08c456a952e8a50ea615f0a5a93da312414c7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/severe/1-failure.png",
+      "sha256": "a7e3d6a2275bb23a76109fe59601e804e9f6a1fd0f00f31a6f02c63b4df53db1"
+    }
+  ],
+  "findings": {
+    "phase": "controlled generation before departure commit and field entry",
+    "workerError": "Error: page.evaluate: Error: Generation worker failed\n    at worker.onerror (http://127.0.0.1:3110/src/generation/rift-generation-client.ts:53:40)",
+    "pageErrors": [],
+    "browserConsoleErrors": [],
+    "generatedIdentityRecorded": false,
+    "entryStateRecorded": false,
+    "fieldResultRecorded": false,
+    "samePriorSettledInventoryRun": true,
+    "recentHistoryUnchanged": true,
+    "rejectedStateCaptureError": "Harness attempted RiftScene runtime checkpoint before its chaos subsystem existed; this occurs only while gathering diagnostics after the original worker error. It is not the initiating failure.",
+    "clientErrorSemantics": "The reported text is the worker.onerror fallback for an empty ErrorEvent.message. Structured executeRiftGeneration errors use the onmessage error branch. No original worker error filename/line, request failures, target crashes or process memory samples were captured."
+  },
+  "resourceTiming": {
+    "authorBodyFiles": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/body12.log",
+        "sha256": "7a7a3df06621310d7b80c28529f3103584d9c9558497e71087696a80980fcf04",
+        "birthTime": "2026-10-07T04:50:19.848208+00:00",
+        "modifiedTime": "2026-10-07T04:50:26.482558+00:00"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/body12/report.json",
+        "sha256": "a5dd147db2cf4859d93fd72673784dd7ca4b266d51fdf1d2884f62ace4794b93",
+        "birthTime": "2026-10-07T04:50:20.519613+00:00",
+        "modifiedTime": "2026-10-07T04:50:26.475709+00:00"
+      }
+    ],
+    "body12DoesNotOverlapFailure": true,
+    "laterOwnerDiagnostic": "Shapes reports two-medium diagnostic04:53:07.620–04:53:07.931Z and pure geometry04:55:25Z, both after failure. This is a timing exclusion, not root-cause proof."
+  },
+  "osLogObservation": {
+    "query": "/usr/bin/log show --style compact --start 2026-10-07 12:51:14 --end 2026-10-07 12:51:24; Chrome/kernel; kill/memory/crash/worker",
+    "result": "Exit0, header only, no matched events. Newest user DiagnosticReports Chrome file is2026-10-01.",
+    "limitation": "Absence of matching log entries does not establish absence of an OS/browser resource failure."
+  },
+  "disposition": "Original failed attempt retained, does not count as an empty/death/complete pressure journey. Finish original24 without changed inputs; perform separately bound same-source/same-seed diagnostics. Do not infer historical cause from a later pass."
+}

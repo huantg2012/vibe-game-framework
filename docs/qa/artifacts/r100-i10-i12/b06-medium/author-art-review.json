@@ -1,0 +1,994 @@
+{
+  "status": "partial-medium-review-short-fibre-rejected",
+  "reviewer": "world_loot_pixels",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/report.json",
+    "sha256": "13b7f768b8d72e3bc68d3388960dfe7da93b9053f9f11b60c64c26d91de12b58"
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "worlds": [
+    {
+      "worldId": "short-fibre-mat",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "short-fibre-mat",
+        "grade": "medium",
+        "package": {
+          "id": "r100-short-fibre-mat",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            },
+            "organization:short-fibre": {
+              "definition": "5136e92cd5d57693961e7e72797a4fa4c543d1ac0adb5008cc9e25b57957822e",
+              "surface": "39a3207c28c9c00ca4713e72cf44edddbd9e948cdd88959d553bb9db94f68b4c",
+              "solid": "488fa9b7cc8cd093c832aab4684cd229b76c582cbecce743d7db24a27b32ec2a"
+            }
+          },
+          "dependencyHash": "c300d677",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3111/r100-gym.html?world=short-fibre-mat&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/recipe.json",
+        "sha256": "00bdf777d27f8ed760dd112b7659874528eeecec539758ab9615626cd1675e89"
+      },
+      "status": "rejected-short-fibre-material",
+      "finding": "厚肩、可行低床与真实裸床可以分开，未见镜像重复；但8帧中皮面与撕端仍由细颗粒/云斑占主导，短束方向、弯折、截断纤维不够可读，正常灯下近似石壳。04西侧主要照到裸床，不能据此签低尾全部轮廓。保留几何，返修显式短纤材质。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/01-west-thick-shoulder-east.png",
+          "sha256": "eec750f11aa664bbb3d9f67fd8ad9b7366c09069714be0815915bd55690c894f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": -0.00025132741228567346,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 225.01371892555315,
+              "y": 414.38640599026513
+            },
+            "facingAngle": -0.00025132741228567346,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 20.083837971999905,
+            "elapsedMs": 3349.9
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 225.01371892555315,
+              "y": 414.38640599026513
+            },
+            "facingAngle": -0.00025132741228567346,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 20.1114901839999,
+            "elapsedMs": 3433.2000000000003
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/01-west-thick-shoulder-north.png",
+          "sha256": "91b87702b0eb0c81ebf75a49dcf9f9fab8fc355cdb4ed46b346c4e8c4e1765af",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 225.01371892555315,
+              "y": 406.94073932359845
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 20.20548248799988,
+            "elapsedMs": 3716.4999999999995
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 225.01371892555315,
+              "y": 406.94073932359845
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 20.238665805999876,
+            "elapsedMs": 3816.4999999999995
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/02-north-torn-end-south.png",
+          "sha256": "f213c26f55409c8e04e2653e58c8f899fec29b5599dcb4557028311ac77884c9",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "south",
+          "actualAngle": 1.5707334949418235,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 244.27106344488936,
+              "y": 233.18941345386241
+            },
+            "facingAngle": 1.5707334949418235,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 25.16303944599976,
+            "elapsedMs": 8883
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 244.27106344488936,
+              "y": 233.18941345386241
+            },
+            "facingAngle": 1.5707334949418235,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 25.229406081999763,
+            "elapsedMs": 8983
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/02-north-torn-end-east.png",
+          "sha256": "be72cae36613a059488ec474be88589ecf2f77cda07d338d72d500bb238579b0",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0.00018849555921252037,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 248.45501769562605,
+              "y": 231.35549966913064
+            },
+            "facingAngle": 0.00018849555921252037,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 25.417410597999762,
+            "elapsedMs": 9266.4
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 248.45501769562605,
+              "y": 231.35549966913064
+            },
+            "facingAngle": 0.00018849555921252037,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 25.472715021999765,
+            "elapsedMs": 9349.7
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/03-low-pressed-bed-north.png",
+          "sha256": "37acc88e7fe34642ef7abea9e327d78d4bad8403866b6b9ec1eedc0e4bc1de83",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 565.1639386657001,
+              "y": 447.32850509442017
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 34.04385888999956,
+            "elapsedMs": 22265.8
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 565.1639386657001,
+              "y": 447.32850509442017
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 34.099163313999554,
+            "elapsedMs": 22349.199999999997
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/03-low-pressed-bed-west.png",
+          "sha256": "67a592af3fd263de8b69a5a7202361a4a66b210441ee3ac12a14cc62d61175af",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 557.7186386657002,
+              "y": 447.32850509442017
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 34.287167829999554,
+            "elapsedMs": 22632.399999999998
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 557.7186386657002,
+              "y": 447.32850509442017
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 34.35351455799956,
+            "elapsedMs": 22732.5
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/04-southeast-low-tail-west.png",
+          "sha256": "712a0b4e617b68ccd46b65a86ff95097b4e08d1c7a64396883f5d5cbb607880a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 860.291327633928,
+              "y": 490.2155285992374
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 37.3119495339996,
+            "elapsedMs": 28398.899999999998
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 860.291327633928,
+              "y": 490.2155285992374
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 37.33959510999961,
+            "elapsedMs": 28482.199999999997
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/short-fibre-mat-medium/04-southeast-low-tail-south.png",
+          "sha256": "296406b5b11b6b033758eae489a8c10022a8b0edcc31610fa1a57bb32b4d913a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "south",
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 860.291327633928,
+              "y": 497.65949526590407
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 37.43360400399961,
+            "elapsedMs": 28765.5
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 860.291327633928,
+              "y": 497.65949526590407
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 37.46678732199962,
+            "elapsedMs": 28865.5
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "marrow-break",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "marrow-break",
+        "grade": "medium",
+        "package": {
+          "id": "r100-marrow-break",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            },
+            "organization:porous-marrow": {
+              "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+              "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+              "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+            }
+          },
+          "dependencyHash": "fb9d4f2e",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3111/r100-gym.html?world=marrow-break&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/recipe.json",
+        "sha256": "cb9b9f2382cd77ae0c51780277e4cd5ce37b3c4abe972127b36277e4082d36e9"
+      },
+      "status": "medium-bounded-author-pass-await-low-severe",
+      "finding": "两高体朝中道的浅色断面有大小不等的带壁小孔和有底暗部，暗孔与黑色缺地不同；外皮/内切/蓝灰可行中床分开。03南向能同时见两内切面，04西向清楚见完整近侧外皮与足沿。两实例仍共享圆钝家族，未照到背部不签。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/01-south-open-channel-north.png",
+          "sha256": "d611861875cbaf1e47ebff77a623a62d2bc6674c0dbe9b3b099398d23225eb26",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 563.5594006268652,
+              "y": 529.0758409782173
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.068132625999827,
+            "elapsedMs": 6316.5
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 563.5594006268652,
+              "y": 529.0758409782173
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.101315943999822,
+            "elapsedMs": 6416.4
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/01-south-open-channel-west.png",
+          "sha256": "47194435659eb0a10bdf2893322991cf317a8fa6f38293a470588ebf46981859",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": -3.141341326177507,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.1146006268652,
+              "y": 529.0758409782173
+            },
+            "facingAngle": -3.141341326177507,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.195324837999816,
+            "elapsedMs": 6699.799999999999
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.1146006268652,
+              "y": 529.0758409782173
+            },
+            "facingAngle": -3.141341326177507,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.228504837999814,
+            "elapsedMs": 6799.799999999999
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/02-east-inner-cut-east.png",
+          "sha256": "625b2a7915dcd127c9c352f0b562c3f4a540e3dce50ba25e0388f31d76f25ca6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 571.8275956601199,
+              "y": 389.10081220363077
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.14643617399975,
+            "elapsedMs": 9566.3
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 571.8275956601199,
+              "y": 389.10081220363077
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.179619491999745,
+            "elapsedMs": 9666.3
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/03-west-inner-cut-west.png",
+          "sha256": "c1736b47dab2b33e93ea690dc9a861dc7a2c09e0aabe9f290b6ef48639c473cb",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 546.9620647827629,
+              "y": 253.349150041107
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.06438409999961,
+            "elapsedMs": 12332.9
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 546.9620647827629,
+              "y": 253.349150041107
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.103095205999605,
+            "elapsedMs": 12449.5
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/03-west-inner-cut-south.png",
+          "sha256": "ecb2266cf1613ec283be8de891947b352eb5a60a3562413410318354246089ea",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "south",
+          "actualAngle": 1.5710476542071856,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 546.9620647827629,
+              "y": 260.793950041107
+            },
+            "facingAngle": 1.5710476542071856,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 19.197097463999587,
+            "elapsedMs": 12732.8
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 546.9620647827629,
+              "y": 260.793950041107
+            },
+            "facingAngle": 1.5710476542071856,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 19.224756311999585,
+            "elapsedMs": 12816.199999999999
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/marrow-break-medium/04-east-skin-west.png",
+          "sha256": "95d3716cfe182fd94a4555aca955eabe4ceac644d971f1284e56460a626aee12",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 796.7065817524735,
+              "y": 365.00729079799635
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 25.349074697999406,
+            "elapsedMs": 18615.9
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 796.7065817524735,
+              "y": 365.00729079799635
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 25.4043658499994,
+            "elapsedMs": 18699.2
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "felt-wedges",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "felt-wedges",
+        "grade": "medium",
+        "package": {
+          "id": "r100-felt-wedges",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            },
+            "organization:short-fibre": {
+              "definition": "5136e92cd5d57693961e7e72797a4fa4c543d1ac0adb5008cc9e25b57957822e",
+              "surface": "39a3207c28c9c00ca4713e72cf44edddbd9e948cdd88959d553bb9db94f68b4c",
+              "solid": "488fa9b7cc8cd093c832aab4684cd229b76c582cbecce743d7db24a27b32ec2a"
+            }
+          },
+          "dependencyHash": "7aaf8fb3",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3111/r100-gym.html?world=felt-wedges&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/recipe.json",
+        "sha256": "38ff07c0fa3cb443f7d2e30174c1dbfce8edb9dbb38982f656b4472b4ac57f96"
+      },
+      "status": "rejected-short-fibre-material",
+      "finding": "聚头蓝厚面与紫灰裸床、红断角可分，三件接触体积可保留；但表面同样呈云斑碎石/皱皮，缺乏成束短纤和受压撕断的可见组织，不能因蓝色与上一世界不同而通过。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/01-exposed-head-joint-north.png",
+          "sha256": "0b7a526f9dda75e7b8d7b4229538711f37f2bb6bdbe66378bc25145194f76df3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 605.1324163911548,
+              "y": 525.9093660160014
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.410980459999788,
+            "elapsedMs": 7349.6
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 605.1324163911548,
+              "y": 525.9093660160014
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.444160459999786,
+            "elapsedMs": 7449.6
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/02-east-thick-head-west.png",
+          "sha256": "0051580b1dfce0c89b08206b6237cff21dacab0327c34b8f417e9604518b4a67",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": -3.1413413261775074,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 729.6921548351901,
+              "y": 486.10829815636475
+            },
+            "facingAngle": -3.1413413261775074,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.36764280999971,
+            "elapsedMs": 10232.9
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 729.6921548351901,
+              "y": 486.10829815636475
+            },
+            "facingAngle": -3.1413413261775074,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.395278431999706,
+            "elapsedMs": 10316.2
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/03-west-outer-cut-east.png",
+          "sha256": "d22b227bc47fcd9d3efd17250d44eb5bbc443c759fe7af9daf269d1dd3a4cdbb",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 411.92188645195756,
+              "y": 437.7467914606974
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 22.183183545999395,
+            "elapsedMs": 21732.5
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 411.92188645195756,
+              "y": 437.7467914606974
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 22.2163602279994,
+            "elapsedMs": 21832.4
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/felt-wedges-medium/04-north-quiet-bed-south.png",
+          "sha256": "cd68d5a3c54253303db67c7a6c2815473cf676a4285185c56f3cd2ae27d05c26",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "south",
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 635.8479862301161,
+              "y": 288.9745962635781
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 24.66052179399938,
+            "elapsedMs": 29198.8
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 635.8479862301161,
+              "y": 288.9745962635781
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 24.69370179399938,
+            "elapsedMs": 29298.8
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "pore-bank",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "pore-bank",
+        "grade": "medium",
+        "package": {
+          "id": "r100-pore-bank",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            },
+            "organization:porous-marrow": {
+              "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+              "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+              "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+            }
+          },
+          "dependencyHash": "e718990d",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3111/r100-gym.html?world=pore-bank&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/pore-bank-medium/recipe.json",
+        "sha256": "7b53fa67115687a1081b7d019f41cc9ff73e1fa17aece57ddebedf22bbebec3d"
+      },
+      "status": "medium-bounded-author-pass-await-low-severe",
+      "finding": "高头的浅孔断面、深紫安静外皮与棕色地床有明确层次；02北向看得到数个不同孔径的壁/底，03东向能见低连接，04西向看低尾与裸床分界。低尾受阴影、敌人和灯照范围限制，不把本次照见的小孔当可通行洞。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/pore-bank-medium/01-west-high-head-east.png",
+          "sha256": "e9ded27ec48af918fe455e65357d34c0d0e58ac7264d9977b55451ddc7e3b9aa",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": -0.00006283185307132122,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 360.6578114723858,
+              "y": 447.5252774578803
+            },
+            "facingAngle": -0.00006283185307132122,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.725287003999842,
+            "elapsedMs": 5283.099999999999
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 360.6578114723858,
+              "y": 447.5252774578803
+            },
+            "facingAngle": -0.00006283185307132122,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.758460367999838,
+            "elapsedMs": 5383.099999999999
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/pore-bank-medium/02-south-porous-cut-north.png",
+          "sha256": "53ae8f7a1b9fc1555c4ab027e74a19101d8a506c916bcf2c1ba6e10865b7362c",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 420.85005186670054,
+              "y": 484.44438680662455
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.77041055199974,
+            "elapsedMs": 8433
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 420.85005186670054,
+              "y": 484.44438680662455
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.803583915999738,
+            "elapsedMs": 8533
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/pore-bank-medium/03-low-connection-east.png",
+          "sha256": "c26534699c30db52251afe14019e077c98215d272c1d8793307b87451d2feb1d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 603.7859671940545,
+              "y": 482.88744160055745
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.058849675999607,
+            "elapsedMs": 12316.2
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 603.7859671940545,
+              "y": 482.88744160055745
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.09202967599961,
+            "elapsedMs": 12416.2
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b06-medium/pore-bank-medium/04-separated-low-tail-west.png",
+          "sha256": "f2be22a74f6a4125031cb50ad1b4d8afb087f52bd729dd180a7fcebf0e57ba99",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 828.9085459561045,
+              "y": 569.0534132129836
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 24.514060181999444,
+            "elapsedMs": 17266
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 828.9085459561045,
+              "y": 569.0534132129836
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 24.569364605999443,
+            "elapsedMs": 17349.3
+          }
+        }
+      ]
+    }
+  ],
+  "personallyViewedCount": 22,
+  "totalCaptured": 29,
+  "scope": "Real WASD, finite normal FOV, active enemies, unmodified clock/HP/body/lighting. Material/visible edge review only; no full journey, user approval or listening claim.",
+  "limitations": [
+    "Only listed22 original PNG personally reviewed; all29 captures retained.",
+    "Actual standing positions vary; not pixel-identical reference camera.",
+    "Short-fibre-mat and felt-wedges explicitly rejected; atom approval did not predict finished world readability.",
+    "Marrow and pore medium approval is limited to lit near surfaces; low/severe and unseen sides remain pending."
+  ],
+  "browserClosed": true,
+  "errors": []
+}

@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-07T05:11:39.000164+00:00",
+  "scope": "Only observer imports same Playwright module as original journey; output moved to new diagnostic directory. No browser input, source, map, seed or policy changes. No execution claim.",
+  "before": {
+    "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload.mjs": "4f70a02bf22aac7c8a7621d71167c8990b5c51dc9403d26b49a70275bb5ef36c",
+    "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/run-observed-rechecks.mjs": "a5630058b7c39529f908a3bb1cf05a9a2759ce481fe748a1642b09304b77ccef"
+  },
+  "after": {
+    "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload.mjs": "1063bb2d1db45923836c3145130c0d2c9f94482faee9d0eed708c9da59413a31",
+    "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/run-observed-rechecks.mjs": "60b97db897e3637eee64e9c3660167e4ec8c93ee01fa1841019eea38d2a65eb0"
+  },
+  "retainedFailures": [
+    "launcher-attempt1-failure.json",
+    "observed-rechecks/execution.json"
+  ]
+}

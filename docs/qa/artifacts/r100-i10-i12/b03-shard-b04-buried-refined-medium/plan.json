@@ -1,0 +1,152 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+  "sourceManifestSha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8",
+  "scope": "Same original WASD requested stations/facing for rejected shard and buried. No teleport/HP/fog/light modification. Buried limited to original02/03/04. Previous rejected captures preserved.",
+  "priorPlans": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/plan.json",
+      "sha256": "b79470289ba40534be2bbcbefb8554c4ff2c7f44ea3759e1b215216351b0a418"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-medium/plan.json",
+      "sha256": "f9b7b7b54ba8a4c76c39a17fe26f2dc2cea6a47e58885be1d2eef6cc6b5bac0c"
+    }
+  ],
+  "cases": [
+    {
+      "world": "shard-switchback",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-west-shoulder",
+          "x": 270,
+          "y": 380,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 268,
+            "y": 372
+          },
+          "lookAtMaterialPoint": {
+            "x": 338,
+            "y": 262
+          }
+        },
+        {
+          "label": "02-first-switch",
+          "x": 456,
+          "y": 404,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 452,
+            "y": 404
+          },
+          "lookAtMaterialPoint": {
+            "x": 520,
+            "y": 306
+          }
+        },
+        {
+          "label": "03-cross-opening",
+          "x": 574,
+          "y": 529,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 572,
+            "y": 532
+          },
+          "lookAtMaterialPoint": {
+            "x": 654,
+            "y": 452
+          }
+        },
+        {
+          "label": "04-last-tip",
+          "x": 858,
+          "y": 390,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 860,
+            "y": 388
+          },
+          "lookAtMaterialPoint": {
+            "x": 798,
+            "y": 292
+          }
+        }
+      ]
+    },
+    {
+      "world": "buried-lamellae",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "02-middle-embedded-edge",
+          "x": 493,
+          "y": 441,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 492,
+            "y": 444
+          },
+          "lookAtMaterialPoint": {
+            "x": 528,
+            "y": 377
+          }
+        },
+        {
+          "label": "03-granular-contact",
+          "x": 642,
+          "y": 502,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 644,
+            "y": 500
+          },
+          "lookAtMaterialPoint": {
+            "x": 645,
+            "y": 486
+          }
+        },
+        {
+          "label": "04-east-low-end",
+          "x": 816,
+          "y": 540,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 812,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 716,
+            "y": 468
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "grain-weld": {
+    "routes": [
+      {
+        "name": "low-seam-through",
+        "points": [
+          [
+            391,
+            536
+          ],
+          [
+            591,
+            495
+          ],
+          [
+            715,
+            464
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "high-extrusion-outside",
+        "points": [
+          [
+            284,
+            455
+          ],
+          [
+            626,
+            379
+          ],
+          [
+            699,
+            238
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        1,
+        2,
+        4
+      ],
+      "nearest": "buried-lamellae",
+      "difference": [
+        "一处高挤头与一处可走低缝并列",
+        "板只露在缝两边的中楔，颗粒并非大面积埋层"
+      ]
+    },
+    "batch": "b08"
+  },
+  "silk-catch": {
+    "routes": [
+      {
+        "name": "laid-end",
+        "points": [
+          [
+            360,
+            556
+          ],
+          [
+            479,
+            509
+          ],
+          [
+            668,
+            571
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "curl-end-outer",
+        "points": [
+          [
+            668,
+            571
+          ],
+          [
+            792,
+            418
+          ],
+          [
+            713,
+            246
+          ],
+          [
+            627,
+            198
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          2
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        3
+      ],
+      "nearest": "wedged-hide",
+      "difference": [
+        "皮挂在一段粗束的断肩而非两硬楔夹持",
+        "皮有一铺一卷两端，铺地端允许直接横穿"
+      ]
+    },
+    "batch": "b08"
+  },
+  "resin-sleeve": {
+    "routes": [
+      {
+        "name": "open-sleeve-side",
+        "points": [
+          [
+            803,
+            420
+          ],
+          [
+            650,
+            363
+          ],
+          [
+            558,
+            380
+          ]
+        ],
+        "bounds": [
+          515,
+          325,
+          870,
+          460
+        ]
+      },
+      {
+        "name": "outside-bend",
+        "points": [
+          [
+            341,
+            546
+          ],
+          [
+            307,
+            368
+          ],
+          [
+            378,
+            221
+          ],
+          [
+            646,
+            183
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "two-low-skins",
+        "points": [
+          [
+            757,
+            357
+          ],
+          [
+            814,
+            485
+          ],
+          [
+            655,
+            539
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        4,
+        5
+      ],
+      "nearest": "clamped-shore",
+      "difference": [
+        "胶弯套包一侧壳根并露出高壳芯",
+        "开口在弯套东端，另两片薄胶与套体断开"
+      ]
+    },
+    "batch": "b08"
+  },
+  "shell-threads": {
+    "routes": [
+      {
+        "name": "interwoven-gap",
+        "points": [
+          [
+            565,
+            628
+          ],
+          [
+            555,
+            459
+          ],
+          [
+            555,
+            289
+          ]
+        ],
+        "bounds": [
+          490,
+          250,
+          630,
+          670
+        ]
+      },
+      {
+        "name": "wide-north",
+        "points": [
+          [
+            265,
+            251
+          ],
+          [
+            868,
+            251
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        1,
+        2
+      ],
+      "nearest": "fibre-choke",
+      "difference": [
+        "两个相隔的低壳交点各被断束穿出",
+        "北侧一条宽床允许一次绕过两个交会"
+      ]
+    },
+    "batch": "b08"
+  }
+}

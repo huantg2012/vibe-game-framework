@@ -1,0 +1,52 @@
+{
+  "status": "local-author-geometry-pass-not-visual-pass",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-source/source-snapshot.json",
+    "sha256": "6afae0bf84a082a68cdd8d56bb1315657411e3f5d778e4ac79f7c82ddcee176c"
+  },
+  "basis": "Uses frozen3104 shared geometry so concurrent ground-edge refinement cannot contaminate the per-world configuration proof. Combined final ground-edge will be validated separately.",
+  "otherWorldDefinitionsExact": 59,
+  "changedInstances": [
+    2,
+    3
+  ],
+  "results": [
+    {
+      "grade": "low",
+      "fullBodyCentersExact": 12288,
+      "unchangedTerrain": true,
+      "unchangedSolidMeshes": true,
+      "unchangedEdgeOwner": true,
+      "twoNecksBothDirections": true,
+      "originalFourStationsSupported": true
+    },
+    {
+      "grade": "medium",
+      "fullBodyCentersExact": 12288,
+      "unchangedTerrain": true,
+      "unchangedSolidMeshes": true,
+      "unchangedEdgeOwner": true,
+      "twoNecksBothDirections": true,
+      "originalFourStationsSupported": true
+    },
+    {
+      "grade": "severe",
+      "fullBodyCentersExact": 12288,
+      "unchangedTerrain": true,
+      "unchangedSolidMeshes": true,
+      "unchangedEdgeOwner": true,
+      "twoNecksBothDirections": true,
+      "originalFourStationsSupported": true
+    }
+  ],
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-offset-refined/before.png",
+      "sha256": "08417c7dd430e919bd1bdbf711cbaed0237b64189747f5823ee5df0f9e09ecc5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-offset-refined/after.png",
+      "sha256": "9678de6cd8c4a45544fb0d0bbab90838c1f2a1486dff1f10091bfb57a73c0fdb"
+    }
+  ]
+}

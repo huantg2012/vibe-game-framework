@@ -1,0 +1,309 @@
+{
+  "staggered-cups": {
+    "routes": [
+      {
+        "name": "alternating-mouths",
+        "points": [
+          [
+            286,
+            590
+          ],
+          [
+            359,
+            503
+          ],
+          [
+            554,
+            508
+          ],
+          [
+            642,
+            264
+          ],
+          [
+            851,
+            398
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "open-outer",
+        "points": [
+          [
+            286,
+            590
+          ],
+          [
+            271,
+            300
+          ],
+          [
+            532,
+            137
+          ],
+          [
+            852,
+            217
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "nearest": "foam-trenches",
+      "difference": [
+        "四个不共轴的中腔沿折线交替开口",
+        "腔外宽床可连续换向，不沿一条长沟走到底"
+      ],
+      "morphology": "两处主腔与两处低残口；不是四座等大的独立碗体。"
+    },
+    "batch": "b07"
+  },
+  "split-tows": {
+    "routes": [
+      {
+        "name": "inner-south-to-north",
+        "points": [
+          [
+            560,
+            634
+          ],
+          [
+            552,
+            460
+          ],
+          [
+            565,
+            361
+          ],
+          [
+            587,
+            172
+          ]
+        ],
+        "bounds": [
+          480,
+          120,
+          650,
+          680
+        ]
+      },
+      {
+        "name": "middle-crossing",
+        "points": [
+          [
+            310,
+            366
+          ],
+          [
+            562,
+            365
+          ],
+          [
+            845,
+            363
+          ]
+        ],
+        "bounds": [
+          250,
+          320,
+          890,
+          415
+        ]
+      },
+      {
+        "name": "west-outer",
+        "points": [
+          [
+            280,
+            632
+          ],
+          [
+            265,
+            187
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "walkableSurfaceObjects": [
+        5
+      ],
+      "nearest": "split-rib-causeway",
+      "difference": [
+        "两列不等断束中段完全断开允许横向换路",
+        "西粗东细且西外侧宽床持续可见"
+      ]
+    },
+    "batch": "b07"
+  },
+  "curled-flats": {
+    "routes": [
+      {
+        "name": "bare-centre",
+        "points": [
+          [
+            470,
+            640
+          ],
+          [
+            539,
+            454
+          ],
+          [
+            537,
+            292
+          ],
+          [
+            496,
+            178
+          ]
+        ],
+        "bounds": [
+          390,
+          120,
+          635,
+          690
+        ]
+      },
+      {
+        "name": "broken-east-curl",
+        "points": [
+          [
+            574,
+            611
+          ],
+          [
+            705,
+            602
+          ],
+          [
+            708,
+            400
+          ],
+          [
+            883,
+            352
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "walkableSurfaceObjects": [
+        1,
+        2
+      ],
+      "barePoint": [
+        570,
+        435
+      ],
+      "disjointSolidObjects": [
+        3,
+        4,
+        5
+      ],
+      "nearest": "satin-fan",
+      "difference": [
+        "三处不连接的厚卷端围绕中间裸床",
+        "大部分膜可走，东侧断卷后可从内床退出"
+      ]
+    },
+    "batch": "b07"
+  },
+  "pitch-forks": {
+    "routes": [
+      {
+        "name": "blind-inner",
+        "points": [
+          [
+            571,
+            579
+          ],
+          [
+            568,
+            443
+          ],
+          [
+            570,
+            353
+          ]
+        ],
+        "bounds": [
+          515,
+          325,
+          620,
+          620
+        ]
+      },
+      {
+        "name": "west-outer",
+        "points": [
+          [
+            571,
+            579
+          ],
+          [
+            305,
+            570
+          ],
+          [
+            300,
+            180
+          ],
+          [
+            765,
+            171
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "east-outer",
+        "points": [
+          [
+            571,
+            579
+          ],
+          [
+            837,
+            559
+          ],
+          [
+            844,
+            241
+          ],
+          [
+            765,
+            171
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        4
+      ],
+      "nearest": "amber-ribs",
+      "difference": [
+        "少臂厚头构成单一浅袋而不是多肋排槽",
+        "袋外两侧都有连续返路且断尾可走"
+      ],
+      "composition": "厚端斜压，两臂不等高且顺接方向不对称；南侧单袋仍止于连续材料，外围两条路回通。"
+    },
+    "batch": "b07"
+  }
+}

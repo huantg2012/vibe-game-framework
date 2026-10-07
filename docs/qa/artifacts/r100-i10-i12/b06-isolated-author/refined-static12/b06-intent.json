@@ -1,0 +1,354 @@
+{
+  "short-fibre-mat": {
+    "batch": "b06",
+    "routes": [
+      {
+        "name": "bare-layer-break",
+        "points": [
+          [
+            420,
+            502
+          ],
+          [
+            565,
+            455
+          ],
+          [
+            774,
+            444
+          ]
+        ],
+        "bounds": [
+          390,
+          418,
+          850,
+          535
+        ]
+      },
+      {
+        "name": "thick-edge-short-round",
+        "points": [
+          [
+            284,
+            500
+          ],
+          [
+            224,
+            420
+          ],
+          [
+            252,
+            228
+          ],
+          [
+            445,
+            216
+          ]
+        ],
+        "bounds": [
+          175,
+          185,
+          475,
+          535
+        ]
+      },
+      {
+        "name": "outer-still-bed",
+        "points": [
+          [
+            846,
+            630
+          ],
+          [
+            875,
+            490
+          ],
+          [
+            887,
+            268
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          3
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        1,
+        2
+      ],
+      "barePoint": [
+        590,
+        455
+      ],
+      "nearest": "felt-basin",
+      "difference": [
+        "一片厚压肩接大低层，第二低层隔开露床；低层自身可行走",
+        "真正绕行由西侧厚压肩形成，其余两处断口只是低皮缺失而非碰撞窄口"
+      ]
+    },
+    "organization": "short-fibre"
+  },
+  "marrow-break": {
+    "batch": "b06",
+    "routes": [
+      {
+        "name": "facing-fracture-mouth",
+        "points": [
+          [
+            564,
+            528
+          ],
+          [
+            564,
+            388
+          ],
+          [
+            564,
+            248
+          ]
+        ],
+        "bounds": [
+          530,
+          215,
+          608,
+          555
+        ]
+      },
+      {
+        "name": "west-outer",
+        "points": [
+          [
+            335,
+            536
+          ],
+          [
+            287,
+            334
+          ],
+          [
+            355,
+            182
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "east-outer",
+        "points": [
+          [
+            787,
+            541
+          ],
+          [
+            802,
+            365
+          ],
+          [
+            752,
+            225
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "disjointSolidObjects": [
+        1,
+        2
+      ],
+      "nearest": "cork-shelves",
+      "difference": [
+        "两处局部有底孔断面相向，真20px通口只在两块之间",
+        "两短厚芯与左右宽绕取代L形长岸，不以表面黑点制造入口"
+      ]
+    },
+    "organization": "porous-marrow"
+  },
+  "felt-wedges": {
+    "batch": "b06",
+    "routes": [
+      {
+        "name": "torn-end-round",
+        "points": [
+          [
+            610,
+            538
+          ],
+          [
+            731,
+            493
+          ],
+          [
+            755,
+            361
+          ],
+          [
+            635,
+            272
+          ]
+        ],
+        "bounds": [
+          585,
+          245,
+          790,
+          565
+        ]
+      },
+      {
+        "name": "western-end-gap",
+        "points": [
+          [
+            414,
+            524
+          ],
+          [
+            405,
+            435
+          ],
+          [
+            386,
+            326
+          ],
+          [
+            450,
+            249
+          ]
+        ],
+        "bounds": [
+          340,
+          225,
+          465,
+          555
+        ]
+      },
+      {
+        "name": "wide-back-bed",
+        "points": [
+          [
+            440,
+            201
+          ],
+          [
+            810,
+            205
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "nearest": "short-fibre-mat",
+      "difference": [
+        "三件实体厚楔的宽头聚接、撕端分散朝向，不能穿过压头",
+        "两侧绕各自断端再进入北方大床，与大片可走低压层的过程不同"
+      ]
+    },
+    "organization": "short-fibre"
+  },
+  "pore-bank": {
+    "batch": "b06",
+    "routes": [
+      {
+        "name": "near-bank-turn",
+        "points": [
+          [
+            355,
+            450
+          ],
+          [
+            421,
+            491
+          ],
+          [
+            596,
+            492
+          ],
+          [
+            829,
+            470
+          ]
+        ],
+        "bounds": [
+          320,
+          417,
+          870,
+          540
+        ]
+      },
+      {
+        "name": "far-still-shore",
+        "points": [
+          [
+            287,
+            227
+          ],
+          [
+            524,
+            213
+          ],
+          [
+            856,
+            229
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "low-fragment-return",
+        "points": [
+          [
+            829,
+            470
+          ],
+          [
+            839,
+            567
+          ],
+          [
+            669,
+            647
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          2
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        2,
+        3
+      ],
+      "nearest": "marrow-break",
+      "difference": [
+        "一高短孔岸贴一长低片、另一片断开，低尾可走而高头需绕",
+        "远侧横向静滩持续贯通，取代两高岸相对夹出的中道"
+      ]
+    },
+    "organization": "porous-marrow"
+  }
+}

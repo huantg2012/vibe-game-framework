@@ -1,0 +1,257 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "sloughed-court",
+    "label": "剥皮露庭",
+    "description": "剥皮露庭的原生材料与完整搜撤地段",
+    "material": "membrane",
+    "surface": {
+      "substrate": "membrane",
+      "coating": "membrane",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 3159879,
+      "floor": 7899550,
+      "floorLight": 12306389,
+      "materialDark": 3153977,
+      "materialMid": 6637689,
+      "materialLight": 11046074,
+      "faceLight": 13870760,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 7899550,
+      "groundLight": 12306389,
+      "groundDark": 3159879,
+      "wall": 6637689,
+      "wallLight": 11046074,
+      "wallDark": 3153977
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "sloughed-court",
+    "ground": {
+      "dark": 3159879,
+      "mid": 7899550,
+      "light": 12306389
+    },
+    "solid": {
+      "dark": 3153977,
+      "mid": 6637689,
+      "light": 11046074
+    },
+    "cleaved": {
+      "dark": 5848128,
+      "mid": 11170165,
+      "light": 13870760
+    },
+    "secondary": {
+      "dark": 4340806,
+      "mid": 8944521,
+      "light": 12102073
+    },
+    "groundPattern": "tension",
+    "patternScale": 256,
+    "patternStrength": 0.32,
+    "secondaryCoverage": 0.12,
+    "textureContrast": 1.13,
+    "quietCoverage": 0.65
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "sloughed-court-low",
+    "family": "membrane-rim",
+    "grade": "low",
+    "label": "剥皮露庭",
+    "profile": "sloughed-court",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 108,
+    "emission": 0.35,
+    "motion_period": 24,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "membrane-rim",
+        "role": "relief",
+        "x": 438,
+        "y": 280,
+        "rotation": -0.29,
+        "length": 361,
+        "width": 169,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.4048,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-sheet",
+        "groundEdgeWidth": 8
+      },
+      {
+        "id": 2,
+        "family": "membrane-rim",
+        "role": "relief",
+        "x": 745,
+        "y": 468,
+        "rotation": 1.07,
+        "length": 343,
+        "width": 176,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.46640000000000004,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-sheet"
+      },
+      {
+        "id": 3,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 391,
+        "y": 546,
+        "rotation": 0.52,
+        "length": 208,
+        "width": 145,
+        "height": 43,
+        "thickness": 10,
+        "fold": 0.5720000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "torn-sheet"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 476,
+          "y": 462
+        },
+        {
+          "x": 576,
+          "y": 445
+        },
+        {
+          "x": 630,
+          "y": 479
+        },
+        {
+          "x": 602,
+          "y": 525
+        },
+        {
+          "x": 529,
+          "y": 554
+        },
+        {
+          "x": 460,
+          "y": 536
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "package": {
+    "id": "r100-sloughed-court",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "membrane-rim": {
+        "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+        "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+        "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+      }
+    },
+    "dependencyHash": "d7a30480",
+    "grade": "low"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "prepared-external-observation-only",
+  "original": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload.mjs",
+    "sha256": "1063bb2d1db45923836c3145130c0d2c9f94482faee9d0eed708c9da59413a31"
+  },
+  "derived": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observe-worker-preload-v2.mjs",
+    "sha256": "7320404fc7d6cffc80d504ecba9b06b67ba1e042ce5ec82a7823e2432d95e1d5"
+  },
+  "changes": [
+    "Subscribe to existing page console error/warning events, because production preparation catches worker rejection and logs console.error.",
+    "Add current fixed-case environment labels to the existing preload-ready record."
+  ],
+  "unchanged": "Original launch/context options and return forwarding; CDP discovery only; no browser Worker/fetch/timer/input or runtime-source change. Original P36 diagnostic observer and results remain immutable."
+}

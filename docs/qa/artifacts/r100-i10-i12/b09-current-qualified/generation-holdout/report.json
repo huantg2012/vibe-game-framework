@@ -1,0 +1,437 @@
+{
+  "status": "pass",
+  "scope": "Complete native generation, real Host, body paths, full CPU cold reconstruction and transferable ownership. No GPU/art/play approval.",
+  "source": {
+    "executor": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b09-current-qualified/generation-holdout/qualification-f3bff2958a71.mjs",
+    "sha256": "f3bff2958a717a12cd32fb9ae0a32a66e85ce074d000375d18f901a9987fa9ac",
+    "dependencies": [
+      {
+        "path": "src/config/constants.ts",
+        "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+      },
+      {
+        "path": "src/core/event-bus.ts",
+        "sha256": "7a5add701fadcccf1362c98db50079f5eb862d541ae29fa3ed23cafd27224d3b"
+      },
+      {
+        "path": "src/entities/form-renderers/d/environment-pixels.ts",
+        "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+      },
+      {
+        "path": "src/entities/form-renderers/d/fragment-ramp.ts",
+        "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+        "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/live.ts",
+        "sha256": "6398f95443a742887d958d583faab8964bebccbdc6a850f7a47c5f44b595e862"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+        "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+      },
+      {
+        "path": "src/entities/form-renderers/d/paint-genome/topology.ts",
+        "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+      },
+      {
+        "path": "src/generated/build-lab-data.ts",
+        "sha256": "bdd7c9218b394e9f877207378e1b375138be8b024416f2c38334b7b704cde672"
+      },
+      {
+        "path": "src/generated/contamination-body-data.ts",
+        "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+      },
+      {
+        "path": "src/generated/contamination-capability-data.ts",
+        "sha256": "9d2e8adfade83f546849fc6e024ae5b61b186c38faba33f657e0307c1d0e0d3b"
+      },
+      {
+        "path": "src/generated/contamination-family-data.ts",
+        "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+      },
+      {
+        "path": "src/generated/contamination-lexicon-data.ts",
+        "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+      },
+      {
+        "path": "src/generated/contamination-volume-data.ts",
+        "sha256": "5f592f2f33ce86dd932f95dc16609ee9ee18d0c56dcdf67b571006f99732aeab"
+      },
+      {
+        "path": "src/generated/enemy-data.ts",
+        "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+      },
+      {
+        "path": "src/generated/r100-materials.ts",
+        "sha256": "defd1c289824cc9a4c7a3ee3870f289e72175d401931a5e3da09ca5a46876968"
+      },
+      {
+        "path": "src/generated/r100-native-worlds.ts",
+        "sha256": "3d5bf2ef485269a043a431407c58fb5550f508a33333302d9791b2afe0646158"
+      },
+      {
+        "path": "src/generated/r100-package-manifest.ts",
+        "sha256": "dad5c30f5296dddbec58a7d02370c313d861d65a6409029babf9e4cf1eabfac7"
+      },
+      {
+        "path": "src/generated/r100-world-appearance.ts",
+        "sha256": "250d9b2777a48206007e2162d2e4b582765e3b738f640684f445de50d2404f16"
+      },
+      {
+        "path": "src/generated/r100-world-selection.ts",
+        "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+      },
+      {
+        "path": "src/generated/rift-expedition-grade-data.ts",
+        "sha256": "8abb62cb1d601290e97edede8d190394664075e2ae0219bafe149ae6868daf71"
+      },
+      {
+        "path": "src/generated/rift-fragment-data.ts",
+        "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+      },
+      {
+        "path": "src/generated/rift-pollution-grade-data.ts",
+        "sha256": "b0d255ab0efd5acdb3a5edb2d5b30017a7521b09de3b5a6c6852b77b9a63d69c"
+      },
+      {
+        "path": "src/generated/rift-world-profile-data.ts",
+        "sha256": "9550a5faca9e262d2ccf7679d29fd4b0306e883785bf352b31f3007c13d39fe8"
+      },
+      {
+        "path": "src/generated/rift-world-space-data.ts",
+        "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+      },
+      {
+        "path": "src/generation/atmosphere.ts",
+        "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+      },
+      {
+        "path": "src/generation/contamination-draw.ts",
+        "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+      },
+      {
+        "path": "src/generation/fragment-roll.ts",
+        "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+      },
+      {
+        "path": "src/generation/legacy-r100-v2/executor.js",
+        "sha256": "bc5117ae07ff61565a1076b466ed1addf14b67691573a6acefe9fb47af1af06f"
+      },
+      {
+        "path": "src/generation/legacy-r100-v3/executor.js",
+        "sha256": "8aa337fb4687b45206db5db496bbe1a0a5269975b002cb2d1a7880c89870be78"
+      },
+      {
+        "path": "src/generation/legacy-r100-v4/executor.js",
+        "sha256": "90a5a6e4c122923c872ebaa623461b6f7217b37fc41c2c1854d2f07c049399f7"
+      },
+      {
+        "path": "src/generation/legacy-r100-v5/executor-recovery.js",
+        "sha256": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6"
+      },
+      {
+        "path": "src/generation/legacy-rift-generation.ts",
+        "sha256": "4d77303290a1c083941e9ad38b87d411e6fe9a9142ef745b6eb459f0a1e31b33"
+      },
+      {
+        "path": "src/generation/legacy-rift-v2/arithmetic-executor.js",
+        "sha256": "7cb7efec95c81dc35415273b31e90ba6a5847f11225848e9f32c3c7bc2c9d6d5"
+      },
+      {
+        "path": "src/generation/legacy-rift-v2/binary64-fma.ts",
+        "sha256": "a6a356d4b722ac4268e922c5fd576fcda1f3ee77457b5594538a255aa5594ed1"
+      },
+      {
+        "path": "src/generation/legacy-rift-v2/executor.js",
+        "sha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074"
+      },
+      {
+        "path": "src/generation/legacy-rift-v2/fdlibm-atan2.ts",
+        "sha256": "03f61c093cf96b72763971e1271173564cac7822863486aa5ecf49668bf8199c"
+      },
+      {
+        "path": "src/generation/outline-mask.ts",
+        "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+      },
+      {
+        "path": "src/generation/palette-quantize.ts",
+        "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+      },
+      {
+        "path": "src/generation/preview-paint.ts",
+        "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+      },
+      {
+        "path": "src/generation/rift-generation-execute.ts",
+        "sha256": "73b0882b47c2b040c11f1f021125c7ce44d1f5d0be5c9785c69adbcad1c36cfc"
+      },
+      {
+        "path": "src/generation/rift-generation-identity.ts",
+        "sha256": "3dc102724053672adc37d32b7f8aa3b502a229dbbe3f5508b8149d74cc654afd"
+      },
+      {
+        "path": "src/generation/rift-generation-protocol.ts",
+        "sha256": "ee929416e408074916458f5445b3ff8f7487ad9e52ff9f1eac41e92b00acf61b"
+      },
+      {
+        "path": "src/generation/seed-fork.ts",
+        "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+      },
+      {
+        "path": "src/generation/terrain-safe-volume-seat.ts",
+        "sha256": "7c2fc5d75240a302a41b4d25e64cf1840939c944db7ae13fec7231148b7e78fa"
+      },
+      {
+        "path": "src/generation/wall-edge-path.ts",
+        "sha256": "a0c1f2944b266640b643bc5fd4da54c9c71de2dc2a2e7cff37a0321416baa925"
+      },
+      {
+        "path": "src/generation/wall-host-placement.ts",
+        "sha256": "37883e816361daaeb478903ba71170867a1c25f4c4443ae5a1df884e948ac800"
+      },
+      {
+        "path": "src/generation/world-study/master-ground-field.ts",
+        "sha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-cellular.ts",
+        "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-erosion.ts",
+        "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-expansion.ts",
+        "sha256": "508b6dfaf744a63671035838c86ad36906b57be341ee26f1f1e55ed68e10d0b4"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-geometry.ts",
+        "sha256": "c4707a3f3354301798ee91487868f14566f4e46554a30b536ab303b087ae8ef6"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-ground-edge.ts",
+        "sha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-ground.ts",
+        "sha256": "dd4e4619f2635516f20704dda011a5fccc2805c7389278e97200a835db7067c3"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-organization.ts",
+        "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-pleated-tear.ts",
+        "sha256": "a542f83a5da9b9d7b70ce35c37cfb0a09984bed56a6cec152af84c425e32eae1"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-raster.ts",
+        "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-settled-sheet.ts",
+        "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
+      },
+      {
+        "path": "src/generation/world-study/pollution-grade.ts",
+        "sha256": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0"
+      },
+      {
+        "path": "src/generation/world-study/profiles.ts",
+        "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+      },
+      {
+        "path": "src/generation/world-study/r100-expedition.ts",
+        "sha256": "3d62896b06faccee9e902806a8bb71827c84efa2775d5a2f07d69a05a6d771b1"
+      },
+      {
+        "path": "src/generation/world-study/r100-generated-scenes.ts",
+        "sha256": "6b3c974c97025874e5cb7fa3e3dd29147a1397616d003852e52cde5685f57d73"
+      },
+      {
+        "path": "src/generation/world-study/r100-master-world.ts",
+        "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+      },
+      {
+        "path": "src/generation/world-study/r100-native-data.ts",
+        "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+      },
+      {
+        "path": "src/generation/world-study/r100-package.ts",
+        "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+      },
+      {
+        "path": "src/generation/world-study/r100-patrol-windows.ts",
+        "sha256": "80bd1a32f5e528f416a3d33c28bbe7f9a20fd23c2eb7cb9674c628d145c790f2"
+      },
+      {
+        "path": "src/generation/world-study/r100-pollution.ts",
+        "sha256": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f"
+      },
+      {
+        "path": "src/generation/world-study/r100-production-map.ts",
+        "sha256": "87509365a644732c6783c58390f37488985822b3e5f53639bb62ea2c34f82883"
+      },
+      {
+        "path": "src/generation/world-study/r100-world-appearance.ts",
+        "sha256": "71441ad19d1ef8702e737f46898abf05a7b0262de4916aede9bfddbe6fe04b59"
+      },
+      {
+        "path": "src/generation/world-study/r100-world-selection.ts",
+        "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+      },
+      {
+        "path": "src/generation/world-study/space-profile.ts",
+        "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+      },
+      {
+        "path": "src/systems/ai/activity-state.ts",
+        "sha256": "779f02925f104a6c07f504e7f1d95215b46578cde1509ca96792e48b5a706c50"
+      },
+      {
+        "path": "src/systems/ai/behaviors.ts",
+        "sha256": "f09a058a249d00a2acbd778f5a56b55ba7c6724d34481600ae705b8cbfc5d11d"
+      },
+      {
+        "path": "src/systems/ai/physical-grid.ts",
+        "sha256": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+      },
+      {
+        "path": "src/systems/ai/runtime-validation.ts",
+        "sha256": "ad91ca5520fd899c0d966b71a0b39026c530e07762f65a125f5899112489a34d"
+      },
+      {
+        "path": "src/systems/contamination-host-live.ts",
+        "sha256": "0f5f31b67d8206568c6bb3e13fd4525a62bd4cbf969cffbe7b9eab642c6f2cd0"
+      },
+      {
+        "path": "src/systems/contamination-host-system.ts",
+        "sha256": "72a0c1ff5d14d08a5bbece1a1f3133a179ab8c6dc028fa939632350d89b40139"
+      },
+      {
+        "path": "src/systems/dust-flow.ts",
+        "sha256": "21c24f13682402ec0aa3aa12826dc177e221838ffac435ea223679da9a781ad9"
+      },
+      {
+        "path": "src/systems/environment-hazard-control.ts",
+        "sha256": "9100fa155985da856d7bf042a4aecd1627c429a6594715521f161683eae1c859"
+      },
+      {
+        "path": "src/systems/r100-world/audio.ts",
+        "sha256": "cb12387b4de1b9a2f7fc1b04880f037488951c1cecdbfa001cc778425c26071f"
+      },
+      {
+        "path": "src/systems/r100-world/presentation-state.ts",
+        "sha256": "22ce24073f78b0286acc22d7bc4e08efcb8ef4a6012fa77aee8d8d1f363af7fa"
+      },
+      {
+        "path": "src/systems/tile-grid.ts",
+        "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+      },
+      {
+        "path": "src/systems/volume-presence.ts",
+        "sha256": "0ff791c4445dd99be74edbf5106938134198c5e64851d432ecdb6dff9e6b677f"
+      },
+      {
+        "path": "src/types/events.ts",
+        "sha256": "f1898794aac8afe9f778f7788669f35a3273fb1d9c2c2065cecee0d9dd29111e"
+      },
+      {
+        "path": "src/types/game-types.ts",
+        "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+      },
+      {
+        "path": "src/types/rift-checkpoint.ts",
+        "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+      },
+      {
+        "path": "src/types/rift-world-history.ts",
+        "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+      },
+      {
+        "path": "src/utils/grid-raycast.ts",
+        "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+      },
+      {
+        "path": "src/utils/math.ts",
+        "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+      },
+      {
+        "path": "src/utils/random.ts",
+        "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+      },
+      {
+        "path": "tools/world-study/check-r100-library.ts",
+        "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+      }
+    ]
+  },
+  "timeoutMs": 60000,
+  "concurrency": 1,
+  "worlds": 4,
+  "grades": 12,
+  "seeds": [
+    {
+      "seed": 3924699420,
+      "cohort": "independent-holdout"
+    },
+    {
+      "seed": 3660982857,
+      "cohort": "independent-holdout"
+    },
+    {
+      "seed": 2355342267,
+      "cohort": "independent-holdout"
+    },
+    {
+      "seed": 4102882983,
+      "cohort": "independent-holdout"
+    },
+    {
+      "seed": 4051696150,
+      "cohort": "independent-holdout"
+    },
+    {
+      "seed": 3156191193,
+      "cohort": "independent-holdout"
+    },
+    {
+      "seed": 1205391731,
+      "cohort": "independent-holdout"
+    },
+    {
+      "seed": 447052351,
+      "cohort": "independent-holdout"
+    }
+  ],
+  "cases": 96,
+  "successful": 96,
+  "failures": [],
+  "transferred": 96,
+  "attemptDistribution": {
+    "1": 96,
+    "2": 0,
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 0
+  },
+  "workerDurationMs": {
+    "p50": 531.8002919999999,
+    "p95": 647.341000000004,
+    "p99": 732.4777499999982,
+    "max": 732.4777499999982
+  },
+  "rawCases": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b09-current-qualified/generation-holdout/cases.jsonl",
+    "sha256": "008e693ab96cbf986b2f8fb6d7dd9eb0ac7e2ad9fccfde5ef25523c1b015b4f2",
+    "records": 96
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "status": "pass",
+  "original": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/012-crossed-casings-severe-3075192741/report.json",
+    "sha256": "b1d4619e578ac7935b52df0fd5b8a48afd131e93d9f4ce19d625530e01ef7821"
+  },
+  "recheck": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/001-crossed-casings-severe-3075192741/report.json",
+    "sha256": "8f7b144d0d0574aaeffa04043b9f4eb733eb5ee3de75d43bb7bab00b6d7c8ba0"
+  },
+  "originalPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/policy-freeze.json",
+    "sha256": "3411d1708ab83278fd4b273734b033fa6103c9e22b08008eed62d10320061d8c"
+  },
+  "recheckPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/play/policy-freeze.json",
+    "sha256": "c8a6499fc77adfac6456c10d154649c58475ecb34be39d1aa7681cf206c0e5fb"
+  },
+  "sameGenerationIdentity": true,
+  "sameEarnedStorageAndInputPolicy": true,
+  "eventCounts": {
+    "preload-ready": 2,
+    "launch": 1,
+    "browser-ready": 1,
+    "process-snapshot": 4,
+    "Target.targetCreated": 9,
+    "Target.targetInfoChanged": 20,
+    "context-created": 1,
+    "Target.targetDestroyed": 9,
+    "page-created": 1,
+    "network-url": 470,
+    "page-navigation": 1,
+    "worker-created": 3,
+    "worker-closed": 3,
+    "page-closed": 1,
+    "network-summary": 1,
+    "context-closed": 1,
+    "browser-disconnected": 1
+  },
+  "contexts": [
+    {
+      "file": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/worker-observations/observer-44167.jsonl",
+        "sha256": "3854716a02aab4cc7b670edd916460a91bc0619a60ee1c7d825d5a3827bcc61c"
+      },
+      "pages": 1,
+      "workers": 3
+    }
+  ],
+  "observations": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/worker-observations/observer-44164.jsonl",
+      "sha256": "a9e279f15515817fb3e203f7596ea2f0fdf0644a54c3360fd90fe97e2dc10391"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-same-identity-recheck/worker-observations/observer-44167.jsonl",
+      "sha256": "3854716a02aab4cc7b670edd916460a91bc0619a60ee1c7d825d5a3827bcc61c"
+    }
+  ],
+  "limitations": "One same-identity replay after removing owned dev auto-open interference. Original012 completed extraction and failed observer context remain retained. No filter/policy/game change; does not close historicalP36."
+}

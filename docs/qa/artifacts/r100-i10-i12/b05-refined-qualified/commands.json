@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "status": "ready-for-full-batch-cpu",
+  "worlds": [
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash"
+  ],
+  "wholeBatchReady": true,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "rootReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades-independent-art-review.json",
+    "sha256": "70a6bfe1095dc4a91335bce76ff0af0a1bcf3407faac759d5f05b9881092f05c"
+  },
+  "additionalReceipts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium-independent-art-review.json",
+      "sha256": "86f6ad593601e92cb8a45d08ff4c26db51f4c79ba1297ed9f6ddea9cc7b33471"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-remaining-medium-independent-art-review.json",
+      "sha256": "00d5b65f0c9414cbb85ed6c124cedee988f4c5f345359b26cb9614064b8b4741"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-three-grades-independent-art-review.json",
+      "sha256": "4c4cf163ddf7db08b34ce77205af925b507a4339c0f7072be2f4dc1da9a7d618"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-medium-independent-art-review.json",
+      "sha256": "f0adbd90c42e0ab05d40af185d4d9fc4c3e84172a158e922e0326a5d8ecab7a8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b05-three-to-split-refined-source.json",
+      "sha256": "b8b3c0952fad1fcffffa806f853167a82f988b71fc9fd71d77f52530621fdd28"
+    }
+  ],
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/preparation/commands.json",
+    "sha256": "df83e6a2d12c6fac5d4472a0fd5a72fc5d2e9a9683fba31c7e9b96b4f7e54843"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/preparation/qualification-79b47e1ef26e.mjs",
+    "sha256": "79b47e1ef26e9bc58469e348c62f8f2941d8bc9d283e9c59d913043e8f5a451f"
+  },
+  "generation": [
+    {
+      "cases": 480,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/preparation/qualification-79b47e1ef26e.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/preparation/qualification-79b47e1ef26e.mjs",
+        "--worlds",
+        "quiet-spur,split-fall,three-shelves,frayed-outwash",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 96,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/preparation/qualification-79b47e1ef26e.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/preparation/qualification-79b47e1ef26e.mjs",
+        "--worlds",
+        "quiet-spur,split-fall,three-shelves,frayed-outwash",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "Original B05 fixed576 only; actual24 separately scheduled on3112."
+}

@@ -1,0 +1,37 @@
+{
+  "decision": "Only the two central collision heads retain a fracture fork; the two diagonal sequences now end in continuous pressure-layer faces and uneven solid broken ends.",
+  "before": {
+    "world_id": "split-fall",
+    "label": "双向坠片",
+    "iteration": "10",
+    "enabled": "false",
+    "family": "folded-slab",
+    "base_profile": "ash-strata",
+    "organization": "clusters",
+    "construction_version": "4",
+    "instances": "folded-slab:solid:343:347:0.65:175:100:36:9:0.55:3:0.7:0.25|folded-slab:solid:492:429:0.6:165:90:45:11:0.68:3:0.7:0.25|folded-slab:solid:669:526:0.5:160:100:27:8:0.42:3:0.7:0.25|folded-slab:solid:338:577:-0.7:160:92:35:9:0.51:3:0.7:0.25|folded-slab:solid:507:554:-0.9:155:90:38:10:0.6:3:0.7:0.25|folded-slab:solid:667:357:-0.5:170:105:50:12:0.7:3:0.7:0.25",
+    "shape_profiles": "fracture-fan|fracture-fan|fracture-fan|fracture-fan|fracture-fan|fracture-fan",
+    "erosion_polygons": "850:32;935:48;946:96;881:112",
+    "ground_edge_width": ""
+  },
+  "after": {
+    "world_id": "split-fall",
+    "label": "双向坠片",
+    "iteration": "10",
+    "enabled": "false",
+    "family": "folded-slab",
+    "base_profile": "ash-strata",
+    "organization": "clusters",
+    "construction_version": "4",
+    "instances": "folded-slab:solid:343:347:0.65:175:87:31:9:0.55:3:0.7:0.25|folded-slab:solid:492:429:0.6:165:90:45:11:0.68:3:0.7:0.25|folded-slab:solid:669:526:0.5:160:88:23:8:0.42:3:0.7:0.25|folded-slab:solid:338:577:-0.7:160:78:28:9:0.51:3:0.7:0.25|folded-slab:solid:507:554:-0.9:155:90:38:10:0.6:3:0.7:0.25|folded-slab:solid:667:357:-0.5:170:90:43:12:0.7:3:0.7:0.25",
+    "shape_profiles": "compressed-wedge|fracture-fan|compressed-wedge|fallen-bundle|fracture-fan|fallen-bundle",
+    "erosion_polygons": "850:32;935:48;946:96;881:112",
+    "ground_edge_width": ""
+  },
+  "other79RowsExact": true,
+  "authorSourceBefore": "6e148324ce10f0d7d79db6ee44fc6cce429395a5fca0342901c8e8f57e350641",
+  "authorSourceAfter": "455b8cb3c1096bc6c043ed95bd73e9391be7f199210460a0dd04a97d495f1e7d",
+  "routeIntentChanged": false,
+  "materialChanged": false,
+  "scope": "Needs original route and actual body3, then frozen normal re-review; prior rejection retained."
+}

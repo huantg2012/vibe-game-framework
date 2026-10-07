@@ -1,0 +1,949 @@
+{
+  "status": "bounded-author-grade-pass",
+  "at": "2026-10-07T06:47:25.531Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/report.json",
+    "sha256": "cfc1d37ad9f20fe834970dbdaea221c57ea9ebef83bade634e795d0f7cbbaedc"
+  },
+  "scope": "All24 low/severe original frames personally viewed,10 actual routes. Normal FOV/light/pressure, fixed requested seed20261005, real WASD. Macro floor planning is not visible-only natural play.",
+  "limitations": [
+    "Limited lit local faces only; no all-map, audio, dynamic fatigue, economic, full search-return or human approval.",
+    "Original rejections retained; repairs belong to new3120 source, not relabeled old images.",
+    "Actual poses/pressure vary; not a pixel-aligned A/B."
+  ],
+  "worlds": [
+    {
+      "worldId": "blue-fault",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "blue-fault",
+        "grade": "low",
+        "package": {
+          "id": "r100-blue-fault",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "be716c82",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=blue-fault&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "01/04贴地层理无整圈硬黑边，02真缺地口与细断沿可辨；低/重均未恢复旧三角贴片读法。",
+      "limitations": [
+        "low02受到真实攻击85HP，角色白闪不用于材质光色判断；缺地沿及远处蓝实体仍可见。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/blue-fault-low/01-material-approach-north.png",
+          "sha256": "40238a74112134397735660c0beb0ae35a448bafb28d9a800dd3d63e7d4efb63",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5705449993826106,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 469.99961581658175,
+              "y": 582.0719881832265
+            },
+            "facingAngle": -1.5705449993826106,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.771008399999987,
+            "elapsedMs": 4149.799999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/blue-fault-low/02-material-approach-north.png",
+          "sha256": "bf873bcc64e0415445faf27a614a9335db95621cc9399cd30424f064f115666f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 675.4886614052434,
+              "y": 596.9119616589363
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.858017431999965,
+            "elapsedMs": 8166.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/blue-fault-low/04-material-approach-east.png",
+          "sha256": "4d684b3f2f635950e1518947bdc89f68b787a24733498c1169b7088d7a052903",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.0004398229715051327,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 393.53629606357686,
+              "y": 422.54194902480776
+            },
+            "facingAngle": -0.0004398229715051327,
+            "facing4": "right",
+            "hp": 85,
+            "chaos": 22.43013861599991,
+            "elapsedMs": 14949.4
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "blue-fault",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "blue-fault",
+        "grade": "severe",
+        "package": {
+          "id": "r100-blue-fault",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "be2024cf",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=blue-fault&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "01/04贴地层理无整圈硬黑边，02真缺地口与细断沿可辨；低/重均未恢复旧三角贴片读法。",
+      "limitations": [
+        "low02受到真实攻击85HP，角色白闪不用于材质光色判断；缺地沿及远处蓝实体仍可见。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/blue-fault-severe/01-material-approach-north.png",
+          "sha256": "7a2d74d69e2a958e01ec6d664f35044d9285a56873854a0706ae766ae3a4435e",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.570733494941825,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 469.6614988416675,
+              "y": 582.0710425206523
+            },
+            "facingAngle": -1.570733494941825,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.039155583999914,
+            "elapsedMs": 4116.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/blue-fault-severe/02-material-approach-north.png",
+          "sha256": "d56f31409ce04064846c44763ea874c87a1d2f6cd8bc60db29114a19be22aff5",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.570482167529538,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 673.3970273262738,
+              "y": 595.8887853330302
+            },
+            "facingAngle": -1.570482167529538,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.01935820799984,
+            "elapsedMs": 8032.999999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/blue-fault-severe/04-material-approach-east.png",
+          "sha256": "442a4764053aa51524982982ff03e35f89e546c01c2ef0ac71378dc361f00e11",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.00025132741228584,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 392.30944189942045,
+              "y": 423.3230500777477
+            },
+            "facingAngle": -0.00025132741228584,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 22.389890047999714,
+            "elapsedMs": 14699.400000000001
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "pale-pressure",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "pale-pressure",
+        "grade": "low",
+        "package": {
+          "id": "r100-pale-pressure",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "e64851cb",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=pale-pressure&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "01低皮平贴蓝床，03饱满压端、04弯唇与断面有区别；重档侵蚀仍与灰白主面/红断口分开。",
+      "limitations": [
+        "仅这三处，不据此推断后墙或整三体关系；其余中档证据独立保留。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/pale-pressure-low/01-material-approach-north.png",
+          "sha256": "a0948d12c86a662e94bc5821c626906790ebb0c151d34f4682efcc2a199680dc",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.570293671970325,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 436.1930126539818,
+              "y": 627.737700923146
+            },
+            "facingAngle": -1.570293671970325,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.856326503999984,
+            "elapsedMs": 4599.8
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/pale-pressure-low/03-material-approach-west.png",
+          "sha256": "cf4c9c9e9c88e3ab926de77e1605a5579be26106ecc3b299b22c278fc4152259",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1415298217367202,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 463.4593178952474,
+              "y": 286.43953543915273
+            },
+            "facingAngle": -3.1415298217367202,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.25151296799994,
+            "elapsedMs": 17232.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/pale-pressure-low/04-material-approach-north.png",
+          "sha256": "9a1068428868b741edc9a8534fdd170123f9ab3b922b8c6681fc0a0b2843624c",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 676.3719174202596,
+              "y": 351.6621957047252
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 24.69577708799989,
+            "elapsedMs": 33865.4
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "pale-pressure",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "pale-pressure",
+        "grade": "severe",
+        "package": {
+          "id": "r100-pale-pressure",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "a27a9d81",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=pale-pressure&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "01低皮平贴蓝床，03饱满压端、04弯唇与断面有区别；重档侵蚀仍与灰白主面/红断口分开。",
+      "limitations": [
+        "仅这三处，不据此推断后墙或整三体关系；其余中档证据独立保留。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/pale-pressure-severe/01-material-approach-north.png",
+          "sha256": "83c3815c6493ae4ae870f555688bb29fc6e002338f78c3c98e1a83148a29f6ce",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5704821675295357,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 436.3475906442282,
+              "y": 627.7420788703567
+            },
+            "facingAngle": -1.5704821675295357,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.300373823999912,
+            "elapsedMs": 4633
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/pale-pressure-severe/03-material-approach-west.png",
+          "sha256": "bfa7d9e6a2c01daeaeecb569121012c7b47aee87d8e90dee9784fe6cc774c277",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 458.0030956676266,
+              "y": 289.9804334603309
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 23.325214655999698,
+            "elapsedMs": 16549.3
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/pale-pressure-severe/04-material-approach-north.png",
+          "sha256": "797c1fda4877a8092e35fbe24e13c6fc98416ebfb3335526091ae45af820a5e0",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 677.7215513317461,
+              "y": 345.0704717570407
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 31.667275903999098,
+            "elapsedMs": 33048.6
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "sloughed-court",
+        "grade": "low",
+        "package": {
+          "id": "r100-sloughed-court",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "d7a30480",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=sloughed-court&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "02低皮在真实肩灯下无尖纸片封边，04高端厚面和下沿独立于裸床；重档吞光绿黑体与普通背暗区分。",
+      "limitations": [
+        "severe04有真实吞光体靠近角色，部分脚下遮挡不作边界完全无遮挡证明。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/sloughed-court-low/02-material-approach-north.png",
+          "sha256": "1d5a0c7837feafc1a0c5825a414df7639557d33087c99fe53a22360b10da09ec",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 483.0288609843332,
+              "y": 376.0473544612176
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.706333639999976,
+            "elapsedMs": 9083
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/sloughed-court-low/04-material-approach-north.png",
+          "sha256": "32ddf621eef18c46e6594e3f9748fd40816cbe5ba6384d932a530cf33a19e015",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 330.3524254531646,
+              "y": 655.5351850927392
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.58961906399994,
+            "elapsedMs": 19015.9
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "sloughed-court",
+        "grade": "severe",
+        "package": {
+          "id": "r100-sloughed-court",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "ee07880b",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=sloughed-court&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "02低皮在真实肩灯下无尖纸片封边，04高端厚面和下沿独立于裸床；重档吞光绿黑体与普通背暗区分。",
+      "limitations": [
+        "severe04有真实吞光体靠近角色，部分脚下遮挡不作边界完全无遮挡证明。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/sloughed-court-severe/02-material-approach-north.png",
+          "sha256": "9955249b0d01a260d88642dcf4bd0efb16429d65cd2929fa821688fb72a385ef",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 483.80076460459344,
+              "y": 376.3631513610668
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.331136447999807,
+            "elapsedMs": 8649.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/sloughed-court-severe/04-material-approach-north.png",
+          "sha256": "f04eb9b1b4f9e4de8c6149f6303a54615ffbc2add71dbd980d8875ff3dc9209a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 333.60253182845577,
+              "y": 653.0355304327389
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 28.20998431999957,
+            "elapsedMs": 18299.3
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "resin-sleeve",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "resin-sleeve",
+        "grade": "low",
+        "package": {
+          "id": "r100-resin-sleeve",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "1ce464a0",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=resin-sleeve&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "02灰胶面与红壳接岸，03厚红断沿/内转和灰床可分；低重均保留两材关系，重档结构侵蚀未整体替代材色。",
+      "limitations": [
+        "灰胶近面仍有较整齐层线，是材料共享弱项；低档敌人遮住局部床面，该区域不签。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/resin-sleeve-low/02-shell-gel-contact-north.png",
+          "sha256": "4446df2e4346a69ab900edc80fba54833319b4b9992c08e88ad63a4079a05de3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 651.1248823057076,
+              "y": 361.34510864441665
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 21.321024119999944,
+            "elapsedMs": 12016.199999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/resin-sleeve-low/03-inner-thick-sleeve-west.png",
+          "sha256": "049e0640b5f57b61ceeffdae6c22d3c1bb40a8bcd0b2c29801716269a5912812",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.1415298217367202,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 588.2853766868491,
+              "y": 373.72716554401836
+            },
+            "facingAngle": 3.1415298217367202,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 24.94667757599993,
+            "elapsedMs": 13666.1
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "resin-sleeve",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "resin-sleeve",
+        "grade": "severe",
+        "package": {
+          "id": "r100-resin-sleeve",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "1c171396",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=resin-sleeve&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "02灰胶面与红壳接岸，03厚红断沿/内转和灰床可分；低重均保留两材关系，重档结构侵蚀未整体替代材色。",
+      "limitations": [
+        "灰胶近面仍有较整齐层线，是材料共享弱项；低档敌人遮住局部床面，该区域不签。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/resin-sleeve-severe/02-shell-gel-contact-north.png",
+          "sha256": "7050093c9e97e0b5f6bb57aaa95e5409a4c43726c3fb16406edb3f6b387a1cf4",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 650.5533808397802,
+              "y": 359.9145681151958
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 20.99955577599976,
+            "elapsedMs": 11949.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/resin-sleeve-severe/03-inner-thick-sleeve-west.png",
+          "sha256": "6ab2ef163d3448a4df99dfa18333fba214d1c71d9764a2c1ad1cefb6909671b2",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141341326177507,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 591.4953681449182,
+              "y": 375.6435341758023
+            },
+            "facingAngle": 3.141341326177507,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 21.842193791999733,
+            "elapsedMs": 13616.199999999999
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "shell-threads",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shell-threads",
+        "grade": "low",
+        "package": {
+          "id": "r100-shell-threads",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "04b02755",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=shell-threads&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "右侧01/02两向均照见蓝长束压浅壳及相邻裸床，脚沿不与黑区混；重档本色、纵层和侵蚀同时可辨。",
+      "limitations": [
+        "敌人局部遮挡且重档85HP；只补右接触及近地，不扩为全部左接触/整个长束或完整搜撤。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/shell-threads-low/01-right-contact-south-approach-north.png",
+          "sha256": "624c769bbfc3261157f8b97b7956e7806b6136f208d6ab5aa754dbe5b6156e11",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 748.961809165838,
+              "y": 543.3675095285436
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 20.132908991999965,
+            "elapsedMs": 9116.3
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/shell-threads-low/02-right-contact-east-side-west.png",
+          "sha256": "4a7357f1b34cbcdf49cdf81bc776217432c085abf4bcc2aed8ee4aa33bfa845f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1415298217367296,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 821.8408658850578,
+              "y": 426.7273257391202
+            },
+            "facingAngle": -3.1415298217367296,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 21.535892111999935,
+            "elapsedMs": 12816.199999999999
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "shell-threads",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shell-threads",
+        "grade": "severe",
+        "package": {
+          "id": "r100-shell-threads",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "1863f478",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=shell-threads&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "finding": "右侧01/02两向均照见蓝长束压浅壳及相邻裸床，脚沿不与黑区混；重档本色、纵层和侵蚀同时可辨。",
+      "limitations": [
+        "敌人局部遮挡且重档85HP；只补右接触及近地，不扩为全部左接触/整个长束或完整搜撤。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/shell-threads-severe/01-right-contact-south-approach-north.png",
+          "sha256": "cea925f23edef2d8100a87fc3856febc08178ea58e626e54bb5cbdc58cd0635a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 747.0583469888448,
+              "y": 544.3765267009414
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 85,
+            "chaos": 23.064221055999855,
+            "elapsedMs": 8799.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/shell-threads-severe/02-right-contact-east-side-west.png",
+          "sha256": "5b20e26d073a20e6a48a50a8eaf6fd95af9502c5afcea4ff605de83e481a5ea0",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.140964335059078,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 830.2685495957036,
+              "y": 422.80666362045463
+            },
+            "facingAngle": -3.140964335059078,
+            "facing4": "left",
+            "hp": 85,
+            "chaos": 26.65382937599989,
+            "elapsedMs": 12349.4
+          }
+        }
+      ]
+    }
+  ]
+}

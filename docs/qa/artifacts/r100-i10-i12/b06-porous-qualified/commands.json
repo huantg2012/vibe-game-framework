@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "status": "ready-for-two-world-cpu-only",
+  "worlds": [
+    "marrow-break",
+    "pore-bank"
+  ],
+  "notAdmitted": [
+    "short-fibre-mat",
+    "felt-wedges"
+  ],
+  "wholeBatchReady": false,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "rootReviews": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium-independent-art-review.json",
+      "sha256": "5f82907d16d858d2de5f214265301d0dce4fb0376ce78ffaa5de185d3cbb30a2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades-independent-art-review.json",
+      "sha256": "98e2b36e30d2ece33dba6cbd4092c9d12fb90e085f321fd0f7603626d22eaa2e"
+    }
+  ],
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-qualified/preparation/commands.json",
+    "sha256": "9c86024c5f075311ea8cbb351366c16eae95f09bb0aa581f64edcb07210cd3c4"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-qualified/preparation/qualification-9a69c17ac558.mjs",
+    "sha256": "9a69c17ac558e4e6cc146ccfda392fc14cf56cc88ee833ade616c7e9afcd127f"
+  },
+  "generation": [
+    {
+      "cases": 240,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-qualified/preparation/qualification-9a69c17ac558.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-qualified/preparation/qualification-9a69c17ac558.mjs",
+        "--worlds",
+        "marrow-break,pore-bank",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 48,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-qualified/preparation/qualification-9a69c17ac558.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-qualified/preparation/qualification-9a69c17ac558.mjs",
+        "--worlds",
+        "marrow-break,pore-bank",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "Only two porous worlds with medium and low/severe root normal review. Original48 seed identities, grades, executor, timing budgets and admission contracts unchanged; short-fibre worlds remain excluded. No whole-batch readiness or completed outcome assigned."
+}

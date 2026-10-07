@@ -1,0 +1,2116 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-source/source-snapshot.json",
+    "sha256": "6afae0bf84a082a68cdd8d56bb1315657411e3f5d778e4ac79f7c82ddcee176c"
+  },
+  "plan": {
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "cases": [
+      {
+        "world": "braided-seam",
+        "grade": "low",
+        "goals": [
+          {
+            "label": "02-first-link",
+            "x": 484,
+            "y": 300,
+            "faces": [
+              "east",
+              "south"
+            ]
+          },
+          {
+            "label": "03-second-link",
+            "x": 548,
+            "y": 508,
+            "faces": [
+              "east"
+            ]
+          },
+          {
+            "label": "04-east-bed",
+            "x": 788,
+            "y": 508,
+            "faces": [
+              "west",
+              "south"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "scalloped-reach",
+        "grade": "low",
+        "goals": [
+          {
+            "label": "02-middle-bay",
+            "x": 628,
+            "y": 548,
+            "faces": [
+              "east",
+              "north"
+            ]
+          },
+          {
+            "label": "04-north-return",
+            "x": 700,
+            "y": 100,
+            "faces": [
+              "west",
+              "south"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "offset-pan",
+        "grade": "low",
+        "goals": [
+          {
+            "label": "02-first-neck",
+            "x": 332,
+            "y": 492,
+            "faces": [
+              "north",
+              "east"
+            ]
+          },
+          {
+            "label": "04-north-bed",
+            "x": 804,
+            "y": 164,
+            "faces": [
+              "west",
+              "south"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "thin-delta",
+        "grade": "low",
+        "goals": [
+          {
+            "label": "01-south-loop",
+            "x": 500,
+            "y": 676,
+            "faces": [
+              "east"
+            ]
+          },
+          {
+            "label": "02-return-turn",
+            "x": 844,
+            "y": 644,
+            "faces": [
+              "west",
+              "north"
+            ]
+          },
+          {
+            "label": "03-middle-toe",
+            "x": 894,
+            "y": 388,
+            "faces": [
+              "east"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "braided-seam",
+        "grade": "severe",
+        "goals": [
+          {
+            "label": "02-first-link",
+            "x": 484,
+            "y": 300,
+            "faces": [
+              "east",
+              "south"
+            ]
+          },
+          {
+            "label": "03-second-link",
+            "x": 548,
+            "y": 508,
+            "faces": [
+              "east"
+            ]
+          },
+          {
+            "label": "04-east-bed",
+            "x": 788,
+            "y": 508,
+            "faces": [
+              "west",
+              "south"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "scalloped-reach",
+        "grade": "severe",
+        "goals": [
+          {
+            "label": "02-middle-bay",
+            "x": 628,
+            "y": 548,
+            "faces": [
+              "east",
+              "north"
+            ]
+          },
+          {
+            "label": "04-north-return",
+            "x": 700,
+            "y": 100,
+            "faces": [
+              "west",
+              "south"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "offset-pan",
+        "grade": "severe",
+        "goals": [
+          {
+            "label": "02-first-neck",
+            "x": 332,
+            "y": 492,
+            "faces": [
+              "north",
+              "east"
+            ]
+          },
+          {
+            "label": "04-north-bed",
+            "x": 804,
+            "y": 164,
+            "faces": [
+              "west",
+              "south"
+            ]
+          }
+        ]
+      },
+      {
+        "world": "thin-delta",
+        "grade": "severe",
+        "goals": [
+          {
+            "label": "01-south-loop",
+            "x": 500,
+            "y": 676,
+            "faces": [
+              "east"
+            ]
+          },
+          {
+            "label": "02-return-turn",
+            "x": 844,
+            "y": 644,
+            "faces": [
+              "west",
+              "north"
+            ]
+          },
+          {
+            "label": "03-middle-toe",
+            "x": 894,
+            "y": 388,
+            "faces": [
+              "east"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "761e0de5c6c11d698ef605ffb093e527e1a413fe6aa19e5887f127ef4ea23cc8",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "braided-seam",
+      "grade": "low",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "02-first-link",
+            "x": 484,
+            "y": 300,
+            "faces": [
+              "east",
+              "south"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-first-link",
+              "x": 484,
+              "y": 300,
+              "faces": [
+                "east",
+                "south"
+              ]
+            },
+            "actual": {
+              "x": 484,
+              "y": 300
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 332,
+                "y": 588
+              },
+              {
+                "x": 332,
+                "y": 348
+              },
+              {
+                "x": 484,
+                "y": 348
+              },
+              {
+                "x": 484,
+                "y": 300
+              }
+            ],
+            "length": 576
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-low/02-first-link-east.png",
+              "sha256": "895a6f2c1a6cff88665ac34c0b044ee3be4c209aa2b129655d5c0a227207d52f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 490.0256780089514,
+                  "y": 300.81381724590636
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.741094903999976,
+                "elapsedMs": 9266.400000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 490.0256780089514,
+                  "y": 300.81381724590636
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.775846687999973,
+                "elapsedMs": 9449.599999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-low/02-first-link-south.png",
+              "sha256": "a7ff862685950d40bd6a74114e38bdbf5e52216a393bd907bae5f66818e0c4e7",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 490.0256780089514,
+                  "y": 308.2595172459063
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 16.829566055999972,
+                "elapsedMs": 9732.900000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 490.0256780089514,
+                  "y": 308.2595172459063
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 16.85800226399997,
+                "elapsedMs": 9882.900000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-second-link",
+            "x": 548,
+            "y": 508,
+            "faces": [
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-second-link",
+              "x": 548,
+              "y": 508,
+              "faces": [
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 548,
+              "y": 508
+            },
+            "points": [
+              {
+                "x": 492,
+                "y": 308
+              },
+              {
+                "x": 548,
+                "y": 308
+              },
+              {
+                "x": 548,
+                "y": 508
+              }
+            ],
+            "length": 256
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-low/03-second-link-east.png",
+              "sha256": "b24dd72bb7595c0dc9f8956b55c3e690e106db82d8a93e4eb740ff47d2ab30aa",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 556.0993382326611,
+                  "y": 507.07313289440225
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.717493191999957,
+                "elapsedMs": 14416.100000000002
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 556.0993382326611,
+                  "y": 507.07313289440225
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.742768767999955,
+                "elapsedMs": 14549.400000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-east-bed",
+            "x": 788,
+            "y": 508,
+            "faces": [
+              "west",
+              "south"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "04-east-bed",
+              "x": 788,
+              "y": 508,
+              "faces": [
+                "west",
+                "south"
+              ]
+            },
+            "actual": {
+              "x": 788,
+              "y": 508
+            },
+            "points": [
+              {
+                "x": 556,
+                "y": 508
+              },
+              {
+                "x": 788,
+                "y": 508
+              }
+            ],
+            "length": 232
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-low/04-east-bed-west.png",
+              "sha256": "945e9cfc2e00b4e2024de9fb0e0d1f075970f1070c97db912526be6d78061d30",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 774.2721382326654,
+                  "y": 507.07313289440225
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.45374032799994,
+                "elapsedMs": 18299.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 774.2721382326654,
+                  "y": 507.07313289440225
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.47901969599994,
+                "elapsedMs": 18432.600000000002
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-low/04-east-bed-south.png",
+              "sha256": "a70c110a6062ebc658e8ebc1b35de9c80e725910bdd355e05e7ca6e78cd74f27",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 774.2721382326654,
+                  "y": 514.5185328944023
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.53589779999994,
+                "elapsedMs": 18732.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 774.2721382326654,
+                  "y": 514.5185328944023
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.56118095999994,
+                "elapsedMs": 18865.9
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "braided-seam",
+        "grade": "low",
+        "package": {
+          "id": "r100-braided-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "90fb0e2f",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3104/r100-gym.html?world=braided-seam&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-low/recipe.json",
+        "sha256": "ae6e2ece5f7770270df29576686f7b8d89de62bc291a32db9d1bcdc53af3702e"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 774.2721382326654,
+          "y": 514.5185328944023
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 18.56118095999994,
+        "elapsedMs": 18865.9
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 774.2721382326654,
+          "y": 514.5185328944023
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 18.791844527999935,
+        "elapsedMs": 20082.5
+      }
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "low",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "02-middle-bay",
+            "x": 628,
+            "y": 548,
+            "faces": [
+              "east",
+              "north"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-middle-bay",
+              "x": 628,
+              "y": 548,
+              "faces": [
+                "east",
+                "north"
+              ]
+            },
+            "actual": {
+              "x": 628,
+              "y": 556
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 524,
+                "y": 588
+              },
+              {
+                "x": 524,
+                "y": 572
+              },
+              {
+                "x": 532,
+                "y": 572
+              },
+              {
+                "x": 532,
+                "y": 564
+              },
+              {
+                "x": 540,
+                "y": 564
+              },
+              {
+                "x": 540,
+                "y": 556
+              },
+              {
+                "x": 628,
+                "y": 556
+              }
+            ],
+            "length": 464
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/scalloped-reach-low/02-middle-bay-east.png",
+              "sha256": "2dce8a2832b409f50f4f50966e3a60599aa89c5e52e680394c71f5a9ab2222a9",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 628.5875611284916,
+                  "y": 554.1985293910827
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.459861223999976,
+                "elapsedMs": 7783
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 628.5875611284916,
+                  "y": 554.1985293910827
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.485140591999976,
+                "elapsedMs": 7916.299999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/scalloped-reach-low/02-middle-bay-north.png",
+              "sha256": "c85344072160d861fa69a78766fc526f028a73d86168f05280857b07e9a568f2",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 628.1987109648754,
+                  "y": 547.9479040512135
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.542018695999975,
+                "elapsedMs": 8216.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 628.1987109648754,
+                  "y": 547.9479040512135
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.576778063999974,
+                "elapsedMs": 8399.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-north-return",
+            "x": 700,
+            "y": 100,
+            "faces": [
+              "west",
+              "south"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "04-north-return",
+              "x": 700,
+              "y": 100,
+              "faces": [
+                "west",
+                "south"
+              ]
+            },
+            "actual": {
+              "x": 700,
+              "y": 100
+            },
+            "points": [
+              {
+                "x": 628,
+                "y": 548
+              },
+              {
+                "x": 460,
+                "y": 548
+              },
+              {
+                "x": 460,
+                "y": 116
+              },
+              {
+                "x": 468,
+                "y": 116
+              },
+              {
+                "x": 468,
+                "y": 108
+              },
+              {
+                "x": 484,
+                "y": 108
+              },
+              {
+                "x": 484,
+                "y": 100
+              },
+              {
+                "x": 700,
+                "y": 100
+              }
+            ],
+            "length": 856
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/scalloped-reach-low/04-north-return-west.png",
+              "sha256": "14c9237a17d579cecc333a1c184388f06804c9c24d031e741fbb22413f7c2c53",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141278494324441,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 693.3623291603021,
+                  "y": 100.02952820124221
+                },
+                "facingAngle": 3.141278494324441,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 22.35430430399992,
+                "elapsedMs": 21682.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 693.3623291603021,
+                  "y": 100.02952820124221
+                },
+                "facingAngle": 3.141278494324441,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 22.40486683199992,
+                "elapsedMs": 21815.8
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/scalloped-reach-low/04-north-return-south.png",
+              "sha256": "dd7350058ff1bfbf5f152cf6574d07abe848484e8369fcd60c3be6cddd9463db",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 693.3623291603021,
+                  "y": 107.47369486790888
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 22.51862303999992,
+                "elapsedMs": 22115.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 693.3623291603021,
+                  "y": 107.47369486790888
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 85,
+                "chaos": 22.562860511999915,
+                "elapsedMs": 22232.5
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "scalloped-reach",
+        "grade": "low",
+        "package": {
+          "id": "r100-scalloped-reach",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "f863bfaf",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3104/r100-gym.html?world=scalloped-reach&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-grades/scalloped-reach-low/recipe.json",
+        "sha256": "543cd6536d38805ed5bb5536fb6de98442ba433768a93c00d7df4eefd3c1919e"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 693.3623291603021,
+          "y": 107.47369486790888
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 85,
+        "chaos": 22.562860511999915,
+        "elapsedMs": 22232.5
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 693.3623291603021,
+          "y": 107.47369486790888
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 85,
+        "chaos": 23.024195231999904,
+        "elapsedMs": 23449
+      }
+    },
+    {
+      "world": "offset-pan",
+      "grade": "low",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "02-first-neck",
+            "x": 332,
+            "y": 492,
+            "faces": [
+              "north",
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-first-neck",
+              "x": 332,
+              "y": 492,
+              "faces": [
+                "north",
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 332,
+              "y": 492
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 332,
+                "y": 588
+              },
+              {
+                "x": 332,
+                "y": 492
+              }
+            ],
+            "length": 232
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/offset-pan-low/02-first-neck-north.png",
+              "sha256": "09e2748457e2cd579335ac4285a4a7e936a02b9fc464871f88003c4b8fb4bb98",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 332.8130929091275,
+                  "y": 482.6858722808622
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.774167135999996,
+                "elapsedMs": 4166.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 332.8130929091275,
+                  "y": 482.6858722808622
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.805767767999995,
+                "elapsedMs": 4333.200000000001
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/offset-pan-low/02-first-neck-east.png",
+              "sha256": "bac2a88fe6de83d3c2f803f7309e36c05826adfdaf6cce4444d8f92e3e054165",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185307326411,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 340.25812624246083,
+                  "y": 482.6858722808622
+                },
+                "facingAngle": -0.00006283185307326411,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 15.862649663999996,
+                "elapsedMs": 4633.200000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 340.25812624246083,
+                  "y": 482.6858722808622
+                },
+                "facingAngle": -0.00006283185307326411,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 15.884766503999995,
+                "elapsedMs": 4749.799999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-north-bed",
+            "x": 804,
+            "y": 164,
+            "faces": [
+              "west",
+              "south"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "04-north-bed",
+              "x": 804,
+              "y": 164,
+              "faces": [
+                "west",
+                "south"
+              ]
+            },
+            "actual": {
+              "x": 804,
+              "y": 172
+            },
+            "points": [
+              {
+                "x": 340,
+                "y": 484
+              },
+              {
+                "x": 380,
+                "y": 484
+              },
+              {
+                "x": 380,
+                "y": 468
+              },
+              {
+                "x": 388,
+                "y": 468
+              },
+              {
+                "x": 388,
+                "y": 460
+              },
+              {
+                "x": 748,
+                "y": 460
+              },
+              {
+                "x": 748,
+                "y": 252
+              },
+              {
+                "x": 756,
+                "y": 252
+              },
+              {
+                "x": 756,
+                "y": 236
+              },
+              {
+                "x": 764,
+                "y": 236
+              },
+              {
+                "x": 764,
+                "y": 228
+              },
+              {
+                "x": 804,
+                "y": 228
+              },
+              {
+                "x": 804,
+                "y": 172
+              }
+            ],
+            "length": 776
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/offset-pan-low/04-north-bed-west.png",
+              "sha256": "845237911e487a946151492b2afa857c7fcc13b0d5a99bf02e18ef5dd0e1fe54",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 787.4247040858712,
+                  "y": 173.70710367320422
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.400026647999947,
+                "elapsedMs": 18015.9
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 787.4247040858712,
+                  "y": 173.70710367320422
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.431627279999947,
+                "elapsedMs": 18182.6
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/offset-pan-low/04-north-bed-south.png",
+              "sha256": "12d3b64e97524e4cfae13204c1a7c853020d3862c0453adcbba312ad53ff9072",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5708591586479628,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 787.4247040858712,
+                  "y": 181.1514703398709
+                },
+                "facingAngle": 1.5708591586479628,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.485344751999946,
+                "elapsedMs": 18466
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 787.4247040858712,
+                  "y": 181.1514703398709
+                },
+                "facingAngle": 1.5708591586479628,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.513780959999945,
+                "elapsedMs": 18615.9
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-pan",
+        "grade": "low",
+        "package": {
+          "id": "r100-offset-pan",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "f60bfe35",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3104/r100-gym.html?world=offset-pan&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-grades/offset-pan-low/recipe.json",
+        "sha256": "f0992455ad7fa04c8e7195b3ff2d432baff28479e3397247c748a9a79e729a40"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 787.4247040858712,
+          "y": 181.1514703398709
+        },
+        "facingAngle": 1.5708591586479628,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 18.513780959999945,
+        "elapsedMs": 18615.9
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 787.4247040858712,
+          "y": 181.1514703398709
+        },
+        "facingAngle": 1.5708591586479628,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 18.74128768799994,
+        "elapsedMs": 19815.8
+      }
+    },
+    {
+      "world": "thin-delta",
+      "grade": "low",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-loop",
+            "x": 500,
+            "y": 676,
+            "faces": [
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-loop",
+              "x": 500,
+              "y": 676,
+              "faces": [
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 500,
+              "y": 676
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 500,
+                "y": 588
+              },
+              {
+                "x": 500,
+                "y": 676
+              }
+            ],
+            "length": 392
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/thin-delta-low/01-south-loop-east.png",
+              "sha256": "761c3fbfdecb235c336986631b4f829bb8c5478b0f5c963c2bad0647f6b1e874",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0.00025132741228922617,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 507.0428817500414,
+                  "y": 680.9978271635156
+                },
+                "facingAngle": 0.00025132741228922617,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.12807259999999,
+                "elapsedMs": 6033
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 507.0428817500414,
+                  "y": 680.9978271635156
+                },
+                "facingAngle": 0.00025132741228922617,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.15019323199999,
+                "elapsedMs": 6149.699999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-return-turn",
+            "x": 844,
+            "y": 644,
+            "faces": [
+              "west",
+              "north"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-return-turn",
+              "x": 844,
+              "y": 644,
+              "faces": [
+                "west",
+                "north"
+              ]
+            },
+            "actual": {
+              "x": 844,
+              "y": 644
+            },
+            "points": [
+              {
+                "x": 508,
+                "y": 684
+              },
+              {
+                "x": 844,
+                "y": 684
+              },
+              {
+                "x": 844,
+                "y": 644
+              }
+            ],
+            "length": 376
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/thin-delta-low/02-return-turn-west.png",
+              "sha256": "d363c59eb7b42003b53d40d2682fcbf598b03c3eb2628596267a677672792639",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.141529821736727,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 837.2029741016569,
+                  "y": 637.9960304358934
+                },
+                "facingAngle": -3.141529821736727,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.256147095999967,
+                "elapsedMs": 11982.800000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 837.2029741016569,
+                  "y": 637.9960304358934
+                },
+                "facingAngle": -3.141529821736727,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.284588991999968,
+                "elapsedMs": 12132.800000000001
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/thin-delta-low/02-return-turn-north.png",
+              "sha256": "5c991fb7d3d33f1fefa4bfffec09a5ac30c124673acb9ecc32cefc3cc8bc2320",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267949037,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 837.2029741016569,
+                  "y": 630.5508304358934
+                },
+                "facingAngle": -1.5707963267949037,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.341465199999966,
+                "elapsedMs": 12432.699999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 837.2029741016569,
+                  "y": 630.5508304358934
+                },
+                "facingAngle": -1.5707963267949037,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.366742671999965,
+                "elapsedMs": 12566.1
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-middle-toe",
+            "x": 894,
+            "y": 388,
+            "faces": [
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-middle-toe",
+              "x": 894,
+              "y": 388,
+              "faces": [
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 892,
+              "y": 388
+            },
+            "points": [
+              {
+                "x": 836,
+                "y": 628
+              },
+              {
+                "x": 804,
+                "y": 628
+              },
+              {
+                "x": 804,
+                "y": 580
+              },
+              {
+                "x": 796,
+                "y": 580
+              },
+              {
+                "x": 796,
+                "y": 556
+              },
+              {
+                "x": 772,
+                "y": 556
+              },
+              {
+                "x": 772,
+                "y": 548
+              },
+              {
+                "x": 748,
+                "y": 548
+              },
+              {
+                "x": 748,
+                "y": 540
+              },
+              {
+                "x": 724,
+                "y": 540
+              },
+              {
+                "x": 724,
+                "y": 532
+              },
+              {
+                "x": 620,
+                "y": 532
+              },
+              {
+                "x": 620,
+                "y": 460
+              },
+              {
+                "x": 628,
+                "y": 460
+              },
+              {
+                "x": 628,
+                "y": 452
+              },
+              {
+                "x": 644,
+                "y": 452
+              },
+              {
+                "x": 644,
+                "y": 444
+              },
+              {
+                "x": 676,
+                "y": 444
+              },
+              {
+                "x": 676,
+                "y": 436
+              },
+              {
+                "x": 708,
+                "y": 436
+              },
+              {
+                "x": 708,
+                "y": 428
+              },
+              {
+                "x": 740,
+                "y": 428
+              },
+              {
+                "x": 740,
+                "y": 420
+              },
+              {
+                "x": 892,
+                "y": 420
+              },
+              {
+                "x": 892,
+                "y": 388
+              }
+            ],
+            "length": 728
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/thin-delta-low/03-middle-toe-east.png",
+              "sha256": "365229926c8515030428b1967b660576a5f56e4d62cd68d1366a9b4b42d6ced8",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 901.5196123788164,
+                  "y": 388.74442071375677
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 85,
+                "chaos": 24.351344039999862,
+                "elapsedMs": 26098.9
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 901.5196123788164,
+                  "y": 388.74442071375677
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 85,
+                "chaos": 24.408224039999862,
+                "elapsedMs": 26248.9
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "low",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "8fa12473",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3104/r100-gym.html?world=thin-delta&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-grades/thin-delta-low/recipe.json",
+        "sha256": "f03ee0d2620914626ddfb8d28d94c94781800ec029e713377e914ee3086bbb63"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 901.5196123788164,
+          "y": 388.74442071375677
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 85,
+        "chaos": 24.408224039999862,
+        "elapsedMs": 26248.9
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 901.5196123788164,
+          "y": 388.74442071375677
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 85,
+        "chaos": 24.86956634399985,
+        "elapsedMs": 27465.5
+      }
+    },
+    {
+      "world": "braided-seam",
+      "grade": "severe",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "02-first-link",
+            "x": 484,
+            "y": 300,
+            "faces": [
+              "east",
+              "south"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "02-first-link",
+              "x": 484,
+              "y": 300,
+              "faces": [
+                "east",
+                "south"
+              ]
+            },
+            "actual": {
+              "x": 484,
+              "y": 300
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 332,
+                "y": 588
+              },
+              {
+                "x": 332,
+                "y": 348
+              },
+              {
+                "x": 484,
+                "y": 348
+              },
+              {
+                "x": 484,
+                "y": 300
+              }
+            ],
+            "length": 576
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-severe/02-first-link-east.png",
+              "sha256": "487b907e04ad03c6ac753279e7b1383019f0ce7b153e1b24c8a9d5cd2223a0de",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 498.11003956192593,
+                  "y": 297.9754581930904
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.592364799999824,
+                "elapsedMs": 9166.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 498.11003956192593,
+                  "y": 297.9754581930904
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.66820479999982,
+                "elapsedMs": 9316.2
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-severe/02-first-link-south.png",
+              "sha256": "b381184b7ce14f2b46e77756d64194b060ddb542e3c8d862789fbc638701a186",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5701680082641787,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 498.11003956192593,
+                  "y": 305.419424859757
+                },
+                "facingAngle": 1.5701680082641787,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 19.819874687999818,
+                "elapsedMs": 9616.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 498.11003956192593,
+                  "y": 305.419424859757
+                },
+                "facingAngle": 1.5701680082641787,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 19.878863039999814,
+                "elapsedMs": 9732.900000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-second-link",
+            "x": 548,
+            "y": 508,
+            "faces": [
+              "east"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "03-second-link",
+              "x": 548,
+              "y": 508,
+              "faces": [
+                "east"
+              ]
+            },
+            "actual": {
+              "x": 548,
+              "y": 508
+            },
+            "points": [
+              {
+                "x": 500,
+                "y": 308
+              },
+              {
+                "x": 548,
+                "y": 308
+              },
+              {
+                "x": 548,
+                "y": 508
+              }
+            ],
+            "length": 248
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-severe/03-second-link-east.png",
+              "sha256": "d515793dd530b47bc2dd89208ab7f2b0f570ee2d23e9188fc07b7a99061e4b47",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 554.1395886901092,
+                  "y": 509.09568902239084
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 34.88137465599967,
+                "elapsedMs": 15016
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 554.1395886901092,
+                  "y": 509.09568902239084
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 35.016197951999665,
+                "elapsedMs": 15149.400000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-east-bed",
+            "x": 788,
+            "y": 508,
+            "faces": [
+              "west",
+              "south"
+            ]
+          },
+          "route": {
+            "requested": {
+              "label": "04-east-bed",
+              "x": 788,
+              "y": 508,
+              "faces": [
+                "west",
+                "south"
+              ]
+            },
+            "actual": {
+              "x": 788,
+              "y": 508
+            },
+            "points": [
+              {
+                "x": 556,
+                "y": 508
+              },
+              {
+                "x": 788,
+                "y": 508
+              }
+            ],
+            "length": 232
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-severe/04-east-bed-west.png",
+              "sha256": "7a8292265ea4836b8e041a0d70c5728ba628b0e3e0af3b6fa68a04ed689a5d76",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 782.6976220234467,
+                  "y": 509.09568902239084
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 39.027142975999375,
+                "elapsedMs": 19115.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 782.6976220234467,
+                  "y": 509.09568902239084
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 42.17878252799937,
+                "elapsedMs": 19265.8
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-severe/04-east-bed-south.png",
+              "sha256": "99c9c6ec6d61da04422bca8c4fac16a87095b9b639c9d01acd8133f18913ef6c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 782.6976220234467,
+                  "y": 516.5406890223908
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 42.499009343999354,
+                "elapsedMs": 19582.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 782.6976220234467,
+                  "y": 516.5406890223908
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 42.68438252799935,
+                "elapsedMs": 19765.8
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "braided-seam",
+        "grade": "severe",
+        "package": {
+          "id": "r100-braided-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "2c6e3407",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3104/r100-gym.html?world=braided-seam&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-grades/braided-seam-severe/recipe.json",
+        "sha256": "787d8e9eb734a9955bd98fad3899c44e6aeb0dec82dc22048566783df0c3b6e0"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 782.6976220234467,
+          "y": 516.5406890223908
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 42.68438252799935,
+        "elapsedMs": 19765.8
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 782.6976220234467,
+          "y": 516.5406890223908
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 43.914638783999266,
+        "elapsedMs": 20982.5
+      }
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "severe",
+      "seed": 20261005,
+      "steps": [],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "scalloped-reach",
+        "grade": "severe",
+        "package": {
+          "id": "r100-scalloped-reach",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "37b21f28",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3104/r100-gym.html?world=scalloped-reach&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-grades/scalloped-reach-severe/recipe.json",
+        "sha256": "af2bbcca94d76564eb8308c57c0ffba6696b5236687b6b0c26f854472a9f99b5"
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "failed",
+  "failure": "Error: keyboard.up: Target page, context or browser has been closed",
+  "stack": "keyboard.up: Target page, context or browser has been closed\n    at hold (/Users/yilungao/coh/tools/qa/capture-r100-expansion-art.mjs:31:222)\n    at async file:///Users/yilungao/coh/tools/qa/capture-r100-expansion-art.mjs:63:132"
+}

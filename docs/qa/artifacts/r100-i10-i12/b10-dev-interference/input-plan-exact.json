@@ -1,0 +1,130 @@
+{
+  "status": "pass",
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/plan.json",
+    "sha256": "c646b8ea89aa6a9f2a27d964a818913e2b25e6d1628e7b6e218d7841cf4b3e0a"
+  },
+  "originalPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/policy-freeze.json",
+    "sha256": "3411d1708ab83278fd4b273734b033fa6103c9e22b08008eed62d10320061d8c"
+  },
+  "originalBatch": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play/batch-report.json",
+    "sha256": "9be004236650cb4b41c785ea1ca4c580c454b50e40ab6115fd6bde57e764bba7"
+  },
+  "attemptedPrefixExact": true,
+  "unchangedEnvironmentExcept": [
+    "QA_WORLDS",
+    "QA_GRADES",
+    "QA_SEEDS",
+    "QA_OUTPUT_DIR",
+    "QA_WORKER_OBSERVER_DIR",
+    "QA_WORKER_OBSERVER_FAILURE_FILE"
+  ],
+  "cases": [
+    {
+      "stage": "012-same-identity-recheck",
+      "originalCases": [
+        {
+          "index": 12,
+          "dir": "012-crossed-casings-severe-3075192741",
+          "world": "crossed-casings",
+          "grade": "severe",
+          "seed": 3075192741
+        }
+      ],
+      "sameRequestSelections": true
+    },
+    {
+      "stage": "remaining-original12",
+      "originalCases": [
+        {
+          "index": 13,
+          "dir": "013-fibre-stumpfield-low-20261005",
+          "world": "fibre-stumpfield",
+          "grade": "low",
+          "seed": 20261005
+        },
+        {
+          "index": 14,
+          "dir": "014-fibre-stumpfield-low-3075192741",
+          "world": "fibre-stumpfield",
+          "grade": "low",
+          "seed": 3075192741
+        },
+        {
+          "index": 15,
+          "dir": "015-fibre-stumpfield-medium-20261005",
+          "world": "fibre-stumpfield",
+          "grade": "medium",
+          "seed": 20261005
+        },
+        {
+          "index": 16,
+          "dir": "016-fibre-stumpfield-medium-3075192741",
+          "world": "fibre-stumpfield",
+          "grade": "medium",
+          "seed": 3075192741
+        },
+        {
+          "index": 17,
+          "dir": "017-fibre-stumpfield-severe-20261005",
+          "world": "fibre-stumpfield",
+          "grade": "severe",
+          "seed": 20261005
+        },
+        {
+          "index": 18,
+          "dir": "018-fibre-stumpfield-severe-3075192741",
+          "world": "fibre-stumpfield",
+          "grade": "severe",
+          "seed": 3075192741
+        },
+        {
+          "index": 19,
+          "dir": "019-sloughed-court-low-20261005",
+          "world": "sloughed-court",
+          "grade": "low",
+          "seed": 20261005
+        },
+        {
+          "index": 20,
+          "dir": "020-sloughed-court-low-3075192741",
+          "world": "sloughed-court",
+          "grade": "low",
+          "seed": 3075192741
+        },
+        {
+          "index": 21,
+          "dir": "021-sloughed-court-medium-20261005",
+          "world": "sloughed-court",
+          "grade": "medium",
+          "seed": 20261005
+        },
+        {
+          "index": 22,
+          "dir": "022-sloughed-court-medium-3075192741",
+          "world": "sloughed-court",
+          "grade": "medium",
+          "seed": 3075192741
+        },
+        {
+          "index": 23,
+          "dir": "023-sloughed-court-severe-20261005",
+          "world": "sloughed-court",
+          "grade": "severe",
+          "seed": 20261005
+        },
+        {
+          "index": 24,
+          "dir": "024-sloughed-court-severe-3075192741",
+          "world": "sloughed-court",
+          "grade": "severe",
+          "seed": 3075192741
+        }
+      ],
+      "sameRequestSelections": true
+    }
+  ],
+  "scope": "Pure scheduling comparison; original012 must also receive an independent clean observer replay. No gameplay result asserted."
+}

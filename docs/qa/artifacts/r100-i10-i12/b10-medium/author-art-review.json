@@ -1,0 +1,541 @@
+{
+  "status": "partial-pass-rejected-worlds-retained",
+  "at": "2026-10-07T06:09:18.508Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-source/source-snapshot.json",
+    "sha256": "6b139ecc99d89d814f904faee219b97fd6001bca60c8b88e2bce4529772d9c71"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/report.json",
+    "sha256": "f05f2b723559bee900510ea5614d2e72a35fcd077cab66c61ab34eab9c66d418"
+  },
+  "scope": "Personally viewed all 16 original medium PNGs. Bare Gym fixture, real WASD and runtime facing, normal FOV/light, active pressure; no teleport or injected HP.",
+  "limitations": [
+    "Four limited routes and static images do not establish whole-map, low/severe, full search-return, audio, dynamic fatigue or human approval.",
+    "Route planning reads floor geometry; this is not visible-only natural-play qualification. Actual coordinates/pressure differ between stations.",
+    "No raw file or original rejection was changed. Independent root review is separate."
+  ],
+  "worlds": [
+    {
+      "worldId": "notched-backwater",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-medium-pass",
+      "finding": "01不等厚臂与中间裸床、02近纵厚侧面、03头臂接合与内转、04外侧开敞床均有实际可见依据；深紫层断与蓝床分开。",
+      "limitations": [
+        "04有敌人且仅照一端；没有全体俯视证据或完整搜撤证明。"
+      ],
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/notched-backwater-medium/recipe.json",
+        "sha256": "f2b98cce3074ddc7f1dd3144911d5e911ced84481b71d32758af6725e74ca7f8"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "notched-backwater",
+        "grade": "medium",
+        "package": {
+          "id": "r100-notched-backwater",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "2dc230fd",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3115/r100-gym.html?world=notched-backwater&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/notched-backwater-medium/01-material-approach-north.png",
+          "sha256": "c4b0539409b2b71d01af5797456d5ae4226aab52f797a82aba820a61e000784d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5702936719703253,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 573.6380278257024,
+              "y": 639.2378098748002
+            },
+            "facingAngle": -1.5702936719703253,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.151099215999807,
+            "elapsedMs": 6566.400000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/notched-backwater-medium/02-material-approach-west.png",
+          "sha256": "b06381fc3420b6333ba557d6aec7fa93f4be8c14ccbe7b7b29e9852725e7044a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1411528306182905,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.8214508671632,
+              "y": 462.39806311384376
+            },
+            "facingAngle": -3.1411528306182905,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.14091833999972,
+            "elapsedMs": 9549.599999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/notched-backwater-medium/03-material-approach-east.png",
+          "sha256": "23e263785cd12740e9ae3dfc766291280324490f961c1e1468a4859f6d493624",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 578.3694143988134,
+              "y": 334.25796733462977
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.998037371999605,
+            "elapsedMs": 12132.8
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/notched-backwater-medium/04-material-approach-west.png",
+          "sha256": "471693fc7e3877751f41fa01a421e2d855d32516c45d94572880323e874adba7",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.140964335059069,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 565.5559415561959,
+              "y": 198.70344014585996
+            },
+            "facingAngle": -3.140964335059069,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.91045087399947,
+            "elapsedMs": 14882.8
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "crossed-casings",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-medium-pass",
+      "finding": "02横壳宽前唇与03纵向厚壳构成不同接近方向；蓝暗顶/粉色断沿与赭床分离，01/04短端有清楚落脚边。",
+      "limitations": [
+        "与red-vault共享壳断面语法，平行细绿层线偏整齐，列近邻弱项；不据四帧宣称全交叉关系和所有内壁。"
+      ],
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/crossed-casings-medium/recipe.json",
+        "sha256": "cfaebe99ee013c03348b2235caab270dc38686f569f3bfaf629446c3b012582f"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "crossed-casings",
+        "grade": "medium",
+        "package": {
+          "id": "r100-crossed-casings",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "3891dff1",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3115/r100-gym.html?world=crossed-casings&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/crossed-casings-medium/01-material-approach-west.png",
+          "sha256": "651d7d5b5667aa70ed48c83b1c7b11dcd716a15936575afdcdc1927916d291d9",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 456.1856183862913,
+              "y": 605.3507365582337
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 16.76401138199983,
+            "elapsedMs": 5399.900000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/crossed-casings-medium/02-material-approach-north.png",
+          "sha256": "6464c167c2f5529132db256c818bba337ac81b8f379234d274e58e8d1fb53d90",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 461.98828534368164,
+              "y": 439.623564469138
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.63218598999974,
+            "elapsedMs": 8016.500000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/crossed-casings-medium/03-material-approach-east.png",
+          "sha256": "c3218ef4d2757eeffe22631b7bde9e00a222398ee9cd4501fc8719002adc347c",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 548.1924403939369,
+              "y": 416.1919501263294
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.351050597999656,
+            "elapsedMs": 10183
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/crossed-casings-medium/04-material-approach-north.png",
+          "sha256": "4adb61fd5ef8d06b535559d92035df5fd5aee7de085d4681cff803c332dfbc39",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 251.85948430283204,
+              "y": 589.7233075385882
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 21.09935331599934,
+            "elapsedMs": 18466.1
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "fibre-stumpfield",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-medium-pass",
+      "finding": "金褐粗短束有纵向纤层、参差断尖与粉红断端；01组间裸路及02/03/04不同朝向近绕可读，床面细层与实体粗束分离。",
+      "limitations": [
+        "多件同族短束是有意群体，仍需后续整库疲劳对照；黑区未见面不签，短路线不是连续体验。"
+      ],
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/fibre-stumpfield-medium/recipe.json",
+        "sha256": "2ef16c94f6419ea3aa45f7d384b584dcfdaa2664f7e36d2b1cd78c076f8664b7"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "fibre-stumpfield",
+        "grade": "medium",
+        "package": {
+          "id": "r100-fibre-stumpfield",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "61d5dc1e",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3115/r100-gym.html?world=fibre-stumpfield&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/fibre-stumpfield-medium/01-material-approach-north.png",
+          "sha256": "20a4d24459486c0b7c5240fe5145a225d0367224ce599fc3da0725e1e051af9a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 459.914367687943,
+              "y": 623.3210094306705
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.653399215999837,
+            "elapsedMs": 5066.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/fibre-stumpfield-medium/02-material-approach-east.png",
+          "sha256": "19bd9bd42f0387aa3e8ce9b99db545870daa394956d8f0fdb1b358f4e766fda0",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 458.7385737948666,
+              "y": 461.16526250239536
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 20.98875110399937,
+            "elapsedMs": 18132.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/fibre-stumpfield-medium/03-material-approach-east.png",
+          "sha256": "8895b46dbad732df1d9c4a2aceb0d578e201ee236d7389972102659fa29bbccf",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.00006283185307287553,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 528.798305045685,
+              "y": 400.9255861616683
+            },
+            "facingAngle": -0.00006283185307287553,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 21.785037923999344,
+            "elapsedMs": 20532.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/fibre-stumpfield-medium/04-material-approach-west.png",
+          "sha256": "aab5a2a4c6a306fc5a4a037a9ed7a00f6f886f423425ad308d1df78cf9821cba",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 509.8442328178735,
+              "y": 301.8026660879593
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 22.625563637999342,
+            "elapsedMs": 23065.699999999997
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "sloughed-court",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "author-rejected",
+      "finding": "01/02/03低面大直边、锐利缺角与黑/浅硬线仍像整片贴纸；04实体断端清楚不能替代低地的材料关系。",
+      "limitations": [
+        "拒绝限于低面读法；未指称可走/实体碰撞错误，不扩大低重已知失败源。"
+      ],
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/sloughed-court-medium/recipe.json",
+        "sha256": "83b07ddaa61d33679c382ddec4eacbbbba647ab7e3f4cf48e9db4acf1a85b3d4"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "sloughed-court",
+        "grade": "medium",
+        "package": {
+          "id": "r100-sloughed-court",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "46d553f4",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3115/r100-gym.html?world=sloughed-court&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/sloughed-court-medium/01-material-approach-north.png",
+          "sha256": "93ff3d018721041020124ff17e6b6feafbce93eb92d6e67ace899bf4e6ec303d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 307.221375448967,
+              "y": 402.2838155495957
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.70869257999984,
+            "elapsedMs": 5233.1
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/sloughed-court-medium/02-material-approach-north.png",
+          "sha256": "f21090806bbba9793feff1e297b208c12c1f332e92656d8968a49f1089ffbbab",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 483.1616644153492,
+              "y": 371.34673268820495
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.83676944599973,
+            "elapsedMs": 8633
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/sloughed-court-medium/03-material-approach-east.png",
+          "sha256": "b98c5c7d044df4191772bbb511202083de02a931cf103b1e70f020eb64d77ade",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 648.4643462293482,
+              "y": 383.77375690410116
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.7878940539996,
+            "elapsedMs": 11499.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/sloughed-court-medium/04-material-approach-north.png",
+          "sha256": "432ccae71793db53e96b5ad7123547550c2f44a873589f7b9226eda534f98a87",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 330.53739944358904,
+              "y": 646.0546425766127
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 22.73615810799933,
+            "elapsedMs": 23399.1
+          }
+        }
+      ]
+    }
+  ]
+}

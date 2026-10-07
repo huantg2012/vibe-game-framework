@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "status": "ready-for-one-world-cpu-only",
+  "worlds": [
+    "shard-switchback"
+  ],
+  "wholeBatchReady": true,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+    "sha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "rootReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-independent-art-review.json",
+    "sha256": "5df9ac94c9a964e496d2dca04bf71ef909ef431e9ac9588827b658d84a9723e9"
+  },
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/preparation/commands.json",
+    "sha256": "2166415c9a48e5621e3e0fa61993db665901a3e687672c0fac27f30405d498c4"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/preparation/qualification-7251cd0d0602.mjs",
+    "sha256": "7251cd0d06027b8c594071cdcbfc6cb5f5fedd394880ee9120cdfc11be9323e0"
+  },
+  "generation": [
+    {
+      "cases": 120,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/preparation/qualification-7251cd0d0602.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/preparation/qualification-7251cd0d0602.mjs",
+        "--worlds",
+        "shard-switchback",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 24,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/preparation/qualification-7251cd0d0602.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/preparation/qualification-7251cd0d0602.mjs",
+        "--worlds",
+        "shard-switchback",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "Only repaired shard original144; do not rerun the other three worlds."
+}

@@ -1,0 +1,2148 @@
+{
+  "status": "bounded-independent-process-data-pass",
+  "reviewer": "identity_shapes",
+  "createdAt": "2026-10-07T08:22:47.965851+00:00",
+  "scope": "只读核对B08原24固定世界/双种子真实输入过程；不等同自然48、视觉/性能/最终324冷续或更晚源资格。",
+  "auditScript": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/independent-process-audit-shapes.py",
+    "sha256": "760cb7108fcbc22855b8057fe6ed1d07f91eded9665e1d23ecaf3e9903b687f3"
+  },
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-summary.json",
+      "sha256": "6a82929ae1f157158d99fa0cfaf1df9cf69d26d241238f9e129b94a7ac33dafc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/outcomes.json",
+      "sha256": "786abe2099d13b35d44767b6dcbb62f0f9499183b16be02a2d51a866fe7a2b6e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-summary-plan.json",
+      "sha256": "4a0c2ad556d529f3873e165114e27d54c787bc464b66ef99da35977004924c1f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-commands.json",
+      "sha256": "22cbd7eb36552b1f7788943cf28a338b7e1c9a5340a560b95dfa7351df9bd88e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/batch-report.json",
+      "sha256": "d950aed497b8fcdddb80424358b6ecf0ee45602063d5c9c661b1b2296291e738"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/policy-freeze.json",
+      "sha256": "fb4aced2bc99788456b1f8271e16263fe9ff49eb74efdef1f535cc2629e68b8a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observation-summary.json",
+      "sha256": "0e9d8e2ffbc8777fa09f707b307988ad1f1d823d62936a9bc3e6fce9704e6b70"
+    }
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "coverage": {
+    "uniqueOriginalProcesses": 24,
+    "worlds": [
+      "grain-weld",
+      "silk-catch",
+      "resin-sleeve",
+      "shell-threads"
+    ],
+    "grades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "requestedSeeds": [
+      20261005,
+      3075192741
+    ],
+    "attempts": 24,
+    "retries": 0,
+    "effectiveSeedEqualsRequested": 24,
+    "searchAndExtract": 24,
+    "emptyReturns": 0,
+    "deaths": 0,
+    "qualifiedGradePairs": 12,
+    "observedEnvironmentErrors": 0
+  },
+  "integrity": [
+    "逐一核对24原report SHA、计划/冻结policy/batch三方固定身份；24个独立runId，两原seed各一次，所有effectiveSeed与requestedSeed相等。",
+    "三份总源收据指向3120，manifest SHA、policy SHA、batch SHA、summary-plan SHA均核对；不按当前工作树代替历史冻结源。",
+    "24份entry/returned原存档与report逐字段一致；同一active run到settled extract/baseSettled。",
+    "独立从entry至field-result节点变化核实际拾取与距原入口距离；污染物返回须同run/node来源且returnedIds/revealedNodes匹配，薪柴须正结算。全部每趟1取1回。",
+    "JSONL主动工具输入与actionReceipts按实例数量匹配；carried物品前后扣次匹配，丢失的耗尽物必须原destroyedIds记录。",
+    "25份observer原JSONL SHA及事件计数独立复算：额外1份仅preload，真实24 launch/context，72 Worker创建/关闭配对、24 context/browser关闭；24网络汇总0 failed、0 pending、请求响应数一致。无观察事件异常。"
+  ],
+  "workerObservation": {
+    "files": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-3123.jsonl",
+        "sha256": "347e44735b1ae12ae409ac2272f0137408740dece54f3a31692ee72f2ac64b78"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-35288.jsonl",
+        "sha256": "639015a5eedd5fd773cd236c7645e709f6e232e7da8a6327c837c346a8b43ec4"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-3860.jsonl",
+        "sha256": "7845b3afe78ab52ef0d71b81954c4c955b81dd1c9b82e94a996d1501bca2b6e3"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-3941.jsonl",
+        "sha256": "39046e8efad19b746b585745512050d6dc5027d3468071bdd59238989f6a0269"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-40738.jsonl",
+        "sha256": "08059d7f20a708a035864c9519cefd9fe6ecd5af43b436a6a8dd1ea3ef98f37e"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-4865.jsonl",
+        "sha256": "7af0c4dccf78c4c569556e8d98a7d0d7bf3ecb3d7a189093385a32aaa5bb8fbe"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-66866.jsonl",
+        "sha256": "ead405e712e05b3e5855987713b42743a4a453339aa93fefc4d343fba59afaf4"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-66878.jsonl",
+        "sha256": "bcde508907d0d56af938ebda2d03d63558da001c2e73102e586e44d664c80754"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-67583.jsonl",
+        "sha256": "343b65e8a990684051a6f682f5f3176445a744acbaab910ce1addb6e5479bbcc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-68301.jsonl",
+        "sha256": "099bcc58668c111d1e8e62c6387313bf97c1c153e5f8b280a0f843c88222053e"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-69014.jsonl",
+        "sha256": "d881e3a18bfbeaef1e55ebc74c6fc70d1134a9fbb151fbfce223904b3b2ebf0b"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-69567.jsonl",
+        "sha256": "2bd7e1d4cb6dcaf13052a907dbe6b97e8e6abdc8ffc51659c0d9eea41c02e930"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-70496.jsonl",
+        "sha256": "28cbaeb95fc4e75f24a08cd72f57730ca84a4d7414780d93f3ed1ca03a08594d"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-71280.jsonl",
+        "sha256": "f44f98434aa4667efa70a57578bf0b460897896785bebe7e67c7d6fed8bea3a5"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-72132.jsonl",
+        "sha256": "acdcb5109107677814b47db47f6b9b94f61c284cfa1903b4752506769c0c70d6"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-72766.jsonl",
+        "sha256": "f4df605f23aded983f39217117f137dda7ec5aa6744f5e37f335d783d55b2c9e"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-73412.jsonl",
+        "sha256": "3e1c53291a57a5044d49e336dcb06843c8de63ca1355000ca7b6f9075cce9669"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-74183.jsonl",
+        "sha256": "5d7ff1a2a4cbfa279d76998729cdce47ea93c3d7c0e047d8d6b8269173d65cee"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-74793.jsonl",
+        "sha256": "ffa16848123ecb7d4127b5a240512d118a1fd7e2f02afa4f4f9a3397dd2b68bb"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-75245.jsonl",
+        "sha256": "33d4699eceb09fbb8b0cb4b6c945f443de674835f903a32994e498bc44a31194"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-75860.jsonl",
+        "sha256": "5333ed5412d453d85aa3da7ef73db37df42d4b7052951e042f9f16f093e2198f"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-76475.jsonl",
+        "sha256": "f85bfc3c3937d3810cf780a6547a0f39810df1ea6bef99f612784a0f7ae0f4bf"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-77782.jsonl",
+        "sha256": "cbda192c807fc0e1629676f0243ae50f6790e665826485761d81c9687234efe6"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-78509.jsonl",
+        "sha256": "a658bbebbcc389faabc59f84a8cb8a2f7bb7ce2339be896efa95fb52387df103"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/worker-observations/observer-86883.jsonl",
+        "sha256": "8f754237f8d63d8f399f774551c1dd7584e1c7324ff2d852e51ac15c98bfdb94"
+      }
+    ],
+    "recountedEventCounts": {
+      "preload-ready": 25,
+      "launch": 24,
+      "browser-ready": 24,
+      "process-snapshot": 96,
+      "Target.targetCreated": 216,
+      "Target.targetInfoChanged": 480,
+      "context-created": 24,
+      "Target.targetDestroyed": 216,
+      "page-created": 24,
+      "network-url": 11328,
+      "page-navigation": 24,
+      "worker-created": 72,
+      "worker-closed": 72,
+      "page-closed": 24,
+      "network-summary": 24,
+      "context-closed": 24,
+      "browser-disconnected": 24
+    },
+    "networkSummaries": 24,
+    "failedRequests": 0,
+    "pendingRequests": 0,
+    "interpretation": "本次观察范围无异常；不解释其它历史Worker失败，不替代最终正式冷续与P36独立结论。"
+  },
+  "consumptionTotals": {
+    "passive-sight-at-departure": 24,
+    "crowbar_fine_standard": 13,
+    "empty_photo_frame": 9,
+    "blind_needle_compass": 1,
+    "ash_tooth": 7
+  },
+  "economy": {
+    "separateFixedFixtureKindlingTotal": 72,
+    "returnedContaminants": 12,
+    "activeToolInputs": 17,
+    "processesWithoutActiveToolUse": 17,
+    "processesWithHpLoss": 4,
+    "perExtractModuleDamage": {
+      "CORE": 4,
+      "STORAGE": 14,
+      "PURIFIER": 4
+    }
+  },
+  "highestPressure": {
+    "case": 15,
+    "world": "resin-sleeve",
+    "grade": "medium",
+    "requestedSeed": 20261005,
+    "minRecordedHp": 55,
+    "maxRecordedChaos": 98.17696648510072,
+    "elapsedMs": 63614.14000000003,
+    "description": "首污染物目标因敌人太近未搜，改取实际争夺薪柴并结算6；假身4/罗盘1/灰牙2用尽销毁，武器消耗7。"
+  },
+  "weakDepthCases": [
+    12,
+    17,
+    18
+  ],
+  "emptyReturns": [],
+  "allProcessRows": [
+    {
+      "index": 1,
+      "world": "grain-weld",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "047a92a0-545a-4492-b915-2465bea94202",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/report.json",
+        "sha256": "13dd26d0c34adfe0f35eba6b714ef062371396156993f9e02b2f036767ee236f"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/low/journey.jsonl",
+        "sha256": "15fcc8aad8d9de536315e8280cd51ab37d5dd7183847944080b7bcea344870e5"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/low/1-entry.save.json",
+        "sha256": "0827e5d55456df33aa53f6d4e9f637a53fab265ea987b529d4db73eba581a08b"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/low/1-returned.save.json",
+        "sha256": "7ad4a833bc1f934f5f7de3d198327971942c74cad01f04b2a80025c90ed6e5c1"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 604.0397337924054
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 28.07588082434962,
+      "fieldChaos": 28.07588082434962,
+      "elapsedMs": 23332.37999999983,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/001-grain-weld-low-20261005/low/1-search-1.png"
+      ]
+    },
+    {
+      "index": 2,
+      "world": "grain-weld",
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "731075f8-ca1c-4a66-8580-672810f3b611",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/report.json",
+        "sha256": "ac28b1d68fddeb4c128cf9038c731551eb8d7a7ce47dcaae43f532259c560d6f"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/low/journey.jsonl",
+        "sha256": "e1b8b808552e970ba02627e0babd7f2dbd60310b9fee250bb92a7b7ad117fdef"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/low/1-entry.save.json",
+        "sha256": "cb1bed6718c3f468c01af381822627819a94d97c64da4275621e7b99626a4121"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/low/1-returned.save.json",
+        "sha256": "41e59fadc348c6d58aa810b84a010db9d7e483a565ed670dd1b041fa5b8e78fd"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 609.3143687785476
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 27.95651494199701,
+      "fieldChaos": 27.95651494199701,
+      "elapsedMs": 22649.06999999984,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/002-grain-weld-low-3075192741/low/1-search-1.png"
+      ]
+    },
+    {
+      "index": 3,
+      "world": "grain-weld",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "939e91af-cdf7-4503-a995-8b32d851c492",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/report.json",
+        "sha256": "285b94a921a98410ab63c1063b01d7982ec70ad59449b92a1f4754591e58b4bd"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/medium/journey.jsonl",
+        "sha256": "b36f35087e54337ab62eda60751c01d833708239e16ed96815ae90080451ba8b"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/medium/1-entry.save.json",
+        "sha256": "3058bc340e482573be5bdd9632dc79d1e66281ea214377f007f39fee6d156190"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/medium/1-returned.save.json",
+        "sha256": "69a23e871741c4766534a3d1eb843a6ecae27f36ab3e47d635a7c082cb6bcf96"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 608.4734998338054
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.051275590472883,
+      "fieldChaos": 31.051275590472883,
+      "elapsedMs": 23065.729999999818,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/003-grain-weld-medium-20261005/medium/1-search-1.png"
+      ]
+    },
+    {
+      "index": 4,
+      "world": "grain-weld",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "0d7b83f5-0bb3-4f3d-8396-73f1bff40d50",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/report.json",
+        "sha256": "cbe5c44b6279159b89797f04e2370b704ef10fb60a73297e56749b87a37f6734"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/medium/journey.jsonl",
+        "sha256": "2817ee8e0fe7fac80126e64f00cbd50a71474c679920ad83c6a0942c48b47012"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/medium/1-entry.save.json",
+        "sha256": "4b169c5ec2aca89af35e0f8b8095c3793ed7996eb21a6fbfdeecb4a7e3b597e4"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/medium/1-returned.save.json",
+        "sha256": "f14e57aa4b6541c159cb6b9e8284cfc52b435152c3a39a23388adfbca9403c57"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 609.3143687785476
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.219412544072842,
+      "fieldChaos": 31.219412544072842,
+      "elapsedMs": 23615.72999999977,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/004-grain-weld-medium-3075192741/medium/1-search-1.png"
+      ]
+    },
+    {
+      "index": 5,
+      "world": "grain-weld",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "1a7440cb-3dd6-4b0d-8846-936ae833d17d",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/report.json",
+        "sha256": "a248391b8c382c50a62decf07772b0f32eed244355b2eeb99f698de42d21ccb9"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/journey.jsonl",
+        "sha256": "fb9dbb69de22ff86a9122f5a373c306815d37bef754432552dc6e7889c795fe5"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/1-entry.save.json",
+        "sha256": "e61d016e20a07c858a1a836bc49341eb4284b4af499993edbd20e279fd5f58f4"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/1-returned.save.json",
+        "sha256": "05209d6b81db5d542ef4eb017873c93e6cd7b0c8121bc80d9a706732cbe13def"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 479.5331062606627
+        }
+      ],
+      "fieldHp": 115,
+      "minRecordedSnapshotHp": 115,
+      "maxRecordedSnapshotChaos": 72.37696849173294,
+      "fieldChaos": 72.37696849173294,
+      "elapsedMs": 53914.510000000155,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+          "definition": "crowbar_fine_standard",
+          "kind": "weapon",
+          "before": 40,
+          "after": 38,
+          "used": 2,
+          "destroyed": false
+        },
+        {
+          "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+          "definition": "empty_photo_frame",
+          "kind": "contaminant",
+          "before": 4,
+          "after": 2,
+          "used": 2,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 2,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/1-search-1.png"
+      ]
+    },
+    {
+      "index": 6,
+      "world": "grain-weld",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "eea4ca6c-7b56-44f5-8597-174de6ea18e3",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/report.json",
+        "sha256": "6ba7437c9a11535c6b6e0d379fdc51890a13d438130c63bca6e7d725b720364b"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/severe/journey.jsonl",
+        "sha256": "0d688463c41acfd6c92c16868f127d45323bd7b28738102d7755b0a1a9729ca8"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "0265391ac3d1d2f6a4bfddf37c015d01ff2f0d414db81a8ba0e39e72f1f342ee"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "70156b9a6792e9a9ed46118e5a1a63b63563cd2d9eeeb3b57cc5292a51f5e3c8"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 610.5735008989499
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 35.60655184510936,
+      "fieldChaos": 35.60655184510936,
+      "elapsedMs": 24915.63999999978,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/006-grain-weld-severe-3075192741/severe/1-search-1.png"
+      ]
+    },
+    {
+      "index": 7,
+      "world": "silk-catch",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "7b5a7f66-7cda-4e41-a8d2-541c1fd7fe9b",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/report.json",
+        "sha256": "42e53d1a5a2d8e4bb6777bec86f5e71b7b116c0a05bbafb1ccabb63f8aa7b229"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/low/journey.jsonl",
+        "sha256": "309100fb3255d6ad4d7098f3f79666cc880f9ae7d709d11d296366a1a2f155e3"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/low/1-entry.save.json",
+        "sha256": "b186a114de8b897f0fec4c8bb75e69d217a7d116fb30027a5022ce96ff4c7927"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/low/1-returned.save.json",
+        "sha256": "73f6b64867d54ddf56c1e6f25771f26c39e9000d71257afffc8f6ad7b0e2b3f9"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 589.4539846332367
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 33.84459248471446,
+      "fieldChaos": 33.84459248471446,
+      "elapsedMs": 33915.329999999696,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/007-silk-catch-low-20261005/low/1-search-1.png"
+      ]
+    },
+    {
+      "index": 8,
+      "world": "silk-catch",
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "d36944c4-e846-49b9-b6bf-ddc4787046dd",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/report.json",
+        "sha256": "ee8108a2d508bdda7cf787cdc039250da224083bb272ce6f6d93f885e1b618c3"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/low/journey.jsonl",
+        "sha256": "fe51597d4bfbcf4776fef20a5857753b9d857089cc8e7f71010880d30d4edbdd"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/low/1-entry.save.json",
+        "sha256": "85abedb24cd6521699a2041b303c604e29bbe3bd6f844327ebe4f15895171a7e"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/low/1-returned.save.json",
+        "sha256": "7fce49212384b632fc5acaa041c0477b072d5c1b320cd95faaedc76be4ca1d34"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 625.2807369494122
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 28.413597652315044,
+      "fieldChaos": 28.413597652315044,
+      "elapsedMs": 25265.639999999745,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/008-silk-catch-low-3075192741/low/1-search-1.png"
+      ]
+    },
+    {
+      "index": 9,
+      "world": "silk-catch",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "fd0442c6-d318-4420-8f7d-2141f722265e",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/report.json",
+        "sha256": "6c6ed56c180d7c9c00b84297994a890f75e46eea7257a26d7c1e72934c5683d6"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/medium/journey.jsonl",
+        "sha256": "5de60af0ce3fa736ec6501e4b6bbf74c2379249dc5e0a68dbba0e4c99284f8c7"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/medium/1-entry.save.json",
+        "sha256": "5a7eae37217c36b0c8cba22fbf0fa85e5533aeae555a2a2d7695f1b59e649015"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/medium/1-returned.save.json",
+        "sha256": "5ee147efeaf440c168e8ed8f96fdad18307dfc5ac2fb8bb569ca97ac589d504a"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 640.4498419080139
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.74418326143598,
+      "fieldChaos": 31.74418326143598,
+      "elapsedMs": 25332.329999999758,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/009-silk-catch-medium-20261005/medium/1-search-1.png"
+      ]
+    },
+    {
+      "index": 10,
+      "world": "silk-catch",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "ba65e28d-22f7-429a-857b-263e0d21f6df",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/report.json",
+        "sha256": "03c20cfd1c403c8a5c4f1a0043433338a5a6ec39b04c8679bce1aa9a98952782"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/medium/journey.jsonl",
+        "sha256": "8f9c08e3a4e11bc517b26cd59541510a41b1a71e7349773de073f12a24fb0343"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/medium/1-entry.save.json",
+        "sha256": "3f8dbb04628ec1d0c5442f7e3eaaa98edef3cc1be7806fe6520c1671d9201ba8"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/medium/1-returned.save.json",
+        "sha256": "a6b175a1c5b00ad0c2989272e887117eeac6ae4042cb7163c9c81c4365a6d557"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 625.2807369494122
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 38.31171357907167,
+      "fieldChaos": 38.31171357907167,
+      "elapsedMs": 25682.299999999716,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/010-silk-catch-medium-3075192741/medium/1-search-1.png"
+      ]
+    },
+    {
+      "index": 11,
+      "world": "silk-catch",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "91612880-96ee-4016-94e8-49d193ec3e83",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/report.json",
+        "sha256": "485a742471ebbf27a44bfb5b5fe5759c83b5c05a55033f92a091bf8159f46b24"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/severe/journey.jsonl",
+        "sha256": "078b39913b1c74f663bbf942982cda44298c6968d4e7a13167fc90bb7ce4bb42"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/severe/1-entry.save.json",
+        "sha256": "8bbd7fb0717066aed4fd2a4c2cef31731901ab743f4cb3cb07f0b2f0774d8734"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/severe/1-returned.save.json",
+        "sha256": "25b9c43f4cc98daec7b14275ed9c3d34ad960f8c74db36cbea6764c9f778a712"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 624.4613679003689
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 36.06461105991638,
+      "fieldChaos": 36.06461105991638,
+      "elapsedMs": 25898.949999999753,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/011-silk-catch-severe-20261005/severe/1-search-1.png"
+      ]
+    },
+    {
+      "index": 12,
+      "world": "silk-catch",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "fa50dd05-a821-4c92-857e-d6c575b5678d",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/report.json",
+        "sha256": "e842826d0c3079326c8377c554f258fe6e673c0a59242cbef80ce3399fe88e71"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/journey.jsonl",
+        "sha256": "8c7cde6f0b65b30da61ee398a9d640d3d34284681dc0575a0f8dbf6f24eb408a"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "724531ecadecb10cd1abbe7bb43632d928b1afbe6f28909e3f590fe64f56496a"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "e11bd92889c71e6b3f021fcc2e602f8da05029a59819dbd1f80911bf6e6c3735"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.8987379221053
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 30.89407277948864,
+      "fieldChaos": 30.89407277948864,
+      "elapsedMs": 14799.41999999999,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/1-search-1.png"
+      ]
+    },
+    {
+      "index": 13,
+      "world": "resin-sleeve",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "e429cc7a-602b-4ba1-9a36-e6314cf02e28",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/report.json",
+        "sha256": "8079f56ea1d7fb8f4a51c14e3106913625bac7f7565941334bdd8558d9dba46b"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/low/journey.jsonl",
+        "sha256": "a0252267b6588cc72d5f5806e8125426510f5ae6af38650c5b70a95c3c320cad"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/low/1-entry.save.json",
+        "sha256": "759a0fcb23a251627f5c81105e103f3e25ae7ff45a7c6181e7f6c7e07f9bf27c"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/low/1-returned.save.json",
+        "sha256": "faa7821f2e7ef7469e85390a86fc580308d1ec2b7e994a7613c123b442f1dcd1"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 640.4498419080139
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 34.57356093738871,
+      "fieldChaos": 34.57356093738871,
+      "elapsedMs": 30998.779999999704,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/013-resin-sleeve-low-20261005/low/1-search-1.png"
+      ]
+    },
+    {
+      "index": 14,
+      "world": "resin-sleeve",
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "f1d0046c-646c-4e01-929a-ba0b60931ec2",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/report.json",
+        "sha256": "d5a76b8b4a4e8a1b3ef19785da5b4fb30f5ec02e7dbe37fce349faf056ec56ff"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/low/journey.jsonl",
+        "sha256": "107f4a9ede96d63b653463266669052b40fb7f838c8b98fbb64131373d7d6865"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/low/1-entry.save.json",
+        "sha256": "0fd7335b41a1af54d98feeea524cd5b3925ed3897444aa2a1b43d75e772e29d4"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/low/1-returned.save.json",
+        "sha256": "509d7b4d441b7ed57d9f703afa668d17b928cd699f9afd6706d7d9ed4779a9f9"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 520.0
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 28.946372562108262,
+      "fieldChaos": 28.946372562108262,
+      "elapsedMs": 28315.509999999707,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/014-resin-sleeve-low-3075192741/low/1-search-1.png"
+      ]
+    },
+    {
+      "index": 15,
+      "world": "resin-sleeve",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "9c7b8f59-88d9-4fcc-acd4-b1a588ffbd33",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/report.json",
+        "sha256": "6ee0df5a79704a9e962d2f92f9326a7def8c0175d418484a856f7b90fa42caaa"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/journey.jsonl",
+        "sha256": "3b4e5471dee8cec809cecdb4b227504d55ec73895e65222b7c4d4fd038e509f9"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-entry.save.json",
+        "sha256": "d14b8764393607b094bc86517c6ad421b4c31870aa8275743d1524ca9d26655c"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-returned.save.json",
+        "sha256": "1fc5e07e17258fe9423eb679a2f5dd2a90a52b8f78626df4a5808b3bc692e6d2"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 646.0216714631174
+        }
+      ],
+      "fieldHp": 55,
+      "minRecordedSnapshotHp": 55,
+      "maxRecordedSnapshotChaos": 98.17696648510072,
+      "fieldChaos": 98.17696648510072,
+      "elapsedMs": 63614.14000000003,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+          "definition": "crowbar_fine_standard",
+          "kind": "weapon",
+          "before": 40,
+          "after": 33,
+          "used": 7,
+          "destroyed": false
+        },
+        {
+          "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+          "definition": "empty_photo_frame",
+          "kind": "contaminant",
+          "before": 4,
+          "after": 0,
+          "used": 4,
+          "destroyed": true
+        },
+        {
+          "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+          "definition": "blind_needle_compass",
+          "kind": "contaminant",
+          "before": 1,
+          "after": 0,
+          "used": 1,
+          "destroyed": true
+        },
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 0,
+          "used": 2,
+          "destroyed": true
+        }
+      ],
+      "activeToolInputs": 7,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          }
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-search-1.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-search-2.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/survey-47381.png"
+      ]
+    },
+    {
+      "index": 16,
+      "world": "resin-sleeve",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "41cf3ee0-6ab0-45d3-94d3-ea03fa8aac21",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/report.json",
+        "sha256": "7576746ff80bc7e0ad474e774cfdea664d8b9052d30849aea36839e28e0e8340"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/medium/journey.jsonl",
+        "sha256": "5b54031f6d9542d630bb0040e92bbcea166f4dc1a809373146c4978c89465709"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/medium/1-entry.save.json",
+        "sha256": "a7347ebd59a029d66f74e91ebea5a7b11d4b1a6dcdfdcb27e449972981564b83"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/medium/1-returned.save.json",
+        "sha256": "21c4088178aeb8c23b4a3d6916e4d76f833760ca1c2fbf046db952938bf9f4d3"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 640.0499980470275
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.443572730612313,
+      "fieldChaos": 31.443572730612313,
+      "elapsedMs": 24348.989999999765,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/016-resin-sleeve-medium-3075192741/medium/1-search-1.png"
+      ]
+    },
+    {
+      "index": 17,
+      "world": "resin-sleeve",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "3030c5c0-56a8-4a3b-923d-b5b45e6f00e7",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/report.json",
+        "sha256": "ae75b12b275cfd02cb00f9a64fc4d07402ee44d8a9bfd86c16690833e31038c5"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/journey.jsonl",
+        "sha256": "a30b2846856a4ccbb0f4834873a116f2f51249db21b5d81284ae5b969709d318"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/1-entry.save.json",
+        "sha256": "e836ed6722e9d435a67ce384bb80ba597f295dd8d2cb063a79138c332aecd2ef"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/1-returned.save.json",
+        "sha256": "3f426c45f9b7d7032373a27099a632ef35935ae657a9655308c90a2033aacb17"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.0999843798809
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.072617628876152,
+      "fieldChaos": 31.072617628876152,
+      "elapsedMs": 15182.699999999988,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/1-search-1.png"
+      ]
+    },
+    {
+      "index": 18,
+      "world": "resin-sleeve",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "8d25a799-210b-4854-8336-87ad734423b6",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/report.json",
+        "sha256": "f1d3c14392a8328125530d3e629f6d0b1b301d88142f27e6ca652abe57d28e41"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/journey.jsonl",
+        "sha256": "48c0ef90b2e674e39164fd3183dde417e58048fb39eacde2d096cad848217501"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "fa682c68e37f0a8d35286456c47e2679936beb376f5bd114e5a574804d016676"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "e07d89a38489a362ece75a1dce5d3f63e9f0116834cb3c6de64311dccb2651f6"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "distanceFromEntry": 320.8987379221053
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 31.165793742355824,
+      "fieldChaos": 31.165793742355824,
+      "elapsedMs": 15382.71999999999,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-safe-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/1-search-1.png"
+      ]
+    },
+    {
+      "index": 19,
+      "world": "shell-threads",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "a99600bc-b180-4bef-9213-b80982462799",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/report.json",
+        "sha256": "a57360d14b94f897090e90f808f90598eabe70c9613f37bffa68c957a7af2639"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/low/journey.jsonl",
+        "sha256": "e4eac78c1dee59680110679b9758b4b2c9f623d5d6730b7bbe5f9b10521b2d9e"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/low/1-entry.save.json",
+        "sha256": "1b59b04976acdcc71e9d5f51003077d2ac00b4cc04ec0e819f6f166418bb4268"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/low/1-returned.save.json",
+        "sha256": "df268d4fb37d38a1aa20267ae7e84536932287dac0fcf9e4fae7145f8dc4ba6d"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 526.1178575186362
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 29.161813209906068,
+      "fieldChaos": 29.161813209906068,
+      "elapsedMs": 29548.799999999694,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/019-shell-threads-low-20261005/low/1-search-1.png"
+      ]
+    },
+    {
+      "index": 20,
+      "world": "shell-threads",
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "7104a2d3-5ff0-4961-a260-61747b6ac001",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/report.json",
+        "sha256": "ab5cc8b8353c8ed49591ed52b567676a65f0f45dcde645113666dfea80308bd4"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/journey.jsonl",
+        "sha256": "fb803a478829b5f1dc5e1a80f5469a82c74d9a8a8e4129b146e9057aa4c3c2d8"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/1-entry.save.json",
+        "sha256": "acec5382c77755bed27efeded791aec58fc38472a124836fefd577563551aeb3"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/1-returned.save.json",
+        "sha256": "1edf0a20e601a116718969776464de587c297a97c1c2638880cf100f4772cd57"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 566.646274142873
+        }
+      ],
+      "fieldHp": 115,
+      "minRecordedSnapshotHp": 115,
+      "maxRecordedSnapshotChaos": 51.041855085521426,
+      "fieldChaos": 51.041855085521426,
+      "elapsedMs": 47314.75999999994,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+          "definition": "crowbar_fine_standard",
+          "kind": "weapon",
+          "before": 40,
+          "after": 38,
+          "used": 2,
+          "destroyed": false
+        },
+        {
+          "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+          "definition": "empty_photo_frame",
+          "kind": "contaminant",
+          "before": 4,
+          "after": 2,
+          "used": 2,
+          "destroyed": false
+        },
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 3,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          }
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/1-search-1.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/020-shell-threads-low-3075192741/low/1-search-2.png"
+      ]
+    },
+    {
+      "index": 21,
+      "world": "shell-threads",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "a6378f12-b62e-4c07-8594-e8e7c84af0eb",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/report.json",
+        "sha256": "7a50fc02ef8b6d9224c93781ce27ddaf2f2423c4b134c4dbed6f6c99bb45ebe4"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/medium/journey.jsonl",
+        "sha256": "5bf4452f7faeeb23ea451287d7eaa3feb8cc0d7b71a1cf6f95920f6e70259944"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/medium/1-entry.save.json",
+        "sha256": "dbfbb346081defaf66bb63aebb869897568a087d14ea917695962e612e2db985"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/medium/1-returned.save.json",
+        "sha256": "47396b44ef1cd7b0c6d2b229608032955e1df191713f4bb6fc1d80cb48ac2bd0"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "distanceFromEntry": 564.1560067924474
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 51.06313156032584,
+      "fieldChaos": 51.06313156032584,
+      "elapsedMs": 36165.159999999734,
+      "settledKindling": 0,
+      "returnedLootCount": 1,
+      "reserveDelta": 0,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-contaminant-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/021-shell-threads-medium-20261005/medium/1-search-1.png"
+      ]
+    },
+    {
+      "index": 22,
+      "world": "shell-threads",
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "287bfec5-f77d-4fe1-bb04-9d03b497dc70",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/report.json",
+        "sha256": "6469bb335957847c45580c5e71999f08daa319b85b1bdea4439ef9532dca8572"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/medium/journey.jsonl",
+        "sha256": "f7cbf698ebec38f2ab269bce6e211290cdc76ccbbb10917b56f4d5f90582814c"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/medium/1-entry.save.json",
+        "sha256": "be7f90e414b92c8a17e41008f707f565230023931c5a96834def4cc44a0279d1"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/medium/1-returned.save.json",
+        "sha256": "5ff6ce1d2fa2528a925455caa4c9069bdc37eb2385b1589740a2545360248e32"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 553.6208088574706
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 33.70569953248909,
+      "fieldChaos": 33.70569953248909,
+      "elapsedMs": 31748.729999999658,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 1,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/medium/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/medium/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/medium/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/medium/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/022-shell-threads-medium-3075192741/medium/1-search-1.png"
+      ]
+    },
+    {
+      "index": 23,
+      "world": "shell-threads",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "runId": "a8904a52-25b2-488a-a794-0d165cfc064e",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/report.json",
+        "sha256": "9747d8bdfc4b4f00eb2da60460fa49464aa1c16ce87fb450075485609c47cba5"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/journey.jsonl",
+        "sha256": "64e3f5dd862a7ca45a5649506c94e3362f03729a176a1195530e553af7b74cd0"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/1-entry.save.json",
+        "sha256": "9c06691c7db519ca0de3632b4dc351f33facda17afcfc58e321a8cb833db778c"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/1-returned.save.json",
+        "sha256": "d9f7aeed9bc3135bf0eaaa7502ca331fc8cbe505cc82a6f7fa528d135a461e8b"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 614.3354132719356
+        }
+      ],
+      "fieldHp": 130,
+      "minRecordedSnapshotHp": 130,
+      "maxRecordedSnapshotChaos": 61.38527612987063,
+      "fieldChaos": 61.38527612987063,
+      "elapsedMs": 40231.729999999734,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [
+        {
+          "id": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+          "definition": "crowbar_fine_standard",
+          "kind": "weapon",
+          "before": 40,
+          "after": 38,
+          "used": 2,
+          "destroyed": false
+        },
+        {
+          "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+          "definition": "empty_photo_frame",
+          "kind": "contaminant",
+          "before": 4,
+          "after": 3,
+          "used": 1,
+          "destroyed": false
+        },
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "definition": "ash_tooth",
+          "kind": "contaminant",
+          "before": 2,
+          "after": 1,
+          "used": 1,
+          "destroyed": false
+        }
+      ],
+      "activeToolInputs": 2,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-2"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/1-search-1.png"
+      ]
+    },
+    {
+      "index": 24,
+      "world": "shell-threads",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "runId": "fdc3adf8-413b-4e26-8075-5f9653ab50b8",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/report.json",
+        "sha256": "89d478ac1d4bd221b7716f81e6e0bfdd5c019fcbed89b2a87d6e5fb6b4c9dc6d"
+      },
+      "journey": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/severe/journey.jsonl",
+        "sha256": "13cfcd23d7afbb07158aca2426d23fd3b2de3481c931a2f5eec230a43e736e3d"
+      },
+      "entrySave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/severe/1-entry.save.json",
+        "sha256": "2503e0b97667291fc9a4693647907f642319a99f72c69e5a73c9380aefdc79ef"
+      },
+      "settledSave": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/severe/1-returned.save.json",
+        "sha256": "1e40035e6498459cd6dd0aa5d510899a1f9d07f31e2b0b1f8d03f58b311dd2b4"
+      },
+      "outcome": "non-entry-search-and-extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "distanceFromEntry": 610.5735008989499
+        }
+      ],
+      "fieldHp": 145,
+      "minRecordedSnapshotHp": 145,
+      "maxRecordedSnapshotChaos": 35.59103957344215,
+      "fieldChaos": 35.59103957344215,
+      "elapsedMs": 24882.339999999764,
+      "settledKindling": 6,
+      "returnedLootCount": 0,
+      "reserveDelta": 6,
+      "moduleDamage": {
+        "CORE": 4,
+        "STORAGE": 14,
+        "PURIFIER": 4
+      },
+      "toolConsumption": [],
+      "activeToolInputs": 0,
+      "departurePassiveUses": 1,
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "decision": {
+            "attempted": true,
+            "reason": "collected",
+            "completedNodeIds": [
+              "r100-kindling-contested-1"
+            ]
+          }
+        }
+      ],
+      "abandonedApproaches": [],
+      "frames": [
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/severe/1-entry.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/severe/1-far-exploration.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/severe/1-field-result.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/severe/1-return.png",
+        "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/024-shell-threads-severe-3075192741/severe/1-search-1.png"
+      ]
+    }
+  ],
+  "rootFrameCandidates": [
+    {
+      "case": 15,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-search-2.png",
+        "sha256": "24196ac06ab9498cbd5dfa3abeef73ba009a1b7c71d2565f4bfcfeb783631d02"
+      },
+      "reason": "最大成本过程的实际薪柴搜取，首目标因敌人太近被放弃后换点；全趟损失90HP并耗尽3件主动工具。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "case": 15,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/015-resin-sleeve-medium-20261005/medium/1-return.png",
+        "sha256": "d72a6ce89c0b1d195c7dba7d2e74f4dfe8ebeb6da7e314243ae7222f8a3bdbf9"
+      },
+      "reason": "同一趟带回6薪且假身4/罗盘1/灰牙2全部耗尽、武器消耗7；核对成功与代价并存。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "case": 17,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/017-resin-sleeve-severe-20261005/severe/1-search-1.png",
+        "sha256": "890ba67473be2e03f589b86fa41bf1c2391a17ddf326c3f58c00ec272ca327ab"
+      },
+      "reason": "resin-sleeve重档第一seed仅安全节点距入口320.100px，15.18s全HP返回，不足以证明深搜受压。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "case": 18,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/018-resin-sleeve-severe-3075192741/severe/1-search-1.png",
+        "sha256": "1813e2d22560383928f0d925cd09093a580eb78c6f32a7ee0f1f7eff16b48e95"
+      },
+      "reason": "同world重档第二seed仍仅安全节点320.899px，15.38s全HP返回；保留双种子都偏浅的限制。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "case": 12,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/012-silk-catch-severe-3075192741/severe/1-search-1.png",
+        "sha256": "d83e07a6c95cbe8258b9ffe9f476c89acf2874c287db1f64a75b25f33696c987"
+      },
+      "reason": "silk-catch重档第二seed仅安全节点320.899px，14.80s全HP返回；该档另一原seed到争夺节点624.46px。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "case": 5,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/005-grain-weld-severe-20261005/severe/1-search-1.png",
+        "sha256": "3a2e956199af99e419e9a970cf72ab737e86b584bbba861223a11c7eaec5d918"
+      },
+      "reason": "grain-weld重档第一seed的原受压搜取：损失30HP、两次假身与2武器耐久，不能用其它全血短趟代表本趟。",
+      "visuallyReviewedByThisAudit": false
+    },
+    {
+      "case": 23,
+      "image": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play/023-shell-threads-severe-20261005/severe/1-search-1.png",
+        "sha256": "cb79565184e5854bd067c9a4058e986400019f3549a37fc09d60a783d883014b"
+      },
+      "reason": "第四world shell-threads重档原压力较高过程：40.23s、损失15HP、假身1/灰牙1/武器2，仍完成争夺薪柴搜取。",
+      "visuallyReviewedByThisAudit": false
+    }
+  ],
+  "findings": [
+    {
+      "severity": "evidence-boundary",
+      "cases": [
+        12,
+        17,
+        18
+      ],
+      "detail": "三个重档过程仅safe节点，距原入口320.899/320.100/320.899px，只超既定320阈值不足1px，14.80/15.18/15.38s、HP145、0主动工具。合法原合同成功，不能推广为深搜/高压证明；resin两个重seed均如此。"
+    },
+    {
+      "severity": "experience-boundary",
+      "cases": [
+        15
+      ],
+      "detail": "全批24成功不代表低成本：该中档损失90HP并耗尽3件工具，带回6薪；原代价保留，不以重档浅部短趟去推断更高档更安全或更划算。"
+    }
+  ],
+  "limits": [
+    "noStateInjection=false是出发前controlledWorld选择披露，controlledBuild=null；不称自然world选择。",
+    "每个固定过程复制同一真实成熟存档并按正常流程配备工具，72薪/工具合计来自24独立fixture，非自然连续经营净收益。",
+    "HP/chaos extrema仅来自保存的snapshot与终态，不声称逐帧全时序极值。",
+    "本审查未打开PNG；只给root明确原帧，视觉/体验结论由root另审。",
+    "B08已完成后续队列日志EEXIST由pipeline报告；其不属于此24原游戏过程，本收据不据消息诊断该调度故障。",
+    "不修改任何原报告/原种子/阈值，不重跑游戏，不继承到3121或更晚来源。"
+  ]
+}

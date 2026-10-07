@@ -1,0 +1,328 @@
+{
+  "notched-backwater": {
+    "routes": [
+      {
+        "name": "central-through",
+        "points": [
+          [
+            571,
+            645
+          ],
+          [
+            568,
+            469
+          ],
+          [
+            571,
+            337
+          ],
+          [
+            571,
+            204
+          ]
+        ],
+        "bounds": [
+          535,
+          165,
+          608,
+          688
+        ]
+      },
+      {
+        "name": "west-blind",
+        "points": [
+          [
+            399,
+            590
+          ],
+          [
+            400,
+            445
+          ],
+          [
+            400,
+            405
+          ]
+        ],
+        "bounds": [
+          363,
+          370,
+          432,
+          630
+        ]
+      },
+      {
+        "name": "east-blind",
+        "points": [
+          [
+            738,
+            602
+          ],
+          [
+            743,
+            439
+          ],
+          [
+            739,
+            413
+          ]
+        ],
+        "bounds": [
+          700,
+          373,
+          780,
+          635
+        ]
+      },
+      {
+        "name": "outer-return",
+        "points": [
+          [
+            571,
+            645
+          ],
+          [
+            261,
+            633
+          ],
+          [
+            224,
+            350
+          ],
+          [
+            268,
+            181
+          ],
+          [
+            573,
+            174
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        7
+      ],
+      "nearest": "pitch-forks",
+      "difference": [
+        "三湾只有中央穿过两个断头通向后床",
+        "侧湾由完整厚端收住，外床单独回通"
+      ],
+      "composition": "两湾头部一高一低，前后错位，断头斜收；两外臂朝向不镜像。中央穿口与侧湾盲端功能保留。"
+    },
+    "batch": "b10"
+  },
+  "crossed-casings": {
+    "routes": [
+      {
+        "name": "inner-turn",
+        "points": [
+          [
+            463,
+            608
+          ],
+          [
+            461,
+            446
+          ],
+          [
+            540,
+            420
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "wide-outside",
+        "points": [
+          [
+            256,
+            605
+          ],
+          [
+            234,
+            246
+          ],
+          [
+            723,
+            199
+          ],
+          [
+            838,
+            496
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          2
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        4
+      ],
+      "nearest": "sentinel-mass",
+      "difference": [
+        "两个方向不同的破壳背真实接成折角",
+        "内转路读作剥开的内侧，不是L形巨块足口"
+      ]
+    },
+    "batch": "b10"
+  },
+  "fibre-stumpfield": {
+    "routes": [
+      {
+        "name": "stump-weave",
+        "points": [
+          [
+            459,
+            640
+          ],
+          [
+            455,
+            458
+          ],
+          [
+            527,
+            401
+          ],
+          [
+            523,
+            297
+          ],
+          [
+            470,
+            191
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "clear-east",
+        "points": [
+          [
+            459,
+            640
+          ],
+          [
+            809,
+            615
+          ],
+          [
+            807,
+            161
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "walkableSurfaceObjects": [
+        7,
+        8
+      ],
+      "disjointSolidObjects": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "nearest": "fallen-spines",
+      "difference": [
+        "六件不等短粗桩与两个低根偏聚一侧",
+        "内部错走和东宽床并行，矮高顺序能回认"
+      ]
+    },
+    "batch": "b10"
+  },
+  "sloughed-court": {
+    "routes": [
+      {
+        "name": "open-court",
+        "points": [
+          [
+            312,
+            410
+          ],
+          [
+            483,
+            380
+          ],
+          [
+            645,
+            378
+          ],
+          [
+            685,
+            271
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "outside-tear",
+        "points": [
+          [
+            335,
+            662
+          ],
+          [
+            610,
+            629
+          ],
+          [
+            716,
+            605
+          ],
+          [
+            786,
+            329
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "walkableSurfaceObjects": [
+        1,
+        2
+      ],
+      "barePoint": [
+        538,
+        365
+      ],
+      "nearest": "quilted-scars",
+      "difference": [
+        "低皮大段缺失形成露出裸床的内庭",
+        "偏南真缺地令内路终止，需从外侧绕出"
+      ]
+    },
+    "batch": "b10"
+  }
+}

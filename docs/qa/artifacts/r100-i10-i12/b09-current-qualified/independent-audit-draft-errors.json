@@ -1,0 +1,9 @@
+{
+  "status": "audit-assumption-corrected-not-game-failure",
+  "createdAt": "2026-10-07T08:46:19.882338+00:00",
+  "attempt1ScriptSha256": "1ef455b9cfbcf0c4de9a2079f4adaa9475d7725045c50bc861b3d9faaeab7dfa",
+  "originalOutput": "Traceback (most recent call last):\n  File \"/tmp/r100-b09-independent-audit.py\", line 34, in <module>\n    active=[x for x in events if x['event']=='known-tool-context-input'];receipts=list(ar['actionReceipts'].values());assert len(active)==len(receipts)\n                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "cause": "旧脚本假定每次known-tool输入必产生一次扣次；021第二次灰釉齿原事件used=0，实际remaining保持1，因此3输入只2receipt。",
+  "correction": "保留全部输入，成功used总和/逐物计数与actionReceipt/存档扣次对账；无效输入单列，不猜失效原因。",
+  "separateClassificationIssue": "root/pipeline独立发现014/018实际近入口拾取，不是真空返；原过程不改，最终等待修正汇总稳定再绑定。"
+}

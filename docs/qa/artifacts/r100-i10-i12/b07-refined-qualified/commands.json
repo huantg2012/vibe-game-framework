@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "status": "ready-for-full-batch-cpu",
+  "worlds": [
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks"
+  ],
+  "wholeBatchReady": true,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+    "sha256": "136f532388dfea4fcdb1c3dd83c16e70e54d9036320fefe7b2b09a2d5cd203e4"
+  },
+  "rootReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/independent-review.json",
+    "sha256": "b09f67a4b50c1d27577497af54b6e17c97a857a02d79b28a86983bd2127fc095"
+  },
+  "additionalReceipts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/reviewed-content-projection.json",
+      "sha256": "1ad6e4df44fa7438b2c4c52136163ff61f56b2c0d9d948c0c58660462d8cbe23"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/execution-plan.json",
+      "sha256": "5c62a6cba160a4061a0df8789593a4fa71d2e876364d37b88847adfbca798cbc"
+    }
+  ],
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/commands.json",
+    "sha256": "258b72436c959207f5c32e5442bf95fd8bd967c1343954ef1f04c2297ef02631"
+  },
+  "generation": [
+    {
+      "cases": 480,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+        "--worlds",
+        "staggered-cups,split-tows,curled-flats,pitch-forks",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 96,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+        "--worlds",
+        "staggered-cups,split-tows,curled-flats,pitch-forks",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "B07 original fixed576 on3120. Root authorizes current-source generation; old review projections are limited to selected content and do not certify complete source equivalence. Actual24 is separate."
+}

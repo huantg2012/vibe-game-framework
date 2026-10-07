@@ -1,0 +1,294 @@
+{
+  "status": "prepared-awaiting-exclusive-browser",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/execution-plan.json",
+    "sha256": "a0fb3721e0c0e2a0f2df854c79335a8736314d23f09b92273a06bad19f3a8506"
+  },
+  "originalPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/policy-freeze.json",
+    "sha256": "1e1ebd234903e78c3f9c781350356dc7c9ff5d75918a00feaa59dccfb619a661"
+  },
+  "originalAttempts": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/batch-report.json",
+    "sha256": "b1adf93154b6fc2173202c6f9ca27a0f673e24ef5d146a70742375bb6a791cdf"
+  },
+  "preservedSuccessfulOrdinal": 1,
+  "replayedFailedOrdinal": 2,
+  "notYetExecutedOriginalOrdinals": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "dependencies": [
+    {
+      "path": "tools/qa/r100-i07-i09-coverage.mjs",
+      "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8"
+    },
+    {
+      "path": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "46f93fbee706a09ca9a35a0df52ca6053ac8d59904fcb602917137906a3b482c"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "93bccf1021f8b1fd65631c1da9e358d3a2169e40592664c2d8ed213bd821c4f8"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "original002-low-second",
+      "worlds": [
+        "marrow-break"
+      ],
+      "grades": [
+        "low"
+      ],
+      "seeds": [
+        3075192741
+      ],
+      "originalOrdinals": [
+        2
+      ],
+      "cases": 1,
+      "originalCases": [
+        {
+          "world": "marrow-break",
+          "grade": "low",
+          "seed": 3075192741,
+          "role": "second-seed-process",
+          "index": 2,
+          "dir": "002-marrow-break-low-3075192741"
+        }
+      ],
+      "output": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/original002-low-second",
+      "command": "/usr/local/bin/node",
+      "args": [
+        "tools/qa/r100-i07-i09-coverage.mjs"
+      ],
+      "env": {
+        "GAME_URL": "http://127.0.0.1:3120/",
+        "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+        "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/execution-plan.json",
+        "QA_BATCH_ID": "B06",
+        "QA_WORLDS": "marrow-break",
+        "QA_GRADES": "low",
+        "QA_SEEDS": "3075192741",
+        "QA_CONCURRENCY": "1",
+        "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+        "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/original002-low-second",
+        "QA_STOP_ON_FAILURE": "1",
+        "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/original002-low-second-worker-observations",
+        "QA_WORKER_OBSERVER_FAILURE_FILE": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/original002-low-second-first-error.json",
+        "NODE_OPTIONS": "--import /Users/yilungao/coh/tools/qa/r100-worker-observer.mjs",
+        "DEBUG": "pw:browser"
+      }
+    },
+    {
+      "id": "remaining-marrow-upper",
+      "worlds": [
+        "marrow-break"
+      ],
+      "grades": [
+        "medium",
+        "severe"
+      ],
+      "seeds": [
+        20261005,
+        3075192741
+      ],
+      "originalOrdinals": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "cases": 4,
+      "originalCases": [
+        {
+          "world": "marrow-break",
+          "grade": "medium",
+          "seed": 20261005,
+          "role": "search-and-extract",
+          "index": 3,
+          "dir": "003-marrow-break-medium-20261005"
+        },
+        {
+          "world": "marrow-break",
+          "grade": "medium",
+          "seed": 3075192741,
+          "role": "second-seed-process",
+          "index": 4,
+          "dir": "004-marrow-break-medium-3075192741"
+        },
+        {
+          "world": "marrow-break",
+          "grade": "severe",
+          "seed": 20261005,
+          "role": "search-and-extract",
+          "index": 5,
+          "dir": "005-marrow-break-severe-20261005"
+        },
+        {
+          "world": "marrow-break",
+          "grade": "severe",
+          "seed": 3075192741,
+          "role": "second-seed-process",
+          "index": 6,
+          "dir": "006-marrow-break-severe-3075192741"
+        }
+      ],
+      "output": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper",
+      "command": "/usr/local/bin/node",
+      "args": [
+        "tools/qa/r100-i07-i09-coverage.mjs"
+      ],
+      "env": {
+        "GAME_URL": "http://127.0.0.1:3120/",
+        "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+        "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/execution-plan.json",
+        "QA_BATCH_ID": "B06",
+        "QA_WORLDS": "marrow-break",
+        "QA_GRADES": "medium,severe",
+        "QA_SEEDS": "20261005,3075192741",
+        "QA_CONCURRENCY": "1",
+        "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+        "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper",
+        "QA_STOP_ON_FAILURE": "1",
+        "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper-worker-observations",
+        "QA_WORKER_OBSERVER_FAILURE_FILE": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-marrow-upper-first-error.json",
+        "NODE_OPTIONS": "--import /Users/yilungao/coh/tools/qa/r100-worker-observer.mjs",
+        "DEBUG": "pw:browser"
+      }
+    },
+    {
+      "id": "remaining-pore-all",
+      "worlds": [
+        "pore-bank"
+      ],
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "seeds": [
+        20261005,
+        3075192741
+      ],
+      "originalOrdinals": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "cases": 6,
+      "originalCases": [
+        {
+          "world": "pore-bank",
+          "grade": "low",
+          "seed": 20261005,
+          "role": "search-and-extract",
+          "index": 7,
+          "dir": "007-pore-bank-low-20261005"
+        },
+        {
+          "world": "pore-bank",
+          "grade": "low",
+          "seed": 3075192741,
+          "role": "second-seed-process",
+          "index": 8,
+          "dir": "008-pore-bank-low-3075192741"
+        },
+        {
+          "world": "pore-bank",
+          "grade": "medium",
+          "seed": 20261005,
+          "role": "search-and-extract",
+          "index": 9,
+          "dir": "009-pore-bank-medium-20261005"
+        },
+        {
+          "world": "pore-bank",
+          "grade": "medium",
+          "seed": 3075192741,
+          "role": "second-seed-process",
+          "index": 10,
+          "dir": "010-pore-bank-medium-3075192741"
+        },
+        {
+          "world": "pore-bank",
+          "grade": "severe",
+          "seed": 20261005,
+          "role": "search-and-extract",
+          "index": 11,
+          "dir": "011-pore-bank-severe-20261005"
+        },
+        {
+          "world": "pore-bank",
+          "grade": "severe",
+          "seed": 3075192741,
+          "role": "second-seed-process",
+          "index": 12,
+          "dir": "012-pore-bank-severe-3075192741"
+        }
+      ],
+      "output": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all",
+      "command": "/usr/local/bin/node",
+      "args": [
+        "tools/qa/r100-i07-i09-coverage.mjs"
+      ],
+      "env": {
+        "GAME_URL": "http://127.0.0.1:3120/",
+        "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+        "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/execution-plan.json",
+        "QA_BATCH_ID": "B06",
+        "QA_WORLDS": "pore-bank",
+        "QA_GRADES": "low,medium,severe",
+        "QA_SEEDS": "20261005,3075192741",
+        "QA_CONCURRENCY": "1",
+        "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+        "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all",
+        "QA_STOP_ON_FAILURE": "1",
+        "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all-worker-observations",
+        "QA_WORKER_OBSERVER_FAILURE_FILE": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/remaining-pore-all-first-error.json",
+        "NODE_OPTIONS": "--import /Users/yilungao/coh/tools/qa/r100-worker-observer.mjs",
+        "DEBUG": "pw:browser"
+      }
+    }
+  ],
+  "sourceContinuity": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/porous-b06-to-b12.json",
+      "sha256": "2f6dca65876c719ca360c128c163e570321380e2f15a0476c1305a054247c408"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/explicit-and-reviewed-transport-92.json",
+      "sha256": "f0c80ffe26fa51683b4bb9ea6130fa37e4c7eecd909f72bdad94e2ee5d826a5c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/reviewed-startup-material-independent-shapes.json",
+      "sha256": "8fff8809f05c86eb36c107f5c2d22930efacb1b3371d4a7f2563ea276927eeed"
+    }
+  ],
+  "method": "Same original world/grade/requested seed and earned ancestor, now on explicit repaired3120 source. Original001 success and002 failure remain untouched. No world/seed replacements, no hidden network flags, no automatic test retry. Observer errors stop after the current child fully closes.",
+  "bookkeeping": "The one-seed coverage sub-batch labels its first item search-and-extract; originalCases preserves its original second-seed-process label. This label is report metadata only and is not passed to the input controller. Qualification still requires both original processes and at least one real non-entry extraction per grade."
+}

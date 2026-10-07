@@ -1,0 +1,886 @@
+{
+  "status": "pass",
+  "method": "Read-only projection after strict original-seed play-summary reconciliation. Contaminant pickups are actual collection even when carried kindling is zero.",
+  "summary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play-summary.json",
+    "sha256": "94275246f49b6171c99203abec6868a58130d09549a5fe2b349b64b87947a4dd"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b"
+  },
+  "counts": {
+    "originalProcesses": 24,
+    "nonEntrySearchAndExtract": 24,
+    "nearEntryOnly": 0,
+    "trueEmptyExtract": 0,
+    "deaths": 0,
+    "errors": 0
+  },
+  "rows": [
+    {
+      "case": "001-quiet-spur-low-20261005",
+      "world": "quiet-spur",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/001-quiet-spur-low-20261005/report.json",
+        "sha256": "ebf9a1fbe130676542731ee9a5c8b1081e203140aae0d68fd4e8807bb70c4daa"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 515.0533952902359,
+          "elapsedMs": 12099.49999999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 22649.069999999803,
+        "hp": 145,
+        "chaos": 27.956514941997014,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "6e17d7a4-49ff-419f-afc6-495f8d058341",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "002-quiet-spur-low-3075192741",
+      "world": "quiet-spur",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/002-quiet-spur-low-3075192741/report.json",
+        "sha256": "f49fd636675bbd13298e9a303d2dea39d6ece1733812c0dcc2e6d5340da74048"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 495.2898141492514,
+          "elapsedMs": 19349.229999999898
+        }
+      ],
+      "field": {
+        "elapsedMs": 32282.069999999636,
+        "hp": 145,
+        "chaos": 29.63928197994888,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "61f482a5-2e1d-42e0-90a3-a402c70f3c66",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "003-quiet-spur-medium-20261005",
+      "world": "quiet-spur",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/003-quiet-spur-medium-20261005/report.json",
+        "sha256": "7432ff0ac5dbd5576026e33612c9761aaf9855b119e89614fc88f6ad4f7378d9"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 515.0533952902359,
+          "elapsedMs": 13149.509999999991
+        }
+      ],
+      "field": {
+        "elapsedMs": 24099.049999999756,
+        "hp": 145,
+        "chaos": 31.367165184825513,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "5ed27d06-205a-4438-ab01-77d782c2165c",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "004-quiet-spur-medium-3075192741",
+      "world": "quiet-spur",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/004-quiet-spur-medium-3075192741/report.json",
+        "sha256": "fd3f190693d5bfe4dce9c877b5122a990bd1866b354a925539e73ba423b6499a"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 451.2028368705144,
+          "elapsedMs": 19149.249999999916
+        }
+      ],
+      "field": {
+        "elapsedMs": 33531.989999999685,
+        "hp": 145,
+        "chaos": 43.03822067139277,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "a432b246-6bc2-4778-8189-52226c579e87",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "005-quiet-spur-severe-20261005",
+      "world": "quiet-spur",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/005-quiet-spur-severe-20261005/report.json",
+        "sha256": "9583e50ceb882d1e467d5b091b83b167172497409d07a25ceb2640c92b2dcf3d"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 477.1247216399502,
+          "elapsedMs": 19465.869999999908
+        }
+      ],
+      "field": {
+        "elapsedMs": 37698.48999999979,
+        "hp": 145,
+        "chaos": 56.54794279919418,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "09e4fc4e-1ce2-49fd-8b58-01f431ff5862",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "006-quiet-spur-severe-3075192741",
+      "world": "quiet-spur",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/006-quiet-spur-severe-3075192741/report.json",
+        "sha256": "5b65030fa4aec03f56d65c67d783f95d2187e6c8cf92c0a2be22da88f2435e97"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 495.2898141492514,
+          "elapsedMs": 20015.869999999893
+        }
+      ],
+      "field": {
+        "elapsedMs": 40831.68999999983,
+        "hp": 145,
+        "chaos": 52.709122100756815,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "e25cd865-b40f-4eb7-b3b6-56ec5a25c864",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "007-split-fall-low-20261005",
+      "world": "split-fall",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/007-split-fall-low-20261005/report.json",
+        "sha256": "da0ed3fa0ce2698dbe598583b96cd98c418a6e854b8dc15e0aca839fe739dcc3"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 563.4749328940907,
+          "elapsedMs": 17549.309999999943
+        }
+      ],
+      "field": {
+        "elapsedMs": 42181.65999999973,
+        "hp": 145,
+        "chaos": 38.69601700804512,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "74a4e22d-f670-44a2-8925-bd0af5826052",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "008-split-fall-low-3075192741",
+      "world": "split-fall",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/008-split-fall-low-3075192741/report.json",
+        "sha256": "92a2ba729df283e92e6157826bd0154278d47695c67a36f17fe806f00e5901dc"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 391.01918111519797,
+          "elapsedMs": 18249.239999999936
+        }
+      ],
+      "field": {
+        "elapsedMs": 34881.93999999963,
+        "hp": 145,
+        "chaos": 30.093447404942218,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "1002c24c-68ab-4ee7-b5f8-d6dad4070e8e",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "009-split-fall-medium-20261005",
+      "world": "split-fall",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/009-split-fall-medium-20261005/report.json",
+        "sha256": "2ff3cdc57a4643d028b624d83fe95d502f057014e1b0540e1f3e65893aab4dc2"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 563.4749328940907,
+          "elapsedMs": 17732.59999999994
+        }
+      ],
+      "field": {
+        "elapsedMs": 33148.67999999963,
+        "hp": 145,
+        "chaos": 34.13366922011152,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "5eff0192-8258-41a5-8fcf-92cbbbff8c62",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "010-split-fall-medium-3075192741",
+      "world": "split-fall",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/010-split-fall-medium-3075192741/report.json",
+        "sha256": "dbcb3b76b235f7c88b4b73470fa25a8cf3f364431cfe0e04cd55cf86a3a60489"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 592.4862867611369,
+          "elapsedMs": 18565.92999999996
+        }
+      ],
+      "field": {
+        "elapsedMs": 35781.86999999978,
+        "hp": 145,
+        "chaos": 34.938644756202336,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "e32b26bb-df9d-4b56-9fe3-355d92fef63f",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "011-split-fall-severe-20261005",
+      "world": "split-fall",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/011-split-fall-severe-20261005/report.json",
+        "sha256": "c32d039b8b1a2dcecff7c0ce908bada43876beb430e3a9c4f6c1afee9e2af37f"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 563.4749328940907,
+          "elapsedMs": 19699.209999999894
+        }
+      ],
+      "field": {
+        "elapsedMs": 36648.50999999975,
+        "hp": 145,
+        "chaos": 48.912121420965136,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "001012e5-d79d-4481-8403-5ba55a59696f",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "012-split-fall-severe-3075192741",
+      "world": "split-fall",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/012-split-fall-severe-3075192741/report.json",
+        "sha256": "4074f1305c55721c411f1d0be1fd9122e7b7516fff6ced49e814b6d78b74c480"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 549.4433546781688,
+          "elapsedMs": 18332.589999999935
+        }
+      ],
+      "field": {
+        "elapsedMs": 32548.69999999966,
+        "hp": 145,
+        "chaos": 41.122290595020395,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "b10416f2-a5c7-402e-a3aa-1566ea2619c1",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "013-three-shelves-low-20261005",
+      "world": "three-shelves",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/013-three-shelves-low-20261005/report.json",
+        "sha256": "7088db40aa58614dfcae1a82cb400a07461d1ba73fa05fa3f3f009cf04ab1ed1"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 536.9543742255946,
+          "elapsedMs": 18149.279999999955
+        }
+      ],
+      "field": {
+        "elapsedMs": 40415.03999999979,
+        "hp": 145,
+        "chaos": 38.116656370681966,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "0ba35be2-7b86-4d50-b5f2-c523171629db",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "014-three-shelves-low-3075192741",
+      "world": "three-shelves",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/014-three-shelves-low-3075192741/report.json",
+        "sha256": "2862995596e9f41993fa42fc387f87b4624be87f97b96f797b70b34e789693e6"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 515.5501915429767,
+          "elapsedMs": 15482.719999999987
+        }
+      ],
+      "field": {
+        "elapsedMs": 29915.469999999685,
+        "hp": 145,
+        "chaos": 33.145865964998706,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "c1529a2a-44b3-4f85-adc5-bb4f4df220a1",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "015-three-shelves-medium-20261005",
+      "world": "three-shelves",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/015-three-shelves-medium-20261005/report.json",
+        "sha256": "91e059864b3fa9e81aec4e6c642c4a5e42ae3e2212174e292e077fcf4e459eb2"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 566.4203386178854,
+          "elapsedMs": 20982.499999999876
+        }
+      ],
+      "field": {
+        "elapsedMs": 36481.869999999704,
+        "hp": 145,
+        "chaos": 35.15263724260236,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "97d58581-8c5e-46c1-86d2-50cac6b637fb",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "016-three-shelves-medium-3075192741",
+      "world": "three-shelves",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/016-three-shelves-medium-3075192741/report.json",
+        "sha256": "3f454bcdcfceebabfa5f2735e75fe533a5511128b0eb0ef36c278fded4816e5c"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 578.7158197250185,
+          "elapsedMs": 14099.449999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 27382.269999999666,
+        "hp": 145,
+        "chaos": 32.370857200822925,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "f299d3fa-0741-460d-907f-cb266e3878aa",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "017-three-shelves-severe-20261005",
+      "world": "three-shelves",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/017-three-shelves-severe-20261005/report.json",
+        "sha256": "891b436bc9d49464e10e796846f30f3aaacdcaafc0fa392255ec4d2602fb50ab"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 593.3498125052371,
+          "elapsedMs": 29148.819999999672
+        }
+      ],
+      "field": {
+        "elapsedMs": 44481.55999999981,
+        "hp": 145,
+        "chaos": 54.85551137343271,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "8b54ed84-6a56-4d86-bddf-3bce5995c972",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "018-three-shelves-severe-3075192741",
+      "world": "three-shelves",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/018-three-shelves-severe-3075192741/report.json",
+        "sha256": "274085e95e784f7729d52f7bd61c85f3fcd9380f286842503d4874897592e43e"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 578.7158197250185,
+          "elapsedMs": 15482.709999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 28365.529999999646,
+        "hp": 145,
+        "chaos": 37.21362784817101,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "45aae1a2-d802-481a-b7a8-7092ef4be8b6",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "019-frayed-outwash-low-20261005",
+      "world": "frayed-outwash",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/019-frayed-outwash-low-20261005/report.json",
+        "sha256": "f46018f34637af394f9060779a593b080144785bf4aad6bcbe81ca9f2d393c2e"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 640.0499980470277,
+          "elapsedMs": 13432.79999999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 25049.029999999722,
+        "hp": 145,
+        "chaos": 28.37575854008719,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "e9f8fb5c-bb72-434e-b167-c819258c7d3c",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "020-frayed-outwash-low-3075192741",
+      "world": "frayed-outwash",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/020-frayed-outwash-low-3075192741/report.json",
+        "sha256": "62898e81f8f186aad4f49b421ca702ebd161b8b0cb6c503752b4a7b242cdb326"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 640.0499980470277,
+          "elapsedMs": 13399.449999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 24765.659999999756,
+        "hp": 145,
+        "chaos": 32.981034094232534,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "63b1fb51-7ff7-448e-8047-71cae588e506",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "021-frayed-outwash-medium-20261005",
+      "world": "frayed-outwash",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/021-frayed-outwash-medium-20261005/report.json",
+        "sha256": "880f1d5dbbcc94a4659c7e07b84e2015953ec60a0640c355a128753cfd20308a"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 640.0499980470277,
+          "elapsedMs": 30548.759999999722
+        }
+      ],
+      "field": {
+        "elapsedMs": 41798.31999999982,
+        "hp": 115,
+        "chaos": 53.50206508710307,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "60edfa8b-7371-43ca-8d02-dd45bc1d705a",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "022-frayed-outwash-medium-3075192741",
+      "world": "frayed-outwash",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/022-frayed-outwash-medium-3075192741/report.json",
+        "sha256": "9478487a03e8d9cc2495f95f98d8cb8501979b07a026469c4670061bff763b01"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 640.0499980470277,
+          "elapsedMs": 13982.76999999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 25898.969999999747,
+        "hp": 145,
+        "chaos": 31.917407122141302,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "4d0b9f56-6dbe-4acc-85fc-d47c7709fb08",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "023-frayed-outwash-severe-20261005",
+      "world": "frayed-outwash",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/023-frayed-outwash-severe-20261005/report.json",
+        "sha256": "c770a8db5354cb90e1d0ebceda284f4fb833dcb3fd4dea9e378479933fc6c116"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.09998437988094,
+          "elapsedMs": 7566.319999999995
+        }
+      ],
+      "field": {
+        "elapsedMs": 14699.37999999999,
+        "hp": 145,
+        "chaos": 30.847470747729293,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "be33957d-58e8-4339-891a-92e8bef83dc4",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "024-frayed-outwash-severe-3075192741",
+      "world": "frayed-outwash",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/024-frayed-outwash-severe-3075192741/report.json",
+        "sha256": "d5661c1e0b0718e9546b187d3cfc8779a2dd25457a4995cfc8279eb7fa130a1a"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.09998437988094,
+          "elapsedMs": 7649.689999999995
+        }
+      ],
+      "field": {
+        "elapsedMs": 14482.75999999999,
+        "hp": 145,
+        "chaos": 30.746561790115212,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "d303ea64-ca6a-456f-8d74-ba6fc4d7d380",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    }
+  ]
+}

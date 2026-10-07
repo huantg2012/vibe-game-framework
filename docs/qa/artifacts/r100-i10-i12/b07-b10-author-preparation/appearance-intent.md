@@ -1,0 +1,7 @@
+These are isolated CSV-first author drafts, not accepted world appearance.
+
+Ground ramps retain quiet darks; source materials receive local colour separation under the existing shoulder lamp, not ambient emission. Pollution green is absent from the authored palettes. Main faces, exposed ends and secondary matter have separate value/temperature roles. No lighting, visibility, collision or contamination rules change.
+
+B07 uses cool shell on brown floor, copper-purple fibres with cold ends, pearl membrane with dark folded interior, and opaque purple gel with pale rose cuts. B08 assigns the secondary ramp to actual secondary material: red plate beneath light grains, ochre fibres beneath blue skin, cold shell inside red gel, blue fibres through pink shells. B09 contrasts light banks with blue-purple ground, red shell with pale cuts, cobalt layers with ochre cuts, and pale skin with dark rose folds. B10 uses grey-purple gel over blue ground, blue shell over ochre ground, copper stumps with red compressed ends, and a dark peeling skin over exposed light ground.
+
+Ground pattern/secondary coverage stay sparse enough to preserve quiet areas. Colour readings must still be judged at actual gameplay scale with normal FOV and all three pollution grades; CSV differences and successful compilation do not prove identity or readability. The new physical arrangements and paired nearest-world review remain mandatory.

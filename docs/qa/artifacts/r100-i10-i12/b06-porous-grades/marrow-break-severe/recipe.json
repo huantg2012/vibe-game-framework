@@ -1,0 +1,236 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "marrow-break",
+    "label": "髓孔断岸",
+    "description": "髓孔断岸的原生材料与完整搜撤地段",
+    "material": "granular",
+    "surface": {
+      "substrate": "granular",
+      "coating": "granular",
+      "organization": "patches",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 2108227,
+      "floor": 5400203,
+      "floorLight": 9544899,
+      "materialDark": 5122089,
+      "materialMid": 10049366,
+      "materialLight": 13342352,
+      "faceLight": 14275251,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 5400203,
+      "groundLight": 9544899,
+      "groundDark": 2108227,
+      "wall": 10049366,
+      "wallLight": 13342352,
+      "wallDark": 5122089
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "marrow-break",
+    "ground": {
+      "dark": 2108227,
+      "mid": 5400203,
+      "light": 9544899
+    },
+    "solid": {
+      "dark": 5122089,
+      "mid": 10049366,
+      "light": 13342352
+    },
+    "cleaved": {
+      "dark": 8419164,
+      "mid": 12234635,
+      "light": 14275251
+    },
+    "secondary": {
+      "dark": 4602673,
+      "mid": 9402969,
+      "light": 12430466
+    },
+    "groundPattern": "grains",
+    "patternScale": 232,
+    "patternStrength": 0.38,
+    "secondaryCoverage": 0.14,
+    "textureContrast": 1.16,
+    "quietCoverage": 0.61,
+    "materialOrganization": "porous-marrow"
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "marrow-break-severe",
+    "family": "granular-ridge",
+    "grade": "severe",
+    "label": "髓孔断岸",
+    "profile": "marrow-break",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 154,
+    "emission": 0.72,
+    "motion_period": 14,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 440,
+        "y": 350,
+        "rotation": -1.5708,
+        "length": 250,
+        "width": 165,
+        "height": 58,
+        "thickness": 14,
+        "fold": 0.7040000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "porous-break"
+      },
+      {
+        "id": 2,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 680,
+        "y": 390,
+        "rotation": 1.5708,
+        "length": 190,
+        "width": 145,
+        "height": 42,
+        "thickness": 11,
+        "fold": 0.528,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "porous-break"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "package": {
+    "id": "r100-marrow-break",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "granular-ridge": {
+        "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+        "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+        "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+      },
+      "organization:porous-marrow": {
+        "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+        "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+        "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+      }
+    },
+    "dependencyHash": "9e1eafea",
+    "grade": "severe"
+  }
+}

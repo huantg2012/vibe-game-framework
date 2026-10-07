@@ -1,0 +1,1354 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+    "sha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b05-author-preflight/camera-supported.json",
+    "cameraInputSha256": "af20b137ea0dddb0cac4cea86cc41c6ac477138ce716c77e874ee4acb6fd2c5e",
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+    "sourceManifestSha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598",
+    "scope": "Only the two never-started medium cases from the original plan. Same source/seed/goals; exact20px origin connector added to unchanged22px coarse route. Prior quiet is retained; rejected split is not repeated.",
+    "cases": [
+      {
+        "world": "three-shelves",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-west-bank",
+            "x": 356,
+            "y": 603,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 356,
+              "y": 604
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 435
+            }
+          },
+          {
+            "label": "02-south-bank",
+            "x": 431,
+            "y": 537,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 428,
+              "y": 540
+            },
+            "lookAtMaterialPoint": {
+              "x": 541,
+              "y": 651
+            }
+          },
+          {
+            "label": "03-east-bank",
+            "x": 535,
+            "y": 462,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 686,
+              "y": 449
+            }
+          },
+          {
+            "label": "04-north-open-return",
+            "x": 535,
+            "y": 284,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 284
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 435
+            }
+          }
+        ]
+      },
+      {
+        "world": "frayed-outwash",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-quiet-tail",
+            "x": 602,
+            "y": 662,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 604,
+              "y": 660
+            },
+            "lookAtMaterialPoint": {
+              "x": 682,
+              "y": 607
+            }
+          },
+          {
+            "label": "02-middle-short-tail",
+            "x": 604,
+            "y": 517,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 604,
+              "y": 516
+            },
+            "lookAtMaterialPoint": {
+              "x": 531,
+              "y": 516
+            }
+          },
+          {
+            "label": "03-thickening-band",
+            "x": 548,
+            "y": 386,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 548,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 434,
+              "y": 386
+            }
+          },
+          {
+            "label": "04-north-dense-head",
+            "x": 566,
+            "y": 147,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 148
+            },
+            "lookAtMaterialPoint": {
+              "x": 489,
+              "y": 205
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "three-shelves",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-west-bank",
+            "x": 356,
+            "y": 603,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 356,
+              "y": 604
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 435
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-west-bank",
+              "x": 356,
+              "y": 603,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 356,
+                "y": 604
+              },
+              "lookAtMaterialPoint": {
+                "x": 398,
+                "y": 435
+              }
+            },
+            "actual": {
+              "x": 356,
+              "y": 604
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 356,
+                "y": 588
+              },
+              {
+                "x": 356,
+                "y": 604
+              }
+            ],
+            "length": 176,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/three-shelves-medium/01-west-bank-north.png",
+              "sha256": "309ec5b2d7c0b744115b00cfb86b4b88372047528e5717ec1540a01582da2600",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 356.9563512986813,
+                  "y": 596.1441615684346
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.056189077999942,
+                "elapsedMs": 3266.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 356.9563512986813,
+                  "y": 596.1441615684346
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.089365759999936,
+                "elapsedMs": 3366.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-south-bank",
+            "x": 431,
+            "y": 537,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 428,
+              "y": 540
+            },
+            "lookAtMaterialPoint": {
+              "x": 541,
+              "y": 651
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-south-bank",
+              "x": 431,
+              "y": 537,
+              "faces": [
+                "east",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 428,
+                "y": 540
+              },
+              "lookAtMaterialPoint": {
+                "x": 541,
+                "y": 651
+              }
+            },
+            "actual": {
+              "x": 428,
+              "y": 540
+            },
+            "points": [
+              {
+                "x": 356,
+                "y": 596
+              },
+              {
+                "x": 428,
+                "y": 596
+              },
+              {
+                "x": 428,
+                "y": 540
+              }
+            ],
+            "length": 128,
+            "originConnector": {
+              "origin": {
+                "x": 356.9563512986813,
+                "y": 596.1441615684346
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9516,
+                "x": 356,
+                "y": 596,
+                "distance": 0.9671558118022645
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/three-shelves-medium/02-south-bank-east.png",
+              "sha256": "2fc94e2e4933042f5e39e1794efbcf47a652bb5bbe15bee7030eb89900ab2436",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 436.52040533636625,
+                  "y": 538.2458491577994
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.924360367999824,
+                "elapsedMs": 5883.000000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 436.52040533636625,
+                  "y": 538.2458491577994
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.95754700399982,
+                "elapsedMs": 5983.000000000001
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/three-shelves-medium/02-south-bank-south.png",
+              "sha256": "e58a29395f97a8cb6c2f6e96f3e7fcfa1b426284c158746829ea5b66caea5517",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5705449993826108,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 436.52040533636625,
+                  "y": 545.6906491577994
+                },
+                "facingAngle": 1.5705449993826108,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 17.057077049999812,
+                "elapsedMs": 6283.000000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 436.52040533636625,
+                  "y": 545.6906491577994
+                },
+                "facingAngle": 1.5705449993826108,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 17.09025704999981,
+                "elapsedMs": 6383.000000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-east-bank",
+            "x": 535,
+            "y": 462,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 686,
+              "y": 449
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-east-bank",
+              "x": 535,
+              "y": 462,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 532,
+                "y": 460
+              },
+              "lookAtMaterialPoint": {
+                "x": 686,
+                "y": 449
+              }
+            },
+            "actual": {
+              "x": 532,
+              "y": 460
+            },
+            "points": [
+              {
+                "x": 436,
+                "y": 548
+              },
+              {
+                "x": 532,
+                "y": 548
+              },
+              {
+                "x": 532,
+                "y": 460
+              }
+            ],
+            "length": 184,
+            "originConnector": {
+              "origin": {
+                "x": 436.52040533636625,
+                "y": 545.6906491577994
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 8758,
+                "x": 436,
+                "y": 548,
+                "distance": 2.367260658755424
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/three-shelves-medium/03-east-bank-east.png",
+              "sha256": "aefd4ecc525fa610a970fb14fc0d84a88e164807c338267c4183a20b5ca7e4e6",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 543.4006578245753,
+                  "y": 458.7894033841894
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.36763727999968,
+                "elapsedMs": 10232.900000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 543.4006578245753,
+                  "y": 458.7894033841894
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.400817279999675,
+                "elapsedMs": 10332.900000000001
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-north-open-return",
+            "x": 535,
+            "y": 284,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 284
+            },
+            "lookAtMaterialPoint": {
+              "x": 398,
+              "y": 435
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-north-open-return",
+              "x": 535,
+              "y": 284,
+              "faces": [
+                "south",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 532,
+                "y": 284
+              },
+              "lookAtMaterialPoint": {
+                "x": 398,
+                "y": 435
+              }
+            },
+            "actual": {
+              "x": 532,
+              "y": 284
+            },
+            "points": [
+              {
+                "x": 540,
+                "y": 460
+              },
+              {
+                "x": 532,
+                "y": 460
+              },
+              {
+                "x": 532,
+                "y": 284
+              }
+            ],
+            "length": 184,
+            "originConnector": {
+              "origin": {
+                "x": 543.4006578245753,
+                "y": 458.7894033841894
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7363,
+                "x": 540,
+                "y": 460,
+                "distance": 3.609711595966824
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/three-shelves-medium/04-north-open-return-south.png",
+              "sha256": "ba0b7a6b0aa80c754ea0e9e8ae297fefa286d60622d30783f021bc1c96195ff2",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 530.262191592914,
+                  "y": 288.6626509284367
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 19.473599675999548,
+                "elapsedMs": 13566.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 530.262191592914,
+                  "y": 288.6626509284367
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 19.50677635799954,
+                "elapsedMs": 13666.099999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/three-shelves-medium/04-north-open-return-west.png",
+              "sha256": "d62b16c1f697a2eb9fe749f3ccd47aa7c5fab171d2fd6e49a234f00e72b5be30",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141341326177501,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 522.817891592914,
+                  "y": 288.6626509284367
+                },
+                "facingAngle": 3.141341326177501,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 19.60077861599953,
+                "elapsedMs": 13949.399999999998
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 522.817891592914,
+                  "y": 288.6626509284367
+                },
+                "facingAngle": 3.141341326177501,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 19.633955297999528,
+                "elapsedMs": 14049.399999999998
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "three-shelves",
+        "grade": "medium",
+        "package": {
+          "id": "r100-three-shelves",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "9fd3ed74",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=three-shelves&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/three-shelves-medium/recipe.json",
+        "sha256": "c7519eb4b68fc71bb4ee78adad0d4022b35fe4674c23249d3ce8a33dc1ea8b29"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 522.817891592914,
+          "y": 288.6626509284367
+        },
+        "facingAngle": 3.141341326177501,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 19.633955297999528,
+        "elapsedMs": 14049.399999999998
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 522.817891592914,
+          "y": 288.6626509284367
+        },
+        "facingAngle": 3.141341326177501,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 20.032102025999475,
+        "elapsedMs": 15249.399999999998
+      }
+    },
+    {
+      "world": "frayed-outwash",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-quiet-tail",
+            "x": 602,
+            "y": 662,
+            "faces": [
+              "east",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 604,
+              "y": 660
+            },
+            "lookAtMaterialPoint": {
+              "x": 682,
+              "y": 607
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-quiet-tail",
+              "x": 602,
+              "y": 662,
+              "faces": [
+                "east",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 604,
+                "y": 660
+              },
+              "lookAtMaterialPoint": {
+                "x": 682,
+                "y": 607
+              }
+            },
+            "actual": {
+              "x": 604,
+              "y": 660
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 516,
+                "y": 588
+              },
+              {
+                "x": 516,
+                "y": 596
+              },
+              {
+                "x": 524,
+                "y": 596
+              },
+              {
+                "x": 524,
+                "y": 604
+              },
+              {
+                "x": 532,
+                "y": 604
+              },
+              {
+                "x": 532,
+                "y": 612
+              },
+              {
+                "x": 604,
+                "y": 612
+              },
+              {
+                "x": 604,
+                "y": 660
+              }
+            ],
+            "length": 480,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/frayed-outwash-medium/01-south-quiet-tail-east.png",
+              "sha256": "c817c4cd0b61edd8c9baae4de6d1f0e338c820fbd47df92f6e24b69693de52fc",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 616.7442198353646,
+                  "y": 658.0098937443015
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.74276165799978,
+                "elapsedMs": 8349.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 616.7442198353646,
+                  "y": 658.0098937443015
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.775941657999777,
+                "elapsedMs": 8449.7
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/frayed-outwash-medium/01-south-quiet-tail-north.png",
+              "sha256": "f52baac956363422fe94b42e1c66956e302690baa86e721d45dd4196c12049c5",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5701680082641751,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 616.7442198353646,
+                  "y": 650.5676270776348
+                },
+                "facingAngle": -1.5701680082641751,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.869947233999763,
+                "elapsedMs": 8733
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 616.7442198353646,
+                  "y": 650.5676270776348
+                },
+                "facingAngle": -1.5701680082641751,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.90313055199976,
+                "elapsedMs": 8833
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-middle-short-tail",
+            "x": 604,
+            "y": 517,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 604,
+              "y": 516
+            },
+            "lookAtMaterialPoint": {
+              "x": 531,
+              "y": 516
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-middle-short-tail",
+              "x": 604,
+              "y": 517,
+              "faces": [
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 604,
+                "y": 516
+              },
+              "lookAtMaterialPoint": {
+                "x": 531,
+                "y": 516
+              }
+            },
+            "actual": {
+              "x": 604,
+              "y": 516
+            },
+            "points": [
+              {
+                "x": 620,
+                "y": 652
+              },
+              {
+                "x": 604,
+                "y": 652
+              },
+              {
+                "x": 604,
+                "y": 516
+              }
+            ],
+            "length": 152,
+            "originConnector": {
+              "origin": {
+                "x": 616.7442198353646,
+                "y": 650.5676270776348
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 10445,
+                "x": 620,
+                "y": 652,
+                "distance": 3.5569364162377886
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/frayed-outwash-medium/02-middle-short-tail-west.png",
+              "sha256": "8c38540d6cb2b0f1eb9882c70cd4366b5bb0c030eebd7145fd54155d3de12805",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 598.9535123763784,
+                  "y": 511.28584067413607
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.854248523999647,
+                "elapsedMs": 11699.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 598.9535123763784,
+                  "y": 511.28584067413607
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.88189409999964,
+                "elapsedMs": 11782.9
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-thickening-band",
+            "x": 548,
+            "y": 386,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 548,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 434,
+              "y": 386
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-thickening-band",
+              "x": 548,
+              "y": 386,
+              "faces": [
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 548,
+                "y": 388
+              },
+              "lookAtMaterialPoint": {
+                "x": 434,
+                "y": 386
+              }
+            },
+            "actual": {
+              "x": 548,
+              "y": 388
+            },
+            "points": [
+              {
+                "x": 596,
+                "y": 508
+              },
+              {
+                "x": 572,
+                "y": 508
+              },
+              {
+                "x": 572,
+                "y": 460
+              },
+              {
+                "x": 564,
+                "y": 460
+              },
+              {
+                "x": 564,
+                "y": 428
+              },
+              {
+                "x": 548,
+                "y": 428
+              },
+              {
+                "x": 548,
+                "y": 388
+              }
+            ],
+            "length": 168,
+            "originConnector": {
+              "origin": {
+                "x": 598.9535123763784,
+                "y": 511.28584067413607
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 8138,
+                "x": 596,
+                "y": 508,
+                "distance": 4.4181426293440715
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/frayed-outwash-medium/03-thickening-band-west.png",
+              "sha256": "613b338b0140a257598570cfb14958d61b7cf6f90ff951619ea017a3837add10",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.1413413261775074,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 540.9582763665132,
+                  "y": 382.72213172849604
+                },
+                "facingAngle": -3.1413413261775074,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 20.043147647999476,
+                "elapsedMs": 15282.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 540.9582763665132,
+                  "y": 382.72213172849604
+                },
+                "facingAngle": -3.1413413261775074,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 20.076330965999475,
+                "elapsedMs": 15382.8
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-north-dense-head",
+            "x": 566,
+            "y": 147,
+            "faces": [
+              "west",
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 148
+            },
+            "lookAtMaterialPoint": {
+              "x": 489,
+              "y": 205
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-north-dense-head",
+              "x": 566,
+              "y": 147,
+              "faces": [
+                "west",
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 564,
+                "y": 148
+              },
+              "lookAtMaterialPoint": {
+                "x": 489,
+                "y": 205
+              }
+            },
+            "actual": {
+              "x": 564,
+              "y": 148
+            },
+            "points": [
+              {
+                "x": 540,
+                "y": 380
+              },
+              {
+                "x": 564,
+                "y": 380
+              },
+              {
+                "x": 564,
+                "y": 148
+              }
+            ],
+            "length": 256,
+            "originConnector": {
+              "origin": {
+                "x": 540.9582763665132,
+                "y": 382.72213172849604
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 6083,
+                "x": 540,
+                "y": 380,
+                "distance": 2.8858785043557624
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/frayed-outwash-medium/04-north-dense-head-west.png",
+              "sha256": "a851c69becefffdf201ceb6ed9ccbfb1fb58a9b6b0cadfade8535a33995bd500",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.140964335059089,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 556.1087130528787,
+                  "y": 145.2948854063436
+                },
+                "facingAngle": -3.140964335059089,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 21.563836817999377,
+                "elapsedMs": 19865.9
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 556.1087130528787,
+                  "y": 145.2948854063436
+                },
+                "facingAngle": -3.140964335059089,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 21.602544605999377,
+                "elapsedMs": 19982.5
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/frayed-outwash-medium/04-north-dense-head-south.png",
+              "sha256": "ebbd7492a650196665994d3f795eaee99a66008e0afd8ffa740166d77bd1335d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.571487477178667,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 556.1087130528787,
+                  "y": 152.7378520730103
+                },
+                "facingAngle": 1.571487477178667,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.696553499999375,
+                "elapsedMs": 20265.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 556.1087130528787,
+                  "y": 152.7378520730103
+                },
+                "facingAngle": 1.571487477178667,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.724199075999376,
+                "elapsedMs": 20349.2
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "frayed-outwash",
+        "grade": "medium",
+        "package": {
+          "id": "r100-frayed-outwash",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "a145a235",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=frayed-outwash&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-medium-remaining/frayed-outwash-medium/recipe.json",
+        "sha256": "9ca595be1cd0d23bf198674f49cf1063fd2bb380d285a9a926edce5c20e16dd5"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 556.1087130528787,
+          "y": 152.7378520730103
+        },
+        "facingAngle": 1.571487477178667,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 21.724199075999376,
+        "elapsedMs": 20349.2
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 556.1087130528787,
+          "y": 152.7378520730103
+        },
+        "facingAngle": 1.571487477178667,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 22.127883545999357,
+        "elapsedMs": 21565.8
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

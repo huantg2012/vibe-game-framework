@@ -1,0 +1,308 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b08-source/source-snapshot.json",
+  "sourceManifestSha256": "a4ce388a6eb12ce9031f942b384ecc41ba6876bfd31dd938f6e0e8d9892ba3dc",
+  "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b08-author-preflight/camera-supported.json",
+  "cameraInputSha256": "a5eca348a0faee96d54426e9ec510d651e2e6bcf636574f7c03a0110085faab0",
+  "scope": "Four medium world cases, four author-supported approaches each; real WASD, actual cardinal facing verified, unchanged normal lighting/FOV/HP/clock. Author route support does not imply visual pass.",
+  "cases": [
+    {
+      "world": "grain-weld",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-south-layer-contact",
+          "x": 391,
+          "y": 536,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 388,
+            "y": 532
+          },
+          "lookAtMaterialPoint": {
+            "x": 485,
+            "y": 320
+          }
+        },
+        {
+          "label": "02-low-granular-contact",
+          "x": 591,
+          "y": 495,
+          "faces": [
+            "east",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 588,
+            "y": 492
+          },
+          "lookAtMaterialPoint": {
+            "x": 630,
+            "y": 486
+          }
+        },
+        {
+          "label": "03-east-broken-end",
+          "x": 715,
+          "y": 464,
+          "faces": [
+            "east",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 716,
+            "y": 460
+          },
+          "lookAtMaterialPoint": {
+            "x": 790,
+            "y": 522
+          }
+        },
+        {
+          "label": "04-north-grain-shoulder",
+          "x": 626,
+          "y": 379,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 628,
+            "y": 380
+          },
+          "lookAtMaterialPoint": {
+            "x": 485,
+            "y": 320
+          }
+        }
+      ]
+    },
+    {
+      "world": "silk-catch",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-low-caught-sheet",
+          "x": 360,
+          "y": 556,
+          "faces": [
+            "east",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 356,
+            "y": 556
+          },
+          "lookAtMaterialPoint": {
+            "x": 501,
+            "y": 495
+          }
+        },
+        {
+          "label": "02-fold-fibre-contact",
+          "x": 479,
+          "y": 509,
+          "faces": [
+            "north",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 476,
+            "y": 508
+          },
+          "lookAtMaterialPoint": {
+            "x": 598,
+            "y": 381
+          }
+        },
+        {
+          "label": "03-south-open-tail",
+          "x": 668,
+          "y": 571,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 668,
+            "y": 572
+          },
+          "lookAtMaterialPoint": {
+            "x": 598,
+            "y": 381
+          }
+        },
+        {
+          "label": "04-north-torn-contact",
+          "x": 713,
+          "y": 246,
+          "faces": [
+            "west",
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 716,
+            "y": 244
+          },
+          "lookAtMaterialPoint": {
+            "x": 598,
+            "y": 381
+          }
+        }
+      ]
+    },
+    {
+      "world": "resin-sleeve",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-east-thin-tail",
+          "x": 803,
+          "y": 420,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 804,
+            "y": 420
+          },
+          "lookAtMaterialPoint": {
+            "x": 722,
+            "y": 326
+          }
+        },
+        {
+          "label": "02-shell-gel-contact",
+          "x": 650,
+          "y": 363,
+          "faces": [
+            "west",
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 652,
+            "y": 364
+          },
+          "lookAtMaterialPoint": {
+            "x": 554,
+            "y": 295
+          }
+        },
+        {
+          "label": "03-inner-thick-sleeve",
+          "x": 592,
+          "y": 376,
+          "faces": [
+            "south",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 588,
+            "y": 372
+          },
+          "lookAtMaterialPoint": {
+            "x": 582,
+            "y": 445
+          }
+        },
+        {
+          "label": "04-west-high-gel",
+          "x": 307,
+          "y": 368,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 308,
+            "y": 364
+          },
+          "lookAtMaterialPoint": {
+            "x": 459,
+            "y": 358
+          }
+        }
+      ]
+    },
+    {
+      "world": "shell-threads",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-south-open-bed",
+          "x": 565,
+          "y": 628,
+          "faces": [
+            "north",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 564,
+            "y": 628
+          },
+          "lookAtMaterialPoint": {
+            "x": 398,
+            "y": 439
+          }
+        },
+        {
+          "label": "02-left-fibre-over-shell",
+          "x": 555,
+          "y": 459,
+          "faces": [
+            "west",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 556,
+            "y": 460
+          },
+          "lookAtMaterialPoint": {
+            "x": 398,
+            "y": 439
+          }
+        },
+        {
+          "label": "03-upper-between-threads",
+          "x": 555,
+          "y": 289,
+          "faces": [
+            "south",
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 556,
+            "y": 292
+          },
+          "lookAtMaterialPoint": {
+            "x": 718,
+            "y": 430
+          }
+        },
+        {
+          "label": "04-right-fibre-contact",
+          "x": 868,
+          "y": 251,
+          "faces": [
+            "south",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 868,
+            "y": 252
+          },
+          "lookAtMaterialPoint": {
+            "x": 718,
+            "y": 430
+          }
+        }
+      ]
+    }
+  ]
+}

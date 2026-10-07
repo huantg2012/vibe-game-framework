@@ -1,0 +1,86 @@
+{
+  "status": "partial-pass-two-low-surface-rejections-one-contact-pending",
+  "reviewer": "root",
+  "date": "2026-10-07",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b08-source/source-snapshot.json",
+    "sha256": "a4ce388a6eb12ce9031f942b384ecc41ba6876bfd31dd938f6e0e8d9892ba3dc"
+  },
+  "authorReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/author-art-review.json",
+    "sha256": "948ccb12ef424b7c101d4ad0020c983dadf206db6ebd3e67d864eb938f74a1da"
+  },
+  "reviewedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/01-south-layer-contact-north.png",
+      "sha256": "8f1bfc6bf86d27c68bd5b72a4f846a1d20e479035c941306c635e03df1fd2822"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/grain-weld-medium/02-low-granular-contact-east.png",
+      "sha256": "d9fd980d2bcd0a1bf72533c1af19284e68ba3380caeaaf5d25766a0433b8dbbd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/01-low-caught-sheet-east.png",
+      "sha256": "afc36d342e50e295a504ad3e476ebf34860dfbf63d81df0f2112f64499debf6c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/02-fold-fibre-contact-north.png",
+      "sha256": "e9d5dc1ad0f3e13e377e1353846c7aa233658ee9592d323073849b57110d9f11"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/silk-catch-medium/04-north-torn-contact-west.png",
+      "sha256": "84d3d6e174c0ae39b60ed5edca9c6869b07de308e1153f146baa8b4fd49c7acc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/02-shell-gel-contact-north.png",
+      "sha256": "0182f20fce1a2a66ed9d148a9a85babbfb81d5eb5952ae4e7f6c7c2163c30478"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/03-inner-thick-sleeve-west.png",
+      "sha256": "311887979ff78587c19634c540a62a3f1799c00c90b055b1ef8707f6e3e61f86"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/02-shell-gel-contact-west.png",
+      "sha256": "507b7c25ae1c4d0536a2f2c7370401ede96c7ebddb843df53e7e51a4b8b0b749"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/resin-sleeve-medium/03-inner-thick-sleeve-south.png",
+      "sha256": "a6deb37aed2c26764bed321da9e9732ecf8fb3275442061de1bf302029514892"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/02-left-fibre-over-shell-east.png",
+      "sha256": "932c873af751273ef8820c004d4ca69d520c47d7afb1377b3206e31a599b5470"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/04-right-fibre-contact-west.png",
+      "sha256": "724c843ca0d1d19a0d226ac166cc042bfdd2914cbc3afda31957c94fcc8dfdce"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/02-left-fibre-over-shell-west.png",
+      "sha256": "db7ed5be2934253ef18b8dd203e4314e98840ecee14f9355e251b8f02ab90f56"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium/shell-threads-medium/04-right-fibre-contact-south.png",
+      "sha256": "ee7d1e4c23ba2734a50e15fd8daac3dd4396e31bd54e0d24aaed842e97873564"
+    }
+  ],
+  "mediumBoundedPass": [
+    "resin-sleeve"
+  ],
+  "rejected": [
+    "grain-weld",
+    "silk-catch"
+  ],
+  "pendingContact": [
+    "shell-threads"
+  ],
+  "findings": [
+    "砂挤断缝的低层以大三角尖端和整段直色界压在冷色地床上；厚肩局部成立，但主低层像覆片。断丝挂褶也有长直黑边与尖折低皮。须修改低层实体高度和贴地关系，不靠加噪声或模糊掩盖。",
+    "树脂套层在受光处有红色厚壁、灰蓝凝胶内层和可见裸床，包夹与内外关系成立。HP85及受击不抹去；只签实际照见局部。",
+    "壳上纤维的左接合局部能辨认蓝纤维、浅壳和床面；右接合在画面下缘/视野外且被追兵干扰，证据不足，补更接近且真实可达的受光站位。"
+  ],
+  "limitations": [
+    "一个原定中档种子的正常肩灯原图；不是低/重档、完整玩法、性能或人审通过。",
+    "旧图失败保留；修后低层必须重新做同机位正常图，不能从身体通行通过推导美术通过。"
+  ]
+}

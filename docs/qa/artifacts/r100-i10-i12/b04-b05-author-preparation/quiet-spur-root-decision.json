@@ -1,0 +1,41 @@
+{
+  "decision": "root-reviewed narrow layout recovery after two failed attempts",
+  "changedField": "quiet-spur instance3 x640 ->594",
+  "preservedChanges": [
+    "north shoulder y224",
+    "last dense grain x438 y479"
+  ],
+  "preservedRouteBounds": true,
+  "required": "same endpoints; both full20px body paths connected; long strictly longer",
+  "beforeDraftSha256": "ae6760ac3fa39ae13d809a88295d2f0c8d62836d113721ea0ae74c0987d1e5ff",
+  "afterDraftSha256": "9d05173fba1926cf6a744b3ab8fd05ae3106cafe27e8a39b91f85af81ddea77c",
+  "status": "FAIL-after-authorized-third-check-no-further-layout-edit",
+  "report": "docs/qa/artifacts/r100-i10-i12/b04-b05-author-preparation/quiet-root-decision/report.json",
+  "reportSha256": "c2201b2397c408d50e5715626a742882e5f679222e72202d4336ec3ca193d872",
+  "grades": [
+    {
+      "grade": "low",
+      "issues": [
+        "dense-short segment0 blocked inside intended bounds"
+      ],
+      "completedQuietLongPx": 976,
+      "denseShortComplete": false
+    },
+    {
+      "grade": "medium",
+      "issues": [
+        "dense-short segment0 blocked inside intended bounds"
+      ],
+      "completedQuietLongPx": 976,
+      "denseShortComplete": false
+    },
+    {
+      "grade": "severe",
+      "issues": [
+        "dense-short segment0 blocked inside intended bounds"
+      ],
+      "completedQuietLongPx": 976,
+      "denseShortComplete": false
+    }
+  ]
+}

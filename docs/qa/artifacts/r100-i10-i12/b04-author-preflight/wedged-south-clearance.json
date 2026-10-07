@@ -1,0 +1,54 @@
+{
+  "scope": "Deterministic +Y separation from occluding slab footprint, no arbitrary candidate search. Clear every true fracture corner past slab south footprint with >=4px margin; preserve X to avoid narrowing bare central tear.",
+  "world": "wedged-hide",
+  "instance": 3,
+  "results": [
+    {
+      "fractureVertex": [
+        443.34527587890625,
+        396.48980712890625,
+        10.774664878845215
+      ],
+      "plateSouthernFootY": 424.1063862198162,
+      "deltaYToOutsideFoot": 27.616579090909966
+    },
+    {
+      "fractureVertex": [
+        443.7404479980469,
+        402.9148254394531,
+        13.357990264892578
+      ],
+      "plateSouthernFootY": 424.0715205354596,
+      "deltaYToOutsideFoot": 21.1566950960065
+    },
+    {
+      "fractureVertex": [
+        437.95550537109375,
+        406.59539794921875,
+        13.577164649963379
+      ],
+      "plateSouthernFootY": 424.5819208746604,
+      "deltaYToOutsideFoot": 17.986522925441648
+    },
+    {
+      "fractureVertex": [
+        437.6472473144531,
+        401.5838623046875,
+        11.56217098236084
+      ],
+      "plateSouthernFootY": 424.6091182086387,
+      "deltaYToOutsideFoot": 23.025255903951177
+    }
+  ],
+  "minimumShiftToClearAllCorners": 27.616579090909966,
+  "proposedShift": 32,
+  "from": {
+    "x": 445,
+    "y": 418
+  },
+  "to": {
+    "x": 445,
+    "y": 450
+  },
+  "requires": "Projected body-contact area and unchanged central bare tear must still pass before accepting."
+}

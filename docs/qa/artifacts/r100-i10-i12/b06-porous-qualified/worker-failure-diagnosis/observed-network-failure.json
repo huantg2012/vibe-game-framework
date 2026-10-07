@@ -1,0 +1,309 @@
+{
+  "status": "diagnosed-observed-network-error-cause-unresolved",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "case": {
+    "world": "marrow-break",
+    "grade": "low",
+    "requestedSeed": 3075192741,
+    "index": 2,
+    "entryReached": false,
+    "committedNewIdentity": false,
+    "outcome": null,
+    "failure": "Error: page.evaluate: Error: Native surface preparation Worker failed\n    at worker.onerror (http://127.0.0.1:3111/src/systems/r100-world/surface-preparation-client.ts:54:40)"
+  },
+  "originalInputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/002-marrow-break-low-3075192741/report.json",
+      "sha256": "69f6656b46492090c3f7d42eb5d0dfbbda03866129b5ce648e8e450c82e9e5cd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/002-marrow-break-low-3075192741/low/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/002-marrow-break-low-3075192741/low/1-rejected-state.json",
+      "sha256": "b3c5c2164d1e08369636d3a884c1777388362a465d7119ec6c554c84310b9fd0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/002-marrow-break-low-3075192741/low/browser-storage.json",
+      "sha256": "dd944033e0538deb28eedaad3b656f506dcb842369804d691dfdcfa97beb90fe"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/worker-observations/observer-84367.jsonl",
+      "sha256": "d1aecf326ef164463afe50057b8ca620436f88b7e36d772f083d7dfa7628476e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/worker-observation-first-error.json",
+      "sha256": "55c7baae0610fd4597723fbaa7c06efde1d3ec6d91278f3a2aeb0f8fa8263f0b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/policy-freeze.json",
+      "sha256": "1e1ebd234903e78c3f9c781350356dc7c9ff5d75918a00feaa59dccfb619a661"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/batch-report.json",
+      "sha256": "b1adf93154b6fc2173202c6f9ca27a0f673e24ef5d146a70742375bb6a791cdf"
+    }
+  ],
+  "workerTimeline": [
+    {
+      "at": "2026-10-07T06:09:36.264Z",
+      "pid": 84367,
+      "event": "context-created",
+      "browserId": 1,
+      "contextId": 1,
+      "args": [
+        {
+          "viewport": {
+            "width": 1440,
+            "height": 960
+          },
+          "storageState": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/play/earned-storage.json"
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T06:09:40.583Z",
+      "pid": 84367,
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 1,
+      "url": "http://127.0.0.1:3111/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T06:09:41.170Z",
+      "pid": 84367,
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 1,
+      "url": "http://127.0.0.1:3111/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T06:09:41.175Z",
+      "pid": 84367,
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 2,
+      "url": "http://127.0.0.1:3111/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T06:09:41.748Z",
+      "pid": 84367,
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 2,
+      "url": "http://127.0.0.1:3111/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T06:09:41.809Z",
+      "pid": 84367,
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 3,
+      "url": "http://127.0.0.1:3111/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T06:09:42.072Z",
+      "pid": 84367,
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 3,
+      "url": "http://127.0.0.1:3111/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T06:09:42.259Z",
+      "pid": 84367,
+      "event": "context-closed",
+      "browserId": 1,
+      "contextId": 1
+    },
+    {
+      "at": "2026-10-07T06:09:42.293Z",
+      "pid": 84367,
+      "event": "browser-disconnected",
+      "browserId": 1
+    }
+  ],
+  "originalNetworkFailures": [
+    {
+      "at": "2026-10-07T06:09:42.072Z",
+      "pid": 84367,
+      "event": "requestfailed",
+      "browserId": 1,
+      "contextId": 1,
+      "urlId": 256,
+      "url": "http://127.0.0.1:3111/src/generation/world-study/native-volume-geometry.ts",
+      "failure": {
+        "errorText": "net::ERR_NETWORK_CHANGED"
+      },
+      "resourceType": "script"
+    },
+    {
+      "at": "2026-10-07T06:09:42.072Z",
+      "pid": 84367,
+      "event": "requestfailed",
+      "browserId": 1,
+      "contextId": 1,
+      "urlId": 312,
+      "url": "http://127.0.0.1:3111/src/systems/r100-world/ground.ts",
+      "failure": {
+        "errorText": "net::ERR_NETWORK_CHANGED"
+      },
+      "resourceType": "script"
+    }
+  ],
+  "terminalNetworkSummary": {
+    "at": "2026-10-07T06:09:42.259Z",
+    "pid": 84367,
+    "event": "network-summary",
+    "reason": "context-closed",
+    "browserId": 1,
+    "contextId": 1,
+    "requests": 642,
+    "responses": 629,
+    "failed": 2,
+    "requestMethods": {
+      "GET": 642
+    },
+    "resourceTypes": {
+      "document": 1,
+      "image": 22,
+      "other": 2,
+      "script": 526,
+      "xhr": 91
+    },
+    "statuses": {
+      "200": 629
+    },
+    "pending": [
+      {
+        "urlId": 250,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/generation/legacy-r100-v4/executor.js"
+      },
+      {
+        "urlId": 248,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/generation/legacy-r100-v3/executor.js"
+      },
+      {
+        "urlId": 246,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/generation/world-study/world-material-pigment.ts"
+      },
+      {
+        "urlId": 262,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/generation/world-study/native-volume-raster.ts"
+      },
+      {
+        "urlId": 311,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/systems/r100-world/surface-fields.ts"
+      },
+      {
+        "urlId": 261,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/entities/form-renderers/d/fragment-ramp.ts"
+      },
+      {
+        "urlId": 313,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/systems/r100-world/organization-sampling.ts"
+      },
+      {
+        "urlId": 92,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/types/game-types.ts"
+      },
+      {
+        "urlId": 314,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/entities/form-renderers/d/paint-genome/material.ts"
+      },
+      {
+        "urlId": 98,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/utils/random.ts"
+      },
+      {
+        "urlId": 207,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/generation/wall-edge-path.ts"
+      },
+      {
+        "urlId": 290,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3111/src/generated/contamination-lexicon-data.ts"
+      }
+    ]
+  },
+  "persistence": {
+    "oldSettledRunExact": true,
+    "oldRunId": "4325cd09-97dc-4260-87f2-744ad2c83644",
+    "oldRunStatus": "settled",
+    "recentHistoryExact": true,
+    "recentHistory": {
+      "version": 1,
+      "visits": []
+    },
+    "noNewCheckpointOrFrameCommit": true,
+    "rejectedInventoryEqualsSavedInventory": true,
+    "allNonInventorySaveFieldsExact": true,
+    "onlyPreparationMutation": {
+      "equipmentChanges": [
+        {
+          "slot": "3",
+          "id": "CAT_53f7d5c9-fbe2-42cd-a263-d71c567511f6_r100-contaminant-contested-1"
+        }
+      ],
+      "itemLocationChanges": [
+        "CAT_53f7d5c9-fbe2-42cd-a263-d71c567511f6_r100-contaminant-contested-1"
+      ],
+      "description": "Normal preparation equipped the existing last/passive tool slot and moved its one owned item stash\u2192carried. No run, history, resource, use count or other inventory data changed."
+    },
+    "diagnosticCheckpointError": "TypeError: Cannot read properties of undefined (reading 'getElapsedMs')\n    at RunController.exportRuntimeState (http://127.0.0.1:3111/src/systems/run-controller.ts:86:30)\n    at RiftScene.captureRuntimeCheckpoint (http://127.0.0.1:3111/src/scenes/rift-scene.ts:2046:31)\n    at eval (eval at evaluate (:311:30), <anonymous>:3:59)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+    "diagnosticCheckpointErrorScope": "Failure-only QA attempted a runtime checkpoint before a valid RiftScene existed; this is separate from the captured original surface Worker error."
+  },
+  "disposition": {
+    "originalAttemptRetained": true,
+    "currentBrowserClosed": true,
+    "nextCaseNeverStarted": true,
+    "automaticRetryPerformed": false,
+    "original001Retained": "completed actual non-entry pickup/extract; not rerun",
+    "P36": "open",
+    "limits": [
+      "Two failed script requests occurred 263ms after the native surface Worker was created, at its close/error. The preceding two generation Worker stages had returned and closed.",
+      "All observed HTTP responses were200; no HTTP504 or Outdated Optimize Dep was observed. This does not identify the system event that caused ERR_NETWORK_CHANGED.",
+      "No evidence retroactively assigns this network cause to the earlier generic B04 Worker failures.",
+      "No changed Chrome network flags, scenario, seed, equipment policy, game source or timing budget was used to obtain this result."
+    ]
+  }
+}

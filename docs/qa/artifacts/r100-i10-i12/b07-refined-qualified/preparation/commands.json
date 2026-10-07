@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-not-ready",
+  "batch": "B07",
+  "worlds": [
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks"
+  ],
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+    "sha256": "136f532388dfea4fcdb1c3dd83c16e70e54d9036320fefe7b2b09a2d5cd203e4"
+  },
+  "executionPlan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/execution-plan.json",
+  "readinessGate": "Root normal-view approval must be recorded first. Create a separate exact execution copy with only this batch status ready, then validateExpansionExecutionPlan before any command.",
+  "generation": [
+    {
+      "cases": 480,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+        "--worlds",
+        "staggered-cups,split-tows,curled-flats,pitch-forks",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 96,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/qualification-136f532388df.mjs",
+        "--worlds",
+        "staggered-cups,split-tows,curled-flats,pitch-forks",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "play": {
+    "cases": 24,
+    "command": "/usr/local/bin/node",
+    "args": [
+      "tools/qa/r100-i07-i09-coverage.mjs"
+    ],
+    "env": {
+      "GAME_URL": "http://127.0.0.1:3120/",
+      "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/execution-plan.json",
+      "QA_BATCH_ID": "B07",
+      "QA_WORLDS": "staggered-cups,split-tows,curled-flats,pitch-forks",
+      "QA_GRADES": "low,medium,severe",
+      "QA_SEEDS": "20261005,3075192741",
+      "QA_CONCURRENCY": "1",
+      "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+      "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play"
+    }
+  },
+  "resources": "At most one CPU worker during one browser; performance requires exclusive CPU/browser. No command has run.",
+  "tool": {
+    "path": "tools/qa/prepare-r100-expansion-batch.mjs",
+    "sha256": "52584ea3a6bb8abbadbd261ee4c69922f3bf169415f509114f11270e5b7060ba"
+  }
+}

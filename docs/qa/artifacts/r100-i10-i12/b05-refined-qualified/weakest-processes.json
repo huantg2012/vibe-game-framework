@@ -1,0 +1,255 @@
+{
+  "status": "selected-for-independent-review",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b"
+  },
+  "outcomes": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play-outcomes.json",
+    "sha256": "eeca39aabb55491a89792ca151936db5ed57eb3fe320c6f8d7518c2e3d2ee60b"
+  },
+  "selection": "Damage-bearing return, highest terminal chaos, longest simulation duration, and distinct longest low-grade route. Controlled earned-save navigation, not a novice or natural-economy claim.",
+  "cases": [
+    {
+      "case": "021-frayed-outwash-medium-20261005",
+      "world": "frayed-outwash",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/021-frayed-outwash-medium-20261005/report.json",
+        "sha256": "880f1d5dbbcc94a4659c7e07b84e2015953ec60a0640c355a128753cfd20308a"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 640.0499980470277,
+          "elapsedMs": 30548.759999999722
+        }
+      ],
+      "field": {
+        "elapsedMs": 41798.31999999982,
+        "hp": 115,
+        "chaos": 53.50206508710307,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "60edfa8b-7371-43ca-8d02-dd45bc1d705a",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      },
+      "reason": "Lowest terminal HP115; two Q uses during the actual route, damage retained.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/021-frayed-outwash-medium-20261005/medium/journey.jsonl",
+        "sha256": "3942837458b6fc67523b54f403e6a44a11844a26bd2082f1510583b77175e288"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/021-frayed-outwash-medium-20261005/medium/1-far-exploration.png",
+          "sha256": "75e17c3759bdab1a2f6b3b347e9dad2ca1ab7d122eaae067d0decaa1785648c4"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/021-frayed-outwash-medium-20261005/medium/1-field-result.png",
+          "sha256": "8b06e4f2725917cffb6f36f4abd27a55ef88644acd9a9dc9dd9ed181712d97e5"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/021-frayed-outwash-medium-20261005/medium/1-return.png",
+          "sha256": "618dcd679994883d9bc62c51a3598c4efc5f1bae6efab9dee1070de44e292b4b"
+        }
+      ],
+      "actualToolInputCounts": {
+        "Q": 2,
+        "F": 0,
+        "G": 2
+      }
+    },
+    {
+      "case": "005-quiet-spur-severe-20261005",
+      "world": "quiet-spur",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/005-quiet-spur-severe-20261005/report.json",
+        "sha256": "9583e50ceb882d1e467d5b091b83b167172497409d07a25ceb2640c92b2dcf3d"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 477.1247216399502,
+          "elapsedMs": 19465.869999999908
+        }
+      ],
+      "field": {
+        "elapsedMs": 37698.48999999979,
+        "hp": 145,
+        "chaos": 56.54794279919418,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "09e4fc4e-1ce2-49fd-8b58-01f431ff5862",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      },
+      "reason": "Highest terminal chaos56.55; real contaminant return despite carried kindling0.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/005-quiet-spur-severe-20261005/severe/journey.jsonl",
+        "sha256": "222ec373a29ada5aaf5f99ecc75235b38be9723e60bf7bcea96f1d9b69451a53"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/005-quiet-spur-severe-20261005/severe/1-far-exploration.png",
+          "sha256": "f7194357c00103424c4087eb43c2915ee5368d36d76e430f5357134378f43686"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/005-quiet-spur-severe-20261005/severe/1-field-result.png",
+          "sha256": "b6537b1646b170259cc1c1c58ca025583a81f6e63e8e5b603db601d556105031"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/005-quiet-spur-severe-20261005/severe/1-return.png",
+          "sha256": "82fb2d9acf6b5d7d34060786ec363d30b5e57417b2a89a73f335a9551536c627"
+        }
+      ],
+      "actualToolInputCounts": {
+        "Q": 0,
+        "F": 0,
+        "G": 0
+      }
+    },
+    {
+      "case": "017-three-shelves-severe-20261005",
+      "world": "three-shelves",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/017-three-shelves-severe-20261005/report.json",
+        "sha256": "891b436bc9d49464e10e796846f30f3aaacdcaafc0fa392255ec4d2602fb50ab"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 593.3498125052371,
+          "elapsedMs": 29148.819999999672
+        }
+      ],
+      "field": {
+        "elapsedMs": 44481.55999999981,
+        "hp": 145,
+        "chaos": 54.85551137343271,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "8b54ed84-6a56-4d86-bddf-3bce5995c972",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      },
+      "reason": "Longest simulation duration44.48s, severe route with actual non-entry pickup.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/017-three-shelves-severe-20261005/severe/journey.jsonl",
+        "sha256": "eae4348afe072f907859df3c98ad12198aba8e7f7a417c49dcc9a07cba253278"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/017-three-shelves-severe-20261005/severe/1-far-exploration.png",
+          "sha256": "ea7472e7eaf040e0656acac9d90715c5a95024717db07eda3b36080794ac4941"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/017-three-shelves-severe-20261005/severe/1-field-result.png",
+          "sha256": "6cf46f1706735418756b7aadc3da5992ea5b7a979647547dafcf805678a6f759"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/017-three-shelves-severe-20261005/severe/1-return.png",
+          "sha256": "add9a41577b51cb9ddc75c0b4444fffa5464fd6dcc46c42e2eb5d5d5bc4271cf"
+        }
+      ],
+      "actualToolInputCounts": {
+        "Q": 1,
+        "F": 0,
+        "G": 0
+      }
+    },
+    {
+      "case": "007-split-fall-low-20261005",
+      "world": "split-fall",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/007-split-fall-low-20261005/report.json",
+        "sha256": "da0ed3fa0ce2698dbe598583b96cd98c418a6e854b8dc15e0aca839fe739dcc3"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 563.4749328940907,
+          "elapsedMs": 17549.309999999943
+        }
+      ],
+      "field": {
+        "elapsedMs": 42181.65999999973,
+        "hp": 145,
+        "chaos": 38.69601700804512,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "74a4e22d-f670-44a2-8925-bd0af5826052",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      },
+      "reason": "Longest low-grade process42.18s, original split-fall route with actual contaminant pickup.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/007-split-fall-low-20261005/low/journey.jsonl",
+        "sha256": "5c75cf2759de011a136af345f1c8d10cdaba04e5e80642899e8ea359978b891e"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/007-split-fall-low-20261005/low/1-far-exploration.png",
+          "sha256": "bb493084bf0a808b819eb7fbccb9833b956c9a408fed5316b6a9b934257453a7"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/007-split-fall-low-20261005/low/1-field-result.png",
+          "sha256": "4c4672093ae89134565be43e9412d9f30b944d5035f99f68fdf0f1e097a9a74f"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/play/007-split-fall-low-20261005/low/1-return.png",
+          "sha256": "66cc97f8637f10b42f412b32d104be9e363cb04f5ca0b06b59aa97eaafa85af3"
+        }
+      ],
+      "actualToolInputCounts": {
+        "Q": 1,
+        "F": 0,
+        "G": 0
+      }
+    }
+  ],
+  "displayMethod": "Rounded values in reason are derived directly from each row.field; original numeric values and raw reports are unchanged."
+}

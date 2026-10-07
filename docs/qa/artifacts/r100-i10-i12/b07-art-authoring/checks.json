@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "typecheck": "npx tsc --noEmit exit0",
+  "lint": "No separate lint script; strict TypeScript/noUnused gate",
+  "remains": {
+    "samples": 738,
+    "worldSources": 82,
+    "distinctGrammars": 9
+  },
+  "dev": {
+    "command": "npm run dev -- --host127.0.0.1 --port3199 --strictPort",
+    "checks": [
+      {
+        "url": "r100-gym.html",
+        "status": 200
+      },
+      {
+        "url": "src/generated/r100-world-appearance.ts",
+        "status": 200
+      },
+      {
+        "url": "src/generated/rift-search-remains.ts",
+        "status": 200
+      }
+    ]
+  },
+  "limits": "No browser or normal art pass inferred."
+}

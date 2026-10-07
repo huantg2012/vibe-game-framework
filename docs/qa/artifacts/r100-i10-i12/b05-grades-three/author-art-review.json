@@ -1,0 +1,906 @@
+{
+  "status": "bounded-low-severe-author-pass",
+  "reviewer": "world_loot_pixels",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+    "sha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/report.json",
+    "sha256": "c9e66125d95571aed660e8dd16992c018797fdc4aa7cc8351aee3b6c5c9f4d75"
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "worlds": [
+    {
+      "worldId": "quiet-spur",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "quiet-spur",
+        "grade": "low",
+        "package": {
+          "id": "r100-quiet-spur",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "808854ef",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=quiet-spur&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/quiet-spur-low/recipe.json",
+        "sha256": "79552d29ffc69df310523e14db363d6973d9a318b0c99cefeb6a92721a6a711a"
+      },
+      "status": "bounded-grade-art-pass",
+      "finding": "紫色短肩与赭色裸床分离，内侧短转弯和北侧开敞床在实际路线后可读。两端小肩仍复用分叉母形，不宣称为两种构造；限定认可它们与内部断体共同构成的短转/长绕场所关系。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/quiet-spur-low/01-south-short-shoulder-north.png",
+          "sha256": "e9756e5d9d635024cec4dab920ece69e873f0830ef5517f795feb04f148c9b0a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 576.6919193210435,
+              "y": 585.8799131986275
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.030117655999984,
+            "elapsedMs": 5516.4
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 576.6919193210435,
+              "y": 585.8799131986275
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.049075759999983,
+            "elapsedMs": 5616.4
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/quiet-spur-low/02-inner-short-turn-west.png",
+          "sha256": "6b74d049428095b0554b6df7b5161d816aa8211f923ad9e8178adb2d017fe748",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 525.7139543431376,
+              "y": 476.9981486188551
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 16.78848542399997,
+            "elapsedMs": 9516.2
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 525.7139543431376,
+              "y": 476.9981486188551
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 16.81060415999997,
+            "elapsedMs": 9632.9
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/quiet-spur-low/04-north-quiet-bed-west.png",
+          "sha256": "3f5ad244ad4b3eb729c2dcfaa09af6a93b682130deba5bba30de3facf1d3145b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": -3.1411528306182817,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 654.8596256697933,
+              "y": 230.32664149730456
+            },
+            "facingAngle": -3.1411528306182817,
+            "facing4": "left",
+            "hp": 85,
+            "chaos": 24.17565688799988,
+            "elapsedMs": 25065.6
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 654.8596256697933,
+              "y": 230.32664149730456
+            },
+            "facingAngle": -3.1411528306182817,
+            "facing4": "left",
+            "hp": 85,
+            "chaos": 24.219894359999884,
+            "elapsedMs": 25148.899999999998
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "quiet-spur",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "quiet-spur",
+        "grade": "severe",
+        "package": {
+          "id": "r100-quiet-spur",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "7ef8a6eb",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=quiet-spur&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/quiet-spur-severe/recipe.json",
+        "sha256": "aad6251fb054eac3209832dfc1b49e60bed4ad40ddb48398abd9412651ed552a"
+      },
+      "status": "bounded-grade-art-pass",
+      "finding": "紫色短肩与赭色裸床分离，内侧短转弯和北侧开敞床在实际路线后可读。两端小肩仍复用分叉母形，不宣称为两种构造；限定认可它们与内部断体共同构成的短转/长绕场所关系。 重档绿色仍为局部侵蚀，近灯实体边界与可行床没有混成一片；活动敌人/攻击在部分帧遮挡角色，不能据静帧签战斗安全或连续压力。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/quiet-spur-severe/01-south-short-shoulder-north.png",
+          "sha256": "a04277176b265109ee98ca9cd9a5c892a0a313399e94419a464ca669ddccac45",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.570733494941825,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 573.6585833234782,
+              "y": 583.0148507102676
+            },
+            "facingAngle": -1.570733494941825,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.730123711999884,
+            "elapsedMs": 5483.1
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 573.6585833234782,
+              "y": 583.0148507102676
+            },
+            "facingAngle": -1.570733494941825,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.789101951999882,
+            "elapsedMs": 5599.700000000001
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/quiet-spur-severe/02-inner-short-turn-west.png",
+          "sha256": "78c59fcc1342c5e28cde07928ecbc87eb44dfb910a6ed712716b9c3cec47ca19",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": -3.141341326177504,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 535.4562631930335,
+              "y": 470.76964330132364
+            },
+            "facingAngle": -3.141341326177504,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.57548281599981,
+            "elapsedMs": 9132.9
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 535.4562631930335,
+              "y": 470.76964330132364
+            },
+            "facingAngle": -3.141341326177504,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.634466111999807,
+            "elapsedMs": 9249.6
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/quiet-spur-severe/04-north-quiet-bed-west.png",
+          "sha256": "c98091ea68c999f6f8fa246a74f0f340d93fe65f0da2f78e6ad55e3c805773bd",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": -3.1413413261775007,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 655.8375334393717,
+              "y": 233.33479227399565
+            },
+            "facingAngle": -3.1413413261775007,
+            "facing4": "left",
+            "hp": 55,
+            "chaos": 44.1280130559992,
+            "elapsedMs": 23749
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 655.8375334393717,
+              "y": 233.33479227399565
+            },
+            "facingAngle": -3.1413413261775007,
+            "facing4": "left",
+            "hp": 55,
+            "chaos": 44.229122943999194,
+            "elapsedMs": 23849.1
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "three-shelves",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "three-shelves",
+        "grade": "low",
+        "package": {
+          "id": "r100-three-shelves",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "2187a0e5",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=three-shelves&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/three-shelves-low/recipe.json",
+        "sha256": "c23daac9b156cea4b3a2a553e0e4ec2109fd836c0d3b8c5070f97a6aef7168fa"
+      },
+      "status": "bounded-grade-art-pass",
+      "finding": "粉灰壳皮、冷蓝内壁和粗灰床有清楚材质/足线分工，东面真实厚度可见；北回望两侧断开的弧体之间是宽床，未读成完整环墙。未照见的壳背不签。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/three-shelves-low/01-west-bank-north.png",
+          "sha256": "9b5bb7686b253b9d083f5f9ff37b33c05d5acf54765aeaef28cdb3dfa3ffb26b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5702936719703195,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 353.3972936167064,
+              "y": 598.5428631664166
+            },
+            "facingAngle": -1.5702936719703195,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.578257247999993,
+            "elapsedMs": 3133.1000000000004
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 353.3972936167064,
+              "y": 598.5428631664166
+            },
+            "facingAngle": -1.5702936719703195,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.597211559999991,
+            "elapsedMs": 3233.1000000000004
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/three-shelves-low/03-east-bank-east.png",
+          "sha256": "c69efd3cad3e569c9a15e5e87a6821925414ed64c98417b9a254b3a5692e981d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": -0.00006283185307293104,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 536.1494625866533,
+              "y": 457.6344197602747
+            },
+            "facingAngle": -0.00006283185307293104,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.77584668799997,
+            "elapsedMs": 9449.599999999999
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 536.1494625866533,
+              "y": 457.6344197602747
+            },
+            "facingAngle": -0.00006283185307293104,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.79164984799997,
+            "elapsedMs": 9532.900000000001
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/three-shelves-low/04-north-open-return-south.png",
+          "sha256": "24bb7e5ef5064a8006d8caad35ec8ab5f4e24152d6d579dbd5131a9b662d2854",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "south",
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 532.2649010403146,
+              "y": 288.45129045598964
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 21.137760551999946,
+            "elapsedMs": 13149.400000000001
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 532.2649010403146,
+              "y": 288.45129045598964
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 21.169351703999943,
+            "elapsedMs": 13232.7
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "three-shelves",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "three-shelves",
+        "grade": "severe",
+        "package": {
+          "id": "r100-three-shelves",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "56a1b816",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=three-shelves&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/three-shelves-severe/recipe.json",
+        "sha256": "982a390f5dbc79cd600cc2db38bc3b8a609168008ab0f16df611115fb774c3df"
+      },
+      "status": "bounded-grade-art-pass",
+      "finding": "粉灰壳皮、冷蓝内壁和粗灰床有清楚材质/足线分工，东面真实厚度可见；北回望两侧断开的弧体之间是宽床，未读成完整环墙。未照见的壳背不签。 重档绿色仍为局部侵蚀，近灯实体边界与可行床没有混成一片；活动敌人/攻击在部分帧遮挡角色，不能据静帧签战斗安全或连续压力。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/three-shelves-severe/01-west-bank-north.png",
+          "sha256": "af7e8addb58dbf538b2390205ffe3afbc9c47995fa7b683a53452466be19363b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 356.24735071897965,
+              "y": 596.4170336904467
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.601002623999932,
+            "elapsedMs": 3249.8999999999996
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 356.24735071897965,
+              "y": 596.4170336904467
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.659996031999928,
+            "elapsedMs": 3366.5
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/three-shelves-severe/03-east-bank-east.png",
+          "sha256": "85293a426ac9b9bbb42f22ee296e4dde210358c4d7a104149d852d3434433aa9",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "east",
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 540.059607657895,
+              "y": 459.1388398750122
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.920989631999806,
+            "elapsedMs": 9816.2
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 540.059607657895,
+              "y": 459.1388398750122
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.971539519999805,
+            "elapsedMs": 9916.2
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/three-shelves-severe/04-north-open-return-south.png",
+          "sha256": "92dd378846b6f7c018877002657a17c7bf538ea6ab1597350cf40af7b45e0d61",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "south",
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 530.4829508391911,
+              "y": 293.6703582826711
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 21.53041049599975,
+            "elapsedMs": 12999.4
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 530.4829508391911,
+              "y": 293.6703582826711
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 21.580980607999745,
+            "elapsedMs": 13099.5
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "frayed-outwash",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "frayed-outwash",
+        "grade": "low",
+        "package": {
+          "id": "r100-frayed-outwash",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "e9292a56",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=frayed-outwash&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/frayed-outwash-low/recipe.json",
+        "sha256": "0fac330a3dff70777066b59fd60cde4b649f012c180ffbdddbb38067520f7720"
+      },
+      "status": "bounded-grade-art-pass",
+      "finding": "南侧低散尾/宽床，转至中段可见铜褐厚断束及白色切端，北部两厚头夹出的窄床可读。纤维纵纹与地表纹理不同；非仅换色的密度/厚度序列成立于所见路线。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/frayed-outwash-low/01-south-quiet-tail-north.png",
+          "sha256": "9d3cb21721c19166eb2cd1691e6264ac871e05c219dbc80e51357d8f77c0ef56",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 618.3573319594374,
+              "y": 655.8763049472434
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.63365932799998,
+            "elapsedMs": 8699.8
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 618.3573319594374,
+              "y": 655.8763049472434
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.64946059199998,
+            "elapsedMs": 8783.1
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/frayed-outwash-low/03-thickening-band-west.png",
+          "sha256": "4756aacdd88a88cdf2c4bf12305cc5474b58d4914c51fa991495495b9e03f954",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 530.9845106619001,
+              "y": 389.64454479564654
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.08404055199995,
+            "elapsedMs": 16349.5
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 530.9845106619001,
+              "y": 389.64454479564654
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.10299865599995,
+            "elapsedMs": 16449.5
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/frayed-outwash-low/04-north-dense-head-south.png",
+          "sha256": "dc6e92a0044bdce5e3e1442f6c0a093f27cf7218d9fd8b3a4a4398f00fc737e1",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "south",
+          "actualAngle": 1.571298981619461,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.6995467196783,
+              "y": 153.13881567466166
+            },
+            "facingAngle": 1.571298981619461,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 22.117309359999926,
+            "elapsedMs": 21065.9
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.6995467196783,
+              "y": 153.13881567466166
+            },
+            "facingAngle": 1.571298981619461,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 22.161543039999923,
+            "elapsedMs": 21182.6
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "frayed-outwash",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "frayed-outwash",
+        "grade": "severe",
+        "package": {
+          "id": "r100-frayed-outwash",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "527a9782",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3108/r100-gym.html?world=frayed-outwash&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/frayed-outwash-severe/recipe.json",
+        "sha256": "12dda7ae428f9fb86acb8a3cbb4b5a57a344972774065234ae01979aec7c096f"
+      },
+      "status": "bounded-grade-art-pass",
+      "finding": "南侧低散尾/宽床，转至中段可见铜褐厚断束及白色切端，北部两厚头夹出的窄床可读。纤维纵纹与地表纹理不同；非仅换色的密度/厚度序列成立于所见路线。 重档绿色仍为局部侵蚀，近灯实体边界与可行床没有混成一片；活动敌人/攻击在部分帧遮挡角色，不能据静帧签战斗安全或连续压力。",
+      "personallyViewed": [
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/frayed-outwash-severe/01-south-quiet-tail-north.png",
+          "sha256": "9839f2264d8416c896c77ec9fe4ca85f3dd739736c12c0252b930a3bdc7dbe3f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "north",
+          "actualAngle": -1.570733494941827,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 618.595250260063,
+              "y": 655.6767825281861
+            },
+            "facingAngle": -1.570733494941827,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.16258963199982,
+            "elapsedMs": 8316.300000000001
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 618.595250260063,
+              "y": 655.6767825281861
+            },
+            "facingAngle": -1.570733494941827,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.213149631999816,
+            "elapsedMs": 8416.300000000001
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/frayed-outwash-severe/03-thickening-band-west.png",
+          "sha256": "9aa8a75ec5d22ab0267bd902ccc11a73c80dd5d8a93647e0c76024867afec930",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "west",
+          "actualAngle": -3.141341326177507,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 542.5754886580221,
+              "y": 383.5832113951753
+            },
+            "facingAngle": -3.141341326177507,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 29.01321177599981,
+            "elapsedMs": 16099.4
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 542.5754886580221,
+              "y": 383.5832113951753
+            },
+            "facingAngle": -3.141341326177507,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 29.11430143999981,
+            "elapsedMs": 16199.4
+          }
+        },
+        {
+          "file": "docs/qa/artifacts/r100-i10-i12/b05-grades-three/frayed-outwash-severe/04-north-dense-head-south.png",
+          "sha256": "3accf872b166011ceb3dbfcd27e96ee743068059b4885274b95588c170cce413",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "facing": "south",
+          "actualAngle": 1.5710476542071818,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 552.2357131671323,
+              "y": 156.2346292199664
+            },
+            "facingAngle": 1.5710476542071818,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 35.01273215999937,
+            "elapsedMs": 22032.5
+          },
+          "after": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 552.2357131671323,
+              "y": 156.2346292199664
+            },
+            "facingAngle": 1.5710476542071818,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 35.14755545599936,
+            "elapsedMs": 22165.699999999997
+          }
+        }
+      ]
+    }
+  ],
+  "personallyViewedCount": 18,
+  "totalCaptured": 34,
+  "scope": "Six finite-FOV actual WASD art routes; selected 18 original PNG personally inspected. No body/light/health/clock edits, enemies active. Not full-run gameplay qualification, fatigue review, listening or human acceptance.",
+  "limitations": [
+    "Same requested seed 20261005, actual stopping points logged rather than pixel-identical viewpoints.",
+    "Dark and unseen walls/other routes remain outside review.",
+    "Quiet severe north frame shows damage/active encounter (55 HP in inspected still); it is not evidence of safe access.",
+    "Split-fall is explicitly excluded: original repeated-fork rejection retained; its repaired source is separately sampled."
+  ]
+}

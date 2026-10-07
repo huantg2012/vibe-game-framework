@@ -1,0 +1,993 @@
+{
+  "status": "fixed-play-pairs-pass-worker-issue-open",
+  "summary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play-summary-v2.json",
+    "sha256": "ecff1e96f30849d01f53b28e364410b2772a82b6653d5730cc2fb54e37752476"
+  },
+  "counts": {
+    "originalPlannedSeeds": 24,
+    "actualAttempts": 27,
+    "completeSeedProcesses": 24,
+    "nonEntrySearchAndExtract": 22,
+    "nearEntryOnly": 2,
+    "trueEmptyExtract": 0,
+    "deaths": 0,
+    "retainedIncompleteAttempts": 3
+  },
+  "diagnosis": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-diagnosis.json",
+    "sha256": "eb62833f4f5f6212e8b47ff92fa20f87eb593253fb6209eaaa28db7727be97df"
+  },
+  "scope": "Both original seeds now have complete observed processes; pair threshold met. Original3 pre-entry failures retained. P36 remains open for final324 entry/cold instrumentation; not an environment-cause or full quality approval.",
+  "rows": [
+    {
+      "case": "001-fibre-choke-low-20261005",
+      "world": "fibre-choke",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/001-fibre-choke-low-20261005/report.json",
+        "sha256": "421786f711fba447df4a43af26a6c192f7ee04dab3d1fecbd180374e75264809"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 695.8160676500652,
+          "elapsedMs": 16099.359999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 26215.60999999975,
+        "hp": 145,
+        "chaos": 28.579545768482667,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "2b780aec-3d59-40c1-afac-a920624a7800",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "002-fibre-choke-low-3075192741",
+      "world": "fibre-choke",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/002-fibre-choke-low-3075192741/report.json",
+        "sha256": "d49f2f4d7660a0fef3da54ba093a2b3d64e17a2b8f954eb239c006abdacace72"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 689.1618097370167,
+          "elapsedMs": 13616.12999999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 26065.629999999772,
+        "hp": 145,
+        "chaos": 28.553346100637615,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "3d6d4794-67b3-4e60-ab71-fe830d824965",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "003-fibre-choke-medium-20261005",
+      "world": "fibre-choke",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/003-fibre-choke-medium-20261005/report.json",
+        "sha256": "c378bc28788fd1f81894cbe70fe1cb809c4a617d7e67d8ae1707009e75ed2347"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 673.1894235651657,
+          "elapsedMs": 29082.159999999683
+        }
+      ],
+      "field": {
+        "elapsedMs": 42131.6499999998,
+        "hp": 115,
+        "chaos": 54.4736857620255,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "8e6906c3-5e51-45b1-a5a9-d6d7e643aca9",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "004-fibre-choke-medium-3075192741",
+      "world": "fibre-choke",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/004-fibre-choke-medium-3075192741/report.json",
+        "sha256": "21520a6f8a2099fa1c4f4d878d5dc7da0b93e706c692fa956556567fdc0c66b1"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 689.1618097370167,
+          "elapsedMs": 14249.41999999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 26732.259999999722,
+        "hp": 145,
+        "chaos": 32.17214683498739,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "601258c5-a488-4c8b-b2db-7f4f17ccdfc5",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "005-fibre-choke-severe-20261005",
+      "world": "fibre-choke",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/005-fibre-choke-severe-20261005/report.json",
+        "sha256": "da7559325562871468322671410f17c290962f11eb9b32fd8a5c5e433a768202"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 561.426753904728,
+          "elapsedMs": 24465.639999999763
+        }
+      ],
+      "field": {
+        "elapsedMs": 38181.779999999766,
+        "hp": 145,
+        "chaos": 42.08036089361125,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "7629093e-2663-46b8-9322-4743d397c05b",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "006-fibre-choke-severe-3075192741",
+      "world": "fibre-choke",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/006-fibre-choke-severe-3075192741/report.json",
+        "sha256": "2836c2efbaf4edeb0f3430d9d568cfbb7f3ea7454b62d09b2d5c7e3e0298247b"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.09998437988094,
+          "elapsedMs": 7749.659999999996
+        }
+      ],
+      "field": {
+        "elapsedMs": 14332.73999999999,
+        "hp": 145,
+        "chaos": 30.67667737583555,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "5726572b-e434-48e0-8f3c-856c09bd8fd3",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "007-buried-lamellae-low-20261005",
+      "world": "buried-lamellae",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/007-buried-lamellae-low-20261005/report.json",
+        "sha256": "d5bccc596bc0627a51601b6b4a8fc6ba9e6d4adfcb80baa349e535a5a074a5a4"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 595.7180541162069,
+          "elapsedMs": 13999.43999999999
+        }
+      ],
+      "field": {
+        "elapsedMs": 28198.849999999737,
+        "hp": 145,
+        "chaos": 28.925993489893226,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "390c407a-ad5a-4ed0-92e8-780d258ce9be",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "008-buried-lamellae-low-3075192741",
+      "world": "buried-lamellae",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/008-buried-lamellae-low-3075192741/report.json",
+        "sha256": "16d83abf013670d1627b229b2a847656579725e6df610d09024462264447b63c"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": false,
+      "actualPickups": 1,
+      "nearEntryPickups": 1,
+      "collected": [],
+      "field": {
+        "elapsedMs": 13249.479999999989,
+        "hp": 145,
+        "chaos": 26.31452177037231,
+        "carried": 4
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "18bb8219-c135-4e8f-bc7c-faeba8ccdace",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "009-buried-lamellae-medium-20261005",
+      "world": "buried-lamellae",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/009-buried-lamellae-medium-20261005/report.json",
+        "sha256": "82cc6e50b53a15ad34ef3fc45e2a3d14572d1b7233f14daf3c68e0695aa585b2"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 680,
+          "elapsedMs": 38948.41999999984
+        }
+      ],
+      "field": {
+        "elapsedMs": 50664.61000000002,
+        "hp": 145,
+        "chaos": 55.09674932389892,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "c09cfef3-5d61-44de-a504-11eff2e32c3d",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "010-buried-lamellae-medium-3075192741",
+      "world": "buried-lamellae",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/010-buried-lamellae-medium-3075192741/report.json",
+        "sha256": "dc78df29829b3dbd2515483f927ed3977fb450caa4da5ac30cbca9d790fd43de"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.8987379221053,
+          "elapsedMs": 7233.069999999996
+        }
+      ],
+      "field": {
+        "elapsedMs": 14316.10999999999,
+        "hp": 145,
+        "chaos": 28.376485677822792,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "c594b3e2-2970-4693-a3c3-bc4d35dd73f4",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "011-buried-lamellae-severe-20261005",
+      "world": "buried-lamellae",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/011-buried-lamellae-severe-20261005/report.json",
+        "sha256": "8db5358d06d04cbd42bd1b1bf3fb147ad95a656450f39411b754a9d73439f328"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.09998437988094,
+          "elapsedMs": 7816.349999999993
+        }
+      ],
+      "field": {
+        "elapsedMs": 14882.729999999987,
+        "hp": 145,
+        "chaos": 30.932881408695675,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "e8367302-6354-4bb8-b222-2ff7a72a857f",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "012-buried-lamellae-severe-3075192741",
+      "world": "buried-lamellae",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/012-buried-lamellae-severe-3075192741/report.json",
+        "sha256": "f6725170c96a0ad622c03506c09a698bf1b5bd7ba23d0de9d79b942ef95e74f8"
+      },
+      "outcome": null,
+      "processComplete": false,
+      "searchAndExtract": false,
+      "actualPickups": 0,
+      "nearEntryPickups": 0,
+      "collected": [],
+      "field": {
+        "elapsedMs": null,
+        "hp": null,
+        "chaos": null,
+        "carried": null
+      },
+      "failure": "Error: page.evaluate: Error: Generation worker failed\n    at worker.onerror (http://127.0.0.1:3110/src/generation/rift-generation-client.ts:53:40)",
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": null,
+        "status": null,
+        "outcome": null,
+        "baseSettled": null
+      }
+    },
+    {
+      "case": "013-pressed-rim-low-20261005",
+      "world": "pressed-rim",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/013-pressed-rim-low-20261005/report.json",
+        "sha256": "5ff570ba1978acabc8d601578a576419052ad3e2f7fb2edbd1a521616008113b"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 16832.689999999984
+        }
+      ],
+      "field": {
+        "elapsedMs": 46498.149999999936,
+        "hp": 145,
+        "chaos": 40.23029596984254,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "d18a798c-249f-4e22-8fd0-26633b8f4ccd",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "014-pressed-rim-low-3075192741",
+      "world": "pressed-rim",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/014-pressed-rim-low-3075192741/report.json",
+        "sha256": "5677b0567f70b67010074e6a122c7d8cd162ad6d31f154eb9e32df1990abf19d"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 12299.469999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 23465.719999999787,
+        "hp": 145,
+        "chaos": 28.099173688134595,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "7a145684-4349-41cc-b5ef-c6063b95b6bd",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "015-pressed-rim-medium-20261005",
+      "world": "pressed-rim",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/015-pressed-rim-medium-20261005/report.json",
+        "sha256": "e293be76271452ca0f8c77fd6b60b6df83e7ca861b67938abeb0481f8aafff66"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 604.0397337924054,
+          "elapsedMs": 35981.91999999966
+        }
+      ],
+      "field": {
+        "elapsedMs": 46131.499999999905,
+        "hp": 145,
+        "chaos": 56.866742356753655,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "7f9610aa-34c1-473e-9fd7-d65a7e40ee96",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "016-pressed-rim-medium-3075192741",
+      "world": "pressed-rim",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/016-pressed-rim-medium-3075192741/report.json",
+        "sha256": "4824616af05effef87672177b1439fb007b4a90d228fb59016eff6205d965c78"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 12349.529999999993
+        }
+      ],
+      "field": {
+        "elapsedMs": 23032.38999999987,
+        "hp": 145,
+        "chaos": 31.04108343404923,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "ccce7724-d9d0-4cf3-ae9a-7bbbee9fad64",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "017-pressed-rim-severe-20261005",
+      "world": "pressed-rim",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/017-pressed-rim-severe-20261005/report.json",
+        "sha256": "04861b4735931bed5e597b6525af0cdf3f0cb0682e3ab314076b3011a6042de1"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 526.8472264328626,
+          "elapsedMs": 22915.739999999838
+        }
+      ],
+      "field": {
+        "elapsedMs": 37498.50999999973,
+        "hp": 145,
+        "chaos": 41.468080307363536,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "0feac1df-c0e2-4875-bb45-0cc62186ecb4",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "018-pressed-rim-severe-3075192741",
+      "world": "pressed-rim",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/018-pressed-rim-severe-3075192741/report.json",
+        "sha256": "b1865fcd46b84736300e06677d3c90029b09ab70734af51e5c3b0691acc89fe3"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 29065.51999999969
+        }
+      ],
+      "field": {
+        "elapsedMs": 41714.999999999796,
+        "hp": 115,
+        "chaos": 64.32544539823103,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "8d39a1f9-ed3f-4c7b-b47f-c2d603ad993f",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "019-wedged-hide-low-20261005",
+      "world": "wedged-hide",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/019-wedged-hide-low-20261005/report.json",
+        "sha256": "1c5f675afa60eb49287e56cff81f517770e2e296a7950d1013420765eecf82cf"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 616.8306088384396,
+          "elapsedMs": 13949.469999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 27115.58999999976,
+        "hp": 145,
+        "chaos": 28.73676124432782,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "142a98d2-ffe3-4207-9c4a-9b5c9306be6c",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "020-wedged-hide-low-3075192741",
+      "world": "wedged-hide",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/020-wedged-hide-low-3075192741/report.json",
+        "sha256": "7b6b57d0384640fee6f7dda98f2fcae47d096b1ba7789abe94686e854e5be080"
+      },
+      "outcome": null,
+      "processComplete": false,
+      "searchAndExtract": false,
+      "actualPickups": 0,
+      "nearEntryPickups": 0,
+      "collected": [],
+      "field": {
+        "elapsedMs": null,
+        "hp": null,
+        "chaos": null,
+        "carried": null
+      },
+      "failure": "Error: page.evaluate: Error: Generation worker failed\n    at worker.onerror (http://127.0.0.1:3110/src/generation/rift-generation-client.ts:53:40)",
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": null,
+        "status": null,
+        "outcome": null,
+        "baseSettled": null
+      }
+    },
+    {
+      "case": "021-wedged-hide-medium-20261005",
+      "world": "wedged-hide",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/021-wedged-hide-medium-20261005/report.json",
+        "sha256": "6b30d00da0cbb72d0a6170f0f7ecc512d077447a527d7a9c66a8429526459452"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 544.0588203494177,
+          "elapsedMs": 16849.319999999974
+        }
+      ],
+      "field": {
+        "elapsedMs": 31882.069999999694,
+        "hp": 145,
+        "chaos": 33.74646204411279,
+        "carried": 6
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "3f3f736c-e7f2-460a-b442-cf66eb0a1167",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "022-wedged-hide-medium-3075192741",
+      "world": "wedged-hide",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/022-wedged-hide-medium-3075192741/report.json",
+        "sha256": "4f61dc1a7df6c332bc0605a8416d7c9d5ff1898d37af85c8d2bcf36806817d3a"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-deep-1",
+          "distanceFromEntry": 883.8099343184597,
+          "elapsedMs": 46448.13999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 68747.25999999978,
+        "hp": 130,
+        "chaos": 69.96075191589263,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "76fd1d03-10b6-41eb-9ced-aa4a16c16f66",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "023-wedged-hide-severe-20261005",
+      "world": "wedged-hide",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/023-wedged-hide-severe-20261005/report.json",
+        "sha256": "c27bec12f3fe23ccad0c9aa959df48bf975dd713e670a63446ec1605a82f6719"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.09998437988094,
+          "elapsedMs": 7533.0399999999945
+        }
+      ],
+      "field": {
+        "elapsedMs": 14516.079999999989,
+        "hp": 145,
+        "chaos": 30.76208337846209,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "f9e8aa4a-b01f-449f-9f24-e6d75a09eca9",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "024-wedged-hide-severe-3075192741",
+      "world": "wedged-hide",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/play/024-wedged-hide-severe-3075192741/report.json",
+        "sha256": "682331a512d1b4b1c612a0dd33dff4edbb839a20139fc7973b95541c6368a3ed"
+      },
+      "outcome": null,
+      "processComplete": false,
+      "searchAndExtract": false,
+      "actualPickups": 0,
+      "nearEntryPickups": 0,
+      "collected": [],
+      "field": {
+        "elapsedMs": null,
+        "hp": null,
+        "chaos": null,
+        "carried": null
+      },
+      "failure": "Error: page.evaluate: Error: Native surface preparation Worker failed\n    at worker.onerror (http://127.0.0.1:3110/src/systems/r100-world/surface-preparation-client.ts:54:40)",
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": null,
+        "status": null,
+        "outcome": null,
+        "baseSettled": null
+      }
+    },
+    {
+      "case": "001-buried-lamellae-severe-3075192741",
+      "world": "buried-lamellae",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/buried-lamellae-severe/001-buried-lamellae-severe-3075192741/report.json",
+        "sha256": "000a0eb668e64c5fd3b54a328a8d7d94b3b2776082ac2b3572eeb2f04937aa43"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": false,
+      "actualPickups": 1,
+      "nearEntryPickups": 1,
+      "collected": [],
+      "field": {
+        "elapsedMs": 15382.699999999988,
+        "hp": 145,
+        "chaos": 31.165784425676144,
+        "carried": 4
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "df34f835-1020-4cc7-8947-aa51709b75f7",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "001-wedged-hide-low-3075192741",
+      "world": "wedged-hide",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-low/001-wedged-hide-low-3075192741/report.json",
+        "sha256": "bd47483768be6bfee65843e5be72eb4bfdf26c6ca042ff407ed54adb9eb0aa77"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 821.1991232338231,
+          "elapsedMs": 47198.11999999982
+        }
+      ],
+      "field": {
+        "elapsedMs": 70063.87999999984,
+        "hp": 145,
+        "chaos": 36.23930113308635,
+        "carried": 9
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "886baf1c-a0de-4c6b-816e-991f5503654e",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    },
+    {
+      "case": "001-wedged-hide-severe-3075192741",
+      "world": "wedged-hide",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-rechecks-v2/wedged-hide-severe/001-wedged-hide-severe-3075192741/report.json",
+        "sha256": "c0aab9cb00c7e2fab419acbde5a0e0f2bc80d1509043d0d491a4a56803d49e2e"
+      },
+      "outcome": "extract",
+      "processComplete": true,
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "distanceFromEntry": 320.8987379221053,
+          "elapsedMs": 7699.699999999996
+        }
+      ],
+      "field": {
+        "elapsedMs": 15032.69999999999,
+        "hp": 145,
+        "chaos": 31.00274253127616,
+        "carried": 0
+      },
+      "failure": null,
+      "runtimeErrors": [],
+      "navigationWarning": null,
+      "settledRun": {
+        "id": "2c2b10b4-f4bb-42ce-8c9e-980c552cf230",
+        "status": "settled",
+        "outcome": "extract",
+        "baseSettled": true
+      }
+    }
+  ]
+}

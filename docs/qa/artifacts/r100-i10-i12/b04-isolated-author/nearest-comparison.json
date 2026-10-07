@@ -1,0 +1,342 @@
+{
+  "currentFormalCatalogSha256": "f6da1bb07c9411f8fecd67d81e41d62dc0f7e6f5b67799c2d1cabb3eb68afb2e",
+  "comparisons": [
+    {
+      "candidate": "fibre-choke",
+      "nearestAuthoredReference": "bladder-weave",
+      "candidateDefinition": {
+        "primaryFamily": "fibre-knot",
+        "solidCount": 5,
+        "reliefCount": 0,
+        "primarySolidCount": 3,
+        "secondarySolidCount": 2,
+        "solidHeights": [
+          46,
+          42,
+          54,
+          49,
+          37
+        ],
+        "solidLargestAxis": [
+          235,
+          220,
+          175,
+          180,
+          175
+        ],
+        "families": [
+          "broken-shell",
+          "fibre-knot"
+        ],
+        "profiles": [
+          "clamp-bank",
+          "fallen-bundle"
+        ]
+      },
+      "referenceDefinition": {
+        "primaryFamily": "membrane-rim",
+        "solidCount": 4,
+        "reliefCount": 0,
+        "primarySolidCount": 2,
+        "secondarySolidCount": 2,
+        "solidHeights": [
+          58,
+          42,
+          62,
+          48
+        ],
+        "solidLargestAxis": [
+          350,
+          300,
+          410,
+          380
+        ],
+        "families": [
+          "fibre-knot",
+          "membrane-rim"
+        ],
+        "profiles": [
+          "cellular-shell",
+          "rib-vault"
+        ]
+      },
+      "spatialDifferences": [
+        "断束压在两片破唇之间，取消完整囊腔和牵丝",
+        "缺段折口可横穿，外侧两路不靠纤锚分区"
+      ],
+      "actualNewRouteLengths": [
+        {
+          "name": "central-fold",
+          "lengthPx": 504
+        },
+        {
+          "name": "west-outer",
+          "lengthPx": 360
+        },
+        {
+          "name": "east-outer",
+          "lengthPx": 360
+        }
+      ],
+      "contactOverlapArea4pxEstimates": [
+        {
+          "a": 1,
+          "b": 3,
+          "footprintOverlapAreaEstimate": 6784
+        },
+        {
+          "a": 1,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 5184
+        },
+        {
+          "a": 2,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 1504
+        }
+      ],
+      "status": "design-and-static-comparison-not-identity-approval",
+      "limitation": "Surface volume, material junction visibility and normal lamp framing remain unverified"
+    },
+    {
+      "candidate": "buried-lamellae",
+      "nearestAuthoredReference": "grain-laminate",
+      "candidateDefinition": {
+        "primaryFamily": "folded-slab",
+        "solidCount": 1,
+        "reliefCount": 3,
+        "primarySolidCount": 1,
+        "secondarySolidCount": 0,
+        "solidHeights": [
+          46
+        ],
+        "solidLargestAxis": [
+          240
+        ],
+        "families": [
+          "folded-slab",
+          "granular-ridge"
+        ],
+        "profiles": [
+          "fallen-bundle",
+          "fracture-fan"
+        ]
+      },
+      "referenceDefinition": {
+        "primaryFamily": "granular-ridge",
+        "solidCount": 3,
+        "reliefCount": 1,
+        "primarySolidCount": 2,
+        "secondarySolidCount": 1,
+        "solidHeights": [
+          38,
+          60,
+          19
+        ],
+        "solidLargestAxis": [
+          450,
+          246,
+          346
+        ],
+        "families": [
+          "folded-slab",
+          "granular-ridge"
+        ],
+        "profiles": [
+          "historical-family"
+        ]
+      },
+      "spatialDifferences": [
+        "一个阻挡高端逐步变成两片可走低肩",
+        "颗粒只在一侧堆积并覆盖埋片端，不是两材平行摆放"
+      ],
+      "actualNewRouteLengths": [
+        {
+          "name": "exposed-end-to-buried-bed",
+          "lengthPx": 624
+        },
+        {
+          "name": "high-end-outer",
+          "lengthPx": 480
+        }
+      ],
+      "contactOverlapArea4pxEstimates": [
+        {
+          "a": 2,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 16640
+        },
+        {
+          "a": 3,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 8016
+        }
+      ],
+      "status": "design-and-static-comparison-not-identity-approval",
+      "limitation": "Surface volume, material junction visibility and normal lamp framing remain unverified"
+    },
+    {
+      "candidate": "pressed-rim",
+      "nearestAuthoredReference": "clamped-shore",
+      "candidateDefinition": {
+        "primaryFamily": "gel-flow",
+        "solidCount": 2,
+        "reliefCount": 2,
+        "primarySolidCount": 1,
+        "secondarySolidCount": 1,
+        "solidHeights": [
+          62,
+          43
+        ],
+        "solidLargestAxis": [
+          260,
+          195
+        ],
+        "families": [
+          "broken-shell",
+          "gel-flow"
+        ],
+        "profiles": [
+          "clamp-bank"
+        ]
+      },
+      "referenceDefinition": {
+        "primaryFamily": "broken-shell",
+        "solidCount": 2,
+        "reliefCount": 2,
+        "primarySolidCount": 2,
+        "secondarySolidCount": 0,
+        "solidHeights": [
+          65,
+          42
+        ],
+        "solidLargestAxis": [
+          435,
+          280
+        ],
+        "families": [
+          "broken-shell",
+          "gel-flow"
+        ],
+        "profiles": [
+          "clamp-bank",
+          "fracture-fan"
+        ]
+      },
+      "spatialDifferences": [
+        "胶自身成为高压头，两个低尾向不同方向展开",
+        "次材短壳仅支住一肩，无主导场景的长厚壳唇"
+      ],
+      "actualNewRouteLengths": [
+        {
+          "name": "low-tail-shortcut",
+          "lengthPx": 608
+        },
+        {
+          "name": "outer-head",
+          "lengthPx": 1056
+        }
+      ],
+      "contactOverlapArea4pxEstimates": [
+        {
+          "a": 1,
+          "b": 2,
+          "footprintOverlapAreaEstimate": 10144
+        },
+        {
+          "a": 1,
+          "b": 3,
+          "footprintOverlapAreaEstimate": 11008
+        },
+        {
+          "a": 1,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 13584
+        }
+      ],
+      "status": "design-and-static-comparison-not-identity-approval",
+      "limitation": "Surface volume, material junction visibility and normal lamp framing remain unverified"
+    },
+    {
+      "candidate": "wedged-hide",
+      "nearestAuthoredReference": "tension-membrane",
+      "candidateDefinition": {
+        "primaryFamily": "membrane-rim",
+        "solidCount": 3,
+        "reliefCount": 2,
+        "primarySolidCount": 1,
+        "secondarySolidCount": 2,
+        "solidHeights": [
+          54,
+          48,
+          35
+        ],
+        "solidLargestAxis": [
+          210,
+          230,
+          180
+        ],
+        "families": [
+          "folded-slab",
+          "membrane-rim"
+        ],
+        "profiles": [
+          "fracture-fan",
+          "torn-sheet"
+        ]
+      },
+      "referenceDefinition": {
+        "primaryFamily": "membrane-rim",
+        "solidCount": 3,
+        "reliefCount": 1,
+        "primarySolidCount": 1,
+        "secondarySolidCount": 2,
+        "solidHeights": [
+          62,
+          34,
+          24
+        ],
+        "solidLargestAxis": [
+          602,
+          392,
+          248
+        ],
+        "families": [
+          "fibre-knot",
+          "membrane-rim"
+        ],
+        "profiles": [
+          "historical-family"
+        ]
+      },
+      "spatialDifferences": [
+        "硬楔压住西厚卷和东断散低皮，不再是拉平的完整膜",
+        "中间表皮真正缺失露出可行裸床，形成直接穿口"
+      ],
+      "actualNewRouteLengths": [
+        {
+          "name": "bare-tear",
+          "lengthPx": 296
+        },
+        {
+          "name": "fold-outer",
+          "lengthPx": 464
+        }
+      ],
+      "contactOverlapArea4pxEstimates": [
+        {
+          "a": 1,
+          "b": 3,
+          "footprintOverlapAreaEstimate": 5120
+        },
+        {
+          "a": 2,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 2336
+        }
+      ],
+      "status": "design-and-static-comparison-not-identity-approval",
+      "limitation": "Surface volume, material junction visibility and normal lamp framing remain unverified"
+    }
+  ]
+}

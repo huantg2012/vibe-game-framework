@@ -1,0 +1,110 @@
+{
+  "status": "pass-selected-data-only",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-and-low-surface-source/source-snapshot.json",
+    "sha256": "ca7c824799dcf428a691fda42c0b449fa7b34ae83ba95c2a847a4fbfadb57edd"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "worlds": [
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks"
+  ],
+  "checks": [
+    {
+      "worldId": "staggered-cups",
+      "field": "R100_NATIVE_WORLDS",
+      "sha256": "ff329a4f227490cad7a2cbefa738bc9ef032e85bc4796c3fc72fcacca8c63045"
+    },
+    {
+      "worldId": "split-tows",
+      "field": "R100_NATIVE_WORLDS",
+      "sha256": "24f65aa13630fcfc09b2ce1fb323c2eb9f148c3de911e57f4ef59cdbd0c5afb2"
+    },
+    {
+      "worldId": "curled-flats",
+      "field": "R100_NATIVE_WORLDS",
+      "sha256": "fc3d02db26ea109c6c7c35c0abfa81cc0d5d9312560db841d3151d2c9de3ede7"
+    },
+    {
+      "worldId": "pitch-forks",
+      "field": "R100_NATIVE_WORLDS",
+      "sha256": "856072d86a8f29bef2216c446512847e33196c29f728dd9a406445ef49f73d23"
+    },
+    {
+      "worldId": "staggered-cups",
+      "field": "R100_WORLD_APPEARANCES",
+      "sha256": "21661898656d1772850974b227795b299f3552d9284d0dfdb4b215d255cdd0df"
+    },
+    {
+      "worldId": "split-tows",
+      "field": "R100_WORLD_APPEARANCES",
+      "sha256": "38b676c1455f77eedf9623399a42ee0c6f0b60959ea067d8b90c7f702f1c6057"
+    },
+    {
+      "worldId": "curled-flats",
+      "field": "R100_WORLD_APPEARANCES",
+      "sha256": "bcab57cf8eea04e8fa21b23ae5247d1f56dd805418d53d70b1dbc23b3baeadfb"
+    },
+    {
+      "worldId": "pitch-forks",
+      "field": "R100_WORLD_APPEARANCES",
+      "sha256": "92d19079141e086f6e0038930271d6d073fc41a3fc25e2d0c1ac466cb744d6bb"
+    },
+    {
+      "worldId": "staggered-cups",
+      "field": "SEARCH_REMAINS",
+      "sha256": "ed75629c154a30e9fc379916053cc5de8878d86bd861e2d08ca554a90440f5f8"
+    },
+    {
+      "worldId": "split-tows",
+      "field": "SEARCH_REMAINS",
+      "sha256": "2150f84809306a6cbf23cdb80d689b6de6db56af3e7874ebbf485373f0973107"
+    },
+    {
+      "worldId": "curled-flats",
+      "field": "SEARCH_REMAINS",
+      "sha256": "0f102b940510dd59d0b38d03c8f4ae81509a9ca072c6a3f42eb80a0364ad920d"
+    },
+    {
+      "worldId": "pitch-forks",
+      "field": "SEARCH_REMAINS",
+      "sha256": "9853cdba338dc3344f56a19e82a0e55f93776ec9f3ec3525ccb860015f80d0d8"
+    }
+  ],
+  "materials": [
+    {
+      "key": "broken-shell",
+      "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+      "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+      "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+    },
+    {
+      "key": "fibre-knot",
+      "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+      "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+      "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+    },
+    {
+      "key": "gel-flow",
+      "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+      "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+      "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+    },
+    {
+      "key": "membrane-rim",
+      "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+      "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+      "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+    }
+  ],
+  "tool": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/prepare-execution.mjs",
+    "sha256": "d9b83dadff4bdcb72221edd6d384ff8292a096775829295c6a4bd92860b246a9"
+  },
+  "scope": "Exact authored definitions, appearance, remains and selected material hashes only. This does not assert complete runtime continuity, RGBA equality, Worker recovery, or inherited generation/play qualification. New generation executes the current frozen source."
+}
