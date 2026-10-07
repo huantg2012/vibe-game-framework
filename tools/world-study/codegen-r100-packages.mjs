@@ -15,6 +15,7 @@ const paths = ['data/rift-master-scenes.csv', 'data/rift-pollution-grades.csv', 
   'src/generation/world-study/native-volume-pleated-tear.ts',
   'src/generation/world-study/native-volume-ground.ts', 'src/generation/world-study/native-volume-erosion.ts',
   'src/generation/world-study/native-volume-settled-sheet.ts',
+  'src/generation/world-study/native-volume-settled-projection.ts',
   'src/generation/world-study/native-volume-ground-edge.ts',
   'src/generation/world-study/native-volume-organization.ts',
   'src/generation/world-study/native-volume-raster.ts', 'src/generation/world-study/pollution-grade.ts'];

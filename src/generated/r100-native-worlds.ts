@@ -2,7 +2,7 @@
 import type { MasterDefinition } from '../generation/world-study/r100-master-world';
 import type { WorldProfile } from '../generation/world-study/types';
 export interface R100NativeWorldEntry { readonly id: string; readonly label: string; readonly iteration: number; readonly enabled: boolean; readonly profile: WorldProfile; readonly definitions: readonly MasterDefinition[] }
-export const R100_NATIVE_CATALOG_SOURCE_HASH = 'd56a3711dd2d005e2f8cfa697c415ce2550b6262c7de1457e3599e43bc100a60';
+export const R100_NATIVE_CATALOG_SOURCE_HASH = 'f8d64f1c96a7ef494552118f762ce675b0a1ad9f12cb1e02f1d9a63f61b6397b';
 export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
   {
     "id": "ash-strata",
@@ -43794,7 +43794,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 2,
@@ -43812,7 +43812,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 3,
@@ -43951,7 +43951,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 2,
@@ -43969,7 +43969,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 3,
@@ -44108,7 +44108,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 2,
@@ -44126,7 +44126,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 3,
@@ -44898,7 +44898,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 8,
@@ -44916,7 +44916,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           }
         ],
         "erosion": [
@@ -45091,7 +45091,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 8,
@@ -45109,7 +45109,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           }
         ],
         "erosion": [
@@ -45284,7 +45284,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 8,
@@ -45302,7 +45302,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           }
         ],
         "erosion": [
@@ -45423,7 +45423,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 2,
@@ -45441,7 +45441,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 3,
@@ -45477,7 +45477,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 5,
@@ -45495,7 +45495,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 6,
@@ -45580,7 +45580,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 2,
@@ -45598,7 +45598,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 3,
@@ -45634,7 +45634,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 5,
@@ -45652,7 +45652,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 6,
@@ -45737,7 +45737,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 2,
@@ -45755,7 +45755,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 3,
@@ -45791,7 +45791,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 5,
@@ -45809,7 +45809,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "clamp-bank"
+            "shapeProfile": "settled-clamp"
           },
           {
             "id": 6,
@@ -46755,7 +46755,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           },
           {
             "id": 2,
@@ -46773,7 +46773,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           },
           {
             "id": 3,
@@ -46912,7 +46912,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           },
           {
             "id": 2,
@@ -46930,7 +46930,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           },
           {
             "id": 3,
@@ -47069,7 +47069,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           },
           {
             "id": 2,
@@ -47087,7 +47087,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           },
           {
             "id": 3,
@@ -47280,7 +47280,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle",
+            "shapeProfile": "settled-bundle",
             "groundEdgeWidth": 8
           },
           {
@@ -47299,7 +47299,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 3,
@@ -47317,7 +47317,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 4,
@@ -47454,7 +47454,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle",
+            "shapeProfile": "settled-bundle",
             "groundEdgeWidth": 8
           },
           {
@@ -47473,7 +47473,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 3,
@@ -47491,7 +47491,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 4,
@@ -47628,7 +47628,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle",
+            "shapeProfile": "settled-bundle",
             "groundEdgeWidth": 8
           },
           {
@@ -47647,7 +47647,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 3,
@@ -47665,7 +47665,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fallen-bundle"
+            "shapeProfile": "settled-bundle"
           },
           {
             "id": 4,
@@ -47856,7 +47856,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -47875,7 +47875,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 3,
@@ -48022,7 +48022,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -48041,7 +48041,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 3,
@@ -48188,7 +48188,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -48207,7 +48207,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 3,
@@ -48408,7 +48408,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -48546,7 +48546,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -48684,7 +48684,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -49382,7 +49382,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           }
         ],
         "erosion": [
@@ -49485,7 +49485,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           }
         ],
         "erosion": [
@@ -49588,7 +49588,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           }
         ],
         "erosion": [
@@ -49709,7 +49709,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -49728,7 +49728,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 3,
@@ -49746,7 +49746,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 4,
@@ -49879,7 +49879,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -49898,7 +49898,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 3,
@@ -49916,7 +49916,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 4,
@@ -50049,7 +50049,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan",
+            "shapeProfile": "settled-fan",
             "groundEdgeWidth": 8
           },
           {
@@ -50068,7 +50068,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 3,
@@ -50086,7 +50086,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "fracture-fan"
+            "shapeProfile": "settled-fan"
           },
           {
             "id": 4,
@@ -50969,7 +50969,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.22,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           }
         ],
         "erosion": [
@@ -51126,7 +51126,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.25,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           }
         ],
         "erosion": [
@@ -51283,7 +51283,7 @@ export const R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = [
             "opening": 0.7,
             "distortion": 0.275,
             "constructionVersion": 4,
-            "shapeProfile": "torn-sheet"
+            "shapeProfile": "settled-sheet"
           }
         ],
         "erosion": [

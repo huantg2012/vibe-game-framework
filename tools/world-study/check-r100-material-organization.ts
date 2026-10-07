@@ -38,6 +38,6 @@ for(const atom of ORGANIZATION_MATERIALS)for(const surface of [atom,atom.solid])
  const pixels=await sharp(`public${surface.source}`).resize(surface.logical_pixels,surface.logical_pixels).ensureAlpha().raw().toBuffer();
  for(let q=3;q<pixels.length;q+=4)assert.equal(pixels[q],255,'Pigment texture cannot open transparent fake holes');
 }
-assert.deepEqual(R100_WORLD_APPEARANCES.filter(row=>row.materialOrganization==='short-fibre-loose').map(row=>row.worldId),['short-fibre-mat','felt-wedges']);
-assert.equal(R100_WORLD_APPEARANCES.find(row=>row.worldId==='woven-quarters')?.materialOrganization,'short-fibre');
-console.log(`PASS ${ORGANIZATION_MATERIALS.length} independent source pairs; CSV strict negatives, explicit resolver/secondary isolation, original 52 absent opt-ins, exact two-world loose selection, source dimension/opaque pigment. Normal-light art remains pending.`);
+assert.deepEqual(R100_WORLD_APPEARANCES.filter(row=>row.materialOrganization==='short-fibre-loose').map(row=>row.worldId),['short-fibre-mat','felt-wedges','woven-quarters']);
+assert.equal(R100_WORLD_APPEARANCES.find(row=>row.worldId==='woven-quarters')?.materialOrganization,'short-fibre-loose');
+console.log(`PASS ${ORGANIZATION_MATERIALS.length} independent source pairs; CSV strict negatives, explicit resolver/secondary isolation, original 52 absent opt-ins, exact three-world loose selection, source dimension/opaque pigment. Normal-light art remains pending.`);

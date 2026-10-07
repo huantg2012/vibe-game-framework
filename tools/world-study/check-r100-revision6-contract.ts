@@ -114,7 +114,8 @@ if (process.argv.includes('--extended-profiles')) {
   assert.equal(oldRecipe.package.algorithmRevision, 5);
   assert.deepEqual(seal(oldRecipe, 5), oldRecipe, 'Revision5 test receipt matches its immutable original algorithm');
   assert(validRevision5Recipe(oldRecipe) && validR100ProductionRecipe(oldRecipe), 'Unmodified revision5 still recovers');
-  for (const [profile, version] of [['pleated-tear', 3], ['settled-sheet', 4], ['settled-fan', 4]] as const) {
+  for (const [profile, version] of [['pleated-tear', 3], ['settled-sheet', 4], ['settled-fan', 4],
+    ['settled-bundle', 4], ['settled-clamp', 4]] as const) {
     const configure = (recipe: WorldProductionRecipeV3): Record<string, unknown> => {
       const native = recipe.nativeDefinition as unknown as MutableNative;
       const instance = native.instances[0]!;

@@ -79,7 +79,7 @@ export function validateNativeVolumeSpec(spec: Readonly<NativeVolumeSpec>): void
   if (profiles.length ? !profiles.includes(spec.shapeProfile!) : spec.shapeProfile !== undefined)
     throw new Error('Native volume shapeProfile must belong to its explicit construction version');
   if (spec.blocking !== undefined && spec.blocking !== 0 && spec.blocking !== 1) throw new Error('Native volume blocking must be 0 or 1');
-  if ((spec.shapeProfile === 'settled-sheet' || spec.shapeProfile === 'settled-fan') && (spec.blocking !== 0 || spec.height > 6))
+  if (spec.shapeProfile?.startsWith('settled-') && (spec.blocking !== 0 || spec.height > 6))
     throw new Error('Settled material requires explicit nonblocking material with height at most 6');
   if (spec.groundEdgeWidth !== undefined && (spec.constructionVersion !== 4 || spec.blocking !== 0 || spec.height > 6
     || spec.groundEdgeWidth < 8 || spec.groundEdgeWidth > 24)) throw new Error('Native ground edge requires v4 low relief and width 8–24px');

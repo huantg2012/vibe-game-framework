@@ -72,7 +72,7 @@ const base: NativeVolumeSpec = { id: 1, seed: 41701, family: 'broken-shell', x: 
 let bodySamples = 0, sweepSamples = 0, rejections = 0;
 const shapeMetrics: unknown[] = [];
 for (const shapeProfile of NATIVE_VOLUME_V4_PROFILES) for (const rotation of [0, .43, -1.1]) {
-  if (shapeProfile === 'settled-sheet' || shapeProfile === 'settled-fan') {
+  if (shapeProfile.startsWith('settled-')) {
     const input = { ...base, shapeProfile, rotation, height: 5, blocking: 0 }, mesh = buildNativeVolume(input);
     assert(mesh.triangleCount > 0 && mesh.triangleCount < 600);
     assert([...mesh.positions, ...mesh.normals, ...mesh.uv].every(Number.isFinite));

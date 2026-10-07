@@ -1,6 +1,6 @@
 // GENERATED from data/rift-world-appearance.csv; do not hand edit.
 import type { R100WorldAppearance } from '../generation/world-study/r100-world-appearance';
-export const R100_APPEARANCE_SOURCE_HASH = '277e7d0485f4b4aaab21323fba613df662321a82fff54668a25079e620f1c7d1';
+export const R100_APPEARANCE_SOURCE_HASH = '8fc9ea2cac80fda4bba849f01e7b5096dd7fb3212acfaef6bf983f89ea0a9cca';
 export const R100_WORLD_APPEARANCES: readonly R100WorldAppearance[] = [
   {
     "version": 1,
@@ -3186,7 +3186,7 @@ export const R100_WORLD_APPEARANCES: readonly R100WorldAppearance[] = [
     "secondaryCoverage": 0.17,
     "textureContrast": 1.13,
     "quietCoverage": 0.63,
-    "materialOrganization": "short-fibre"
+    "materialOrganization": "short-fibre-loose"
   },
   {
     "version": 1,

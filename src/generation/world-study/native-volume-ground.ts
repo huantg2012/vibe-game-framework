@@ -4,8 +4,9 @@
 import type { Builder, Point, UV } from './native-volume-expansion';
 import { buildCompressedWedge, buildPorousBreak } from './native-volume-organization';
 import { buildSettledSheet, buildSettledFan } from './native-volume-settled-sheet';
+import { buildSettledProjection } from './native-volume-settled-projection';
 
-export const NATIVE_VOLUME_V4_PROFILES = ['fracture-fan', 'fallen-bundle', 'clamp-bank', 'torn-sheet', 'compressed-wedge', 'porous-break', 'settled-sheet', 'settled-fan'] as const;
+export const NATIVE_VOLUME_V4_PROFILES = ['fracture-fan', 'fallen-bundle', 'clamp-bank', 'torn-sheet', 'compressed-wedge', 'porous-break', 'settled-sheet', 'settled-fan', 'settled-bundle', 'settled-clamp'] as const;
 export type NativeVolumeV4Profile = typeof NATIVE_VOLUME_V4_PROFILES[number];
 const uv = (p: Point): UV => [p[0], p[1]];
 
@@ -349,6 +350,8 @@ export function buildGroundNativeVolume(builder: Builder): void {
     case 'porous-break': buildPorousBreak(builder); return;
     case 'settled-sheet': buildSettledSheet(builder); return;
     case 'settled-fan': buildSettledFan(builder); return;
+    case 'settled-bundle': buildSettledProjection(builder, fallenBundle, true); return;
+    case 'settled-clamp': buildSettledProjection(builder, clampBank, false); return;
     default: throw new Error('Unknown construction 4 native shape profile');
   }
 }

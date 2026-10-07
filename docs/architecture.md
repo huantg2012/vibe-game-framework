@@ -24,6 +24,8 @@ note: Foundation Step 2。已通过独立技术审查并经人最终批准。**�
 
 `rift-generation-protocol.ts`声明传输DTO：普通对象与typed array通过结构化克隆；`walkableMask`发为null，主线程用原tileMap重建TileGrid方法。接收端重算身份/签名，合法且请求仍有效才注册layout/world关联；layout缓存仍至多4条，末次准备分段指标只保留1份。没有把整个带Phaser/存档的恢复manager搬进Worker，也没有通过Promise包装同步生成假装离线程。
 
+生成和表面准备的两个client共用`utils/worker-request.ts`。Worker收到逻辑请求后先发同id的`started`，再调用原纯执行函数。仅未确认任务开始的首个Worker错误可在120ms后创建一个替代Worker；请求及输入复用、无输入transfer，两个尝试共享原截止。旧Worker先脱钩再terminate，Worker引用和尝试编号共同拒迟到事件；abort同时覆盖重试延迟。克隆/传输、构造、明确计算错误及确认后的错误不重试。原浏览器错误不被隐藏，最终失败可保留`workerStartupFailure`诊断字段。没有新增存档字段、修改纯生成/烘焙、重新选种或在client内提交出击。
+
 `prepareProceduralDeparture`返回准备身份，不消费库存。场景保存等待前的库存/cycle/修正与存档字节，成功后复核未变，再在`withPreparedProceduralRecovery`作用域内执行原出发事务。失败写入保留原候选和既有retry，不撤销或重开该趟。`session.loadExpedition`是首页与暂停菜单共用的Promise入口：`captureLoadSnapshot`只读包 → 按原identity预热 → 同步复核raw → prepared-only作用域内`load(undefined, snapshot)`；SaveManager入口本身也比较raw，未知/改变的快照不hydrate。
 
 prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/外来身份都抛错。`RiftScene.create`在真正建场帧再包住layout/world恢复，避免准备与场景启动之间的逐出重新引发主线程生成。同步create/restore仍用于离线工具；没有正式recovery身份的`import.meta.env.DEV`直入（`#rift`、pollution-review）和显式DEV fixture保留开发路径，有正式身份的恢复不能落入此例外。
@@ -81,6 +83,8 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 `native-volume-ground.ts`独立拥有构造版本4的宽断床、倒束、夹岸与撕膜；`native-volume-geometry.ts`显式按版本/profile分派，旧v1–v3不换实现。`native-volume-erosion.ts`共享CSV解析及冻结配方恢复校验；作者多边形编入原`MasterDefinition.erosion`，由同一个8px地表存在网格表达真实缺地；不因此生成Host或赋予普通实体吞光能力。`native-volume-ground-edge.ts`只在实际存在的地表格内建立浅断沿，归首个主材低浮雕所有，不另生阻挡层。完整身体路线在最终缺地和实体叠加后检查，不从仅含几何中心的路线推断可通。具体数据语法、大小和退化拒绝见[地图spec](specs/system-map-generation.md)。
 
 `native-volume-organization.ts`增加短纤压体与有封底小孔的厚芯。`buildNativeVolume`只对显式v4 `compressed-wedge/porous-break`的完整皮面执行平滑法线，硬断面和孔壁保持几何面法线；旧profile仍返回原网格。`organization-sampling.ts`在准备worker中为每件主材实例建立固定连续源窗；`surface-bake.ts`仅在非空`materialOrganization`分支使用，副材和缺省世界保持既有采样。组织定义及独立源图来自CSV编译，不在渲染器按世界ID写特殊规则。能力接入、实际作者世界、正常图审及正式资格分别记录。
+
+`native-volume-pleated-tear.ts`实现显式v3 `pleated-tear`的短裂口，裁去裂口内原顶面，补真实斜壁和封底；发光材质及joint同源。`native-volume-settled-sheet.ts`实现显式v4 `settled-sheet/settled-fan`：原轮廓分片经共享网格细分，沿边距离控制浅层逐渐贴入地表，无直立外围裙边或整片透明度补丁。`native-volume-settled-projection.ts`另为显式`settled-bundle/clamp`复用原builder的完整XY三角域，拆分重叠边段以取得合并后的外沿；共用高度场及局部UV让附接碎端保持相接，倒束只在新分支四分细化。四种浅层都只接收显式非阻挡且高度≤6px实例，不改变地表存在网格或人物碰撞。形体登记、CSV编译、恢复校验和包依赖一并包含五个新增profile；旧修订5闭包保持原实现并拒绝新profile。未注册的短纤候选builder不计入已启用架构或世界资格。
 
 `legacy-r100-v5/executor.js`从`d194be4c`的68个依赖封存生成、验证及预烤；`freeze-native-r100-revision5.mjs --check`核对完整闭包。正式恢复引入独立`executor-recovery.js`：先由`derive-native-r100-revision5.mjs`移除内部不可能的历史分派，再由`project-native-r100-revision5.mjs`严格证明目录只有ID成员查询后只留52个ID；原始和两级派生文件均保留，未改外层revision1–5同步接口。`check-r100-revision5-projection.ts`逐一核对原156配方、完整地图与四层RGBA哈希。新包保持version3/内容version2并显式标记algorithmRevision6；保存的revision5由封存验证/生成/预烤处理，不读取新CSV重算。当前调用接口保持，资格与来源连续性由[I10–I12 QA](qa/rift-r100-i10-i12.md)单独确认，模块存在不代表108世界已完成。
 
