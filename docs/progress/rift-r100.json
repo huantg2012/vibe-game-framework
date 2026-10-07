@@ -40,9 +40,9 @@
   },
   "resume": {
     "iteration": "R100-I10",
-    "batch": "B01 双种子搜撤验证；B02 四世界实际画面审核准备",
-    "nextAction": "B01 576生成已过、24实际过程持续执行；B02 60候选源冻结后审核三档正常图。旧52已有3103源码/RGBA严格继承批准，正式r6进入/恢复仍待验证。",
-    "lastCompleted": "修订5基线52世界156等级已结案；新修订6开始后暂不把旧资格算成当前通过，等待精确连续性和接入证明。",
+    "batch": "B01–B12固定过程有限复核完成；B13原003网络异常后中断，清洁补验尚未启动",
+    "nextAction": "先读docs/progress/r100-i10-i12-checkpoint.md。按已授权原003同完整身份/earned存档/3121/policy15单次独立补验；清洁后继续B13原004–024及B14原24。不得覆跑旧failed队列。随后最终108启用与全套收尾。",
+    "lastCompleted": "B11原24非入口搜撤；B12原24含23非入口/1真空返均独审；35源码归档及逐文件恢复通过，完整I10–I12仍未结案。",
     "headline": "I10–I12推进中 · 目标108世界",
     "updatedDate": "2026-10-07",
     "evidenceRevision": "r100-native-v3-revision-6-in-progress"
@@ -3543,11 +3543,25 @@
         "R100-P21",
         "R100-P22",
         "R100-P23",
-        "R100-P24"
+        "R100-P24",
+        "R100-P25",
+        "R100-P26",
+        "R100-P27",
+        "R100-P28",
+        "R100-P30",
+        "R100-P31",
+        "R100-P33",
+        "R100-P36"
       ],
       "evidenceIds": [
         "R100-R6-P19-RECOVERY",
-        "R100-R6-B01-ART-REPAIR"
+        "R100-R6-B01-ART-REPAIR",
+        "R100-R6-B02-ART-REPAIR",
+        "R100-R6-B03-BOUNDED",
+        "R100-R6-B04-BURIED-REPAIR",
+        "R100-R6-B05-THREE-GRADES",
+        "R100-R6-B05-SPLIT-MEDIUM",
+        "R100-R6-B05-SPLIT-REPAIR"
       ],
       "targetGradeCases": 216
     },
@@ -3579,9 +3593,28 @@
       "exit": "九十二份合格包。",
       "actualRevision": null,
       "gateResults": [],
-      "issueIds": [],
+      "issueIds": [
+        "R100-P29",
+        "R100-P32",
+        "R100-P34",
+        "R100-P38",
+        "R100-P39"
+      ],
       "evidenceIds": [],
-      "targetGradeCases": 276
+      "targetGradeCases": 276,
+      "execution": {
+        "state": "in-progress",
+        "revision": "r100-native-v3-revision-6",
+        "evidenceIds": [
+          "R100-R6-B07-B10-AUTHOR",
+          "R100-R6-B08-BODY",
+          "R100-R6-B09-BODY",
+          "R100-R6-B10-BODY",
+          "R100-R6-B06-MATERIAL-REJECT",
+          "R100-R6-B06-POROUS-GRADES"
+        ],
+        "summary": "作者20世界60实际身体基线已齐；三世界低层修正完成三档局部复审，B09/B10三世界新返修原9身体通过、图审待验。短纤专用材料注册，原两世界正常图待审。"
+      }
     },
     {
       "id": "R100-I12",
@@ -3611,9 +3644,21 @@
       "exit": "至少108份完整三级内部合格包、324格有效证据及RC；仍需I13等级深度和I14正式终验。",
       "actualRevision": null,
       "gateResults": [],
-      "issueIds": [],
+      "issueIds": [
+        "R100-P37"
+      ],
       "evidenceIds": [],
-      "targetGradeCases": 324
+      "targetGradeCases": 324,
+      "execution": {
+        "state": "in-progress",
+        "revision": "r100-native-v3-revision-6",
+        "evidenceIds": [
+          "R100-R6-I12-STATIC48",
+          "R100-R6-B12-FRACTURE-REJECT",
+          "R100-R6-B12-FRACTURE-REPAIR"
+        ],
+        "summary": "最后16世界已追加为108作者目录；原48实际身体完成，B12/B13保留原失败与修正。赭皮短裂口已近侧限定复审，B11–B14其余中档/低重图审与资格继续。"
+      }
     },
     {
       "id": "R100-I13",
@@ -12755,6 +12800,4291 @@
         "shell-gel-delta"
       ],
       "knownVisualLimitations": "作者数据与20px身体路线前检完成；尚未绑定正常画面、固定双种子搜撤及正式进入，未计合格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "shard-switchback",
+      "label": "错片折径",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "五件中尺度断层沿连续错位通路呈现坠裂先后，局部短切与外侧返路并存。",
+      "nearestWorldIds": [
+        "cleft-tableland",
+        "ash-strata"
+      ],
+      "knownVisualLimitations": "12个三档作者样本及60站完整身体前检通过；正常画面、固定实际搜撤和正式接入待验。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "hollow-wreckage",
+      "label": "裂壳散场",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "四处不等残壳露出不同方向的内壁，开口之间共享裸床而非完整圆盆。",
+      "nearestWorldIds": [
+        "foam-trenches",
+        "porcelain-maw"
+      ],
+      "knownVisualLimitations": "12个三档作者样本及60站完整身体前检通过；正常画面、固定实际搜撤和正式接入待验。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "knotted-run",
+      "label": "断结交路",
+      "family": "fibre-knot",
+      "families": [
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "三个断束结头与短散根围绕穿插路线，团界和转折关系主导。",
+      "nearestWorldIds": [
+        "fallen-spines",
+        "crystal-fibre"
+      ],
+      "knownVisualLimitations": "12个三档作者样本及60站完整身体前检通过；正常画面、固定实际搜撤和正式接入待验。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "rolled-fragments",
+      "label": "卷皮断片",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "五段断卷膜形成疏密不同的弧序，部分低尾可踩，厚卷端保留清楚边界。",
+      "nearestWorldIds": [
+        "torn-reservoir",
+        "satin-fan"
+      ],
+      "knownVisualLimitations": "12个三档作者样本及60站完整身体前检通过；正常画面、固定实际搜撤和正式接入待验。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "fibre-choke",
+      "label": "纤束夹口",
+      "family": "fibre-knot",
+      "families": [
+        "broken-shell",
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "断束压在两片破唇之间，取消完整囊腔和牵丝；缺段折口可横穿，外侧两路不靠纤锚分区",
+      "nearestWorldIds": [
+        "bladder-weave"
+      ],
+      "knownVisualLimitations": "作者目录与外观/残骸已追加，旧64/66对象精确保护；实际Master三档身体前检与正常画面、搜撤资格待验。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "buried-lamellae",
+      "label": "埋片砂床",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab",
+        "granular-ridge"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "一个阻挡高端逐步变成两片可走低肩；颗粒只在一侧堆积并覆盖埋片端，不是两材平行摆放",
+      "nearestWorldIds": [
+        "grain-laminate"
+      ],
+      "knownVisualLimitations": "作者目录与外观/残骸已追加，旧64/66对象精确保护；实际Master三档身体前检与正常画面、搜撤资格待验。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "pressed-rim",
+      "label": "挤脂壳缘",
+      "family": "gel-flow",
+      "families": [
+        "gel-flow",
+        "broken-shell"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "胶自身成为高压头，两个低尾向不同方向展开；次材短壳仅支住一肩，无主导场景的长厚壳唇",
+      "nearestWorldIds": [
+        "clamped-shore"
+      ],
+      "knownVisualLimitations": "作者目录与外观/残骸已追加，旧64/66对象精确保护；实际Master三档身体前检与正常画面、搜撤资格待验。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "wedged-hide",
+      "label": "楔间破皮",
+      "family": "membrane-rim",
+      "families": [
+        "folded-slab",
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "硬楔压住西厚卷和东断散低皮，不再是拉平的完整膜；中间表皮真正缺失露出可行裸床，形成直接穿口",
+      "nearestWorldIds": [
+        "tension-membrane"
+      ],
+      "knownVisualLimitations": "作者目录与外观/残骸已追加，旧64/66对象精确保护；实际Master三档身体前检与正常画面、搜撤资格待验。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "quiet-spur",
+      "label": "静床窄岬",
+      "family": "granular-ridge",
+      "families": [
+        "granular-ridge"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "真缺地将东侧床收成偏心岬，外侧长返路有实际长度；四小粒块只形成内侧短密段，无贯穿全图的粒脊",
+      "nearestWorldIds": [
+        "cinder-ridge"
+      ],
+      "knownVisualLimitations": "B05实际Master三档12作者样本通过；quiet内外同起终路线成立。正常画面、完整生成/搜撤和正式接入尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "split-fall",
+      "label": "双向坠片",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "两股相反斜向的片序只在前段交会；穿出交会处后是横贯后部的宽静床，不沿全路重复断片",
+      "nearestWorldIds": [
+        "shard-switchback"
+      ],
+      "knownVisualLimitations": "B05实际Master三档12作者样本通过；quiet内外同起终路线成立。正常画面、完整生成/搜撤和正式接入尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "three-shelves",
+      "label": "三岸留庭",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "三件独立短弯岸形成三种大小开口，不是两道长对岸；低庭向北完全敞开，近处能同时看到两岸断端",
+      "nearestWorldIds": [
+        "stepped-bowl"
+      ],
+      "knownVisualLimitations": "B05实际Master三档12作者样本通过；quiet内外同起终路线成立。正常画面、完整生成/搜撤和正式接入尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "frayed-outwash",
+      "label": "散纤远滩",
+      "family": "fibre-knot",
+      "families": [
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I10",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "分离的实体按北到南降高，末段真实变成可踩低痕；密根口与南端宽横床形成回程方向，不是完整放射叉",
+      "nearestWorldIds": [
+        "splayed-fibres"
+      ],
+      "knownVisualLimitations": "B05实际Master三档12作者样本通过；quiet内外同起终路线成立。正常画面、完整生成/搜撤和正式接入尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "short-fibre-mat",
+      "label": "短纤压床",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "一片厚压肩接大低层，第二低层隔开露床；低层自身可行走；真正绕行由西侧厚压肩形成，其余两处断口只是低皮缺失而非碰撞窄口",
+      "nearestWorldIds": [
+        "felt-basin"
+      ],
+      "knownVisualLimitations": "B06作者76候选；原actual12中9通过，felt3遮盖失败正在修正。新材料仅有隔离合同，正常世界图/生成/搜撤/正式接入待验证。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "marrow-break",
+      "label": "髓孔断岸",
+      "family": "granular-ridge",
+      "families": [
+        "granular-ridge"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "两处局部有底孔断面相向，真20px通口只在两块之间；两短厚芯与左右宽绕取代L形长岸，不以表面黑点制造入口",
+      "nearestWorldIds": [
+        "cork-shelves"
+      ],
+      "knownVisualLimitations": "B06作者76候选；原actual12中9通过，felt3遮盖失败正在修正。新材料仅有隔离合同，正常世界图/生成/搜撤/正式接入待验证。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "felt-wedges",
+      "label": "毡层挤片",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "三件实体厚楔的宽头聚接、撕端分散朝向，不能穿过压头；两侧绕各自断端再进入北方大床，与大片可走低压层的过程不同",
+      "nearestWorldIds": [
+        "short-fibre-mat"
+      ],
+      "knownVisualLimitations": "B06作者76候选；原actual12中9通过，felt3遮盖失败正在修正。新材料仅有隔离合同，正常世界图/生成/搜撤/正式接入待验证。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "pore-bank",
+      "label": "孔岸静滩",
+      "family": "granular-ridge",
+      "families": [
+        "granular-ridge"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "一高短孔岸贴一长低片、另一片断开，低尾可走而高头需绕；远侧横向静滩持续贯通，取代两高岸相对夹出的中道",
+      "nearestWorldIds": [
+        "marrow-break"
+      ],
+      "knownVisualLimitations": "B06作者76候选；原actual12中9通过，felt3遮盖失败正在修正。新材料仅有隔离合同，正常世界图/生成/搜撤/正式接入待验证。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "staggered-cups",
+      "label": "错口壳片",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "四个不共轴的中腔沿折线交替开口；腔外宽床可连续换向，不沿一条长沟走到底",
+      "nearestWorldIds": [
+        "foam-trenches"
+      ],
+      "knownVisualLimitations": "B07四作者正式表80候选，原三档12实际身体/既定路线通过，60站支持；正常图/完整生成/实际搜撤/正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "split-tows",
+      "label": "断束两道",
+      "family": "fibre-knot",
+      "families": [
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "两列不等断束中段完全断开允许横向换路；西粗东细且西外侧宽床持续可见",
+      "nearestWorldIds": [
+        "split-rib-causeway"
+      ],
+      "knownVisualLimitations": "B07四作者正式表80候选，原三档12实际身体/既定路线通过，60站支持；正常图/完整生成/实际搜撤/正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "curled-flats",
+      "label": "卷缘平滩",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "三处不连接的厚卷端围绕中间裸床；大部分膜可走，东侧断卷后可从内床退出",
+      "nearestWorldIds": [
+        "satin-fan"
+      ],
+      "knownVisualLimitations": "B07四作者正式表80候选，原三档12实际身体/既定路线通过，60站支持；正常图/完整生成/实际搜撤/正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "pitch-forks",
+      "label": "凝脂岔口",
+      "family": "gel-flow",
+      "families": [
+        "gel-flow"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "少臂厚头构成单一浅袋而不是多肋排槽；袋外两侧都有连续返路且断尾可走",
+      "nearestWorldIds": [
+        "amber-ribs"
+      ],
+      "knownVisualLimitations": "B07四作者正式表80候选，原三档12实际身体/既定路线通过，60站支持；正常图/完整生成/实际搜撤/正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "grain-weld",
+      "label": "砂挤断缝",
+      "family": "granular-ridge",
+      "families": [
+        "granular-ridge"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主`granular-ridge`、次`folded-slab`。粗粒从两条板缝挤出，中央一处变为高实体、另一处仍低薄可走；两组中楔断端错开。白粒、暗红板、蓝灰床。近路穿低缝，外路绕高挤头，必须一眼分清。三档侵蚀递进附真接触带。近邻`buried-lamellae`：材料从缝中挤出而非板逐渐埋没；一高一低相邻缝形成可辨选择。残骸`packed-granules`；颗粒声。",
+      "nearestWorldIds": [
+        "ash-strata"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "silk-catch",
+      "label": "断丝挂褶",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主`membrane-rim`、次`fibre-knot`。短褶皮卡在已断粗束的断肩，皮的一端铺地、一端卷起；断束并非两端把皮拉成完整平面。蓝灰皮、赭纤肩、紫灰床。从铺地端穿过或绕卷端，转身能见两材相接。三档污染从挂接处扩到一侧路径。近邻`wedged-hide`：单粗束断肩/卷铺两端，非硬楔夹膜；横穿方向由纤断口决定。残骸`torn-membrane`；膜声。",
+      "nearestWorldIds": [
+        "ivory-basin"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "resin-sleeve",
+      "label": "脂层断套",
+      "family": "gel-flow",
+      "families": [
+        "gel-flow"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主`gel-flow`、次`broken-shell`。凝脂包住壳根的一半后裂开，剩一弯厚套和两处薄皮，断口露出壳面；无完整发光环。深红胶、冷白壳、灰蓝床。沿套外绕或穿真实裂口，套内小袋末端清楚。三档绿色集中裂口附近，不冒充脂的透明。近邻`clamped-shore`：外覆半套与露芯取代壳夹薄尾；单弯袋加裂口是不同接近关系。残骸`gel-fragments`；胶声。",
+      "nearestWorldIds": [
+        "ivory-basin"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "shell-threads",
+      "label": "碎壳穿束",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主`broken-shell`、次`fibre-knot`。两张低裂壳各被一段粗纤穿破，纤在裂外已经断开，四件中体不连成栅栏；北侧完整静床横贯。灰粉壳、墨蓝束、暖灰断面。局部交织短路与一条直宽路并行。三档侵蚀取交会处，普通裂纹不能画成绿色箭头。近邻`fibre-choke`：两个低壳交点取代单个高夹口；宽横床可一次绕过全部交会。残骸`glaze-shell`；壳声。",
+      "nearestWorldIds": [
+        "ivory-basin"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "chalk-divide",
+      "label": "粉岸三口",
+      "family": "granular-ridge",
+      "families": [
+        "granular-ridge"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`granular-ridge`。一条宽而不等厚的粉岸被三处大断口分成四块中高体，端部高低递变；不是连续几条细脊。粉白面、暗赭断层、蓝紫床。近侧可择不同口横穿，远侧有长连接床。三档不得用亮材减弱真实视野，也不全岸刷绿。近邻`chalk-steps`：一岸三横口代替两长错岸；可同时看见短体的完整厚端。残骸`packed-granules`；颗粒声。",
+      "nearestWorldIds": [
+        "ash-strata"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "red-vault-fragments",
+      "label": "赤壳断拱",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`broken-shell`。母壳崩成一长弧背与三件倒伏短段，正面原空腔被真实裂口贯通；没有可钻桥下或顶盖。深红壳、苍白断面、灰蓝床。入口静面转进裂壳内部，再由侧裂口出去。三档侵蚀保留红皮/白断/绿侵蚀三种职责。近邻`hollow-wreckage`：一长背主导连贯内路，非四块均衡散场；倒段只在一端聚集。残骸`glaze-shell`；壳声。",
+      "nearestWorldIds": [
+        "ivory-basin"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "blue-fault",
+      "label": "蓝层斜断",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`folded-slab`。一条斜向真实裂地旁有两段错位的中高板肩，只有南端能跨到另一床，北段绕远可回入口侧。深钴蓝面、黄灰切口、紫灰床。沿裂走和跨裂两次方向判断主导，断肩不覆盖整片床。三档在肩后增加压力，岸线本色不被污染替代。近邻`offset-pan`：斜裂长岸单跨口加外回路，非三床串联；高肩只压转折。残骸`laminated-flakes`；层片声。",
+      "nearestWorldIds": [
+        "ash-strata"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "pale-pressure",
+      "label": "白膜压滩",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`membrane-rim`。入口是一片宽平白膜，越往后中尺度皱片越密，最终留下偏侧宽出口；没有两张高墙夹道。白灰皮、暗玫瑰褶底、蓝灰裸路。通过密度渐变而非明度渐变建立压迫，回程沿外侧保持方向。三档侵蚀与原结构叠加，不让最密处只有黑圈。近邻`pale-sail`：平到皱的物量变化取代双高幕；出口侧可见裸床持续贯通。残骸`torn-membrane`；膜声。",
+      "nearestWorldIds": [
+        "ivory-basin"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "notched-backwater",
+      "label": "缺口脂湾",
+      "family": "gel-flow",
+      "families": [
+        "gel-flow"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`gel-flow`。三个不等低湾围同一厚胶断头，只有中湾穿过断头接向后床，另两湾末端由可见厚边收住；外侧保留返路。灰紫胶、浅肉灰断、冷蓝床。短袋与通路不同必须由口/末端表达。三档污染不得掩盖近灯下袋底。近邻`pitch-forks`：三湾围厚头且只有一条中穿口，非二臂外绕；低湾/断头尺度关系不同。残骸`gel-fragments`；胶声。",
+      "nearestWorldIds": [
+        "ivory-basin"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "crossed-casings",
+      "label": "交断壳背",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`broken-shell`。两个不等壳背实接为折角母体，两个开裂方向不同；一侧内路弯一次，另一侧是宽外床，绝不画重叠盒子。暗蓝壳、粉白内断、赭灰床。三档沿真实内角递进，接缝在近距能说明连体。近邻`sentinel-mass`：曲壳内外层及开裂背取代分足实块；内路是断壳开口而非L足口。残骸`glaze-shell`；壳声。",
+      "nearestWorldIds": [
+        "ivory-basin"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "fibre-stumpfield",
+      "label": "断纤矮林",
+      "family": "fibre-knot",
+      "families": [
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`fibre-knot`。六件高度有主次的短粗纤桩偏聚一侧，粗断面朝向不同，地上有两条相接低根；不长成直立圆柱阵。浅铜纤、暗红压端、蓝灰床。内部错走与开敞侧路，回看矮高排列能辨进出。三档侵蚀不把桩脚暗化成地斑。近邻`fallen-spines`：短粗竖断头取代倒伏长段；一侧偏聚代替沿断裂序列。残骸`fractured-fibres`；纤维声。",
+      "nearestWorldIds": [
+        "crystal-fibre"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "sloughed-court",
+      "label": "剥皮露庭",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I11",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`membrane-rim`。一圈原低膜只剩两长薄段和一短卷段，中央露出不规则大裸床，偏侧有真缺地裂伤；皮本身不是完整高环墙。深紫外皮、浅蓝灰露床、赤灰剥端。穿破环内庭和绕裂伤外路并存。三档侵蚀沿剥口聚集，不能把内庭画成安全光区。近邻`quilted-scars`：低皮的缺失与露床取代厚叶环；真裂地令一条内侧线终止。残骸`torn-membrane`；膜声。",
+      "nearestWorldIds": [
+        "ivory-basin"
+      ],
+      "knownVisualLimitations": "作者正式表92候选基线；三档实际身体/既定路线通过。正常图、完整生成、实际搜撤及正式启用尚未通过。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "crushed-seam",
+      "label": "压碎层缝",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`folded-slab`。两片大低层与中间两段短厚压口真实相接，上下各有一件已离断的碎片；不宣称四件全被母层挤住。中央保持宽横床，旁边有小折路。赤褐片、灰白切面、蓝床。低档辨压碎主次，中重风险围缝分布。近邻`shard-switchback`：两母层、两相接压口与两离断片有主次，而非无母体的错楔序列；横床是结构断裂中心。残骸`laminated-flakes`；层片声。",
+      "nearestWorldIds": [
+        "shard-switchback"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "husk-reef",
+      "label": "空皮残脊",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`broken-shell`。一侧三件保留内壁的薄壳背，另一侧是倒下的宽低皮；一处粗横断片把长路分成两段但留端口。黄灰皮、暗红内壁、紫蓝床。由壳背密段转入低皮静段，归来可外绕。三档污染不把小内腔涂成统一绿孔。近邻`red-vault-fragments`：数个分离薄背与一宽低皮主次，非长弧母背内穿。残骸`glaze-shell`；壳声。",
+      "nearestWorldIds": [
+        "red-vault-fragments"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "fibre-scree",
+      "label": "碎束斜坡",
+      "family": "fibre-knot",
+      "families": [
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`fibre-knot`。两团中尺度刚性断束顺相反斜向堆住，之间宽曲路，下方只有可走短屑；小屑不生成额外碰撞针。灰蓝束、黄灰切端、暗紫床。绕两团而非绕每根细杆，近路在两团偏心间隙。三档侵蚀围粗团，地床纹理不画假尖障碍。近邻`knotted-run`：无扭结、两团相反倾向代替三结交路；整体团界比单杆重要。残骸`fractured-fibres`；纤维声。",
+      "nearestWorldIds": [
+        "knotted-run"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "gel-rafts",
+      "label": "断脂浅片",
+      "family": "gel-flow",
+      "families": [
+        "gel-flow"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`gel-flow`。六块不等低片分成两组，每组仅一块翘起成阻挡厚端，组间保留宽床；不是漂浮桥或透明水。粉灰硬脂、深紫断头、蓝床。从薄片可走面跨到裸床或绕厚端，三档不改变低片语义。近邻`wax-tongues`：分组独立断片、端头数量与实际缺口取代连体长舌；两组之间有明显空档。残骸`gel-fragments`；胶声。",
+      "nearestWorldIds": [
+        "wax-tongues"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "double-return",
+      "label": "双缝归路",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`folded-slab`。中段一块偏心静床，被两条真实裂地从左右夹住；上下各有连通颈，床内三件短断层只影响局部近路。蓝灰层、粉白口、赤灰床。左短但连续拐弯，右宽但远，回程可换路；不保证其敌情安全。三档侵蚀不令某条路永久不可走。近邻`cleft-tableland`：中床加左右绕行而非两大床互跨；短片组织床内路线。残骸`laminated-flakes`；层片声。",
+      "nearestWorldIds": [
+        "cleft-tableland"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "offset-basins",
+      "label": "错湾连床",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`broken-shell`。两个宽浅湾前后错位，左侧共享一条外床，右侧由断唇短口相连；内壁厚端不同，不是两个完整圆盆。紫红壳、浅灰内壁、深蓝床。能在湾内短接或退回共同外床。三档从各湾不同端增加压力，保留真口。近邻`porcelain-maw`：宽湾并行接床而非相对嘴收喉；共享一侧返路。残骸`glaze-shell`；壳声。",
+      "nearestWorldIds": [
+        "porcelain-maw"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "pinched-fan",
+      "label": "双夹膜扇",
+      "family": "membrane-rim",
+      "families": [
+        "granular-ridge",
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主`membrane-rim`、次`granular-ridge`。一大片可走扇膜被两块短粒肩挤出两处厚褶，中间裂开露床；粒肩与褶是实体，扇面不是。浅灰膜、暗赤粒、蓝灰断褶。直穿露床和沿扇外缘有不同转折，三档保持材质/role读法。近邻`satin-fan`：两个真实夹点与中央露床取代单高折；次材参与挤压而非装饰。残骸`torn-membrane`；膜声。",
+      "nearestWorldIds": [
+        "satin-fan"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "spliced-reaches",
+      "label": "接束分滩",
+      "family": "fibre-knot",
+      "families": [
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`fibre-knot`。两条断开的宽纤床在中段由第三短床斜向相接，接合处有两件中粗断束，末端不长成整桥架。暗紫纤、铜灰切端、冷灰床。前进至少换一次床，归来可经短横接合而非原路回转。三档污染取接合旁，不把桥身画光。近邻`braided-seam`：两长一短的斜接与接点粗束，非三条纵床错位横连。残骸`fractured-fibres`；纤维声。",
+      "nearestWorldIds": [
+        "braided-seam"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "white-scarfield",
+      "label": "白砂断原",
+      "family": "granular-ridge",
+      "families": [
+        "granular-ridge"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`granular-ridge`。两块大片压实浅床中间夹一列短粗粒体，列中两次断开并错位，裸床本身有厚裂边；不是白色版山脊。粉白床、暗蓝粗粒、赭灰断面。明亮材料在正常肩灯外仍黑，三档污染单独可辨。近邻`chalk-divide`：两大片床和暗中体的主次倒置，非高白岸三口；走过中列后有大静面。残骸`packed-granules`；颗粒声。",
+      "nearestWorldIds": [
+        "chalk-divide"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "black-lacuna",
+      "label": "暗脂缺湾",
+      "family": "gel-flow",
+      "families": [
+        "gel-flow"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`gel-flow`。深色不透明胶床缺去一块偏心湾，湾边只一段厚高头，其余为低而清楚的薄唇；浅灰裸床从湾口接入。墨紫胶、灰粉切层，黑度仍须有正常受光材质，不能当吞光贴片。三档绿侵蚀与本色明确分离。近邻`notched-backwater`：一个真缺地湾而非三低袋；一高头/长薄唇面积关系不同。残骸`gel-fragments`；胶声。",
+      "nearestWorldIds": [
+        "notched-backwater"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "ochre-folds",
+      "label": "赭皮折口",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "`membrane-rim`。三件独立中厚折皮朝同一宽床但错开前后位置，内部短路并不连成一条缝，须两次回到大床。赭皮、暗蓝折内、浅灰床。三档风险分散在三个折口，让退回大床成为明确空间动作。近邻`rolled-fragments`：三离散折口与反复出入静床，非五段弧序连续走；尖折与半卷形体不同。残骸`torn-membrane`；膜声。",
+      "nearestWorldIds": [
+        "rolled-fragments"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "violet-marrows",
+      "label": "紫髓横断",
+      "family": "granular-ridge",
+      "families": [
+        "granular-ridge"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "孔髓能力通过后，`granular-ridge`。两件横剖髓芯露不等孔群，一件短粗、一件长低，第三只留平整外皮；三者夹出宽斜床与短直缝。紫皮、浅粉孔壁、冷灰床。三档不让孔洞与大通缝混读。近邻`pore-bank`：独立横剖芯的端面/侧面方向不同，非一高头拖低尾；宽斜床贯穿两剖件。残骸用已验孔髓形制；颗粒声。",
+      "nearestWorldIds": [
+        "pore-bank"
+      ],
+      "knownVisualLimitations": "作者候选已追加；B11/B12各12真实身体格通过、正常图待审。B13真实身体首轮9过3未过，ochre短裂纹修复中。未做完整生成/实际搜撤和正式启用，不计资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "fractured-estuary",
+      "label": "断层汇滩",
+      "family": "folded-slab",
+      "families": [
+        "folded-slab",
+        "gel-flow"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主`folded-slab`、次`gel-flow`。两片不同方向的低层床汇到同一宽地颈，颈旁被胶挤出两块中厚断肩；颈后又分成宽床与短侧湾。紫蓝层、赤胶、浅灰切面。路线有明确汇合再分开，不是板上涂胶。三档侵蚀沿汇口一侧增强，主颈身体余量不减。近邻`pressed-rim`：双地床汇合主导，非单高胶头双尾。残骸`laminated-flakes`；层片声。",
+      "nearestWorldIds": [
+        "pressed-rim"
+      ],
+      "knownVisualLimitations": "最后四个作者世界已追加；原12等级实际完整身体/站位/路线通过。压纤四角依赖P34材料返修，断岸余台物3断纹仅5px，须正常视野复审。未取得完整图审、搜撤和最终资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "woven-quarters",
+      "label": "压纤四角",
+      "family": "membrane-rim",
+      "families": [
+        "membrane-rim",
+        "fibre-knot"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主短纤组织`membrane-rim`、次`fibre-knot`。四块大小不同的低压毡与两段中粗长纤交错，只有西北一块翻起厚边；两条真实短裂地切掉对角连接，其余宽床可通。蓝灰短纤、铜长束、紫床。三档仍区分短纤面/长束/缺地。近邻`felt-wedges`：四角平片和长束交会而非三厚楔；对角缺地改变实际绕行。残骸用短纤已验形制；膜声。",
+      "nearestWorldIds": [
+        "felt-wedges"
+      ],
+      "knownVisualLimitations": "最后四个作者世界已追加；原12等级实际完整身体/站位/路线通过。压纤四角依赖P34材料返修，断岸余台物3断纹仅5px，须正常视野复审。未取得完整图审、搜撤和最终资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "shell-patchwork",
+      "label": "拼裂壳皮",
+      "family": "broken-shell",
+      "families": [
+        "broken-shell",
+        "membrane-rim"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主`broken-shell`、次`membrane-rim`。两块大低壳之间夹几件短厚壳端，膜只在断接处被挤成折边；主床从拼片之间不规则穿过，不画人造瓷砖网格。灰白壳、深红皮、蓝灰裸床。三档侵蚀在拼裂处增加，不能铺成等距绿缝。近邻`buried-lamellae`：破壳/膜的厚薄交接与不规则中穿床，非层片逐渐埋入粒地。残骸`glaze-shell`；壳声。",
+      "nearestWorldIds": [
+        "buried-lamellae"
+      ],
+      "knownVisualLimitations": "最后四个作者世界已追加；原12等级实际完整身体/站位/路线通过。压纤四角依赖P34材料返修，断岸余台物3断纹仅5px，须正常视野复审。未取得完整图审、搜撤和最终资格。",
+      "review": {
+        "technical": "pending",
+        "visual": "pending",
+        "experience": "pending",
+        "human": "pending"
+      },
+      "reviewEvidence": {
+        "technical": [],
+        "visual": [],
+        "experience": [],
+        "human": []
+      },
+      "evidenceIds": [],
+      "grades": {
+        "low": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "medium": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        },
+        "severe": {
+          "integration": "dev",
+          "invalidated": false,
+          "review": {
+            "technical": "pending",
+            "visual": "pending",
+            "experience": "pending",
+            "human": "pending"
+          },
+          "reviewEvidence": {
+            "technical": [],
+            "visual": [],
+            "experience": [],
+            "human": []
+          },
+          "integrationEvidence": []
+        }
+      }
+    },
+    {
+      "id": "last-shelf",
+      "label": "断岸余台",
+      "family": "granular-ridge",
+      "families": [
+        "granular-ridge",
+        "folded-slab"
+      ],
+      "iterationId": "R100-I12",
+      "revision": "r100-native-v3-revision-6",
+      "generation": {
+        "id": "r100-native",
+        "version": 3,
+        "revision": 6
+      },
+      "implementation": "planned",
+      "integration": "dev",
+      "invalidated": false,
+      "distinctness": "主`granular-ridge`、次`folded-slab`。一片宽厚床外侧被缺地削去三段，余下两处不等突台由内侧完整床接通；每突台仅有一件短压层断肩，避免装满终局地标。赭灰粒床、蓝黑层肩、粉白断岸。两处侧向探入与共同宽归路，视野下能读真实终止边。三档压力在外探处增加但不新增掉落/奖励规则。近邻`scalloped-reach`：凸余台与内部共用床取代连凹湾，短层肩只给近处识别。残骸`packed-granules`；颗粒声。",
+      "nearestWorldIds": [
+        "scalloped-reach"
+      ],
+      "knownVisualLimitations": "最后四个作者世界已追加；原12等级实际完整身体/站位/路线通过。压纤四角依赖P34材料返修，断岸余台物3断纹仅5px，须正常视野复审。未取得完整图审、搜撤和最终资格。",
       "review": {
         "technical": "pending",
         "visual": "pending",
@@ -25328,6 +29658,516 @@
       "scope": "B01四世界三档正常有限视野；作者22张、root列明14张静帧，几何/足印合同和修前失败保留，P20–P24具体缺陷修复。",
       "limitations": "一固定seed、受限关键视角；无完整影片/全种子资格、实际双种子搜撤、真人或听感通过。",
       "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B02-ART-REPAIR",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-independent-art-review.json",
+      "evidenceSha256": "84db0b3c950aa73341c63f2c7391f97a6eb3dd65d1b8c29db37b6fc8cde9364b",
+      "scope": "3105 B02四世界三档与B01 cleft受影响岸沿；作者32张、root20张列明正常原帧；15接近0运行错误。",
+      "limitations": "固定seed和列明静帧，不是全外壁/全种子/完整搜撤、用户或听感通过。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-QUIET-ROUTES",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-b05-author-preparation/quiet-root-shape-reallocation/body3/report.json",
+      "evidenceSha256": "6244c303cfe6919b0faf00584097e4e1655436f1daa9c072a13e06b830222ecc",
+      "scope": "quiet-spur重分南根肩后低中重完整20px同起終两条路线通过；32px内口独立报告同行保留。",
+      "limitations": "作者静态通路验证，不是正常画面/生产生成/实际搜撤/用户认可。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B02-QUALIFIED",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "d6ce9097e9e962a1a3123cb5c3233bd1d80479b9cd3d5e537e2afd6bf80211c6",
+      "scope": "3105四世界576生成、双原种子24实际过程；22途中搜取返回/2真实空返，12等级对达到原冻结条件。root核报告及6原帧。",
+      "limitations": "受控世界种子、已挣得祖先上的装备夹具及专家导航；不是自然供给、全路线、人审、听感或最终性能。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-B07-B10-AUTHOR",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-b10-author-preparation/current-author-summary.json",
+      "evidenceSha256": "8807c7ef901995474ab136ec621047bff952b34bfa216fab47d8badf7bc2176a",
+      "scope": "16隔离作者48等级格32px保守身体/既定通路/材料接触通过；当前definition严格逐项匹配。",
+      "limitations": "不是production生成、正常图、搜撤、污染或108资格；所有失败报告保留。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B03-SHARD-REPAIR",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-independent-art-review.json",
+      "evidenceSha256": "5df9ac94c9a964e496d2dca04bf71ef909ef431e9ac9588827b658d84a9723e9",
+      "scope": "3109错片折径三档7张正常原图root复审通过；原三档路线通过。",
+      "limitations": "仅解除重复轮廓拒绝，未替代原144生成/实际过程/全角度/用户与听感。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B04-THREE-ART",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-three-independent-art-review.json",
+      "evidenceSha256": "9e61c864f2e6d7cf510abfd43c54684c663247667c4d16eb923c885fc1f7f311",
+      "scope": "3107三世界root11张正常原图复审，包括楔间破皮原遮盖问题的正常图。",
+      "limitations": "不含埋片砂床，不等于生成/实际搜撤/最终全库接入。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B05-PARTIAL-ART",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-medium-independent-art-review.json",
+      "evidenceSha256": "86f6ad593601e92cb8a45d08ff4c26db51f4c79ba1297ed9f6ddea9cc7b33471",
+      "scope": "B05 quiet/split中档8原图独立审查，split重复箭头拒绝。",
+      "limitations": "不含其它两world/三档全批及实际过程。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B03-BOUNDED",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "54ce365b8349a01e1e38868a65721358ceac2c8d784660af6368f89a38787863",
+      "scope": "B03四世界原576生成、24原定实际过程和12等级对通过；24均途中搜取后撤离，0空返/死亡；root读全报告并看6原帧。",
+      "limitations": "受控出发fixture、熟悉路线的代理输入；非自然经济、全角度、人审或最终接入。",
+      "purpose": "bounded-experience-review"
+    },
+    {
+      "id": "R100-R6-B04-BURIED-REPAIR",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-grades-independent-art-review.json",
+      "evidenceSha256": "d20a0f1c8edb3c90aa22da77760cab4b88c9c6217dd76e343f800007da04675c",
+      "scope": "埋片砂床真实24px堆体修后三档正常图通过；root低重4帧＋此前中档5帧限定审阅。",
+      "limitations": "仅关闭材料体量问题；144新生成和全批24实际过程独立推进。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B05-THREE-GRADES",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-three-grades-independent-art-review.json",
+      "evidenceSha256": "4c4cf163ddf7db08b34ce77205af925b507a4339c0f7072be2f4dc1da9a7d618",
+      "scope": "B05未改三世界低重9原帧独审通过，结合既有中档和exact来源桥启动原生成。",
+      "limitations": "不含split修后低重和实际搜撤。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B05-SPLIT-MEDIUM",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-medium-independent-art-review.json",
+      "evidenceSha256": "f0adbd90c42e0ab05d40af185d4d9fc4c3e84172a158e922e0326a5d8ecab7a8",
+      "scope": "双向坠片减少相同分叉后中档4原图独审通过、原路线三档复验通过。",
+      "limitations": "低重待审，不提前关闭P33。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B08-BODY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-author-preflight/body-preflight-summary.json",
+      "evidenceSha256": "3183a1c0b524686de29c881e8a3ac16f938f76a1c5e2a6c65bf0150cf38b1bdb",
+      "scope": "B08四作者世界原12等级实际20px身体通路、60摄影站和断面可见像素通过。",
+      "limitations": "不是正常图、原576生成、24实际搜撤或最终启用。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B09-BODY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-author-preflight/body-preflight-summary.json",
+      "evidenceSha256": "b6e02c977496c3a65f76ba62d728b66428e165da82dc4aa962c13542aafcde5c",
+      "scope": "B09四作者世界原12等级实际20px身体通路、60摄影站和断面可见像素通过。",
+      "limitations": "不是正常图、原576生成、24实际搜撤或最终启用。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B10-BODY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-author-preflight/body-preflight-summary.json",
+      "evidenceSha256": "004a15f9b89a0e6e77b1364f8d3e513c8d4d206e1d560f5210b63c023b18e474",
+      "scope": "B10四作者世界原12等级实际20px身体通路、60摄影站和断面可见像素通过。",
+      "limitations": "不是正常图、原576生成、24实际搜撤或最终启用。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-I12-STATIC48",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/author-preparation/late-static-current48.json",
+      "evidenceSha256": "1a6e2247c7d10c922ea9744a173d0b8e2ffb8d56aaa3c4d1f5878b4135800dd4",
+      "scope": "16隔离作者三档48当前静态格保守身体与既定路线通过，原失败和被替代记录保留。",
+      "limitations": "实际Master身体、材料关系和正常图独立待验证；不能计正式世界资格。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B05-SPLIT-REPAIR",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-split-refined-grades-independent-art-review.json",
+      "evidenceSha256": "70a6bfe1095dc4a91335bce76ff0af0a1bcf3407faac759d5f05b9881092f05c",
+      "scope": "split修后低重6原帧root独审通过，结合中档4原帧关闭重复六箭头画面问题。",
+      "limitations": "原576生成/24实际过程及最终接入独立执行。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B06-MATERIAL-REJECT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium-independent-art-review.json",
+      "evidenceSha256": "5f82907d16d858d2de5f214265301d0dce4fb0376ce78ffaa5de185d3cbb30a2",
+      "scope": "B06中档12原图root独审，短纤/毡层材质身份拒绝；两孔髓场景可进低重。",
+      "limitations": "材质路径仅整改新short-fibre，旧source保留；不是全批视觉通过。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B12-FRACTURE-REJECT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/body12/report.json",
+      "evidenceSha256": "a5dd147db2cf4859d93fd72673784dd7ca4b266d51fdf1d2884f62ace4794b93",
+      "scope": "B12首次actual12原报告：offset/spliced六格通过，double物4断纹3px、pinched膜5/6被完全遮盖，各三档未达标；原路线及站位步骤通过。",
+      "limitations": "静态48通过不能代替真实表面可见断纹。保留失败并待修复原12复核。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B06-POROUS-GRADES",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-grades-independent-art-review.json",
+      "evidenceSha256": "98e2b36e30d2ece33dba6cbd4092c9d12fb90e085f321fd0f7603626d22eaa2e",
+      "scope": "根代理亲看孔髓两世界低/重6原PNG：外皮/孔状断面/地面可分，限定正常图通过。",
+      "limitations": "短纤/毡层仍未通过；不代表整个B06或深度压力、声音、性能通过。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B04-ORIGINAL-PROCESSES",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/independent-gameplay-attempt1-review.json",
+      "evidenceSha256": "771b64d31bcc73ca80132cf459c675f271ef43742ff0511c742f0f5a60c99705",
+      "scope": "24原过程已逐项读取，21完成；20途中搜撤、1近入口；3入场前Worker错误保留。独立查看4原场内图。",
+      "limitations": "3次错误后续同源观察重放完成但历史原因未知；P36维持开放，不把原失败算成空返。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B12-FRACTURE-REPAIR",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/fracture-refined/protection.json",
+      "evidenceSha256": "6f959e75d88c6f62304009112d6ec9ea1b23246ad98c60f4dc783c6bf92f5489",
+      "scope": "仅3实例4字段修复，保留原路线/边界，其他98世界294等级定义精确。作者原12实际身体复验通过，100作者源冻结3117。",
+      "limitations": "P35待正常游戏画面复核；几何修复和12格通过不代表正常图或正式资格。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B05-ACTUAL",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "02f62120ed0e20ceeb1633d52699d730073098fdead908e03e5322a9066ee29e",
+      "scope": "B05原24实际搜取撤离及12固定种子对限定通过；root复核所有结局与五张原帧。",
+      "limitations": "两次重档为320px安全堆短返，不代表深搜或自然长期经济。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B08-VISUAL-REVIEW",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-medium-independent-art-review.json",
+      "evidenceSha256": "2cd27cceda08f6378e3090650f921869675a787a7817ee962e2ceee016117ef0",
+      "scope": "B08正常中档独审：树脂套层局部通过；砂挤断缝和断丝挂褶低层拒绝；壳上纤维右接合待补图。",
+      "limitations": "旧图结论；不能移植为修后、低重档或完整世界通过。",
+      "purpose": "bounded-visual-review"
+    },
+    {
+      "id": "R100-R6-LOW-SURFACE-BODY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-settled-refined/grain-body3/report.json",
+      "evidenceSha256": "889c2e762028d535b4c0e54c0a9881223a4b1f113c3d7b2ed21aec5940b56ed2",
+      "scope": "三世界低层改为显式贴地形体；砂挤断缝/断丝挂褶六格与卷缘平滩三格原身体路线均通过。",
+      "limitations": "此记录直接绑定砂挤3格；其他报告见E172。正常画面待复审，P38保持open。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-B14-AUTHOR-BODY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-author-preflight/body-preflight-summary.json",
+      "evidenceSha256": "1f9b58aaa5bc36b6eca32346287ed7b6e085da88a9b74d6f0ab6d004fbb21b50",
+      "scope": "最后四个作者世界原12完整身体、站位和路线通过；旧104行和312定义精确。",
+      "limitations": "108是作者候选数，不计当前修订正式资格；短纤待修、5px短裂纹待正常图。",
+      "purpose": "bounded-route-review"
+    },
+    {
+      "id": "R100-R6-LOW-SURFACE-VISUAL",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/independent-review.json",
+      "evidenceSha256": "b09f67a4b50c1d27577497af54b6e17c97a857a02d79b28a86983bd2127fc095",
+      "scope": "三世界低层低/重正常图及B07三世界局部边界复审通过；中档先前已独审。",
+      "limitations": "限定原源原图，不提升整个世界/迭代资格；完整生成、实际搜撤及全库验证继续。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-OCHRE-TEAR-VISUAL",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/ochre-near-tear-medium/independent-review.json",
+      "evidenceSha256": "acaedec117a0e03dc1fa69914a3e176d46bd0c0e393210451c1d2bba184978c2",
+      "scope": "赭皮短裂口中档近侧两实际站位可读，结合独立身体合同关闭单像素问题。",
+      "limitations": "限定原源原图，不提升整个世界/迭代资格；完整生成、实际搜撤及全库验证继续。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B09-B10-VISUAL-REVIEW",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-medium-independent-review.json",
+      "evidenceSha256": "13de86f566c14a6b6c608ba64be6f5c72871b597861c5e3479d3efd1e4e9e9e8",
+      "scope": "B09/B10五世界局部中档通过、三世界拒绝，明确逐图限制。",
+      "limitations": "不代替低重或完整资格；profile修正图尚待复审。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-STARTUP-BROWSER",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/independent-review.json",
+      "evidenceSha256": "a09394ddeb26db100ed921e0a3e3208e1c2e8a868d74bb0c57d75b221adaf08c",
+      "scope": "真实默认客户端三组受控浏览器验证通过；启动失败后同配方和全部结果/输入缓冲保持，未出现额外页面错误。",
+      "limitations": "不证明自然网络错误已消失，P36及最终324接入/恢复/性能仍待验。",
+      "purpose": "bounded-review"
+    },
+    {
+      "id": "R100-R6-FIVE-REFINED-MEDIUM",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-medium/independent-review.json",
+      "evidenceSha256": "ec9dbed1a41c578c822737393764839e206d8f765f22698e241af48695032c73",
+      "scope": "五世界正常中档十张原图独审通过，短纤表面与三世界低层/重复形体改善。",
+      "limitations": "低重与完整世界资格另验；P34/P39暂不关闭。",
+      "purpose": "bounded-review"
+    },
+    {
+      "id": "R100-R6-P34-GRADE-VISUAL",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-refined-grades/independent-review.json",
+      "evidenceSha256": "72bf04f38633c4e5c929e65eaff23e3c0bc2582f206615379675858513d96ae0",
+      "scope": "短纤/毡层两世界低重七原帧独审，结合中档与body关闭P32/P34原缺陷。",
+      "limitations": "限定原两世界/原观察点，不提升完整世界资格；woven新缺陷单独追踪。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B08-P39-GRADE-VISUAL",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-b10-and-b08-refined-grades/independent-review.json",
+      "evidenceSha256": "9b13bdc8acaf4a71232d6724ca939c7404e2ceeda3d077bc00dcfdf242e5c7d4",
+      "scope": "五世界低/重十二原帧独审，P39三世界原贴片/重复缺陷关闭，B08两剩余世界补足限定图审。",
+      "limitations": "固定生成/实际过程及全库资格另验；原失败保留。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B11-CURRENT-MEDIUM-INDEPENDENT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/independent-review.json",
+      "evidenceSha256": "9a39b1d686e3ad976717abbb492b16accee077df6d8228ac6efad1c2f26bfbd7",
+      "scope": "B11中档正常原图独审，明确区分通过局部与拒绝低床。",
+      "limitations": "按列举原帧，不代替三级/完整世界资格或用户审美认可。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B12-CURRENT-MEDIUM-INDEPENDENT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/independent-review.json",
+      "evidenceSha256": "950029e61539f7367e38347c66b95b589c36bfe2f06d75c1b746fa2dba0f3994",
+      "scope": "B12中档正常原图独审，明确区分通过局部与拒绝低床。",
+      "limitations": "按列举原帧，不代替三级/完整世界资格或用户审美认可。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B13-CURRENT-MEDIUM-INDEPENDENT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/independent-review.json",
+      "evidenceSha256": "369974b4ff5fc89e132d07f44ac9e69427e33543f085a490014ceb44bd64ee5e",
+      "scope": "B13中档正常原图独审，明确区分通过局部与拒绝低床。",
+      "limitations": "按列举原帧，不代替三级/完整世界资格或用户审美认可。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B14-CURRENT-MEDIUM-INDEPENDENT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/independent-review.json",
+      "evidenceSha256": "12b5ad2d3640bcd038b1107d91e0f155bb24143336dca5d5a3a4c1efc92de537",
+      "scope": "B14中档正常原图独审，明确区分通过局部与拒绝低床。",
+      "limitations": "按列举原帧，不代替三级/完整世界资格或用户审美认可。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-LATE-PASSED-GRADES-INDEPENDENT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/independent-review.json",
+      "evidenceSha256": "8ce5143e4a9fcead3e42ba0377162780bb5afb1ba56880b428e6eea363dddc06",
+      "scope": "4世界低重原图独立局部审查，所见材质/障碍及真缺地边沿通过。",
+      "limitations": "不扩签未看面、自然搜撤或完整资格。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-EARLIER-PASSED-GRADES-INDEPENDENT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/independent-review.json",
+      "evidenceSha256": "c8a817c17f56596c6e209013540436f4bc8daa988f591895f9809e5a3be8607f",
+      "scope": "6世界低重原图独立局部审查，所见材质/障碍及真缺地边沿通过。",
+      "limitations": "不扩签未看面、自然搜撤或完整资格。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-LATE-REFINED-MEDIUM",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-medium/independent-review.json",
+      "evidenceSha256": "08bfc334b78b0181e7a2eb1a43876c3739f8351e513ed1ea9502075b537c2848",
+      "scope": "返修11世界中档15原帧独审通过；作者另逐张看完47帧。",
+      "limitations": "仅中档列举局部；低重待验，P40/P41不提前关闭。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B06-POROUS-ORIGINAL-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/independent-gameplay-review.json",
+      "evidenceSha256": "6b1e72e8513ef13ca6997b51dc2b4f0d177cfc078115ed0db56c287f5bf25774",
+      "scope": "多孔2世界6档对12原种子过程实际非入口搜取归来，原002失败作为第13尝试保留。",
+      "limitations": "受控世界/种子与熟练导航，不是自然经济或深搜收益；P36最终生产矩阵继续。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-LATE-REFINED-GRADES",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/independent-review.json",
+      "evidenceSha256": "f9fb1c06635a1c58ebdfac1f0f5388897315a864e4b293aec3f7de4236cfc846",
+      "scope": "修后11世界低重22案例的24原帧独审；结合中档及原身体合同关闭P40/P41具体缺陷。",
+      "limitations": "不是全图/全部种子/完整世界资格；正常灯照和真实遮挡保持。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B07-ORIGINAL-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "293efd2dfe93ca8be822b5967e725b831321cad1ba865574ab4064065ac6ce6b",
+      "scope": "4世界24原种子实际过程，22非入口搜撤/2真实空返/0死，9原帧独审及独立原报告核对。",
+      "limitations": "限定列举原过程和原帧，未代替最终108接入/恢复/性能/自然经济与用户认可；pitch两重档仅浅部拾取。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-P35-NORMAL-REVIEW",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/p35-independent-review-root.json",
+      "evidenceSha256": "70058a4864d6d7daf84e4ede0738bdd2427dce246e7146159919bca07f10e846",
+      "scope": "double-return物4三档4原帧root独审与真实joint归属；pinched-fan引用既有三档root原图。原P35限定关闭。",
+      "limitations": "不声称细三角形状、全表面/全方向、全种子或完整搜撤通过；最终源仍须精确绑定。",
+      "purpose": "bounded-art-review"
+    },
+    {
+      "id": "R100-R6-B08-ORIGINAL-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "a3da6eab36413754bc705bf89e60aa4c4ed82932c5e3069e37a1b706894c0e26",
+      "scope": "4世界24原过程全部搜撤，9原帧root亲审；3重档浅搜与中档大损耗保留。",
+      "limitations": "固定输入有限证据，不代替最终108接入/恢复/性能、自然48趟、听感或人审。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-B06-SHORT-FIBRE-ORIGINAL-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "105f7c07da8db4afde415f5d7bdd2b0b8c126b530a58dbe8b0e8cf8145dc0a4a",
+      "scope": "两短纤世界12原过程全部争夺点搜撤，6原帧root亲审；全HP/无主动消耗限制保留。",
+      "limitations": "固定输入有限证据，不代替最终108接入/恢复/性能、自然48趟、听感或人审。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-GENERATION-ALL-NEW",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/final-generation/independent-accounting-root.json",
+      "evidenceSha256": "2e079cc853b9ae98077ebf2fdaf667238e66ec8d99663eaf22b8f1bd3547e373",
+      "scope": "新56基础8064与额外2592原JSONL/计划/冻结执行器独立核对，原superseded144保留，旧7488另作历史继承。",
+      "limitations": "固定输入有限证据，不代替最终108接入/恢复/性能、自然48趟、听感或人审。",
+      "purpose": "bounded-generation-accounting"
+    },
+    {
+      "id": "R100-R6-B09-ORIGINAL-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "6a88fe482f02dd8804192ff36cb3b65bd9f4c806583a101620f14ba9414f3bed",
+      "scope": "24原过程：22非入口携返、2近入口携返、0真空返；8原帧root亲审，原误分类摘要保留而v2独立修正。",
+      "limitations": "固定输入有限证据，不代替最终108接入/恢复/性能、自然48趟、听感或人审。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-B10-ORIGINAL-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/independent-gameplay-review.json",
+      "evidenceSha256": "f02e0171103e476e9d081b06f3bf7c46816e865cc23d39f901e520425606764c",
+      "scope": "24固定身份25实际过程；23唯一非入口搜撤、1近入口携返，9原帧root亲审。开发服务额外标签页导致原012环境错误，原成功和同身份清洁复测均保留。",
+      "limitations": "固定输入有限证据，不代替最终108接入/恢复/性能、自然48趟、听感或人审；原开发页报错不解释历史P36。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-B04-RECHECKED-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "71da650d1e831096adaaf6abf8f08672779b08748a02aed2cbd63f7fa763364b",
+      "scope": "原24+3固定输入补验、24唯一完成，22非入口/2近入口/0真空返；原4帧与3补验帧root审核。原三次Worker失败完整保留，P36仍待最终324接入。",
+      "limitations": "受控流程与所见帧限定通过；原故障未被三次干净补验单独解释，不代替自然出征或最终源接入/性能。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-B11-ORIGINAL-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "3b20cd4675181b00f714b668f06dcee0048515ffccc717860a376f31b8dac42f",
+      "scope": "24固定原过程全部非入口搜撤，10原帧root亲审；最高损75HP、混乱118.093，较短重档低压力亦保留。",
+      "limitations": "受控流程及所见帧有限通过；不代替最终接入、自然48趟、性能、听感或人审。",
+      "purpose": "bounded-gameplay-review"
+    },
+    {
+      "id": "R100-R6-B12-ORIGINAL-PLAY",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/independent-gameplay-review.json",
+      "evidenceSha256": "3b12f083eb516d95e400651f0942e9d0863b964c2bf81ee1594138892639b6bb",
+      "scope": "24原固定过程，23非入口搜撤、1真空返；9原帧root亲审，最高损105HP/混乱113.861和轻松重档短途均保留。",
+      "limitations": "受控流程和所见画面限定通过，未覆盖自然经济与最终接入/性能/听感人审；原空返不得抹去。",
+      "purpose": "bounded-gameplay-review"
     }
   ],
   "risks": [
@@ -25412,7 +30252,8 @@
       "evidenceIds": [
         "R100-E-COMPLETION-AUDIO-ENGINEERING"
       ],
-      "reviewPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/README.md"
+      "reviewPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/README.md",
+      "disposition": "2026-10-07 root按sound-disposition.json批准现有源/配方有限复用；真实听感未签，I14发布门保留，最终依赖变化使复用失效。"
     }
   ],
   "issues": [
@@ -25815,6 +30656,248 @@
       ],
       "note": "3102材料接触与胶尾视角中，两材交接实际存在，但壳内面像平切斜板。root改为连续曲率、不等受压内唇和短端真实断口；既有600三角预算保持，九个实例/等级足印逐像素不变。正常修后图待审。",
       "resolution": "3103冻结源：局部真实几何/断面/原足印检查通过，作者三档正常视野与root列明静帧独立复审通过；仅关闭本条具体缺陷，世界生成/实际搜撤资格单独执行。"
+    },
+    {
+      "id": "R100-P25",
+      "title": "窄地沿逐格尖峰导致规则栅栏外观",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "shapes",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B02-ART-REPAIR"
+      ],
+      "note": "B02正常中档thin02/offset04及低档同类可见。width8对齐8px格时四角零高、单中心高导致独立小锥，须连续肩峰；保持原8px地形、20px身体和2048三角预算。影响当前B02四世界及B01 cleft的边沿画面，其他旧52未选择该路径。 2026-10-07修复：3105双方正常三档复图通过，原失败与身体/内容对照保留；范围见20帧独审。"
+    },
+    {
+      "id": "R100-P26",
+      "title": "错台浅原低母面长直交线像贴片",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "art",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B02-ART-REPAIR"
+      ],
+      "note": "B02 offset正常中低02/04确认，大低片跨宽床的色面交线不成立。只收id2/id3为实体脚边短露层并对齐实际断岸，保id1断沿拥有者、真地形、solid和关键路线。 2026-10-07修复：3105双方正常三档复图通过，原失败与身体/内容对照保留；范围见20帧独审。"
+    },
+    {
+      "id": "R100-P27",
+      "title": "静床窄岬内外返路互相挤占",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "root",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-QUIET-ROUTES"
+      ],
+      "note": "隔离作者前三次位置调整均未同时保住两条路线，未进入正式。改为缩短南根肩占地并让出内口；三档20px同起终双路通过，短632/长1000px；中档32px局部扫掠通过。仅作者通路问题收口，正常艺术/世界资格另验。"
+    },
+    {
+      "id": "R100-P28",
+      "title": "楔间破皮厚卷的污染断纹被楔体遮住",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "identity_shapes",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B04-THREE-ART"
+      ],
+      "note": "原物3三档断纹0像素失败保留。真实几何南移32px后断纹34px、接触保留，body12通过；3107正常三档在root列明原图可辨。限定解除本缺陷，不代表B04整批资格完成。"
+    },
+    {
+      "id": "R100-P29",
+      "title": "I11四候选通路余量及查看站位需修正",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I11",
+      "owner": "root",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B07-B10-AUTHOR"
+      ],
+      "note": "四原通路问题12格32px复验通过；新增三构图调整的接触/路线也完成，16候选48格当前definition逐项精确匹配。原失败与并发正式写入披露保留。仅作者通路通过，不计正常图/世界资格。"
+    },
+    {
+      "id": "R100-P30",
+      "title": "错片折径重复六个分叉母片，岩体读成箭头复制",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "identity_shapes + art",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B03-SHARD-REPAIR"
+      ],
+      "note": "改为两件分叉、两件短厚断块、两件压层端块；第一次改形堵原路的失败保留，物3宽145→96修路。3109原3档路线与7张正常图通过，原六箭头拒绝保留。"
+    },
+    {
+      "id": "R100-P31",
+      "title": "埋片砂床缺少真实掩埋体量",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "root",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B04-BURIED-REPAIR"
+      ],
+      "note": "3107色带/3109纸片原拒绝保留。真实24px颗粒堆体与南绕路线三档实际身体通过；3110三档正常图作者/root复审通过，关闭掩埋体量缺陷。固定144生成及全批24实际过程仍独立验证。"
+    },
+    {
+      "id": "R100-P32",
+      "title": "毡层挤片的一件污染断纹被上覆几何遮住",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I11",
+      "owner": "identity_shapes",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-P34-GRADE-VISUAL"
+      ],
+      "note": "B06原actual12有9通过/3felt失败；物2精确南移16px后原三档/原路线全部通过，cut最小708px、fracture最小4px仍需正常图重点核对。只解除机器遮盖失败，未签最终视觉。",
+      "resolution": "原两世界三档正常肩灯已由作者与root列明原帧复审，结合原身体/站位修正关闭具体缺陷。完整生成与实际搜撤继续；woven旧材单独记P40。"
+    },
+    {
+      "id": "R100-P33",
+      "title": "双向坠片重复六处分叉箭头",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I10",
+      "owner": "root",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B05-PARTIAL-ART",
+        "R100-R6-B05-SPLIT-REPAIR"
+      ],
+      "note": "旧六相同分叉拒绝保留。三档原路线实际身体通过，3112中档4＋低重6正常原帧root复审通过；关闭重复母形视觉问题，固定生成/实际过程独立待验。"
+    },
+    {
+      "id": "R100-P34",
+      "title": "短纤压毡正常视野仍像颗粒石壳",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I11",
+      "owner": "world_loot_pixels",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B06-MATERIAL-REJECT",
+        "R100-R6-FIVE-REFINED-MEDIUM",
+        "R100-R6-P34-GRADE-VISUAL"
+      ],
+      "note": "原正常图及几何v1–v3拒绝保留。专用束团源窗及world384在短纤/毡层两world中档原图经作者和root通过，低重继续；woven旧源实际图也读成云状颗粒，准仅此world更换组织后重新验证。",
+      "resolution": "原两世界三档正常肩灯已由作者与root列明原帧复审，结合原身体/站位修正关闭具体缺陷。完整生成与实际搜撤继续；woven旧材单独记P40。"
+    },
+    {
+      "id": "R100-P35",
+      "title": "末批压口断纹面积不足或被上层完全遮住",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I12",
+      "owner": "identity_shapes",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B12-FRACTURE-REJECT",
+        "R100-R6-B12-FRACTURE-REPAIR",
+        "R100-R6-P35-NORMAL-REVIEW"
+      ],
+      "note": "double-return物4局部青绿标记及右端厚切面在三档原帧可辨，真实joint归属独立核对；pinched-fan下层不再被上层完全遮住，三档已有root复审。P35原缺陷限定关闭，不把局部图审扩作全表面或完整搜撤。"
+    },
+    {
+      "id": "R100-P36",
+      "title": "三次原定出击在入场前发生Worker错误",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I10",
+      "owner": "identity_pipeline",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B04-ORIGINAL-PROCESSES",
+        "R100-R6-STARTUP-BROWSER"
+      ],
+      "note": "原B04三次入场前Worker失败、B06原002明确ERR_NETWORK_CHANGED均保留；同请求一次启动恢复已通过14生命周期、旧恢复/像素回归及三组真实浏览器受控验证。最终324进入/冷续与生产观察未完，不据受控实验解释所有历史间歇原因。"
+    },
+    {
+      "id": "R100-P37",
+      "title": "赭皮折口的短裂纹只有一个像素",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I12",
+      "owner": "identity_shapes",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-OCHRE-TEAR-VISUAL"
+      ],
+      "note": "原B13首轮9过3失败保留。显式pleated-tear补斜壁/底面，原12真实身体复验全通过；中档新增原可达近侧两图能辨局部短裂口。B13全体三档图审仍继续。"
+    },
+    {
+      "id": "R100-P38",
+      "title": "三世界低矮皮层像多边形贴片",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I11",
+      "owner": "root",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B08-VISUAL-REVIEW",
+        "R100-R6-LOW-SURFACE-BODY",
+        "R100-R6-LOW-SURFACE-VISUAL"
+      ],
+      "note": "原低层贴片与黑裙问题已用限定settled-sheet/fan修复，原9身体路线及3档正常原位图复验。高障碍/路权保持；限定三世界低层修正，不提升完整世界资格。"
+    },
+    {
+      "id": "R100-P39",
+      "title": "蓝色断层等三世界低层贴片及浅壳三次重复构造",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I11",
+      "owner": "identity_shapes",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B09-B10-VISUAL-REVIEW",
+        "R100-R6-FIVE-REFINED-MEDIUM",
+        "R100-R6-B08-P39-GRADE-VISUAL"
+      ],
+      "note": "三世界原中档图拒绝保留，原9身体复验及新中档正常原位图通过，低重继续。只低层用settled、pale两实体改形；其他105世界/315定义精确。",
+      "resolution": "原9身体路线、新中档及低重正常原图作者/root复审通过，仅关闭原三处视觉缺陷。"
+    },
+    {
+      "id": "R100-P40",
+      "title": "编织夹庭主面短纤仍像云状颗粒石面",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I12",
+      "owner": "world_loot_pixels",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-LATE-REFINED-MEDIUM",
+        "R100-R6-LATE-REFINED-GRADES"
+      ],
+      "note": "woven属于B14/I12。原3120主面读成云状颗粒，3121仅该world组织切short-fibre-loose，中档01主纤维原帧作者/root已通过；棕副材不冒充主面。低重原位复验继续。",
+      "resolution": "3121中档作者47/root15与低重作者46/root24原帧复审通过；10世界21浅层原30身体合同通过，高实体/碰撞/真缺地保持。仅关闭原视觉缺陷，完整世界资格继续验证。"
+    },
+    {
+      "id": "R100-P41",
+      "title": "后四批十世界可走浅层带硬黑边，误读为铺贴板材",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I12",
+      "owner": "identity_shapes",
+      "revision": "r100-native-v3-revision-6",
+      "evidenceIds": [
+        "R100-R6-B11-CURRENT-MEDIUM-INDEPENDENT",
+        "R100-R6-B12-CURRENT-MEDIUM-INDEPENDENT",
+        "R100-R6-B13-CURRENT-MEDIUM-INDEPENDENT",
+        "R100-R6-B14-CURRENT-MEDIUM-INDEPENDENT",
+        "R100-R6-LATE-REFINED-MEDIUM",
+        "R100-R6-LATE-REFINED-GRADES"
+      ],
+      "note": "原31帧独审：crushed/fibre/gel、pinched/spliced、white/black/violet、shell/estuary共10世界21低实例返修。只显式低profile连续压入地面；高障碍、真VOID、地貌投影覆盖及旧profile保持。原身体路线与三档原位正常图均复验后关闭。 3121中档作者47帧/root15帧已限定通过，低重原位待验。",
+      "resolution": "3121中档作者47/root15与低重作者46/root24原帧复审通过；10世界21浅层原30身体合同通过，高实体/碰撞/真缺地保持。仅关闭原视觉缺陷，完整世界资格继续验证。"
     }
   ],
   "changeLog": [
@@ -25954,6 +31037,40 @@
       "date": "2026-10-07",
       "kind": "implementation",
       "note": "累计60作者候选。B01四世界正常图审通过、576生成通过，双种子实际搜撤执行中；B02四世界身体通路修正完成，待正常图审。旧52限定继承已独审，不抹掉r6正式进入/恢复缺口。"
+    },
+    {
+      "date": "2026-10-07",
+      "kind": "implementation",
+      "note": "B02断沿尖峰与错台贴片修复通过作者32/root20张有限正常图审，P25/P26关闭，原576/24验证已从3105启动。旧52×3当前map/四RGBA精确；I11两新形体64fixture和原52共465网格检查通过，未代签世界资格。B03作者追加中，64目录待配套/前检。"
+    },
+    {
+      "date": "2026-10-07",
+      "note": "B03四世界作者目录和外观/残骸加入；12个三档作者前检与60站身体支持通过。64仅为作者候选，B02有限图审与B03数据接入不提前计为世界/迭代合格。"
+    },
+    {
+      "date": "2026-10-07",
+      "kind": "implementation",
+      "note": "累计92作者基线；B03原576生成/24实际均完成途中搜撤，独审通过；埋片砂床三档实图关闭P31，split修后中档通过待低重。B06–B10各12实际作者身体格通过；I12隔离48静态通过、正式逐批导入启动。正式资格数不提前增加。"
+    },
+    {
+      "date": "2026-10-07",
+      "kind": "implementation",
+      "note": "100作者源冻结、104作者追加进行中；B06孔髓两世界低重正常图通过，短纤仍拒绝。B12原12修复复验通过但P35待正常图；B04保留3入场前Worker失败，同源观察复验完成，P36未知根因继续开放。"
+    },
+    {
+      "date": "2026-10-07",
+      "kind": "verification",
+      "note": "108作者条目齐备。P37短裂口及P38三世界低层以原身体证据+正常实景复核限定关闭；P34新源窗候选仅准进实际图。B09两世界新发现贴片/重复构造问题，继续返修。"
+    },
+    {
+      "date": "2026-10-07",
+      "kind": "verification",
+      "note": "五世界修后中档独审通过；B07原576生成0失败。一次启动恢复经3组真实浏览器受控验证通过，P36仍待最终生产矩阵。woven旧短纤实图拒绝，仅准更换主面组织。"
+    },
+    {
+      "date": "2026-10-07",
+      "kind": "verification",
+      "note": "18:03用户要求log当前进度。B01–B12有限独审完成，B13原003网络异常原件及诊断保留，单次同身份补验未启动，B14未启动；35源码归档/恢复通过。准确续接与未执行最终门槛见r100-i10-i12-checkpoint.md。"
     }
   ],
   "qualityPlan": {

@@ -392,7 +392,15 @@
       "COH-E163",
       "COH-E164",
       "COH-E165",
-      "COH-E166"
+      "COH-E166",
+      "COH-E167",
+      "COH-E169",
+      "COH-E170",
+      "COH-E171",
+      "COH-E172",
+      "COH-E173",
+      "COH-E174",
+      "COH-E175"
     ],
     "unknowns": [
       "最终真实交互站位版本的恢复20组、生产生成专项、94例离线资格与正式浏览器一趟搜撤/刷新通过；30组合使用代表/上下界与4个已知正式选池种子，不是未筛选随机总体。有限检查不证明所有连续参数、全种子拒绝率、重试尾部或长期加载/重玩质量。",
@@ -404,7 +412,7 @@
     "id": "COH-F012",
     "title": "共享多层地表与材料表现",
     "domain": "world",
-    "summary": "修订5沿用已认可的材料连续映色与源笔触，新增六类显式形状及构造版本3，表达厚壳、褶皮、肋组、分足巨体、低叶和不规则台缘。地面/完整皮面/断面/次材分工，可走浅浮雕与阻挡脚边分开。52项有限正常图审及近邻返工绑定最终源；312实际过程另验，旧修订4RGBA按独立闭包恢复。",
+    "summary": "修订5获认可的材料连续映色、源笔触和实体/浅浮雕分工保留；修订6显式构造4增加缺地断岸、孔髓和压层。赭皮短裂口、三世界贴地低层及短纤两世界原缺陷已有限复审。woven旧短纤与后四批十世界浅层硬边已定点修正，原三档正常画面经作者和root独立复审，P40/P41限定关闭；固定生成、实际搜撤与最终正式接入仍单独验证。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -675,6 +683,31 @@
       {
         "path": "src/generated/r100-material-organizations.ts",
         "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-organization.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/systems/r100-world/organization-sampling.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-native-organization.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-organization-sampling.ts",
+        "role": "code"
+      },
+      {
+        "path": "tools/world-study/check-organization-surface-bake.ts",
+        "role": "code"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-settled-projection.ts",
+        "role": "code",
+        "note": "显式非阻挡浅倒束/夹接岸使用原XY投影和连续压边；旧构造保持。"
       }
     ],
     "dependsOn": [
@@ -702,7 +735,16 @@
       "COH-E161",
       "COH-E163",
       "COH-E164",
-      "COH-E165"
+      "COH-E165",
+      "COH-E167",
+      "COH-E168",
+      "COH-E169",
+      "COH-E170",
+      "COH-E171",
+      "COH-E172",
+      "COH-E173",
+      "COH-E174",
+      "COH-E175"
     ],
     "unknowns": [
       "旧v1/v2及v3修订1/2/3按各自封存身份恢复；当前修订4仍是单层可走空间，不支持多层攀爬或动态改变碰撞。",
@@ -989,7 +1031,7 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "R100目标108世界324等级。I01–I09已结案，当前基线52世界156等级；I10/11/12获连续授权并开始首批构造版本4、作者缺失地面及修订6。新增内容须按14批完成技术、美术、实际搜撤和接入，尚未签新包合格。 10-07累计60作者候选；B01四世界576生成/24实际过程及正常图审限定通过，B02进入正常图审，r6正式全库验证未完成。",
+    "summary": "I01/I02人审、I03–I09内部结案，9/14轮；前轮正式基线52世界156等级。I10–I12作者108齐备、三档局部美术与新增8064+2592生成完成，B01–B12固定过程有限复核完成。B13原003网络异常后队列中断，清洁补验未启动，B14未启动；最终108启用、接入/冷续/自然连续/性能/资源仍待完成。35冻结源归档与逐文件恢复已通过。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1815,6 +1857,35 @@
         "path": "tools/qa/check-r100-presentation-phases.ts",
         "role": "test",
         "note": "I11受控交叉合同；工具存在不等于全部世界执行通过，结果范围见绑定报告。"
+      },
+      {
+        "path": "tools/qa/r100-bind-i10-i12.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-r100-expansion-binding.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-r100-expanded-holdout-summary.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-r100-ground-edge-behavior.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/r100-organization-dispatch-continuity.mjs",
+        "role": "code"
+      },
+      {
+        "path": "tools/qa/check-r100-organization-dispatch.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/progress/r100-i10-i12-checkpoint.md",
+        "role": "doc",
+        "note": "2026-10-07 18:03精确续接点；未执行门槛与原失败完整保留，不是迭代完成验收。"
       }
     ],
     "dependsOn": [
@@ -1874,7 +1945,16 @@
       "COH-E163",
       "COH-E164",
       "COH-E165",
-      "COH-E166"
+      "COH-E166",
+      "COH-E167",
+      "COH-E168",
+      "COH-E169",
+      "COH-E170",
+      "COH-E171",
+      "COH-E172",
+      "COH-E173",
+      "COH-E174",
+      "COH-E175"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",

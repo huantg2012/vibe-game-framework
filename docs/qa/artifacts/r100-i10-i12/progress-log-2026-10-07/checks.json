@@ -1,0 +1,47 @@
+[
+  {
+    "check": "board-check",
+    "command": [
+      "node",
+      "tools/world-study/r100-progress.mjs",
+      "check"
+    ],
+    "exitCode": 0,
+    "log": "docs/qa/artifacts/r100-i10-i12/progress-log-2026-10-07/board-check.log"
+  },
+  {
+    "check": "board-render",
+    "command": [
+      "node",
+      "tools/world-study/r100-progress.mjs",
+      "render"
+    ],
+    "exitCode": 0,
+    "log": "docs/qa/artifacts/r100-i10-i12/progress-log-2026-10-07/board-render.log"
+  },
+  {
+    "check": "state-check",
+    "command": [
+      "node",
+      ".agents/skills/game-state/scripts/game-state.mjs",
+      "check",
+      "--root",
+      "."
+    ],
+    "exitCode": 2,
+    "log": "docs/qa/artifacts/r100-i10-i12/progress-log-2026-10-07/state-check.log"
+  },
+  {
+    "check": "state-index",
+    "command": [
+      "node",
+      ".agents/skills/game-state/scripts/game-state.mjs",
+      "render",
+      "--root",
+      ".",
+      "--index-only"
+    ],
+    "exitCode": 0,
+    "log": "docs/qa/artifacts/r100-i10-i12/progress-log-2026-10-07/state-index.log"
+  }
+]
