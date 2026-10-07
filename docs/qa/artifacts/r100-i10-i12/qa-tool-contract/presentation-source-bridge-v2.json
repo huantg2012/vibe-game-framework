@@ -1,0 +1,55 @@
+{
+  "status": "pass",
+  "reports": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/inactive-presentation-continuity-v2.json",
+      "sha256": "19462a4ecca45c7cd525a8bfc7d21c01587a22dd64c9cc505952db2e299a4534"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b02-refined-unaffected55-v2.json",
+      "sha256": "e726b2c424c4cd5f93d2378f0d15bd1359e76ea303d388cca09a188c32a613ee"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b03-unselected60-v2.json",
+      "sha256": "2d8d52de972748ea0cdc7c51b92aabf0e251d0a862e1a2a3424be3c028643727"
+    }
+  ],
+  "executedSources": [
+    {
+      "path": "tools/qa/r100-source-continuity.mjs",
+      "sha256": "aaa478d0f547d0243ca66f2f7c87c8f93be277f180b66eee195ddc951edfbfad"
+    },
+    {
+      "path": "tools/qa/r100-remains-source-continuity.mjs",
+      "sha256": "0a9b64c3bec9bd9ffe1df610bc1e640147edd26dd560624e4dda43e8a17537df"
+    },
+    {
+      "path": "tools/qa/r100-organization-dispatch-continuity.mjs",
+      "sha256": "f2d7885d76cb47bf93ffd0409f5a44e6f2873222e61b0f45e305adc34659930f"
+    },
+    {
+      "path": "tools/qa/r100-inactive-presentation-continuity.mjs",
+      "sha256": "20da8da7338e5c41830e576947369cc139d13c3e1fd74bfb59681801fdcc2636"
+    },
+    {
+      "path": "tools/qa/check-r100-inactive-presentation-continuity.mjs",
+      "sha256": "9ca4a7d943bca0bc2af3fc1ff0447711d27760d63b9fc4fd4fafa1a9cbf07456"
+    }
+  ],
+  "checks": [
+    "9 actual-source positive/negative opt-out predicates, including refusing a removed original edge-module top-level side effect",
+    "Full source bytes plus unchanged per-world inputs55 before3103\u2192after3105",
+    "Full source bytes plus explicit unselected geometry60 before3105\u2192after3106",
+    "node --check and scoped git diff --check"
+  ],
+  "scope": "Source bridge only. Cleft is excluded from55-world edge and uses separate root-approved six-play recipe proof/new144 CPU plan. No new art/gameplay/RGBA execution created.",
+  "preservedPriorExecution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/presentation-source-bridge.json",
+    "sha256": "1d9d8cf2ba446216ae5fd839ede019e9c60220cc3d8afa429489b47ca5691d89"
+  },
+  "preservedPriorTools": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/presentation-bridge-v1-sources/manifest.json",
+    "sha256": "62e8f577bcca79d279b36af8d15d88c79c20f9f43f850293c1c35e947f454890"
+  },
+  "change": "Require both original and replacement unselected edge modules to be inert; actual world inputs and outcomes unchanged."
+}

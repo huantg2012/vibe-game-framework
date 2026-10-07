@@ -1,0 +1,2575 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-source/source-snapshot.json",
+    "sha256": "8161b87497c223b903b07d6fbd68c3afcbf46995487f7c2cd35cb2058af3b4e8"
+  },
+  "plan": {
+    "status": "ready-awaiting-single-browser-window",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "cameraInputSource": "docs/qa/artifacts/r100-i10-i12/b03-author-preflight/camera-supported.json",
+    "scope": "Actual WASD with normal shoulder lamp. World-space source targets guide cardinal views; actual position/facing must be recorded. No screenshot or art pass exists yet.",
+    "cases": [
+      {
+        "world": "shard-switchback",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-west-shoulder",
+            "x": 270,
+            "y": 380,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 268,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 262
+            }
+          },
+          {
+            "label": "02-first-switch",
+            "x": 456,
+            "y": 404,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 452,
+              "y": 404
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 306
+            }
+          },
+          {
+            "label": "03-cross-opening",
+            "x": 574,
+            "y": 529,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 654,
+              "y": 452
+            }
+          },
+          {
+            "label": "04-last-tip",
+            "x": 858,
+            "y": 390,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 860,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 798,
+              "y": 292
+            }
+          }
+        ]
+      },
+      {
+        "world": "hollow-wreckage",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-south-low-shell",
+            "x": 536,
+            "y": 616,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 612
+            },
+            "lookAtMaterialPoint": {
+              "x": 566,
+              "y": 544
+            }
+          },
+          {
+            "label": "02-west-standing-shell",
+            "x": 562,
+            "y": 452,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 452
+            },
+            "lookAtMaterialPoint": {
+              "x": 386,
+              "y": 320
+            }
+          },
+          {
+            "label": "03-east-standing-shell",
+            "x": 540,
+            "y": 326,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 324
+            },
+            "lookAtMaterialPoint": {
+              "x": 708,
+              "y": 370
+            }
+          },
+          {
+            "label": "04-north-low-shell",
+            "x": 532,
+            "y": 180,
+            "faces": [
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 180
+            },
+            "lookAtMaterialPoint": {
+              "x": 526,
+              "y": 228
+            }
+          }
+        ]
+      },
+      {
+        "world": "knotted-run",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-west-crossed-head",
+            "x": 292,
+            "y": 462,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 292,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 354,
+              "y": 287
+            }
+          },
+          {
+            "label": "02-south-crossed-head",
+            "x": 544,
+            "y": 418,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 420
+            },
+            "lookAtMaterialPoint": {
+              "x": 463,
+              "y": 530
+            }
+          },
+          {
+            "label": "03-east-crossed-head",
+            "x": 580,
+            "y": 267,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 268
+            },
+            "lookAtMaterialPoint": {
+              "x": 714,
+              "y": 330
+            }
+          },
+          {
+            "label": "04-south-broken-tail",
+            "x": 540,
+            "y": 630,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 628
+            },
+            "lookAtMaterialPoint": {
+              "x": 463,
+              "y": 530
+            }
+          }
+        ]
+      },
+      {
+        "world": "rolled-fragments",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-first-roll",
+            "x": 388,
+            "y": 468,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 388,
+              "y": 468
+            },
+            "lookAtMaterialPoint": {
+              "x": 300,
+              "y": 370
+            }
+          },
+          {
+            "label": "02-second-roll",
+            "x": 478,
+            "y": 346,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 476,
+              "y": 348
+            },
+            "lookAtMaterialPoint": {
+              "x": 408,
+              "y": 218
+            }
+          },
+          {
+            "label": "03-middle-roll",
+            "x": 642,
+            "y": 340,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 644,
+              "y": 340
+            },
+            "lookAtMaterialPoint": {
+              "x": 610,
+              "y": 228
+            }
+          },
+          {
+            "label": "04-small-roll",
+            "x": 897,
+            "y": 443,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 900,
+              "y": 444
+            },
+            "lookAtMaterialPoint": {
+              "x": 794,
+              "y": 563
+            }
+          }
+        ]
+      }
+    ],
+    "cameraInputSha256": "902eacbc957889661ce862c464ed03d6cc65738f54f13b3ce33ed934b1b1a339",
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b03-source/source-snapshot.json",
+    "sourceManifestSha256": "8161b87497c223b903b07d6fbd68c3afcbf46995487f7c2cd35cb2058af3b4e8"
+  },
+  "harnessSha256": "761e0de5c6c11d698ef605ffb093e527e1a413fe6aa19e5887f127ef4ea23cc8",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "shard-switchback",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-west-shoulder",
+            "x": 270,
+            "y": 380,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 268,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 338,
+              "y": 262
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-west-shoulder",
+              "x": 270,
+              "y": 380,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 268,
+                "y": 372
+              },
+              "lookAtMaterialPoint": {
+                "x": 338,
+                "y": 262
+              }
+            },
+            "actual": {
+              "x": 268,
+              "y": 372
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 252,
+                "y": 588
+              },
+              {
+                "x": 252,
+                "y": 428
+              },
+              {
+                "x": 260,
+                "y": 428
+              },
+              {
+                "x": 260,
+                "y": 372
+              },
+              {
+                "x": 268,
+                "y": 372
+              }
+            ],
+            "length": 288
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/01-west-shoulder-north.png",
+              "sha256": "bb561f30a30709efa2521f3a49f760dd945867872d5636955b6724be34350ad2",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 272.04061053015346,
+                  "y": 364.55662621946936
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.499446081999782,
+                "elapsedMs": 7616.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 272.04061053015346,
+                  "y": 364.55662621946936
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.660379035999764,
+                "elapsedMs": 8116.399999999998
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/01-west-shoulder-east.png",
+              "sha256": "e6ec26778fa643dbdc6c75fab166267a5cf655e6be1d6f9e07a329aa6237c00b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 280.8966105301534,
+                  "y": 364.55662621946936
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.78700386999976,
+                "elapsedMs": 8483
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 280.8966105301534,
+                  "y": 364.55662621946936
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.853360551999756,
+                "elapsedMs": 8683
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-first-switch",
+            "x": 456,
+            "y": 404,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 452,
+              "y": 404
+            },
+            "lookAtMaterialPoint": {
+              "x": 520,
+              "y": 306
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-first-switch",
+              "x": 456,
+              "y": 404,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 452,
+                "y": 404
+              },
+              "lookAtMaterialPoint": {
+                "x": 520,
+                "y": 306
+              }
+            },
+            "actual": {
+              "x": 452,
+              "y": 404
+            },
+            "points": [
+              {
+                "x": 284,
+                "y": 364
+              },
+              {
+                "x": 300,
+                "y": 364
+              },
+              {
+                "x": 300,
+                "y": 356
+              },
+              {
+                "x": 420,
+                "y": 356
+              },
+              {
+                "x": 420,
+                "y": 380
+              },
+              {
+                "x": 436,
+                "y": 380
+              },
+              {
+                "x": 436,
+                "y": 388
+              },
+              {
+                "x": 452,
+                "y": 388
+              },
+              {
+                "x": 452,
+                "y": 404
+              }
+            ],
+            "length": 224
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/02-first-switch-north.png",
+              "sha256": "ba315425658d0ee5cc480721c472a8379f50126a665c315a24263dbfcea092ca",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 450.03551921603287,
+                  "y": 396.55241856760176
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.949155343999507,
+                "elapsedMs": 14999.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 450.03551921603287,
+                  "y": 396.55241856760176
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.0099742839995,
+                "elapsedMs": 15182.8
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-cross-opening",
+            "x": 574,
+            "y": 529,
+            "faces": [
+              "north",
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 572,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 654,
+              "y": 452
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-cross-opening",
+              "x": 574,
+              "y": 529,
+              "faces": [
+                "north",
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 572,
+                "y": 532
+              },
+              "lookAtMaterialPoint": {
+                "x": 654,
+                "y": 452
+              }
+            },
+            "actual": {
+              "x": 572,
+              "y": 532
+            },
+            "points": [
+              {
+                "x": 452,
+                "y": 396
+              },
+              {
+                "x": 532,
+                "y": 396
+              },
+              {
+                "x": 532,
+                "y": 500
+              },
+              {
+                "x": 564,
+                "y": 500
+              },
+              {
+                "x": 564,
+                "y": 532
+              },
+              {
+                "x": 572,
+                "y": 532
+              }
+            ],
+            "length": 256
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/03-cross-opening-north.png",
+              "sha256": "5aa161ac24d1f7ae22604b15436da5e8bfaf3d71929d3fa7bf365bcef384f845",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 573.9601489380973,
+                  "y": 527.9423908683157
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 22.221885803999395,
+                "elapsedMs": 21849.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 573.9601489380973,
+                  "y": 527.9423908683157
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 22.374507167999408,
+                "elapsedMs": 22315.8
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/03-cross-opening-east.png",
+              "sha256": "5688daccef28ede4a4084185dc5e42ffe6f23fbd4515d3d80ee032884cc7999d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 580.9260970623828,
+                  "y": 529.5812291521859
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 22.498371425999423,
+                "elapsedMs": 22682.399999999998
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 580.9260970623828,
+                  "y": 529.5812291521859
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 22.636622531999418,
+                "elapsedMs": 23099.1
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-last-tip",
+            "x": 858,
+            "y": 390,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 860,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 798,
+              "y": 292
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-last-tip",
+              "x": 858,
+              "y": 390,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 860,
+                "y": 388
+              },
+              "lookAtMaterialPoint": {
+                "x": 798,
+                "y": 292
+              }
+            },
+            "actual": {
+              "x": 860,
+              "y": 388
+            },
+            "points": [
+              {
+                "x": 580,
+                "y": 532
+              },
+              {
+                "x": 580,
+                "y": 540
+              },
+              {
+                "x": 612,
+                "y": 540
+              },
+              {
+                "x": 612,
+                "y": 548
+              },
+              {
+                "x": 692,
+                "y": 548
+              },
+              {
+                "x": 692,
+                "y": 540
+              },
+              {
+                "x": 708,
+                "y": 540
+              },
+              {
+                "x": 708,
+                "y": 532
+              },
+              {
+                "x": 732,
+                "y": 532
+              },
+              {
+                "x": 732,
+                "y": 524
+              },
+              {
+                "x": 756,
+                "y": 524
+              },
+              {
+                "x": 756,
+                "y": 516
+              },
+              {
+                "x": 780,
+                "y": 516
+              },
+              {
+                "x": 780,
+                "y": 508
+              },
+              {
+                "x": 860,
+                "y": 508
+              },
+              {
+                "x": 860,
+                "y": 388
+              }
+            ],
+            "length": 456
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/04-last-tip-north.png",
+              "sha256": "d5af97dcd47a841e6bfbf7934f1ec212056f480da16cff78e646fd97d162c1c6",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 861.9162387173787,
+                  "y": 379.4515776871739
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 29.546168843999652,
+                "elapsedMs": 34465.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 861.9162387173787,
+                  "y": 379.4515776871739
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 29.74081599599965,
+                "elapsedMs": 34765.3
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/04-last-tip-west.png",
+              "sha256": "0db33cc4e74b917afe15d6bbf821e565047574e72ab4f8f75029c06f936649ea",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 852.5433387173786,
+                  "y": 379.4515776871739
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 32.977488935999666,
+                "elapsedMs": 35115.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 852.5433387173786,
+                  "y": 379.4515776871739
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 33.300436511999706,
+                "elapsedMs": 35632
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shard-switchback",
+        "grade": "medium",
+        "package": {
+          "id": "r100-shard-switchback",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "e403b72b",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3106/r100-gym.html?world=shard-switchback&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/recipe.json",
+        "sha256": "99b491cbd6152114e48c46e70b1c57d438900fd6e8f292b3cf5caf994b270846"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 852.5433387173786,
+          "y": 379.4515776871739
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 33.300436511999706,
+        "elapsedMs": 35632
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 852.5433387173786,
+          "y": 379.4515776871739
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 34.1497980599998,
+        "elapsedMs": 36881.8
+      }
+    },
+    {
+      "world": "hollow-wreckage",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-south-low-shell",
+            "x": 536,
+            "y": 616,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 612
+            },
+            "lookAtMaterialPoint": {
+              "x": 566,
+              "y": 544
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-south-low-shell",
+              "x": 536,
+              "y": 616,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 532,
+                "y": 612
+              },
+              "lookAtMaterialPoint": {
+                "x": 566,
+                "y": 544
+              }
+            },
+            "actual": {
+              "x": 532,
+              "y": 612
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 532,
+                "y": 588
+              },
+              {
+                "x": 532,
+                "y": 612
+              }
+            ],
+            "length": 360
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/01-south-low-shell-north.png",
+              "sha256": "9c8d679845012a9b23f82ed8e88d24ddcff191b30bc9f59f2e3bb1088ee4e5da",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 531.7828666666649,
+                  "y": 599.9407000000002
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.383342625999774,
+                "elapsedMs": 7266.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 531.7828666666649,
+                  "y": 599.9407000000002
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.519931413999767,
+                "elapsedMs": 7683
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-west-standing-shell",
+            "x": 562,
+            "y": 452,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 564,
+              "y": 452
+            },
+            "lookAtMaterialPoint": {
+              "x": 386,
+              "y": 320
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-west-standing-shell",
+              "x": 562,
+              "y": 452,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 564,
+                "y": 452
+              },
+              "lookAtMaterialPoint": {
+                "x": 386,
+                "y": 320
+              }
+            },
+            "actual": {
+              "x": 564,
+              "y": 452
+            },
+            "points": [
+              {
+                "x": 532,
+                "y": 596
+              },
+              {
+                "x": 564,
+                "y": 596
+              },
+              {
+                "x": 564,
+                "y": 452
+              }
+            ],
+            "length": 176
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/02-west-standing-shell-west.png",
+              "sha256": "1d9578607f3f0358a1acf05d3817f6b7e6ce0ee5a4c97cf1c912734081d92c5f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.14152982173672,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 553.8940666666653,
+                  "y": 449.4401666666667
+                },
+                "facingAngle": -3.14152982173672,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.90955958399963,
+                "elapsedMs": 11866.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 553.8940666666653,
+                  "y": 449.4401666666667
+                },
+                "facingAngle": -3.14152982173672,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 19.109737841999603,
+                "elapsedMs": 12499.5
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/02-west-standing-shell-north.png",
+              "sha256": "442041bec54d41551a629636d222ec4b768be55b137036266f1bc25bee69858d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 553.8940666666653,
+                  "y": 439.5056333333335
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.246884053999597,
+                "elapsedMs": 12882.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 553.8940666666653,
+                  "y": 439.5056333333335
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.38070231199958,
+                "elapsedMs": 13316.2
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-east-standing-shell",
+            "x": 540,
+            "y": 326,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 324
+            },
+            "lookAtMaterialPoint": {
+              "x": 708,
+              "y": 370
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-east-standing-shell",
+              "x": 540,
+              "y": 326,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 540,
+                "y": 324
+              },
+              "lookAtMaterialPoint": {
+                "x": 708,
+                "y": 370
+              }
+            },
+            "actual": {
+              "x": 540,
+              "y": 324
+            },
+            "points": [
+              {
+                "x": 556,
+                "y": 436
+              },
+              {
+                "x": 540,
+                "y": 436
+              },
+              {
+                "x": 540,
+                "y": 324
+              }
+            ],
+            "length": 128
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/03-east-standing-shell-east.png",
+              "sha256": "493e17332adf7d819b18c4bf54bd2bf557e6209c32d448667817297e73e9c69f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 551.8536457580428,
+                  "y": 322.3457024071008
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.750976587999467,
+                "elapsedMs": 17416
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 551.8536457580428,
+                  "y": 322.3457024071008
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.84498548199946,
+                "elapsedMs": 17699.3
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-north-low-shell",
+            "x": 532,
+            "y": 180,
+            "faces": [
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 532,
+              "y": 180
+            },
+            "lookAtMaterialPoint": {
+              "x": 526,
+              "y": 228
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-north-low-shell",
+              "x": 532,
+              "y": 180,
+              "faces": [
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 532,
+                "y": 180
+              },
+              "lookAtMaterialPoint": {
+                "x": 526,
+                "y": 228
+              }
+            },
+            "actual": {
+              "x": 532,
+              "y": 180
+            },
+            "points": [
+              {
+                "x": 548,
+                "y": 324
+              },
+              {
+                "x": 532,
+                "y": 324
+              },
+              {
+                "x": 532,
+                "y": 180
+              }
+            ],
+            "length": 160
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/04-north-low-shell-south.png",
+              "sha256": "e6f169fe39ca7236772384eb8f662b70abe47e4cbe7e70cd2715d937bfd98860",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 530.0211457580426,
+                  "y": 199.90643574043403
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 22.08365128799946,
+                "elapsedMs": 21432.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 530.0211457580426,
+                  "y": 199.90643574043403
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 22.21747618199946,
+                "elapsedMs": 21865.8
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "hollow-wreckage",
+        "grade": "medium",
+        "package": {
+          "id": "r100-hollow-wreckage",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "a3691c2b",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3106/r100-gym.html?world=hollow-wreckage&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/recipe.json",
+        "sha256": "40aca53fa06732f7871b7e3582fad21ec98b23f8da1e35caafc0f824f1ae7565"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 530.0211457580426,
+          "y": 199.90643574043403
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 22.22411218199946,
+        "elapsedMs": 21882.5
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 530.0211457580426,
+          "y": 199.90643574043403
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 22.636629167999455,
+        "elapsedMs": 23099
+      }
+    },
+    {
+      "world": "knotted-run",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-west-crossed-head",
+            "x": 292,
+            "y": 462,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 292,
+              "y": 460
+            },
+            "lookAtMaterialPoint": {
+              "x": 354,
+              "y": 287
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-west-crossed-head",
+              "x": 292,
+              "y": 462,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 292,
+                "y": 460
+              },
+              "lookAtMaterialPoint": {
+                "x": 354,
+                "y": 287
+              }
+            },
+            "actual": {
+              "x": 292,
+              "y": 460
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 268,
+                "y": 588
+              },
+              {
+                "x": 268,
+                "y": 580
+              },
+              {
+                "x": 276,
+                "y": 580
+              },
+              {
+                "x": 276,
+                "y": 572
+              },
+              {
+                "x": 292,
+                "y": 572
+              },
+              {
+                "x": 292,
+                "y": 460
+              }
+            ],
+            "length": 224
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/01-west-crossed-head-north.png",
+              "sha256": "3dbca672c9dc27c0e96016fd3f451d64036124e4839ad59334733da14943e447",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 290.98455043713994,
+                  "y": 458.4073160744757
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.835879261999843,
+                "elapsedMs": 5616.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 290.98455043713994,
+                  "y": 458.4073160744757
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.91882926199984,
+                "elapsedMs": 5866.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-south-crossed-head",
+            "x": 544,
+            "y": 418,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 420
+            },
+            "lookAtMaterialPoint": {
+              "x": 463,
+              "y": 530
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-south-crossed-head",
+              "x": 544,
+              "y": 418,
+              "faces": [
+                "south",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 540,
+                "y": 420
+              },
+              "lookAtMaterialPoint": {
+                "x": 463,
+                "y": 530
+              }
+            },
+            "actual": {
+              "x": 540,
+              "y": 420
+            },
+            "points": [
+              {
+                "x": 292,
+                "y": 460
+              },
+              {
+                "x": 428,
+                "y": 460
+              },
+              {
+                "x": 428,
+                "y": 452
+              },
+              {
+                "x": 540,
+                "y": 452
+              },
+              {
+                "x": 540,
+                "y": 420
+              }
+            ],
+            "length": 288
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/02-south-crossed-head-south.png",
+              "sha256": "3feead5f4dccf51bd94422548dd7575aa5b4dc82a75e1d52f83be432640286ca",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 539.5652508317789,
+                  "y": 442.89406932196033
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 19.7721898139995,
+                "elapsedMs": 14466.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 539.5652508317789,
+                  "y": 442.89406932196033
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 19.865087177999502,
+                "elapsedMs": 14766.099999999999
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/02-south-crossed-head-west.png",
+              "sha256": "98de33354d5a830029d4d103721f9bc17be39ebe2f66e4178d03bc2df624652f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 531.563850831779,
+                  "y": 442.89406932196033
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 19.976784329999496,
+                "elapsedMs": 15082.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 531.563850831779,
+                  "y": 442.89406932196033
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 20.06803596599949,
+                "elapsedMs": 15366.099999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-east-crossed-head",
+            "x": 580,
+            "y": 267,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 268
+            },
+            "lookAtMaterialPoint": {
+              "x": 714,
+              "y": 330
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-east-crossed-head",
+              "x": 580,
+              "y": 267,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 580,
+                "y": 268
+              },
+              "lookAtMaterialPoint": {
+                "x": 714,
+                "y": 330
+              }
+            },
+            "actual": {
+              "x": 580,
+              "y": 268
+            },
+            "points": [
+              {
+                "x": 532,
+                "y": 444
+              },
+              {
+                "x": 580,
+                "y": 444
+              },
+              {
+                "x": 580,
+                "y": 268
+              }
+            ],
+            "length": 224
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/03-east-crossed-head-east.png",
+              "sha256": "24aa62d3d8b577ee58ce90050b3cb61e6dc657646304dc3cc356c5dd69d12c21",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 590.387590514414,
+                  "y": 272.9146995136876
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.71868124199944,
+                "elapsedMs": 20332.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 590.387590514414,
+                  "y": 272.9146995136876
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.818207969999445,
+                "elapsedMs": 20632.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-south-broken-tail",
+            "x": 540,
+            "y": 630,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 628
+            },
+            "lookAtMaterialPoint": {
+              "x": 463,
+              "y": 530
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-south-broken-tail",
+              "x": 540,
+              "y": 630,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 540,
+                "y": 628
+              },
+              "lookAtMaterialPoint": {
+                "x": 463,
+                "y": 530
+              }
+            },
+            "actual": {
+              "x": 540,
+              "y": 628
+            },
+            "points": [
+              {
+                "x": 588,
+                "y": 276
+              },
+              {
+                "x": 564,
+                "y": 276
+              },
+              {
+                "x": 564,
+                "y": 548
+              },
+              {
+                "x": 548,
+                "y": 548
+              },
+              {
+                "x": 548,
+                "y": 556
+              },
+              {
+                "x": 540,
+                "y": 556
+              },
+              {
+                "x": 540,
+                "y": 628
+              }
+            ],
+            "length": 400
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/04-south-broken-tail-north.png",
+              "sha256": "d6cd0b3e77d7559179f53af4d911461c5f5a85e56549cdbee54101c9bc679ac3",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 541.0154236112775,
+                  "y": 615.8235435655197
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 25.25219529599955,
+                "elapsedMs": 30982.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 541.0154236112775,
+                  "y": 615.8235435655197
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 25.396531613999553,
+                "elapsedMs": 31432.1
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/04-south-broken-tail-west.png",
+              "sha256": "6234623b6cebe1bc477ad69990babbd2dc7775be6cb114d68caabbd3843b5bac",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 532.0712902779441,
+                  "y": 615.8235435655197
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.550808659999568,
+                "elapsedMs": 31882.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 532.0712902779441,
+                  "y": 615.8235435655197
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.66140423599958,
+                "elapsedMs": 32215.4
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "knotted-run",
+        "grade": "medium",
+        "package": {
+          "id": "r100-knotted-run",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "c43762cd",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3106/r100-gym.html?world=knotted-run&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/recipe.json",
+        "sha256": "3c5e6bd73d5cb1f8e937d71133154168f0db6e4aa13b5f81d9b100f704729650"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 532.0712902779441,
+          "y": 615.8235435655197
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 25.66140423599958,
+        "elapsedMs": 32215.4
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 532.0712902779441,
+          "y": 615.8235435655197
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 26.070613175999622,
+        "elapsedMs": 33448.7
+      }
+    },
+    {
+      "world": "rolled-fragments",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-first-roll",
+            "x": 388,
+            "y": 468,
+            "faces": [
+              "west",
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 388,
+              "y": 468
+            },
+            "lookAtMaterialPoint": {
+              "x": 300,
+              "y": 370
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-first-roll",
+              "x": 388,
+              "y": 468,
+              "faces": [
+                "west",
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 388,
+                "y": 468
+              },
+              "lookAtMaterialPoint": {
+                "x": 300,
+                "y": 370
+              }
+            },
+            "actual": {
+              "x": 388,
+              "y": 468
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 388,
+                "y": 588
+              },
+              {
+                "x": 388,
+                "y": 468
+              }
+            ],
+            "length": 312
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/01-first-roll-west.png",
+              "sha256": "197fc5eeec721538c3f27b533b3a36e0a04df1930af461505883063c901df192",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": -3.140775839499859,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 380.472154551576,
+                  "y": 465.1272314470071
+                },
+                "facingAngle": -3.140775839499859,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.51612598999978,
+                "elapsedMs": 7616.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 380.472154551576,
+                  "y": 465.1272314470071
+                },
+                "facingAngle": -3.140775839499859,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 18.00284229399978,
+                "elapsedMs": 8332.900000000001
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/01-first-roll-north.png",
+              "sha256": "7e62b2659311a2bff5b9224325dd58e3c47de714ff0ba47a6ff2f8fee4243383",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 380.472154551576,
+                  "y": 455.68356478034053
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.13665723399978,
+                "elapsedMs": 8682.899999999998
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 380.472154551576,
+                  "y": 455.68356478034053
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.40873323399976,
+                "elapsedMs": 9532.899999999998
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-second-roll",
+            "x": 478,
+            "y": 346,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 476,
+              "y": 348
+            },
+            "lookAtMaterialPoint": {
+              "x": 408,
+              "y": 218
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "02-second-roll",
+              "x": 478,
+              "y": 346,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 476,
+                "y": 348
+              },
+              "lookAtMaterialPoint": {
+                "x": 408,
+                "y": 218
+              }
+            },
+            "actual": {
+              "x": 476,
+              "y": 348
+            },
+            "points": [
+              {
+                "x": 380,
+                "y": 452
+              },
+              {
+                "x": 476,
+                "y": 452
+              },
+              {
+                "x": 476,
+                "y": 348
+              }
+            ],
+            "length": 200
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/02-second-roll-north.png",
+              "sha256": "3cb0914c8ac79b5dfff88941b5718b5b1e954ec961ae5f76b486e1b8655c9663",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 474.9873798644582,
+                  "y": 339.1383645141214
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.083142025999535,
+                "elapsedMs": 14549.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 474.9873798644582,
+                  "y": 339.1383645141214
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.237983131999513,
+                "elapsedMs": 15016.099999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-middle-roll",
+            "x": 642,
+            "y": 340,
+            "faces": [
+              "north",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 644,
+              "y": 340
+            },
+            "lookAtMaterialPoint": {
+              "x": 610,
+              "y": 228
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "03-middle-roll",
+              "x": 642,
+              "y": 340,
+              "faces": [
+                "north",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 644,
+                "y": 340
+              },
+              "lookAtMaterialPoint": {
+                "x": 610,
+                "y": 228
+              }
+            },
+            "actual": {
+              "x": 644,
+              "y": 340
+            },
+            "points": [
+              {
+                "x": 476,
+                "y": 340
+              },
+              {
+                "x": 644,
+                "y": 340
+              }
+            ],
+            "length": 168
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/03-middle-roll-north.png",
+              "sha256": "f618959ed50d1d642a77173e5aa5785e6e65698be855d9c2f592d730e93d7810",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 643.1571798644594,
+                  "y": 322.9170978474548
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 21.614890089999438,
+                "elapsedMs": 19165.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 643.1571798644594,
+                  "y": 322.9170978474548
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 21.780793407999436,
+                "elapsedMs": 19665.8
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/03-middle-roll-west.png",
+              "sha256": "f86e7d4a57c1b76beb30dddf587f3a30e954f44b9c356eb70a5324b21ee7a53d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 634.4469131977927,
+                  "y": 322.9170978474548
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 21.89137571199944,
+                "elapsedMs": 19999.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 634.4469131977927,
+                  "y": 322.9170978474548
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 21.952214559999437,
+                "elapsedMs": 20182.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-small-roll",
+            "x": 897,
+            "y": 443,
+            "faces": [
+              "south",
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 900,
+              "y": 444
+            },
+            "lookAtMaterialPoint": {
+              "x": 794,
+              "y": 563
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "04-small-roll",
+              "x": 897,
+              "y": 443,
+              "faces": [
+                "south",
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 900,
+                "y": 444
+              },
+              "lookAtMaterialPoint": {
+                "x": 794,
+                "y": 563
+              }
+            },
+            "actual": {
+              "x": 900,
+              "y": 444
+            },
+            "points": [
+              {
+                "x": 636,
+                "y": 324
+              },
+              {
+                "x": 700,
+                "y": 324
+              },
+              {
+                "x": 700,
+                "y": 380
+              },
+              {
+                "x": 708,
+                "y": 380
+              },
+              {
+                "x": 708,
+                "y": 404
+              },
+              {
+                "x": 724,
+                "y": 404
+              },
+              {
+                "x": 724,
+                "y": 412
+              },
+              {
+                "x": 740,
+                "y": 412
+              },
+              {
+                "x": 740,
+                "y": 420
+              },
+              {
+                "x": 764,
+                "y": 420
+              },
+              {
+                "x": 764,
+                "y": 452
+              },
+              {
+                "x": 900,
+                "y": 452
+              },
+              {
+                "x": 900,
+                "y": 444
+              }
+            ],
+            "length": 400
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/04-small-roll-south.png",
+              "sha256": "aa850f1ba1d81227d921bb7cf42a3f9af98383ec0c3cfaf4050ba377506de18b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 901.4365667789621,
+                  "y": 459.8309009700815
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 26.138246493999517,
+                "elapsedMs": 32798.700000000004
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 901.4365667789621,
+                  "y": 459.8309009700815
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 26.35613291799954,
+                "elapsedMs": 33482
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/04-small-roll-west.png",
+              "sha256": "e2ac4f3c440b4fdf0f4668f1b57c720bd028b4baa1811df188713ad111b03979",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 888.768866778962,
+                  "y": 459.8309009700815
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 26.492157645999548,
+                "elapsedMs": 33865.3
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 888.768866778962,
+                  "y": 459.8309009700815
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 26.580652023999548,
+                "elapsedMs": 34781.9
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "rolled-fragments",
+        "grade": "medium",
+        "package": {
+          "id": "r100-rolled-fragments",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "9f44d667",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3106/r100-gym.html?world=rolled-fragments&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/recipe.json",
+        "sha256": "e5163af32ad41135eb0ce79b535b00bdb7f145eb347ad4a699e3d43004840a65"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 888.768866778962,
+          "y": 459.8309009700815
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 26.580652023999548,
+        "elapsedMs": 34781.9
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 888.768866778962,
+          "y": 459.8309009700815
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 26.995392069999603,
+        "elapsedMs": 36031.8
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

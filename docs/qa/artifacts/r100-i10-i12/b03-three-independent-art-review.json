@@ -1,0 +1,88 @@
+{
+  "status": "bounded-three-world-art-pass-shard-rejected",
+  "reviewer": "root",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-source/source-snapshot.json",
+    "sha256": "8161b87497c223b903b07d6fbd68c3afcbf46995487f7c2cd35cb2058af3b4e8"
+  },
+  "worlds": [
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments"
+  ],
+  "reviewedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/02-west-standing-shell-west.png",
+      "sha256": "1d9578607f3f0358a1acf05d3817f6b7e6ce0ee5a4c97cf1c912734081d92c5f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/04-north-low-shell-south.png",
+      "sha256": "e6f169fe39ca7236772384eb8f662b70abe47e4cbe7e70cd2715d937bfd98860"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/02-south-crossed-head-west.png",
+      "sha256": "98de33354d5a830029d4d103721f9bc17be39ebe2f66e4178d03bc2df624652f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/02-second-roll-north.png",
+      "sha256": "3cb0914c8ac79b5dfff88941b5718b5b1e954ec961ae5f76b486e1b8655c9663"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-grades-three/hollow-wreckage-severe/03-east-standing-shell-east.png",
+      "sha256": "92adca2edef0979a552ebc5256398f71bb5c9d5aa7d6c943ca91e49c5a36f54a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-grades-three/knotted-run-severe/04-south-broken-tail-west.png",
+      "sha256": "0acbb67d034c9de6d8527b51509022f03282dd1d9e2e031f70ecc83ffbdc0335"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-grades-three/rolled-fragments-severe/02-second-roll-north.png",
+      "sha256": "6678c2fe73e9cffc287ff6b7bb23a52ee7579c27b65159bed789d5acaf3203d0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-grades-three/rolled-fragments-severe/04-small-roll-west.png",
+      "sha256": "79eb37943d519fd181a570840ad097d5df8dd08f6645723cbf09a2d24b434315"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-grades-three/hollow-wreckage-low/02-west-standing-shell-west.png",
+      "sha256": "95803208003e5a97798f37d7c1b5509a7d70888d9ec4b71e73bf9ef7291a8750"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-grades-three/knotted-run-low/03-east-crossed-head-east.png",
+      "sha256": "5f678399a54fc0eeb6e7e5e42073c4af9ec410f485776aad29c561ac5da32ae4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-grades-three/rolled-fragments-low/04-small-roll-west.png",
+      "sha256": "68ac6e98004fb3aa7fccf324a2611885df6c59db09ca619c87d934ccf8d70184"
+    }
+  ],
+  "findings": [
+    "高壳与低残壳的实际高度、内外两面及其间裸床成立；列明镜头可辨高障碍脚边。未声明完整外周都已看。",
+    "粗束场靠实体互压、长向层纹和向外断尾区别；此处批准的是实际交叉粗束，不以“knotted”名称声称绘出了扭结。",
+    "卷片场的高卷肩、浅色内面、深蓝裸床和小卷残片在所列镜头中可辨；不因低重拍摄过程受伤而删除原帧。",
+    "同世界低中重材料身份稳定。重档绿色侵蚀、真实污染体与受击过程在原帧保留，不能以这些短镜头声称完成长期重度搜撤。"
+  ],
+  "rejected": {
+    "world": "shard-switchback",
+    "images": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/01-west-shoulder-north.png",
+        "sha256": "bb561f30a30709efa2521f3a49f760dd945867872d5636955b6724be34350ad2"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/02-first-switch-north.png",
+        "sha256": "ba315425658d0ee5cc480721c472a8379f50126a665c315a24263dbfcea092ca"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/04-last-tip-north.png",
+        "sha256": "d5af97dcd47a841e6bfbf7934f1ec212056f480da16cff78e646fd97d162c1c6"
+      }
+    ],
+    "reason": "六件共享同一分叉箭头轮廓；大小和旋转不能抵消重复，必须重分厚短断块/完整片和少数分叉。"
+  },
+  "limitations": [
+    "Only11 listed normal static images for three worlds at frozen3106; no watching complete videos, sound listening, allseeds/allroutes/human acceptance.",
+    "Shared source changes or later authored catalogs require exact dependency/projection continuity before inheriting these images.",
+    "Shard geometry/art remains rejected until revised source and normal views reviewed; three-world pass does not admit the wholeB03."
+  ]
+}

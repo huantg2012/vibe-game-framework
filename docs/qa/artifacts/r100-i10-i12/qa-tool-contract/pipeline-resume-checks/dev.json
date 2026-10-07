@@ -1,0 +1,35 @@
+{
+  "status": "pass",
+  "command": [
+    "npm",
+    "run",
+    "dev",
+    "--",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "3198",
+    "--strictPort"
+  ],
+  "checks": [
+    {
+      "url": "/",
+      "status": 200,
+      "sha256": "ab6ea5f179eee364155690e3b1003032c4560a46b101fe5bb58194946457a19b"
+    },
+    {
+      "url": "/src/systems/r100-world/surface-bake.ts",
+      "status": 200,
+      "sha256": "48e1e13aa44d80efb7bee7effb2c8e1af22779fed3ab3b7a363af4d50b31574d"
+    },
+    {
+      "url": "/src/generation/world-study/r100-package.ts",
+      "status": 200,
+      "sha256": "03fc7160fcd4b5640c9b25864051870f78fb4c66aaeba797421fbdfdc0c7c9f6"
+    }
+  ],
+  "ownedProcessExited": true,
+  "browserStarted": false,
+  "logSha256": "99e30d281405cda408062f621a7d338052ca29f7ba67c7875b630ff0fb646d62",
+  "scope": "npm dev startup and transformed current modules only; not visual or gameplay review."
+}

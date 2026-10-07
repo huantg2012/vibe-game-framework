@@ -1,0 +1,35 @@
+{
+  "status": "pass-bounded-old56-continuity",
+  "sources": [
+    {
+      "path": "tools/qa/r100-source-continuity.mjs",
+      "sha256": "6f890d65b3eff068c4b1a75ea2222873c3bc8c7cab3bbf77ca97ad02910a3f89"
+    },
+    {
+      "path": "tools/qa/r100-remains-source-continuity.mjs",
+      "sha256": "0a9b64c3bec9bd9ffe1df610bc1e640147edd26dd560624e4dda43e8a17537df"
+    },
+    {
+      "path": "tools/qa/check-r100-remains-source-continuity.mjs",
+      "sha256": "216aa4daff57ac52e7cff67a9b013b5e2b46f659469170219044669484879f41"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/remains-source-continuity.json",
+      "sha256": "b0dd10210f52271d511ffc7c40dd2c418563c8cc0995a707d4523739ddf09ae5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/source-continuity-remains-adapter.json",
+      "sha256": "8da43d639c0c627a32b05611fe5820a3c797064593fa48b2578ce9ac979c1dbc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b02-old56.json",
+      "sha256": "726531805d459109879b15103085bdc6440375c9549e26e95c6e6b72f1cdccdd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/material-organization/remains-v3/existing-rgba-exact.json",
+      "sha256": "b2f312860cfa8c4408d464934fb4b0ecbc3b36d399feaaa843b86c760efe5f00"
+    }
+  ],
+  "scope": "Seven original branches and every statement outside narrow delegation remain AST-exact,selected old56 rows unchanged. Referenced504RGBA report is prior author-run evidence; this audit did not rebake. Two new grammar branches are unselected and gain no visual approval.",
+  "sourceTimeCorrection": "3103 contains old renderer d44aec31;3104 contains new renderer03d1ba13. Original3103 receipt remains unchanged."
+}

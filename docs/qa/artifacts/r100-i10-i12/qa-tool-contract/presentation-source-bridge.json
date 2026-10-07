@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "reports": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/inactive-presentation-continuity.json",
+      "sha256": "2801cd603091f480c1d3dc9752d2c6d350861a3cc8f90b0942a398768bd9a983"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b02-refined-unaffected55.json",
+      "sha256": "e726b2c424c4cd5f93d2378f0d15bd1359e76ea303d388cca09a188c32a613ee"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b03-unselected60.json",
+      "sha256": "2d8d52de972748ea0cdc7c51b92aabf0e251d0a862e1a2a3424be3c028643727"
+    }
+  ],
+  "executedSources": [
+    {
+      "path": "tools/qa/r100-source-continuity.mjs",
+      "sha256": "55996a417b733de70a085c287476d1594540e6dc05531d0c26aabfcbb9e1a035"
+    },
+    {
+      "path": "tools/qa/r100-remains-source-continuity.mjs",
+      "sha256": "0a9b64c3bec9bd9ffe1df610bc1e640147edd26dd560624e4dda43e8a17537df"
+    },
+    {
+      "path": "tools/qa/r100-organization-dispatch-continuity.mjs",
+      "sha256": "f2d7885d76cb47bf93ffd0409f5a44e6f2873222e61b0f45e305adc34659930f"
+    },
+    {
+      "path": "tools/qa/r100-inactive-presentation-continuity.mjs",
+      "sha256": "f4eb01b648943125db50e8593ca0a0f9c6ffcd169f1f5d45011b688cdcd42d04"
+    },
+    {
+      "path": "tools/qa/check-r100-inactive-presentation-continuity.mjs",
+      "sha256": "0cbb258608494727c4522a406dee3e434f7f9173ceff796d91a154dbfe048dbe"
+    }
+  ],
+  "checks": [
+    "8 actual-source positive/negative opt-out predicates",
+    "Full source bytes plus unchanged per-world inputs55 before3103→after3105",
+    "Full source bytes plus explicit unselected geometry60 before3105→after3106",
+    "node --check and scoped git diff --check"
+  ],
+  "scope": "Source bridge only. Cleft is excluded from55-world edge and uses separate root-approved six-play recipe proof/new144 CPU plan. No new art/gameplay/RGBA execution created."
+}

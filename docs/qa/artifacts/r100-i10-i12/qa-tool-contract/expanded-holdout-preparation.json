@@ -1,0 +1,39 @@
+{
+  "status": "prepared-not-executed",
+  "scope": "Expanded-eight summary admission only; no additional game cases executed",
+  "inputs": [
+    {
+      "path": "tools/qa/r100-qualification-summary.mjs",
+      "sha256": "1efac9932b08997387c317795ad4fc36b1024d807af178d66561153688f57c50"
+    },
+    {
+      "path": "tools/qa/check-r100-expanded-holdout-summary.mjs",
+      "sha256": "ae06bfe918046b8c2bd22b13e1ae5328c58185050bcf417d5adfd9e5e6e801fe"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/expanded-holdout-summary.json",
+      "sha256": "53e728d14fe4da3e993f92773c1772e09f3e96418759156c5061c3fdddfe834f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary-plan.json",
+      "sha256": "591b414bb0b325c32a62dcc9b1c1ad3ee3c0849de0235fe0228cdfea00d9f53b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary-plan.json",
+      "sha256": "cc9f21a058492f1cc6e9e5fce89e3f2c0933f526127d5fbf6bd1bbdda9c76aee"
+    }
+  ],
+  "stages": {
+    "I11": {
+      "worlds": 92,
+      "grades": 276,
+      "cases": 2208
+    },
+    "I12": {
+      "worlds": 16,
+      "grades": 48,
+      "cases": 384
+    }
+  },
+  "execution": "Reuse one original frozen revision6 qualification executor from the chosen source, one worker, --holdout expanded-holdout-seeds.json --compact-report. Expanded summary never grants or replaces corresponding original48 or final-source continuity. Stage92/last16 full scopes required."
+}

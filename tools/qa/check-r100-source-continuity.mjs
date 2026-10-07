@@ -43,12 +43,12 @@ function snapshot(name, files) {
   return manifest;
 }
 const results = [];
-function run(name, mutate, expected, mode='unused-profiles', mutateBefore=null) {
+function run(name, mutate, expected, mode='unused-profiles', mutateBefore=null, extraFlags=[]) {
   const old = structuredClone(original), next = structuredClone(original);
   mutateBefore?.(old); mutate(next);
   const before = snapshot(`${name}-before`,old), after = snapshot(`${name}-after`,next);
   const output = path.join(temporary,`${name}.json`);
-  const result = spawnSync(process.execPath,[harness,'--from',before,'--to',after,'--worlds',world.id,'--output',output,'--unused-shape-change',mode],{cwd:root,encoding:'utf8'});
+  const result = spawnSync(process.execPath,[harness,'--from',before,'--to',after,'--worlds',world.id,'--output',output,'--unused-shape-change',mode,...extraFlags],{cwd:root,encoding:'utf8'});
   assert.equal(result.status === 0, expected, `${name}: ${result.stderr || result.stdout}`);
   assert.equal(fs.existsSync(output),expected,`${name} must not write a false receipt`);
   results.push({name, expected:expected?'pass':'reject', actualExitCode:result.status});
@@ -89,6 +89,30 @@ try {
   run('new-runtime-file',files=>files['src/new.ts']='export const x=1;',false);
   run('deleted-runtime-file',files=>delete files[expansionFile],false);
   run('enabled-only-and-catalog-append',files=>files[worldFile]=literal('R100_NATIVE_WORLDS',[{...world,enabled:true},{...world,id:'another'}]),true);
+  // Exact source-addition adapter: old-world bodies cannot be waved through
+  // merely because a newly imported module describes an unused profile.
+  const organizationFile='src/generation/world-study/native-volume-organization.ts';
+  const priorOrganizationSource=files=>{
+    files[geometryFile]='export function buildNativeVolume(spec, builder) { if (spec.constructionVersion === 4) buildGroundNativeVolume(builder); return builder.finish(); }\n';
+    files[groundFile]="import type { Builder } from './native-volume-expansion';\nexport const NATIVE_VOLUME_V4_PROFILES = ['fracture-fan','fallen-bundle','clamp-bank','torn-sheet'] as const;\nfunction clampBank() { return 1; }\nexport function buildGroundNativeVolume(builder: Builder) { switch (builder.spec.shapeProfile) { case 'clamp-bank': clampBank(); return; default: throw new Error('unsupported'); } }\n";
+  };
+  const nextOrganizationSource=files=>{
+    priorOrganizationSource(files);
+    files[geometryFile]="import { smoothOrganizedSurface } from './native-volume-organization';\n"+files[geometryFile].replace('return builder.finish();',"const mesh = builder.finish(); if (spec.constructionVersion === 4 && (spec.shapeProfile === 'compressed-wedge' || spec.shapeProfile === 'porous-break')) return smoothOrganizedSurface(mesh); return mesh;");
+    files[groundFile]="import { buildCompressedWedge, buildPorousBreak } from './native-volume-organization';\n"+files[groundFile]
+      .replace("'torn-sheet']","'torn-sheet','compressed-wedge','porous-break']")
+      .replace("default: throw", "case 'compressed-wedge': buildCompressedWedge(builder); return; case 'porous-break': buildPorousBreak(builder); return; default: throw");
+    files[organizationFile]='import type { Builder } from "./native-volume-expansion";\nexport function smoothOrganizedSurface(mesh) { return mesh; }\nexport function buildCompressedWedge(builder: Builder) {}\nexport function buildPorousBreak(builder: Builder) {}\n';
+  };
+  const organizationFlag=['--unused-organization-profiles'];
+  run('organization-explicit-inert-addition',nextOrganizationSource,true,'none',priorOrganizationSource,organizationFlag);
+  run('organization-previously-unimported-module',nextOrganizationSource,true,'none',files=>{priorOrganizationSource(files);files[organizationFile]='export function unusedDraft() { return 1; }';},organizationFlag);
+  run('organization-addition-needs-explicit-mode',nextOrganizationSource,false,'none',priorOrganizationSource);
+  run('organization-missing-version-guard',files=>{nextOrganizationSource(files);files[geometryFile]=files[geometryFile].replace("spec.constructionVersion === 4 && (spec.shapeProfile",'(spec.shapeProfile');},false,'none',priorOrganizationSource,organizationFlag);
+  run('organization-unrelated-loader-change',files=>{nextOrganizationSource(files);files['src/runtime-loader.ts']='export const load=2;';},false,'none',priorOrganizationSource,organizationFlag);
+  run('organization-unreviewed-new-file',files=>{nextOrganizationSource(files);files['src/other.ts']='export const x=1;';},false,'none',priorOrganizationSource,organizationFlag);
+  const priorConsumer=files=>{priorOrganizationSource(files);files[organizationFile]='export function unusedDraft() { return 1; }';files['src/runtime-loader.ts']="import { unusedDraft } from './generation/world-study/native-volume-organization'; export const load=unusedDraft();";};
+  run('organization-extra-consumer',files=>{nextOrganizationSource(files);files['src/runtime-loader.ts']="import { unusedDraft } from './generation/world-study/native-volume-organization'; export const load=unusedDraft();";},false,'none',priorConsumer,organizationFlag);
   const arg=process.argv.indexOf('--output');
   const report={status:'pass',scope:'Evidence continuity gate fixtures only; no new game, art or play qualification.',harness:{path:harness,sha256:sha(fs.readFileSync(path.join(root,harness)))},checks:results};
   if(arg>=0){assert(process.argv[arg+1]); const output=path.resolve(root,process.argv[arg+1]);assert(!fs.existsSync(output),'Do not overwrite gate evidence');fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');}

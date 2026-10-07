@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "pid": 78304,
+  "startedAt": "2026-10-07T00:47:51Z",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/qualification-c275794dc08c.mjs",
+    "sha256": "c275794dc08cb21bb4a58c37323b04087c9480c50ede4556176f4edb96022a5c"
+  },
+  "stages": [
+    {
+      "stage": "full",
+      "cases": 480,
+      "exitCode": 0,
+      "elapsedSeconds": 1000.214,
+      "log": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-full.log",
+      "logSha256": "210198e3c96e801a7dadf3c8e55af8c90c7daeb074c2c9bd8f3e5d8759989c7c"
+    },
+    {
+      "stage": "holdout",
+      "cases": 96,
+      "exitCode": 0,
+      "elapsedSeconds": 251.24,
+      "log": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-holdout.log",
+      "logSha256": "baa257ea26108404ffee41f1149abea68f99d6814492112bdb632b6ac1258409"
+    }
+  ]
+}

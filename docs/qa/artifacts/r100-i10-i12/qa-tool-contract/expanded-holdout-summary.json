@@ -1,0 +1,78 @@
+{
+  "status": "pass",
+  "scope": "Synthetic in-memory accounting contract only; zero new game generation samples.",
+  "harness": {
+    "path": "tools/qa/check-r100-expanded-holdout-summary.mjs",
+    "sha256": "ae06bfe918046b8c2bd22b13e1ae5328c58185050bcf417d5adfd9e5e6e801fe"
+  },
+  "summarizer": {
+    "path": "tools/qa/r100-qualification-summary.mjs",
+    "sha256": "1efac9932b08997387c317795ad4fc36b1024d807af178d66561153688f57c50"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "checks": [
+    {
+      "name": "I11 complete2208 extra-only identities",
+      "status": "pass"
+    },
+    {
+      "name": "I12 complete384 extra-only identities",
+      "status": "pass"
+    },
+    {
+      "name": "reject missing world",
+      "status": "pass"
+    },
+    {
+      "name": "reject unknown stage",
+      "status": "pass"
+    },
+    {
+      "name": "reject wrong mode",
+      "status": "pass"
+    },
+    {
+      "name": "reject resealed smaller qualification scope",
+      "status": "pass"
+    },
+    {
+      "name": "reject mutated qualification source",
+      "status": "pass"
+    },
+    {
+      "name": "reject holdout replacement",
+      "status": "pass"
+    },
+    {
+      "name": "reject original-base seed in raw row",
+      "status": "pass"
+    },
+    {
+      "name": "reject wrong raw cohort",
+      "status": "pass"
+    },
+    {
+      "name": "reject duplicate raw identity",
+      "status": "pass"
+    },
+    {
+      "name": "missing raw process remains incomplete",
+      "status": "pass"
+    },
+    {
+      "name": "same executor retry retains original failure",
+      "status": "pass"
+    },
+    {
+      "name": "reject changed retry executor",
+      "status": "pass"
+    },
+    {
+      "name": "default original48 policy unchanged",
+      "status": "pass"
+    }
+  ]
+}

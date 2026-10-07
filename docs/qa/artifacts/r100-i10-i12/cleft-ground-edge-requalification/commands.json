@@ -1,0 +1,59 @@
+{
+  "status": "planned-not-executed",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/qualification-c275794dc08c.mjs",
+    "sha256": "c275794dc08cb21bb4a58c37323b04087c9480c50ede4556176f4edb96022a5c"
+  },
+  "worlds": [
+    "cleft-tableland"
+  ],
+  "grades": [
+    "low",
+    "medium",
+    "severe"
+  ],
+  "expectedCases": 144,
+  "stages": [
+    {
+      "cases": 120,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/qualification-c275794dc08c.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/qualification-c275794dc08c.mjs",
+        "--worlds",
+        "cleft-tableland",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 24,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/qualification-c275794dc08c.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/qualification-c275794dc08c.mjs",
+        "--worlds",
+        "cleft-tableland",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "after": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-execution.json",
+  "reason": "Root authorized all original48 CPU seeds for cleft after shared visible ground-edge change; prior144 remains archived. Six actual-play identities have separate bounded behavior continuity; no fullRGBA/signature claim."
+}

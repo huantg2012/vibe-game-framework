@@ -1,0 +1,123 @@
+{
+  "status": "pass",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "worlds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway",
+    "cleft-tableland",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir",
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta"
+  ],
+  "result": {
+    "status": "pass",
+    "newProfiles": [
+      "compressed-wedge",
+      "porous-break"
+    ],
+    "selectedInstances": 576,
+    "scope": "Only two unselected construction4 branches and an inert imported module are added. Existing physical builder, prior shape bodies, old dispatch and old mesh return remain AST-exact. No RGBA or authored-world visual approval is created."
+  },
+  "checks": [
+    {
+      "name": "actual unselected organization additions",
+      "status": "pass"
+    },
+    {
+      "name": "missing version guard",
+      "status": "pass"
+    },
+    {
+      "name": "changed shared prior body",
+      "status": "pass"
+    },
+    {
+      "name": "new profile actually selected",
+      "status": "pass"
+    },
+    {
+      "name": "top-level module side effect",
+      "status": "pass"
+    }
+  ],
+  "sources": [
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "c944df69504841016a09204dfa3db035cf633cc532b5bd58d1e4c7b50a8fdd28"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "598e8adbce5fbb968954088141a643f7d01cdcb6fd204486d59bf73da72406a7"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-organization.ts",
+      "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
+    },
+    {
+      "path": "tools/qa/r100-organization-dispatch-continuity.mjs",
+      "sha256": "fe29c12ed0fad39baa1245105ec23513f8ca93e4dbad5f7c7be3519df51d08bb"
+    },
+    {
+      "path": "tools/qa/check-r100-organization-dispatch.mjs",
+      "sha256": "6ba1c4439d056726dd5f73de070c0e5cbeccf1e93c7f69e6c9b97a52378fb84e"
+    }
+  ],
+  "scope": "Actual-source AST and negative contracts only. No maps, RGBA bakes or browser. Existing156 RGBA evidence stays bound to3105; this proves added unselected code has no old-profile execution effect."
+}

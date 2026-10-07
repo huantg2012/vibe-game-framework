@@ -1,0 +1,645 @@
+{
+  "status": "selected-for-independent-review",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "outcomes": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play-outcomes.json",
+    "sha256": "3b6e2e404a0c61426e8d8c7edefe64a4e99ff0aa6329dadecfc4df71c23581f7"
+  },
+  "selection": "Two actual empty returns, successful lowestHP severe example, and longest successful severe route.",
+  "cases": [
+    {
+      "case": "011-scalloped-reach-severe-20261005",
+      "world": "scalloped-reach",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/011-scalloped-reach-severe-20261005/report.json",
+        "sha256": "ac04ee47056af63c2a4ff422535ab5e0804e1eeecb18cc547037e24e8bb2103c"
+      },
+      "outcome": "extract",
+      "searchAndExtract": false,
+      "actualPickups": 0,
+      "nearEntryPickups": 0,
+      "collected": [],
+      "field": {
+        "elapsedMs": 95979.52000000037,
+        "hp": 130,
+        "chaos": 118.04454005629776,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "reason": "True empty return: no entry→terminal node changed and searches is empty. Observed contested-kindling approach was abandoned as dangerous; actual Q twice/G four times/F once. Other original seed012 supplies the non-entry search+extract requirement; no route-impossibility claim.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/011-scalloped-reach-severe-20261005/severe/journey.jsonl",
+        "sha256": "3e3285513cd1d1dc60bcd33b75f18f2acaf8eead6d7908293da21a31c3f389c6"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/011-scalloped-reach-severe-20261005/severe/1-far-exploration.png",
+          "sha256": "4d9174ab141cdfb422c7679c300541c00f52bc2e3cb819ca0bea971b71866c68"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/011-scalloped-reach-severe-20261005/severe/1-field-result.png",
+          "sha256": "27f93e2cb906d578f180e0c1b5722156450993dbefabf5b2f5891c7359716971"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/011-scalloped-reach-severe-20261005/severe/1-return.png",
+          "sha256": "13b347b8497f918b450fce5beb5967e800c220ce7003250d04471d8b87ab1719"
+        }
+      ],
+      "selectedEvents": [
+        {
+          "at": "2026-10-07T00:58:28.113Z",
+          "event": "known-tool-context-input",
+          "label": "imminent-visible-green-crossing",
+          "slot": 0,
+          "key": "Q",
+          "item": {
+            "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+            "name": "灰釉齿",
+            "description": "压住一处污染源1秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 346.8684749090909,
+            "y": 432
+          }
+        },
+        {
+          "at": "2026-10-07T00:58:38.507Z",
+          "event": "known-tool-context-input",
+          "label": "imminent-visible-green-crossing",
+          "slot": 0,
+          "key": "Q",
+          "item": {
+            "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+            "name": "灰釉齿",
+            "description": "压住一处污染源1秒",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": {
+            "x": 368,
+            "y": 112
+          }
+        },
+        {
+          "at": "2026-10-07T00:58:47.685Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 4
+          },
+          "remaining": 3,
+          "used": 1,
+          "facePoint": {
+            "x": 365.09163599765344,
+            "y": 166.98096935090322
+          }
+        },
+        {
+          "at": "2026-10-07T00:58:56.783Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 3
+          },
+          "remaining": 2,
+          "used": 1,
+          "facePoint": {
+            "x": 328.03251520716435,
+            "y": 375.4558391452958
+          }
+        },
+        {
+          "at": "2026-10-07T00:59:00.596Z",
+          "event": "abandoned-observed-approach",
+          "reason": "approach-kept-dangerous",
+          "target": {
+            "id": "r100-kindling-contested-2",
+            "kind": "kindling",
+            "pos": {
+              "x": 516,
+              "y": 68
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          }
+        },
+        {
+          "at": "2026-10-07T00:59:04.864Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 357.2630323691615,
+            "y": 499.94019158427943
+          }
+        },
+        {
+          "at": "2026-10-07T00:59:25.090Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": {
+            "x": 468.31057796525846,
+            "y": 81.28621933122541
+          }
+        },
+        {
+          "at": "2026-10-07T00:59:27.570Z",
+          "event": "known-tool-context-input",
+          "label": "unknown-corner-before-search",
+          "slot": 1,
+          "key": "F",
+          "item": {
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+            "name": "盲针罗盘",
+            "description": "探查4格内目标位置",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": null
+        }
+      ]
+    },
+    {
+      "case": "023-thin-delta-severe-20261005",
+      "world": "thin-delta",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/023-thin-delta-severe-20261005/report.json",
+        "sha256": "6f028203fe5802a8dadc7ff892a6ca9d71a1f44bf18ed83de583ddf5aa3f79f0"
+      },
+      "outcome": "extract",
+      "searchAndExtract": false,
+      "actualPickups": 0,
+      "nearEntryPickups": 0,
+      "collected": [],
+      "field": {
+        "elapsedMs": 128878.1800000011,
+        "hp": 100,
+        "chaos": 135.12069862426424,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "reason": "True empty return after three observed dangerous approaches. Return reserve triggered at100.96s/chaos116.70 with921px route; final128.9s/chaos135.1. Other original seed024 searched/extracted. No parameter or seed was replaced.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/023-thin-delta-severe-20261005/severe/journey.jsonl",
+        "sha256": "5de8c0c8fcac59f632e437baa8f1893b8904fb000125aa20d5bd8313de05bc43"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/023-thin-delta-severe-20261005/severe/1-far-exploration.png",
+          "sha256": "8e936320bc613d9f492c6e5ec3ddd5d50bf2efa1f9a2ca9c703c1d9152ac0b9e"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/023-thin-delta-severe-20261005/severe/1-field-result.png",
+          "sha256": "064009bd88e06d52ce249eba90841a0d20d13eb5dc2eb8e344d3754812554b90"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/023-thin-delta-severe-20261005/severe/1-return.png",
+          "sha256": "4a4e2fd83d3b2017f2f5bbc0ca4a9e54f020a5f1b46c1c91987ff98eefd84f25"
+        }
+      ],
+      "selectedEvents": [
+        {
+          "at": "2026-10-07T01:13:51.865Z",
+          "event": "known-tool-context-input",
+          "label": "imminent-visible-green-crossing",
+          "slot": 0,
+          "key": "Q",
+          "item": {
+            "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+            "name": "灰釉齿",
+            "description": "压住一处污染源1秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 176,
+            "y": 432
+          }
+        },
+        {
+          "at": "2026-10-07T01:14:18.937Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 4
+          },
+          "remaining": 3,
+          "used": 1,
+          "facePoint": {
+            "x": 481.00210161047113,
+            "y": 231.13791579928954
+          }
+        },
+        {
+          "at": "2026-10-07T01:14:26.161Z",
+          "event": "abandoned-observed-approach",
+          "reason": "approach-kept-dangerous",
+          "target": {
+            "id": "r100-kindling-contested-1",
+            "kind": "kindling",
+            "pos": {
+              "x": 532,
+              "y": 164
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          }
+        },
+        {
+          "at": "2026-10-07T01:14:27.487Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 3
+          },
+          "remaining": 2,
+          "used": 1,
+          "facePoint": {
+            "x": 393.11677352579136,
+            "y": 291.2657763475584
+          }
+        },
+        {
+          "at": "2026-10-07T01:14:51.710Z",
+          "event": "abandoned-observed-approach",
+          "reason": "approach-kept-dangerous",
+          "target": {
+            "id": "r100-kindling-contested-2",
+            "kind": "kindling",
+            "pos": {
+              "x": 692,
+              "y": 388
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          }
+        },
+        {
+          "at": "2026-10-07T01:14:52.894Z",
+          "event": "known-tool-context-input",
+          "label": "unknown-corner-before-search",
+          "slot": 1,
+          "key": "F",
+          "item": {
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+            "name": "盲针罗盘",
+            "description": "探查4格内目标位置",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": null
+        },
+        {
+          "at": "2026-10-07T01:15:03.271Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 625.8607602155835,
+            "y": 205.86724041480656
+          }
+        },
+        {
+          "at": "2026-10-07T01:15:22.706Z",
+          "event": "abandoned-observed-approach",
+          "reason": "approach-kept-dangerous",
+          "target": {
+            "id": "r100-contaminant-deep-1",
+            "kind": "contaminant",
+            "pos": {
+              "x": 788,
+              "y": 180
+            },
+            "tier": "deep",
+            "value": 0,
+            "collected": false
+          }
+        },
+        {
+          "at": "2026-10-07T01:15:24.607Z",
+          "event": "known-return-budget",
+          "elapsedMs": 100962.63000000047,
+          "chaos": 116.70409877399679,
+          "routeLength": 921.4320592697611,
+          "actualSpeed": 53.304928785801835,
+          "budgetSpeed": 53.304928785801835,
+          "observedRate": 0.9212846109137517,
+          "reservedChaos": 29.610517119592945,
+          "stop": true
+        },
+        {
+          "at": "2026-10-07T01:15:24.607Z",
+          "event": "abandoned-observed-approach",
+          "reason": "return-reserve-threshold",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "kind": "kindling",
+            "pos": {
+              "x": 772,
+              "y": 116
+            },
+            "tier": "deep",
+            "value": 6,
+            "collected": false
+          }
+        }
+      ]
+    },
+    {
+      "case": "005-braided-seam-severe-20261005",
+      "world": "braided-seam",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/005-braided-seam-severe-20261005/report.json",
+        "sha256": "38ab4d825cdc16e0d434d3a38d7eb540cb7a51670fa8d1c3bfbcc1bff0c5c02b"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 483.2556259372466,
+          "elapsedMs": 44431.53999999988
+        }
+      ],
+      "field": {
+        "elapsedMs": 67630.62999999951,
+        "hp": 100,
+        "chaos": 98.50130400935649,
+        "carried": 0
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "reason": "Successful non-entry pickup/extraction with substantial pressure: HP100 and chaos98.5. Inspect actual collected contaminant and settlement, not carried-kindling alone.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/005-braided-seam-severe-20261005/severe/journey.jsonl",
+        "sha256": "239f9eb9d91f3f4c529e74cd5e3805ea2d21922c2aa28ee8466de4fec80eae1f"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/005-braided-seam-severe-20261005/severe/1-far-exploration.png",
+          "sha256": "d7b201e488167fcb762649f64c8e40ecf4174394ce117f47a6b74788eb44c8e7"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/005-braided-seam-severe-20261005/severe/1-field-result.png",
+          "sha256": "c81fadf3b83923f4c7797c139d07f5ee22487ac23ddb68559e7819035e8160d5"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/005-braided-seam-severe-20261005/severe/1-return.png",
+          "sha256": "1bd976f8a2b1658c662f648e8aa17107884ec70311d64af1ea8ac01af18a9833"
+        }
+      ],
+      "selectedEvents": [
+        {
+          "at": "2026-10-07T00:52:50.627Z",
+          "event": "known-tool-context-input",
+          "label": "unknown-corner-before-search",
+          "slot": 1,
+          "key": "F",
+          "item": {
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+            "name": "盲针罗盘",
+            "description": "探查4格内目标位置",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": null
+        },
+        {
+          "at": "2026-10-07T00:52:56.690Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 4
+          },
+          "remaining": 3,
+          "used": 1,
+          "facePoint": {
+            "x": 419.7250711198418,
+            "y": 335.57535248318914
+          }
+        },
+        {
+          "at": "2026-10-07T00:53:05.722Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 3
+          },
+          "remaining": 2,
+          "used": 1,
+          "facePoint": {
+            "x": 529.4236890883543,
+            "y": 280.87348463035664
+          }
+        },
+        {
+          "at": "2026-10-07T00:53:10.724Z",
+          "event": "known-tool-context-input",
+          "label": "imminent-visible-green-crossing",
+          "slot": 0,
+          "key": "Q",
+          "item": {
+            "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+            "name": "灰釉齿",
+            "description": "压住一处污染源1秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 592,
+            "y": 400
+          }
+        },
+        {
+          "at": "2026-10-07T00:53:14.468Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 595.1002379550293,
+            "y": 430.8330680803838
+          }
+        }
+      ]
+    },
+    {
+      "case": "018-offset-pan-severe-3075192741",
+      "world": "offset-pan",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/018-offset-pan-severe-3075192741/report.json",
+        "sha256": "89606fbe6a30e53d59de213d253134097f6123c6148afe309bc74aee99d51ea0"
+      },
+      "outcome": "extract",
+      "searchAndExtract": true,
+      "actualPickups": 1,
+      "nearEntryPickups": 0,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 704.590661306265,
+          "elapsedMs": 73423.32999999968
+        }
+      ],
+      "field": {
+        "elapsedMs": 107105.34000000035,
+        "hp": 145,
+        "chaos": 79.72027788115602,
+        "carried": 6
+      },
+      "runtimeErrors": [],
+      "consoleErrors": [],
+      "navigationWarning": null,
+      "reason": "Successful long route:107.1s active simulation,6 carried kindling,HP145/chaos79.72. Runtime/navigation errors absent; sample is not an exclusive performance test.",
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/018-offset-pan-severe-3075192741/severe/journey.jsonl",
+        "sha256": "c2ada4da9cc76c71a144f548f6cae43423b1c6365ec3fa2faf4a45e6a1da0ff4"
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/018-offset-pan-severe-3075192741/severe/1-far-exploration.png",
+          "sha256": "9384b4adbc17d2ecf6b085e4b36481772f5b45365a8614a4b0cee9cb32b96f7f"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/018-offset-pan-severe-3075192741/severe/1-field-result.png",
+          "sha256": "0d2e532d78d2dbc263325b79f350f4b074370c1a06d0c930ad8b6a4556b5fb53"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/play/018-offset-pan-severe-3075192741/severe/1-return.png",
+          "sha256": "087f8a11bdf9b10cb1ee15db776218fcfc181d7957abcb8c19e9f9d0bad4a2be"
+        }
+      ],
+      "selectedEvents": [
+        {
+          "at": "2026-10-07T01:06:55.961Z",
+          "event": "known-tool-context-input",
+          "label": "unknown-corner-before-search",
+          "slot": 1,
+          "key": "F",
+          "item": {
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+            "name": "盲针罗盘",
+            "description": "探查4格内目标位置",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": null
+        },
+        {
+          "at": "2026-10-07T01:07:50.225Z",
+          "event": "abandoned-observed-approach",
+          "reason": "approach-kept-dangerous",
+          "target": {
+            "id": "r100-kindling-contested-2",
+            "kind": "kindling",
+            "pos": {
+              "x": 836,
+              "y": 324
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          }
+        }
+      ]
+    }
+  ],
+  "scope": "Read-only index of original24 evidence; no additional browser or qualification created."
+}

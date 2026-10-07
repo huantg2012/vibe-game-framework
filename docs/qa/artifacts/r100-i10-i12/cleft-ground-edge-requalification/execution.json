@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "pid": 83976,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/qualification-c275794dc08c.mjs",
+    "sha256": "c275794dc08cb21bb4a58c37323b04087c9480c50ede4556176f4edb96022a5c"
+  },
+  "stages": [
+    {
+      "stage": "full",
+      "cases": 120,
+      "exitCode": 0,
+      "elapsedSeconds": 290.302,
+      "log": "docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-full.log",
+      "logSha256": "cc4d2e23d88114c949705b6f03dbb44e6ed4032fa9f97638a4a679564761831a"
+    },
+    {
+      "stage": "holdout",
+      "cases": 24,
+      "exitCode": 0,
+      "elapsedSeconds": 31.789,
+      "log": "docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-holdout.log",
+      "logSha256": "29f1f04c25674496444be9a573f16ba29f80c53107422951e600e92fd6ccc31b"
+    }
+  ],
+  "startedAt": "2026-10-07T01:16:30Z"
+}

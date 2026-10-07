@@ -8,13 +8,19 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import ts from 'typescript';
 import { assertRemainsSourceContinuity } from './r100-remains-source-continuity.mjs';
+import { assertOrganizationDispatchContinuity, assertInertOrganizationSource } from './r100-organization-dispatch-continuity.mjs';
+import { assertInactivePresentationChanges } from './r100-inactive-presentation-continuity.mjs';
 
 const arg = name => process.argv[process.argv.indexOf(name) + 1];
 for (const name of ['--from', '--to', '--worlds', '--output']) assert(process.argv.includes(name), `Missing ${name}`);
 const fromPath = arg('--from'), toPath = arg('--to'), output = arg('--output');
 const mode = process.argv.includes('--unused-shape-change') ? arg('--unused-shape-change') : 'none';
 const allowUnusedRemains = process.argv.includes('--unused-remains-forms');
+const allowUnusedOrganizations = process.argv.includes('--unused-organization-profiles');
+const allowInactivePresentation = process.argv.includes('--inactive-presentation-branches');
 assert(['none', 'v3-only', 'terrace-only', 'unused-profiles', 'v4-only'].includes(mode));
+assert(!allowUnusedOrganizations || mode === 'none', 'Organization addition must be audited without other shape exceptions');
+assert(!allowInactivePresentation || (mode === 'none' && !allowUnusedOrganizations), 'Inactive presentation changes require a separate source edge');
 const worlds = arg('--worlds').split(',');
 assert(worlds.length && new Set(worlds).size === worlds.length);
 const read = file => JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -45,10 +51,13 @@ const withoutEnabled = ({ enabled, ...content }) => content;
 const projections = [];
 const materialKeys = new Set();
 const selectedGrammars = [];
+const selectedInstances = [];
+const selectedAppearances = [];
 for (const world of worlds) {
   const old = pick(oldWorlds, world), current = pick(newWorlds, world);
   assert.deepEqual(withoutEnabled(old), withoutEnabled(current), `World content changed: ${world}`);
   const instances = old.definitions.flatMap(definition => definition.instances);
+  selectedInstances.push(...instances);
   for (const definition of old.definitions) {
     assert.equal(typeof definition.family, 'string', 'Selected native material family is explicit');
     materialKeys.add(definition.family);
@@ -73,6 +82,7 @@ for (const [file, name, csv] of [
     assert.deepEqual(previous, pick(current, world, 'worldId'), `${file}:${world}`);
     if (name === 'R100_WORLD_APPEARANCES' && previous.materialOrganization)
       materialKeys.add(`organization:${previous.materialOrganization}`);
+    if (name === 'R100_WORLD_APPEARANCES') selectedAppearances.push(previous);
     if (name === 'SEARCH_REMAINS') selectedGrammars.push(previous.grammar);
   }
   projected.add(file); projected.add(csv);
@@ -95,6 +105,44 @@ function outsideFunctions(snapshot, file, names) {
     .map(statement => printer.printNode(ts.EmitHint.Unspecified, statement, ast)).join('\n');
 }
 const groundFile = 'src/generation/world-study/native-volume-ground.ts';
+const geometryFile = 'src/generation/world-study/native-volume-geometry.ts';
+const organizationFile = 'src/generation/world-study/native-volume-organization.ts';
+const surfaceFile = 'src/systems/r100-world/surface-bake.ts';
+const samplingFile = 'src/systems/r100-world/organization-sampling.ts';
+const edgeFile = 'src/generation/world-study/native-volume-ground-edge.ts';
+const organizationContinuity = allowUnusedOrganizations ? assertOrganizationDispatchContinuity({
+  oldGeometry: load(before, geometryFile), newGeometry: load(after, geometryFile),
+  oldGround: load(before, groundFile), newGround: load(after, groundFile),
+  module: load(after, organizationFile), instances: selectedInstances,
+}) : undefined;
+const consumers = (snapshot, module) => Object.keys(snapshot.sources).filter(file => {
+    if (!/\.[cm]?[jt]sx?$/.test(file)) return false;
+    const content = load(snapshot, file);
+    if (!content.includes(path.posix.basename(module, '.ts'))) return false;
+    return ts.preProcessFile(content, true, true).importedFiles.some(reference => {
+      const name = reference.fileName;
+      const target = name.startsWith('@/') ? `src/${name.slice(2)}`
+        : name.startsWith('.') ? path.posix.normalize(path.posix.join(path.posix.dirname(file), name)) : name;
+      return target.replace(/\.ts$/, '') === module.replace(/\.ts$/, '');
+    });
+  }).sort();
+if (organizationContinuity) {
+  assert.deepEqual(consumers(before, organizationFile), [], 'Preexisting organization module must have no imported consumers');
+  assert.deepEqual(consumers(after, organizationFile), [geometryFile, groundFile].sort(), 'Only the two audited guarded entries may import organization geometry');
+}
+const inactivePresentationContinuity = allowInactivePresentation ? assertInactivePresentationChanges({
+  beforeSurface: load(before, surfaceFile), afterSurface: load(after, surfaceFile),
+  beforeGeometry: load(before, geometryFile), afterGeometry: load(after, geometryFile),
+  samplingModule: load(after, samplingFile), edgeModule: load(after, edgeFile),
+  beforeEdgeModule: load(before, edgeFile),
+  instances: selectedInstances, appearances: selectedAppearances,
+}) : undefined;
+if (inactivePresentationContinuity) {
+  assert.deepEqual(consumers(before, samplingFile), []); assert.deepEqual(consumers(after, samplingFile), [surfaceFile]);
+  assert.deepEqual(consumers(before, edgeFile), [geometryFile]); assert.deepEqual(consumers(after, edgeFile), [geometryFile]);
+  assert.deepEqual(consumers(before, organizationFile), []); assert.deepEqual(consumers(after, organizationFile), []);
+  assertInertOrganizationSource(load(after, organizationFile));
+}
 function assertInertV4Module(snapshot) {
   const ast = parse(snapshot, groundFile); assert.equal(ast.parseDiagnostics.length, 0);
   const inertValue = node => {
@@ -153,6 +201,12 @@ for (const [file, oldHash] of Object.entries(before.sources)) {
     remainsContinuity = assertRemainsSourceContinuity(load(before, file), load(after, file), selectedGrammars);
     changed.push({ file, reason: remainsContinuity.rule }); continue;
   }
+  if (organizationContinuity && [geometryFile, groundFile, organizationFile].includes(file)) {
+    changed.push({ file, reason: organizationContinuity.scope }); continue;
+  }
+  if (inactivePresentationContinuity && [surfaceFile, edgeFile].includes(file)) {
+    changed.push({ file, reason: inactivePresentationContinuity.scope }); continue;
+  }
   assert(allowedShapeFiles.includes(file), `Unreviewed runtime change: ${file}`);
   const omitted = mode === 'terrace-only' ? ['terraceShelf'] : mode === 'unused-profiles'
     ? file.endsWith('native-volume-cellular.ts') ? ['buildCellularShell'] : ['pleatedSheet', 'monolithButtress', 'terraceShelf'] : null;
@@ -161,11 +215,18 @@ for (const [file, oldHash] of Object.entries(before.sources)) {
 }
 const additions = Object.keys(after.sources).filter(file => !before.sources[file]);
 // Appended files require separate review; do not assume a new shader/module is inert.
-assert.equal(additions.length, 0, `Unexpected new source files: ${additions.join(', ')}`);
+const reviewedAdditionNames = organizationContinuity ? [organizationFile]
+  : inactivePresentationContinuity ? [organizationFile, samplingFile] : [];
+const unreviewedAdditions = additions.filter(file => !reviewedAdditionNames.includes(file));
+assert.equal(unreviewedAdditions.length, 0, `Unexpected new source files: ${unreviewedAdditions.join(', ')}`);
+if (organizationContinuity) assert.deepEqual(additions, before.sources[organizationFile] ? [] : [organizationFile], 'Only an unimported or newly added organization module may be admitted');
+if (inactivePresentationContinuity) assert.deepEqual([...additions].sort(), [organizationFile, samplingFile].sort(), 'Only the two audited inactive modules may be added');
 const result = { status: 'pass', scope: 'Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.',
   before: { path: fromPath, sha256: sha(fs.readFileSync(fromPath)) }, after: { path: toPath, sha256: sha(fs.readFileSync(toPath)) },
   mode, worlds: projections, materialDependencyKeys: [...materialKeys].sort(), unchangedFiles: identical.length, reviewedChanges: changed,
   ...(remainsContinuity ? { remainsContinuity } : {}),
+  ...(organizationContinuity ? { organizationContinuity, reviewedAdditions: additions } : {}),
+  ...(inactivePresentationContinuity ? { inactivePresentationContinuity, reviewedAdditions: additions } : {}),
   limitations: 'Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison.' };
 assert(!fs.existsSync(output), 'Do not overwrite continuity evidence');
 fs.mkdirSync(path.dirname(output), { recursive: true });

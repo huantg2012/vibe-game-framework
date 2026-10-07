@@ -1,0 +1,588 @@
+{
+  "status": "medium-author-review-awaiting-root-shard-verdict",
+  "reviewer": "world_loot_pixels",
+  "createdAt": "2026-10-07T01:24:07.339347+00:00",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-source/source-snapshot.json",
+    "sha256": "8161b87497c223b903b07d6fbd68c3afcbf46995487f7c2cd35cb2058af3b4e8"
+  },
+  "captureReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/report.json",
+    "sha256": "e5f5e9a640e993df56ca7448aa114f57c1cbdded7ad2916a060fd901ef62387f"
+  },
+  "worlds": [
+    {
+      "worldId": "shard-switchback",
+      "grade": "medium",
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shard-switchback",
+        "grade": "medium",
+        "package": {
+          "id": "r100-shard-switchback",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "e403b72b",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3106/r100-gym.html?world=shard-switchback&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "medium-neighbor-review-needed",
+      "finding": "六分离中体构成多次换侧与横接通路；已看近脚短断沿与粗地清楚，未出现旧闭合拼板圈。",
+      "limitations": "多个站位重复同一分叉母片，当前本批最弱项；不能只凭相同母材允许度当品质已通过，待root复核。不把图中全黑处签为已看外壁。",
+      "personallyViewed": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/01-west-shoulder-north.png",
+          "sha256": "bb561f30a30709efa2521f3a49f760dd945867872d5636955b6724be34350ad2",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 272.04061053015346,
+            "y": 364.55662621946936
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 17.499446081999782,
+          "elapsedMs": 7616.4
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/01-west-shoulder-east.png",
+          "sha256": "e6ec26778fa643dbdc6c75fab166267a5cf655e6be1d6f9e07a329aa6237c00b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 280.8966105301534,
+            "y": 364.55662621946936
+          },
+          "actualFacingRadians": 0,
+          "facing": "east",
+          "hp": 100,
+          "chaos": 17.78700386999976,
+          "elapsedMs": 8483
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/02-first-switch-north.png",
+          "sha256": "ba315425658d0ee5cc480721c472a8379f50126a665c315a24263dbfcea092ca",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 450.03551921603287,
+            "y": 396.55241856760176
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 19.949155343999507,
+          "elapsedMs": 14999.5
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/03-cross-opening-north.png",
+          "sha256": "5aa161ac24d1f7ae22604b15436da5e8bfaf3d71929d3fa7bf365bcef384f845",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 573.9601489380973,
+            "y": 527.9423908683157
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 22.221885803999395,
+          "elapsedMs": 21849.2
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/03-cross-opening-east.png",
+          "sha256": "5688daccef28ede4a4084185dc5e42ffe6f23fbd4515d3d80ee032884cc7999d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 580.9260970623828,
+            "y": 529.5812291521859
+          },
+          "actualFacingRadians": 0,
+          "facing": "east",
+          "hp": 100,
+          "chaos": 22.498371425999423,
+          "elapsedMs": 22682.399999999998
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/04-last-tip-north.png",
+          "sha256": "d5af97dcd47a841e6bfbf7934f1ec212056f480da16cff78e646fd97d162c1c6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 861.9162387173787,
+            "y": 379.4515776871739
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 29.546168843999652,
+          "elapsedMs": 34465.3
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/shard-switchback-medium/04-last-tip-west.png",
+          "sha256": "0db33cc4e74b917afe15d6bbf821e565047574e72ab4f8f75029c06f936649ea",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 852.5433387173786,
+            "y": 379.4515776871739
+          },
+          "actualFacingRadians": 3.141592653589793,
+          "facing": "west",
+          "hp": 100,
+          "chaos": 32.977488935999666,
+          "elapsedMs": 35115.2
+        }
+      ]
+    },
+    {
+      "worldId": "hollow-wreckage",
+      "grade": "medium",
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "hollow-wreckage",
+        "grade": "medium",
+        "package": {
+          "id": "r100-hollow-wreckage",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "a3691c2b",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3106/r100-gym.html?world=hollow-wreckage&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-medium-local-pass",
+      "finding": "高曲壳、低残面之间的通道及低端细断沿可辨。01/04低端、02两侧壳路与03高内面互相补充，区别于完整囊腔。",
+      "limitations": "两站有较宽材质交界线，但当前可见范围读作地表关系；全外壁/完整环绕未尽见，曲面细绿线不代表所有污染表面。",
+      "personallyViewed": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/01-south-low-shell-north.png",
+          "sha256": "9c8d679845012a9b23f82ed8e88d24ddcff191b30bc9f59f2e3bb1088ee4e5da",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 531.7828666666649,
+            "y": 599.9407000000002
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 17.383342625999774,
+          "elapsedMs": 7266.4
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/02-west-standing-shell-west.png",
+          "sha256": "1d9578607f3f0358a1acf05d3817f6b7e6ce0ee5a4c97cf1c912734081d92c5f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 553.8940666666653,
+            "y": 449.4401666666667
+          },
+          "actualFacingRadians": -3.14152982173672,
+          "facing": "west",
+          "hp": 100,
+          "chaos": 18.90955958399963,
+          "elapsedMs": 11866.2
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/02-west-standing-shell-north.png",
+          "sha256": "442041bec54d41551a629636d222ec4b768be55b137036266f1bc25bee69858d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 553.8940666666653,
+            "y": 439.5056333333335
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 19.246884053999597,
+          "elapsedMs": 12882.8
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/03-east-standing-shell-east.png",
+          "sha256": "493e17332adf7d819b18c4bf54bd2bf557e6209c32d448667817297e73e9c69f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 551.8536457580428,
+            "y": 322.3457024071008
+          },
+          "actualFacingRadians": 0,
+          "facing": "east",
+          "hp": 100,
+          "chaos": 20.750976587999467,
+          "elapsedMs": 17416
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/hollow-wreckage-medium/04-north-low-shell-south.png",
+          "sha256": "e6f169fe39ca7236772384eb8f662b70abe47e4cbe7e70cd2715d937bfd98860",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 530.0211457580426,
+            "y": 199.90643574043403
+          },
+          "actualFacingRadians": 1.5707963267948966,
+          "facing": "south",
+          "hp": 100,
+          "chaos": 22.08365128799946,
+          "elapsedMs": 21432.5
+        }
+      ]
+    },
+    {
+      "worldId": "knotted-run",
+      "grade": "medium",
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "knotted-run",
+        "grade": "medium",
+        "package": {
+          "id": "r100-knotted-run",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "c43762cd",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3106/r100-gym.html?world=knotted-run&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-medium-local-pass",
+      "finding": "可见三处粗束相交处的高低覆盖、外放撕尾以及连接裸床；材料沿束方向分层，地面与束断沿分开。",
+      "limitations": "只能称交接粗头/断尾，实际不是扭曲结。01有实际敌人靠近，敌体遮挡范围不签。03/04证明相叠不等于证明体内穿插。",
+      "personallyViewed": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/01-west-crossed-head-north.png",
+          "sha256": "3dbca672c9dc27c0e96016fd3f451d64036124e4839ad59334733da14943e447",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 290.98455043713994,
+            "y": 458.4073160744757
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 16.835879261999843,
+          "elapsedMs": 5616.4
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/02-south-crossed-head-south.png",
+          "sha256": "3feead5f4dccf51bd94422548dd7575aa5b4dc82a75e1d52f83be432640286ca",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 539.5652508317789,
+            "y": 442.89406932196033
+          },
+          "actualFacingRadians": 1.5707963267948966,
+          "facing": "south",
+          "hp": 100,
+          "chaos": 19.7721898139995,
+          "elapsedMs": 14466.099999999999
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/02-south-crossed-head-west.png",
+          "sha256": "98de33354d5a830029d4d103721f9bc17be39ebe2f66e4178d03bc2df624652f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 531.563850831779,
+            "y": 442.89406932196033
+          },
+          "actualFacingRadians": 3.141592653589793,
+          "facing": "west",
+          "hp": 100,
+          "chaos": 19.976784329999496,
+          "elapsedMs": 15082.8
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/03-east-crossed-head-east.png",
+          "sha256": "24aa62d3d8b577ee58ce90050b3cb61e6dc657646304dc3cc356c5dd69d12c21",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 590.387590514414,
+            "y": 272.9146995136876
+          },
+          "actualFacingRadians": 0,
+          "facing": "east",
+          "hp": 100,
+          "chaos": 21.71868124199944,
+          "elapsedMs": 20332.6
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/04-south-broken-tail-north.png",
+          "sha256": "d6cd0b3e77d7559179f53af4d911461c5f5a85e56549cdbee54101c9bc679ac3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 541.0154236112775,
+            "y": 615.8235435655197
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 25.25219529599955,
+          "elapsedMs": 30982.1
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/knotted-run-medium/04-south-broken-tail-west.png",
+          "sha256": "6234623b6cebe1bc477ad69990babbd2dc7775be6cb114d68caabbd3843b5bac",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 532.0712902779441,
+            "y": 615.8235435655197
+          },
+          "actualFacingRadians": 3.141592653589793,
+          "facing": "west",
+          "hp": 100,
+          "chaos": 25.550808659999568,
+          "elapsedMs": 31882.1
+        }
+      ]
+    },
+    {
+      "worldId": "rolled-fragments",
+      "grade": "medium",
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "rolled-fragments",
+        "grade": "medium",
+        "package": {
+          "id": "r100-rolled-fragments",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "9f44d667",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3106/r100-gym.html?world=rolled-fragments&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-medium-local-pass",
+      "finding": "五件分离小卷的高外皮、浅内面及裸床通行关系可读；01/02/03/04近不同卷端，连续小体区别于torn大低皮。",
+      "limitations": "03west主要见裸床，不单独用于实体结论；远面/遮住的外壁未看，不把全黑区认为空地或已验碰撞。",
+      "personallyViewed": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/01-first-roll-west.png",
+          "sha256": "197fc5eeec721538c3f27b533b3a36e0a04df1930af461505883063c901df192",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 380.472154551576,
+            "y": 465.1272314470071
+          },
+          "actualFacingRadians": -3.140775839499859,
+          "facing": "west",
+          "hp": 100,
+          "chaos": 17.51612598999978,
+          "elapsedMs": 7616.3
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/01-first-roll-north.png",
+          "sha256": "7e62b2659311a2bff5b9224325dd58e3c47de714ff0ba47a6ff2f8fee4243383",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 380.472154551576,
+            "y": 455.68356478034053
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 18.13665723399978,
+          "elapsedMs": 8682.899999999998
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/02-second-roll-north.png",
+          "sha256": "3cb0914c8ac79b5dfff88941b5718b5b1e954ec961ae5f76b486e1b8655c9663",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 474.9873798644582,
+            "y": 339.1383645141214
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 20.083142025999535,
+          "elapsedMs": 14549.3
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/03-middle-roll-north.png",
+          "sha256": "f618959ed50d1d642a77173e5aa5785e6e65698be855d9c2f592d730e93d7810",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 643.1571798644594,
+            "y": 322.9170978474548
+          },
+          "actualFacingRadians": -1.5707963267948966,
+          "facing": "north",
+          "hp": 100,
+          "chaos": 21.614890089999438,
+          "elapsedMs": 19165.8
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/03-middle-roll-west.png",
+          "sha256": "f86e7d4a57c1b76beb30dddf587f3a30e954f44b9c356eb70a5324b21ee7a53d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 634.4469131977927,
+            "y": 322.9170978474548
+          },
+          "actualFacingRadians": 3.141592653589793,
+          "facing": "west",
+          "hp": 100,
+          "chaos": 21.89137571199944,
+          "elapsedMs": 19999.1
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/04-small-roll-south.png",
+          "sha256": "aa850f1ba1d81227d921bb7cf42a3f9af98383ec0c3cfaf4050ba377506de18b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 901.4365667789621,
+            "y": 459.8309009700815
+          },
+          "actualFacingRadians": 1.5707963267948966,
+          "facing": "south",
+          "hp": 100,
+          "chaos": 26.138246493999517,
+          "elapsedMs": 32798.700000000004
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-medium/rolled-fragments-medium/04-small-roll-west.png",
+          "sha256": "e2ac4f3c440b4fdf0f4668f1b57c720bd028b4baa1811df188713ad111b03979",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualPosition": {
+            "x": 888.768866778962,
+            "y": 459.8309009700815
+          },
+          "actualFacingRadians": 3.141592653589793,
+          "facing": "west",
+          "hp": 100,
+          "chaos": 26.492157645999548,
+          "elapsedMs": 33865.3
+        }
+      ]
+    }
+  ],
+  "viewedImageCount": 25,
+  "scope": "正常有限灯光/FOV、真实WASD、原生生产renderer；世界/种子/普通训练装是受控输入。只查看静帧，不冒称已审完整视频、正式搜撤、声音、人类体验。",
+  "limits": [
+    "PNG 1136×758 是当前浏览器canvas截图尺寸，不称逻辑原生尺寸。",
+    "不同面向由真实短按键形成，实际站位有小偏移；对照以记录位置为准，不声称严格同机位。",
+    "仅medium/20261005；未签low/severe。",
+    "机器运行通过不替代艺术结论；shard重复母片风险仍明确待裁决。"
+  ]
+}

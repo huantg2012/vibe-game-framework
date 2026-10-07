@@ -1,0 +1,121 @@
+{
+  "status": "pass",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "sha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "worlds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir"
+  ],
+  "result": {
+    "status": "pass",
+    "scope": "Selected worlds have no organization option and no ground-edge width. The revised edge is never invoked, both imported modules have no top-level execution, and the sampling opt-in reduces to the complete original surface AST. This is a source proof, not a new rendered/gameplay execution."
+  },
+  "checks": [
+    {
+      "name": "actual55 unselected world paths",
+      "status": "pass"
+    },
+    {
+      "name": "world owns revised edge",
+      "status": "pass"
+    },
+    {
+      "name": "world selects organization",
+      "status": "pass"
+    },
+    {
+      "name": "default source mix changed",
+      "status": "pass"
+    },
+    {
+      "name": "opt-in guard removed",
+      "status": "pass"
+    },
+    {
+      "name": "sampling top-level side effect",
+      "status": "pass"
+    },
+    {
+      "name": "edge top-level side effect",
+      "status": "pass"
+    },
+    {
+      "name": "removed original module side effect",
+      "status": "pass"
+    },
+    {
+      "name": "shared builder changed",
+      "status": "pass"
+    }
+  ],
+  "sources": [
+    {
+      "path": "tools/qa/r100-inactive-presentation-continuity.mjs",
+      "sha256": "20da8da7338e5c41830e576947369cc139d13c3e1fd74bfb59681801fdcc2636"
+    },
+    {
+      "path": "tools/qa/check-r100-inactive-presentation-continuity.mjs",
+      "sha256": "9ca4a7d943bca0bc2af3fc1ff0447711d27760d63b9fc4fd4fafa1a9cbf07456"
+    }
+  ],
+  "scope": "Frozen-source AST proof only; six cleft play identities and all144 cleft generation cases are explicitly outside this55-world scope."
+}
