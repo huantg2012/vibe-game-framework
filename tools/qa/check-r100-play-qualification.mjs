@@ -45,6 +45,7 @@ try {
   check('unchanged-records', () => {}, (run, summary) => {
     assert.equal(run.status, 0, run.stderr); assert.equal(summary.qualifiedGradePairs, 3);
     assert.equal(summary.completedSeedProcesses, 6);
+    assert(!Object.hasOwn(summary, 'nearEntryOnlyReturns'), 'Preserve historical policy13 summary format');
   });
   check('empty-return-is-not-search', ({ reports }) => {
     for (const row of lowReports(reports)) row.searches = [];
@@ -120,6 +121,8 @@ try {
   check('explicit-revision6-controller15-fixture', revision6Fixture, (run, summary) => {
     assert.equal(run.status, 0, run.stderr); assert.equal(summary.qualifiedGradePairs, 3);
     assert.deepEqual(summary.algorithmRevisions, [6]);
+    assert.equal(summary.nearEntryOnlyReturns, 0);
+    assert.equal(summary.emptyReturns, 1, 'Keep the original severe second-seed empty return');
   });
   check('near-entry-pickup-is-process-not-search-qualification', context => {
     revision6Fixture(context);
@@ -134,6 +137,8 @@ try {
     assert.equal(run.status, 1, run.stderr); assert.equal(summary.qualifiedGradePairs, 2);
     assert.equal(summary.completedSeedProcesses, 6);
     assert(summary.attempts.filter(row => row.grade === 'low').every(row => row.nearEntryPickups > 0 && row.collected.length === 0));
+    assert.equal(summary.nearEntryOnlyReturns, 2);
+    assert.equal(summary.emptyReturns, 1, 'Only the original severe empty return remains; two near-entry returns are separate');
   });
   console.log(JSON.stringify({ status: 'pass', checks: results.length,
     scope: 'Qualification-accounting negative tests only; no new browser or game outcomes.', results }, null, 2));

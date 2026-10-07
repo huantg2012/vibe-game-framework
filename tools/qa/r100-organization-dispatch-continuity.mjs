@@ -18,7 +18,10 @@ function inertModule(ast){
   if(ts.isImportDeclaration(node)){assert(node.importClause?.isTypeOnly,'Organization module imports types only');continue;}
   if(ts.isFunctionDeclaration(node)||ts.isInterfaceDeclaration(node)||ts.isTypeAliasDeclaration(node))continue;
   assert(ts.isVariableStatement(node)&&(node.declarationList.flags&ts.NodeFlags.Const),'No organization top-level execution');
-  for(const d of node.declarationList.declarations)assert(d.initializer&&inert(unwrap(d.initializer)),'No executed organization initializer');
+  for(const d of node.declarationList.declarations){
+   assert(ts.isIdentifier(d.name),'Organization constants require a plain identifier binding');
+   assert(d.initializer&&inert(unwrap(d.initializer)),'No executed organization initializer');
+  }
  }
 }
 export function assertInertOrganizationSource(text){ inertModule(parse(text,'organization.ts')); }

@@ -15,10 +15,20 @@ import type { MasterSurfaceRenderer } from '../../src/systems/r100-world/surface
 const hash = (value: string | Uint8Array) => createHash('sha256').update(value).digest('hex');
 const planPath = 'docs/qa/artifacts/r100-i10-i12/qualification-plan.json';
 const plan = JSON.parse(readFileSync(planPath, 'utf8')), matrix = plan.i11ContractMatrix;
+const finalMatrix = process.env.QA_MATRIX_FINAL === '1';
+const plannedWorlds: string[] = [...plan.baseline.worlds, ...plan.batches.flatMap((batch: { worlds: string[] }) => batch.worlds)];
+assert.equal(hash(readFileSync(planPath)), 'd493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25');
+assert.equal(new Set(plannedWorlds).size, 108);
+if (finalMatrix) {
+  assert.equal(process.env.QA_WORLDS, undefined, 'Final matrix cannot select a partial world list');
+  assert.deepEqual(R100_NATIVE_WORLDS.map(w => w.id).sort(), [...plannedWorlds].sort(), 'Compiled final catalog must match all108 planned worlds');
+}
 const selected = (process.env.QA_WORLDS ?? R100_NATIVE_WORLDS.map(w => w.id).join(',')).split(',');
 assert.equal(new Set(selected).size, selected.length);
 for (const id of selected) assert(R100_NATIVE_WORLDS.some(w => w.id === id), id);
 const phases = [...matrix.normalizedAnimationPhases, .8, .9]; // Also cover the short bright peak and release.
+assert.equal(matrix.orientationsDegrees.length, 8); assert.equal(new Set(matrix.orientationsDegrees).size, 8);
+assert.equal(phases.length, 6); assert.equal(new Set(phases).size, 6);
 const rows: Record<string, unknown>[] = [];
 let sourceSamples = 0, drawCalls = 0, graphicCalls = 0, destroyed = 0;
 for (const id of selected) for (const grade of ['low','medium','severe'] as const) {
@@ -91,7 +101,13 @@ for (const id of selected) for (const grade of ['low','medium','severe'] as cons
   }
   assert.equal(immutable(), before, `${id}/${grade}: presentation cannot mutate ground, collision, sight or combat`);
 }
-const report = { status: 'pass', scope: 'Actual authored recipe, native triangle collision and presentation/audio clocks with a recorded renderer and scene adapter. Eight facing samples at supported positions, four frozen phases plus bright peak/release; exact restore and following frame, paused clock, no terrain/visibility mutation. GPU pixels, human visual quality, actual sound and browser keys are deliberately outside this contract.',
+const expectedKeys = selected.flatMap(world => ['low','medium','severe'].flatMap(grade =>
+  (matrix.orientationsDegrees as number[]).flatMap(degrees => phases.map((phase: number) => `${world}/${grade}/${degrees}/${phase}`))));
+const actualKeys = rows.map(row => `${row.world}/${row.grade}/${row.degrees}/${row.phase}`);
+assert.equal(new Set(actualKeys).size, actualKeys.length, 'Every matrix combination must be unique');
+assert.deepEqual(actualKeys.sort(), expectedKeys.sort(), 'No missing or substituted matrix combination');
+if (finalMatrix) assert.equal(rows.length, 15552, 'Final108 requires324 grades,8 directions and6 phases');
+const report = { status: 'pass', coverageMode: finalMatrix ? 'final108' : 'partial-author-scope', scope: 'Actual authored recipe, native triangle collision and presentation/audio clocks with a recorded renderer and scene adapter. Eight facing samples at supported positions, four frozen phases plus bright peak/release; exact restore and following frame, paused clock, no terrain/visibility mutation. GPU pixels, human visual quality, actual sound and browser keys are deliberately outside this contract.',
   source: { path: 'tools/qa/check-r100-presentation-phases.ts', sha256: hash(readFileSync('tools/qa/check-r100-presentation-phases.ts')) },
   plan: { path: planPath, sha256: hash(readFileSync(planPath)) }, worlds: selected, counts: { cases: rows.length, sourceSamples, drawCalls, graphicCalls, destroyed }, rows };
 if (process.argv[2]) writeFileSync(process.argv[2], JSON.stringify(report, null, 2) + '\n');

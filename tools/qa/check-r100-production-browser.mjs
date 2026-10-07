@@ -206,6 +206,15 @@ try {
       fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
       await context.close();
     }
+    // Explicit final-observation mode preserves the current complete case,
+    // then stops before creating another context even if a caught error did
+    // not fail the scene's own completion predicate. Default probes are unchanged.
+    const observedFailure = process.env.QA_WORKER_OBSERVER_FAILURE_FILE;
+    if (observedFailure && fs.existsSync(observedFailure)) {
+      result.status = 'failed'; result.failure ??= 'External Worker/network observation requires diagnosis';
+      result.observedFailure = { path: observedFailure, sha256: createHash('sha256').update(fs.readFileSync(observedFailure)).digest('hex') };
+      process.exitCode = 1;
+    }
     if (result.status === 'failed' && process.env.QA_STOP_ON_FAILURE === '1') break coverage;
   }
   report.status = report.cases.every(c => c.status === 'passed') ? 'passed' : 'failed';

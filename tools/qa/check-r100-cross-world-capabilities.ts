@@ -22,6 +22,7 @@ const plan = JSON.parse(readFileSync(planFile, 'utf8'));
 const matrix = plan.i11ContractMatrix;
 assert(matrix, 'frozen plan must contain the cross-world matrix');
 const hash = (file: string) => createHash('sha256').update(readFileSync(file)).digest('hex');
+assert.equal(hash(planFile), 'd493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25');
 assert.equal(hash(matrix.abilitySource.path), matrix.abilitySource.sha256);
 const definitions = Object.values(CATALOG_ITEMS).filter(row => row.class === 'core' && row.grade === 1);
 assert.deepEqual(definitions.map(row => row.familyId).sort(), [...matrix.abilityFamilies].sort());
@@ -171,6 +172,11 @@ for (const degrees of matrix.orientationsDegrees as number[]) for (const phase o
   }
 }
 assert.equal(rows.length, 12 * 8 * 4 * 4);
+assert.equal(new Set(rows.map(row => row.label)).size, 1536, 'Every ability/direction/phase/topology combination must be unique');
+const expectedKeys = (matrix.abilityFamilies as string[]).flatMap(family =>
+  (matrix.orientationsDegrees as number[]).flatMap(degrees => (matrix.normalizedAnimationPhases as number[])
+    .flatMap(phase => topologies.map(topology => `${family}/${degrees}/${phase}/${topology}`))));
+assert.deepEqual(rows.map(row => row.label).sort(), expectedKeys.sort());
 assert(observedSweeps > 0 && refusedTargets > 0 && negativeChecks > 0);
 const output = process.argv[2];
 const result = { status: 'pass', kind: 'controlled real runtime contracts, not normal game play or rendered art',

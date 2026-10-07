@@ -8,7 +8,7 @@ import {fileURLToPath} from 'node:url';
 import {checkPlan} from '../world-study/r100-progress.mjs';
 import {buildGenerationSummary} from './r100-qualification-summary.mjs';
 import {buildPlaySummary} from './r100-play-qualification.mjs';
-import {validateFinalReport} from './r100-i09-final-probe.mjs';
+import {validateFinalReport, summarizeWorkerEvents} from './r100-i09-final-probe.mjs';
 import {validateExpansionPlan} from './check-r100-expansion-plan.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -126,6 +126,61 @@ export function validateRuntimeBinding(binding, kind, plan, source, ids, bytes) 
   assert.deepEqual(binding.beforeFiles, {nodeWorkingDirectory: root, frozenDirectory: source.temporaryRoot, files: Object.keys(source.sources).length});
   assert.deepEqual(binding.afterFiles, binding.beforeFiles);
   assert.deepEqual([...binding.worldIds].sort(), [...ids].sort());
+  if (kind === 'production') {
+    assert.equal(binding.probeOptions?.stopOnFailure, true, 'Final revision6 entry coverage must stop after failure');
+    assert.equal(binding.probeOptions?.observeWorkers, true, 'Final revision6 entry coverage requires P36 observations');
+    const observer = (binding.dependencies ?? []).filter(row => row.path === 'tools/qa/r100-worker-observer.mjs');
+    assert.equal(observer.length, 1, 'Exactly one tracked observer source required');
+    assert.equal(digest(bytes(observer[0].path)), observer[0].sha256, 'Observer source changed');
+    assert.equal(binding.workerObservationStatus, 'pass-observed-events');
+    const reference = binding.workerObservation; assert(reference, 'Missing Worker observation report');
+    const raw = bytes(reference.path); assert.equal(digest(raw), reference.sha256);
+    const observation = JSON.parse(raw), {files, ...claimed} = observation;
+    assert(Array.isArray(files) && files.length > 0, 'No raw Worker observations');
+    assert.equal(new Set(files.map(row => row.path)).size, files.length, 'Duplicate raw Worker observation file');
+    const events = files.flatMap(row => {
+      const data = bytes(row.path); assert.equal(digest(data), row.sha256, 'Raw Worker observations changed');
+      return data.toString('utf8').split('\n').filter(Boolean).map(line => JSON.parse(line));
+    });
+    const recomputed = summarizeWorkerEvents(events, ids.length * 3);
+    assert.equal(recomputed.status, 'pass-observed-events', 'Original Worker/network events need diagnosis');
+    assert.deepEqual(claimed, recomputed, 'Worker observation summary differs from original events');
+  }
+}
+
+/** All four final runtime methods need their own complete source audit. */
+export function validateFinalRuntimeBindings(plan, source, ids, read) {
+  const kinds = ['production', 'equivalence', 'budget', 'lifecycle'];
+  for (const kind of kinds) {
+    assert(plan[kind]?.path && /^[a-f0-9]{64}$/.test(plan[kind].sha256), `Missing final runtime report: ${kind}`);
+  }
+  assert.equal(new Set(kinds.map(kind => plan[kind].path)).size, kinds.length, 'Runtime reports must be distinct');
+  assert.equal(plan.runtimeBindings?.length, kinds.length, 'Exactly four runtime-source audits required');
+  const candidates = plan.runtimeBindings.map(reference => ({reference, binding: read.receipt(reference)}));
+  const result = {};
+  for (const kind of kinds) {
+    const matches = candidates.filter(row => row.binding.report.path === plan[kind].path);
+    assert.equal(matches.length, 1, `Missing runtime-source audit: ${kind}`);
+    validateRuntimeBinding(matches[0].binding, kind, plan, source, ids, read.bytes);
+    result[kind] = matches[0];
+  }
+  return result;
+}
+
+/** A numerical pass is not an independent review of Shader ownership. The
+ * reviewer must bind every observed sample and the same final-source audit. */
+export function validateShaderReview(review, plan, lifecycle, lifecycleBinding) {
+  assert.equal(review.status, 'bounded-independent-shader-pass');
+  assert.equal(review.reviewer, 'root');
+  assert.deepEqual(review.finalSource, plan.finalSource);
+  assert.deepEqual(review.report, plan.lifecycle);
+  assert.deepEqual(review.sourceBinding, lifecycleBinding);
+  for (const field of ['scope', 'ownershipConclusion', 'limitations'])
+    assert(typeof review[field] === 'string' && review[field].trim().length > 0, `Missing Shader review ${field}`);
+  assert.equal(lifecycle.samples?.length, 12, 'Shader review requires every warmed and GC sample');
+  assert.deepEqual(review.reviewedShaderSamples, lifecycle.samples.map(sample => ({
+    label: sample.label, created: sample.objects.Shader.created, live: sample.objects.Shader.live, active: sample.objects.Shader.active,
+  })), 'Shader review does not concern the observed counts');
 }
 
 /** Explicitly reviewed play-only inheritance. It cannot satisfy a generation
@@ -187,7 +242,9 @@ export function buildProposal(plan, read) {
   const play = {pairs: [...plays.historicalPlay.pairs, ...plays.play.pairs],
     attempts: [...plays.historicalPlay.attempts, ...plays.play.attempts], sources: [...plays.historicalPlay.sources, ...plays.play.sources],
     limitations: 'Original fixed processes only: old52 executed revision5 with reviewed inheritance; added56 executed revision6. Natural48 and sound review remain separate.'};
-  const production = read.receipt(plan.production), equivalence = read.receipt(plan.equivalence);
+  const runtime = Object.fromEntries(['production', 'equivalence', 'budget', 'lifecycle']
+    .map(kind => [kind, read.receipt(plan[kind])]));
+  const {production, equivalence} = runtime;
   const art = read.receipt(plan.art), technicalReview = read.receipt(plan.technicalReview);
   const relative = file => path.isAbsolute(file) ? path.relative(root, file) : file;
   const bytes = file => read.bytes(relative(file));
@@ -218,14 +275,10 @@ export function buildProposal(plan, read) {
   }
   for (const attempt of play.attempts) if (attempt.reportSha256) assert.equal(digest(read.bytes(attempt.report)), attempt.reportSha256);
   const gold = read.json('tools/recovery/fixtures/r100-revision1-gold.json').records.map(row => row.identity);
-  validateFinalReport('production', production, ids, gold, 6);
-  validateFinalReport('equivalence', equivalence, ids, gold, 6);
-  const runtimeBindings = plan.runtimeBindings.map(item => read.receipt(item));
-  for (const key of ['production', 'equivalence']) {
-    const bindings = runtimeBindings.filter(row => row.report.path === plan[key].path);
-    assert.equal(bindings.length, 1, `Missing runtime-source audit: ${key}`);
-    validateRuntimeBinding(bindings[0], key, plan, source, ids, read.bytes);
-  }
+  for (const [kind, report] of Object.entries(runtime)) validateFinalReport(kind, report, ids, gold, 6);
+  const runtimeBindings = validateFinalRuntimeBindings(plan, source, ids, read);
+  const shaderReview = read.receipt(plan.shaderReview);
+  validateShaderReview(shaderReview, plan, runtime.lifecycle, runtimeBindings.lifecycle.reference);
   assert(Object.keys(production.loadedSourceHashes ?? {}).length > 0);
   assert(Object.keys(equivalence.loadedSourceHashes ?? {}).length > 0);
   assert.equal(technicalReview.status, 'independent-technical-pass');
@@ -306,7 +359,7 @@ export function buildProposal(plan, read) {
       for (const world of group.worlds) assert(hasContinuity(world, entry.path, entry.sha256), `Unbound CPU world: ${world}`);
     }
   }
-  for (const key of ['generation', 'historicalGeneration', 'expandedHoldoutI11', 'expandedHoldoutI12', 'play', 'historicalPlay', 'inheritance', 'production', 'equivalence'])
+  for (const key of ['generation', 'historicalGeneration', 'expandedHoldoutI11', 'expandedHoldoutI12', 'play', 'historicalPlay', 'inheritance', 'production', 'equivalence', 'budget', 'lifecycle', 'shaderReview'])
     assert.deepEqual(technicalReview.evidence[key], plan[key], `Technical review concerns different ${key} evidence`);
   for (const [file, hash] of Object.entries(source.sources)) {
     assert.equal(digest(read.bytes(file)), hash, `Current runtime differs from final source: ${file}`);
@@ -375,8 +428,8 @@ export function buildProposal(plan, read) {
       sourceManifest: plan.finalSource.path, sourceManifestSha256: plan.finalSource.sha256};
     const evidence = {
       technical: {id: `R100-R6-FINAL-TECHNICAL-${world.id}`, kind: 'source', purpose: 'technical-review', ...common,
-        path: plan.technicalReview.path, supportingPaths: [plan.historicalGeneration.path, plan.generation.path, plan.expandedHoldoutI11.path, plan.expandedHoldoutI12.path, plan.inheritance.path, plan.equivalence.path, plan.production.path],
-        scope: '每档32普通、8边界及16保留种子；旧52基础48沿已审连续性继承revision5执行，新56基础48与全108追加8为revision6。当前跨引擎身份、正式进入/冷续另验。',
+        path: plan.technicalReview.path, supportingPaths: [plan.historicalGeneration.path, plan.generation.path, plan.expandedHoldoutI11.path, plan.expandedHoldoutI12.path, plan.inheritance.path, plan.equivalence.path, plan.production.path, plan.budget.path, plan.lifecycle.path, plan.shaderReview.path],
+        scope: '每档32普通、8边界及16保留种子；旧52基础48沿已审连续性继承revision5执行，新56基础48与全108追加8为revision6。当前跨引擎身份、正式进入/冷续、逐世界60秒性能和重复切换资源回收另验，Shader计数由独立审查绑定。',
         limitations: '固定有限样本和本机证据；不代表全种子、全设备或实际声音听感。'},
       visual: {id: `R100-R6-FINAL-VISUAL-${world.id}`, kind: 'source', purpose: 'bounded-art-review', ...common,
         path: plan.art.path, supportingPaths: visual.evidence.map(row => row.path), scope: visual.scope, limitations: visual.limitations},

@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-import {validateAccountingScopes, validateInheritance, validateRuntimeBinding, assertPlaySummaryExact, validateBoundedPlayContinuity} from './r100-bind-i10-i12.mjs';
-import {validateFinalReport} from './r100-i09-final-probe.mjs';
+import {validateAccountingScopes, validateInheritance, validateRuntimeBinding, assertPlaySummaryExact, validateBoundedPlayContinuity, validateFinalRuntimeBindings, validateShaderReview} from './r100-bind-i10-i12.mjs';
+import {validateFinalReport, summarizeWorkerEvents} from './r100-i09-final-probe.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const read = file => JSON.parse(fs.readFileSync(file));
@@ -74,13 +74,80 @@ const binding={status:'pass',kind:'production',finalSource:plan.finalSource,repo
   beforeServedHashes:source.sources,afterServedHashes:source.sources,
   beforeFiles:{nodeWorkingDirectory:process.cwd(),frozenDirectory:source.temporaryRoot,files:2},worldIds:['one']};
 binding.afterFiles=binding.beforeFiles;
-const verify=value=>validateRuntimeBinding(value,'production',plan,source,['one'],()=>Buffer.from('tool'));
+const event=(name, extra={})=>({event:name,pid:1,browserId:1,...extra});
+const observedEvents=[event('preload-ready'),event('launch'),...grades.flatMap((_,i)=>[
+  event('context-created',{contextId:i+1}),event('worker-created',{contextId:i+1,workerId:i+1}),
+  event('worker-closed',{contextId:i+1,workerId:i+1}),event('network-summary',{contextId:i+1,reason:'context-closed',requests:3,responses:3,urls:[1]}),
+  event('context-closed',{contextId:i+1}),]),event('browser-disconnected')];
+const memory=new Map(), rawPath='synthetic-worker.jsonl', observationPath='synthetic-worker-summary.json';
+function installObservedEvents(value, events) {
+  const raw=Buffer.from(events.map(row=>JSON.stringify(row)).join('\n')+'\n');memory.set(rawPath,raw);
+  const report=Buffer.from(JSON.stringify({...summarizeWorkerEvents(events,3),files:[{path:rawPath,sha256:sha(raw)}]}));
+  memory.set(observationPath,report);value.workerObservation={path:observationPath,sha256:sha(report)};
+}
+binding.probeOptions={stopOnFailure:true,observeWorkers:true};
+binding.dependencies=[{path:'tools/qa/r100-worker-observer.mjs',sha256:sha('tool')}];
+binding.workerObservationStatus='pass-observed-events';installObservedEvents(binding,observedEvents);
+const verify=value=>validateRuntimeBinding(value,'production',plan,source,['one'],file=>memory.get(file)??Buffer.from('tool'));
 check('runtime binding shape baseline, not real HTTP evidence',()=>verify(binding));
 for(const [name,mutate] of [
   ['same report cannot bind contaminated served source',x=>x.afterServedHashes['src/one.ts']=sha('different runtime')],
   ['missing source byte cannot be covered by verification flag',x=>delete x.beforeServedHashes['data/one.csv']],
   ['source-binding cannot target another frozen source',x=>x.finalSource.sha256=sha('other source')],
+  ['missing observation cannot be substituted by passed gameplay',x=>delete x.workerObservation],
+  ['missing explicit failure stop',x=>x.probeOptions.stopOnFailure=false],
+  ['changed observer implementation',x=>x.dependencies[0].sha256=sha('other observer')],
 ])check(name,()=>{const x=structuredClone(binding);mutate(x);assert.throws(()=>verify(x));});
+for(const [name,events]of [
+  ['caught Worker failure despite successful case, resealed raw', [...observedEvents,event('console',{type:'error',text:'Generation worker failed'})]],
+  ['missing context despite claimed complete coverage, resealed raw',observedEvents.filter(row=>row.contextId!==3)],
+])check(name,()=>{const x=structuredClone(binding);installObservedEvents(x,events);assert.throws(()=>verify(x));installObservedEvents(binding,observedEvents);});
+check('false clean observation summary cannot hide original raw failure',()=>{
+  const x=structuredClone(binding);installObservedEvents(x,[...observedEvents,event('pageerror',{message:'original error'})]);
+  const fake=JSON.parse(memory.get(observationPath));fake.status='pass-observed-events';fake.issues=[];
+  const raw=Buffer.from(JSON.stringify(fake));memory.set(observationPath,raw);x.workerObservation.sha256=sha(raw);
+  assert.throws(()=>verify(x));installObservedEvents(binding,observedEvents);
+});
+// Audit all four runtime methods without inventing any final108 execution.
+const runtimeKinds=['production','equivalence','budget','lifecycle'];
+const runtimePlan=structuredClone(plan), auditMemory=new Map();
+for(const kind of runtimeKinds){
+  runtimePlan[kind]={path:`synthetic-${kind}-report.json`,sha256:sha(kind)};
+  const audit={...structuredClone(binding),kind,report:runtimePlan[kind]};
+  const raw=Buffer.from(JSON.stringify(audit)), file=`synthetic-${kind}-binding.json`;
+  auditMemory.set(file,raw);(runtimePlan.runtimeBindings??=[]).push({path:file,sha256:sha(raw)});
+}
+const auditReader={bytes:file=>memory.get(file)??Buffer.from('tool'),receipt:ref=>{
+  const raw=auditMemory.get(ref.path);assert.equal(sha(raw),ref.sha256);return JSON.parse(raw);
+}};
+check('four distinct runtime-source audits required, metadata only',()=>validateFinalRuntimeBindings(runtimePlan,source,['one'],auditReader));
+for(const [name,mutate] of [
+  ['missing budget report cannot grant final qualification',p=>delete p.budget],
+  ['missing lifecycle report cannot grant final qualification',p=>delete p.lifecycle],
+  ['missing lifecycle source audit',p=>p.runtimeBindings.pop()],
+  ['duplicate source audit hides budget',p=>p.runtimeBindings[2]=p.runtimeBindings[1]],
+  ['budget receipt bound to wrong report bytes',p=>p.budget.sha256=sha('changed-budget')],
+])check(name,()=>{const p=structuredClone(runtimePlan);mutate(p);assert.throws(()=>validateFinalRuntimeBindings(p,source,['one'],auditReader));});
+
+const lifecyclePath='docs/qa/artifacts/r100-i09/lifecycle-final52/report.json';
+const originalLifecycle=fs.readFileSync(lifecyclePath), lifecycle=JSON.parse(originalLifecycle);
+const shader={status:'bounded-independent-shader-pass',reviewer:'root',finalSource:runtimePlan.finalSource,
+  report:runtimePlan.lifecycle,sourceBinding:runtimePlan.runtimeBindings[3],
+  scope:'Synthetic review fixture for the existing 12 real samples; not an actual approval.',
+  ownershipConclusion:'Fixture text only; real ownership review remains required.',limitations:'No final108 lifecycle execution.',
+  reviewedShaderSamples:lifecycle.samples.map(row=>({label:row.label,...row.objects.Shader}))};
+const verifyShader=x=>validateShaderReview(x,runtimePlan,lifecycle,runtimePlan.runtimeBindings[3]);
+check('Shader evidence binds all original12 counts, review metadata only',()=>verifyShader(shader));
+for(const [name,mutate] of [
+  ['missing independent Shader review',()=>undefined],
+  ['author cannot sign root Shader review',x=>({...x,reviewer:'author'})],
+  ['Shader review concerns another final source',x=>({...x,finalSource:{...x.finalSource,sha256:sha('other')}})],
+  ['Shader review concerns another lifecycle report',x=>({...x,report:{...x.report,sha256:sha('other')}})],
+  ['Shader review concerns another source audit',x=>({...x,sourceBinding:{...x.sourceBinding,sha256:sha('other')}})],
+  ['Shader last-sample growth cannot hide under old review',x=>{x.reviewedShaderSamples[11].active+=100;return x;}],
+  ['Shader ownership conclusion missing',x=>({...x,ownershipConclusion:''})],
+])check(name,()=>assert.throws(()=>verifyShader(mutate(structuredClone(shader)))));
+assert(fs.readFileSync(lifecyclePath).equals(originalLifecycle),'Historical lifecycle bytes changed');
 const formal={status:'passed',loadedSourceHashes:{'synthetic-url':sha('runtime')},cases:grades.map(grade=>({world:'one',grade,status:'passed',errors:[],
   coldIdentityPreserved:true,worldHistoryPreserved:true,historyBeforeDeparture:{version:1,visits:[]},
   committedWorldHistory:{version:1,visits:[{worldId:'one',grade}]},bodyGeometry:{version:1,fullBodyCheckpointAdmitted:true,coldBodyPositionPreserved:true},controlledSeed:1,

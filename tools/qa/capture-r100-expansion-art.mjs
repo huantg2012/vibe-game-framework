@@ -47,12 +47,32 @@ try {
       const center = i => ({ x: (i % cols + .5) * size, y: (Math.floor(i / cols) + .5) * size });
       const floor = (x, y) => x >= 0 && y >= 0 && x < cols && y < rows && walk[y * cols + x];
       const safe = walk.map((v, i) => { if (!v) return false; const p = center(i); for (let y = Math.floor((p.y - halfY) / size); y <= Math.floor((p.y + halfY - .01) / size); y++) for (let x = Math.floor((p.x - halfX) / size); x <= Math.floor((p.x + halfX - .01) / size); x++) if (!floor(x, y)) return false; return true; });
-      const begin = Math.floor(start.y / size) * cols + Math.floor(start.x / size), prev = new Map([[begin, -1]]), queue = [begin];
+      // A real 20px body may stand in a legal corner excluded by the coarse
+      // 22px planning margin. Connect to that unchanged conservative grid only
+      // through an exact, short native-body sweep; never teleport or shrink it.
+      const candidates = safe.flatMap((value, index) => value && Math.hypot(center(index).x - start.x, center(index).y - start.y) <= 32
+        ? [{ index, ...center(index) }] : []);
+      const connector = await page.evaluate(({ candidates }) => {
+        const s = window.__game.scene.getScene('RiftScene'), b = s.player.getSprite().body, collision = s.nativeBody;
+        const origin = { ...s.player.getPosition() }, halfX = b.halfWidth, halfY = b.halfHeight;
+        if (!collision || s.runController.isRunEnded() || halfX !== 10 || halfY !== 10
+          || Math.hypot(b.center.x - origin.x, b.center.y - origin.y) > 1e-6
+          || !collision.supports(origin, halfX, halfY)) throw new Error('Art route requires an active supported original 20px native body');
+        const ordered = candidates.map(candidate => ({ ...candidate, distance: Math.hypot(candidate.x - origin.x, candidate.y - origin.y) }))
+          .filter(candidate => candidate.distance <= 32).sort((a, b) => a.distance - b.distance || a.index - b.index);
+        for (const candidate of ordered) {
+          if (!collision.supports(candidate, halfX, halfY)) continue;
+          const fraction = collision.displacementFraction(origin, halfX, halfY, candidate.x - origin.x, candidate.y - origin.y);
+          if (fraction === 1) return { origin, halfX, halfY, selected: candidate, fraction };
+        }
+        throw new Error(`No supported native-body connector within 32px of ${JSON.stringify(origin)}`);
+      }, { candidates });
+      const begin = connector.selected.index, prev = new Map([[begin, -1]]), queue = [begin];
       for (let n = 0; n < queue.length; n++) { const i = queue[n], x = i % cols, y = Math.floor(i / cols); for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const a = x + dx, b = y + dy, k = b * cols + a; if (floor(a, b) && safe[k] && !prev.has(k)) { prev.set(k, i); queue.push(k); } } }
       const end = queue.filter(i => safe[i]).sort((a, b) => Math.hypot(center(a).x - target.x, center(a).y - target.y) - Math.hypot(center(b).x - target.x, center(b).y - target.y))[0];
       assert.notEqual(end, undefined); const raw = []; for (let i = end; i !== -1; i = prev.get(i)) raw.push(center(i)); raw.reverse(); const points = [raw[0]];
       for (let i = 1; i < raw.length - 1; i++) if ((raw[i - 1].x === raw[i].x) !== (raw[i].x === raw[i + 1].x)) points.push(raw[i]); points.push(raw.at(-1));
-      return { requested: target, actual: center(end), points, length: (raw.length - 1) * size };
+      return { requested: target, actual: center(end), points, length: (raw.length - 1) * size, originConnector: connector };
     }
     for (const goal of goals) {
       const planned = await route(goal), start = Date.now(); let previous = null, stuck = 0; log({ event: 'route', planned });

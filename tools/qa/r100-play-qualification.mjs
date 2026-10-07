@@ -139,7 +139,14 @@ const summary = {version: 1, createdAt: new Date().toISOString(), status: qualif
   expectedGradePairs: pairs.length, qualifiedGradePairs: qualified.length, expectedSeeds: wanted.size, scheduledSeeds: scheduled.size,
   completedSeedProcesses: [...wanted].filter(id => attempts.some(row => row.key === id && row.processComplete)).length,
   actualAttempts: attempts.length, searchAndExtractAttempts: attempts.filter(row => row.searchAndExtract).length,
-  emptyReturns: attempts.filter(row => row.processComplete && row.outcome === 'extract' && !row.collected.length).length,
+  // collected contains only eligible non-entry nodes. A policy15 return with
+  // actual near-entry pickups is neither an eligible search nor an empty run.
+  emptyReturns: attempts.filter(row => row.processComplete && row.outcome === 'extract'
+    && !row.collected.length && !(row.actualPickups > 0)).length,
+  ...(sources.some(row => row.controllerPolicyRevision === 15) ? {
+    nearEntryOnlyReturns: attempts.filter(row => row.processComplete && row.outcome === 'extract'
+      && !row.collected.length && row.actualPickups > 0).length,
+  } : {}),
   deaths: attempts.filter(row => row.processComplete && row.outcome === 'death').length,
   invalidOrIncompleteProcesses: attempts.filter(row => !row.processComplete).length, sources, pairs, attempts};
 return summary;

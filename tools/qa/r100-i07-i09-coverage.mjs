@@ -50,9 +50,10 @@ const servedCatalog = await verifyServedSourceFile({ file: 'data/rift-native-wor
 const catalogSource = fs.readFileSync(path.join(source.temporaryRoot, 'src/generated/r100-native-worlds.ts'), 'utf8');
 const catalog = JSON.parse(catalogSource.split('R100_NATIVE_WORLDS: readonly R100NativeWorldEntry[] = ')[1].trim().replace(/;$/, ''));
 const batchWorlds = expansion?.batches.find(row => row.id === expansionBatch).worlds;
-const selected = process.env.QA_WORLDS?.split(',') ?? batchWorlds ?? catalog.map(world => world.id);
+const selected = process.env.QA_WORLDS?.split(',') ?? expansion?.executionWorlds ?? batchWorlds ?? catalog.map(world => world.id);
 assert(selected.every(id => catalog.some(world => world.id === id)));
 if (batchWorlds) assert(selected.every(id => batchWorlds.includes(id)), 'No world outside the declared batch');
+if (expansion?.executionWorlds) assert(selected.every(id => expansion.executionWorlds.includes(id)), 'No world outside the explicitly ready subset');
 const grades = (process.env.QA_GRADES ?? 'low,medium,severe').split(',');
 assert(selected.length && new Set(selected).size === selected.length);
 assert(grades.length && new Set(grades).size === grades.length && grades.every(grade => ['low', 'medium', 'severe'].includes(grade)));
@@ -63,6 +64,13 @@ if (expansion) assert(seeds.every(seed => expansion.actualPlay.seeds.includes(se
 const parallelism = Number(process.env.QA_CONCURRENCY ?? (expansion ? 1 : 2));
 assert(Number.isInteger(parallelism) && parallelism >= 1 && parallelism <= 2);
 if (expansion) assert.equal(parallelism, 1, 'Expansion real-input evidence requires the sole browser');
+const stopOnFailure = process.env.QA_STOP_ON_FAILURE === '1';
+const observationFailureFile = process.env.QA_WORKER_OBSERVER_FAILURE_FILE;
+if (stopOnFailure) assert.equal(parallelism, 1, 'Failure-stop coverage is strictly serial');
+if (observationFailureFile) {
+  assert(stopOnFailure, 'Observed failures require an explicit between-case stop');
+  assert(!fs.existsSync(observationFailureFile), 'Preserve stale observation failure; use a fresh attempt directory');
+}
 // Cooperative scheduling only, between completed journeys. Never freeze the
 // browser, character, simulation clock or a partially played expedition.
 const resourcePauseFile = process.env.QA_RESOURCE_PAUSE_FILE;
@@ -88,6 +96,7 @@ const policy = {version: 1, frozenAt: new Date().toISOString(), cases, gameUrl,
   harness, harnessSha256: sha(harness), wrapperSha256: sha(new URL(import.meta.url)), dependencies: dependencies.map(file => ({file, sha256: sha(file)})),
   wrapperDependencies: wrapperDependencies.map(file => ({file, sha256: sha(file)})),
   parallelism, resourcePauseFile,
+  ...(stopOnFailure ? {stopOnFailure, observationFailureFile} : {}),
   method: 'One fixed attempt per world/grade/seed. Actual WASD/E/R with earned equipment. Static terrain assists macro routing; enemies/Hosts only currently observed or 5s memory. No field reward, HP, clock or position injection. One non-entry collected remain (>320px from entry), then actual return. A failed or empty process remains a failure for the primary search-and-extract requirement; no pass is assigned by this runner.',
   limitations: 'Controlled world and seed on identical earned save branches; not natural continuous economy, novice play, success-rate inference, or exclusive performance measurement.'};
 fs.writeFileSync(freeze, JSON.stringify(policy, null, 2));
@@ -142,9 +151,18 @@ async function worker() {
         baseSettled: journey.afterReturn?.state?.inventory?.run?.baseSettled ?? false}; });
     }
     save(); console.log('END', row.dir, row.exitCode, row.journeys?.map(journey => [journey.outcome, journey.collected, Math.round((journey.elapsedMs ?? 0) / 1000)]));
+    // The child has exited and closed its browser before this boundary. Never
+    // interrupt a live field to make a failed observation disappear.
+    if (stopOnFailure && (row.exitCode !== 0 || !row.journeys?.length
+      || row.journeys.some(journey => !journey.matchesPlan || journey.accountingError)
+      || observationFailureFile && fs.existsSync(observationFailureFile))) {
+      report.stoppedAfterFailure = {index: row.index, dir: row.dir,
+        observation: observationFailureFile && fs.existsSync(observationFailureFile) ? JSON.parse(fs.readFileSync(observationFailureFile)) : null};
+      save(); break;
+    }
   }
 }
 await Promise.all(Array.from({length: policy.parallelism}, worker));
-report.status = 'completed-fixed-attempts-pending-review'; report.endedAt = new Date().toISOString(); save();
+report.status = report.stoppedAfterFailure ? 'stopped-after-failed-attempt' : 'completed-fixed-attempts-pending-review'; report.endedAt = new Date().toISOString(); save();
 console.log('DONE', cases.length, 'fixed attempts; failures retained, no automatic qualification');
-if (report.attempts.length !== cases.length || report.attempts.some(row => row.exitCode !== 0 || !row.journeys?.length || row.journeys.some(journey => !journey.matchesPlan || journey.accountingError))) process.exitCode = 1;
+if (report.stoppedAfterFailure || report.attempts.length !== cases.length || report.attempts.some(row => row.exitCode !== 0 || !row.journeys?.length || row.journeys.some(journey => !journey.matchesPlan || journey.accountingError))) process.exitCode = 1;

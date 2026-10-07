@@ -28,6 +28,143 @@ const relative = file => path.relative(ROOT, path.resolve(ROOT, file));
 const receipt = file => ({ path: relative(file), sha256: sha(file) });
 const sorted = values => [...values].sort();
 const grades = ['low', 'medium', 'severe'];
+const WORKER_OBSERVER = 'tools/qa/r100-worker-observer.mjs';
+
+export function finalProbeLaunchOptions(kind, revision, argv, inherited, out) {
+  const stopOnFailure = argv.includes('--stop-on-failure'), observeWorkers = argv.includes('--observe-workers');
+  assert(!(stopOnFailure || observeWorkers) || (kind === 'production' && revision === 6),
+    'Explicit failure/Worker observation options are for revision6 production coverage only');
+  assert(!observeWorkers || stopOnFailure, 'Worker observation requires failure-stop coverage');
+  assert(!observeWorkers || !inherited.NODE_OPTIONS, 'Use the tracked observer preload, without untracked NODE_OPTIONS');
+  const env = { ...inherited };
+  // Historical callers retain their default continuation policy. An explicit
+  // request is applied after sanitization so it cannot be silently discarded.
+  delete env.QA_STOP_ON_FAILURE;
+  delete env.QA_WORKER_OBSERVER_DIR;
+  delete env.QA_WORKER_OBSERVER_FAILURE_FILE;
+  if (stopOnFailure) env.QA_STOP_ON_FAILURE = '1';
+  if (observeWorkers) {
+    env.QA_WORKER_OBSERVER_DIR = path.join(out, 'worker-observations');
+    env.QA_WORKER_OBSERVER_FAILURE_FILE = path.join(out, 'worker-observation-first-error.json');
+  }
+  return { stopOnFailure, observeWorkers, env,
+    preload: observeWorkers ? ['--import', path.join(ROOT, WORKER_OBSERVER)] : [] };
+}
+
+export function summarizeWorkerEvents(events, expectedContexts) {
+  const counts = {}, issues = [], created = new Set(), closed = new Set(), workerContexts = new Set(), summaries = new Map();
+  const key = row => `${row.pid}/${row.browserId}/${row.contextId}/${row.workerId}`;
+  for (const row of events) {
+    counts[row.event] = (counts[row.event] ?? 0) + 1;
+    if (row.event === 'worker-created') {
+      assert(!created.has(key(row)), 'Duplicate Worker creation'); created.add(key(row));
+      workerContexts.add(`${row.pid}/${row.browserId}/${row.contextId}`);
+    }
+    if (row.event === 'worker-closed') { assert(!closed.has(key(row)), 'Duplicate Worker close'); closed.add(key(row)); }
+    if (row.event === 'network-summary' && row.reason === 'context-closed') summaries.set(`${row.pid}/${row.browserId}/${row.contextId}`, row);
+    if (['requestfailed', 'http-error', 'pageerror', 'page-crash', 'Target.targetCrashed'].includes(row.event)
+      || row.event === 'console' && row.type === 'error') issues.push(row);
+  }
+  if (counts['preload-ready'] !== 1 || counts.launch !== 1 || counts['browser-disconnected'] !== 1)
+    issues.push({ issue: 'Expected exactly one observed production browser lifecycle' });
+  if (counts['context-created'] !== expectedContexts || counts['context-closed'] !== expectedContexts || summaries.size !== expectedContexts)
+    issues.push({ issue: 'Incomplete observed context coverage', expectedContexts, actual: counts['context-created'] ?? 0 });
+  if (!created.size || !closed.size || JSON.stringify(sorted(created)) !== JSON.stringify(sorted(closed)))
+    issues.push({ issue: 'Incomplete Worker lifecycle pairing' });
+  for (const [context, summary] of summaries) {
+    if (!summary.requests || !summary.responses || !summary.urls.length)
+      issues.push({ issue: 'Missing network observation', contextId: summary.contextId });
+    if (!workerContexts.has(context)) issues.push({ issue: 'Context has no Worker observation', contextId: summary.contextId });
+  }
+  return { status: issues.length ? 'failed' : 'pass-observed-events', expectedContexts, counts, issues,
+    limitation: 'External observed events only. Absence of an event cannot establish a browser-internal cause or eliminate the earlier intermittent failure.' };
+}
+
+function finiteNonnegative(value, label) {
+  assert(Number.isFinite(value) && value >= 0, `Finite nonnegative ${label} required`);
+}
+
+function validateMeasurementStats(stats, label) {
+  assert(Number.isSafeInteger(stats?.count) && stats.count > 0, `${label}: nonempty measurements required`);
+  for (const key of ['p50', 'p95', 'p99', 'max', 'over50']) finiteNonnegative(stats[key], `${label}/${key}`);
+  assert(stats.p50 <= stats.p95 && stats.p95 <= stats.p99 && stats.p99 <= stats.max,
+    `${label}: ordered measured quantiles required`);
+  assert(stats.over50 <= 1, `${label}: over50 is a fraction`);
+}
+
+function validateBudgetMeasurements(report) {
+  for (const row of report.cases) {
+    assert.equal(row.seed, 20261004, 'The declared severe budget seed cannot change');
+    assert.equal(row.grade, 'severe');
+    for (const key of ['frames', 'cpu', 'materialSubmit']) validateMeasurementStats(row[key], `${row.world}/${key}`);
+    // These are the original measurement harness thresholds, not new budgets.
+    assert(row.frames.p95 <= 20, `${row.world}: frame P95 exceeds 20ms`);
+    assert(row.frames.p99 <= 33.4, `${row.world}: frame P99 exceeds 33.4ms`);
+    assert(row.frames.over50 <= .005, `${row.world}: frames over 50ms exceed 0.5%`);
+    assert(row.cpu.p95 <= 12, `${row.world}: CPU P95 exceeds 12ms`);
+    assert(row.materialSubmit.p95 <= 3, `${row.world}: material submission P95 exceeds 3ms`);
+    assert.equal(row.positions?.length, 12, 'Preserve the twelve actual held-key interval observations');
+    let elapsed = row.start?.elapsedMs;
+    finiteNonnegative(elapsed, `${row.world}/start time`);
+    for (const sample of [row.start, ...row.positions, row.end]) {
+      finiteNonnegative(sample.elapsedMs, `${row.world}/sample time`);
+      assert(sample.elapsedMs >= elapsed, `${row.world}: sample clock moved backward`); elapsed = sample.elapsedMs;
+      assert.equal(sample.pollutionGrade, 'severe', 'Measure the actual severe runtime');
+      assert.equal(sample.ended, false, 'All observations must remain alive');
+      assert(Number.isFinite(sample.hp) && sample.hp > 0, 'Actual positive health required');
+    }
+    assert.equal(row.duration, row.end.elapsedMs - row.start.elapsedMs, 'Duration differs from the actual runtime clock');
+    assert(row.duration >= 60000, 'At least 60 seconds of alive runtime required');
+    assert.equal(row.fullAliveDuration, true); assert.equal(row.budgetPass, true);
+  }
+  return { status: 'pass-measured-budget-contract', thresholds: {
+    frameP95Ms: 20, frameP99Ms: 33.4, framesOver50Fraction: .005, cpuP95Ms: 12, materialP95Ms: 3,
+    minimumAliveMs: 60000, seed: 20261004,
+  }, exclusivity: 'operator-declared; resource scheduling must also be independently checked' };
+}
+
+function validateLifecycleMeasurements(report) {
+  const mixed = report.catalogWorldIds.flatMap((world, index) => grades.map((grade, gradeIndex) => ({
+    world, grade, seed: 20261004 + gradeIndex * report.catalogWorldIds.length + index,
+  })));
+  // The harness visits each full catalog in grade order, with this exact seed schedule.
+  mixed.sort((a, b) => a.seed - b.seed);
+  assert.deepEqual(report.mixedCoverage, mixed, 'Mixed reconstruction identities/order/seeds differ from the fixed schedule');
+  assert.deepEqual(report.samples?.map(row => row.label), ['warmed-baseline',
+    ...Array.from({ length: 10 }, (_, n) => `identical-${n + 1}`), `after-mixed-${report.mixedRebuilds}`],
+  'All twelve double-GC retained samples are required');
+  const baseline = report.samples[0], kinds = ['WebGL2', 'Texture', 'Buffer', 'Program', 'Shader', 'Framebuffer', 'Renderbuffer'];
+  const shaders = [];
+  let maxCombinedGrowth = 0;
+  for (const [index, row] of report.samples.entries()) {
+    for (const key of ['usedSize', 'totalSize']) finiteNonnegative(row.usage?.[key], `${row.label}/${key}`);
+    assert(row.usage.usedSize <= row.usage.totalSize, 'Used heap cannot exceed total heap');
+    finiteNonnegative(row.usage.backingStorageSize ?? 0, `${row.label}/backingStorageSize`);
+    for (const kind of kinds) {
+      const counts = row.objects?.[kind];
+      for (const key of ['created', 'live', 'active'])
+        assert(Number.isSafeInteger(counts?.[key]) && counts[key] >= 0, `${row.label}/${kind}/${key}: resource count required`);
+      assert(counts.active <= counts.live && counts.live <= counts.created, `${row.label}/${kind}: impossible resource counts`);
+      if (index) assert(counts.created >= report.samples[index - 1].objects[kind].created, 'Cumulative creates cannot decrease');
+      assert.equal(counts.active, baseline.objects[kind].active, `${row.label}/${kind}: active resources did not return to baseline`);
+    }
+    assert(baseline.objects.WebGL2.active > 0, 'A real warmed WebGL context is required');
+    // The earlier independent Shader review required bounded live/active counts,
+    // not a flat cumulative create count. This numeric check does not sign that review.
+    assert.equal(row.objects.Shader.live, baseline.objects.Shader.live, `${row.label}: live Shader wrappers grew`);
+    const used = row.usage.usedSize - baseline.usage.usedSize;
+    const backing = (row.usage.backingStorageSize ?? 0) - (baseline.usage.backingStorageSize ?? 0);
+    assert.equal(row.usedHeapGrowth, used, 'Reported retained heap delta differs from measured bytes');
+    assert.equal(row.backingGrowth, backing, 'Reported backing delta differs from measured bytes');
+    const combined = used + Math.max(0, backing);
+    assert(combined < 10 * 1024 * 1024, `${row.label}: retained growth reaches the original 10MiB limit`);
+    maxCombinedGrowth = Math.max(maxCombinedGrowth, combined);
+    shaders.push({ label: row.label, ...row.objects.Shader });
+  }
+  return { status: 'pass-measured-lifecycle-contract', retainedBytesLimit: 10 * 1024 * 1024,
+    maxCombinedGrowth, shaderSamples: shaders, independentShaderReview: 'pending-separate-receipt',
+    limitation: 'Numeric resource checks only. Final technical/closure binding must separately consume the independent Shader review; no GPU driver bytes/RSS or unbounded lifetime claim.' };
+}
 
 export function validateFinalReport(kind, report, ids, gold, revision = 5) {
   assert([5, 6].includes(revision), 'Unsupported expected revision');
@@ -60,15 +197,13 @@ export function validateFinalReport(kind, report, ids, gold, revision = 5) {
     assert.equal(report.status, 'passed-reference-samples'); assert.equal(report.exclusiveWindow, true);
     assert.deepEqual(sorted(report.worlds), sorted(ids)); assert.deepEqual(sorted(report.cases.map(row => row.world)), sorted(ids));
     assert.deepEqual(report.errors, []);
-    for (const row of report.cases) {
-      assert.equal(row.grade, 'severe'); assert.equal(row.fullAliveDuration, true);
-      assert(row.duration >= 60000); assert.equal(row.budgetPass, true);
-    }
+    return validateBudgetMeasurements(report);
   } else if (kind === 'lifecycle') {
     assert.equal(report.status, 'passed-bounded-lifecycle'); assert.deepEqual(report.errors, []);
-    assert.deepEqual(sorted(report.catalogWorldIds), sorted(ids)); assert.equal(report.repetitions, 10);
+    assert.deepEqual(report.catalogWorldIds, ids, 'Lifecycle seeds follow the frozen catalog order'); assert.equal(report.repetitions, 10);
     assert.equal(report.mixedRebuilds, ids.length * 3);
     assert.deepEqual(sorted(report.mixedCoverage.map(row => `${row.world}/${row.grade}`)), expected);
+    return validateLifecycleMeasurements(report);
   } else assert.fail(`Unknown probe ${kind}`);
   if (kind === 'production' || kind === 'equivalence')
     assert(Object.keys(report.loadedSourceHashes ?? {}).length > 0, 'Probe must record actual served module URLs');
@@ -145,6 +280,28 @@ async function verifyServed(source, gameUrl, failureDirectory) {
 }
 
 async function selfCheck() {
+  const historicalLaunch = finalProbeLaunchOptions('production', 5, [], { QA_STOP_ON_FAILURE: '1' }, '/unused');
+  assert.equal(historicalLaunch.env.QA_STOP_ON_FAILURE, undefined); assert.deepEqual(historicalLaunch.preload, []);
+  const observedLaunch = finalProbeLaunchOptions('production', 6, ['--stop-on-failure', '--observe-workers'], {}, '/unused');
+  assert.equal(observedLaunch.env.QA_STOP_ON_FAILURE, '1'); assert.equal(observedLaunch.env.QA_WORKER_OBSERVER_DIR, '/unused/worker-observations');
+  assert.equal(observedLaunch.env.QA_WORKER_OBSERVER_FAILURE_FILE, '/unused/worker-observation-first-error.json');
+  assert.equal(finalProbeLaunchOptions('production', 5, [], { QA_WORKER_OBSERVER_FAILURE_FILE: '/stale' }, '/unused').env.QA_WORKER_OBSERVER_FAILURE_FILE, undefined);
+  assert.deepEqual(observedLaunch.preload, ['--import', path.join(ROOT, WORKER_OBSERVER)]);
+  for (const [kind, revision, args, env] of [
+    ['production', 5, ['--stop-on-failure'], {}], ['budget', 6, ['--observe-workers', '--stop-on-failure'], {}],
+    ['production', 6, ['--observe-workers'], {}], ['production', 6, ['--observe-workers', '--stop-on-failure'], { NODE_OPTIONS: '--import untracked.mjs' }],
+  ]) assert.throws(() => finalProbeLaunchOptions(kind, revision, args, env, '/unused'));
+  const event = (name, extra = {}) => ({ event: name, pid: 1, browserId: 1, contextId: 1, ...extra });
+  const observed = [event('preload-ready'), event('launch'), event('context-created'),
+    event('worker-created', { workerId: 1 }), event('worker-closed', { workerId: 1 }),
+    event('network-summary', { reason: 'context-closed', requests: 3, responses: 3, urls: [1, 2] }),
+    event('context-closed'), event('browser-disconnected')];
+  assert.equal(summarizeWorkerEvents(observed, 1).status, 'pass-observed-events');
+  assert.equal(summarizeWorkerEvents(observed, 2).status, 'failed');
+  assert.equal(summarizeWorkerEvents(observed.filter(row => row.event !== 'worker-closed'), 1).status, 'failed');
+  assert.equal(summarizeWorkerEvents(observed.filter(row => row.event !== 'preload-ready'), 1).status, 'failed');
+  for (const failure of ['requestfailed', 'http-error', 'pageerror', 'page-crash', 'Target.targetCrashed', 'console'])
+    assert.equal(summarizeWorkerEvents([...observed, event(failure, { type: 'error' })], 1).status, 'failed');
   const ids = ['one'], rows = grades.map(grade => ({ world: 'one', grade, status: 'passed', errors: [],
     coldIdentityPreserved: true, worldHistoryPreserved: true, historyBeforeDeparture: { version: 1, visits: [] },
     committedWorldHistory: { version: 1, visits: [{ worldId: 'one', grade }] },
@@ -214,7 +371,7 @@ async function selfCheck() {
     assert.equal(failure.url, `${url}/src/direct.ts?raw&import`);
     assert.deepEqual(fs.readFileSync(failure.body), fixture['src/direct.ts']);
   } finally { await new Promise(resolve => server.close(resolve)); fs.rmSync(failureDirectory, { recursive: true }); }
-  console.log('PASS final probe: unique scope, exact revisions/seeds, one committed history, cold preservation, exact direct TS/CSV/literal-source bytes, strict literal wrapper decoding including escapes/Unicode/newlines, wrong direct bytes/interpolation/execution rejected, HTTP hashes, wrong/missing source rejected with exact failure body/file/URL');
+  console.log('PASS final probe: explicit revision6 failure-stop/observed preload and unchanged historical default; incomplete/error observations rejected; unique scope, exact revisions/seeds, one committed history, cold preservation, exact direct bytes/literal wrapper decoding and rejected HTTP/source mismatches');
 }
 
 async function main() {
@@ -226,6 +383,7 @@ async function main() {
   assert([52, 72, 92, 108].includes(expectedWorlds) && [5, 6].includes(revision), 'Unsupported final scope');
   const kind = arg('--probe'), config = PROBES[kind]; assert(config, 'Known probe required');
   const manifest = arg('--source'), out = path.resolve(ROOT, arg('--output')), gameUrl = process.env.GAME_URL;
+  const launchOptions = finalProbeLaunchOptions(kind, revision, process.argv, process.env, out);
   assert(gameUrl, 'GAME_URL required'); assert(!fs.existsSync(out), 'Keep original attempts; choose a new output folder');
   const source = read(manifest), url = new URL(gameUrl);
   assert.equal(url.hostname, '127.0.0.1'); assert.equal(Number(url.port), source.port);
@@ -237,8 +395,12 @@ async function main() {
   fs.mkdirSync(out, { recursive: true });
   const binding = { version: 1, kind, expectedWorlds, expectedRevision: revision, status: 'running', startedAt: new Date().toISOString(), gameUrl,
     finalSource: receipt(manifest), harness: receipt(config.harness), wrapper: receipt(fileURLToPath(import.meta.url)),
-    dependencies: [GOLD, 'tools/contam-preview/tsconfig.json', 'package-lock.json'].map(receipt), worldIds: ids, beforeRuntimeVerified: false,
+    dependencies: [GOLD, 'tools/contam-preview/tsconfig.json', 'package-lock.json', ...(launchOptions.observeWorkers ? [WORKER_OBSERVER] : [])].map(receipt), worldIds: ids, beforeRuntimeVerified: false,
     afterRuntimeVerified: false, servedSourceVerified: false };
+  if (launchOptions.stopOnFailure || launchOptions.observeWorkers) binding.probeOptions = {
+    stopOnFailure: launchOptions.stopOnFailure, observeWorkers: launchOptions.observeWorkers,
+    successfulTraffic: 'Exact URL catalogue plus per-context counts; all failure and Worker lifecycle events retained individually',
+  };
   const save = () => fs.writeFileSync(path.join(out, 'source-binding.json'), JSON.stringify(binding, null, 2) + '\n'); save();
   for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) {
     const target = path.join(out, 'sources', item.path); fs.mkdirSync(path.dirname(target), { recursive: true });
@@ -246,20 +408,31 @@ async function main() {
   }
   try {
     binding.beforeFiles = verifyFiles(source); binding.beforeServedHashes = await verifyServed(source, gameUrl, path.join(out, 'source-audit-failures', 'before')); binding.beforeRuntimeVerified = true; save();
-    const env = { ...process.env, GAME_URL: gameUrl, QA_OUTPUT_DIR: out, QA_WORLDS: ids.join(','), QA_GRADES: grades.join(','),
+    const env = { ...launchOptions.env, GAME_URL: gameUrl, QA_OUTPUT_DIR: out, QA_WORLDS: ids.join(','), QA_GRADES: grades.join(','),
       QA_EXPECTED_ALGORITHM_REVISION: String(revision), QA_REQUIRE_BODY_VERSION: '1', QA_REBUILDS: '10', QA_MIXED_REBUILDS: String(ids.length * 3), QA_SCREENSHOTS: '0', QA_DEFER_AUDIT: '1' };
-    for (const key of ['QA_STOP_ON_FAILURE', 'QA_CPU_PROFILE', 'QA_STAGE_TIMING', 'QA_P01_STRICT', 'QA_WORLD_ID', 'QA_SEED', 'QA_CONTROLLED_BUILD', 'QA_REPRO_IDENTITY_FILE']) delete env[key];
+    for (const key of ['QA_CPU_PROFILE', 'QA_STAGE_TIMING', 'QA_P01_STRICT', 'QA_WORLD_ID', 'QA_SEED', 'QA_CONTROLLED_BUILD', 'QA_REPRO_IDENTITY_FILE']) delete env[key];
     const fd = fs.openSync(path.join(out, 'runner.log'), 'wx');
+    if (launchOptions.observeWorkers) assert(!fs.existsSync(env.QA_WORKER_OBSERVER_FAILURE_FILE), 'Observer marker must be fresh for this batch');
     await new Promise(resolve => {
-      const child = spawn(process.execPath, [config.harness], { cwd: ROOT, env, stdio: ['ignore', fd, fd] });
+      const child = spawn(process.execPath, [...launchOptions.preload, config.harness], { cwd: ROOT, env, stdio: ['ignore', fd, fd] });
       child.once('error', error => { binding.spawnError = String(error); });
       child.once('close', (code, signal) => { fs.closeSync(fd); binding.exitCode = code; binding.signal = signal; resolve(); });
     });
+    if (launchOptions.observeWorkers) {
+      const folder = env.QA_WORKER_OBSERVER_DIR;
+      const files = fs.existsSync(folder) ? fs.readdirSync(folder).filter(file => /^observer-\d+\.jsonl$/.test(file)).sort().map(file => path.join(folder, file)) : [];
+      const events = files.flatMap(file => fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).map(line => JSON.parse(line)));
+      const observation = { ...summarizeWorkerEvents(events, ids.length * 3), files: files.map(receipt) };
+      const observationPath = path.join(out, 'worker-observation-summary.json');
+      fs.writeFileSync(observationPath, JSON.stringify(observation, null, 2) + '\n', { flag: 'wx' });
+      binding.workerObservation = receipt(observationPath); binding.workerObservationStatus = observation.status; save();
+    }
     binding.afterFiles = verifyFiles(source); binding.afterRuntimeVerified = true;
     binding.afterServedHashes = await verifyServed(source, gameUrl, path.join(out, 'source-audit-failures', 'after'));
     assert.deepEqual(binding.afterServedHashes, binding.beforeServedHashes); binding.servedSourceVerified = true;
     for (const item of [binding.finalSource, binding.harness, binding.wrapper, ...binding.dependencies]) assert.equal(sha(item.path), item.sha256, `Probe input changed: ${item.path}`);
     binding.report = receipt(path.join(out, config.report)); assert.equal(binding.exitCode, 0, 'Original probe failed; preserve it before any diagnosis');
+    if (launchOptions.observeWorkers) assert.equal(binding.workerObservationStatus, 'pass-observed-events', 'Worker/network observations require diagnosis');
     validateFinalReport(kind, read(binding.report.path), ids, read(GOLD).records.map(row => row.identity), revision);
     binding.status = 'pass';
   } catch (error) { binding.status = 'failed'; binding.failure = String(error); process.exitCode = 1; }

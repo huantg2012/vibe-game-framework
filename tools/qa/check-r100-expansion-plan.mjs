@@ -88,7 +88,8 @@ export function validateExpansionPlan(plan, { batch, read = file => fs.readFileS
  * represented by the original receipt and all other parsed values are exact. */
 export function validateExpansionExecutionPlan(execution, { batch, read = file => fs.readFileSync(file) } = {}) {
   assert(batch, 'Execution requires a specific batch');
-  const result = validateExpansionPlan(execution, { batch, read });
+  const partial = execution.executionWorlds;
+  const result = validateExpansionPlan(execution, { batch: partial === undefined ? batch : undefined, read });
   const source = execution.executionSource;
   assert(source && Object.keys(source).sort().join(',') === 'path,sha256', 'Execution requires the original frozen plan receipt');
   assert.equal(path.resolve(source.path), path.resolve(DEFAULT_PLAN), 'Readiness must derive from this expansion scope freeze');
@@ -96,10 +97,16 @@ export function validateExpansionExecutionPlan(execution, { batch, read = file =
   const original = JSON.parse(bytes); assert.equal(original.status, 'frozen'); validateExpansionPlan(original, { read });
   const restored = structuredClone(execution); delete restored.executionSource;
   const row = restored.batches.find(row => row.id === batch), prior = original.batches.find(row => row.id === batch);
+  assert(row && prior, 'Unknown execution batch');
   assert.equal(prior.status, 'specified', 'Only an authored, frozen batch may become ready');
-  row.status = prior.status;
+  if (partial !== undefined) {
+    assert(Array.isArray(partial) && partial.length > 0 && partial.length < prior.worlds.length && unique(partial), 'Partial execution needs a nonempty proper subset');
+    assert(partial.every(world => prior.worlds.includes(world)), 'Partial execution contains an unplanned world');
+    assert.equal(row.status, prior.status, 'Partial readiness cannot approve the whole batch');
+    delete restored.executionWorlds;
+  } else row.status = prior.status;
   assert.deepEqual(restored, original, 'Readiness cannot alter IDs, seeds, controller, ancestor, review policy or another batch');
-  return { ...result, executionBatch: batch, frozenPlan: source };
+  return { ...result, executionBatch: batch, executionWorlds: partial ?? prior.worlds, frozenPlan: source };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
@@ -143,7 +150,25 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       const wrong = structuredClone(executable); mutate(wrong);
       assert.throws(() => validateExpansionExecutionPlan(wrong, { batch: 'B01' }));
     }
+    const partial = structuredClone(plan);
+    partial.executionSource = executable.executionSource;
+    partial.executionWorlds = partial.batches[0].worlds.slice(0, 2);
+    assert.deepEqual(validateExpansionExecutionPlan(partial, {batch: 'B01'}).executionWorlds, partial.executionWorlds);
+    const partialFailures = [
+      p => { p.executionWorlds = []; },
+      p => { p.executionWorlds = [...p.batches[0].worlds]; },
+      p => { p.executionWorlds[1] = p.executionWorlds[0]; },
+      p => { p.executionWorlds[0] = p.batches[1].worlds[0]; },
+      p => { p.batches[0].status = 'ready'; },
+      p => { p.actualPlay.seeds[0]++; },
+      p => { p.batches[1].status = 'ready'; },
+    ];
+    for (const mutate of partialFailures) {
+      const wrong = structuredClone(partial); mutate(wrong);
+      assert.throws(() => validateExpansionExecutionPlan(wrong, {batch: 'B01'}));
+    }
     console.log(JSON.stringify({ ...result, selfCheck: { negativeCases: fails.length + 1,
-      completeSyntheticPlan: 'pass', executionCopyNegativeCases: executionFailures.length, executionCopyStatusOnly: 'pass' } }));
+      completeSyntheticPlan: 'pass', executionCopyNegativeCases: executionFailures.length, executionCopyStatusOnly: 'pass',
+      partialExecutionNegativeCases: partialFailures.length, partialExecutionKeepsBatchSpecified: 'pass' } }));
   } else console.log(JSON.stringify(result));
 }
