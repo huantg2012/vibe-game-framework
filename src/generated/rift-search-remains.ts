@@ -1,5 +1,5 @@
 // GENERATED from data/rift-search-remains.csv; edit the CSV, not this file.
-export const SEARCH_REMAINS_SOURCE_HASH = 'ca2452d4ca9fb45b142044e9ab63633892d2d7cda67f4afe8c15d0074abec14f';
+export const SEARCH_REMAINS_SOURCE_HASH = 'a4837f613f350f7ce8171d6cde8c2b02261fc94aca35f85b351fe3b291a00dfb';
 export const SEARCH_REMAINS = [
   {
     "worldId": "ash-strata",
@@ -248,6 +248,38 @@ export const SEARCH_REMAINS = [
   {
     "worldId": "thin-delta",
     "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "shard-switchback",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "hollow-wreckage",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "knotted-run",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "rolled-fragments",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "fibre-choke",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "buried-lamellae",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "pressed-rim",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "wedged-hide",
+    "grammar": "torn-membrane"
   }
 ] as const;
 export type SearchRemainsGrammar = 'laminated-flakes' | 'fractured-fibres' | 'glaze-shell' | 'mineral-splinters' | 'packed-granules' | 'torn-membrane' | 'gel-fragments' | 'compressed-fibre-fragments' | 'porous-core-chips';

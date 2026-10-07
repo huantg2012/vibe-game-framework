@@ -1,0 +1,50 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-07T00:51:16.824Z",
+  "checks": [
+    {
+      "name": "official appearance compiler --check",
+      "result": "64 exact identities"
+    },
+    {
+      "name": "official remains compiler --check",
+      "result": "66 exact sources"
+    },
+    {
+      "name": "existing remains CPU test",
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-art-authoring/remains-check.json",
+      "sha256": "15c757bef50055a83a6d78071a4d038e343be47f5da6617578e9b1db92c8632c",
+      "samples": 594,
+      "result": "pass"
+    },
+    {
+      "name": "tsc --noEmit",
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-art-authoring/typecheck.log",
+      "result": "pass"
+    },
+    {
+      "name": "npm run dev smoke",
+      "port": 3199,
+      "readyMs": 176,
+      "responses": [
+        {
+          "path": "/r100-gym.html",
+          "status": 200,
+          "bytes": 2608
+        },
+        {
+          "path": "/src/generated/r100-world-appearance.ts",
+          "status": 200,
+          "bytes": 134940
+        },
+        {
+          "path": "/src/generated/rift-search-remains.ts",
+          "status": 200,
+          "bytes": 17599
+        }
+      ]
+    }
+  ],
+  "lint": "No lint script exists; strict TypeScript/noUnused checks used. No synthetic substitute for art review.",
+  "limits": "Data/schema/runtime module loading only; B03 visual review pending."
+}

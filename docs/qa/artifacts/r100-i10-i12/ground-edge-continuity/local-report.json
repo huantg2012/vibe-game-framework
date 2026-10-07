@@ -1,0 +1,411 @@
+{
+  "status": "focused-geometry-body-and-cpu-sample-pass",
+  "scope": "Current catalog on both executors; only old vs new ground-edge implementation differs. Includes art offset author repair in both, so no conflation. Author-local seed, not production gameplay nor normal FOV art approval.",
+  "source": {
+    "data/rift-native-worlds.csv": "642fcee7df5c2f3cb9ed284d4399476f8f01bbf6ac115038c48613b98d45093c",
+    "src/generated/r100-native-worlds.ts": "80bf749ee4e5f2ded5f34e5b0f78c39dceff28a00dd934db6d5236b0f1848c33",
+    "src/generation/world-study/native-volume-ground-edge.ts": "42bd8c89bd785318dc3e9609e36aaae61d89cd3e528975651bee6069ef7b4036",
+    "src/generation/world-study/native-volume-geometry.ts": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916",
+    "src/generation/world-study/native-volume-ground.ts": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60",
+    "src/systems/r100-world/surface-bake.ts": "603d3680ed4f6b95223fa268034a2332760dc0c804f26c00337526a29a7592fa"
+  },
+  "oldEdgeSha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d",
+  "unaffectedWorldGradeMeshExact": 165,
+  "unaffectedWorlds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir"
+  ],
+  "oldPyramidRegression": {
+    "before": 3.7419678568840027,
+    "after": 0
+  },
+  "cases": [
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 174257,
+      "changedNormalPixels": 174470,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 685.6264170000002
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 174258,
+      "changedNormalPixels": 174471,
+      "changedVisualOccupancyPixels": 0,
+      "pictures": {
+        "before": {
+          "image": "cleft-tableland-before.png",
+          "sha256": "d8bdcba501fc326aa9512454dddbd24d6cbcd90d27241b318552d296cb5bd090",
+          "surface": {
+            "albedo": "5825cdfb2835336d6fce6c7c4de913487c733f3e58471b0e49c5d435463fbb4b",
+            "normal": "1cef424ae58864ec30c379d40d71704bbfb07b024d8c7ff64c4b91d4ee30d47d",
+            "response": "0e73eca1dc55d2870c55a58771cb7bddaab366ec14a8f244e765b9e031192016",
+            "emission": "fe01a4fd6237212f8d20828ebf6e1bc71d4ed2e9f571c57878e15c62676b0ac4"
+          }
+        },
+        "after": {
+          "image": "cleft-tableland-after.png",
+          "sha256": "13b072e1959f793bd9cdc2ef2467490ac597b7a52316fffc887c021b8a74eb59",
+          "surface": {
+            "albedo": "e6b4e6dc5d5ec1df9ab55e3a5152c279427f5bf957c7a1945b8b47d73c081d46",
+            "normal": "1e17c8dcf3d7f7f6ab78df7bc9be78ce68e4fab4e06e197e1af7ab0b79a667ea",
+            "response": "cb5a70673a0a164271a347d30c76f986749e037805d2f73f0374e862fb04dad6",
+            "emission": "949d0ddac81c981e6e070faca30f74576eff21fc4c6dd71ba9ca4255ab0847cc"
+          }
+        }
+      },
+      "durationMs": 2795.5382080000004
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 174258,
+      "changedNormalPixels": 174471,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 642.773459
+    },
+    {
+      "world": "braided-seam",
+      "grade": "low",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 9358,
+      "changedNormalPixels": 11185,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 534.1965829999999
+    },
+    {
+      "world": "braided-seam",
+      "grade": "medium",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 9360,
+      "changedNormalPixels": 11187,
+      "changedVisualOccupancyPixels": 0,
+      "pictures": {
+        "before": {
+          "image": "braided-seam-before.png",
+          "sha256": "ac80a88e222984b26b1b51de9c91be2ab62b07b64a21129cef0c445a290a18d6",
+          "surface": {
+            "albedo": "49d62d2438efb315e1d40bf1efb1842ba4e011d83fc2bf42acffac1d898f9936",
+            "normal": "77a5c1fcc4cf776acffb286e918fb76a7333893801d55d237eafd3f6f7fb7d74",
+            "response": "2d8626cf68712ea6d5d5a55e0036bd572112808eb1c1319e6241d1e048ebb5dd",
+            "emission": "244de8cc66a210c04922c0a4770fbbc65a9fcc2bb484bb8d4af065f4a8297ab7"
+          }
+        },
+        "after": {
+          "image": "braided-seam-after.png",
+          "sha256": "d494da444d6dc603a66ef7a6247a823ced0b34b52e446ce5b058b1df3d9488e3",
+          "surface": {
+            "albedo": "8fb27ff4782cc588b55b9d44b1cc4eecd488e9cac2b3a2272a80a20e6ebc7b5f",
+            "normal": "fea2d207b8e4ac34788694377d43bdcd0865f029c6dd64fe794472e1876b3c45",
+            "response": "7919ea63101f020e3696d0769ff106d2910cbad1404befca5e3a00180fa191a4",
+            "emission": "244de8cc66a210c04922c0a4770fbbc65a9fcc2bb484bb8d4af065f4a8297ab7"
+          }
+        }
+      },
+      "durationMs": 2752.450584000001
+    },
+    {
+      "world": "braided-seam",
+      "grade": "severe",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 9362,
+      "changedNormalPixels": 11188,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 602.8620420000007
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "low",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 237907,
+      "changedNormalPixels": 238005,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 1192.7681250000005
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "medium",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 237907,
+      "changedNormalPixels": 238005,
+      "changedVisualOccupancyPixels": 0,
+      "pictures": {
+        "before": {
+          "image": "scalloped-reach-before.png",
+          "sha256": "c18945d69dd9ec504ce2b9f4ff804e364bc707f3a5458ad667475f1ec1849cae",
+          "surface": {
+            "albedo": "a2f83748ee515b2ceefda9d37b4730722fdb7e048a12bdbdcf3fe81cd7a88098",
+            "normal": "dea80b5d7344bd6f0d207e3ada3f3f3e09a6a6a6044e332363668cb4d8cd3094",
+            "response": "948b839c8dd2ceca43e05a690c902e8277391db9cd934d9d410d9ac07c3d89a1",
+            "emission": "1d546ddbffa33bdd97471a08edf4ae9d879c3d848b3d20d7c268c5d3bdb915a8"
+          }
+        },
+        "after": {
+          "image": "scalloped-reach-after.png",
+          "sha256": "c9049ccab7445382f64c29abf90343d2fe4180f603ce594af2141e8c6d3e32c1",
+          "surface": {
+            "albedo": "ceb0686ce6ab615be394441b73416a070938a4e153df46d68b211a5e7165bf4a",
+            "normal": "82b3a725cfd637947d6361338b17adf0d8bed016acb5e03ce98ab2c3ffc8f88f",
+            "response": "fd8b6df5981f3b2b0ff298b6ddf73fcacc0cf2875fdfb313b059c0e1060e797d",
+            "emission": "1d546ddbffa33bdd97471a08edf4ae9d879c3d848b3d20d7c268c5d3bdb915a8"
+          }
+        }
+      },
+      "durationMs": 4028.5171250000003
+    },
+    {
+      "world": "scalloped-reach",
+      "grade": "severe",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 237907,
+      "changedNormalPixels": 238005,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 1305.6864580000001
+    },
+    {
+      "world": "offset-pan",
+      "grade": "low",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 11831,
+      "changedNormalPixels": 24015,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 386.5969170000026
+    },
+    {
+      "world": "offset-pan",
+      "grade": "medium",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 11831,
+      "changedNormalPixels": 24015,
+      "changedVisualOccupancyPixels": 0,
+      "pictures": {
+        "before": {
+          "image": "offset-pan-before.png",
+          "sha256": "02d3d2ce1b294553b8715d191df73ad9c7375b32b59859d82f2732db2286a446",
+          "surface": {
+            "albedo": "d567fbaf1c72f36924d5404a0b752ad906b9cd6d759417c4ed4f3d03421dbed4",
+            "normal": "195dc12a7f2fd677bdf7d9bf7ef4e2a3bcfddccda0ef03a70d899ec8c729579d",
+            "response": "6f06b06d03ca5789e30dcab19f60ec7535c1c715a0ce3241c70a22c4ddd8d5e8",
+            "emission": "83a714df04df54320fdfd4e7dc91520aef815a379a35cba99eef5a8f9684058e"
+          }
+        },
+        "after": {
+          "image": "offset-pan-after.png",
+          "sha256": "a03c758d3e7aec2afe498406edce9b5dff717b63ad33a3060c2212fcd52b634d",
+          "surface": {
+            "albedo": "b1ac99753a358ebbd243d450a46026baf7deeae0f09300c4e49886c026e31db6",
+            "normal": "b6cc853e477f165a3f5ffec897be9e7a3d47315d06ef43407a80ef4e187f9bc5",
+            "response": "470447356d3d7e2c5bf1515192199fb0ae8dfa61a0fba495113f22d265f1fc4e",
+            "emission": "83a714df04df54320fdfd4e7dc91520aef815a379a35cba99eef5a8f9684058e"
+          }
+        }
+      },
+      "durationMs": 2320.715750000003
+    },
+    {
+      "world": "offset-pan",
+      "grade": "severe",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 11830,
+      "changedNormalPixels": 24014,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 395.7084160000013
+    },
+    {
+      "world": "thin-delta",
+      "grade": "low",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 16868,
+      "changedNormalPixels": 22367,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 539.3126660000016
+    },
+    {
+      "world": "thin-delta",
+      "grade": "medium",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 16867,
+      "changedNormalPixels": 22366,
+      "changedVisualOccupancyPixels": 0,
+      "pictures": {
+        "before": {
+          "image": "thin-delta-before.png",
+          "sha256": "fa2d6f5b54aa0c69da92e3f415ab4346cb88b85ca1376aa5994d05d90b539f2c",
+          "surface": {
+            "albedo": "3f015bf09eee8e765ba3e6f470b4f97c94355ab2f6e3d35d3648b15eedb33c1f",
+            "normal": "04d7c0f3072cc3ada4115e217e3398a5f0033d6c2901a4b3a5671e28bc32878d",
+            "response": "ee9047a9876afdff577941df4aea51e2e08001ea13e381d4a19b9e4ccf4c2890",
+            "emission": "1854189285d42b36bae2d0028bd8ff98a3b919f4b0f8050b6aab044266e7a6d4"
+          }
+        },
+        "after": {
+          "image": "thin-delta-after.png",
+          "sha256": "02bbec0d3e616a65833ac3b3ff5ce8056e71971d47c0af03d544f048a4154331",
+          "surface": {
+            "albedo": "fdb235bd3fa7efa6fb823eaf6da6b5ac52cc70b45057fc3df0c1f90a09dfdca9",
+            "normal": "ace594000323d760e2db2abd0c220dc4b823ccbc77c75b9ceab532dfe2ea125a",
+            "response": "d9a26e706cc35a352ab56dd9226dc673172544f0494eb74575b23199bd9fc1ca",
+            "emission": "1854189285d42b36bae2d0028bd8ff98a3b919f4b0f8050b6aab044266e7a6d4"
+          }
+        }
+      },
+      "durationMs": 2360.7427500000013
+    },
+    {
+      "world": "thin-delta",
+      "grade": "severe",
+      "seed": 20261005,
+      "fullBodyCentersExact": 12288,
+      "fullBody8pxSweepsExact": 24576,
+      "terrainLayoutHostPollutionExact": true,
+      "nonOwnerMeshesExact": true,
+      "groundEdgeOwner": 1,
+      "changedHeightPixels": 16867,
+      "changedNormalPixels": 22366,
+      "changedVisualOccupancyPixels": 0,
+      "durationMs": 697.1087499999994
+    }
+  ],
+  "cpuImageMethod": "Current original source PNG ->512 preparation using sharp, current material regions and appearance via production surface bake, same native lighting/fixed lamp; no FOV/HUD/actors, shadow disabled in diagnostic lamp. Not an actual game screenshot.",
+  "light": {
+    "x": 500,
+    "y": 700,
+    "z": 110,
+    "radius": 1100,
+    "intensity": 2.1,
+    "color": [
+      1,
+      0.98,
+      0.95
+    ],
+    "castsShadow": false
+  }
+}

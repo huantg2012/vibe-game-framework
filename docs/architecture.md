@@ -80,6 +80,8 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-volume-ground.ts`独立拥有构造版本4的宽断床、倒束、夹岸与撕膜；`native-volume-geometry.ts`显式按版本/profile分派，旧v1–v3不换实现。`native-volume-erosion.ts`共享CSV解析及冻结配方恢复校验；作者多边形编入原`MasterDefinition.erosion`，由同一个8px地表存在网格表达真实缺地；不因此生成Host或赋予普通实体吞光能力。`native-volume-ground-edge.ts`只在实际存在的地表格内建立浅断沿，归首个主材低浮雕所有，不另生阻挡层。完整身体路线在最终缺地和实体叠加后检查，不从仅含几何中心的路线推断可通。具体数据语法、大小和退化拒绝见[地图spec](specs/system-map-generation.md)。
 
+`native-volume-organization.ts`增加短纤压体与有封底小孔的厚芯。`buildNativeVolume`只对显式v4 `compressed-wedge/porous-break`的完整皮面执行平滑法线，硬断面和孔壁保持几何面法线；旧profile仍返回原网格。`organization-sampling.ts`在准备worker中为每件主材实例建立固定连续源窗；`surface-bake.ts`仅在非空`materialOrganization`分支使用，副材和缺省世界保持既有采样。组织定义及独立源图来自CSV编译，不在渲染器按世界ID写特殊规则。能力接入、实际作者世界、正常图审及正式资格分别记录。
+
 `legacy-r100-v5/executor.js`从`d194be4c`的68个依赖封存生成、验证及预烤；`freeze-native-r100-revision5.mjs --check`核对完整闭包。正式恢复引入独立`executor-recovery.js`：先由`derive-native-r100-revision5.mjs`移除内部不可能的历史分派，再由`project-native-r100-revision5.mjs`严格证明目录只有ID成员查询后只留52个ID；原始和两级派生文件均保留，未改外层revision1–5同步接口。`check-r100-revision5-projection.ts`逐一核对原156配方、完整地图与四层RGBA哈希。新包保持version3/内容version2并显式标记algorithmRevision6；保存的revision5由封存验证/生成/预烤处理，不读取新CSV重算。当前调用接口保持，资格与来源连续性由[I10–I12 QA](qa/rift-r100-i10-i12.md)单独确认，模块存在不代表108世界已完成。
 
 ## R100 I07—I09：扩展形体与连续选择

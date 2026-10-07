@@ -12,6 +12,7 @@ import { buildMasterSurfaceFields } from './surface-fields';
 import { deriveFragmentContamRamp, type Rgb } from '@/entities/form-renderers/d/fragment-ramp';
 import { NATIVE_VOLUME_FAMILY_SEQUENCE } from '@/generation/world-study/native-volume-geometry';
 import { paintMasterGround } from './ground';
+import { organizationSampleIndex, prepareOrganizationSurfaceWindows } from './organization-sampling';
 export interface MasterSurfaceBake {
  readonly width:number; readonly height:number;
  readonly albedo:Uint8Array; readonly normal:Uint8Array;
@@ -44,6 +45,8 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
   const getRange=(surface:PaintedSurface):PaintedToneRange=>{let range=ranges.get(surface);if(!range){range=paintedToneRange(surface);ranges.set(surface,range);}return range;};
   const primaryFamilyIndex=NATIVE_VOLUME_FAMILY_SEQUENCE.indexOf(world.definition.family)+1;
   const familyPaints=[undefined,...NATIVE_VOLUME_FAMILY_SEQUENCE.map(family=>painting?.families?.[family]??painting)];
+  const organizationWindows=appearance?.materialOrganization&&painting
+    ?prepareOrganizationSurfaceWindows(world.meshes,world.definition.family,painting):undefined;
   const mirror=(v:number,extent:number):number=>{const period=extent*2,n=((Math.floor(v)%period)+period)%period;return n<extent?n:period-n-1;};
   for(let i=0;i<size;i++){
    const x=i%w,y=Math.floor(i/w),q=i*4,n=i*3;if(!world.matterAt(x,y))continue;
@@ -52,6 +55,7 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
    const objectPaint=hasSurface?familyPaints[r.family[i]!]:painting;
    const solidPaint=fields.solid[i]===1?objectPaint?.solid:undefined;
    const receiverPaint=solidPaint??objectPaint;
+   const organizedSurface=hasSurface?organizationWindows?.get(r.objectId[i]!):undefined;
    // Apparent transmission uses only this world's known static substrate.
    // The receiver stays opaque: it can never reveal a hidden actor, change
    // the tactical visibility mask or erase an impassable thick edge.
@@ -77,7 +81,7 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
     if(solidPaint)paintRegion=cut||r.material[i]===2||r.material[i]===3?'cleaved':'skin';
     // Blocking matter owns its material coordinates. Reusing the substrate's
     // world field makes a shallow, impassable face look like walkable ground.
-    const local=fields.solid[i]===1||cut||(hasSurface&&r.family[i]===2);
+    const local=fields.solid[i]===1||cut||(hasSurface&&r.family[i]===2)||organizedSurface!==undefined;
     const u=local?r.uv[i*2]!:x*ca+y*sa,v=local?r.uv[i*2+1]!:-x*sa+y*ca;
     const scale=receiverPaint.width/receiverPaint.worldSize;
     const px=mirror(u*scale+(seed%83),receiverPaint.width),py=mirror(v*scale+((seed>>>8)%97),receiverPaint.height);
@@ -89,8 +93,13 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
      const ph=Math.min(receiverPaint.height-top,Math.max(1,Math.round(patch.height*receiverPaint.height)));
      // Preserve the source's native cluster size. Mirroring is continuous at
      // patch limits; no independently randomized tile or artificial outline.
-     const sx=left+mirror(u*scale+(seed%83),pw),sy=top+mirror(v*scale+((seed>>>8)%97),ph);
-     paintingIndex=(sy*receiverPaint.width+sx)*4;
+     const organizedWindow=(solidPaint?organizedSurface?.solid:organizedSurface?.ground)?.[paintRegion];
+     if(organizedWindow){
+      paintingIndex=organizationSampleIndex(organizedWindow,u,v);
+     }else{
+      const sx=left+mirror(u*scale+(seed%83),pw),sy=top+mirror(v*scale+((seed>>>8)%97),ph);
+      paintingIndex=(sy*receiverPaint.width+sx)*4;
+     }
     }else paintingIndex=worldPaintingIndex;
 
    }
@@ -100,7 +109,7 @@ export function bakeMasterSurface(world:MasterWorld,ground:MasterGroundSurface,v
      const primaryFamily=!hasSurface||r.family[i]===primaryFamilyIndex;
      const role=hasSurface?(paintRegion==='cleaved'?'cleaved':'solid'):'ground';
      const secondary=hasSurface?(primaryFamily?0:1):identityField.secondary;
-     const patchWeight=solidPaint?1:.92,worldWeight=1-patchWeight;
+     const patchWeight=solidPaint||organizedSurface?1:.92,worldWeight=1-patchWeight;
      mapWorldPigment(appearance,role,
       receiverPaint.pixels[paintingIndex]!*patchWeight+receiverPaint.pixels[worldPaintingIndex]!*worldWeight,
       receiverPaint.pixels[paintingIndex+1]!*patchWeight+receiverPaint.pixels[worldPaintingIndex+1]!*worldWeight,

@@ -1,0 +1,19 @@
+{
+  "status": "preserved-author-tool-failure-before-mutation",
+  "stage": "Draft append preparation",
+  "error": "AssertionError: first draft row was fibre-choke,..., but script expected world_id,... header.",
+  "secondaryError": "Following appearance compiler correctly rejected native68 vs appearance64 exact catalog mismatch.",
+  "cause": "Temporary B04 drafts contain four data rows without headers; append script assumed a full CSV.",
+  "sourceUnchangedBeforeCorrection": true,
+  "sourceChecks": [
+    {
+      "path": "data/rift-world-appearance.csv",
+      "sha256": "a14444250e6a31802b72fc5baf0dba8540e56f427427fd3672e0d6a4cd02e04e"
+    },
+    {
+      "path": "data/rift-search-remains.csv",
+      "sha256": "963b3c9d036048140a7fa8e979a48b48b03dfbb4245ac77fb1e23a3b3c69586d"
+    }
+  ],
+  "correction": "Inspect actual drafts; assert exactly four data rows and schema column counts, then append. No production fallback or relaxed compiler."
+}

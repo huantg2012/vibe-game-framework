@@ -1,0 +1,85 @@
+{
+  "status": "ready-for-frozen-normal-view-review",
+  "createdAt": "2026-10-07T00:32:53.872578+00:00",
+  "runtimeFilesChanged": [
+    "src/generation/world-study/native-volume-ground-edge.ts"
+  ],
+  "runtimeSourceSha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc",
+  "implementation": "Two cross-bank strips per8px cell; shared midpoint insertion at corners prevents height cracks. Preserve original maximum bank sample so MeshBuilder normalization does not resize its owner formation. Actual emitted triangles remain capped2048.",
+  "affectedWorlds": [
+    "cleft-tableland",
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta"
+  ],
+  "affectedGrades": [
+    "low",
+    "medium",
+    "severe"
+  ],
+  "invariants": {
+    "authoritativeTerrainTile": 8,
+    "bodySize": 20,
+    "noVoidBridge": true,
+    "maxEdgeTriangles": 1885,
+    "unaffectedWorldGradeMeshExact": 165,
+    "authorCases": 15,
+    "fullBodyCentersExact": 184320,
+    "fullBody8pxSweepsExact": 368640,
+    "layoutHostPollutionExact": true,
+    "ownerFormationPositionsNormalsExact": true,
+    "nonOwnerMeshesExact": true,
+    "visualOccupancyChangedPixels": 0
+  },
+  "originalPyramidRegression": {
+    "before": 3.7419678568840027,
+    "after": 0
+  },
+  "visualScope": "Five medium CPU before/after source-material samples inspected: straight8px pyramid repetition eliminated. Diagonal physical8px terrain steps remain and require normal shoulder-light judgement. CPU source prep uses sharp512; fixed native lamp without tacticalFOV/HUD/actors/shadows. This is not game visual approval.",
+  "checks": {
+    "focusedContract": 0,
+    "sameCatalogBeforeAfter15": 0,
+    "typecheck": 0,
+    "nativeCodegenCheck": 0,
+    "diffWhitespaceCheck": 0,
+    "devStartupAndHTTP": 0,
+    "devShutdown": {
+      "exitCode": 130,
+      "reason": "intentional SIGINT after HTTP200/source transform success"
+    },
+    "lint": "No lint script/config in package; strict typecheck and whitespace check performed."
+  },
+  "historicalPreservation": "Original3104 screenshots and tests untouched; first new shoulder local-report/images preserved at parent folder before scale preservation. Current qualified comparison is stable-scale/local-report.json. Offset author reduction exists in both edge comparison executors; its prior frozen3104 author proof stays b02-offset-refined/report.json.",
+  "next": "Pipeline refreshes identity receipts/freezes; art/root repeat B02 original normals and cleft affected edge. B03 stays isolated until approval.",
+  "receipts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-continuity/stable-scale/local-report.json",
+      "sha256": "0f6dc9d23e343d9bc113e18e7640eeaf0a4766fca49fddb3fdb29bbda3e756ec"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-continuity/contract-stable-scale.log",
+      "sha256": "bb80b8950b839d5c184f85b289513c07e9c0b8a7b6dc3e23737297ac36decf85"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-continuity/typecheck-stable-scale.log",
+      "sha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-continuity/codegen-check.log",
+      "sha256": "fadd72bd0428d5b1ab2e6cb16a6ed55410008116c7eff33b0c45129278ed0a36"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-continuity/whitespace-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-continuity/dev.log",
+      "sha256": "7c7c051cc1ee308feb8faf414244e560fcd09fac7446b588bb5e8573bb1f6a31"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-continuity/dev-response.js",
+      "sha256": "e6785a9a8bb07a86465e575dab99fc2c67cf344fae04d76c7a3919caca8d7aee"
+    }
+  ]
+}

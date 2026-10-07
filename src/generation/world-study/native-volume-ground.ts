@@ -2,8 +2,9 @@
  * These surfaces share the ordinary native raster/body path. None is a bridge,
  * a walkable upper floor, or a source of pollution/visibility semantics. */
 import type { Builder, Point, UV } from './native-volume-expansion';
+import { buildCompressedWedge, buildPorousBreak } from './native-volume-organization';
 
-export const NATIVE_VOLUME_V4_PROFILES = ['fracture-fan', 'fallen-bundle', 'clamp-bank', 'torn-sheet'] as const;
+export const NATIVE_VOLUME_V4_PROFILES = ['fracture-fan', 'fallen-bundle', 'clamp-bank', 'torn-sheet', 'compressed-wedge', 'porous-break'] as const;
 export type NativeVolumeV4Profile = typeof NATIVE_VOLUME_V4_PROFILES[number];
 const uv = (p: Point): UV => [p[0], p[1]];
 
@@ -343,6 +344,8 @@ export function buildGroundNativeVolume(builder: Builder): void {
     case 'fallen-bundle': fallenBundle(builder); return;
     case 'clamp-bank': clampBank(builder); return;
     case 'torn-sheet': tornSheet(builder); return;
+    case 'compressed-wedge': buildCompressedWedge(builder); return;
+    case 'porous-break': buildPorousBreak(builder); return;
     default: throw new Error('Unknown construction 4 native shape profile');
   }
 }

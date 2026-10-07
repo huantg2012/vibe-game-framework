@@ -1,0 +1,55 @@
+{
+  "status": "engineering-isolation-pass-art-pending",
+  "time": "2026-10-07T00:31:48.783736+00:00",
+  "sources": [
+    {
+      "path": "src/systems/r100-world/surface-bake.ts",
+      "sha256": "603d3680ed4f6b95223fa268034a2332760dc0c804f26c00337526a29a7592fa"
+    },
+    {
+      "path": "src/systems/r100-world/organization-sampling.ts",
+      "sha256": "7a3afe8ba3cb1816fbf899bbecde20dc020d4432c9f35b7da2398c4dc3bdca3e"
+    },
+    {
+      "path": "tools/world-study/check-organization-sampling.ts",
+      "sha256": "613e3b2ec029105c3ab33cd443f15cf0d8109e0becc33e1e6daf50de76bfc469"
+    },
+    {
+      "path": "tools/world-study/check-organization-surface-bake.ts",
+      "sha256": "c5ab36d3658466e8cc53b6aee594a17269cc74cee1b4a8491103e198be896001"
+    }
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "sourceWindowContract": {
+      "status": "pass",
+      "cases": 18,
+      "sourceCoordinatesChecked": 326268,
+      "scope": "Pure source-window contracts only: deterministic, bounded, monotonic, uniform axis density, immutable inputs and secondary-family exclusion. Not visual approval."
+    },
+    "surfaceFixtures": {
+      "path": "docs/qa/artifacts/r100-i10-i12/i11-geometry-preparation/eight-directions-v3/surface-bake-contract.json",
+      "sha256": "b4f8cafe889fe700b7d4801ba66d4d92b38ae2ed9f772069dd37e45b878b64fe",
+      "cases": 6,
+      "status": "pass"
+    },
+    "atomContract": "PASS 2 independent source pairs; CSV strict negatives, explicit resolver/secondary isolation, 60 absent opt-ins, source dimension/opaque pigment. Normal-light art remains pending.",
+    "lint": "No lint script; TypeScript strict/noUnused compiler checks passed.",
+    "devSmoke": {
+      "port": 3199,
+      "viteReadyMs": 130,
+      "http200": [
+        "/r100-gym.html",
+        "/src/systems/r100-world/surface-bake.ts",
+        "/src/systems/r100-world/organization-sampling.ts"
+      ],
+      "stopped": true,
+      "browserLaunched": false
+    }
+  },
+  "limitations": [
+    "No catalog world enables materialOrganization.",
+    "CPU test fixtures are not production recipes or normal-FOV art approval.",
+    "Full old52 default RGBA continuity is independently owned by pipeline and not claimed here."
+  ]
+}

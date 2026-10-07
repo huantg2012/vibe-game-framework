@@ -1,0 +1,35 @@
+{
+  "status": "author-data-pass-art-pending",
+  "createdAt": "2026-10-07T00:50:08.510Z",
+  "worlds": [
+    "shard-switchback",
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments"
+  ],
+  "oldCsvPrefixesExact": true,
+  "checks": [
+    {
+      "current": "src/generated/r100-world-appearance.ts",
+      "before": "docs/qa/artifacts/r100-i10-i12/b03-art-authoring/r100-world-appearance.ts.before",
+      "oldCount": 60,
+      "currentCount": 64,
+      "oldObjectsDeepExact": true,
+      "currentSha256": "9d373aa6915d512cb4880dc2dfff35f0c0e3d7345767ac613fa0a0265d1f290e",
+      "beforeSha256": "f43b3fec04bd0776fb3d580a8302d9229aaee0c23d0975156d1c864c28a32925"
+    },
+    {
+      "current": "src/generated/rift-search-remains.ts",
+      "before": "docs/qa/artifacts/r100-i10-i12/b03-art-authoring/rift-search-remains.ts.before",
+      "oldCount": 62,
+      "currentCount": 66,
+      "oldObjectsDeepExact": true,
+      "currentSha256": "8806f8f2029cc03bc4b5f66301b1d4088e705e52646c24d86ae7e92dfb96e535",
+      "beforeSha256": "38b6095f976105bb930f8d385ed25abee88ece5c15c74d872f8ddcb86e3c8f50"
+    }
+  ],
+  "limits": [
+    "Only append/source/schema protection. Native light and body-boundary art review is pending.",
+    "No material organization has been enabled. All four worlds remain production-disabled pending batch review and qualification."
+  ]
+}

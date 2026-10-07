@@ -7,12 +7,14 @@ const paths = ['data/rift-master-scenes.csv', 'data/rift-pollution-grades.csv', 
   'data/rift-world-appearance.csv', 'data/rift-master-materials.csv', 'data/rift-search-remains.csv', 'data/rift-native-worlds.csv',
   'src/generation/world-study/r100-world-appearance.ts', 'src/generation/world-study/world-material-pigment.ts',
   'src/systems/r100-world/surface-bake.ts', 'src/systems/r100-world/ground.ts',
+  'src/systems/r100-world/organization-sampling.ts',
   'src/generation/world-study/r100-master-world.ts', 'src/generation/world-study/r100-pollution.ts',
   'src/generation/world-study/r100-expedition.ts', 'src/generation/world-study/r100-expedition-v1.ts',
   'src/generation/world-study/r100-patrol-windows.ts', 'src/generation/world-study/r100-package.ts', 'src/generation/world-study/native-volume-geometry.ts',
   'src/generation/world-study/native-volume-expansion.ts', 'src/generation/world-study/native-volume-cellular.ts',
   'src/generation/world-study/native-volume-ground.ts', 'src/generation/world-study/native-volume-erosion.ts',
   'src/generation/world-study/native-volume-ground-edge.ts',
+  'src/generation/world-study/native-volume-organization.ts',
   'src/generation/world-study/native-volume-raster.ts', 'src/generation/world-study/pollution-grade.ts'];
 for (const match of readFileSync('data/rift-master-materials.csv', 'utf8').matchAll(/\/assets\/[a-zA-Z0-9_./-]+\.png/g)) paths.push(`public${match[0]}`);
 const organizationCsv = 'data/rift-material-organizations.csv';

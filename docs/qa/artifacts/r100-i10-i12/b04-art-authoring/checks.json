@@ -1,0 +1,51 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-07T01:07:17.774Z",
+  "checks": [
+    {
+      "name": "appearance compiler --check",
+      "count": 68,
+      "result": "pass"
+    },
+    {
+      "name": "remains compiler --check",
+      "count": 70,
+      "result": "pass"
+    },
+    {
+      "name": "existing remains CPU",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-art-authoring/remains-check.json",
+      "sha256": "f14f5f623fe4d5f8df42a6f0557d4479b06f0029b7a223f56cca75426577edc8",
+      "samples": 630,
+      "result": "pass"
+    },
+    {
+      "name": "tsc --noEmit",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-art-authoring/typecheck.log",
+      "result": "pass"
+    },
+    {
+      "name": "npm run dev modules",
+      "port": 3199,
+      "responses": [
+        {
+          "path": "/r100-gym.html",
+          "status": 200,
+          "bytes": 2608
+        },
+        {
+          "path": "/src/generated/r100-world-appearance.ts",
+          "status": 200,
+          "bytes": 143318
+        },
+        {
+          "path": "/src/generated/rift-search-remains.ts",
+          "status": 200,
+          "bytes": 18609
+        }
+      ]
+    }
+  ],
+  "lint": "No lint script; strict TypeScript/noUnused compile gate.",
+  "scope": "Author schema/source/consumer verification only. Runtime normal visual review pending."
+}

@@ -21,7 +21,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-native-worlds.csv",
-      "sha256": "e8a99833620ecb0c48d55ae1575768ba0f8ff6fff2fdde9a073de431d7fef4de"
+      "sha256": "4ecdff448c9418436d7873395feb82f2e88e95f467e3e3155be93be6e93afbe2"
     },
     {
       "path": "data/rift-pollution-grades.csv",
@@ -29,11 +29,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-search-remains.csv",
-      "sha256": "ca2452d4ca9fb45b142044e9ab63633892d2d7cda67f4afe8c15d0074abec14f"
+      "sha256": "a4837f613f350f7ce8171d6cde8c2b02261fc94aca35f85b351fe3b291a00dfb"
     },
     {
       "path": "data/rift-world-appearance.csv",
-      "sha256": "dbfed9ebbdd910287169ab1b10438aeb1b0ee842d438d15ce863de75399a6fd4"
+      "sha256": "e3fe76650d72c13cdb7276c885bc3baa7647c97848fa6af9f1770d838d53895d"
     },
     {
       "path": "public/assets/r100-materials/ash-strata-source.png",
@@ -113,15 +113,19 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/native-volume-geometry.ts",
-      "sha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916"
+      "sha256": "c944df69504841016a09204dfa3db035cf633cc532b5bd58d1e4c7b50a8fdd28"
     },
     {
       "path": "src/generation/world-study/native-volume-ground-edge.ts",
-      "sha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d"
+      "sha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc"
     },
     {
       "path": "src/generation/world-study/native-volume-ground.ts",
-      "sha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60"
+      "sha256": "598e8adbce5fbb968954088141a643f7d01cdcb6fd204486d59bf73da72406a7"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-organization.ts",
+      "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
     },
     {
       "path": "src/generation/world-study/native-volume-raster.ts",
@@ -168,11 +172,15 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "36fc10eb24d9d111619c968367e937b82693d31d775a8d07800831794aa57f0d"
     },
     {
+      "path": "src/systems/r100-world/organization-sampling.ts",
+      "sha256": "7a3afe8ba3cb1816fbf899bbecde20dc020d4432c9f35b7da2398c4dc3bdca3e"
+    },
+    {
       "path": "src/systems/r100-world/surface-bake.ts",
-      "sha256": "411f7394344c9c41776d2f774b172b8071561c1a790b02c6d506046519872262"
+      "sha256": "603d3680ed4f6b95223fa268034a2332760dc0c804f26c00337526a29a7592fa"
     }
   ],
-  "hash": "2f08cf3b29592fe186e9731dafbee0608ae17ad04c229fd57d93dbf589fdcd97"
+  "hash": "86118df656b9ecb79c951b63cea124530e08752115539f604ad6b05ef656226a"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {

@@ -3,6 +3,7 @@
 import { buildExpandedNativeVolume, NATIVE_VOLUME_SHAPE_PROFILES, type NativeVolumeShapeProfile as NativeVolumeV3Profile } from './native-volume-expansion';
 import { buildGroundNativeVolume, NATIVE_VOLUME_V4_PROFILES, type NativeVolumeV4Profile } from './native-volume-ground';
 import { appendNativeGroundEdges, type NativeGroundEdgeContext } from './native-volume-ground-edge';
+import { smoothOrganizedSurface } from './native-volume-organization';
 export { NATIVE_VOLUME_SHAPE_PROFILES } from './native-volume-expansion';
 export { NATIVE_VOLUME_V4_PROFILES } from './native-volume-ground';
 export type NativeVolumeShapeProfile = NativeVolumeV3Profile | NativeVolumeV4Profile;
@@ -718,5 +719,8 @@ export function buildNativeVolume(spec: Readonly<NativeVolumeSpec>, ground?: Nat
   else if (spec.family === 'membrane-rim') membraneRim(builder);
   else gelFlow(builder);
   if (spec.groundEdgeWidth !== undefined) appendNativeGroundEdges(builder, ground!);
-  return builder.finish();
+  const mesh = builder.finish();
+  if (spec.constructionVersion === 4 && (spec.shapeProfile === 'compressed-wedge' || spec.shapeProfile === 'porous-break'))
+    return smoothOrganizedSurface(mesh);
+  return mesh;
 }

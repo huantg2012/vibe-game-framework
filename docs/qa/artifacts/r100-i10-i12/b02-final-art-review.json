@@ -1,0 +1,2280 @@
+{
+  "status": "bounded-author-pass",
+  "independentReview": "Root has independently accepted three specific medium repair views; final batch/cleft independent verdict is separate and pending at this record creation.",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "reports": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/report.json",
+      "sha256": "1b25593ce36e179fb7a53eb1ef470cd383fd41969209c804df456e62b7d22f18"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/report.json",
+      "sha256": "dde6abb496fff0ba519fd4a095a72d506f411667e1ce64310649194a7db6d276"
+    }
+  ],
+  "scope": "Four B02 worlds across three grades plus cleft-tableland edge-only recheck across three grades, one requested seed 20261005. Normal finite FOV/light/camera, bare training kit and real WASD from spawn. Full static floor used only for QA route planning. No health, enemy, fog, clock or position edits. Only the listed stills are art-reviewed; videos retained but not called continuous play or listening.",
+  "worlds": [
+    {
+      "worldId": "braided-seam",
+      "status": "bounded-author-pass",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "finding": "顺纤床的两处横接和独立冷蓝断束可分；三档照见的细岸保持连续，暖床/蓝实体/绿色侵蚀各有职责。",
+      "limits": "仅两接近处和东床断束；视野外的岸、整条返路和全部敌情未审。"
+    },
+    {
+      "worldId": "scalloped-reach",
+      "status": "bounded-author-pass",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "finding": "弯厚唇与冷蓝粗床、真实凹湾边界可辨，北侧返路保持开放；三档近脚边未退成地面斑。",
+      "limits": "斜岸仍跟随真实8px地形形成阶梯，此次修复的是逐格独立锥峰；不签完整壳背及黑处。"
+    },
+    {
+      "worldId": "offset-pan",
+      "status": "bounded-author-pass",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "finding": "两处灰露层已收回各自短断肩旁；原覆盖整床的长直灰粉分色线消除，三床转折与两颈仍可辨。",
+      "limits": "保留第一低母面与真实片状外沿；低层为可走表面，不能把色线等同碰撞。只签已照见短肩/颈口与局部裸床。"
+    },
+    {
+      "worldId": "thin-delta",
+      "status": "bounded-author-pass",
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "finding": "长直岸从规则锥齿改为连续窄厚边，紫胶薄尾与冷蓝裸床相接；三档回连处和近身终止岸可辨。",
+      "limits": "面朝终端及追加侧视都受真实缺地遮挡，只证明近足窄岸/可走床分界，未展示整个端部外壁；不是完整双袋搜撤证明。"
+    }
+  ],
+  "affectedPriorWorld": {
+    "worldId": "cleft-tableland",
+    "status": "bounded-edge-recheck-author-pass",
+    "grades": [
+      "low",
+      "medium",
+      "severe"
+    ],
+    "finding": "两颈受影响岸沿三档复审，连续母面及裸床/缺地的近身区分保持；绿色侵蚀增加时未重新形成规则锥齿。",
+    "limits": "只复查共享地沿变动；不把3103原图改标3105，不重新签其整个关卡资格。"
+  },
+  "authorReviewedImages": [
+    {
+      "worldId": "braided-seam",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/braided-seam-medium/02-first-link-east.png",
+      "sha256": "e27cce9e89279968a94a04bd1dac1d1740fc85197be3dbc16f0b4823822933a5",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "braided-seam",
+        "grade": "medium",
+        "package": {
+          "id": "r100-braided-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "42e7e9a7",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=braided-seam&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/braided-seam-medium/02-first-link-east.png",
+        "sha256": "e27cce9e89279968a94a04bd1dac1d1740fc85197be3dbc16f0b4823822933a5",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 496.7175361765993,
+            "y": 298.40709473016585
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 26.31787391599969,
+          "elapsedMs": 10082.8
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 496.7175361765993,
+            "y": 298.40709473016585
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 26.356581703999687,
+          "elapsedMs": 10199.5
+        }
+      }
+    },
+    {
+      "worldId": "braided-seam",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/braided-seam-medium/04-east-bed-south.png",
+      "sha256": "9579bfba993f787133fae16b2d8553b3aab45a6ab8fe7d9a0b94df30ea1d3abf",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "braided-seam",
+        "grade": "medium",
+        "package": {
+          "id": "r100-braided-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "42e7e9a7",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=braided-seam&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/braided-seam-medium/04-east-bed-south.png",
+        "sha256": "9579bfba993f787133fae16b2d8553b3aab45a6ab8fe7d9a0b94df30ea1d3abf",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.5710476542071818,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 775.4173593123808,
+            "y": 512.4311291874951
+          },
+          "facingAngle": 1.5710476542071818,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 36.99055359199939,
+          "elapsedMs": 19299.2
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 775.4173593123808,
+            "y": 512.4311291874951
+          },
+          "facingAngle": 1.5710476542071818,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 37.056900319999386,
+          "elapsedMs": 19399.2
+        }
+      }
+    },
+    {
+      "worldId": "scalloped-reach",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/scalloped-reach-medium/02-middle-bay-east.png",
+      "sha256": "e240662f388b141792e28196576dd5264e7b82f9d51e6de79fdbcbaba4a571e7",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "scalloped-reach",
+        "grade": "medium",
+        "package": {
+          "id": "r100-scalloped-reach",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "362c963f",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=scalloped-reach&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/scalloped-reach-medium/02-middle-bay-east.png",
+        "sha256": "e240662f388b141792e28196576dd5264e7b82f9d51e6de79fdbcbaba4a571e7",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 628.4715073494081,
+            "y": 555.5173723900294
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 17.56581271799975,
+          "elapsedMs": 7816.400000000001
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 628.4715073494081,
+            "y": 555.5173723900294
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 17.604523823999745,
+          "elapsedMs": 7932.999999999999
+        }
+      }
+    },
+    {
+      "worldId": "scalloped-reach",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/scalloped-reach-medium/04-north-return-south.png",
+      "sha256": "d7aae815ebd4aff04c6329a66c0d1a090f8160347223998ea110648cdbaf6ee4",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "scalloped-reach",
+        "grade": "medium",
+        "package": {
+          "id": "r100-scalloped-reach",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "362c963f",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=scalloped-reach&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/scalloped-reach-medium/04-north-return-south.png",
+        "sha256": "d7aae815ebd4aff04c6329a66c0d1a090f8160347223998ea110648cdbaf6ee4",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 693.2864552430315,
+            "y": 106.09295826747221
+          },
+          "facingAngle": 1.5707963267948966,
+          "facing4": "down",
+          "hp": 70,
+          "chaos": 35.52868091799933,
+          "elapsedMs": 29115.600000000002
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 693.2864552430315,
+            "y": 106.09295826747221
+          },
+          "facingAngle": 1.5707963267948966,
+          "facing4": "down",
+          "hp": 70,
+          "chaos": 35.60610976599932,
+          "elapsedMs": 29232.2
+        }
+      }
+    },
+    {
+      "worldId": "offset-pan",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/offset-pan-medium/02-first-neck-north.png",
+      "sha256": "4b499c00e1f0ececb0ff2f6233ed21d4887aef3cb6229847a9b427e077ef2b9f",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-pan",
+        "grade": "medium",
+        "package": {
+          "id": "r100-offset-pan",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "4dedaa09",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=offset-pan&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/offset-pan-medium/02-first-neck-north.png",
+        "sha256": "4b499c00e1f0ececb0ff2f6233ed21d4887aef3cb6229847a9b427e077ef2b9f",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 332.8591985176916,
+            "y": 489.1577357168168
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 16.49857801799988,
+          "elapsedMs": 4599.799999999999
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 332.8591985176916,
+            "y": 489.1577357168168
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 16.559403593999868,
+          "elapsedMs": 4783.1
+        }
+      }
+    },
+    {
+      "worldId": "offset-pan",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/offset-pan-medium/04-north-bed-south.png",
+      "sha256": "3f811566609dc649b7a7bfb3a436496b247079b084e908c636e38576ac948d05",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-pan",
+        "grade": "medium",
+        "package": {
+          "id": "r100-offset-pan",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "4dedaa09",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=offset-pan&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/offset-pan-medium/04-north-bed-south.png",
+        "sha256": "3f811566609dc649b7a7bfb3a436496b247079b084e908c636e38576ac948d05",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.571110486060248,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 799.6609312778111,
+            "y": 177.42748434686573
+          },
+          "facingAngle": 1.571110486060248,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 21.02193773999939,
+          "elapsedMs": 18232.6
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 799.6609312778111,
+            "y": 177.42748434686573
+          },
+          "facingAngle": 1.571110486060248,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 21.06064220999939,
+          "elapsedMs": 18349.199999999997
+        }
+      }
+    },
+    {
+      "worldId": "thin-delta",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/thin-delta-medium/01-south-loop-east.png",
+      "sha256": "145dc264f6ff13f5ef4815f9c8518ec0d0919848763360a43e39f0e49e80e4a4",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "medium",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "ec179c76",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=thin-delta&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/thin-delta-medium/01-south-loop-east.png",
+        "sha256": "145dc264f6ff13f5ef4815f9c8518ec0d0919848763360a43e39f0e49e80e4a4",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 6.283185307309758e-05,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 507.12814664966396,
+            "y": 681.8831663363278
+          },
+          "facingAngle": 6.283185307309758e-05,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 21.08472594399981,
+          "elapsedMs": 6366.4
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 507.12814664966396,
+            "y": 681.8831663363278
+          },
+          "facingAngle": 6.283185307309758e-05,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 21.123433731999803,
+          "elapsedMs": 6483
+        }
+      }
+    },
+    {
+      "worldId": "thin-delta",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/thin-delta-medium/02-return-turn-north.png",
+      "sha256": "5018f1d675b667fed63f654804be86b68892d8a89364d4081dc202b0f160bb41",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "medium",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "ec179c76",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=thin-delta&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/thin-delta-medium/02-return-turn-north.png",
+        "sha256": "5018f1d675b667fed63f654804be86b68892d8a89364d4081dc202b0f160bb41",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5710476542071818,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 834.8992879952207,
+            "y": 636.0316302839956
+          },
+          "facingAngle": -1.5710476542071818,
+          "facing4": "up",
+          "hp": 85,
+          "chaos": 35.264335481999396,
+          "elapsedMs": 13016.099999999999
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 834.8992879952207,
+            "y": 636.0316302839956
+          },
+          "facingAngle": -1.5710476542071818,
+          "facing4": "up",
+          "hp": 85,
+          "chaos": 35.34175105799938,
+          "elapsedMs": 13132.8
+        }
+      }
+    },
+    {
+      "worldId": "thin-delta",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/thin-delta-medium/03-middle-toe-east.png",
+      "sha256": "5bf36752ed18d5360366e9086afa1e43bb777880e7b578ec96c23428b67b4289",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "medium",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "ec179c76",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=thin-delta&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/thin-delta-medium/03-middle-toe-east.png",
+        "sha256": "5bf36752ed18d5360366e9086afa1e43bb777880e7b578ec96c23428b67b4289",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 900.5249009104792,
+            "y": 389.5214310775666
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 85,
+          "chaos": 43.69171040999893,
+          "elapsedMs": 25715.6
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 900.5249009104792,
+            "y": 389.5214310775666
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 85,
+          "chaos": 43.74700819799893,
+          "elapsedMs": 25798.9
+        }
+      }
+    },
+    {
+      "worldId": "thin-delta",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/thin-delta-medium/04-north-toe-east.png",
+      "sha256": "dc3fdf4f671c9efd890d3e30204aca275f27f471666800ed266894107339e775",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "medium",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "ec179c76",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=thin-delta&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/thin-delta-medium/04-north-toe-east.png",
+        "sha256": "dc3fdf4f671c9efd890d3e30204aca275f27f471666800ed266894107339e775",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 883.6661360832317,
+            "y": 162.22380759755112
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 85,
+          "chaos": 54.25645510799941,
+          "elapsedMs": 41248.3
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 883.6661360832317,
+            "y": 162.22380759755112
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 85,
+          "chaos": 54.333870683999415,
+          "elapsedMs": 41365
+        }
+      }
+    },
+    {
+      "worldId": "cleft-tableland",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/02-upper-neck-west.png",
+      "sha256": "caabbe00a936c5e441517e9aed1375dbc14b9fb5f5205d37cd211d6f29db2d42",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "cleft-tableland",
+        "grade": "medium",
+        "package": {
+          "id": "r100-cleft-tableland",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "4992b5c1",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=cleft-tableland&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/02-upper-neck-west.png",
+        "sha256": "caabbe00a936c5e441517e9aed1375dbc14b9fb5f5205d37cd211d6f29db2d42",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "west",
+        "actualAngle": -3.1415298217367207,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 709.4456104792494,
+            "y": 279.0492186469031
+          },
+          "facingAngle": -3.1415298217367207,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 29.446832117999556,
+          "elapsedMs": 14066.1
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 709.4456104792494,
+            "y": 279.0492186469031
+          },
+          "facingAngle": -3.1415298217367207,
+          "facing4": "left",
+          "hp": 85,
+          "chaos": 29.546352209999554,
+          "elapsedMs": 14216.1
+        }
+      }
+    },
+    {
+      "worldId": "cleft-tableland",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/03-lower-neck-west.png",
+      "sha256": "f532acdb096ccfe9d582be0682fa69c76c2c0ebdc6eace8124c9bc80a4917320",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "cleft-tableland",
+        "grade": "medium",
+        "package": {
+          "id": "r100-cleft-tableland",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "4992b5c1",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=cleft-tableland&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/03-lower-neck-west.png",
+        "sha256": "f532acdb096ccfe9d582be0682fa69c76c2c0ebdc6eace8124c9bc80a4917320",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "west",
+        "actualAngle": 3.141592653589793,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 779.5024054047724,
+            "y": 555.3118388719521
+          },
+          "facingAngle": 3.141592653589793,
+          "facing4": "left",
+          "hp": 85,
+          "chaos": 36.91488409799944,
+          "elapsedMs": 20799.1
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 779.5024054047724,
+            "y": 555.3118388719521
+          },
+          "facingAngle": 3.141592653589793,
+          "facing4": "left",
+          "hp": 85,
+          "chaos": 37.00334861399944,
+          "elapsedMs": 20932.5
+        }
+      }
+    },
+    {
+      "worldId": "braided-seam",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/braided-seam-low/02-first-link-east.png",
+      "sha256": "c51b48d3d551f6053dbd48e39015ecdd730a55b9205116eb49ae2a37a8ac3816",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "braided-seam",
+        "grade": "low",
+        "package": {
+          "id": "r100-braided-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "90fb0e2f",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=braided-seam&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/braided-seam-low/02-first-link-east.png",
+        "sha256": "c51b48d3d551f6053dbd48e39015ecdd730a55b9205116eb49ae2a37a8ac3816",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 489.39804784765175,
+            "y": 301.0134357663011
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.712653007999982,
+          "elapsedMs": 9116.300000000001
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 489.39804784765175,
+            "y": 301.0134357663011
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.741093007999982,
+          "elapsedMs": 9266.300000000001
+        }
+      }
+    },
+    {
+      "worldId": "braided-seam",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/braided-seam-low/04-east-bed-south.png",
+      "sha256": "9dc07a03e5cc89042565bda0a72af0f026bcacaf8546db65696e8fc41a1af78c",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "braided-seam",
+        "grade": "low",
+        "package": {
+          "id": "r100-braided-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "90fb0e2f",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=braided-seam&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/braided-seam-low/04-east-bed-south.png",
+        "sha256": "9dc07a03e5cc89042565bda0a72af0f026bcacaf8546db65696e8fc41a1af78c",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 778.3567519317393,
+            "y": 517.339329549554
+          },
+          "facingAngle": 1.5707963267948966,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 18.472702223999953,
+          "elapsedMs": 18399.199999999997
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 778.3567519317393,
+            "y": 517.339329549554
+          },
+          "facingAngle": 1.5707963267948966,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 18.504300959999952,
+          "elapsedMs": 18565.9
+        }
+      }
+    },
+    {
+      "worldId": "scalloped-reach",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/scalloped-reach-low/02-middle-bay-east.png",
+      "sha256": "20cf4e0f7c175073e73bced2712594ceedcc1515cd60e491617b91ccaa536c23",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "scalloped-reach",
+        "grade": "low",
+        "package": {
+          "id": "r100-scalloped-reach",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "f863bfaf",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=scalloped-reach&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/scalloped-reach-low/02-middle-bay-east.png",
+        "sha256": "20cf4e0f7c175073e73bced2712594ceedcc1515cd60e491617b91ccaa536c23",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 630.799256903737,
+            "y": 554.0034048764867
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.377709439999983,
+          "elapsedMs": 7349.799999999999
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 630.799256903737,
+            "y": 554.0034048764867
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 16.39982438399998,
+          "elapsedMs": 7466.299999999999
+        }
+      }
+    },
+    {
+      "worldId": "scalloped-reach",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/scalloped-reach-low/04-north-return-south.png",
+      "sha256": "f933ba51c846dccf72160200f1e9843d00cd597a8e56044815bd0d022454a2bc",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "scalloped-reach",
+        "grade": "low",
+        "package": {
+          "id": "r100-scalloped-reach",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "f863bfaf",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=scalloped-reach&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/scalloped-reach-low/04-north-return-south.png",
+        "sha256": "f933ba51c846dccf72160200f1e9843d00cd597a8e56044815bd0d022454a2bc",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.571110486060276,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 693.3775197879311,
+            "y": 106.81907910326792
+          },
+          "facingAngle": 1.571110486060276,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 22.373266199999904,
+          "elapsedMs": 21582.5
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 693.3775197879311,
+            "y": 106.81907910326792
+          },
+          "facingAngle": 1.571110486060276,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 22.411182407999902,
+          "elapsedMs": 21682.5
+        }
+      }
+    },
+    {
+      "worldId": "offset-pan",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/offset-pan-low/02-first-neck-north.png",
+      "sha256": "494b9888f22b18fe3761ebf2cfe1f1152a9138342f173bc0855ba5fc226eb7e5",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-pan",
+        "grade": "low",
+        "package": {
+          "id": "r100-offset-pan",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "f572a052",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=offset-pan&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/offset-pan-low/02-first-neck-north.png",
+        "sha256": "494b9888f22b18fe3761ebf2cfe1f1152a9138342f173bc0855ba5fc226eb7e5",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 331.71382063479746,
+            "y": 489.5009197156902
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 15.755209031999993,
+          "elapsedMs": 4066.5
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 331.71382063479746,
+            "y": 489.5009197156902
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 15.774167135999992,
+          "elapsedMs": 4166.5
+        }
+      }
+    },
+    {
+      "worldId": "offset-pan",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/offset-pan-low/04-north-bed-south.png",
+      "sha256": "cbf927dd60fdee80f5ae77af7fea9f42672111da2e71837868af9b4d000ba380",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-pan",
+        "grade": "low",
+        "package": {
+          "id": "r100-offset-pan",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "f572a052",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=offset-pan&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/offset-pan-low/04-north-bed-south.png",
+        "sha256": "cbf927dd60fdee80f5ae77af7fea9f42672111da2e71837868af9b4d000ba380",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 798.4595466725294,
+            "y": 177.30977981718772
+          },
+          "facingAngle": 1.5707963267948966,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 18.24203107199995,
+          "elapsedMs": 17182.6
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 798.4595466725294,
+            "y": 177.30977981718772
+          },
+          "facingAngle": 1.5707963267948966,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 18.26098727999995,
+          "elapsedMs": 17282.6
+        }
+      }
+    },
+    {
+      "worldId": "thin-delta",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/thin-delta-low/02-return-turn-north.png",
+      "sha256": "5cb34423f3fd0fef7f20217bb98e22e2bf0c599cb9b4a8d78056dd1ed31655f4",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "low",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "8fa12473",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=thin-delta&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/thin-delta-low/02-return-turn-north.png",
+        "sha256": "5cb34423f3fd0fef7f20217bb98e22e2bf0c599cb9b4a8d78056dd1ed31655f4",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 833.7852398359796,
+            "y": 635.0579876951174
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.341467095999963,
+          "elapsedMs": 12433
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 833.7852398359796,
+            "y": 635.0579876951174
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.360427095999963,
+          "elapsedMs": 12532.900000000001
+        }
+      }
+    },
+    {
+      "worldId": "thin-delta",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/thin-delta-low/03-middle-toe-north.png",
+      "sha256": "adbd691e486a263ce1719fa79bb64093de0a1c5c63b5de4b98439ba1cfe77f7c",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "low",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "8fa12473",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=thin-delta&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/thin-delta-low/03-middle-toe-north.png",
+        "sha256": "adbd691e486a263ce1719fa79bb64093de0a1c5c63b5de4b98439ba1cfe77f7c",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 899.7077131641538,
+            "y": 382.42792813685156
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 23.776247423999855,
+          "elapsedMs": 24582.4
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 899.7077131641538,
+            "y": 382.42792813685156
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 23.814163631999854,
+          "elapsedMs": 24682.5
+        }
+      }
+    },
+    {
+      "worldId": "braided-seam",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/braided-seam-severe/02-first-link-east.png",
+      "sha256": "567446f043743b18a1f6a544d1a4e9a070a443cbe74b55376195f3aaf92a816f",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "braided-seam",
+        "grade": "severe",
+        "package": {
+          "id": "r100-braided-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "2c6e3407",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=braided-seam&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/braided-seam-severe/02-first-link-east.png",
+        "sha256": "567446f043743b18a1f6a544d1a4e9a070a443cbe74b55376195f3aaf92a816f",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 490.4144602492452,
+            "y": 300.5750492756114
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 22.996829631999834,
+          "elapsedMs": 9049.599999999999
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 490.4144602492452,
+            "y": 300.5750492756114
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 23.148509631999836,
+          "elapsedMs": 9199.599999999999
+        }
+      }
+    },
+    {
+      "worldId": "braided-seam",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/braided-seam-severe/04-east-bed-south.png",
+      "sha256": "9335190564b7f05bac4cf386eec2194b8bb0484155077db98279c1edb11e54cc",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "braided-seam",
+        "grade": "severe",
+        "package": {
+          "id": "r100-braided-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "2c6e3407",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=braided-seam&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/braided-seam-severe/04-east-bed-south.png",
+        "sha256": "9335190564b7f05bac4cf386eec2194b8bb0484155077db98279c1edb11e54cc",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.5710476542071818,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 781.3601809534277,
+            "y": 512.7975913051654
+          },
+          "facingAngle": 1.5710476542071818,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 40.46801196799958,
+          "elapsedMs": 18415.9
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 781.3601809534277,
+            "y": 512.7975913051654
+          },
+          "facingAngle": 1.5710476542071818,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 40.67867526399957,
+          "elapsedMs": 18632.5
+        }
+      }
+    },
+    {
+      "worldId": "scalloped-reach",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/scalloped-reach-severe/02-middle-bay-east.png",
+      "sha256": "7f5f611d820fbc4e54e529ca0da88b8f02900bfef15a036b541e32b9112477da",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "scalloped-reach",
+        "grade": "severe",
+        "package": {
+          "id": "r100-scalloped-reach",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "37b21f28",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=scalloped-reach&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/scalloped-reach-severe/02-middle-bay-east.png",
+        "sha256": "7f5f611d820fbc4e54e529ca0da88b8f02900bfef15a036b541e32b9112477da",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "east",
+        "actualAngle": 0,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 628.5133879741173,
+            "y": 554.8978917935877
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 18.817128319999842,
+          "elapsedMs": 7633
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 628.5133879741173,
+            "y": 554.8978917935877
+          },
+          "facingAngle": 0,
+          "facing4": "right",
+          "hp": 100,
+          "chaos": 18.86768326399984,
+          "elapsedMs": 7733
+        }
+      }
+    },
+    {
+      "worldId": "scalloped-reach",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/scalloped-reach-severe/04-north-return-south.png",
+      "sha256": "4e102b6b955ebbb10e2120c8ed7257e9e4b1e96f5926c5e9e540936ff14e79fc",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "scalloped-reach",
+        "grade": "severe",
+        "package": {
+          "id": "r100-scalloped-reach",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "37b21f28",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=scalloped-reach&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/scalloped-reach-severe/04-north-return-south.png",
+        "sha256": "4e102b6b955ebbb10e2120c8ed7257e9e4b1e96f5926c5e9e540936ff14e79fc",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.5708591586479694,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 692.1150537295915,
+            "y": 106.80648182536385
+          },
+          "facingAngle": 1.5708591586479694,
+          "facing4": "down",
+          "hp": 85,
+          "chaos": 37.72649900799928,
+          "elapsedMs": 21999
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 692.1150537295915,
+            "y": 106.80648182536385
+          },
+          "facingAngle": 1.5708591586479694,
+          "facing4": "down",
+          "hp": 85,
+          "chaos": 37.810772415999274,
+          "elapsedMs": 22082.4
+        }
+      }
+    },
+    {
+      "worldId": "offset-pan",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/offset-pan-severe/02-first-neck-north.png",
+      "sha256": "53d6334521fff106dbf044458ad371af58510ba552a84d212f49c41a23a1d185",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-pan",
+        "grade": "severe",
+        "package": {
+          "id": "r100-offset-pan",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "18ed1886",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=offset-pan&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/offset-pan-severe/02-first-neck-north.png",
+        "sha256": "53d6334521fff106dbf044458ad371af58510ba552a84d212f49c41a23a1d185",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 331.0629052006518,
+            "y": 487.57458789546797
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 16.997023935999913,
+          "elapsedMs": 4033.2
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 331.0629052006518,
+            "y": 487.57458789546797
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.056027455999907,
+          "elapsedMs": 4149.900000000001
+        }
+      }
+    },
+    {
+      "worldId": "offset-pan",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/offset-pan-severe/04-north-bed-south.png",
+      "sha256": "c7454ed662b5e28ba339a33221e27b1cdf5ac770f82137b09f85c09856274042",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-pan",
+        "grade": "severe",
+        "package": {
+          "id": "r100-offset-pan",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "18ed1886",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=offset-pan&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/offset-pan-severe/04-north-bed-south.png",
+        "sha256": "c7454ed662b5e28ba339a33221e27b1cdf5ac770f82137b09f85c09856274042",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "south",
+        "actualAngle": 1.5709219905010419,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 796.0614356328242,
+            "y": 174.41624658183122
+          },
+          "facingAngle": 1.5709219905010419,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 23.78022431999963,
+          "elapsedMs": 17449.3
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 796.0614356328242,
+            "y": 174.41624658183122
+          },
+          "facingAngle": 1.5709219905010419,
+          "facing4": "down",
+          "hp": 100,
+          "chaos": 23.830774207999625,
+          "elapsedMs": 17549.3
+        }
+      }
+    },
+    {
+      "worldId": "thin-delta",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/thin-delta-severe/02-return-turn-north.png",
+      "sha256": "318787492034d778d94df926330c960c6c5ac731c3a2b248a5c3c615d6090326",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "severe",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "445291b6",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=thin-delta&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/thin-delta-severe/02-return-turn-north.png",
+        "sha256": "318787492034d778d94df926330c960c6c5ac731c3a2b248a5c3c615d6090326",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5710476542071752,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 831.9771813211398,
+            "y": 634.4324952625959
+          },
+          "facingAngle": -1.5710476542071752,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 36.16510124799971,
+          "elapsedMs": 12699.5
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 831.9771813211398,
+            "y": 634.4324952625959
+          },
+          "facingAngle": -1.5710476542071752,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 36.249364543999704,
+          "elapsedMs": 12782.900000000001
+        }
+      }
+    },
+    {
+      "worldId": "thin-delta",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/thin-delta-severe/03-middle-toe-north.png",
+      "sha256": "37c190c33081ddf14f57e6b50c91a73a5fda87089aba09bd97a2f9f5fc297302",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "thin-delta",
+        "grade": "severe",
+        "package": {
+          "id": "r100-thin-delta",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "445291b6",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=thin-delta&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/thin-delta-severe/03-middle-toe-north.png",
+        "sha256": "37c190c33081ddf14f57e6b50c91a73a5fda87089aba09bd97a2f9f5fc297302",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707334949418237,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 897.3448963920305,
+            "y": 381.95717720417963
+          },
+          "facingAngle": -1.5707334949418237,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 50.237102015998815,
+          "elapsedMs": 26615.6
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 897.3448963920305,
+            "y": 381.95717720417963
+          },
+          "facingAngle": -1.5707334949418237,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 50.3213551999988,
+          "elapsedMs": 26698.9
+        }
+      }
+    },
+    {
+      "worldId": "cleft-tableland",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/02-upper-neck-west.png",
+      "sha256": "35811f91fabb8f4c8a2840a31853af8637f2eec78dea24411c12f73a6f04759d",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "cleft-tableland",
+        "grade": "low",
+        "package": {
+          "id": "r100-cleft-tableland",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "ee432185",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=cleft-tableland&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/02-upper-neck-west.png",
+        "sha256": "35811f91fabb8f4c8a2840a31853af8637f2eec78dea24411c12f73a6f04759d",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "west",
+        "actualAngle": 3.141592653589793,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 699.5119364007274,
+            "y": 285.0528046910288
+          },
+          "facingAngle": 3.141592653589793,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 17.63217887999996,
+          "elapsedMs": 13966.100000000002
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 699.5119364007274,
+            "y": 285.0528046910288
+          },
+          "facingAngle": 3.141592653589793,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 17.65746203999996,
+          "elapsedMs": 14099.5
+        }
+      }
+    },
+    {
+      "worldId": "cleft-tableland",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/03-lower-neck-west.png",
+      "sha256": "3edb5312e1173301bca1d6b3e80d66c94ab46b6b4caea5de44deb1fb4377ca17",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "cleft-tableland",
+        "grade": "low",
+        "package": {
+          "id": "r100-cleft-tableland",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "ee432185",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=cleft-tableland&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/03-lower-neck-west.png",
+        "sha256": "3edb5312e1173301bca1d6b3e80d66c94ab46b6b4caea5de44deb1fb4377ca17",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "west",
+        "actualAngle": 3.141592653589793,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 785.824069939697,
+            "y": 557.3994010107502
+          },
+          "facingAngle": 3.141592653589793,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 21.810802631999934,
+          "elapsedMs": 19715.9
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 785.824069939697,
+            "y": 557.3994010107502
+          },
+          "facingAngle": 3.141592653589793,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 21.848722631999934,
+          "elapsedMs": 19815.9
+        }
+      }
+    },
+    {
+      "worldId": "cleft-tableland",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/02-upper-neck-west.png",
+      "sha256": "a4642cea908b68686db99a7c012b978278441bfcb091f1121a207dee281ee439",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "cleft-tableland",
+        "grade": "severe",
+        "package": {
+          "id": "r100-cleft-tableland",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "6c057d1d",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=cleft-tableland&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/02-upper-neck-west.png",
+        "sha256": "a4642cea908b68686db99a7c012b978278441bfcb091f1121a207dee281ee439",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "west",
+        "actualAngle": -3.141341326177508,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 709.0562124708052,
+            "y": 283.11821934856187
+          },
+          "facingAngle": -3.141341326177508,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 27.654272383999736,
+          "elapsedMs": 13249.5
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 709.0562124708052,
+            "y": 283.11821934856187
+          },
+          "facingAngle": -3.141341326177508,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 27.704837439999732,
+          "elapsedMs": 13349.5
+        }
+      }
+    },
+    {
+      "worldId": "cleft-tableland",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/03-lower-neck-west.png",
+      "sha256": "37260216461384fbce23aedafe73e0a82fb2280eb969d0dc6d9eb61ce4d0ae43",
+      "actualIdentity": {
+        "requestedSeed": 20261005,
+        "worldId": "cleft-tableland",
+        "grade": "severe",
+        "package": {
+          "id": "r100-cleft-tableland",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "6c057d1d",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3105/r100-gym.html?world=cleft-tableland&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "actualCapture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/03-lower-neck-west.png",
+        "sha256": "37260216461384fbce23aedafe73e0a82fb2280eb969d0dc6d9eb61ce4d0ae43",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "west",
+        "actualAngle": 3.1411528306182883,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 792.0446219390955,
+            "y": 560.4643325041808
+          },
+          "facingAngle": 3.1411528306182883,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 41.61737343999951,
+          "elapsedMs": 18682.6
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 792.0446219390955,
+            "y": 560.4643325041808
+          },
+          "facingAngle": 3.1411528306182883,
+          "facing4": "left",
+          "hp": 100,
+          "chaos": 41.71847321599951,
+          "elapsedMs": 18782.6
+        }
+      }
+    }
+  ],
+  "authorReviewedImageCount": 32,
+  "allCapturedCaseCount": 15,
+  "runtimeErrors": [],
+  "browserClosed": true,
+  "history": {
+    "rejectedSource3104": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-medium/rejection.json",
+      "sha256": "0f30a73d29bb46ce47449db95174ee125f83f3d88be8950d47ed89ae6c41d2a0"
+    },
+    "partialGradeCancellation": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-grades/cancellation.json",
+      "sha256": "27f24d7598714c0733e7bd0203e8893f6c9726960721d3e6b3fee50bc2e15001"
+    },
+    "localOffsetProtection": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-offset-refined/report.json",
+      "sha256": "d2910cceee02bc435ea0625dff77c405ae53e35ad25695a98b7e438ec722dfb1"
+    },
+    "retention": "All previous reports, screenshots and source identities preserved. New evidence addresses the stated visible defects only."
+  },
+  "humanReview": "pending",
+  "limitations": [
+    "No full route, full enemy set, all seed, search/extraction, economic balance, long-run fatigue or listening claim.",
+    "Actual keypress positions and live phase timing differ slightly; these are comparable intended stations, not pixel-identical camera/time.",
+    "Native world coordinates and 20px support are not inferred from bright outlines; collision protection is separately tested.",
+    "Dark/unlit surfaces and the hidden outer sides of end banks are not signed."
+  ]
+}

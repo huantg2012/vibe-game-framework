@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "commands": [
+    "node tools/world-study/codegen-r100-packages.mjs",
+    "node tools/world-study/codegen-r100-packages.mjs --check"
+  ],
+  "dependencies": 44,
+  "scope": "Current authoring64 package receipt only. Does not change3105 frozen qualification or approveB03 author/art/play.",
+  "sources": [
+    {
+      "path": "tools/world-study/codegen-r100-packages.mjs",
+      "sha256": "7be5aaf462618424f6c55646d1181885e43ca07f8fb69cfac5bd8e353d9ca545"
+    },
+    {
+      "path": "src/generated/r100-package-manifest.ts",
+      "sha256": "ff810d14bf7e8f532b4acc260ac9f7c2c5961b9e0822bc42b446d02759694cd5"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-organization.ts",
+      "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
+    },
+    {
+      "path": "src/systems/r100-world/organization-sampling.ts",
+      "sha256": "7a3afe8ba3cb1816fbf899bbecde20dc020d4432c9f35b7da2398c4dc3bdca3e"
+    }
+  ]
+}

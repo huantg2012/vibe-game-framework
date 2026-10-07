@@ -1,0 +1,355 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "braided-seam",
+    "label": "编裂长滩",
+    "description": "编裂长滩的原生材料与完整搜撤地段",
+    "material": "crystal",
+    "surface": {
+      "substrate": "crystal",
+      "coating": "crystal",
+      "organization": "bands",
+      "coverage": 0.66,
+      "wear": 0.43,
+      "deposits": 0.42,
+      "scale": 0.95,
+      "relief": 0.58,
+      "contrast": 0.85,
+      "regionScale": 1.1,
+      "quietness": 0.5,
+      "formScale": 1.5,
+      "fragmentation": 0.32,
+      "accentCoverage": 0.18
+    },
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 1452094,
+      "floor": 3561334,
+      "floorLight": 7903663,
+      "materialDark": 2505034,
+      "materialMid": 5470349,
+      "materialLight": 10534599,
+      "faceLight": 14268826,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 3561334,
+      "groundLight": 7903663,
+      "groundDark": 1452094,
+      "wall": 5470349,
+      "wallLight": 10534599,
+      "wallDark": 2505034
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "braided-seam",
+    "ground": {
+      "dark": 1452094,
+      "mid": 3561334,
+      "light": 7903663
+    },
+    "solid": {
+      "dark": 2505034,
+      "mid": 5470349,
+      "light": 10534599
+    },
+    "cleaved": {
+      "dark": 5913901,
+      "mid": 11172950,
+      "light": 14268826
+    },
+    "secondary": {
+      "dark": 3945031,
+      "mid": 7823486,
+      "light": 10983088
+    },
+    "groundPattern": "veins",
+    "patternScale": 240,
+    "patternStrength": 0.4,
+    "secondaryCoverage": 0.12,
+    "textureContrast": 1.11,
+    "quietCoverage": 0.63
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "braided-seam-medium",
+    "family": "fibre-knot",
+    "grade": "medium",
+    "label": "编裂长滩",
+    "profile": "braided-seam",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": -0.28,
+    "light_radius": 136,
+    "emission": 0.55,
+    "motion_period": 18,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "fibre-knot",
+        "role": "relief",
+        "x": 188,
+        "y": 382,
+        "rotation": 0,
+        "length": 285,
+        "width": 610,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.5,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan",
+        "groundEdgeWidth": 8
+      },
+      {
+        "id": 2,
+        "family": "fibre-knot",
+        "role": "relief",
+        "x": 514,
+        "y": 390,
+        "rotation": 0.025,
+        "length": 205,
+        "width": 550,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.5,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 3,
+        "family": "fibre-knot",
+        "role": "relief",
+        "x": 846,
+        "y": 378,
+        "rotation": 3.04,
+        "length": 260,
+        "width": 594,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.5,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 4,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 284,
+        "y": 210,
+        "rotation": 0.32,
+        "length": 170,
+        "width": 79,
+        "height": 35,
+        "thickness": 11,
+        "fold": 0.65,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 5,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 784,
+        "y": 571,
+        "rotation": -0.5,
+        "length": 145,
+        "width": 70,
+        "height": 26,
+        "thickness": 9,
+        "fold": 0.45,
+        "branches": 2,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 344,
+          "y": 0
+        },
+        {
+          "x": 400,
+          "y": 0
+        },
+        {
+          "x": 400,
+          "y": 216
+        },
+        {
+          "x": 384,
+          "y": 256
+        },
+        {
+          "x": 344,
+          "y": 256
+        }
+      ],
+      [
+        {
+          "x": 344,
+          "y": 360
+        },
+        {
+          "x": 384,
+          "y": 360
+        },
+        {
+          "x": 400,
+          "y": 400
+        },
+        {
+          "x": 400,
+          "y": 768
+        },
+        {
+          "x": 344,
+          "y": 768
+        }
+      ],
+      [
+        {
+          "x": 640,
+          "y": 0
+        },
+        {
+          "x": 696,
+          "y": 0
+        },
+        {
+          "x": 696,
+          "y": 412
+        },
+        {
+          "x": 680,
+          "y": 448
+        },
+        {
+          "x": 640,
+          "y": 448
+        }
+      ],
+      [
+        {
+          "x": 640,
+          "y": 568
+        },
+        {
+          "x": 680,
+          "y": 568
+        },
+        {
+          "x": 696,
+          "y": 600
+        },
+        {
+          "x": 696,
+          "y": 768
+        },
+        {
+          "x": 640,
+          "y": 768
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "package": {
+    "id": "r100-braided-seam",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "fibre-knot": {
+        "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+        "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+        "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+      }
+    },
+    "dependencyHash": "42e7e9a7",
+    "grade": "medium"
+  }
+}
