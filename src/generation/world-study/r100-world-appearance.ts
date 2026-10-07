@@ -7,7 +7,7 @@ export interface WorldMaterialRamp {
 }
 export const WORLD_GROUND_PATTERNS = ['strata', 'veins', 'plates', 'grains', 'tension', 'flow'] as const;
 export type WorldGroundPattern = typeof WORLD_GROUND_PATTERNS[number];
-export const WORLD_MATERIAL_ORGANIZATIONS = ['short-fibre', 'porous-marrow'] as const;
+export const WORLD_MATERIAL_ORGANIZATIONS = ['short-fibre', 'porous-marrow', 'short-fibre-loose'] as const;
 export type WorldMaterialOrganization = typeof WORLD_MATERIAL_ORGANIZATIONS[number];
 export interface R100WorldAppearance {
   readonly version: 1;

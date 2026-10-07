@@ -29,13 +29,13 @@ for (const world of oldWorlds) for (const definition of world.definitions) { val
 const temporary = mkdtempSync(join(tmpdir(), 'coh-v4-geometry-'));
 let oldMeshes = 0;
 try {
-  const geometry = execFileSync('git', ['show', `${baseline}:src/generation/world-study/native-volume-geometry.ts`], { encoding: 'utf8' });
-  // Both imported v3 modules must themselves be byte-identical before this
-  // baseline module may resolve them. This avoids a circular equivalence test.
-  for (const file of ['native-volume-expansion.ts', 'native-volume-cellular.ts']) assert.equal(readFileSync(`src/generation/world-study/${file}`, 'utf8'),
-    execFileSync('git', ['show', `${baseline}:src/generation/world-study/${file}`], { encoding: 'utf8' }));
+  // Resolve the entire historical geometry closure from Git, never through
+  // current modules. Explicit new profiles may extend today's v3 dispatcher
+  // while these old inputs must still produce the exact historical mesh.
+  for (const file of ['native-volume-geometry.ts', 'native-volume-expansion.ts', 'native-volume-cellular.ts'])
+    writeFileSync(join(temporary, file), execFileSync('git', ['show', `${baseline}:src/generation/world-study/${file}`]));
   const bundled = join(temporary, 'baseline.mjs');
-  buildSync({ stdin: { contents: geometry, loader: 'ts', resolveDir: resolve('src/generation/world-study') }, outfile: bundled, platform: 'node', format: 'esm', bundle: true, logLevel: 'silent' });
+  buildSync({ entryPoints: [join(temporary, 'native-volume-geometry.ts')], outfile: bundled, platform: 'node', format: 'esm', bundle: true, logLevel: 'silent' });
   const previous = await import(pathToFileURL(bundled).href) as { buildNativeVolume: typeof buildNativeVolume };
   for (const world of oldWorlds) for (const definition of world.definitions) for (const instance of definition.instances) {
     const { role, ...geometry } = instance;
@@ -72,6 +72,17 @@ const base: NativeVolumeSpec = { id: 1, seed: 41701, family: 'broken-shell', x: 
 let bodySamples = 0, sweepSamples = 0, rejections = 0;
 const shapeMetrics: unknown[] = [];
 for (const shapeProfile of NATIVE_VOLUME_V4_PROFILES) for (const rotation of [0, .43, -1.1]) {
+  if (shapeProfile === 'settled-sheet' || shapeProfile === 'settled-fan') {
+    const input = { ...base, shapeProfile, rotation, height: 5, blocking: 0 }, mesh = buildNativeVolume(input);
+    assert(mesh.triangleCount > 0 && mesh.triangleCount < 600);
+    assert([...mesh.positions, ...mesh.normals, ...mesh.uv].every(Number.isFinite));
+    assert(mesh.materials.every(slot => slot === 0) && mesh.joints.length === 0, 'settled relief is intact non-emissive skin');
+    assert(mesh.positions.some((v, i) => i % 3 === 2 && v === 0), 'settled edge reaches the real floor');
+    assert.throws(() => validateNativeVolumeSpec({ ...input, blocking: 1 })); rejections++;
+    assert.throws(() => validateNativeVolumeSpec({ ...input, height: 7 })); rejections++;
+    shapeMetrics.push({ shapeProfile, rotation, triangles: mesh.triangleCount, role: 'relief-only', bounds: mesh.bounds });
+    continue;
+  }
   const mesh = buildNativeVolume({ ...base, shapeProfile, rotation }), faces = triangles(mesh);
   assert([...mesh.positions, ...mesh.normals, ...mesh.uv].every(Number.isFinite));
   assert(mesh.triangleCount > 0 && mesh.triangleCount < 600);

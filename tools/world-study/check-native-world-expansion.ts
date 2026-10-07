@@ -48,7 +48,7 @@ for (const shapeProfile of NATIVE_VOLUME_SHAPE_PROFILES) {
     assert.equal(mesh.bounds.maxZ, input.height);
     const planar = shapeProfile === 'monolith-buttress' || shapeProfile === 'terrace-shelf';
     assert(mesh.triangleCount < 7000 && mesh.triangleCount > (planar ? 30 : 200));
-    assert([0, 1, 2, 3].every(slot => mesh.materials.includes(slot)), `${shapeProfile}: material faces`);
+    assert((shapeProfile === 'pleated-tear' && !blocking ? [0, 1, 2] : [0, 1, 2, 3]).every(slot => mesh.materials.includes(slot)), `${shapeProfile}: material faces`);
     assert(mesh.positions.filter((_v, at) => at % 3 === 2).every(z => z >= 0), 'Nothing clips below ground');
     normals(mesh); cases++;
   }
@@ -72,7 +72,7 @@ for (const shapeProfile of NATIVE_VOLUME_SHAPE_PROFILES) {
     for (let x = 110; x <= 370; x += 8) if (collision.supports({ x, y: 176 }, 10, 10) && collision.displacementFraction({ x, y: 176 }, 10, 10, 0, 125) === 1) clearLanes++;
     assert(clearLanes >= 4, 'Rib gaps admit the complete body from the quiet courtyard');
     assert(!collision.supports({ x: 240, y: 114 }, 10, 10), 'Backbone remains solid');
-  } else if (shapeProfile === 'pleated-sheet') {
+  } else if (shapeProfile === 'pleated-sheet' || shapeProfile === 'pleated-tear') {
     assert(raster.occupiedPixels.length > spec.length * spec.width * .35, 'Pleated sheet unfolds across a broad two-dimensional surface, not a thin swept wall');
     for (let face = 0; face < mesh.triangleCount; face++) if (mesh.regions[face] === 4)
       assert.equal(mesh.materials[face], 0, 'Continuous folded outer skin cannot acquire alternating inner-material stripes');

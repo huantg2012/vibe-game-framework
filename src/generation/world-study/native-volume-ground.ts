@@ -3,8 +3,9 @@
  * a walkable upper floor, or a source of pollution/visibility semantics. */
 import type { Builder, Point, UV } from './native-volume-expansion';
 import { buildCompressedWedge, buildPorousBreak } from './native-volume-organization';
+import { buildSettledSheet, buildSettledFan } from './native-volume-settled-sheet';
 
-export const NATIVE_VOLUME_V4_PROFILES = ['fracture-fan', 'fallen-bundle', 'clamp-bank', 'torn-sheet', 'compressed-wedge', 'porous-break'] as const;
+export const NATIVE_VOLUME_V4_PROFILES = ['fracture-fan', 'fallen-bundle', 'clamp-bank', 'torn-sheet', 'compressed-wedge', 'porous-break', 'settled-sheet', 'settled-fan'] as const;
 export type NativeVolumeV4Profile = typeof NATIVE_VOLUME_V4_PROFILES[number];
 const uv = (p: Point): UV => [p[0], p[1]];
 
@@ -346,6 +347,8 @@ export function buildGroundNativeVolume(builder: Builder): void {
     case 'torn-sheet': tornSheet(builder); return;
     case 'compressed-wedge': buildCompressedWedge(builder); return;
     case 'porous-break': buildPorousBreak(builder); return;
+    case 'settled-sheet': buildSettledSheet(builder); return;
+    case 'settled-fan': buildSettledFan(builder); return;
     default: throw new Error('Unknown construction 4 native shape profile');
   }
 }

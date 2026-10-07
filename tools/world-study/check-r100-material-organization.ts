@@ -5,7 +5,7 @@ import sharp from 'sharp';
 import { PAINTED_MATERIALS } from '../../src/generated/r100-materials';
 import { ORGANIZATION_MATERIALS } from '../../src/generated/r100-material-organizations';
 import { R100_WORLD_APPEARANCES } from '../../src/generated/r100-world-appearance';
-import { validR100WorldAppearance, type WorldMaterialOrganization } from '../../src/generation/world-study/r100-world-appearance';
+import { validR100WorldAppearance, WORLD_MATERIAL_ORGANIZATIONS, type WorldMaterialOrganization } from '../../src/generation/world-study/r100-world-appearance';
 import { paintedMaterialDefinition } from '../../src/systems/r100-world/painted-material';
 import { compileMaterialOrganizationsCSV } from './generate-material-organizations.mjs';
 
@@ -18,9 +18,9 @@ assert.throws(()=>compileMaterialOrganizationsCSV(csv.replace('/assets/r100-mate
 assert.throws(()=>compileMaterialOrganizationsCSV(csv.split('\n').slice(0,2).join('\n')),/Expected one/);
 for(const appearance of R100_WORLD_APPEARANCES){
  assert(validR100WorldAppearance(appearance));
- assert(!Object.hasOwn(appearance,'materialOrganization'),'Existing worlds do not implicitly opt in');
+ if (R100_WORLD_APPEARANCES.indexOf(appearance) < 52) assert(!Object.hasOwn(appearance,'materialOrganization'),'Accepted original 52 worlds do not implicitly opt in');
  assert(!validR100WorldAppearance({...appearance,materialOrganization:'unknown'}));
- for(const organization of ['short-fibre','porous-marrow'])assert(validR100WorldAppearance({...appearance,materialOrganization:organization}));
+ for(const organization of WORLD_MATERIAL_ORGANIZATIONS)assert(validR100WorldAppearance({...appearance,materialOrganization:organization}));
 }
 for(const family of PAINTED_MATERIALS){
  assert.equal(paintedMaterialDefinition(family.family),family,'Absent selection retains exact family object');
@@ -38,4 +38,6 @@ for(const atom of ORGANIZATION_MATERIALS)for(const surface of [atom,atom.solid])
  const pixels=await sharp(`public${surface.source}`).resize(surface.logical_pixels,surface.logical_pixels).ensureAlpha().raw().toBuffer();
  for(let q=3;q<pixels.length;q+=4)assert.equal(pixels[q],255,'Pigment texture cannot open transparent fake holes');
 }
-console.log(`PASS 2 independent source pairs; CSV strict negatives, explicit resolver/secondary isolation, ${R100_WORLD_APPEARANCES.length} absent opt-ins, source dimension/opaque pigment. Normal-light art remains pending.`);
+assert.deepEqual(R100_WORLD_APPEARANCES.filter(row=>row.materialOrganization==='short-fibre-loose').map(row=>row.worldId),['short-fibre-mat','felt-wedges']);
+assert.equal(R100_WORLD_APPEARANCES.find(row=>row.worldId==='woven-quarters')?.materialOrganization,'short-fibre');
+console.log(`PASS ${ORGANIZATION_MATERIALS.length} independent source pairs; CSV strict negatives, explicit resolver/secondary isolation, original 52 absent opt-ins, exact two-world loose selection, source dimension/opaque pigment. Normal-light art remains pending.`);

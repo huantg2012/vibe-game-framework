@@ -4,9 +4,11 @@ import assert from 'node:assert/strict';
 import { createR100ProductionRecipe, validR100ProductionRecipe } from '../../src/generation/world-study/r100-package';
 import type { WorldProductionRecipeV3 } from '../../src/generation/world-study/production-recipe';
 import { R100_MATERIAL_DEPENDENCIES } from '../../src/generated/r100-package-manifest';
+import { createR100ProductionRecipe as createRevision5Recipe,
+  validR100ProductionRecipe as validRevision5Recipe } from '../../src/generation/legacy-r100-v5/executor-revision5.js';
 
-function seal(recipe: WorldProductionRecipeV3): WorldProductionRecipeV3 {
-  const source = JSON.stringify({ algorithm: 'r100-native@3.6', native: recipe.nativeDefinition,
+function seal(recipe: WorldProductionRecipeV3, revision: 5 | 6 = 6): WorldProductionRecipeV3 {
+  const source = JSON.stringify({ algorithm: `r100-native@3.${revision}`, native: recipe.nativeDefinition,
     profile: recipe.profile, space: recipe.space, contentFragmentTypeId: recipe.contentFragmentTypeId,
     grade: recipe.gradeDefinition, contents: recipe.contentDefinition, appearance: recipe.appearance,
     materials: recipe.package.materials });
@@ -63,7 +65,7 @@ let organizationNegatives = 0;
 if (process.argv.includes('--organizations')) {
   assert(Object.keys(original.package.materials).every(key => !key.startsWith('organization:')),
     'Unselected original world retains family-only material dependencies');
-  for (const organization of ['short-fibre', 'porous-marrow'] as const) {
+  for (const organization of ['short-fibre', 'porous-marrow', 'short-fibre-loose'] as const) {
     const key = `organization:${organization}`, dependency = R100_MATERIAL_DEPENDENCIES[key];
     assert(dependency, `Compile the dedicated ${organization} atoms before this contract check`);
     const keys = [...Object.keys(original.package.materials), key].sort();
@@ -94,6 +96,54 @@ if (process.argv.includes('--organizations')) {
     });
     negative('unknown organization', recipe => ({ ...recipe,
       appearance: { ...recipe.appearance, materialOrganization: 'unknown-organization' } as unknown as WorldProductionRecipeV3['appearance'] }));
+    if (organization === 'short-fibre-loose') {
+      const prior = createRevision5Recipe('ash-strata', 20261004, 'medium');
+      assert(validRevision5Recipe(prior) && validR100ProductionRecipe(prior));
+      const wrongRevision = seal({...structuredClone(prior),
+        appearance: {...prior.appearance, materialOrganization: organization},
+        package: {...prior.package, materials: {...prior.package.materials, [key]: dependency}}}, 5);
+      assert(!validRevision5Recipe(wrongRevision), 'Frozen revision5 cannot accept a newly authored atom');
+      assert(!validR100ProductionRecipe(wrongRevision), 'Outer legacy routing cannot silently upgrade old material identity');
+      organizationNegatives += 2;
+    }
   }
 }
-console.log(`PASS revision6 package contract: ${cases.length + edgeCases.length} re-sealed invalid native schemas, ${organizationNegatives} organization negatives; valid authored erosion/edge${organizationNegatives ? ' and two dedicated organization dependency fixtures' : ''} accepted. Synthetic package contracts only; no map/art/gameplay claim.`);
+let extendedProfileNegatives = 0;
+if (process.argv.includes('--extended-profiles')) {
+  const oldRecipe = createRevision5Recipe('ash-strata', 20261004, 'medium');
+  assert.equal(oldRecipe.package.algorithmRevision, 5);
+  assert.deepEqual(seal(oldRecipe, 5), oldRecipe, 'Revision5 test receipt matches its immutable original algorithm');
+  assert(validRevision5Recipe(oldRecipe) && validR100ProductionRecipe(oldRecipe), 'Unmodified revision5 still recovers');
+  for (const [profile, version] of [['pleated-tear', 3], ['settled-sheet', 4], ['settled-fan', 4]] as const) {
+    const configure = (recipe: WorldProductionRecipeV3): Record<string, unknown> => {
+      const native = recipe.nativeDefinition as unknown as MutableNative;
+      const instance = native.instances[0]!;
+      instance.constructionVersion = version;
+      instance.shapeProfile = profile;
+      // The settled layer is explicitly shallow and walkable; this does not
+      // turn a solid into a traversable shape in any authored world.
+      if (version === 4) { instance.role = 'relief'; instance.height = 6; }
+      return instance;
+    };
+    const selected = structuredClone(original); configure(selected);
+    assert(validR100ProductionRecipe(seal(selected)), `${profile}: valid explicit revision6 fixture admitted`);
+    for (const wrongVersion of [1, 2, version === 3 ? 4 : 3]) {
+      const invalid = structuredClone(selected);
+      (invalid.nativeDefinition as unknown as MutableNative).instances[0]!.constructionVersion = wrongVersion;
+      assert(!validR100ProductionRecipe(seal(invalid)), `${profile}: wrong construction ${wrongVersion} rejected`);
+      extendedProfileNegatives++;
+    }
+    if (version === 4) for (const [field, value] of [['role', 'solid'], ['height', 7]] as const) {
+      const invalid = structuredClone(selected);
+      (invalid.nativeDefinition as unknown as MutableNative).instances[0]![field] = value;
+      assert(!validR100ProductionRecipe(seal(invalid)), `${profile}: ${field} ${value} rejected`);
+      extendedProfileNegatives++;
+    }
+    const injected = structuredClone(oldRecipe); configure(injected);
+    const resealedOld = seal(injected, 5);
+    assert(!validRevision5Recipe(resealedOld), `${profile}: frozen revision5 rejects a correctly re-sealed new shape`);
+    assert(!validR100ProductionRecipe(resealedOld), `${profile}: outer recovery router preserves frozen rejection`);
+    extendedProfileNegatives++;
+  }
+}
+console.log(`PASS revision6 package contract: ${cases.length + edgeCases.length} re-sealed invalid native schemas, ${organizationNegatives} organization negatives, ${extendedProfileNegatives} extended-profile negatives; valid authored erosion/edge${organizationNegatives ? ' and three dedicated organization dependency fixtures' : ''} accepted. Synthetic package contracts only; no map/art/gameplay claim.`);

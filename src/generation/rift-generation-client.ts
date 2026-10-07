@@ -1,4 +1,5 @@
 import type { RiftGenerationInput, RiftGenerationRequest, RiftGenerationResponse, RiftGenerationWire } from './rift-generation-protocol';
+import { requestWorker } from '@/utils/worker-request';
 
 export const RIFT_GENERATION_TIMEOUT_MS = 60000;
 /** Minimal worker boundary permits deterministic cancellation tests without a DOM. */
@@ -22,33 +23,10 @@ export class RiftGenerationClient {
   }
 
   generate(input: RiftGenerationInput, signal?: AbortSignal): Promise<RiftGenerationWire> {
-    if (signal?.aborted) return Promise.reject(new DOMException('Generation cancelled', 'AbortError'));
-    return new Promise((resolve, reject) => {
-      let worker: RiftGenerationWorkerPort;
-      try { worker = this.createWorker(); } catch (error) { reject(error); return; }
-      const id = ++requestSequence;
-      let finished = false;
-      const cleanup = (): void => {
-        clearTimeout(timeout); signal?.removeEventListener('abort', cancel);
-        worker.onmessage = null; worker.onerror = null; worker.onmessageerror = null; worker.terminate();
-      };
-      const fail = (error: Error): void => {
-        if (finished) return; finished = true; cleanup(); reject(error);
-      };
-      const cancel = (): void => fail(new DOMException('Generation cancelled', 'AbortError'));
-      const timeout = setTimeout(() => fail(new DOMException(`Generation exceeded ${this.timeoutMs} ms budget`, 'TimeoutError')), this.timeoutMs);
-      worker.onmessage = ({ data }) => {
-        if (finished || data?.id !== id) return;
-        if ('error' in data) { fail(new Error(data.error)); return; }
-        if (!('result' in data)) { fail(new Error('Malformed generation response')); return; }
-        finished = true; cleanup(); resolve(data.result);
-      };
-      worker.onerror = event => fail(new Error(event.message || 'Generation worker failed'));
-      worker.onmessageerror = () => fail(new Error('Generation worker transfer failed'));
-      signal?.addEventListener('abort', cancel, { once: true });
-      if (signal?.aborted) { cancel(); return; }
-      try { worker.postMessage({ id, input }); }
-      catch (error) { fail(error instanceof Error ? error : new Error(String(error))); }
-    });
+    return requestWorker(this.createWorker, { id: ++requestSequence, input }, data => {
+      if ('error' in data) throw new Error(data.error);
+      if (!('result' in data)) throw new Error('Malformed generation response');
+      return data.result;
+    }, { signal, timeoutMs: this.timeoutMs, label: 'Generation' });
   }
 }

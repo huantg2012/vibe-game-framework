@@ -20,7 +20,7 @@ export interface R100SurfacePreparationInput {
 }
 export interface R100SurfacePreparationResult { readonly identity:string; readonly surface:MasterSurfaceBake; readonly paintHosts:readonly PreparedPaintGenome[]; readonly gameplay:R100PreparedGameplay }
 export interface R100SurfacePreparationRequest { readonly id:number; readonly input:R100SurfacePreparationInput }
-export type R100SurfacePreparationResponse={readonly id:number;readonly result:R100SurfacePreparationResult}|{readonly id:number;readonly error:string};
+export type R100SurfacePreparationResponse={readonly id:number;readonly started:true}|{readonly id:number;readonly result:R100SurfacePreparationResult}|{readonly id:number;readonly error:string};
 export function executeR100SurfacePreparation(input:R100SurfacePreparationInput):R100SurfacePreparationResult {
  const world=hydrateR100MasterWorld(input.native,input.layout);
  const paintHosts = r100PaintHostRequests(input.layout).map(request => ({key:paintGenomePreparationKey(request),baked:bakePaintGenome(request)}));

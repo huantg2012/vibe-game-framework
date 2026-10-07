@@ -12,7 +12,9 @@ const paths = ['data/rift-master-scenes.csv', 'data/rift-pollution-grades.csv', 
   'src/generation/world-study/r100-expedition.ts', 'src/generation/world-study/r100-expedition-v1.ts',
   'src/generation/world-study/r100-patrol-windows.ts', 'src/generation/world-study/r100-package.ts', 'src/generation/world-study/native-volume-geometry.ts',
   'src/generation/world-study/native-volume-expansion.ts', 'src/generation/world-study/native-volume-cellular.ts',
+  'src/generation/world-study/native-volume-pleated-tear.ts',
   'src/generation/world-study/native-volume-ground.ts', 'src/generation/world-study/native-volume-erosion.ts',
+  'src/generation/world-study/native-volume-settled-sheet.ts',
   'src/generation/world-study/native-volume-ground-edge.ts',
   'src/generation/world-study/native-volume-organization.ts',
   'src/generation/world-study/native-volume-raster.ts', 'src/generation/world-study/pollution-grade.ts'];
@@ -37,7 +39,7 @@ if (existsSync(organizationCsv)) {
     const values = line.split(',');
     if (values.length !== header.length) throw new Error('Invalid material organization row');
     const row = Object.fromEntries(header.map((key, index) => [key, values[index]]));
-    if (!['short-fibre', 'porous-marrow'].includes(row.organization)) throw new Error('Unknown material organization');
+    if (!['short-fibre', 'porous-marrow', 'short-fibre-loose'].includes(row.organization)) throw new Error('Unknown material organization');
     const key = `organization:${row.organization}`;
     if (materials[key]) throw new Error(`Duplicate material organization: ${key}`);
     for (const source of [row.source, row.solid_source]) if (!/^\/assets\/r100-materials\/[a-z0-9-]+-source\.png$/.test(source)) throw new Error('Invalid immutable organization asset path');

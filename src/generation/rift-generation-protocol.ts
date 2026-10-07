@@ -17,6 +17,7 @@ export interface RiftGenerationWire {
   readonly generationMs: number;
 }
 export type RiftGenerationResponse =
+  | { readonly id: number; readonly started: true }
   | { readonly id: number; readonly result: RiftGenerationWire }
   | { readonly id: number; readonly error: string };
 

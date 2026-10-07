@@ -17,11 +17,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-material-organizations.csv",
-      "sha256": "062b5ec22851ee681dfd57eb8c9ce1c384b27457651ff0742efe0363f921c0ad"
+      "sha256": "352cea48094c2f7bc214b2390e5cfc4c5e9ac6af5817f736773f51ac5d6c3d48"
     },
     {
       "path": "data/rift-native-worlds.csv",
-      "sha256": "4ecdff448c9418436d7873395feb82f2e88e95f467e3e3155be93be6e93afbe2"
+      "sha256": "d56a3711dd2d005e2f8cfa697c415ce2550b6262c7de1457e3599e43bc100a60"
     },
     {
       "path": "data/rift-pollution-grades.csv",
@@ -29,11 +29,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "data/rift-search-remains.csv",
-      "sha256": "a4837f613f350f7ce8171d6cde8c2b02261fc94aca35f85b351fe3b291a00dfb"
+      "sha256": "bd5f8b3d2863ff4e1974d56922afeb8a477116e65755e8830d19a27e0b0401fa"
     },
     {
       "path": "data/rift-world-appearance.csv",
-      "sha256": "e3fe76650d72c13cdb7276c885bc3baa7647c97848fa6af9f1770d838d53895d"
+      "sha256": "277e7d0485f4b4aaab21323fba613df662321a82fff54668a25079e620f1c7d1"
     },
     {
       "path": "public/assets/r100-materials/ash-strata-source.png",
@@ -92,6 +92,14 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "39a3207c28c9c00ca4713e72cf44edddbd9e948cdd88959d553bb9db94f68b4c"
     },
     {
+      "path": "public/assets/r100-materials/short-fibre-loose-ground-source.png",
+      "sha256": "c7bd9b26d16d9dd374d4d61e2b42eb13cee3a5e0980cee07e292b5db8d4112dd"
+    },
+    {
+      "path": "public/assets/r100-materials/short-fibre-loose-solid-source.png",
+      "sha256": "cf673c46a193dd9f50bf1c26a0218bced7c335af8b52e9adb5b3f6c0f50246dd"
+    },
+    {
       "path": "public/assets/r100-materials/short-fibre-solid-source.png",
       "sha256": "488fa9b7cc8cd093c832aab4684cd229b76c582cbecce743d7db24a27b32ec2a"
     },
@@ -109,11 +117,11 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/native-volume-expansion.ts",
-      "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
+      "sha256": "508b6dfaf744a63671035838c86ad36906b57be341ee26f1f1e55ed68e10d0b4"
     },
     {
       "path": "src/generation/world-study/native-volume-geometry.ts",
-      "sha256": "c944df69504841016a09204dfa3db035cf633cc532b5bd58d1e4c7b50a8fdd28"
+      "sha256": "c4707a3f3354301798ee91487868f14566f4e46554a30b536ab303b087ae8ef6"
     },
     {
       "path": "src/generation/world-study/native-volume-ground-edge.ts",
@@ -121,15 +129,23 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/native-volume-ground.ts",
-      "sha256": "598e8adbce5fbb968954088141a643f7d01cdcb6fd204486d59bf73da72406a7"
+      "sha256": "dd4e4619f2635516f20704dda011a5fccc2805c7389278e97200a835db7067c3"
     },
     {
       "path": "src/generation/world-study/native-volume-organization.ts",
       "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
     },
     {
+      "path": "src/generation/world-study/native-volume-pleated-tear.ts",
+      "sha256": "a542f83a5da9b9d7b70ce35c37cfb0a09984bed56a6cec152af84c425e32eae1"
+    },
+    {
       "path": "src/generation/world-study/native-volume-raster.ts",
       "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-settled-sheet.ts",
+      "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
     },
     {
       "path": "src/generation/world-study/pollution-grade.ts",
@@ -161,7 +177,7 @@ export const R100_PACKAGE_MANIFEST = {
     },
     {
       "path": "src/generation/world-study/r100-world-appearance.ts",
-      "sha256": "019e641e9c7471a6a58d250d44a8341c35fd58ad6f007b5abffc668578c76f4a"
+      "sha256": "71441ad19d1ef8702e737f46898abf05a7b0262de4916aede9bfddbe6fe04b59"
     },
     {
       "path": "src/generation/world-study/world-material-pigment.ts",
@@ -180,7 +196,7 @@ export const R100_PACKAGE_MANIFEST = {
       "sha256": "603d3680ed4f6b95223fa268034a2332760dc0c804f26c00337526a29a7592fa"
     }
   ],
-  "hash": "86118df656b9ecb79c951b63cea124530e08752115539f604ad6b05ef656226a"
+  "hash": "d52fb50e9033e29f928cbca0139f273fd9585a89245dec2f20efd696e276c89c"
 } as const;
 export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly definition: string; readonly surface: string; readonly solid: string }>> = {
   "folded-slab": {
@@ -222,5 +238,10 @@ export const R100_MATERIAL_DEPENDENCIES: Readonly<Record<string, { readonly defi
     "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
     "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
     "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+  },
+  "organization:short-fibre-loose": {
+    "definition": "06b98bb318c7f8440c6c576a6f0472aac78c13a198f65fe8ffcc1b1a266dd328",
+    "surface": "c7bd9b26d16d9dd374d4d61e2b42eb13cee3a5e0980cee07e292b5db8d4112dd",
+    "solid": "cf673c46a193dd9f50bf1c26a0218bced7c335af8b52e9adb5b3f6c0f50246dd"
   }
 };

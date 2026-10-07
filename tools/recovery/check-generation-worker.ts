@@ -48,7 +48,7 @@ for (const failure of ['error', 'messageerror', 'response-error', 'post-error'] 
   const fake = new FakeWorker();
   if (failure === 'post-error') fake.postMessage = () => { throw new Error('post failed'); };
   const waiting = new RiftGenerationClient(() => fake).generate(input);
-  if (failure === 'error') fake.onerror!({ message: 'worker failed' } as ErrorEvent);
+  if (failure === 'error') { fake.respond({ id: fake.request!.id, started: true }); fake.onerror!({ message: 'worker failed' } as ErrorEvent); }
   else if (failure === 'messageerror') fake.onmessageerror!({} as MessageEvent);
   else if (failure === 'response-error') fake.respond({ id: fake.request!.id, error: 'generation failed' });
   await assert.rejects(waiting); assertDisposed(fake);

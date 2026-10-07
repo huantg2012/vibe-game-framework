@@ -2,8 +2,9 @@
  * joined physical surfaces. Empty passages never receive a floor or a lid. */
 import type { NativeVolumeSpec } from './native-volume-geometry';
 import { buildCellularShell } from './native-volume-cellular';
+import { createPleatedTear } from './native-volume-pleated-tear';
 
-export const NATIVE_VOLUME_SHAPE_PROFILES = ['rib-vault', 'pleated-sheet', 'cellular-shell', 'lobed-cushion', 'monolith-buttress', 'terrace-shelf'] as const;
+export const NATIVE_VOLUME_SHAPE_PROFILES = ['rib-vault', 'pleated-sheet', 'cellular-shell', 'lobed-cushion', 'monolith-buttress', 'terrace-shelf', 'pleated-tear'] as const;
 export type NativeVolumeShapeProfile = typeof NATIVE_VOLUME_SHAPE_PROFILES[number];
 export type Point = readonly [number, number, number];
 export type UV = readonly [number, number];
@@ -94,7 +95,7 @@ function ribVault(b: Builder): void {
   }
 }
 
-function pleatedSheet(b: Builder): void {
+function pleatedSheet(b: Builder, openedTear = false): void {
   const s = b.spec, gap = Math.min(s.length * .38, Math.max(48, s.width * (.28 + s.opening * .14) + 20));
   const centreGap = (.04 + (noise(s.seed, 1981) - .5) * .10) * s.length;
   // Unequal fold runs belong to one skin. They do not alternate paint slots:
@@ -130,10 +131,18 @@ function pleatedSheet(b: Builder): void {
       }
       rows.push(row);
     }
+    // The opt-in tear follows a real ridge in the right sheet. The default
+    // profile executes the original quad/marker path without any alteration.
+    let ridge = 4;
+    if (openedTear && piece === 1) for (let i = 5; i < along - 4; i++)
+      if (rows[i]![6]![2] > rows[ridge]![6]![2]) ridge = i;
+    const openedSurface = openedTear && piece === 1 ? createPleatedTear(b, rows[ridge]![6]!,
+      [rows[ridge]![7]![0] - rows[ridge]![5]![0], rows[ridge]![7]![1] - rows[ridge]![5]![1]]) : undefined;
     for (let i = 0; i < along; i++) for (let j = 0; j < across; j++) {
       const a = rows[i]![j]!, c = rows[i + 1]![j]!, d = rows[i + 1]![j + 1]!, e = rows[i]![j + 1]!;
-      b.quad(a, c, d, e, 0, [uv(a), uv(c), uv(d), uv(e)], [0, 0, 1], 4);
-      if (start! < 0 && i === 15 && j === 7) fracture(b, a, c, d);
+      if (openedSurface) { openedSurface.triangle(a, c, d); openedSurface.triangle(a, d, e); }
+      else b.quad(a, c, d, e, 0, [uv(a), uv(c), uv(d), uv(e)], [0, 0, 1], 4);
+      if (!openedTear && start! < 0 && i === 15 && j === 7) fracture(b, a, c, d);
     }
     const outline: Point[] = [...rows.map(row => row[0]!), ...rows[along]!.slice(1),
       ...rows.slice(0, along).reverse().map(row => row[across]!), ...rows[0]!.slice(1, across).reverse()];
@@ -237,6 +246,7 @@ export function buildExpandedNativeVolume(builder: Builder): void {
   switch (builder.spec.shapeProfile) {
     case 'rib-vault': ribVault(builder); return;
     case 'pleated-sheet': pleatedSheet(builder); return;
+    case 'pleated-tear': pleatedSheet(builder, true); return;
     case 'cellular-shell': buildCellularShell(builder); return;
     case 'lobed-cushion': lobedCushion(builder); return;
     case 'monolith-buttress': monolithButtress(builder); return;

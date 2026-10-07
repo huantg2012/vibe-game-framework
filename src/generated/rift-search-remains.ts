@@ -1,5 +1,5 @@
 // GENERATED from data/rift-search-remains.csv; edit the CSV, not this file.
-export const SEARCH_REMAINS_SOURCE_HASH = 'a4837f613f350f7ce8171d6cde8c2b02261fc94aca35f85b351fe3b291a00dfb';
+export const SEARCH_REMAINS_SOURCE_HASH = 'bd5f8b3d2863ff4e1974d56922afeb8a477116e65755e8830d19a27e0b0401fa';
 export const SEARCH_REMAINS = [
   {
     "worldId": "ash-strata",
@@ -280,6 +280,166 @@ export const SEARCH_REMAINS = [
   {
     "worldId": "wedged-hide",
     "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "quiet-spur",
+    "grammar": "packed-granules"
+  },
+  {
+    "worldId": "split-fall",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "three-shelves",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "frayed-outwash",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "short-fibre-mat",
+    "grammar": "compressed-fibre-fragments"
+  },
+  {
+    "worldId": "marrow-break",
+    "grammar": "porous-core-chips"
+  },
+  {
+    "worldId": "felt-wedges",
+    "grammar": "compressed-fibre-fragments"
+  },
+  {
+    "worldId": "pore-bank",
+    "grammar": "porous-core-chips"
+  },
+  {
+    "worldId": "staggered-cups",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "split-tows",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "curled-flats",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "pitch-forks",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "grain-weld",
+    "grammar": "packed-granules"
+  },
+  {
+    "worldId": "silk-catch",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "resin-sleeve",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "shell-threads",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "chalk-divide",
+    "grammar": "packed-granules"
+  },
+  {
+    "worldId": "red-vault-fragments",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "blue-fault",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "pale-pressure",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "notched-backwater",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "crossed-casings",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "fibre-stumpfield",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "sloughed-court",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "crushed-seam",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "husk-reef",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "fibre-scree",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "gel-rafts",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "double-return",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "offset-basins",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "pinched-fan",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "spliced-reaches",
+    "grammar": "fractured-fibres"
+  },
+  {
+    "worldId": "white-scarfield",
+    "grammar": "packed-granules"
+  },
+  {
+    "worldId": "black-lacuna",
+    "grammar": "gel-fragments"
+  },
+  {
+    "worldId": "ochre-folds",
+    "grammar": "torn-membrane"
+  },
+  {
+    "worldId": "violet-marrows",
+    "grammar": "porous-core-chips"
+  },
+  {
+    "worldId": "fractured-estuary",
+    "grammar": "laminated-flakes"
+  },
+  {
+    "worldId": "woven-quarters",
+    "grammar": "compressed-fibre-fragments"
+  },
+  {
+    "worldId": "shell-patchwork",
+    "grammar": "glaze-shell"
+  },
+  {
+    "worldId": "last-shelf",
+    "grammar": "packed-granules"
   }
 ] as const;
 export type SearchRemainsGrammar = 'laminated-flakes' | 'fractured-fibres' | 'glaze-shell' | 'mineral-splinters' | 'packed-granules' | 'torn-membrane' | 'gel-fragments' | 'compressed-fibre-fragments' | 'porous-core-chips';

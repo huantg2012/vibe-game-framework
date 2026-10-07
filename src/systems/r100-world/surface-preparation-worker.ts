@@ -5,6 +5,7 @@ const worker=self as unknown as {
 };
 worker.onmessage=({data})=>{
  try {
+  worker.postMessage({id:data.id,started:true});
   const result=executeR100SurfacePreparation(data.input);
   const buffers=new Set<ArrayBuffer>();
   const collect=(value:unknown):void=>{

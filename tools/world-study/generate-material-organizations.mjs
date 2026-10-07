@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 
 const source = 'data/rift-material-organizations.csv';
 const target = 'src/generated/r100-material-organizations.ts';
-const organizations = ['short-fibre', 'porous-marrow'];
+const organizations = ['short-fibre', 'porous-marrow', 'short-fibre-loose'];
 const header = 'organization,source,logical_pixels,world_size,skin_region,cleaved_region,loose_region,solid_source,solid_world_size,solid_skin_region,solid_cut_region,solid_skin_roughness,solid_cut_roughness,solid_gain,solid_cut_gain';
 
 export function compileMaterialOrganizationsCSV(raw) {
@@ -45,6 +45,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const output = compileMaterialOrganizationsCSV(readFileSync(source, 'utf8'));
   if (process.argv.includes('--check')) {
     if (readFileSync(target, 'utf8') !== output) throw new Error('Material organization manifest is stale');
-    console.log('2 opt-in material organizations: CSV and generated manifest match');
+    console.log(`${organizations.length} opt-in material organizations: CSV and generated manifest match`);
   } else { writeFileSync(target, output); console.log(`Generated ${target}`); }
 }

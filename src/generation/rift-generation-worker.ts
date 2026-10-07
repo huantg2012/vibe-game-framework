@@ -8,7 +8,8 @@ const worker = self as unknown as {
   postMessage(message: RiftGenerationResponse, transfer?: ArrayBuffer[]): void;
 };
 worker.onmessage = ({ data }) => {
-  try { const result = executeRiftGeneration(data.input);
+  try { worker.postMessage({ id: data.id, started: true });
+    const result = executeRiftGeneration(data.input);
     worker.postMessage({ id: data.id, result }, riftGenerationTransferables(result)); }
   catch (error) { worker.postMessage({ id: data.id, error: error instanceof Error ? error.message : String(error) }); }
 };
