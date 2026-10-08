@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-10-08T10:55:38.381Z",
+  "status": "bounded-frozen-sources-and-observed-contract-check-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-a-pursuit-freeze.mjs",
+    "sha256": "d3002a5fa39834206d92d8345a5818514f6e039ff01fc62d8d16566f0252f3e0"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/policy-freeze.json",
+    "sha256": "a1870d611d25926be36147092a4c44cbdc52400e1323367e4fc49d3fdf481d71"
+  },
+  "executionAtAudit": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/execution.json",
+    "sha256": "925448f655dd07c3c0bbe6a87cb855e91a6b8dc4b7357aeeb49c19d597cb5434"
+  },
+  "taskSnapshot": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/task-preregistration.md",
+    "sha256": "51902dd11e7f3618ebe53b33ecc741bfc22da0a5914e08167d9ccbd28790abc1"
+  },
+  "productionFiles": 1397,
+  "dependencies": 10,
+  "cases": [
+    {
+      "id": "a-target-control",
+      "status": "running",
+      "reportAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/report.json",
+        "sha256": "f0fb3686b45a9d29c38633ab9ef7aab617378d068def7df51a7325c53ef578a1"
+      },
+      "journalAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/journey.jsonl",
+        "sha256": "66ae0a4c7785011942eba07f6fb9f073f0bd7ddf3d34104caf6d21a75763b7fd"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/i13/2-after-preparation.save.json",
+        "sha256": "a33342615bfd2a81124204293b5ed7fb9a3e19a54a257302de7a8a7bb6b9c3bb"
+      },
+      "completed": 0,
+      "expectedMaximum": 3,
+      "earlyStop": null,
+      "controlObservedEvents": []
+    }
+  ],
+  "limits": [
+    "Source and cap checks do not themselves establish that a retry yielded new income or that debt was restored. Four raw saves and original-service bridge are required.",
+    "New method explicitly changes Q transit/search roles and cap2, own-paid frozen-target risk handling and max24px/140ms input chunks. Other enemies/Host risks remain; useful action and deep outcome require separate review.",
+    "All geometric routing is diagnostic assistance; observed-source restrictions and later runtime window review remain separate."
+  ]
+}

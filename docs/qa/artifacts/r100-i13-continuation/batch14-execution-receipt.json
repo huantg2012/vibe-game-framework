@@ -1,0 +1,847 @@
+{
+  "recordedAt": "2026-10-08T10:00:43.022Z",
+  "scope": "First renewed authorization batch14 only; subsequent functional correction has separate freeze and receipts",
+  "planSha256": "a0a5f4fbfe1cefd6a3acb3116d8d11a0e41b966f17d8be2b7c49d0667c36b72c",
+  "executionSha256": "26bb1dc19171d9a6f6c6113012fdbc4aad4a1c8dd00663ddc9c82f6e5839f10d",
+  "completed": 14,
+  "uniqueRunIds": 14,
+  "plannedGrades": {
+    "low": 9,
+    "severe": 3,
+    "medium": 2
+  },
+  "actualGrades": {
+    "low": 10,
+    "medium": 2,
+    "severe": 2
+  },
+  "outcomes": {
+    "extract": 14
+  },
+  "technicalFailures": 0,
+  "replacements": 0,
+  "maxContexts": 3,
+  "verifiedFrozenBindings": [
+    {
+      "file": "tools/world-study/r100-i13-continuation-journey.mjs",
+      "sha256": "fcd8989466b6902462dbcf6a309f5d8f703eaef02e9a3374be2f7d056205475f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-continuation.mjs",
+      "sha256": "16c7906e150c8228deb4ddd39b0e931ab14722f322e4e3fa8de44b0fdd2d1a65"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-journey.mjs",
+      "sha256": "22c34317b9add03c98117ec573383c11a3a350406549bc81dd9fa94d66d82c5f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-encounters.mjs",
+      "sha256": "8efa42af08bfac8cef42010ca312893a26f294a00214ddfab526721bf3dc4db2"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-r2.mjs",
+      "sha256": "4f09752de6e160921fee5f56bc74032d4d3fb9a5229e71b2277cc790997ba7ba"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13/overall-execution-receipt.json",
+      "sha256": "1d727cfcfd2b9f6689c946199efb1982b9c95efa1019ab0d7951df9bc16b8578"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/frozen-source/source-snapshot.json",
+      "sha256": "35b784df631cfe771c81f523b76d9549771682495e6f569becba02bb3e9597f0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/qa-preflight.json",
+      "sha256": "d16863f23b831414144b75d2b72b459e9edbf11f6ece1ab1cc74b74b729a3099"
+    }
+  ],
+  "workspaceProductionFilesMatched": 1397,
+  "oldArtifactsProtection": "root/continuity.json independently verifies original616",
+  "serviceLifecycle": {
+    "port3033": "Owned frozen server retained for specifically authorized functional-selection followup; no browser contexts remain from batch14",
+    "port3034": "Owned npm dev smoke stopped after HTTP200"
+  },
+  "cases": [
+    {
+      "id": "a-new-directions",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+        "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+      },
+      "report": "docs/qa/artifacts/r100-i13-continuation/a-new-directions/report.json",
+      "reportSha256": "925c9dc3ef7c0a4687e4a0d64e34ca487814afeb844d5e4e1911c1e18cfaa335",
+      "status": "completed",
+      "exitCode": 0,
+      "attempts": [
+        {
+          "ordinal": 1,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "c494ba40-ca59-4eec-9fa4-2feddf194306",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-pallid-membrane",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "membrane-rim": {
+                "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+                "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+                "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+              }
+            },
+            "dependencyHash": "2b6fa31f",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 23,
+          "afterReserve": 24,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 102
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 52
+            }
+          ],
+          "normalAndEmergencyUse": [
+            {
+              "slot": 1,
+              "used": 2
+            },
+            {
+              "slot": 0,
+              "used": 1
+            }
+          ]
+        },
+        {
+          "ordinal": 2,
+          "plannedGrade": "severe",
+          "actualGrade": "low",
+          "gradeDecision": {
+            "plannedGrade": "severe",
+            "actualGrade": "low",
+            "eligible": false,
+            "tools": [
+              {
+                "index": 0,
+                "id": "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+                "uses": 2,
+                "family": "survey",
+                "required": 2
+              },
+              {
+                "index": 1,
+                "id": "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-safe-1",
+                "uses": 2,
+                "family": "dash",
+                "required": 3
+              }
+            ],
+            "moduleFacts": [
+              {
+                "type": "CORE",
+                "hp": 52,
+                "required": 51
+              },
+              {
+                "type": "STORAGE",
+                "hp": 102,
+                "required": 100
+              },
+              {
+                "type": "PURIFIER",
+                "hp": 52,
+                "required": 51
+              }
+            ],
+            "reason": "Insufficient real budget or service: actual low retained as missed severe eligibility"
+          },
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "97fc69a8-59e5-4e6f-a683-b4550f685bd7",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-knotted-run",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "af3b5ef8",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 24,
+          "afterReserve": 16,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 103
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 52
+            }
+          ],
+          "normalAndEmergencyUse": [
+            {
+              "slot": 1,
+              "used": 2
+            },
+            {
+              "slot": 0,
+              "used": 1
+            }
+          ]
+        },
+        {
+          "ordinal": 3,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "215f9d02-eca3-4427-b56a-d53a37d27e96",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-shell-grit",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              },
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              }
+            },
+            "dependencyHash": "90488c1f",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 16,
+          "afterReserve": 16,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 103
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 53
+            }
+          ],
+          "normalAndEmergencyUse": [
+            {
+              "slot": 0,
+              "used": 1
+            },
+            {
+              "slot": 1,
+              "used": 1
+            }
+          ]
+        },
+        {
+          "ordinal": 4,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "90bab9f2-7b2f-486a-8589-70dade82d77a",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-pitch-forks",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "gel-flow": {
+                "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+                "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+                "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+              }
+            },
+            "dependencyHash": "cfdb5831",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 16,
+          "afterReserve": 17,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 100
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 54
+            }
+          ],
+          "normalAndEmergencyUse": [
+            {
+              "slot": 0,
+              "used": 1
+            },
+            {
+              "slot": 1,
+              "used": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b-service-recovery",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-earned-glove/i13/1-after-preparation.save.json",
+        "sha256": "c860e250b88ae6cd18e5a979aa1a648844b0209c44e9290dc4192d8ebd6dc286"
+      },
+      "report": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/report.json",
+      "reportSha256": "5cd9f98647ace3eb7d9179cbaef243800dd606a7b9dbb0558015c5ca88dd5a27",
+      "status": "completed",
+      "exitCode": 0,
+      "attempts": [
+        {
+          "ordinal": 1,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "75e81d29-94d4-4687-a576-e6b0c6cbf804",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-braided-seam",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "90fb0e2f",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 0,
+          "afterReserve": 0,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 44
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 53
+            }
+          ],
+          "normalAndEmergencyUse": []
+        },
+        {
+          "ordinal": 2,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "a04cc983-c625-4ce5-945a-f3d98f882620",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-pressed-rim",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              },
+              "gel-flow": {
+                "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+                "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+                "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+              }
+            },
+            "dependencyHash": "cb0ed262",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 0,
+          "afterReserve": 0,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 53
+            },
+            {
+              "type": "STORAGE",
+              "hp": 72
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 51
+            }
+          ],
+          "normalAndEmergencyUse": [
+            {
+              "slot": 1,
+              "used": 3
+            }
+          ]
+        },
+        {
+          "ordinal": 3,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "a3e64a5a-02a9-4802-82be-eee9ff685897",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-hollow-wreckage",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              }
+            },
+            "dependencyHash": "4785a8db",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 0,
+          "afterReserve": 0,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 28
+            },
+            {
+              "type": "STORAGE",
+              "hp": 56
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 52
+            }
+          ],
+          "normalAndEmergencyUse": []
+        },
+        {
+          "ordinal": 4,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "5509f6c5-360d-4e8e-92b0-556f94ba26ce",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-bleached-court",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              }
+            },
+            "dependencyHash": "6ed99fca",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 0,
+          "afterReserve": 0,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 31
+            },
+            {
+              "type": "STORAGE",
+              "hp": 24
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 52
+            }
+          ],
+          "normalAndEmergencyUse": []
+        }
+      ]
+    },
+    {
+      "id": "entry-low",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+        "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+      },
+      "report": "docs/qa/artifacts/r100-i13-continuation/entry-low/report.json",
+      "reportSha256": "0594c180d10eaa975776df71a4feadbe4cf9eeaefaecbea6c9ea81d2a61ca2e0",
+      "status": "completed",
+      "exitCode": 0,
+      "attempts": [
+        {
+          "ordinal": 1,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "ae2d5ab8-b86c-4fea-a34b-47cf472b1a13",
+          "controlledWorld": "ash-strata",
+          "identity": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "7b6d7e47",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 23,
+          "afterReserve": 20,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 102
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 52
+            }
+          ],
+          "normalAndEmergencyUse": []
+        },
+        {
+          "ordinal": 2,
+          "plannedGrade": "low",
+          "actualGrade": "low",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "0252cf4a-72d2-4fb4-8d9c-2bdb6c6e22e9",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-ochre-folds",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "membrane-rim": {
+                "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+                "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+                "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+              }
+            },
+            "dependencyHash": "e74991e7",
+            "grade": "low"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 20,
+          "afterReserve": 3,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 102
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 53
+            }
+          ],
+          "normalAndEmergencyUse": []
+        }
+      ]
+    },
+    {
+      "id": "entry-medium",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+        "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+      },
+      "report": "docs/qa/artifacts/r100-i13-continuation/entry-medium/report.json",
+      "reportSha256": "c65b93ab2ae17d0c4e2e4c90fbbd9ec9572c35bf395ace60602a2ec6e21fcced",
+      "status": "completed",
+      "exitCode": 0,
+      "attempts": [
+        {
+          "ordinal": 1,
+          "plannedGrade": "medium",
+          "actualGrade": "medium",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "9acde61f-8055-43d2-896d-776bbe569bda",
+          "controlledWorld": "ash-strata",
+          "identity": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "7fbac693",
+            "grade": "medium"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 23,
+          "afterReserve": 20,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 102
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 52
+            }
+          ],
+          "normalAndEmergencyUse": []
+        },
+        {
+          "ordinal": 2,
+          "plannedGrade": "medium",
+          "actualGrade": "medium",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "997c7878-1acf-4dfc-9a58-078d303cdfc5",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-marrow-break",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "granular-ridge": {
+                "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+              },
+              "organization:porous-marrow": {
+                "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+                "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+                "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+              }
+            },
+            "dependencyHash": "fb9d4f2e",
+            "grade": "medium"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 20,
+          "afterReserve": 3,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 102
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 53
+            }
+          ],
+          "normalAndEmergencyUse": []
+        }
+      ]
+    },
+    {
+      "id": "entry-severe",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+        "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+      },
+      "report": "docs/qa/artifacts/r100-i13-continuation/entry-severe/report.json",
+      "reportSha256": "974b480885dc49af239eb289fdd4dd193af53a830c68a4e335762096f7c9ad5c",
+      "status": "completed",
+      "exitCode": 0,
+      "attempts": [
+        {
+          "ordinal": 1,
+          "plannedGrade": "severe",
+          "actualGrade": "severe",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "f5aed1df-7691-4c3f-8a0a-6124cbca88d9",
+          "controlledWorld": "ash-strata",
+          "identity": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "73f4c4ab",
+            "grade": "severe"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 23,
+          "afterReserve": 14,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 102
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 52
+            }
+          ],
+          "normalAndEmergencyUse": []
+        },
+        {
+          "ordinal": 2,
+          "plannedGrade": "severe",
+          "actualGrade": "severe",
+          "gradeDecision": null,
+          "outcome": "extract",
+          "status": "completed-real-input",
+          "runId": "864a6773-2287-465e-8308-16102212b5ff",
+          "controlledWorld": null,
+          "identity": {
+            "id": "r100-tendon-shelves",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 6,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "e05b80f2",
+            "grade": "severe"
+          },
+          "resourcesGranted": false,
+          "beforeReserve": 14,
+          "afterReserve": 0,
+          "afterModules": [
+            {
+              "type": "CORE",
+              "hp": 52
+            },
+            {
+              "type": "STORAGE",
+              "hp": 67
+            },
+            {
+              "type": "PURIFIER",
+              "hp": 53
+            }
+          ],
+          "normalAndEmergencyUse": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "recordedAt": "2026-10-08T11:00:54.618Z",
+  "status": "public-prediction-recomputation-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-target-admission-audit.mjs",
+    "sha256": "75511163037d3664b05a1507d309b4e4bb2f61f888b92542cffe30e38307714d"
+  },
+  "productionSelector": {
+    "path": "src/systems/tool-targeting.ts",
+    "sha256": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+  },
+  "journal": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/journey.jsonl",
+    "sha256": "705a246cd2d7ae5c87ab9cd61ad5e61e1ed833a583ec8ed3401d4937b6701646"
+  },
+  "observedAdmissions": 1,
+  "allowed": 1,
+  "rejected": 0,
+  "paidCasts": 1,
+  "mismatches": 0,
+  "rows": [
+    {
+      "line": 657,
+      "role": "search",
+      "requested": "ENM_INF_03",
+      "selected": "ENM_INF_03",
+      "allowed": true,
+      "reason": "formal-predicted-search-target-and-other-original-gates",
+      "elapsedBeforeTurn": 50831.28999999983,
+      "elapsedAfterTurn": 50947.97999999983,
+      "normalVisibleEnemyIds": [
+        "ENM_INF_03"
+      ],
+      "publicUnavailable": [],
+      "blockerIds": null
+    }
+  ],
+  "paid": [
+    {
+      "line": 660,
+      "admissionLine": 657,
+      "role": "search",
+      "predicted": "ENM_INF_03",
+      "actual": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_03",
+          "controlActive": true,
+          "remainingTime": 5383.36,
+          "startTime": 50964.639999999825
+        }
+      ],
+      "newEffects": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_03",
+          "controlActive": true,
+          "remainingTime": 5383.36,
+          "startTime": 50964.639999999825
+        }
+      ],
+      "accepted": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_03",
+          "controlActive": true,
+          "remainingTime": 5383.36,
+          "startTime": 50964.639999999825
+        }
+      ],
+      "mismatch": false
+    }
+  ],
+  "limits": [
+    "Prediction uses only recorded normal observations, LOS/facing and conservative known-unavailable memory; hidden current protection is not read or reconstructed. Actual paid effects remain authoritative.",
+    "An allowed predicate or cast does not establish useful subsequent movement/search; independent short-leg audit and normal scene review remain required.",
+    "Pure selection checks are not proof of natural severe deep success, restored new supply, or an isolated reward effect."
+  ]
+}

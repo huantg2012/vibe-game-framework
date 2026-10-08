@@ -1,0 +1,1728 @@
+{
+  "recordedAt": "2026-10-08T11:00:54.748Z",
+  "status": "bounded-frozen-sources-and-observed-contract-check-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-a-pursuit-freeze.mjs",
+    "sha256": "d3002a5fa39834206d92d8345a5818514f6e039ff01fc62d8d16566f0252f3e0"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/policy-freeze.json",
+    "sha256": "a1870d611d25926be36147092a4c44cbdc52400e1323367e4fc49d3fdf481d71"
+  },
+  "executionAtAudit": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/execution.json",
+    "sha256": "4344ed34662947a6e71d4eb0f64a50c1c963ddbc099575c76a4d905aed0fee6a"
+  },
+  "taskSnapshot": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/task-preregistration.md",
+    "sha256": "51902dd11e7f3618ebe53b33ecc741bfc22da0a5914e08167d9ccbd28790abc1"
+  },
+  "productionFiles": 1397,
+  "dependencies": 10,
+  "cases": [
+    {
+      "id": "a-target-control",
+      "status": "failed",
+      "reportAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/report.json",
+        "sha256": "eb0962c37e7073e5bd6729573be35814a8b2dbee5df9764b860371e4b766bf9c"
+      },
+      "journalAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/journey.jsonl",
+        "sha256": "705a246cd2d7ae5c87ab9cd61ad5e61e1ed833a583ec8ed3401d4937b6701646"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/i13/2-after-preparation.save.json",
+        "sha256": "a33342615bfd2a81124204293b5ed7fb9a3e19a54a257302de7a8a7bb6b9c3bb"
+      },
+      "completed": 0,
+      "expectedMaximum": 3,
+      "earlyStop": null,
+      "controlObservedEvents": [
+        {
+          "line": 659,
+          "at": "2026-10-08T10:56:12.543Z",
+          "event": "own-control-permit-state",
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 5366.699999999999,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 660,
+          "at": "2026-10-08T10:56:12.543Z",
+          "event": "paid-solidify-role-window",
+          "controlIntent": {
+            "role": "search",
+            "targetId": "ENM_INF_03",
+            "point": {
+              "x": 964,
+              "y": 276
+            },
+            "leg": {
+              "start": {
+                "x": 947.7540789579334,
+                "y": 318.96546103125513
+              },
+              "end": {
+                "x": 957.6570424250596,
+                "y": 292.77517056763554
+              }
+            }
+          },
+          "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 5383.36,
+              "startTime": 50964.639999999825
+            }
+          ],
+          "accepted": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 5383.36,
+              "startTime": 50964.639999999825
+            }
+          ],
+          "roles": [
+            [
+              "search",
+              1
+            ]
+          ],
+          "beforeObservation": {
+            "visibleSearches": [
+              {
+                "id": "r100-kindling-deep-1",
+                "pos": {
+                  "x": 868,
+                  "y": 180
+                }
+              },
+              {
+                "id": "r100-kindling-deep-2",
+                "pos": {
+                  "x": 932,
+                  "y": 196
+                }
+              },
+              {
+                "id": "r100-contaminant-deep-1",
+                "pos": {
+                  "x": 964,
+                  "y": 276
+                }
+              }
+            ],
+            "position": {
+              "x": 947.7540789579334,
+              "y": 318.96546103125513
+            },
+            "facing": -1.5707963267948966,
+            "hp": 160,
+            "chaos": 51.21115066553397,
+            "elapsedMs": 50947.97999999983,
+            "ended": false,
+            "enemies": [
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 959.3346991276735,
+                  "y": 233.95945313334124
+                },
+                "facing": 0.45483412751997426,
+                "attack": "idle",
+                "approaching": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_06",
+                "position": {
+                  "x": 912,
+                  "y": 112
+                },
+                "occupancy": "paint"
+              }
+            ],
+            "visiblePollutionCells": [
+              {
+                "x": 872,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 888,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 904,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 936,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 952,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 968,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 984,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 904,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 936,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 952,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 968,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 984,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 904,
+                "y": 152,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 152,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 936,
+                "y": 152,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 952,
+                "y": 152,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 968,
+                "y": 152,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 984,
+                "y": 152,
+                "paint": true,
+                "air": false
+              }
+            ],
+            "remembered": [
+              {
+                "id": "ENM_INF_01",
+                "position": {
+                  "x": 762.0640646489301,
+                  "y": 296.55184716741917
+                },
+                "facing": -2.497690753432518,
+                "attack": "idle",
+                "approaching": false,
+                "seen": 49114.68999999984
+              },
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 959.3346991276735,
+                  "y": 233.95945313334124
+                },
+                "facing": 0.45483412751997426,
+                "attack": "idle",
+                "approaching": false,
+                "seen": 50947.97999999983
+              }
+            ],
+            "normalVisibleEnemies": [
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 959.3346991276735,
+                  "y": 233.95945313334124
+                },
+                "facing": 0.45483412751997426,
+                "attack": "idle",
+                "approaching": false
+              }
+            ],
+            "ownPaidControls": []
+          }
+        },
+        {
+          "line": 670,
+          "at": "2026-10-08T10:56:12.847Z",
+          "event": "own-control-actual-short-leg",
+          "keys": [
+            "w"
+          ],
+          "ms": 120.87564713616732,
+          "leg": {
+            "start": {
+              "x": 947.7540789579334,
+              "y": 317.6669242312551
+            },
+            "end": {
+              "x": 948,
+              "y": 308
+            }
+          },
+          "before": {
+            "position": {
+              "x": 947.7540789579334,
+              "y": 317.6669242312551
+            },
+            "hp": 160,
+            "elapsedMs": 51231.28999999984
+          },
+          "after": {
+            "position": {
+              "x": 947.7540789579334,
+              "y": 309.117541831255
+            },
+            "hp": 160,
+            "elapsedMs": 51397.93999999984
+          },
+          "distance": 8.549382400000127,
+          "paidAtInput": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 5233.3499999999985,
+              "startTime": 50964.639999999825
+            }
+          ],
+          "paidAfter": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 5066.699999999997,
+              "startTime": 50964.639999999825
+            }
+          ],
+          "otherThreatsRetained": []
+        },
+        {
+          "line": 676,
+          "at": "2026-10-08T10:56:13.007Z",
+          "event": "own-control-actual-short-leg",
+          "keys": [
+            "d",
+            "w"
+          ],
+          "ms": 65,
+          "leg": {
+            "start": {
+              "x": 947.7540789579334,
+              "y": 308.03484343125496
+            },
+            "end": {
+              "x": 958.6091732636613,
+              "y": 286.6300092199429
+            }
+          },
+          "before": {
+            "position": {
+              "x": 947.7540789579334,
+              "y": 307.8180959645883
+            },
+            "hp": 160,
+            "elapsedMs": 51447.93999999984
+          },
+          "after": {
+            "position": {
+              "x": 950.2786740100526,
+              "y": 305.29270854480615
+            },
+            "hp": 160,
+            "elapsedMs": 51547.91999999985
+          },
+          "distance": 3.57087689471064,
+          "paidAtInput": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 5033.369999999997,
+              "startTime": 50964.639999999825
+            }
+          ],
+          "paidAfter": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 4900.0499999999965,
+              "startTime": 50964.639999999825
+            }
+          ],
+          "otherThreatsRetained": []
+        },
+        {
+          "line": 694,
+          "at": "2026-10-08T10:56:14.477Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "pos": {
+              "x": 868,
+              "y": 180
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 872.482042581714,
+                "y": 310.40764357570583
+              },
+              "facing": -0.076488003089809,
+              "attack": "idle",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 951.1961398192132,
+                "y": 304.37519075538563
+              },
+              "end": {
+                "x": 948,
+                "y": 300
+              }
+            }
+          },
+          "otherVisibleEnemies": []
+        },
+        {
+          "line": 698,
+          "at": "2026-10-08T10:56:14.540Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 951.1961398192132,
+              "y": 304.37519075538563
+            },
+            "end": {
+              "x": 948,
+              "y": 300
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 877.0187393761314,
+                "y": 310.05996240634875
+              },
+              "facing": -0.07648800308980891,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 3366.779999999992,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 701,
+          "at": "2026-10-08T10:56:14.609Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-2",
+            "pos": {
+              "x": 932,
+              "y": 196
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 878.5309716409372,
+                "y": 309.9440686832297
+              },
+              "facing": -0.07648800308980888,
+              "attack": "idle",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 951.1961398192132,
+                "y": 304.37519075538563
+              },
+              "end": {
+                "x": 948,
+                "y": 300
+              }
+            }
+          },
+          "otherVisibleEnemies": []
+        },
+        {
+          "line": 704,
+          "at": "2026-10-08T10:56:14.695Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 951.1961398192132,
+              "y": 304.37519075538563
+            },
+            "end": {
+              "x": 960.3805421959753,
+              "y": 282.20208197511477
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 883.0676684353546,
+                "y": 309.5963875138726
+              },
+              "facing": -0.07648800308980877,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 3216.779999999993,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 706,
+          "at": "2026-10-08T10:56:14.706Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 951.1961398192132,
+              "y": 304.37519075538563
+            },
+            "end": {
+              "x": 927.266310573936,
+              "y": 306.20911340693937
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 884.5799007001604,
+                "y": 309.4804937907536
+              },
+              "facing": -0.07648800308980873,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 3200.1099999999924,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 711,
+          "at": "2026-10-08T10:56:14.745Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 951.1961398192132,
+              "y": 304.37519075538563
+            },
+            "end": {
+              "x": 948,
+              "y": 300
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 886.848249097369,
+                "y": 309.30665320607505
+              },
+              "facing": -0.07648800308980866,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 3166.7699999999923,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 714,
+          "at": "2026-10-08T10:56:14.828Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-2",
+            "pos": {
+              "x": 932,
+              "y": 196
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 888.3604813621748,
+                "y": 309.190759482956
+              },
+              "facing": -0.07648800308980862,
+              "attack": "idle",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 951.1961398192132,
+                "y": 304.37519075538563
+              },
+              "end": {
+                "x": 948,
+                "y": 300
+              }
+            }
+          },
+          "otherVisibleEnemies": []
+        },
+        {
+          "line": 717,
+          "at": "2026-10-08T10:56:14.888Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 951.1961398192132,
+              "y": 304.37519075538563
+            },
+            "end": {
+              "x": 960.3805421959753,
+              "y": 282.20208197511477
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 892.8971781565922,
+                "y": 308.84307831359894
+              },
+              "facing": -0.07648800308980847,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 3016.779999999991,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 720,
+          "at": "2026-10-08T10:56:14.915Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 951.1961398192132,
+              "y": 304.37519075538563
+            },
+            "end": {
+              "x": 960.3805421959753,
+              "y": 282.20208197511477
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 894.409410421398,
+                "y": 308.7271845904799
+              },
+              "facing": -0.07648800308980841,
+              "attack": "idle",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 3000.1199999999913,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 726,
+          "at": "2026-10-08T10:56:15.262Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 959.6441775525847,
+              "y": 282.30193271576377
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 909.5355635506705,
+                "y": 304.0806624456346
+              },
+              "facing": -0.39849820910905637,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 2650.1399999999917,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 733,
+          "at": "2026-10-08T10:56:15.350Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 268
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 913.0301333416292,
+                "y": 302.6093643496566
+              },
+              "facing": -0.3984982091090552,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 2566.7899999999927,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 739,
+          "at": "2026-10-08T10:56:15.489Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 268
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 918.6214450071633,
+                "y": 300.2552873960918
+              },
+              "facing": -0.3984982091090543,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 2416.819999999992,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 745,
+          "at": "2026-10-08T10:56:15.614Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 268
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 924.2127566726975,
+                "y": 297.901210442527
+              },
+              "facing": -0.39849820910905465,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 2300.139999999991,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 751,
+          "at": "2026-10-08T10:56:15.774Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 268
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 931.2018962546152,
+                "y": 294.958614250571
+              },
+              "facing": -0.3984982091090544,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 2133.4999999999923,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 757,
+          "at": "2026-10-08T10:56:15.926Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 268
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 937.4921218783413,
+                "y": 292.3102776778106
+              },
+              "facing": -0.3984982091090554,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 1983.469999999993,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 765,
+          "at": "2026-10-08T10:56:16.081Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 268
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 943.7823475020672,
+                "y": 289.6619411050502
+              },
+              "facing": -0.39849820910905565,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 1833.479999999993,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 771,
+          "at": "2026-10-08T10:56:16.225Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 268
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 950.072573125793,
+                "y": 287.0136045322898
+              },
+              "facing": -0.39849820910905476,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 1683.5199999999927,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 777,
+          "at": "2026-10-08T10:56:16.356Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 268
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 954.9649708331355,
+                "y": 284.9537871979206
+              },
+              "facing": -0.39849820910905476,
+              "attack": "idle",
+              "approaching": true
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 1550.1899999999926,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 783,
+          "at": "2026-10-08T10:56:16.493Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 972,
+              "y": 276
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "idle",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 1416.8499999999933,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 789,
+          "at": "2026-10-08T10:56:16.623Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 972,
+              "y": 276
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "idle",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 1283.5499999999927,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 795,
+          "at": "2026-10-08T10:56:16.725Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 972,
+              "y": 276
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "windup",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 1183.5299999999932,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 803,
+          "at": "2026-10-08T10:56:16.922Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 972,
+              "y": 276
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "windup",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 983.5299999999934,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 812,
+          "at": "2026-10-08T10:56:17.123Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "windup",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 783.5299999999934,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 817,
+          "at": "2026-10-08T10:56:17.190Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "windup",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 716.8699999999935,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 822,
+          "at": "2026-10-08T10:56:17.256Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "windup",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 650.1999999999931,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 827,
+          "at": "2026-10-08T10:56:17.323Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "windup",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 583.559999999993,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 832,
+          "at": "2026-10-08T10:56:17.391Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "strike",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 516.8899999999933,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 837,
+          "at": "2026-10-08T10:56:17.460Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "recover",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 450.2299999999927,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 842,
+          "at": "2026-10-08T10:56:17.524Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "recover",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 383.5599999999929,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 847,
+          "at": "2026-10-08T10:56:17.593Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "recover",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 316.89999999999304,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 852,
+          "at": "2026-10-08T10:56:17.663Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "recover",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 250.23999999999245,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 857,
+          "at": "2026-10-08T10:56:17.725Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "idle",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 183.5799999999926,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 862,
+          "at": "2026-10-08T10:56:17.791Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "idle",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 116.90999999999289,
+              "startTime": 50964.639999999825
+            }
+          ]
+        },
+        {
+          "line": 867,
+          "at": "2026-10-08T10:56:17.875Z",
+          "event": "own-control-short-leg-rejected",
+          "leg": {
+            "start": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "end": {
+              "x": 980,
+              "y": 284
+            }
+          },
+          "visible": true,
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 955.6638847913273,
+                "y": 284.659527578725
+              },
+              "facing": -0.398498209109055,
+              "attack": "idle",
+              "approaching": false
+            }
+          ],
+          "actual": [
+            {
+              "effectId": "ability:1",
+              "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 33.55999999999289,
+              "startTime": 50964.639999999825
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Source and cap checks do not themselves establish that a retry yielded new income or that debt was restored. Four raw saves and original-service bridge are required.",
+    "New method explicitly changes Q transit/search roles and cap2, own-paid frozen-target risk handling and max24px/140ms input chunks. Other enemies/Host risks remain; useful action and deep outcome require separate review.",
+    "All geometric routing is diagnostic assistance; observed-source restrictions and later runtime window review remain separate."
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "recordedAt": "2026-10-08T11:00:14.771Z",
+  "status": "same-active-run-last-complete-frame-preflight-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-a-target-recovery-preflight.mjs",
+    "sha256": "d3c3d5580ff70c3a3c58ed607d90092fcbd00f74e619324d5bd0df0c7500b787"
+  },
+  "productionEnvelopeValidator": {
+    "path": "src/types/rift-checkpoint.ts",
+    "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+  },
+  "sourceStorage": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/browser-storage.json",
+    "sha256": "6baf77ab32aad4d406c41b232d95c310191101879869fad3cf1c8c5806f4a1d1"
+  },
+  "sourceReport": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/../report.json",
+    "sha256": "eb0962c37e7073e5bd6729573be35814a8b2dbee5df9764b860371e4b766bf9c"
+  },
+  "rejectedDiagnostic": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/1-rejected-state.json",
+    "sha256": "ba968a79763a7ef308f7890a30792a88ccb58859b74ae318c2d288e7f65b8b62"
+  },
+  "originalEntry": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/1-entry.save.json",
+    "sha256": "6517c2784297b971a0c2609f02850a3a342d904e2ebcd8748d2ae4a5369a4719"
+  },
+  "sourceRawSha256": "be52d66459eba83b56d46564876da792d864ccc68af2c1a5d79fe24c3b415bb7",
+  "lastCompleteRawExact": true,
+  "checksum": "2170f6b9",
+  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94",
+  "identity": {
+    "seed": 991458829,
+    "recipeId": "r100-native-v3:cork-shelves-severe",
+    "signature": "0ff82328"
+  },
+  "committedSequence": 112,
+  "committedElapsedMs": 56447.73999999992,
+  "diagnosticSequence": 113,
+  "diagnosticElapsedMs": 56547.72999999992,
+  "unsavedIntervalMs": 99.99000000000524,
+  "sameInventory": true,
+  "samePosition": true,
+  "position": {
+    "x": 981.9999001,
+    "y": 273.57143047459886
+  },
+  "hp": 145,
+  "chaos": {
+    "committed": 56.34865900784923,
+    "diagnostic": 56.44341312652394
+  },
+  "baseReserve": 46,
+  "carriedKindling": 20,
+  "collectedNodeIds": [
+    "r100-kindling-safe-1",
+    "r100-kindling-contested-1",
+    "r100-kindling-contested-2",
+    "r100-contaminant-safe-1",
+    "r100-contaminant-deep-1"
+  ],
+  "acquiredItemIds": [
+    "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+    "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1"
+  ],
+  "consumption": [
+    {
+      "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+      "count": 1,
+      "usesBefore": 5,
+      "usesAtCommit": 4
+    },
+    {
+      "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+      "count": 1,
+      "usesBefore": 4,
+      "usesAtCommit": 3
+    }
+  ],
+  "limits": [
+    "Only the actual committed seq112 bytes are authorized recovery input; diagnostic seq113 is not a replacement save.",
+    "The99.99ms unsaved interval and chaos difference are disclosed; this is not exact diagnostic-frame restoration. No inventory, carried money, HP, position or action receipt rollback was found between these frames.",
+    "Production envelope and checksum validate, but full scene-domain cold-load acceptance, exact restored runtime and subsequent normal exit/return/maintenance still require real browser evidence.",
+    "Carried20 and field deep pickup are not banked income or completed severe opportunity until the same run settles. The technical failure remains in execution history, not replaced by another sample."
+  ]
+}

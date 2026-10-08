@@ -1,0 +1,81 @@
+{
+  "recordedAt": "2026-10-08T09:54:45.735Z",
+  "scope": "New I13 continuation tools only; source1397 unchanged and actual journey evidence separate",
+  "checks": [
+    {
+      "command": "node tools/world-study/run-r100-i13-continuation.mjs --self-check",
+      "exitCode": 0,
+      "checks": "7 dependency syntax checks and public ability/route/budget policy assertions"
+    },
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/world-study/r100-i13-continuation-journey.mjs --check-return-policy",
+      "environment": "frozen case0 exact schedule/preparation/continuation/storage; no browser launched",
+      "exitCode": 0,
+      "stdout": "PASS return policy: current short-leg threats only, no voluntary pursuit, bounded evasion\n",
+      "stderr": "",
+      "previousAttempt": {
+        "environment": "missing mandatory frozen configuration",
+        "exitCode": 1,
+        "error": "AssertionError 0 !== 12 at schedule.length prerequisite; no browser launched"
+      }
+    },
+    {
+      "command": "node tools/qa/r100-i09-continuous.mjs --self-check",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run dev -- --host 127.0.0.1 --port 3034 --strictPort",
+      "status": "started-ready",
+      "readyMs": 107,
+      "httpStatus": 200,
+      "shutdown": "owned smoke session79046 SIGINT exit130"
+    }
+  ],
+  "missingGates": [
+    {
+      "gate": "lint",
+      "status": "not-configured",
+      "evidence": "No lint script or lint dependency; node --check is syntax only"
+    },
+    {
+      "gate": "npm test",
+      "status": "not-configured",
+      "evidence": "Existing named self-checks applied, not whole project contract suite"
+    }
+  ],
+  "frozenPlanSha256": "a0a5f4fbfe1cefd6a3acb3116d8d11a0e41b966f17d8be2b7c49d0667c36b72c",
+  "dependencyBindings": [
+    {
+      "file": "tools/world-study/r100-i13-continuation-journey.mjs",
+      "sha256": "fcd8989466b6902462dbcf6a309f5d8f703eaef02e9a3374be2f7d056205475f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-continuation.mjs",
+      "sha256": "16c7906e150c8228deb4ddd39b0e931ab14722f322e4e3fa8de44b0fdd2d1a65"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    }
+  ]
+}

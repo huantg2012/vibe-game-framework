@@ -1,0 +1,620 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-08T11:03:27.891Z",
+  "gameUrl": "http://127.0.0.1:3033/",
+  "maxContexts": 1,
+  "maxAttempts": 3,
+  "maxNewDepartures": 2,
+  "resumedRunId": "b4582c78-5f9d-4a27-9416-164a8425fc94",
+  "preflight": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-recovery-preflight.json",
+    "sha256": "5007ba00f8bd12c0bd698b88ca324fd85e3491ca9fa136f27d89d300c353ab3e"
+  },
+  "dependencies": [
+    {
+      "file": "tools/world-study/r100-i13-resume-journey.mjs",
+      "sha256": "e8e1b942053d46c34ce72cff90583e5c64fc13f8825c7d41b3cce741903c904b"
+    },
+    {
+      "file": "tools/world-study/r100-i13-resume-encounters.mjs",
+      "sha256": "d3a2bf656f6c8b6276d7f74ae99779fe1efbc50ad8bcddd4e52fb327d126f0d7"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-resume.mjs",
+      "sha256": "2f8ee6a4b7dbb476416fa16d7cbb4bd3cff1b3784c7db1eb9243348018d7d819"
+    },
+    {
+      "file": "tools/world-study/r100-i13-target-journey.mjs",
+      "sha256": "8278e31af31aeb14f211d959d331991ac0b396599044a5bcb91ac1ece5177154"
+    },
+    {
+      "file": "tools/world-study/r100-i13-target-policy.mjs",
+      "sha256": "ac918a6b4ad16a1c92ee97e9d0aaae817e470932540685ebee2099e623242d21"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-target.mjs",
+      "sha256": "f3f9710d70651cbcf909a1187741c93734cb8d5cf51cbfa632e4f0b23ccfad40"
+    },
+    {
+      "file": "tools/world-study/r100-i13-pursuit-policy.mjs",
+      "sha256": "7ab6b72b1863aafc087465c0f3353303bf5eccca190b922fb1b0af2db72302b3"
+    },
+    {
+      "file": "tools/world-study/r100-i13-target-encounters.mjs",
+      "sha256": "b69b54b30ef686f3539025b4b1d70b446b3827b353f7561d98f1a77032567c94"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    }
+  ],
+  "immutablePriorSources": [
+    {
+      "file": "tools/world-study/r100-i13-pursuit-journey.mjs",
+      "sha256": "52444909b87ea1b9ccb75ffb145fac2c3ef79db172cbcafc84e47309ad6d74b0"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-pursuit.mjs",
+      "sha256": "edbad1e5499e8731d972c7ec1c80aa71047a5ff109175a7386a458b415594b21"
+    },
+    {
+      "file": "tools/world-study/r100-i13-pursuit-policy.mjs",
+      "sha256": "7ab6b72b1863aafc087465c0f3353303bf5eccca190b922fb1b0af2db72302b3"
+    },
+    {
+      "file": "tools/world-study/r100-i13-pursuit-encounters.mjs",
+      "sha256": "7d62cacebd099f2d9889d235d87a8dbb02d0f21552e6c450ae267d40a6e330b8"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-journey.mjs",
+      "sha256": "10f2679b4076dc7f48ebb623cf398b0564eb1611ea2fcc3a7100d71c5dfdfc9d"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-functional.mjs",
+      "sha256": "8cedf51a22ceb9eecd48b9caf31bb2694841a60f71ed1a9243caf582748d74e6"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-journey.mjs",
+      "sha256": "fcd8989466b6902462dbcf6a309f5d8f703eaef02e9a3374be2f7d056205475f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-continuation.mjs",
+      "sha256": "16c7906e150c8228deb4ddd39b0e931ab14722f322e4e3fa8de44b0fdd2d1a65"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-journey.mjs",
+      "sha256": "22c34317b9add03c98117ec573383c11a3a350406549bc81dd9fa94d66d82c5f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-encounters.mjs",
+      "sha256": "8efa42af08bfac8cef42010ca312893a26f294a00214ddfab526721bf3dc4db2"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-r2.mjs",
+      "sha256": "4f09752de6e160921fee5f56bc74032d4d3fb9a5229e71b2277cc790997ba7ba"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13/overall-execution-receipt.json",
+      "sha256": "1d727cfcfd2b9f6689c946199efb1982b9c95efa1019ab0d7951df9bc16b8578"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/policy-freeze.json",
+      "sha256": "a0a5f4fbfe1cefd6a3acb3116d8d11a0e41b966f17d8be2b7c49d0667c36b72c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/execution.json",
+      "sha256": "26bb1dc19171d9a6f6c6113012fdbc4aad4a1c8dd00663ddc9c82f6e5839f10d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/batch14-execution-receipt.json",
+      "sha256": "1bc1eeb7a362c664bb02e45f3b7462e0cfc2e302b3299d3ad1fcbdc621898629"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-journey.mjs",
+      "sha256": "10f2679b4076dc7f48ebb623cf398b0564eb1611ea2fcc3a7100d71c5dfdfc9d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/functional-selection/policy-freeze.json",
+      "sha256": "3534d90f1b905b83fd8b50dd051ed11fa21644090d2d86b98d6add0090be6509"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/functional-selection/execution.json",
+      "sha256": "4d0b3e9b5baf40def07d38fdd7b50eec9a851bb44718c676f38f39efc8da9f85"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/functional-selection/execution-receipt.json",
+      "sha256": "9c33617c6c9ff115bd5db704a608096e521a228dd0c697ff4484f53abd3821e7"
+    },
+    {
+      "file": "tools/world-study/r100-i13-pursuit-journey.mjs",
+      "sha256": "52444909b87ea1b9ccb75ffb145fac2c3ef79db172cbcafc84e47309ad6d74b0"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/policy-freeze.json",
+      "sha256": "7fac3aa044f5123b2673fd5c4ad06d942b2781da5308b25a9a5ea4248fe7333a"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/execution.json",
+      "sha256": "cf4da342bd9071b424afc8347dac705c6d756447d875f6b1f1499f871ad31fe6"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/execution-receipt.json",
+      "sha256": "25ba4934d3c74221f6a633f93502d36f781bd8dc6f8f69c2c5ca79420b3e23aa"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/policy-freeze.json",
+      "sha256": "a1870d611d25926be36147092a4c44cbdc52400e1323367e4fc49d3fdf481d71"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/task-preregistration.md",
+      "sha256": "51902dd11e7f3618ebe53b33ecc741bfc22da0a5914e08167d9ccbd28790abc1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-preflight.json",
+      "sha256": "483e996b903b2f81fcb8f9c61f28189fab70fba665ce9b63d31513efdbd02173"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/browser-storage.json",
+      "sha256": "6baf77ab32aad4d406c41b232d95c310191101879869fad3cf1c8c5806f4a1d1"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/../report.json",
+      "sha256": "eb0962c37e7073e5bd6729573be35814a8b2dbee5df9764b860371e4b766bf9c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/1-rejected-state.json",
+      "sha256": "ba968a79763a7ef308f7890a30792a88ccb58859b74ae318c2d288e7f65b8b62"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/journey.jsonl",
+      "sha256": "705a246cd2d7ae5c87ab9cd61ad5e61e1ed833a583ec8ed3401d4937b6701646"
+    }
+  ],
+  "sourceManifest": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/frozen-source/source-snapshot.json",
+    "sha256": "35b784df631cfe771c81f523b76d9549771682495e6f569becba02bb3e9597f0"
+  },
+  "taskContract": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/task-preregistration.md",
+    "sha256": "51902dd11e7f3618ebe53b33ecc741bfc22da0a5914e08167d9ccbd28790abc1"
+  },
+  "originalTaskAtFreeze": {
+    "file": "docs/tasks/rift-r100-i13.md",
+    "sha256": "51902dd11e7f3618ebe53b33ecc741bfc22da0a5914e08167d9ccbd28790abc1"
+  },
+  "cases": [
+    {
+      "id": "a-same-run-recovery",
+      "sourceBranch": "A",
+      "stopAfterLowPreparation": true,
+      "recoveryFunctions": [
+        {
+          "family": "solidify",
+          "minimumPower": 4
+        },
+        {
+          "family": "dash",
+          "minimumPower": 48
+        }
+      ],
+      "sourceStorage": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/browser-storage.json",
+      "sourceStorageSha256": "6baf77ab32aad4d406c41b232d95c310191101879869fad3cf1c8c5806f4a1d1",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/i13/2-after-preparation.save.json",
+        "sha256": "a33342615bfd2a81124204293b5ed7fb9a3e19a54a257302de7a8a7bb6b9c3bb"
+      },
+      "input": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/earned-storage.json",
+      "inputSha256": "6baf77ab32aad4d406c41b232d95c310191101879869fad3cf1c8c5806f4a1d1",
+      "steps": [
+        {
+          "grade": "severe",
+          "preparation": {
+            "id": "public-ancestor-backed-four-second-control-and-dash",
+            "active": [
+              {
+                "family": "solidify",
+                "minimumPower": 4,
+                "minimumUses": 4
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 3
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "requiredUses": [
+            4,
+            3
+          ],
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 4,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences",
+            "controlMaxPerTrip": 2,
+            "controlRoles": {
+              "transit": 1,
+              "search": 1
+            }
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-four-second-control-and-dash-recovery",
+            "active": [
+              {
+                "family": "solidify",
+                "minimumPower": 4,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 4,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences",
+            "controlMaxPerTrip": 2,
+            "controlRoles": {
+              "transit": 1,
+              "search": 1
+            }
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-four-second-control-and-dash-recovery",
+            "active": [
+              {
+                "family": "solidify",
+                "minimumPower": 4,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 4,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences",
+            "controlMaxPerTrip": 2,
+            "controlRoles": {
+              "transit": 1,
+              "search": 1
+            }
+          }
+        }
+      ],
+      "searchLimit": 6,
+      "ancestorRunIds": [
+        "63d77e65-1889-4624-a1e8-4d7989f255cf",
+        "f3ae18d6-2c46-49e5-8d96-21cd0e0a8e3b",
+        "ca6e3a1b-53c1-40f2-9c09-bc0ebf895327",
+        "97874d5b-0c9e-4199-abfc-61491ca13f5b",
+        "b7aa8a85-de4f-4413-a9ca-29d04f8c601b",
+        "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0",
+        "a8cbed61-55c0-4205-9356-535531bae725",
+        "c3b1b065-4154-41bd-938b-90033e8775a6",
+        "074b0dcb-02c8-4c24-a239-e654f963f44e",
+        "a6557e90-f8cd-4e91-a0fb-8d511aae077d",
+        "d1b034c1-0332-4467-817b-e4aeff5dd351",
+        "abcdad60-2750-47fc-ae26-adf20ef26c05",
+        "c494ba40-ca59-4eec-9fa4-2feddf194306",
+        "97fc69a8-59e5-4e6f-a683-b4550f685bd7",
+        "215f9d02-eca3-4427-b56a-d53a37d27e96",
+        "90bab9f2-7b2f-486a-8589-70dade82d77a",
+        "cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3",
+        "f6cdd44f-ef72-4bcf-871c-139f65e00495",
+        "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2",
+        "024df695-2804-475d-a3d1-a7d29b6faa6f",
+        "2c2f1723-a1b1-40d9-914e-82a48640e411"
+      ],
+      "freshItemIds": [
+        "WPN_ff7bbaa9-d411-4e37-8e69-22148848335e",
+        "CAT_ca6e3a1b-53c1-40f2-9c09-bc0ebf895327_r100-contaminant-contested-1",
+        "CAT_b7aa8a85-de4f-4413-a9ca-29d04f8c601b_r100-contaminant-contested-1",
+        "WPN_bc67d68d-9eac-49c6-aa6a-18f45f779520",
+        "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+        "WPN_083e90ea-ea31-4ed3-ad75-53794a1d11d9",
+        "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-safe-1",
+        "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+        "WPN_445d4b25-646f-4c5b-b59e-ed721590971b",
+        "WPN_3bb0f70d-1407-4ffb-a44b-ced1295931c0",
+        "CAT_c3b1b065-4154-41bd-938b-90033e8775a6_r100-contaminant-safe-1",
+        "WPN_a29da5c0-9eca-40a6-998d-94d70377034f",
+        "CAT_074b0dcb-02c8-4c24-a239-e654f963f44e_r100-contaminant-safe-1",
+        "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+        "WPN_0c1b85a7-182e-4ff3-b5ae-64a3dd4ca31a",
+        "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+        "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+        "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+        "WPN_dc953dc6-a64d-414d-af87-851540e4ef00",
+        "WPN_438813bf-f55d-40b5-8861-26093285a906",
+        "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+        "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+        "WPN_d20c10d8-9800-4524-8628-0d60bb958a4c",
+        "CAT_97fc69a8-59e5-4e6f-a683-b4550f685bd7_r100-contaminant-safe-1",
+        "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+        "CAT_cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3_r100-contaminant-safe-1",
+        "CAT_f6cdd44f-ef72-4bcf-871c-139f65e00495_r100-contaminant-safe-1",
+        "CAT_f123d0d1-cdc5-4152-a55d-cf8eb7a000c2_r100-contaminant-safe-1",
+        "WPN_166aa2b1-2228-4f6b-9b3b-dd7a8c6a4d58",
+        "WPN_b030f7f4-f4b7-4c5d-9271-d6996a40e438",
+        "CAT_024df695-2804-475d-a3d1-a7d29b6faa6f_r100-contaminant-safe-1",
+        "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+        "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1"
+      ],
+      "initialReserve": 46,
+      "initialModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 53,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 102,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 130
+        }
+      ],
+      "expectedInitialSelection": {
+        "solidify": {
+          "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-contested-1",
+            "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+          },
+          "lineage": "earned-ancestor-before-I13",
+          "acquiredOrdinal": null,
+          "offeredOrdinal": null,
+          "maturedOrdinal": null,
+          "name": "封底沙漏",
+          "location": "stash",
+          "uses": 5,
+          "weight": 20,
+          "slot": "active",
+          "inert": false,
+          "family": "solidify",
+          "power": 5500,
+          "qualified": true,
+          "available": true
+        },
+        "dash": {
+          "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-safe-1",
+            "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+          },
+          "lineage": "earned-ancestor-before-I13",
+          "acquiredOrdinal": null,
+          "offeredOrdinal": null,
+          "maturedOrdinal": null,
+          "name": "断跟短靴",
+          "location": "stash",
+          "uses": 4,
+          "weight": 20,
+          "slot": "active",
+          "inert": false,
+          "family": "dash",
+          "power": 48,
+          "qualified": true,
+          "available": true
+        }
+      },
+      "interruptedReport": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/../report.json",
+      "autosaveBeforeDiagnosticMs": 99.99000000000524,
+      "priorSegmentToolBudget": {
+        "slots": [
+          {
+            "slot": 0,
+            "used": 1
+          },
+          {
+            "slot": 1,
+            "used": 1
+          }
+        ],
+        "controlRoles": [
+          {
+            "role": "search",
+            "used": 1
+          }
+        ],
+        "acceptedControls": [
+          {
+            "effectId": "ability:1",
+            "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+            "targetId": "ENM_INF_03",
+            "controlActive": true,
+            "remainingTime": 5383.36,
+            "startTime": 50964.639999999825,
+            "role": "search"
+          }
+        ],
+        "dashWindows": [
+          {
+            "at": "2026-10-08T10:56:15.256Z",
+            "event": "paid-dash-actual-window",
+            "itemId": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+            "family": "dash",
+            "from": {
+              "x": 951.1961398192132,
+              "y": 304.37519075538563
+            },
+            "to": {
+              "x": 981.9999001,
+              "y": 273.57143047459886
+            },
+            "distance": 43.56309556117836,
+            "beforeHp": 160,
+            "afterHp": 160,
+            "elapsedBefore": 53464.51999999989,
+            "elapsedAfter": 53814.4999999999,
+            "visiblePressure": [
+              {
+                "id": "ENM_INF_01",
+                "position": {
+                  "x": 894.409410421398,
+                  "y": 308.7271845904799
+                },
+                "facing": -0.07648800308980841,
+                "attack": "idle",
+                "approaching": true
+              }
+            ],
+            "permission": {
+              "allowed": true,
+              "mode": "normal",
+              "reason": "within-preregistered-slot-budget"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "authorization": "Root explicitly approved same-run production Continue from saved sequence112; fix only actual-movement stuck accounting. Retain original failed segment and99.99ms normal autosave gap. No replacement severe, no search after resume, inherited Qsearch1/Fnormal1 budget; after real settlement at most original two low with ordinary recovery early stop.",
+  "limits": [
+    "TrueA21 service53/102/53 cash46, ancestor hourglass5.5sec5 and boots48px4 are independently qualified. Initial severe requires equipped4/3 and service51/100/51.",
+    "Q normal budget retains at most2: one currently visible pursuit-blocked short leg and one actual search window. Each role at most1. Every use must leave a real public four-second same-function single item>=2.",
+    "Before payment: actual turn then fresh normal observation, current facing half-plane, public visibility/LOS/range and nearest prediction. Transit requires this target be the only blocker. Search retains other enemy danger gates. No hidden hard-control state reads; own observed removal reserves2sec publicly known protection.",
+    "Transit: current visible enemy<=110px, approaching through normal consecutive observations or windup/active, blocking actual planned visible28px segment under existing proximity/facing danger. No enemy luring or hidden pursuit state.",
+    "Only actual successful own sourceInstanceId/effectId/targetId with controlActive and positive remaining time may leave the temporary decision threat set; raw normal visible enemies remain logged. Control break or expiry revokes permission.",
+    "Controlled input is reobserved after at most24px/140ms, stricter than28px/450ms. Other threats and Host remain; Space is prohibited while own control active to avoid breaking it.",
+    "F normal1 plus original actual-near-attack emergency remains; old A route/exit/search/time/economy policies unchanged. No B reconsideration or second region policy included.",
+    "Low followups use public four-second control/dash48px each single item>=2, FIFO, missing function empty. After first actual low stop if serviceD0 and ordinary2/2 preparation exists; otherwise second low ends the batch.",
+    "Ordinary2/2 preparation is distinct from next severe4/3 admission. All worlds naturally random, no added acquisition, grant, reroll or replacement."
+  ]
+}

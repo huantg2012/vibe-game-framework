@@ -1,0 +1,4662 @@
+{
+  "version": 1,
+  "recordedDate": "2026-10-08",
+  "status": "bounded-accounting-pass-with-explicit-unknowns",
+  "reviewer": "/root/i13_qa",
+  "tool": {
+    "path": "tools/qa/check-r100-i13-accounting.mjs",
+    "sha256": "4c8e910b3d2d009b3809224952063501bf5c437ea4df372d82e54229fb77eb20"
+  },
+  "catalog": {
+    "path": "data/contaminant-items.csv",
+    "sha256": "d0d7daaf2005ae91b490cdc3986af47efe7c98d5cd0d07523e2eeed2257d2634"
+  },
+  "checked": {
+    "assertions": 1413,
+    "snapshotFiles": 8,
+    "reports": 1,
+    "trips": 2
+  },
+  "failures": [],
+  "totalTrips": 2,
+  "branches": [
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/report.json",
+        "sha256": "9bb670ee68ac83b681a87c722874f94dfc16007b7f34cf9ac8466b4daba04f5f"
+      },
+      "policyRevision": "I13-target-cold-continuation-v1",
+      "controlledWorld": "",
+      "controlledBuild": "",
+      "completed": 2,
+      "pending": [],
+      "sourceMode": "natural-world-selection",
+      "serviceTarget": {
+        "CORE": 53,
+        "STORAGE": 100,
+        "PURIFIER": 53
+      },
+      "fullEffectTarget": {
+        "CORE": 100,
+        "STORAGE": 100,
+        "PURIFIER": 100
+      },
+      "capitalTarget": {
+        "CORE": 53,
+        "STORAGE": 102,
+        "PURIFIER": 53
+      },
+      "restoredFacilities": [
+        {
+          "id": "CORE",
+          "start": 53,
+          "end": 51,
+          "missingHpToStart": 2,
+          "kindlingToRestoreStartBeforeSharedBonus": 1
+        },
+        {
+          "id": "STORAGE",
+          "start": 102,
+          "end": 103,
+          "missingHpToStart": 0,
+          "kindlingToRestoreStartBeforeSharedBonus": 0
+        },
+        {
+          "id": "PURIFIER",
+          "start": 53,
+          "end": 51,
+          "missingHpToStart": 2,
+          "kindlingToRestoreStartBeforeSharedBonus": 1
+        }
+      ],
+      "supply": [
+        {
+          "before": {
+            "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 0
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+            }
+          },
+          "after": {
+            "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "tool",
+            "uses": 6,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+            }
+          },
+          "family": "solidify",
+          "sourceScope": "earned-ancestor-stock"
+        },
+        {
+          "before": {
+            "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "crooked_hook_needle",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 1
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+            }
+          },
+          "after": {
+            "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "crooked_hook_needle",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+            }
+          },
+          "family": "tripwire",
+          "sourceScope": "earned-ancestor-stock"
+        },
+        {
+          "before": {
+            "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "split_heel_boot",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 0
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+            }
+          },
+          "after": {
+            "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "split_heel_boot",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+            }
+          },
+          "family": "dash",
+          "sourceScope": "collected-in-this-sequence"
+        },
+        {
+          "before": {
+            "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 1
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-deep-1",
+              "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+            }
+          },
+          "after": {
+            "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-deep-1",
+              "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+            }
+          },
+          "family": "survey",
+          "sourceScope": "collected-in-this-sequence"
+        }
+      ],
+      "freshSupplyChains": [
+        {
+          "item": {
+            "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "split_heel_boot",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+            }
+          },
+          "collectedOrdinal": 1,
+          "firstOfferedOrdinal": 1,
+          "maturedOrdinal": 2,
+          "consumedLater": [],
+          "completeRecordedSupplyAndConsumption": false,
+          "semanticEffectConfirmed": false
+        },
+        {
+          "item": {
+            "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-deep-1",
+              "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+            }
+          },
+          "collectedOrdinal": 1,
+          "firstOfferedOrdinal": 1,
+          "maturedOrdinal": 2,
+          "consumedLater": [],
+          "completeRecordedSupplyAndConsumption": false,
+          "semanticEffectConfirmed": false
+        },
+        {
+          "item": {
+            "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+            }
+          },
+          "collectedOrdinal": 2,
+          "firstOfferedOrdinal": 2,
+          "maturedOrdinal": null,
+          "consumedLater": [],
+          "completeRecordedSupplyAndConsumption": false,
+          "semanticEffectConfirmed": false
+        },
+        {
+          "item": {
+            "id": "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+            }
+          },
+          "collectedOrdinal": 2,
+          "firstOfferedOrdinal": 2,
+          "maturedOrdinal": null,
+          "consumedLater": [],
+          "completeRecordedSupplyAndConsumption": false,
+          "semanticEffectConfirmed": false
+        },
+        {
+          "item": {
+            "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "frosted_furnace_core",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+            }
+          },
+          "collectedOrdinal": 2,
+          "firstOfferedOrdinal": 2,
+          "maturedOrdinal": null,
+          "consumedLater": [],
+          "completeRecordedSupplyAndConsumption": false,
+          "semanticEffectConfirmed": false
+        }
+      ],
+      "startAssets": {
+        "reserve": 46,
+        "repairBonusHp": 0,
+        "modules": [
+          {
+            "id": "CORE",
+            "hp": 53,
+            "maxHp": 130
+          },
+          {
+            "id": "STORAGE",
+            "hp": 102,
+            "maxHp": 130
+          },
+          {
+            "id": "PURIFIER",
+            "hp": 53,
+            "maxHp": 130
+          }
+        ],
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 4,
+            "growth_kindling_affinity": 3,
+            "growth_vitality": 4,
+            "growth_sortie_slot": 1,
+            "growth_defense_slot": 3,
+            "growth_forecast_clarity": 3
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "usableWeaponCharges": 2459,
+        "usableContaminantCharges": 171,
+        "items": [
+          {
+            "id": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-1",
+              "runId": "2e6ede84-8ba3-45f1-840b-a22215fca161"
+            }
+          },
+          {
+            "id": "CAT_cacae3b1-506f-4488-8564-7892744fe206_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "brass_monocle",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "cacae3b1-506f-4488-8564-7892744fe206"
+            }
+          },
+          {
+            "id": "CAT_bc200fa5-a2a4-46f5-9a25-b80ccfe62d34_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "bc200fa5-a2a4-46f5-9a25-b80ccfe62d34"
+            }
+          },
+          {
+            "id": "WPN_db431ecc-bcb9-4afb-ba49-88937d2c07da",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "bdfe22dd-b4ae-41b8-9091-2e0958bdf38b"
+            }
+          },
+          {
+            "id": "CAT_c0340f2e-c530-4d11-87a3-a4133c4e064f_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "milky_fish_eye",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "c0340f2e-c530-4d11-87a3-a4133c4e064f"
+            }
+          },
+          {
+            "id": "CAT_3838f4a1-9198-4192-a21f-f82922fbd8bb_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "wrinkled_bottom_satchel",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "3838f4a1-9198-4192-a21f-f82922fbd8bb"
+            }
+          },
+          {
+            "id": "WPN_0cf4e05f-9fbe-4b9f-bda8-8769eb809b06",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "3838f4a1-9198-4192-a21f-f82922fbd8bb"
+            }
+          },
+          {
+            "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+            }
+          },
+          {
+            "id": "WPN_ca84f4af-0c64-4783-b6c4-e73410375ff0",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+            }
+          },
+          {
+            "id": "WPN_2539cdd6-3c72-4331-bf52-638227cfced6",
+            "kind": "weapon",
+            "definition": "crowbar_good_resistant",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-1",
+              "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+            }
+          },
+          {
+            "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "wooden_thread_spool",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+            }
+          },
+          {
+            "id": "WPN_3372d679-98ab-4a07-a572-d38a3cd8e764",
+            "kind": "weapon",
+            "definition": "crowbar_good_resistant",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "9248dc7b-753c-4b6a-ac6d-16956305b181"
+            }
+          },
+          {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "40c0b289-37f7-4905-80e5-a4d838360b0c"
+            }
+          },
+          {
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "fa3c944a-fd24-4f87-9c66-dca8d26ba574"
+            }
+          },
+          {
+            "id": "WPN_replacement:fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 57,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": null
+          },
+          {
+            "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "split_heel_boot",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+            }
+          },
+          {
+            "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "missing_tooth_music_box",
+            "stage": "tool",
+            "uses": 6,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+            }
+          },
+          {
+            "id": "WPN_e4fe8656-48b4-4cd7-bd92-40916a05986b",
+            "kind": "weapon",
+            "definition": "crowbar_good_light",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+            }
+          },
+          {
+            "id": "CAT_f60af7ae-a85d-4ebf-9258-b502459d8e3e_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "wax_sealed_button",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e"
+            }
+          },
+          {
+            "id": "WPN_0e58805c-8287-4b7b-a68c-787fa4a2b0e7",
+            "kind": "weapon",
+            "definition": "crowbar_good_light",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-safe-1",
+              "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e"
+            }
+          },
+          {
+            "id": "WPN_93034541-c9a1-4bbf-b939-0d80673efd7e",
+            "kind": "weapon",
+            "definition": "crowbar_good_resistant",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e"
+            }
+          },
+          {
+            "id": "WPN_b340bdc7-5314-4e06-9802-38ea7f1e5b22",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-safe-1",
+              "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+            }
+          },
+          {
+            "id": "CAT_eb0b3d96-4344-4550-87e9-ba0b95e7eb73_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "wooden_thread_spool",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+            }
+          },
+          {
+            "id": "CAT_eb0b3d96-4344-4550-87e9-ba0b95e7eb73_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "ash_tooth",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+            }
+          },
+          {
+            "id": "WPN_a4d1c90a-6774-4f0f-b5e4-dc562904b1d0",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+            }
+          },
+          {
+            "id": "CAT_bf5f3038-8316-49ab-be7a-5311d560517c_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "crooked_hook_needle",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "bf5f3038-8316-49ab-be7a-5311d560517c"
+            }
+          },
+          {
+            "id": "WPN_724f4f03-0223-4d11-8096-a885cf47029c",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "bf5f3038-8316-49ab-be7a-5311d560517c"
+            }
+          },
+          {
+            "id": "WPN_6bbb42f6-7cb6-4f4d-bd79-f06de9457e60",
+            "kind": "weapon",
+            "definition": "crowbar_fine_resistant",
+            "stage": "tool",
+            "uses": 90,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "11d5a88b-9729-472e-aa23-0d2e871c94b9"
+            }
+          },
+          {
+            "id": "CAT_7e932b8d-fc82-4e89-8264-62abfa8d1aa1_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "ceramic_capsule",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "7e932b8d-fc82-4e89-8264-62abfa8d1aa1"
+            }
+          },
+          {
+            "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "sunken_inkstone",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+            }
+          },
+          {
+            "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "coiled_tape_measure",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+            }
+          },
+          {
+            "id": "WPN_2705dc2a-df33-49ea-a2d0-b8a92e212bbe",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+            }
+          },
+          {
+            "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "gray_felt_glove",
+            "stage": "tool",
+            "uses": 6,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "87a1ee48-277c-4e0c-9d52-86eae5bc0c8d"
+            }
+          },
+          {
+            "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "ceramic_charcoal_box",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "2e038080-3a09-4524-99db-dc30caf23768"
+            }
+          },
+          {
+            "id": "CAT_0ff5d0cc-4723-4460-a3ba-bc62b895a03d_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "sunken_inkstone",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "0ff5d0cc-4723-4460-a3ba-bc62b895a03d"
+            }
+          },
+          {
+            "id": "WPN_906c2bf7-29c6-4b22-833c-f6a0c65dc5e5",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "0ff5d0cc-4723-4460-a3ba-bc62b895a03d"
+            }
+          },
+          {
+            "id": "CAT_f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "hollow_reed_joint",
+            "stage": "tool",
+            "uses": 6,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec"
+            }
+          },
+          {
+            "id": "CAT_f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "crooked_hook_needle",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec"
+            }
+          },
+          {
+            "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "hollow_eyelet",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+            }
+          },
+          {
+            "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "sealed_hourglass",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+            }
+          },
+          {
+            "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "scorched_scarf",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "55844805-dfdb-4c9a-9cda-516f3f1c9338"
+            }
+          },
+          {
+            "id": "WPN_6b4c933e-e952-46aa-92c5-3aa5b8683c39",
+            "kind": "weapon",
+            "definition": "crowbar_excellent_resistant",
+            "stage": "tool",
+            "uses": 57,
+            "charges": 3,
+            "location": {
+              "kind": "carried"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "1b82459c-cac6-452c-8590-b598edf496e3"
+            }
+          },
+          {
+            "id": "CAT_cdad99a1-204b-47e7-95d1-8ef718ad607d_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "milky_fish_eye",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 5,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "cdad99a1-204b-47e7-95d1-8ef718ad607d"
+            }
+          },
+          {
+            "id": "CAT_a3b4af24-23c3-4575-bbc6-a691120e86c6_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "sunken_inkstone",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "a3b4af24-23c3-4575-bbc6-a691120e86c6"
+            }
+          },
+          {
+            "id": "CAT_7234d0a8-a6b8-491d-818e-5dc10c35d3e8_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "bone_clasp_mask",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "7234d0a8-a6b8-491d-818e-5dc10c35d3e8"
+            }
+          },
+          {
+            "id": "CAT_7234d0a8-a6b8-491d-818e-5dc10c35d3e8_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "bone_clasp_mask",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "7234d0a8-a6b8-491d-818e-5dc10c35d3e8"
+            }
+          },
+          {
+            "id": "CAT_a6f906e9-f260-49bf-a91d-ab3e0169f07b_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "silver_back_hand_mirror",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "a6f906e9-f260-49bf-a91d-ab3e0169f07b"
+            }
+          },
+          {
+            "id": "WPN_cb89a878-148f-4f50-8431-47f58fee3e1d",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "a6f906e9-f260-49bf-a91d-ab3e0169f07b"
+            }
+          },
+          {
+            "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "gray_felt_glove",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "f4a259d9-7835-4ec5-92ff-7305ff97aa42"
+            }
+          },
+          {
+            "id": "WPN_b7ffd571-820e-448e-b0d0-0ec0e1e1fd4f",
+            "kind": "weapon",
+            "definition": "crowbar_excellent_resistant",
+            "stage": "tool",
+            "uses": 110,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "6431561f-ee37-409b-9603-aba7060560f3"
+            }
+          },
+          {
+            "id": "WPN_75a59884-fc66-4da5-b30c-9bbd3c904ad4",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "6431561f-ee37-409b-9603-aba7060560f3"
+            }
+          },
+          {
+            "id": "WPN_f4e66a39-885a-476a-8dec-dcd86c8d36cd",
+            "kind": "weapon",
+            "definition": "crowbar_fine_standard",
+            "stage": "tool",
+            "uses": 90,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "0f076b22-3b93-4d36-8ee9-0d67571a1028"
+            }
+          },
+          {
+            "id": "WPN_ff7bbaa9-d411-4e37-8e69-22148848335e",
+            "kind": "weapon",
+            "definition": "crowbar_fine_resistant",
+            "stage": "tool",
+            "uses": 90,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "f3ae18d6-2c46-49e5-8d96-21cd0e0a8e3b"
+            }
+          },
+          {
+            "id": "CAT_ca6e3a1b-53c1-40f2-9c09-bc0ebf895327_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "ca6e3a1b-53c1-40f2-9c09-bc0ebf895327"
+            }
+          },
+          {
+            "id": "CAT_b7aa8a85-de4f-4413-a9ca-29d04f8c601b_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "creased_ticket_wallet",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "b7aa8a85-de4f-4413-a9ca-29d04f8c601b"
+            }
+          },
+          {
+            "id": "WPN_bc67d68d-9eac-49c6-aa6a-18f45f779520",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "b7aa8a85-de4f-4413-a9ca-29d04f8c601b"
+            }
+          },
+          {
+            "id": "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 1,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0"
+            }
+          },
+          {
+            "id": "WPN_083e90ea-ea31-4ed3-ad75-53794a1d11d9",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0"
+            }
+          },
+          {
+            "id": "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "frosted_furnace_core",
+            "stage": "tool",
+            "uses": 1,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "a8cbed61-55c0-4205-9356-535531bae725"
+            }
+          },
+          {
+            "id": "WPN_445d4b25-646f-4c5b-b59e-ed721590971b",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-1",
+              "runId": "a8cbed61-55c0-4205-9356-535531bae725"
+            }
+          },
+          {
+            "id": "WPN_3bb0f70d-1407-4ffb-a44b-ced1295931c0",
+            "kind": "weapon",
+            "definition": "crowbar_good_light",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "a8cbed61-55c0-4205-9356-535531bae725"
+            }
+          },
+          {
+            "id": "WPN_a29da5c0-9eca-40a6-998d-94d70377034f",
+            "kind": "weapon",
+            "definition": "crowbar_good_light",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-2",
+              "runId": "c3b1b065-4154-41bd-938b-90033e8775a6"
+            }
+          },
+          {
+            "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "a6557e90-f8cd-4e91-a0fb-8d511aae077d"
+            }
+          },
+          {
+            "id": "WPN_0c1b85a7-182e-4ff3-b5ae-64a3dd4ca31a",
+            "kind": "weapon",
+            "definition": "crowbar_good_resistant",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-safe-1",
+              "runId": "a6557e90-f8cd-4e91-a0fb-8d511aae077d"
+            }
+          },
+          {
+            "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351"
+            }
+          },
+          {
+            "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "stopped_pocket_watch",
+            "stage": "tool",
+            "uses": 1,
+            "charges": 3,
+            "location": {
+              "kind": "carried"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351"
+            }
+          },
+          {
+            "id": "WPN_dc953dc6-a64d-414d-af87-851540e4ef00",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351"
+            }
+          },
+          {
+            "id": "WPN_438813bf-f55d-40b5-8861-26093285a906",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-1",
+              "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351"
+            }
+          },
+          {
+            "id": "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "milky_fish_eye",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "abcdad60-2750-47fc-ae26-adf20ef26c05"
+            }
+          },
+          {
+            "id": "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "abcdad60-2750-47fc-ae26-adf20ef26c05"
+            }
+          },
+          {
+            "id": "WPN_d20c10d8-9800-4524-8628-0d60bb958a4c",
+            "kind": "weapon",
+            "definition": "crowbar_fine_light",
+            "stage": "tool",
+            "uses": 90,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "c494ba40-ca59-4eec-9fa4-2feddf194306"
+            }
+          },
+          {
+            "id": "CAT_97fc69a8-59e5-4e6f-a683-b4550f685bd7_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "sealed_flower_calyx",
+            "stage": "inert",
+            "uses": 0,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "97fc69a8-59e5-4e6f-a683-b4550f685bd7"
+            }
+          },
+          {
+            "id": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "90bab9f2-7b2f-486a-8589-70dade82d77a"
+            }
+          },
+          {
+            "id": "CAT_cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "split_tongue_bell",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3"
+            }
+          },
+          {
+            "id": "CAT_f6cdd44f-ef72-4bcf-871c-139f65e00495_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "brass_monocle",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "f6cdd44f-ef72-4bcf-871c-139f65e00495"
+            }
+          },
+          {
+            "id": "CAT_f123d0d1-cdc5-4152-a55d-cf8eb7a000c2_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "hollow_eyelet",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2"
+            }
+          },
+          {
+            "id": "WPN_166aa2b1-2228-4f6b-9b3b-dd7a8c6a4d58",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2"
+            }
+          },
+          {
+            "id": "WPN_b030f7f4-f4b7-4c5d-9271-d6996a40e438",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-safe-1",
+              "runId": "024df695-2804-475d-a3d1-a7d29b6faa6f"
+            }
+          },
+          {
+            "id": "CAT_024df695-2804-475d-a3d1-a7d29b6faa6f_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "tool",
+            "uses": 7,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "024df695-2804-475d-a3d1-a7d29b6faa6f"
+            }
+          },
+          {
+            "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 0
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+            }
+          },
+          {
+            "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "crooked_hook_needle",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 1
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+            }
+          }
+        ],
+        "buckets": {
+          "weapon/crowbar_good_standard/tool": {
+            "count": 13,
+            "uses": 975,
+            "charges": 39,
+            "offeringSlots": 0
+          },
+          "contaminant/brass_monocle/tool": {
+            "count": 2,
+            "uses": 4,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/lead_type_stamp/tool": {
+            "count": 4,
+            "uses": 18,
+            "charges": 12,
+            "offeringSlots": 0
+          },
+          "contaminant/milky_fish_eye/tool": {
+            "count": 3,
+            "uses": 6,
+            "charges": 11,
+            "offeringSlots": 0
+          },
+          "contaminant/wrinkled_bottom_satchel/tool": {
+            "count": 1,
+            "uses": 4,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/amber_beetle/tool": {
+            "count": 3,
+            "uses": 16,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_good_resistant/tool": {
+            "count": 4,
+            "uses": 300,
+            "charges": 12,
+            "offeringSlots": 0
+          },
+          "contaminant/wooden_thread_spool/tool": {
+            "count": 2,
+            "uses": 8,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "contaminant/blind_needle_compass/tool": {
+            "count": 4,
+            "uses": 10,
+            "charges": 18,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_plain/tool": {
+            "count": 6,
+            "uses": 357,
+            "charges": 18,
+            "offeringSlots": 0
+          },
+          "contaminant/split_heel_boot/tool": {
+            "count": 1,
+            "uses": 4,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/missing_tooth_music_box/tool": {
+            "count": 1,
+            "uses": 6,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_good_light/tool": {
+            "count": 4,
+            "uses": 300,
+            "charges": 12,
+            "offeringSlots": 0
+          },
+          "contaminant/wax_sealed_button/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/ash_tooth/tool": {
+            "count": 1,
+            "uses": 3,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/crooked_hook_needle/tool": {
+            "count": 2,
+            "uses": 10,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_fine_resistant/tool": {
+            "count": 2,
+            "uses": 180,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/ceramic_capsule/tool": {
+            "count": 1,
+            "uses": 4,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/sunken_inkstone/tool": {
+            "count": 3,
+            "uses": 13,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "contaminant/coiled_tape_measure/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/gray_felt_glove/tool": {
+            "count": 2,
+            "uses": 11,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "contaminant/ceramic_charcoal_box/tool": {
+            "count": 1,
+            "uses": 2,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/hollow_reed_joint/tool": {
+            "count": 1,
+            "uses": 6,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/hollow_eyelet/tool": {
+            "count": 2,
+            "uses": 6,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/sealed_hourglass/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/scorched_scarf/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_excellent_resistant/tool": {
+            "count": 2,
+            "uses": 167,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/bone_clasp_mask/tool": {
+            "count": 2,
+            "uses": 6,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/silver_back_hand_mirror/tool": {
+            "count": 1,
+            "uses": 4,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_fine_standard/tool": {
+            "count": 1,
+            "uses": 90,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/creased_ticket_wallet/tool": {
+            "count": 1,
+            "uses": 3,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/frosted_furnace_core/tool": {
+            "count": 1,
+            "uses": 1,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/stopped_pocket_watch/tool": {
+            "count": 1,
+            "uses": 1,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_fine_light/tool": {
+            "count": 1,
+            "uses": 90,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/sealed_flower_calyx/inert": {
+            "count": 1,
+            "uses": 0,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/split_tongue_bell/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/amber_beetle/defense": {
+            "count": 1,
+            "uses": 0,
+            "charges": 0,
+            "offeringSlots": 1
+          },
+          "contaminant/crooked_hook_needle/defense": {
+            "count": 1,
+            "uses": 0,
+            "charges": 0,
+            "offeringSlots": 1
+          }
+        }
+      },
+      "endAssets": {
+        "reserve": 35,
+        "repairBonusHp": 0,
+        "modules": [
+          {
+            "id": "CORE",
+            "hp": 51,
+            "maxHp": 145
+          },
+          {
+            "id": "STORAGE",
+            "hp": 103,
+            "maxHp": 145
+          },
+          {
+            "id": "PURIFIER",
+            "hp": 51,
+            "maxHp": 145
+          }
+        ],
+        "growth": {
+          "schemaVersion": 2,
+          "upgrades": {
+            "growth_chaos_resist": 4,
+            "growth_kindling_affinity": 3,
+            "growth_vitality": 4,
+            "growth_sortie_slot": 1,
+            "growth_defense_slot": 3,
+            "growth_forecast_clarity": 3
+          },
+          "progression": {
+            "version": 1,
+            "impactExperienced": true,
+            "offeringCompleted": true,
+            "toolRevealed": true,
+            "crestExperienced": true
+          }
+        },
+        "usableWeaponCharges": 2459,
+        "usableContaminantCharges": 184,
+        "items": [
+          {
+            "id": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-1",
+              "runId": "2e6ede84-8ba3-45f1-840b-a22215fca161"
+            }
+          },
+          {
+            "id": "CAT_cacae3b1-506f-4488-8564-7892744fe206_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "brass_monocle",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "cacae3b1-506f-4488-8564-7892744fe206"
+            }
+          },
+          {
+            "id": "CAT_bc200fa5-a2a4-46f5-9a25-b80ccfe62d34_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "bc200fa5-a2a4-46f5-9a25-b80ccfe62d34"
+            }
+          },
+          {
+            "id": "WPN_db431ecc-bcb9-4afb-ba49-88937d2c07da",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "bdfe22dd-b4ae-41b8-9091-2e0958bdf38b"
+            }
+          },
+          {
+            "id": "CAT_c0340f2e-c530-4d11-87a3-a4133c4e064f_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "milky_fish_eye",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "c0340f2e-c530-4d11-87a3-a4133c4e064f"
+            }
+          },
+          {
+            "id": "CAT_3838f4a1-9198-4192-a21f-f82922fbd8bb_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "wrinkled_bottom_satchel",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "3838f4a1-9198-4192-a21f-f82922fbd8bb"
+            }
+          },
+          {
+            "id": "WPN_0cf4e05f-9fbe-4b9f-bda8-8769eb809b06",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "3838f4a1-9198-4192-a21f-f82922fbd8bb"
+            }
+          },
+          {
+            "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+            }
+          },
+          {
+            "id": "WPN_ca84f4af-0c64-4783-b6c4-e73410375ff0",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+            }
+          },
+          {
+            "id": "WPN_2539cdd6-3c72-4331-bf52-638227cfced6",
+            "kind": "weapon",
+            "definition": "crowbar_good_resistant",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-1",
+              "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+            }
+          },
+          {
+            "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "wooden_thread_spool",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+            }
+          },
+          {
+            "id": "WPN_3372d679-98ab-4a07-a572-d38a3cd8e764",
+            "kind": "weapon",
+            "definition": "crowbar_good_resistant",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "9248dc7b-753c-4b6a-ac6d-16956305b181"
+            }
+          },
+          {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "40c0b289-37f7-4905-80e5-a4d838360b0c"
+            }
+          },
+          {
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "fa3c944a-fd24-4f87-9c66-dca8d26ba574"
+            }
+          },
+          {
+            "id": "WPN_replacement:fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 57,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": null
+          },
+          {
+            "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "split_heel_boot",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "carried"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+            }
+          },
+          {
+            "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "missing_tooth_music_box",
+            "stage": "tool",
+            "uses": 6,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+            }
+          },
+          {
+            "id": "WPN_e4fe8656-48b4-4cd7-bd92-40916a05986b",
+            "kind": "weapon",
+            "definition": "crowbar_good_light",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+            }
+          },
+          {
+            "id": "CAT_f60af7ae-a85d-4ebf-9258-b502459d8e3e_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "wax_sealed_button",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e"
+            }
+          },
+          {
+            "id": "WPN_0e58805c-8287-4b7b-a68c-787fa4a2b0e7",
+            "kind": "weapon",
+            "definition": "crowbar_good_light",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-safe-1",
+              "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e"
+            }
+          },
+          {
+            "id": "WPN_93034541-c9a1-4bbf-b939-0d80673efd7e",
+            "kind": "weapon",
+            "definition": "crowbar_good_resistant",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e"
+            }
+          },
+          {
+            "id": "WPN_b340bdc7-5314-4e06-9802-38ea7f1e5b22",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-safe-1",
+              "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+            }
+          },
+          {
+            "id": "CAT_eb0b3d96-4344-4550-87e9-ba0b95e7eb73_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "wooden_thread_spool",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+            }
+          },
+          {
+            "id": "CAT_eb0b3d96-4344-4550-87e9-ba0b95e7eb73_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "ash_tooth",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+            }
+          },
+          {
+            "id": "WPN_a4d1c90a-6774-4f0f-b5e4-dc562904b1d0",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+            }
+          },
+          {
+            "id": "CAT_bf5f3038-8316-49ab-be7a-5311d560517c_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "crooked_hook_needle",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "bf5f3038-8316-49ab-be7a-5311d560517c"
+            }
+          },
+          {
+            "id": "WPN_724f4f03-0223-4d11-8096-a885cf47029c",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "bf5f3038-8316-49ab-be7a-5311d560517c"
+            }
+          },
+          {
+            "id": "WPN_6bbb42f6-7cb6-4f4d-bd79-f06de9457e60",
+            "kind": "weapon",
+            "definition": "crowbar_fine_resistant",
+            "stage": "tool",
+            "uses": 90,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "11d5a88b-9729-472e-aa23-0d2e871c94b9"
+            }
+          },
+          {
+            "id": "CAT_7e932b8d-fc82-4e89-8264-62abfa8d1aa1_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "ceramic_capsule",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "7e932b8d-fc82-4e89-8264-62abfa8d1aa1"
+            }
+          },
+          {
+            "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "sunken_inkstone",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+            }
+          },
+          {
+            "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "coiled_tape_measure",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+            }
+          },
+          {
+            "id": "WPN_2705dc2a-df33-49ea-a2d0-b8a92e212bbe",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+            }
+          },
+          {
+            "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "gray_felt_glove",
+            "stage": "tool",
+            "uses": 6,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "87a1ee48-277c-4e0c-9d52-86eae5bc0c8d"
+            }
+          },
+          {
+            "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "ceramic_charcoal_box",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "2e038080-3a09-4524-99db-dc30caf23768"
+            }
+          },
+          {
+            "id": "CAT_0ff5d0cc-4723-4460-a3ba-bc62b895a03d_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "sunken_inkstone",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "0ff5d0cc-4723-4460-a3ba-bc62b895a03d"
+            }
+          },
+          {
+            "id": "WPN_906c2bf7-29c6-4b22-833c-f6a0c65dc5e5",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "0ff5d0cc-4723-4460-a3ba-bc62b895a03d"
+            }
+          },
+          {
+            "id": "CAT_f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "hollow_reed_joint",
+            "stage": "tool",
+            "uses": 6,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec"
+            }
+          },
+          {
+            "id": "CAT_f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "crooked_hook_needle",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec"
+            }
+          },
+          {
+            "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "hollow_eyelet",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+            }
+          },
+          {
+            "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "sealed_hourglass",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "carried"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+            }
+          },
+          {
+            "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "scorched_scarf",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "55844805-dfdb-4c9a-9cda-516f3f1c9338"
+            }
+          },
+          {
+            "id": "WPN_6b4c933e-e952-46aa-92c5-3aa5b8683c39",
+            "kind": "weapon",
+            "definition": "crowbar_excellent_resistant",
+            "stage": "tool",
+            "uses": 57,
+            "charges": 3,
+            "location": {
+              "kind": "carried"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "1b82459c-cac6-452c-8590-b598edf496e3"
+            }
+          },
+          {
+            "id": "CAT_cdad99a1-204b-47e7-95d1-8ef718ad607d_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "milky_fish_eye",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 5,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "cdad99a1-204b-47e7-95d1-8ef718ad607d"
+            }
+          },
+          {
+            "id": "CAT_a3b4af24-23c3-4575-bbc6-a691120e86c6_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "sunken_inkstone",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "a3b4af24-23c3-4575-bbc6-a691120e86c6"
+            }
+          },
+          {
+            "id": "CAT_7234d0a8-a6b8-491d-818e-5dc10c35d3e8_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "bone_clasp_mask",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "7234d0a8-a6b8-491d-818e-5dc10c35d3e8"
+            }
+          },
+          {
+            "id": "CAT_7234d0a8-a6b8-491d-818e-5dc10c35d3e8_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "bone_clasp_mask",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "7234d0a8-a6b8-491d-818e-5dc10c35d3e8"
+            }
+          },
+          {
+            "id": "CAT_a6f906e9-f260-49bf-a91d-ab3e0169f07b_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "silver_back_hand_mirror",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "a6f906e9-f260-49bf-a91d-ab3e0169f07b"
+            }
+          },
+          {
+            "id": "WPN_cb89a878-148f-4f50-8431-47f58fee3e1d",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "a6f906e9-f260-49bf-a91d-ab3e0169f07b"
+            }
+          },
+          {
+            "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "gray_felt_glove",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "f4a259d9-7835-4ec5-92ff-7305ff97aa42"
+            }
+          },
+          {
+            "id": "WPN_b7ffd571-820e-448e-b0d0-0ec0e1e1fd4f",
+            "kind": "weapon",
+            "definition": "crowbar_excellent_resistant",
+            "stage": "tool",
+            "uses": 110,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "6431561f-ee37-409b-9603-aba7060560f3"
+            }
+          },
+          {
+            "id": "WPN_75a59884-fc66-4da5-b30c-9bbd3c904ad4",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "6431561f-ee37-409b-9603-aba7060560f3"
+            }
+          },
+          {
+            "id": "WPN_f4e66a39-885a-476a-8dec-dcd86c8d36cd",
+            "kind": "weapon",
+            "definition": "crowbar_fine_standard",
+            "stage": "tool",
+            "uses": 90,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "0f076b22-3b93-4d36-8ee9-0d67571a1028"
+            }
+          },
+          {
+            "id": "WPN_ff7bbaa9-d411-4e37-8e69-22148848335e",
+            "kind": "weapon",
+            "definition": "crowbar_fine_resistant",
+            "stage": "tool",
+            "uses": 90,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "f3ae18d6-2c46-49e5-8d96-21cd0e0a8e3b"
+            }
+          },
+          {
+            "id": "CAT_ca6e3a1b-53c1-40f2-9c09-bc0ebf895327_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "ca6e3a1b-53c1-40f2-9c09-bc0ebf895327"
+            }
+          },
+          {
+            "id": "CAT_b7aa8a85-de4f-4413-a9ca-29d04f8c601b_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "creased_ticket_wallet",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "b7aa8a85-de4f-4413-a9ca-29d04f8c601b"
+            }
+          },
+          {
+            "id": "WPN_bc67d68d-9eac-49c6-aa6a-18f45f779520",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "b7aa8a85-de4f-4413-a9ca-29d04f8c601b"
+            }
+          },
+          {
+            "id": "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 1,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0"
+            }
+          },
+          {
+            "id": "WPN_083e90ea-ea31-4ed3-ad75-53794a1d11d9",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0"
+            }
+          },
+          {
+            "id": "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "frosted_furnace_core",
+            "stage": "tool",
+            "uses": 1,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "a8cbed61-55c0-4205-9356-535531bae725"
+            }
+          },
+          {
+            "id": "WPN_445d4b25-646f-4c5b-b59e-ed721590971b",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-1",
+              "runId": "a8cbed61-55c0-4205-9356-535531bae725"
+            }
+          },
+          {
+            "id": "WPN_3bb0f70d-1407-4ffb-a44b-ced1295931c0",
+            "kind": "weapon",
+            "definition": "crowbar_good_light",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "a8cbed61-55c0-4205-9356-535531bae725"
+            }
+          },
+          {
+            "id": "WPN_a29da5c0-9eca-40a6-998d-94d70377034f",
+            "kind": "weapon",
+            "definition": "crowbar_good_light",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-2",
+              "runId": "c3b1b065-4154-41bd-938b-90033e8775a6"
+            }
+          },
+          {
+            "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "a6557e90-f8cd-4e91-a0fb-8d511aae077d"
+            }
+          },
+          {
+            "id": "WPN_0c1b85a7-182e-4ff3-b5ae-64a3dd4ca31a",
+            "kind": "weapon",
+            "definition": "crowbar_good_resistant",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-safe-1",
+              "runId": "a6557e90-f8cd-4e91-a0fb-8d511aae077d"
+            }
+          },
+          {
+            "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351"
+            }
+          },
+          {
+            "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "stopped_pocket_watch",
+            "stage": "tool",
+            "uses": 1,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351"
+            }
+          },
+          {
+            "id": "WPN_dc953dc6-a64d-414d-af87-851540e4ef00",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351"
+            }
+          },
+          {
+            "id": "WPN_438813bf-f55d-40b5-8861-26093285a906",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-1",
+              "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351"
+            }
+          },
+          {
+            "id": "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "milky_fish_eye",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "abcdad60-2750-47fc-ae26-adf20ef26c05"
+            }
+          },
+          {
+            "id": "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "abcdad60-2750-47fc-ae26-adf20ef26c05"
+            }
+          },
+          {
+            "id": "WPN_d20c10d8-9800-4524-8628-0d60bb958a4c",
+            "kind": "weapon",
+            "definition": "crowbar_fine_light",
+            "stage": "tool",
+            "uses": 90,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-deep-1",
+              "runId": "c494ba40-ca59-4eec-9fa4-2feddf194306"
+            }
+          },
+          {
+            "id": "CAT_97fc69a8-59e5-4e6f-a683-b4550f685bd7_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "sealed_flower_calyx",
+            "stage": "inert",
+            "uses": 0,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "97fc69a8-59e5-4e6f-a683-b4550f685bd7"
+            }
+          },
+          {
+            "id": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "90bab9f2-7b2f-486a-8589-70dade82d77a"
+            }
+          },
+          {
+            "id": "CAT_cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "split_tongue_bell",
+            "stage": "tool",
+            "uses": 5,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3"
+            }
+          },
+          {
+            "id": "CAT_f6cdd44f-ef72-4bcf-871c-139f65e00495_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "brass_monocle",
+            "stage": "tool",
+            "uses": 2,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "f6cdd44f-ef72-4bcf-871c-139f65e00495"
+            }
+          },
+          {
+            "id": "CAT_f123d0d1-cdc5-4152-a55d-cf8eb7a000c2_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "hollow_eyelet",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2"
+            }
+          },
+          {
+            "id": "WPN_166aa2b1-2228-4f6b-9b3b-dd7a8c6a4d58",
+            "kind": "weapon",
+            "definition": "crowbar_plain",
+            "stage": "tool",
+            "uses": 60,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2"
+            }
+          },
+          {
+            "id": "WPN_b030f7f4-f4b7-4c5d-9271-d6996a40e438",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "tool",
+            "uses": 75,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-safe-1",
+              "runId": "024df695-2804-475d-a3d1-a7d29b6faa6f"
+            }
+          },
+          {
+            "id": "CAT_024df695-2804-475d-a3d1-a7d29b6faa6f_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "tool",
+            "uses": 7,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "024df695-2804-475d-a3d1-a7d29b6faa6f"
+            }
+          },
+          {
+            "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "amber_beetle",
+            "stage": "tool",
+            "uses": 6,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+            }
+          },
+          {
+            "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "crooked_hook_needle",
+            "stage": "tool",
+            "uses": 4,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+            }
+          },
+          {
+            "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "split_heel_boot",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 6,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+            }
+          },
+          {
+            "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+            "kind": "contaminant",
+            "definition": "blind_needle_compass",
+            "stage": "tool",
+            "uses": 3,
+            "charges": 3,
+            "location": {
+              "kind": "stash"
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-deep-1",
+              "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+            }
+          },
+          {
+            "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+            "kind": "contaminant",
+            "definition": "lead_type_stamp",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 0
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-safe-1",
+              "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+            }
+          },
+          {
+            "id": "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+            "kind": "weapon",
+            "definition": "crowbar_good_standard",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 1
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-kindling-contested-2",
+              "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+            }
+          },
+          {
+            "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1",
+            "kind": "contaminant",
+            "definition": "frosted_furnace_core",
+            "stage": "defense",
+            "uses": 0,
+            "charges": 0,
+            "location": {
+              "kind": "defense",
+              "slot": 2
+            },
+            "source": {
+              "fragmentId": "frag-outdoor",
+              "nodeId": "r100-contaminant-contested-1",
+              "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+            }
+          }
+        ],
+        "buckets": {
+          "weapon/crowbar_good_standard/tool": {
+            "count": 13,
+            "uses": 975,
+            "charges": 39,
+            "offeringSlots": 0
+          },
+          "contaminant/brass_monocle/tool": {
+            "count": 2,
+            "uses": 4,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/lead_type_stamp/tool": {
+            "count": 4,
+            "uses": 18,
+            "charges": 12,
+            "offeringSlots": 0
+          },
+          "contaminant/milky_fish_eye/tool": {
+            "count": 3,
+            "uses": 6,
+            "charges": 11,
+            "offeringSlots": 0
+          },
+          "contaminant/wrinkled_bottom_satchel/tool": {
+            "count": 1,
+            "uses": 4,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/amber_beetle/tool": {
+            "count": 4,
+            "uses": 22,
+            "charges": 15,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_good_resistant/tool": {
+            "count": 4,
+            "uses": 300,
+            "charges": 12,
+            "offeringSlots": 0
+          },
+          "contaminant/wooden_thread_spool/tool": {
+            "count": 2,
+            "uses": 8,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "contaminant/blind_needle_compass/tool": {
+            "count": 5,
+            "uses": 13,
+            "charges": 21,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_plain/tool": {
+            "count": 6,
+            "uses": 357,
+            "charges": 18,
+            "offeringSlots": 0
+          },
+          "contaminant/split_heel_boot/tool": {
+            "count": 2,
+            "uses": 6,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "contaminant/missing_tooth_music_box/tool": {
+            "count": 1,
+            "uses": 6,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_good_light/tool": {
+            "count": 4,
+            "uses": 300,
+            "charges": 12,
+            "offeringSlots": 0
+          },
+          "contaminant/wax_sealed_button/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/ash_tooth/tool": {
+            "count": 1,
+            "uses": 3,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/crooked_hook_needle/tool": {
+            "count": 3,
+            "uses": 14,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_fine_resistant/tool": {
+            "count": 2,
+            "uses": 180,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/ceramic_capsule/tool": {
+            "count": 1,
+            "uses": 4,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/sunken_inkstone/tool": {
+            "count": 3,
+            "uses": 13,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "contaminant/coiled_tape_measure/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/gray_felt_glove/tool": {
+            "count": 2,
+            "uses": 11,
+            "charges": 9,
+            "offeringSlots": 0
+          },
+          "contaminant/ceramic_charcoal_box/tool": {
+            "count": 1,
+            "uses": 2,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/hollow_reed_joint/tool": {
+            "count": 1,
+            "uses": 6,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/hollow_eyelet/tool": {
+            "count": 2,
+            "uses": 6,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/sealed_hourglass/tool": {
+            "count": 1,
+            "uses": 3,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/scorched_scarf/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_excellent_resistant/tool": {
+            "count": 2,
+            "uses": 167,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/bone_clasp_mask/tool": {
+            "count": 2,
+            "uses": 6,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/silver_back_hand_mirror/tool": {
+            "count": 1,
+            "uses": 4,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_fine_standard/tool": {
+            "count": 1,
+            "uses": 90,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/creased_ticket_wallet/tool": {
+            "count": 1,
+            "uses": 3,
+            "charges": 6,
+            "offeringSlots": 0
+          },
+          "contaminant/frosted_furnace_core/tool": {
+            "count": 1,
+            "uses": 1,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/stopped_pocket_watch/tool": {
+            "count": 1,
+            "uses": 1,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "weapon/crowbar_fine_light/tool": {
+            "count": 1,
+            "uses": 90,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/sealed_flower_calyx/inert": {
+            "count": 1,
+            "uses": 0,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/split_tongue_bell/tool": {
+            "count": 1,
+            "uses": 5,
+            "charges": 3,
+            "offeringSlots": 0
+          },
+          "contaminant/lead_type_stamp/defense": {
+            "count": 1,
+            "uses": 0,
+            "charges": 0,
+            "offeringSlots": 1
+          },
+          "weapon/crowbar_good_standard/defense": {
+            "count": 1,
+            "uses": 0,
+            "charges": 0,
+            "offeringSlots": 1
+          },
+          "contaminant/frosted_furnace_core/defense": {
+            "count": 1,
+            "uses": 0,
+            "charges": 0,
+            "offeringSlots": 1
+          }
+        }
+      },
+      "totals": {
+        "banked": 50,
+        "repair": 26,
+        "growth": 35,
+        "cashAfterRepair": 24,
+        "sameServiceMargin": 22,
+        "reserveDelta": -11,
+        "carriedCashLost": 0,
+        "fieldMs": 146060.8,
+        "deaths": 0,
+        "actualConsumedCharges": {
+          "weapon": 0,
+          "contaminant": 3,
+          "passive": 0
+        },
+        "lostItems": 0,
+        "newItems": 5,
+        "maturedItems": 4,
+        "maturedFromThisSequence": 2,
+        "maturedFromEarnedAncestor": 2,
+        "offeringAssignments": 5
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "grade": "severe",
+          "outcome": "extract",
+          "world": "r100-cork-shelves",
+          "seed": 991458829,
+          "algorithmRevision": 6,
+          "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94",
+          "fieldMs": 78413.51000000037,
+          "observedTiming": {
+            "fieldEnd": "2026-10-08T11:03:55.465Z",
+            "returned": "2026-10-08T11:03:57.234Z",
+            "nextEntry": "2026-10-08T11:05:14.495Z",
+            "observedEntryToFieldEndMs": null,
+            "observedReturnToNextEntryMs": 77261,
+            "interpretation": "Operator wall time includes automation, screenshots, loading and UI waits; it is not human time or pure management time."
+          },
+          "recordedI13Timing": {
+            "resumeStartedAt": "2026-10-08T11:03:32.654Z",
+            "preparationStartedMs": 1791457412654,
+            "preparationAndEntryWallMs": 0,
+            "returnAndManagementStartedMs": 1791457435465,
+            "returnAndManagementWallMs": 75437
+          },
+          "cash": {
+            "start": 46,
+            "banked": 20,
+            "repair": 12,
+            "growth": 35,
+            "cashAfterRepair": 8,
+            "sameServiceMargin": 8,
+            "reserveDelta": -27,
+            "end": 19,
+            "carriedCashLost": 0
+          },
+          "serviceDebt": {
+            "before": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 102,
+                  "target": 100,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 0
+            },
+            "returned": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 21,
+                  "target": 53,
+                  "deficit": 32,
+                  "kindling": 8,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 93,
+                  "target": 100,
+                  "deficit": 7,
+                  "kindling": 2,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 45,
+                  "target": 53,
+                  "deficit": 8,
+                  "kindling": 2,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 12
+            },
+            "prepared": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 101,
+                  "target": 100,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 0
+            }
+          },
+          "fullEffectDebt": {
+            "before": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 100,
+                  "deficit": 47,
+                  "kindling": 12,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 102,
+                  "target": 100,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 100,
+                  "deficit": 47,
+                  "kindling": 12,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 24
+            },
+            "prepared": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 100,
+                  "deficit": 47,
+                  "kindling": 12,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 101,
+                  "target": 100,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 100,
+                  "deficit": 47,
+                  "kindling": 12,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 24
+            }
+          },
+          "originalCapitalDebt": {
+            "before": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 102,
+                  "target": 102,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 0
+            },
+            "prepared": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 101,
+                  "target": 102,
+                  "deficit": 1,
+                  "kindling": 1,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 1
+            }
+          },
+          "modules": [
+            {
+              "id": "CORE",
+              "beforeHp": 53,
+              "entryHp": 53,
+              "returnedHp": 21,
+              "preparedHp": 53,
+              "beforeMax": 130,
+              "preparedMax": 145,
+              "change": 0,
+              "actualRepairPaid": 8
+            },
+            {
+              "id": "STORAGE",
+              "beforeHp": 102,
+              "entryHp": 102,
+              "returnedHp": 93,
+              "preparedHp": 101,
+              "beforeMax": 130,
+              "preparedMax": 145,
+              "change": -1,
+              "actualRepairPaid": 2
+            },
+            {
+              "id": "PURIFIER",
+              "beforeHp": 53,
+              "entryHp": 53,
+              "returnedHp": 45,
+              "preparedHp": 53,
+              "beforeMax": 130,
+              "preparedMax": 145,
+              "change": 0,
+              "actualRepairPaid": 2
+            }
+          ],
+          "growthChanges": [],
+          "conditions": {
+            "modifiers": {
+              "chaosRateModifier": 0.841,
+              "kindlingValueModifier": 1.5,
+              "startingChaos": 24
+            },
+            "cycle": 64,
+            "maxHealth": 160,
+            "kindlingAffinity": 3
+          },
+          "consumed": [
+            {
+              "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+              "kind": "contaminant",
+              "definition": "split_heel_boot",
+              "family": "dash",
+              "uses": 1,
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-contaminant-safe-1",
+                "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+              }
+            },
+            {
+              "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "kind": "contaminant",
+              "definition": "sealed_hourglass",
+              "family": "solidify",
+              "uses": 1,
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-contaminant-contested-1",
+                "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+              }
+            },
+            {
+              "id": "WPN_6b4c933e-e952-46aa-92c5-3aa5b8683c39",
+              "kind": "weapon",
+              "definition": "crowbar_excellent_resistant",
+              "uses": 0,
+              "method": "actual surviving-item balance",
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-kindling-deep-1",
+                "runId": "1b82459c-cac6-452c-8590-b598edf496e3"
+              }
+            }
+          ],
+          "lost": [],
+          "newItems": [
+            {
+              "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+              "kind": "contaminant",
+              "definition": "split_heel_boot",
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0,
+              "location": {
+                "kind": "stash"
+              },
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-contaminant-safe-1",
+                "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+              }
+            },
+            {
+              "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+              "kind": "contaminant",
+              "definition": "blind_needle_compass",
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0,
+              "location": {
+                "kind": "stash"
+              },
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-contaminant-deep-1",
+                "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+              }
+            }
+          ],
+          "matured": [
+            {
+              "before": {
+                "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "definition": "amber_beetle",
+                "stage": "defense",
+                "uses": 0,
+                "charges": 0,
+                "location": {
+                  "kind": "defense",
+                  "slot": 0
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-safe-1",
+                  "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+                }
+              },
+              "after": {
+                "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "definition": "amber_beetle",
+                "stage": "tool",
+                "uses": 6,
+                "charges": 6,
+                "location": {
+                  "kind": "stash"
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-safe-1",
+                  "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+                }
+              },
+              "family": "solidify"
+            },
+            {
+              "before": {
+                "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "definition": "crooked_hook_needle",
+                "stage": "defense",
+                "uses": 0,
+                "charges": 0,
+                "location": {
+                  "kind": "defense",
+                  "slot": 1
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-contested-1",
+                  "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+                }
+              },
+              "after": {
+                "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "definition": "crooked_hook_needle",
+                "stage": "tool",
+                "uses": 4,
+                "charges": 3,
+                "location": {
+                  "kind": "stash"
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-contested-1",
+                  "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+                }
+              },
+              "family": "tripwire"
+            }
+          ],
+          "offeringSlots": [
+            {
+              "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+              "entry": {
+                "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "definition": "amber_beetle",
+                "stage": "defense",
+                "uses": 0,
+                "charges": 0,
+                "location": {
+                  "kind": "defense",
+                  "slot": 0
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-safe-1",
+                  "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+                }
+              },
+              "returned": {
+                "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "definition": "amber_beetle",
+                "stage": "tool",
+                "uses": 6,
+                "charges": 6,
+                "location": {
+                  "kind": "stash"
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-safe-1",
+                  "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+                }
+              }
+            },
+            {
+              "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+              "entry": {
+                "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "definition": "crooked_hook_needle",
+                "stage": "defense",
+                "uses": 0,
+                "charges": 0,
+                "location": {
+                  "kind": "defense",
+                  "slot": 1
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-contested-1",
+                  "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+                }
+              },
+              "returned": {
+                "id": "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1",
+                "kind": "contaminant",
+                "definition": "crooked_hook_needle",
+                "stage": "tool",
+                "uses": 4,
+                "charges": 3,
+                "location": {
+                  "kind": "stash"
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-contested-1",
+                  "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411"
+                }
+              }
+            }
+          ],
+          "offered": [
+            "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+            "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1"
+          ],
+          "unknown": []
+        },
+        {
+          "ordinal": 2,
+          "grade": "low",
+          "outcome": "extract",
+          "world": "r100-gel-rafts",
+          "seed": 3078293538,
+          "algorithmRevision": 6,
+          "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f",
+          "fieldMs": 67647.28999999963,
+          "observedTiming": {
+            "entry": "2026-10-08T11:05:14.495Z",
+            "fieldEnd": "2026-10-08T11:06:22.339Z",
+            "returned": "2026-10-08T11:06:24.021Z",
+            "observedEntryToFieldEndMs": 67844,
+            "observedReturnToNextEntryMs": null,
+            "interpretation": "Operator wall time includes automation, screenshots, loading and UI waits; it is not human time or pure management time."
+          },
+          "recordedI13Timing": {
+            "preparationStartedAt": "2026-10-08T11:05:10.918Z",
+            "preparationStartedMs": 1791457510918,
+            "preparationAndEntryWallMs": 3513,
+            "returnAndManagementStartedMs": 1791457582339,
+            "returnAndManagementWallMs": 68607
+          },
+          "cash": {
+            "start": 19,
+            "banked": 30,
+            "repair": 14,
+            "growth": 0,
+            "cashAfterRepair": 16,
+            "sameServiceMargin": 14,
+            "reserveDelta": 16,
+            "end": 35,
+            "carriedCashLost": 0
+          },
+          "serviceDebt": {
+            "before": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 101,
+                  "target": 100,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 0
+            },
+            "returned": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 43,
+                  "target": 53,
+                  "deficit": 10,
+                  "kindling": 3,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 91,
+                  "target": 100,
+                  "deficit": 9,
+                  "kindling": 3,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 15,
+                  "target": 53,
+                  "deficit": 38,
+                  "kindling": 10,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 16
+            },
+            "prepared": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 51,
+                  "target": 53,
+                  "deficit": 2,
+                  "kindling": 1,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 103,
+                  "target": 100,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 51,
+                  "target": 53,
+                  "deficit": 2,
+                  "kindling": 1,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 2
+            }
+          },
+          "fullEffectDebt": {
+            "before": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 100,
+                  "deficit": 47,
+                  "kindling": 12,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 101,
+                  "target": 100,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 100,
+                  "deficit": 47,
+                  "kindling": 12,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 24
+            },
+            "prepared": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 51,
+                  "target": 100,
+                  "deficit": 49,
+                  "kindling": 13,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 103,
+                  "target": 100,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 51,
+                  "target": 100,
+                  "deficit": 49,
+                  "kindling": 13,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 26
+            }
+          },
+          "originalCapitalDebt": {
+            "before": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 101,
+                  "target": 102,
+                  "deficit": 1,
+                  "kindling": 1,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 53,
+                  "target": 53,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 1
+            },
+            "prepared": {
+              "bonusModule": null,
+              "modules": [
+                {
+                  "id": "CORE",
+                  "hp": 51,
+                  "target": 53,
+                  "deficit": 2,
+                  "kindling": 1,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "STORAGE",
+                  "hp": 103,
+                  "target": 102,
+                  "deficit": 0,
+                  "kindling": 0,
+                  "bonusApplied": 0
+                },
+                {
+                  "id": "PURIFIER",
+                  "hp": 51,
+                  "target": 53,
+                  "deficit": 2,
+                  "kindling": 1,
+                  "bonusApplied": 0
+                }
+              ],
+              "kindling": 2
+            }
+          },
+          "modules": [
+            {
+              "id": "CORE",
+              "beforeHp": 53,
+              "entryHp": 53,
+              "returnedHp": 43,
+              "preparedHp": 51,
+              "beforeMax": 145,
+              "preparedMax": 145,
+              "change": -2,
+              "actualRepairPaid": 2
+            },
+            {
+              "id": "STORAGE",
+              "beforeHp": 101,
+              "entryHp": 101,
+              "returnedHp": 91,
+              "preparedHp": 103,
+              "beforeMax": 145,
+              "preparedMax": 145,
+              "change": 2,
+              "actualRepairPaid": 3
+            },
+            {
+              "id": "PURIFIER",
+              "beforeHp": 53,
+              "entryHp": 53,
+              "returnedHp": 15,
+              "preparedHp": 51,
+              "beforeMax": 145,
+              "preparedMax": 145,
+              "change": -2,
+              "actualRepairPaid": 9
+            }
+          ],
+          "growthChanges": [],
+          "conditions": {
+            "modifiers": {
+              "chaosRateModifier": 0.841,
+              "kindlingValueModifier": 1.5,
+              "startingChaos": 24
+            },
+            "cycle": 65,
+            "maxHealth": 160,
+            "kindlingAffinity": 3
+          },
+          "consumed": [
+            {
+              "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+              "kind": "contaminant",
+              "definition": "split_heel_boot",
+              "family": "dash",
+              "uses": 0,
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-contaminant-safe-1",
+                "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+              }
+            },
+            {
+              "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+              "kind": "contaminant",
+              "definition": "sealed_hourglass",
+              "family": "solidify",
+              "uses": 1,
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-contaminant-contested-1",
+                "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+              }
+            },
+            {
+              "id": "WPN_6b4c933e-e952-46aa-92c5-3aa5b8683c39",
+              "kind": "weapon",
+              "definition": "crowbar_excellent_resistant",
+              "uses": 0,
+              "method": "actual surviving-item balance",
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-kindling-deep-1",
+                "runId": "1b82459c-cac6-452c-8590-b598edf496e3"
+              }
+            }
+          ],
+          "lost": [],
+          "newItems": [
+            {
+              "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+              "kind": "contaminant",
+              "definition": "lead_type_stamp",
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0,
+              "location": {
+                "kind": "stash"
+              },
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-contaminant-safe-1",
+                "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+              }
+            },
+            {
+              "id": "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+              "kind": "weapon",
+              "definition": "crowbar_good_standard",
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0,
+              "location": {
+                "kind": "stash"
+              },
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-kindling-contested-2",
+                "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+              }
+            },
+            {
+              "id": "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1",
+              "kind": "contaminant",
+              "definition": "frosted_furnace_core",
+              "stage": "defense",
+              "uses": 0,
+              "charges": 0,
+              "location": {
+                "kind": "stash"
+              },
+              "source": {
+                "fragmentId": "frag-outdoor",
+                "nodeId": "r100-contaminant-contested-1",
+                "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f"
+              }
+            }
+          ],
+          "matured": [
+            {
+              "before": {
+                "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "definition": "split_heel_boot",
+                "stage": "defense",
+                "uses": 0,
+                "charges": 0,
+                "location": {
+                  "kind": "defense",
+                  "slot": 0
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-safe-1",
+                  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+                }
+              },
+              "after": {
+                "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "definition": "split_heel_boot",
+                "stage": "tool",
+                "uses": 3,
+                "charges": 6,
+                "location": {
+                  "kind": "stash"
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-safe-1",
+                  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+                }
+              },
+              "family": "dash"
+            },
+            {
+              "before": {
+                "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "definition": "blind_needle_compass",
+                "stage": "defense",
+                "uses": 0,
+                "charges": 0,
+                "location": {
+                  "kind": "defense",
+                  "slot": 1
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-deep-1",
+                  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+                }
+              },
+              "after": {
+                "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "definition": "blind_needle_compass",
+                "stage": "tool",
+                "uses": 3,
+                "charges": 3,
+                "location": {
+                  "kind": "stash"
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-deep-1",
+                  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+                }
+              },
+              "family": "survey"
+            }
+          ],
+          "offeringSlots": [
+            {
+              "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+              "entry": {
+                "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "definition": "split_heel_boot",
+                "stage": "defense",
+                "uses": 0,
+                "charges": 0,
+                "location": {
+                  "kind": "defense",
+                  "slot": 0
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-safe-1",
+                  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+                }
+              },
+              "returned": {
+                "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-safe-1",
+                "kind": "contaminant",
+                "definition": "split_heel_boot",
+                "stage": "tool",
+                "uses": 3,
+                "charges": 6,
+                "location": {
+                  "kind": "stash"
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-safe-1",
+                  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+                }
+              }
+            },
+            {
+              "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+              "entry": {
+                "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "definition": "blind_needle_compass",
+                "stage": "defense",
+                "uses": 0,
+                "charges": 0,
+                "location": {
+                  "kind": "defense",
+                  "slot": 1
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-deep-1",
+                  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+                }
+              },
+              "returned": {
+                "id": "CAT_b4582c78-5f9d-4a27-9416-164a8425fc94_r100-contaminant-deep-1",
+                "kind": "contaminant",
+                "definition": "blind_needle_compass",
+                "stage": "tool",
+                "uses": 3,
+                "charges": 3,
+                "location": {
+                  "kind": "stash"
+                },
+                "source": {
+                  "fragmentId": "frag-outdoor",
+                  "nodeId": "r100-contaminant-deep-1",
+                  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94"
+                }
+              }
+            }
+          ],
+          "offered": [
+            "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-safe-1",
+            "WPN_02b78f00-e8da-4b12-88f2-3c19938d5cdc",
+            "CAT_608f30e3-ad10-4f07-b54f-17b7d425ca4f_r100-contaminant-contested-1"
+          ],
+          "unknown": []
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No asset is assigned an invented kindling sale price; heterogeneous tools and facility HP cannot be added into cash.",
+    "Exact owned stocks and maturity are accounting evidence, not proof that abilities created useful action windows.",
+    "Shared ancestors/fixed-world branches are not independent players or estimates of long-term expected grade value.",
+    "Per-field and operator wall time are distinct; pure human preparation, listening, fatigue and all-world balance remain unverified."
+  ]
+}

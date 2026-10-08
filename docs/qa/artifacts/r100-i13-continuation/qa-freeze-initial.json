@@ -1,0 +1,148 @@
+{
+  "recordedAt": "2026-10-08T09:52:01.758Z",
+  "status": "freeze-and-observed-initial-state-pass",
+  "tool": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/qa-freeze-audit.mjs",
+    "sha256": "737037af6abee7c3994e6979e697cddd8cb059601a1a60b5d4c9af51f0fff025"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/policy-freeze.json",
+    "sha256": "a0a5f4fbfe1cefd6a3acb3116d8d11a0e41b966f17d8be2b7c49d0667c36b72c"
+  },
+  "executionAtAudit": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/execution.json",
+    "sha256": "695dee43f350ee5efdf7da1bda3eb5c6ffd35c3c142a53211b210ee802b18f30"
+  },
+  "taskSnapshot": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/qa-frozen-task.md",
+    "sha256": "8490401767a5ae4dbe0b80ba64f913e708574f0cbde4db8503f7be90f3ed6668"
+  },
+  "currentTaskMatchesFrozen": true,
+  "productionFilesMatched": 1397,
+  "toolDependenciesMatched": 7,
+  "immutableSourcesMatched": 4,
+  "dependencyReview": "New journey/encounters/policy/orchestrator and imported QA driver/slots are in the frozen tool list. Production TS imports are covered by the 1397-file source manifest. Browser/runtime packages remain the disclosed host environment, not bundled source.",
+  "environmentReview": "Frozen orchestrator explicitly clears QA_WORLD_ID, QA_SEED, QA_CONTROLLED_BUILD, QA_REPRO_IDENTITY_FILE and QA_REPLAY_INPUTS. Journey asserts no controlledBuild, no fixedIdentity and no replay input. QA_STORAGE_STATE retains exact original coh-save-v1 bytes with web-origin adaptation only.",
+  "sourceControllerSha256Meaning": "R2 parent source lineage only; actual executed continuation is harnessSha256 plus frozen dependencies.",
+  "reportFacts": [
+    {
+      "caseId": "a-new-directions",
+      "sourceBranch": "A",
+      "input": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-new-directions-earned-storage.json",
+        "sha256": "7d78a9934991d832b1ef45fa3570f881e1bcde4b7d4042af02f1a9783611cbe0"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+        "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+      },
+      "status": "running",
+      "observedAttempts": [
+        {
+          "ordinal": 1,
+          "status": "completed-real-input",
+          "grade": "low",
+          "world": "r100-pallid-membrane",
+          "seed": 2395437868,
+          "mode": "normal-world-selection",
+          "noStateInjectionLabel": true,
+          "labelCaveat": null
+        }
+      ],
+      "reportAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-new-directions/report.json",
+        "sha256": "c2c7c73c65292e5b7d223af0e3b81087d8be916a770f100d5d36a312971dc266"
+      }
+    },
+    {
+      "caseId": "b-service-recovery",
+      "sourceBranch": "B",
+      "input": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery-earned-storage.json",
+        "sha256": "5126fb5cd2597153edbeaf0e1fafa7ad380c28dcec87fe92243d4525b0038ed0"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-earned-glove/i13/1-after-preparation.save.json",
+        "sha256": "c860e250b88ae6cd18e5a979aa1a648844b0209c44e9290dc4192d8ebd6dc286"
+      },
+      "status": "running",
+      "observedAttempts": [],
+      "reportAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/report.json",
+        "sha256": "1e0009ee477102d0eac4942ca992d12ed253b6e5f11b9ed4efdbed515ff57f9e"
+      }
+    },
+    {
+      "caseId": "entry-low",
+      "sourceBranch": "A",
+      "input": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/entry-low-earned-storage.json",
+        "sha256": "7d78a9934991d832b1ef45fa3570f881e1bcde4b7d4042af02f1a9783611cbe0"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+        "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+      },
+      "status": "completed-limited-real-input",
+      "observedAttempts": [
+        {
+          "ordinal": 1,
+          "status": "completed-real-input",
+          "grade": "low",
+          "world": "r100-ash-strata",
+          "seed": 20261005,
+          "mode": "fixed-diagnostic",
+          "noStateInjectionLabel": false,
+          "labelCaveat": "Legacy noStateInjection boolean ignores fixedFirstWorld; explicit controlledWorld and identity determine diagnostic mode."
+        },
+        {
+          "ordinal": 2,
+          "status": "completed-real-input",
+          "grade": "low",
+          "world": "r100-ochre-folds",
+          "seed": 242316461,
+          "mode": "normal-world-selection",
+          "noStateInjectionLabel": true,
+          "labelCaveat": null
+        }
+      ],
+      "reportAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/entry-low/report.json",
+        "sha256": "0594c180d10eaa975776df71a4feadbe4cf9eeaefaecbea6c9ea81d2a61ca2e0"
+      }
+    },
+    {
+      "caseId": "entry-medium",
+      "sourceBranch": "A",
+      "input": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/entry-medium-earned-storage.json",
+        "sha256": "7d78a9934991d832b1ef45fa3570f881e1bcde4b7d4042af02f1a9783611cbe0"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+        "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+      },
+      "status": "not-yet-reported",
+      "observedAttempts": []
+    },
+    {
+      "caseId": "entry-severe",
+      "sourceBranch": "A",
+      "input": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/entry-severe-earned-storage.json",
+        "sha256": "7d78a9934991d832b1ef45fa3570f881e1bcde4b7d4042af02f1a9783611cbe0"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+        "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+      },
+      "status": "not-yet-reported",
+      "observedAttempts": []
+    }
+  ],
+  "limits": [
+    "This intermediate report binds the files as observed now; unfinished attempts have no accounting/semantic conclusion. Final audit must recheck unchanged frozen sources and complete raw saves.",
+    "Entry ordinal1 is fixed diagnostic despite legacy noStateInjection=true. Entry ordinal2 follows normal selection from ordinal1 real terminal, which still requires final identity/continuity audit.",
+    "Uncalled inherited controlledBuild fixture code remains in the source. Its guard, cleared environment, absent fixture artifact and raw state audits establish non-execution for this batch; code presence is not evidence of injected resources."
+  ]
+}

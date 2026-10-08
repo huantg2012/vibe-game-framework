@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-10-08T10:42:55.320Z",
+  "source": "QA independently reviewed immutable journey.jsonl lines1978/1981",
+  "scope": "Clarifies semantic claim only; no raw report, logger, tool or frozen policy edited",
+  "facts": {
+    "requestedHoldMs": 140,
+    "paidAtInputRemainingMs": 166.85,
+    "observedElapsedIntervalMs": 183.35,
+    "expiredTailApproximatelyMs": 16.5,
+    "paidAfterEmpty": true,
+    "permissionRevokedAtSameAfterObservation": true,
+    "noSubsequentUseOfExpiredPermissionObserved": true
+  },
+  "interpretation": "The input budget retained20ms relative to the read remaining time and the next observation revoked the expired control. The entire183.35ms interval must not be described as fully freeze-covered; actual timing/observation overhead crossed natural expiry. All other enemies and unchanged risk gates remain separate."
+}

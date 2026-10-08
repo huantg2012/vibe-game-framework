@@ -1,0 +1,2370 @@
+{
+  "recordedAt": "2026-10-08T10:29:11.462Z",
+  "status": "bounded-frozen-sources-and-observed-contract-check-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-bounded-freeze.mjs",
+    "sha256": "62e020419e8a52b71b779b67302152dcf3c38a34fd4e3bdee27423405a9e91d1"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/policy-freeze.json",
+    "sha256": "a58b0720429b8f39ef556ad18cf29327c32db6ef78ea136251685ae87e9c6637"
+  },
+  "executionAtAudit": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/execution.json",
+    "sha256": "592b249315749ac0f449206b2fe786290083b7ec7de7d4d2c6f8d96de8857ea4"
+  },
+  "taskSnapshot": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/task-preregistration.md",
+    "sha256": "76f84c796c5ee1f2318ca27e8de4521f910ad5827aabe6637b799e2ce3da9ec4"
+  },
+  "productionFiles": 1397,
+  "dependencies": 9,
+  "cases": [
+    {
+      "id": "b-bounded-functional",
+      "status": "completed-limited-real-input",
+      "reportAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/b-bounded-functional/report.json",
+        "sha256": "bc71e06616604df24be1e565ac50f4c69e9de4ea9fc01497ce539c517857f5b9"
+      },
+      "journalAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/b-bounded-functional/i13/journey.jsonl",
+        "sha256": "2dc246cab138f211b7cc07822e6e991b8289d6abba773212bf9dc96f4d4a7da4"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/i13/4-after-preparation.save.json",
+        "sha256": "57c31bba1f4b2e8bba6d08981d3f52d9a89d66391853e164c4a8c9b932bd878b"
+      },
+      "completed": 3,
+      "expectedMaximum": 4,
+      "earlyStop": {
+        "ordinal": 3,
+        "reason": "Actual fixed service baseline restored; boundedB ends immediately",
+        "modules": [
+          {
+            "id": "CORE",
+            "type": "CORE",
+            "hp": 53,
+            "maxHp": 130
+          },
+          {
+            "id": "STORAGE",
+            "type": "STORAGE",
+            "hp": 102,
+            "maxHp": 130
+          },
+          {
+            "id": "PURIFIER",
+            "type": "PURIFIER",
+            "hp": 52,
+            "maxHp": 130
+          }
+        ]
+      },
+      "boundedObservedEvents": [
+        {
+          "line": 35,
+          "at": "2026-10-08T10:19:50.494Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-contaminant-safe-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 102,
+          "at": "2026-10-08T10:19:56.598Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-safe-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 190,
+          "at": "2026-10-08T10:20:03.915Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-2",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 241,
+          "at": "2026-10-08T10:20:08.608Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 271,
+          "at": "2026-10-08T10:20:11.330Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 733,
+          "at": "2026-10-08T10:20:53.538Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-deep-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 1369,
+          "at": "2026-10-08T10:22:55.265Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-contaminant-safe-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 1413,
+          "at": "2026-10-08T10:22:59.273Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-safe-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 1477,
+          "at": "2026-10-08T10:23:04.598Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-contaminant-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 1582,
+          "at": "2026-10-08T10:23:13.537Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-deep-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 1874,
+          "at": "2026-10-08T10:23:38.584Z",
+          "event": "bounded-target-deferred",
+          "record": {
+            "target": {
+              "id": "r100-kindling-deep-1",
+              "pos": {
+                "x": 884,
+                "y": 180
+              }
+            },
+            "reason": "approach-kept-dangerous",
+            "failures": 1,
+            "elapsedMs": 44181.5799999999,
+            "position": {
+              "x": 883.5309062927099,
+              "y": 93.08567637726469
+            },
+            "successes": 3,
+            "blockers": [
+              {
+                "id": "ENM_INF_01",
+                "position": {
+                  "x": 935.6028280970511,
+                  "y": 212.1846764010444
+                },
+                "seen": 40848.369999999886
+              },
+              {
+                "id": "ENM_RWR_01",
+                "position": {
+                  "x": 916.8010754305387,
+                  "y": 132.57855513063222
+                },
+                "seen": 44164.9099999999
+              }
+            ]
+          },
+          "normalObservation": {
+            "visibleSearches": [
+              {
+                "id": "r100-kindling-deep-1",
+                "pos": {
+                  "x": 884,
+                  "y": 180
+                }
+              }
+            ],
+            "position": {
+              "x": 882.9438211766967,
+              "y": 92.49859126125145
+            },
+            "facing": 0.7853981633974483,
+            "hp": 130,
+            "chaos": 62.076684106626715,
+            "elapsedMs": 44164.9099999999,
+            "ended": false,
+            "enemies": [
+              {
+                "id": "ENM_RWR_01",
+                "position": {
+                  "x": 916.8010754305387,
+                  "y": 132.57855513063222
+                },
+                "facing": -2.273883501766993,
+                "attack": "idle",
+                "approaching": false
+              }
+            ],
+            "hosts": [
+              {
+                "id": "ENM_BING_01",
+                "position": {
+                  "x": 912,
+                  "y": 112
+                },
+                "occupancy": "paint"
+              }
+            ],
+            "visiblePollutionCells": [
+              {
+                "x": 904,
+                "y": 72,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 72,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 904,
+                "y": 88,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 88,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 904,
+                "y": 104,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 104,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 936,
+                "y": 104,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 952,
+                "y": 104,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 904,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 936,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 952,
+                "y": 120,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 904,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 936,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 952,
+                "y": 136,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 904,
+                "y": 152,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 920,
+                "y": 152,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 936,
+                "y": 152,
+                "paint": true,
+                "air": false
+              },
+              {
+                "x": 952,
+                "y": 152,
+                "paint": true,
+                "air": false
+              }
+            ],
+            "remembered": [
+              {
+                "id": "ENM_INF_01",
+                "position": {
+                  "x": 935.6028280970511,
+                  "y": 212.1846764010444
+                },
+                "facing": -1.046008813342099,
+                "attack": "recover",
+                "approaching": false,
+                "seen": 40848.369999999886
+              },
+              {
+                "id": "ENM_RWR_01",
+                "position": {
+                  "x": 916.8010754305387,
+                  "y": 132.57855513063222
+                },
+                "facing": -2.273883501766993,
+                "attack": "idle",
+                "approaching": false,
+                "seen": 44164.9099999999
+              }
+            ]
+          }
+        },
+        {
+          "line": 1888,
+          "at": "2026-10-08T10:23:39.177Z",
+          "event": "bounded-geometry-progress",
+          "goal": {
+            "id": "geometry-exploration",
+            "pos": {
+              "x": 916,
+              "y": 108
+            }
+          },
+          "geometryCount": 1,
+          "finished": true,
+          "reason": "arrived-with-no-currently-admitted-target"
+        },
+        {
+          "line": 1892,
+          "at": "2026-10-08T10:23:39.268Z",
+          "event": "bounded-second-geometry-choice",
+          "goal": {
+            "id": "geometry-exploration",
+            "pos": {
+              "x": 548,
+              "y": 100
+            },
+            "geometryOrdinal": 2,
+            "disclosure": "Pure body-reachable terrain at least128px from actual footprints; least-visited256px neighborhood, then shortest body path; no object/AI inputs",
+            "regionVisits": 0,
+            "pathDistance": 344
+          },
+          "actualFootprints": [
+            {
+              "x": 196,
+              "y": 588
+            },
+            {
+              "x": 203.88819999999998,
+              "y": 588
+            },
+            {
+              "x": 217.72176666666672,
+              "y": 588
+            },
+            {
+              "x": 231.44386666666682,
+              "y": 588
+            },
+            {
+              "x": 244.7212666666669,
+              "y": 588
+            },
+            {
+              "x": 258.83176666666714,
+              "y": 588
+            },
+            {
+              "x": 272.6652000000005,
+              "y": 588
+            },
+            {
+              "x": 286.83243333333354,
+              "y": 588
+            },
+            {
+              "x": 300.6656000000001,
+              "y": 588
+            },
+            {
+              "x": 313.8875999999998,
+              "y": 588
+            },
+            {
+              "x": 327.1647666666663,
+              "y": 588
+            },
+            {
+              "x": 340.88706666666616,
+              "y": 588
+            },
+            {
+              "x": 353.6645666666659,
+              "y": 588
+            },
+            {
+              "x": 355.4294833031661,
+              "y": 581.4818703271325
+            },
+            {
+              "x": 360.3287659651213,
+              "y": 573.383344551135
+            },
+            {
+              "x": 370.6097255651215,
+              "y": 573.383344551135
+            },
+            {
+              "x": 384.08322989845504,
+              "y": 573.383344551135
+            },
+            {
+              "x": 397.55686409845526,
+              "y": 573.383344551135
+            },
+            {
+              "x": 410.0567255651221,
+              "y": 573.383344551135
+            },
+            {
+              "x": 422.50243263178885,
+              "y": 573.383344551135
+            },
+            {
+              "x": 431.647610831789,
+              "y": 573.383344551135
+            },
+            {
+              "x": 448.1512291651226,
+              "y": 573.383344551135
+            },
+            {
+              "x": 461.62457116512275,
+              "y": 573.383344551135
+            },
+            {
+              "x": 475.4229369651229,
+              "y": 573.383344551135
+            },
+            {
+              "x": 488.8964088317897,
+              "y": 573.383344551135
+            },
+            {
+              "x": 500.04312456512304,
+              "y": 573.383344551135
+            },
+            {
+              "x": 512.5432782317898,
+              "y": 573.383344551135
+            },
+            {
+              "x": 526.3420011651234,
+              "y": 573.383344551135
+            },
+            {
+              "x": 538.8417976984567,
+              "y": 573.383344551135
+            },
+            {
+              "x": 552.5867882984569,
+              "y": 573.383344551135
+            },
+            {
+              "x": 566.0602601651237,
+              "y": 573.383344551135
+            },
+            {
+              "x": 579.8039520984572,
+              "y": 573.383344551135
+            },
+            {
+              "x": 593.2778460317907,
+              "y": 573.383344551135
+            },
+            {
+              "x": 605.291908765124,
+              "y": 573.383344551135
+            },
+            {
+              "x": 610.0546064317906,
+              "y": 573.383344551135
+            },
+            {
+              "x": 621.1493430317905,
+              "y": 573.383344551135
+            },
+            {
+              "x": 634.6231070984574,
+              "y": 573.383344551135
+            },
+            {
+              "x": 648.0969685651243,
+              "y": 573.383344551135
+            },
+            {
+              "x": 660.5959534317911,
+              "y": 573.383344551135
+            },
+            {
+              "x": 674.3398401651248,
+              "y": 573.383344551135
+            },
+            {
+              "x": 686.8393444984583,
+              "y": 573.383344551135
+            },
+            {
+              "x": 700.6374505651252,
+              "y": 573.383344551135
+            },
+            {
+              "x": 714.1116042317921,
+              "y": 573.383344551135
+            },
+            {
+              "x": 726.989767298459,
+              "y": 573.383344551135
+            },
+            {
+              "x": 739.4897586317924,
+              "y": 573.383344551135
+            },
+            {
+              "x": 752.4217189651258,
+              "y": 573.383344551135
+            },
+            {
+              "x": 765.7872391651259,
+              "y": 573.383344551135
+            },
+            {
+              "x": 777.8014966984592,
+              "y": 573.383344551135
+            },
+            {
+              "x": 789.3807333651258,
+              "y": 573.383344551135
+            },
+            {
+              "x": 792.3238781253922,
+              "y": 565.0283242740667
+            },
+            {
+              "x": 793.0499385990951,
+              "y": 558.4377781855717
+            },
+            {
+              "x": 799.1407595537081,
+              "y": 552.3469572309587
+            },
+            {
+              "x": 798.9688169157848,
+              "y": 547.8687542238154
+            },
+            {
+              "x": 792.11626184181,
+              "y": 540.7479548926046
+            },
+            {
+              "x": 796.7717401435615,
+              "y": 532.2569289605782
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 521.0354699460765
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 509.10091134607643
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 495.35034541274297
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 482.9484132127429
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 470.96170627940944
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 459.44439661274265
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 446.21257427940924
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 433.2923032127425
+            },
+            {
+              "x": 797.7859541787104,
+              "y": 424.52322627940913
+            },
+            {
+              "x": 802.6437940206706,
+              "y": 426.8998616658311
+            },
+            {
+              "x": 805.4672892071203,
+              "y": 417.6431879663256
+            },
+            {
+              "x": 805.4672892071203,
+              "y": 404.82643523299214
+            },
+            {
+              "x": 805.4672892071203,
+              "y": 392.83985283299205
+            },
+            {
+              "x": 805.4672892071203,
+              "y": 380.9046715663251
+            },
+            {
+              "x": 809.5784653806546,
+              "y": 377.9925151062882
+            },
+            {
+              "x": 813.2286332155068,
+              "y": 369.6839804504743
+            },
+            {
+              "x": 813.2286332155068,
+              "y": 356.86760131714084
+            },
+            {
+              "x": 813.2286332155068,
+              "y": 348.66919838380744
+            },
+            {
+              "x": 813.2286332155068,
+              "y": 336.3187918504741
+            },
+            {
+              "x": 817.9800734725686,
+              "y": 329.1016606926017
+            },
+            {
+              "x": 821.3395384760713,
+              "y": 331.5428030707896
+            },
+            {
+              "x": 821.3424659093746,
+              "y": 325.5170227613318
+            },
+            {
+              "x": 826.8630499047395,
+              "y": 322.694314657282
+            },
+            {
+              "x": 829.6886436297526,
+              "y": 313.60922370730856
+            },
+            {
+              "x": 834.0178349882768,
+              "y": 316.6923345324995
+            },
+            {
+              "x": 836.3099256309264,
+              "y": 311.5609237211958
+            },
+            {
+              "x": 843.2625282309263,
+              "y": 309.48495305452906
+            },
+            {
+              "x": 845.2573748497039,
+              "y": 299.98425025701806
+            },
+            {
+              "x": 845.2573748497039,
+              "y": 289.96943525701795
+            },
+            {
+              "x": 849.5869844854594,
+              "y": 293.05346249277346
+            },
+            {
+              "x": 851.3802285680991,
+              "y": 285.78024203644367
+            },
+            {
+              "x": 851.3802285680991,
+              "y": 275.920315369777
+            },
+            {
+              "x": 860.8795537342165,
+              "y": 273.093780245059
+            },
+            {
+              "x": 871.4327990656963,
+              "y": 280.33200915574344
+            },
+            {
+              "x": 879.2518107134606,
+              "y": 274.8452893404722
+            },
+            {
+              "x": 886.5306113016093,
+              "y": 271.73399708098145
+            },
+            {
+              "x": 886.5899947224527,
+              "y": 267.6817644590549
+            },
+            {
+              "x": 891.8988320062674,
+              "y": 266.95042038417665
+            },
+            {
+              "x": 901.3946543396006,
+              "y": 266.95042038417665
+            },
+            {
+              "x": 903.3912738679236,
+              "y": 257.86698548604204
+            },
+            {
+              "x": 900.9697348883934,
+              "y": 254.2008603731787
+            },
+            {
+              "x": 899.8138838458804,
+              "y": 243.00396132508192
+            },
+            {
+              "x": 899.8138838458804,
+              "y": 231.4820750584151
+            },
+            {
+              "x": 923.0337053584524,
+              "y": 253.18542528079004
+            },
+            {
+              "x": 946.076091695057,
+              "y": 276.2278116173947
+            },
+            {
+              "x": 954.273996495057,
+              "y": 276.2278116173947
+            },
+            {
+              "x": 963.7170166950568,
+              "y": 276.2278116173947
+            },
+            {
+              "x": 962.9065835455253,
+              "y": 242.1881881545981
+            },
+            {
+              "x": 962.5725102308131,
+              "y": 134.7016450727404
+            },
+            {
+              "x": 962.5725102308131,
+              "y": 126.08854613940697
+            },
+            {
+              "x": 962.5725102308131,
+              "y": 113.16799487274025
+            },
+            {
+              "x": 962.5725102308131,
+              "y": 100.35127327274026
+            },
+            {
+              "x": 962.5725102308131,
+              "y": 87.94990147274022
+            },
+            {
+              "x": 962.5725102308131,
+              "y": 75.59974400607368
+            },
+            {
+              "x": 962.5725102308131,
+              "y": 66.9346524060737
+            },
+            {
+              "x": 953.2756743582269,
+              "y": 64.2220435884868
+            },
+            {
+              "x": 944.6231798395296,
+              "y": 71.44018762015943
+            },
+            {
+              "x": 943.7421632467006,
+              "y": 84.67079793372841
+            },
+            {
+              "x": 943.7421632467006,
+              "y": 101.17049946706207
+            },
+            {
+              "x": 935.1283171133676,
+              "y": 101.17049946706207
+            },
+            {
+              "x": 930.7168794467009,
+              "y": 101.17049946706207
+            },
+            {
+              "x": 918.1574748467011,
+              "y": 101.17049946706207
+            },
+            {
+              "x": 893.149461232243,
+              "y": 78.23783385260428
+            },
+            {
+              "x": 868.5675611224874,
+              "y": 79.08187327618117
+            },
+            {
+              "x": 868.5675611224874,
+              "y": 83.12861507618096
+            },
+            {
+              "x": 868.5675611224874,
+              "y": 94.44041360951427
+            },
+            {
+              "x": 868.5675611224874,
+              "y": 106.42680920951423
+            },
+            {
+              "x": 792.5588647511337,
+              "y": 183.68071438086756
+            },
+            {
+              "x": 799.3469978795027,
+              "y": 176.89258125249862
+            },
+            {
+              "x": 811.1980275216736,
+              "y": 185.50275928711653
+            },
+            {
+              "x": 821.1570253460662,
+              "y": 178.20590173314915
+            },
+            {
+              "x": 823.4681391365339,
+              "y": 201.94368990934785
+            },
+            {
+              "x": 826.9707591953842,
+              "y": 204.76610810915767
+            },
+            {
+              "x": 838.9372707377617,
+              "y": 206.00759893413803
+            },
+            {
+              "x": 913.7032743135891,
+              "y": 277.12403349832545
+            },
+            {
+              "x": 922.2068804933308,
+              "y": 277.01376241140065
+            },
+            {
+              "x": 935.1270270266638,
+              "y": 277.01376241140065
+            },
+            {
+              "x": 948.3588493599968,
+              "y": 277.01376241140065
+            },
+            {
+              "x": 961.1755398266633,
+              "y": 277.01376241140065
+            },
+            {
+              "x": 973.1097870933302,
+              "y": 277.01376241140065
+            },
+            {
+              "x": 981.3601204266637,
+              "y": 277.01376241140065
+            },
+            {
+              "x": 981.9999001,
+              "y": 267.1547386114005
+            },
+            {
+              "x": 981.9999001,
+              "y": 254.23393827806746
+            },
+            {
+              "x": 969.1784061851104,
+              "y": 251.4078356391173
+            },
+            {
+              "x": 955.3760032517771,
+              "y": 251.4078356391173
+            },
+            {
+              "x": 954.3498352243921,
+              "y": 245.73576889320856
+            },
+            {
+              "x": 954.3498352243921,
+              "y": 233.33399235987542
+            },
+            {
+              "x": 954.3498352243921,
+              "y": 220.41369015987547
+            },
+            {
+              "x": 953.1519041619696,
+              "y": 185.6505232422014
+            },
+            {
+              "x": 952.3081729426685,
+              "y": 161.0703385948358
+            },
+            {
+              "x": 938.6918891220223,
+              "y": 164.64561169053533
+            },
+            {
+              "x": 884.7972403290344,
+              "y": 86.0170472630062
+            },
+            {
+              "x": 879.1106072674016,
+              "y": 80.33041420137364
+            },
+            {
+              "x": 874.2599203115177,
+              "y": 83.5895818627218
+            },
+            {
+              "x": 882.9438211766967,
+              "y": 92.49859126125145
+            },
+            {
+              "x": 894.24850109407,
+              "y": 103.13039352240418
+            },
+            {
+              "x": 893.4220140908736,
+              "y": 99.1975901102043
+            }
+          ],
+          "disclosure": "Pure static support and actual walked positions only; zero object, loot or enemy inputs"
+        },
+        {
+          "line": 1949,
+          "at": "2026-10-08T10:23:43.453Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-2",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 2019,
+          "at": "2026-10-08T10:23:50.037Z",
+          "event": "bounded-target-deferred",
+          "record": {
+            "target": {
+              "id": "r100-kindling-contested-2",
+              "pos": {
+                "x": 596,
+                "y": 180
+              }
+            },
+            "reason": "visible-opponent-too-close",
+            "failures": 1,
+            "elapsedMs": 55631.09999999991,
+            "position": {
+              "x": 581.817214943203,
+              "y": 182.00741719978447
+            },
+            "successes": 3,
+            "blockers": [
+              {
+                "id": "ENM_RWR_01",
+                "position": {
+                  "x": 604.8564257408051,
+                  "y": 149.32492850637232
+                },
+                "seen": 55631.09999999991
+              }
+            ]
+          },
+          "normalObservation": {
+            "visibleSearches": [
+              {
+                "id": "r100-kindling-contested-2",
+                "pos": {
+                  "x": 596,
+                  "y": 180
+                }
+              }
+            ],
+            "position": {
+              "x": 581.817214943203,
+              "y": 182.00741719978447
+            },
+            "facing": 1.0996830924626149,
+            "hp": 115,
+            "chaos": 70.80093461446235,
+            "elapsedMs": 55631.09999999991,
+            "ended": false,
+            "enemies": [
+              {
+                "id": "ENM_RWR_01",
+                "position": {
+                  "x": 604.8564257408051,
+                  "y": 149.32492850637232
+                },
+                "facing": 2.1848303853176074,
+                "attack": "recover",
+                "approaching": true
+              }
+            ],
+            "hosts": [],
+            "visiblePollutionCells": [],
+            "remembered": [
+              {
+                "id": "ENM_RWR_01",
+                "position": {
+                  "x": 604.8564257408051,
+                  "y": 149.32492850637232
+                },
+                "facing": 2.1848303853176074,
+                "attack": "recover",
+                "approaching": true,
+                "seen": 55631.09999999991
+              }
+            ]
+          }
+        },
+        {
+          "line": 2027,
+          "at": "2026-10-08T10:23:50.690Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-deep-1",
+              "admission": {
+                "allowed": true,
+                "reason": "reassess-only-after-old-blocking-observation-changed",
+                "requiresOriginalCaution": true,
+                "evidence": [
+                  {
+                    "id": "ENM_INF_01",
+                    "moved": false,
+                    "expired": true,
+                    "old": {
+                      "id": "ENM_INF_01",
+                      "position": {
+                        "x": 935.6028280970511,
+                        "y": 212.1846764010444
+                      },
+                      "seen": 40848.369999999886
+                    },
+                    "currentNormalMemory": null
+                  },
+                  {
+                    "id": "ENM_RWR_01",
+                    "moved": true,
+                    "expired": false,
+                    "old": {
+                      "id": "ENM_RWR_01",
+                      "position": {
+                        "x": 916.8010754305387,
+                        "y": 132.57855513063222
+                      },
+                      "seen": 44164.9099999999
+                    },
+                    "currentNormalMemory": {
+                      "id": "ENM_RWR_01",
+                      "position": {
+                        "x": 586.553485899461,
+                        "y": 172.53258878678392
+                      },
+                      "facing": 2.2794919431112706,
+                      "attack": "idle",
+                      "approaching": true,
+                      "seen": 56281.069999999934
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "line": 2205,
+          "at": "2026-10-08T10:24:07.287Z",
+          "event": "bounded-target-retry-arrival",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "kind": "kindling",
+            "pos": {
+              "x": 884,
+              "y": 180
+            },
+            "tier": "deep",
+            "value": 4,
+            "collected": false
+          },
+          "admission": {
+            "allowed": true,
+            "reason": "reassess-only-after-old-blocking-observation-changed",
+            "requiresOriginalCaution": true,
+            "evidence": [
+              {
+                "id": "ENM_INF_01",
+                "moved": false,
+                "expired": true,
+                "old": {
+                  "id": "ENM_INF_01",
+                  "position": {
+                    "x": 935.6028280970511,
+                    "y": 212.1846764010444
+                  },
+                  "seen": 40848.369999999886
+                },
+                "currentNormalMemory": null
+              },
+              {
+                "id": "ENM_RWR_01",
+                "moved": false,
+                "expired": true,
+                "old": {
+                  "id": "ENM_RWR_01",
+                  "position": {
+                    "x": 916.8010754305387,
+                    "y": 132.57855513063222
+                  },
+                  "seen": 44164.9099999999
+                },
+                "currentNormalMemory": null
+              }
+            ]
+          },
+          "originalCaution": "Original live approach and search danger checks remain in force"
+        },
+        {
+          "line": 2222,
+          "at": "2026-10-08T10:24:08.752Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            },
+            {
+              "id": "r100-kindling-contested-2",
+              "admission": {
+                "allowed": true,
+                "reason": "reassess-only-after-old-blocking-observation-changed",
+                "requiresOriginalCaution": true,
+                "evidence": [
+                  {
+                    "id": "ENM_RWR_01",
+                    "moved": false,
+                    "expired": true,
+                    "old": {
+                      "id": "ENM_RWR_01",
+                      "position": {
+                        "x": 604.8564257408051,
+                        "y": 149.32492850637232
+                      },
+                      "seen": 55631.09999999991
+                    },
+                    "currentNormalMemory": null
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "line": 2270,
+          "at": "2026-10-08T10:24:13.335Z",
+          "event": "bounded-target-retry-arrival",
+          "target": {
+            "id": "r100-kindling-contested-2",
+            "kind": "kindling",
+            "pos": {
+              "x": 596,
+              "y": 180
+            },
+            "tier": "contested",
+            "value": 2,
+            "collected": false
+          },
+          "admission": {
+            "allowed": true,
+            "reason": "reassess-only-after-old-blocking-observation-changed",
+            "requiresOriginalCaution": true,
+            "evidence": [
+              {
+                "id": "ENM_RWR_01",
+                "moved": false,
+                "expired": true,
+                "old": {
+                  "id": "ENM_RWR_01",
+                  "position": {
+                    "x": 604.8564257408051,
+                    "y": 149.32492850637232
+                  },
+                  "seen": 55631.09999999991
+                },
+                "currentNormalMemory": null
+              }
+            ]
+          },
+          "originalCaution": "Original live approach and search danger checks remain in force"
+        },
+        {
+          "line": 2287,
+          "at": "2026-10-08T10:24:14.848Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 2765,
+          "at": "2026-10-08T10:25:57.126Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-safe-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 2809,
+          "at": "2026-10-08T10:26:01.383Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-contaminant-safe-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 2886,
+          "at": "2026-10-08T10:26:07.927Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-2",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 2951,
+          "at": "2026-10-08T10:26:13.932Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 3156,
+          "at": "2026-10-08T10:26:31.981Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-deep-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 3318,
+          "at": "2026-10-08T10:26:46.058Z",
+          "event": "bounded-geometry-progress",
+          "goal": {
+            "id": "geometry-exploration",
+            "pos": {
+              "x": 924,
+              "y": 116
+            }
+          },
+          "geometryCount": 1,
+          "finished": true,
+          "reason": "arrived-with-no-currently-admitted-target"
+        },
+        {
+          "line": 3322,
+          "at": "2026-10-08T10:26:46.168Z",
+          "event": "bounded-second-geometry-choice",
+          "goal": {
+            "id": "geometry-exploration",
+            "pos": {
+              "x": 644,
+              "y": 60
+            },
+            "geometryOrdinal": 2,
+            "disclosure": "Pure body-reachable terrain at least128px from actual footprints; least-visited256px neighborhood, then shortest body path; no object/AI inputs",
+            "regionVisits": 0,
+            "pathDistance": 336
+          },
+          "actualFootprints": [
+            {
+              "x": 196,
+              "y": 588
+            },
+            {
+              "x": 203.4441333333334,
+              "y": 588
+            },
+            {
+              "x": 216.72226666666694,
+              "y": 588
+            },
+            {
+              "x": 230.88880000000063,
+              "y": 588
+            },
+            {
+              "x": 243.66646666666725,
+              "y": 588
+            },
+            {
+              "x": 257.50013333333413,
+              "y": 588
+            },
+            {
+              "x": 271.1676000000006,
+              "y": 588
+            },
+            {
+              "x": 285.00090000000046,
+              "y": 588
+            },
+            {
+              "x": 296.44526666666724,
+              "y": 588
+            },
+            {
+              "x": 310.167166666667,
+              "y": 588
+            },
+            {
+              "x": 324.2792333333336,
+              "y": 588
+            },
+            {
+              "x": 336.1679000000002,
+              "y": 588
+            },
+            {
+              "x": 347.6134000000006,
+              "y": 588
+            },
+            {
+              "x": 361.77976666666723,
+              "y": 588
+            },
+            {
+              "x": 375.44600000000037,
+              "y": 588
+            },
+            {
+              "x": 389.5580333333333,
+              "y": 588
+            },
+            {
+              "x": 401.0033333333331,
+              "y": 588
+            },
+            {
+              "x": 409.83816666666615,
+              "y": 588
+            },
+            {
+              "x": 418.615866666666,
+              "y": 588
+            },
+            {
+              "x": 432.78253333333254,
+              "y": 588
+            },
+            {
+              "x": 446.004533333332,
+              "y": 588
+            },
+            {
+              "x": 458.83789999999857,
+              "y": 588
+            },
+            {
+              "x": 471.1726333333316,
+              "y": 588
+            },
+            {
+              "x": 466.6551449807313,
+              "y": 594.3961699090125
+            },
+            {
+              "x": 471.5540063129407,
+              "y": 601.7190654470184
+            },
+            {
+              "x": 466.91880351113264,
+              "y": 597.0838626452103
+            },
+            {
+              "x": 465.5132516811951,
+              "y": 584.2144933021762
+            },
+            {
+              "x": 473.619448911532,
+              "y": 574.121401933844
+            },
+            {
+              "x": 469.0439640736855,
+              "y": 564.6057153666343
+            },
+            {
+              "x": 467.8680272541742,
+              "y": 551.984704718037
+            },
+            {
+              "x": 467.8680272541742,
+              "y": 537.8174380513702
+            },
+            {
+              "x": 467.8680272541742,
+              "y": 523.9842713847034
+            },
+            {
+              "x": 467.8680272541742,
+              "y": 510.15100471803737
+            },
+            {
+              "x": 467.8680272541742,
+              "y": 496.0397713847044
+            },
+            {
+              "x": 467.8680272541742,
+              "y": 481.3182380513711
+            },
+            {
+              "x": 472.87410834638894,
+              "y": 484.09145075308726
+            },
+            {
+              "x": 476.9139138841934,
+              "y": 486.0045804679711
+            },
+            {
+              "x": 477.8625306805005,
+              "y": 477.66077304266224
+            },
+            {
+              "x": 487.9368735114669,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 501.2148068448002,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 515.0482401781333,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 528.7705735114668,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 541.547340178134,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 554.3258068448007,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 563.1018401781345,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 575.9350068448014,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 589.6565735114687,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 602.9344401781356,
+              "y": 475.8950326592513
+            },
+            {
+              "x": 605.8402843321539,
+              "y": 465.49800803361853
+            },
+            {
+              "x": 605.8402843321539,
+              "y": 457.99730803361837
+            },
+            {
+              "x": 611.6619242390489,
+              "y": 460.08855065340134
+            },
+            {
+              "x": 612.5859300271319,
+              "y": 451.1284073046522
+            },
+            {
+              "x": 612.5859300271319,
+              "y": 437.46094063798535
+            },
+            {
+              "x": 612.5859300271319,
+              "y": 424.6833073046522
+            },
+            {
+              "x": 612.5859300271319,
+              "y": 411.85017397131924
+            },
+            {
+              "x": 612.5859300271319,
+              "y": 398.5715073046527
+            },
+            {
+              "x": 622.9835328603581,
+              "y": 395.66697647563404
+            },
+            {
+              "x": 636.8167995270251,
+              "y": 395.66697647563404
+            },
+            {
+              "x": 639.8389762531974,
+              "y": 385.7556149129706
+            },
+            {
+              "x": 634.6255003832591,
+              "y": 378.1174231842182
+            },
+            {
+              "x": 638.0047719318824,
+              "y": 375.43304453349344
+            },
+            {
+              "x": 645.1793780994554,
+              "y": 380.3584989357406
+            },
+            {
+              "x": 646.3577129687029,
+              "y": 372.90249119798716
+            },
+            {
+              "x": 638.2513359261903,
+              "y": 362.80909149057396
+            },
+            {
+              "x": 643.1223795421806,
+              "y": 353.66338335806887
+            },
+            {
+              "x": 644.8367383139127,
+              "y": 341.0202301045174
+            },
+            {
+              "x": 644.8367383139127,
+              "y": 330.90839677118413
+            },
+            {
+              "x": 649.9534114721749,
+              "y": 327.7187280038144
+            },
+            {
+              "x": 654.340964466673,
+              "y": 330.76353205691544
+            },
+            {
+              "x": 659.4623473416506,
+              "y": 330.4033225569508
+            },
+            {
+              "x": 666.0168806749836,
+              "y": 330.4033225569508
+            },
+            {
+              "x": 678.8508473416507,
+              "y": 330.4033225569508
+            },
+            {
+              "x": 692.5739473416513,
+              "y": 330.4033225569508
+            },
+            {
+              "x": 705.8526473416518,
+              "y": 330.4033225569508
+            },
+            {
+              "x": 708.7618393078568,
+              "y": 325.3552828011444
+            },
+            {
+              "x": 718.7099115183133,
+              "y": 322.4030240988733
+            },
+            {
+              "x": 726.1553781849801,
+              "y": 322.4030240988733
+            },
+            {
+              "x": 723.8645307548073,
+              "y": 315.0647379542682
+            },
+            {
+              "x": 730.2785535166305,
+              "y": 312.54148930813466
+            },
+            {
+              "x": 739.1561392006112,
+              "y": 319.48939004771023
+            },
+            {
+              "x": 740.6351977043171,
+              "y": 306.2574384057743
+            },
+            {
+              "x": 747.1970121689579,
+              "y": 309.34705681665247
+            },
+            {
+              "x": 757.3994627193529,
+              "y": 310.7513577339216
+            },
+            {
+              "x": 755.6096569219035,
+              "y": 300.8666562588953
+            },
+            {
+              "x": 765.3357072782035,
+              "y": 297.8403873887476
+            },
+            {
+              "x": 772.7134931772998,
+              "y": 303.683107068935
+            },
+            {
+              "x": 771.9554902562666,
+              "y": 291.30251859704424
+            },
+            {
+              "x": 781.6819878142344,
+              "y": 288.2769007093614
+            },
+            {
+              "x": 786.7084146203947,
+              "y": 291.9702608488553
+            },
+            {
+              "x": 799.5775721917865,
+              "y": 293.375721775638
+            },
+            {
+              "x": 813.6892055251202,
+              "y": 293.375721775638
+            },
+            {
+              "x": 819.6872055251198,
+              "y": 293.375721775638
+            },
+            {
+              "x": 831.5745055251197,
+              "y": 293.375721775638
+            },
+            {
+              "x": 844.852638858453,
+              "y": 293.375721775638
+            },
+            {
+              "x": 850.741038858453,
+              "y": 293.375721775638
+            },
+            {
+              "x": 861.2977055251199,
+              "y": 293.375721775638
+            },
+            {
+              "x": 864.3238095385038,
+              "y": 300.435701726213
+            },
+            {
+              "x": 860.8567435797427,
+              "y": 302.5192742550074
+            },
+            {
+              "x": 865.5110008491113,
+              "y": 296.0724457014436
+            },
+            {
+              "x": 874.1974030532475,
+              "y": 302.2610319079098
+            },
+            {
+              "x": 883.3427303175168,
+              "y": 297.389969454913
+            },
+            {
+              "x": 892.4880575817865,
+              "y": 302.2610319079095
+            },
+            {
+              "x": 899.6191168837079,
+              "y": 299.40868191682466
+            },
+            {
+              "x": 900.5631358876888,
+              "y": 308.5757367387666
+            },
+            {
+              "x": 900.5631358876888,
+              "y": 321.8537034054332
+            },
+            {
+              "x": 900.5631358876888,
+              "y": 334.2428034054333
+            },
+            {
+              "x": 908.6112700591126,
+              "y": 331.9681721297343
+            },
+            {
+              "x": 910.1408428169508,
+              "y": 343.32448821178457
+            },
+            {
+              "x": 902.0992930092547,
+              "y": 352.90231081232923
+            },
+            {
+              "x": 906.6562114895963,
+              "y": 361.73349410394354
+            },
+            {
+              "x": 907.8936160604668,
+              "y": 372.83191067721157
+            },
+            {
+              "x": 907.8936160604668,
+              "y": 386.943544010545
+            },
+            {
+              "x": 907.8936160604668,
+              "y": 400.77684401054483
+            },
+            {
+              "x": 907.8936160604668,
+              "y": 414.4975773438776
+            },
+            {
+              "x": 912.5707149882392,
+              "y": 412.4016870363373
+            },
+            {
+              "x": 917.3566856575611,
+              "y": 410.93535573661245
+            },
+            {
+              "x": 913.017230029341,
+              "y": 417.7559034791086
+            },
+            {
+              "x": 917.7546909506675,
+              "y": 426.7731548799854
+            },
+            {
+              "x": 918.8407331624447,
+              "y": 438.78727250801904
+            },
+            {
+              "x": 910.4597858686383,
+              "y": 449.57887214001363
+            },
+            {
+              "x": 916.6221485889464,
+              "y": 459.12602687306884
+            },
+            {
+              "x": 918.3362407380985,
+              "y": 471.76892005345104
+            },
+            {
+              "x": 910.6086702778773,
+              "y": 481.032273039153
+            },
+            {
+              "x": 912.427989060398,
+              "y": 485.925694620217
+            },
+            {
+              "x": 916.9928318458697,
+              "y": 487.58320163265927
+            },
+            {
+              "x": 908.7233061795627,
+              "y": 484.32417226895967
+            },
+            {
+              "x": 905.6318434204418,
+              "y": 489.8692844520042
+            },
+            {
+              "x": 897.2350888046653,
+              "y": 493.5591362066587
+            },
+            {
+              "x": 888.4570221379985,
+              "y": 493.5591362066587
+            },
+            {
+              "x": 891.4488963916483,
+              "y": 503.50727954314306
+            },
+            {
+              "x": 891.4488963916483,
+              "y": 514.9519462098096
+            },
+            {
+              "x": 885.2771359120336,
+              "y": 517.9776932472878
+            },
+            {
+              "x": 882.2503229593231,
+              "y": 522.0573888271942
+            },
+            {
+              "x": 876.0842171022556,
+              "y": 523.208739646688
+            },
+            {
+              "x": 873.9472543030622,
+              "y": 530.7135353291651
+            },
+            {
+              "x": 863.1477861049768,
+              "y": 533.7361743215018
+            },
+            {
+              "x": 851.2580861049767,
+              "y": 533.7361743215018
+            },
+            {
+              "x": 848.4358857095588,
+              "y": 544.129154963351
+            },
+            {
+              "x": 843.4760455347423,
+              "y": 543.1132511962298
+            },
+            {
+              "x": 842.6613367683361,
+              "y": 538.8769760356997
+            },
+            {
+              "x": 842.5269430241331,
+              "y": 550.5885246742289
+            },
+            {
+              "x": 837.8912216773521,
+              "y": 547.2858699941148
+            },
+            {
+              "x": 835.2358350655257,
+              "y": 553.4416610603729
+            },
+            {
+              "x": 835.2358350655257,
+              "y": 565.9418943937065
+            },
+            {
+              "x": 826.1721980274895,
+              "y": 568.8462360222624
+            },
+            {
+              "x": 816.648381592612,
+              "y": 561.7464366142457
+            },
+            {
+              "x": 806.7053143660179,
+              "y": 567.934845831994
+            },
+            {
+              "x": 801.5902474956191,
+              "y": 563.5215528606559
+            },
+            {
+              "x": 805.9825540424838,
+              "y": 565.6773871009074
+            },
+            {
+              "x": 807.6970337769449,
+              "y": 573.4321333429563
+            },
+            {
+              "x": 797.8620437472116,
+              "y": 570.8374694951457
+            },
+            {
+              "x": 794.8353433536336,
+              "y": 579.2298569238371
+            },
+            {
+              "x": 784.6626884170134,
+              "y": 581.3657961221937
+            },
+            {
+              "x": 777.4956884170132,
+              "y": 581.3657961221937
+            },
+            {
+              "x": 779.0533021935989,
+              "y": 586.0474561005424
+            },
+            {
+              "x": 777.6810741208752,
+              "y": 590.7474649954842
+            },
+            {
+              "x": 784.8303715129662,
+              "y": 583.5981676033932
+            },
+            {
+              "x": 789.945903503254,
+              "y": 588.0122453709188
+            },
+            {
+              "x": 800.652963089142,
+              "y": 589.8965180811318
+            },
+            {
+              "x": 813.4855964224757,
+              "y": 589.8965180811318
+            },
+            {
+              "x": 826.7080297558086,
+              "y": 589.8965180811318
+            },
+            {
+              "x": 838.6528964224755,
+              "y": 589.8965180811318
+            },
+            {
+              "x": 834.7362548553256,
+              "y": 579.726493392468
+            },
+            {
+              "x": 834.7362548553256,
+              "y": 569.1707267258018
+            },
+            {
+              "x": 842.603905214829,
+              "y": 571.1580550542691
+            },
+            {
+              "x": 845.6302328707857,
+              "y": 562.3205222994004
+            },
+            {
+              "x": 845.6302328707857,
+              "y": 548.4868222993999
+            },
+            {
+              "x": 845.6302328707857,
+              "y": 537.0404222993996
+            },
+            {
+              "x": 851.176004629669,
+              "y": 540.8553318691194
+            },
+            {
+              "x": 853.0021063060143,
+              "y": 533.3704219701269
+            },
+            {
+              "x": 864.0619371913538,
+              "y": 530.3443767425516
+            },
+            {
+              "x": 875.5065371913533,
+              "y": 530.3443767425516
+            },
+            {
+              "x": 889.6724705246872,
+              "y": 530.3443767425516
+            },
+            {
+              "x": 902.1725705246877,
+              "y": 530.3443767425516
+            },
+            {
+              "x": 899.0519677234115,
+              "y": 524.018906094944
+            },
+            {
+              "x": 897.8485288988389,
+              "y": 515.0288029278167
+            },
+            {
+              "x": 907.5749949512619,
+              "y": 512.8923966540897
+            },
+            {
+              "x": 909.9954612947643,
+              "y": 506.7295409476053
+            },
+            {
+              "x": 909.9954612947643,
+              "y": 493.0075076142721
+            },
+            {
+              "x": 909.9954612947643,
+              "y": 480.2281742809395
+            },
+            {
+              "x": 909.9954612947643,
+              "y": 473.061840947606
+            },
+            {
+              "x": 915.1795222738097,
+              "y": 476.60583398782575
+            },
+            {
+              "x": 918.2009541423658,
+              "y": 466.6939017174328
+            },
+            {
+              "x": 910.2845419902407,
+              "y": 456.1382472251702
+            },
+            {
+              "x": 914.393698554297,
+              "y": 447.7490120931816
+            },
+            {
+              "x": 916.107909450025,
+              "y": 435.1069507589581
+            },
+            {
+              "x": 916.107909450025,
+              "y": 422.2736174256248
+            },
+            {
+              "x": 916.107909450025,
+              "y": 410.38665075895864
+            },
+            {
+              "x": 916.107909450025,
+              "y": 396.5534840922922
+            },
+            {
+              "x": 916.107909450025,
+              "y": 382.7199174256257
+            },
+            {
+              "x": 916.107909450025,
+              "y": 369.8858174256259
+            },
+            {
+              "x": 916.107909450025,
+              "y": 354.8861174256259
+            },
+            {
+              "x": 916.107909450025,
+              "y": 342.10808409229276
+            },
+            {
+              "x": 916.107909450025,
+              "y": 328.8297840922929
+            },
+            {
+              "x": 916.107909450025,
+              "y": 314.99668409229304
+            },
+            {
+              "x": 916.107909450025,
+              "y": 301.3302840922931
+            },
+            {
+              "x": 916.107909450025,
+              "y": 287.4967507589597
+            },
+            {
+              "x": 916.107909450025,
+              "y": 277.38661742562607
+            },
+            {
+              "x": 916.107909450025,
+              "y": 263.55308409229275
+            },
+            {
+              "x": 916.107909450025,
+              "y": 253.4416507589596
+            },
+            {
+              "x": 906.196409214446,
+              "y": 250.41956648602022
+            },
+            {
+              "x": 897.3628758811127,
+              "y": 250.41956648602022
+            },
+            {
+              "x": 900.3078758811118,
+              "y": 245.19783315268688
+            },
+            {
+              "x": 893.0632983279824,
+              "y": 242.1760315096027
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 232.44882007137278
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 220.5575867380386
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 206.39128673803864
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 192.72505340470545
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 178.55728673803833
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 164.39022007137146
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 150.55678673803803
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 136.89135340470472
+            },
+            {
+              "x": 890.0379040470972,
+              "y": 141.1136534047047
+            },
+            {
+              "x": 897.3244742980844,
+              "y": 141.77336823978706
+            },
+            {
+              "x": 902.8250409647512,
+              "y": 141.77336823978706
+            }
+          ],
+          "disclosure": "Pure static support and actual walked positions only; zero object, loot or enemy inputs"
+        },
+        {
+          "line": 3574,
+          "at": "2026-10-08T10:27:09.806Z",
+          "event": "bounded-geometry-progress",
+          "goal": {
+            "id": "geometry-exploration",
+            "pos": {
+              "x": 644,
+              "y": 60
+            },
+            "geometryOrdinal": 2,
+            "disclosure": "Pure body-reachable terrain at least128px from actual footprints; least-visited256px neighborhood, then shortest body path; no object/AI inputs",
+            "regionVisits": 0,
+            "pathDistance": 336
+          },
+          "geometryCount": 2,
+          "finished": true,
+          "reason": "arrived-with-no-currently-admitted-target"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Source and cap checks do not themselves establish that a retry yielded new income or that debt was restored. Four raw saves and original-service bridge are required.",
+    "Bounded policy combines public function selection, reconsideration and second geometric direction. No single-factor economic cause claimed.",
+    "All geometric routing is diagnostic assistance; observed-source restrictions and later runtime window review remain separate."
+  ]
+}

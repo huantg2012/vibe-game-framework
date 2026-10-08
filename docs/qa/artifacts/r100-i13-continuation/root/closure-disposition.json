@@ -1,0 +1,223 @@
+{
+  "date": "2026-10-08",
+  "reviewer": "director / root",
+  "result": "bounded-internal-pass",
+  "iteration": "R100-I13",
+  "productionRevision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+  "productionChanged": false,
+  "previousGates": [
+    {
+      "id": "cash-asset-accounting",
+      "status": "pass",
+      "label": "现金、设施、成长及新旧物件独立核账（限定证据）",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-ACCOUNTING",
+        "R100-E-I13-ACCOUNTING-NEGATIVES",
+        "R100-E-I13-PAIRED-NINE",
+        "R100-E-I13-NATURAL-TWELVE",
+        "R100-E-I13-R2-SEVEN",
+        "R100-E-I13-FRESH-AND-SERVICE"
+      ]
+    },
+    {
+      "id": "cancel-persistence-integer-contracts",
+      "status": "pass",
+      "label": "取消/恢复/事务与整数所得合同",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-CONTRACTS"
+      ]
+    },
+    {
+      "id": "natural-preparation-and-recovery",
+      "status": "changes-required",
+      "label": "两类自然准备、重度预算与后续恢复未成立",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-NATURAL-TWELVE"
+      ]
+    },
+    {
+      "id": "sustainable-grade-value",
+      "status": "changes-required",
+      "label": "完整工具成本、长期等级价值与失败恢复仍未通过",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-FRESH-AND-SERVICE"
+      ]
+    },
+    {
+      "id": "entry-farming-and-fatigue",
+      "status": "pending",
+      "label": "入口速刷真实往返与连续视听疲劳未验证",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": []
+    },
+    {
+      "id": "unchanged-production-and-execution",
+      "status": "pass",
+      "label": "生产1397来源保持，28趟冻结执行与依赖绑定通过",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-EXECUTION-28"
+      ]
+    },
+    {
+      "id": "bounded-low-medium-maintenance-and-growth",
+      "status": "pass",
+      "label": "限定低中主链12趟维持固定服务并真实支付33成长",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-FRESH-AND-SERVICE"
+      ]
+    },
+    {
+      "id": "fresh-item-to-consumption",
+      "status": "pass",
+      "label": "当支新物搜得→成熟→实际消费链（单件限定）",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-FRESH-AND-SERVICE"
+      ]
+    },
+    {
+      "id": "limited-earned-item-action-windows",
+      "status": "pass",
+      "label": "新烟斗Host压制及新手套消声覆盖真实翻找（限定窗口）",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-FINAL-REVIEW"
+      ]
+    }
+  ],
+  "design": {
+    "path": "docs/tasks/rift-r100-i13.md",
+    "sha256": "4bfafcc44ebcce4fb1eb53755d38ff3478a2cf9cd07ced3d515d45f8cb3bf273"
+  },
+  "evidence": [
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-run-binding.json",
+      "sha256": "6d619a1bf6573f53a4338b6185959f9a54ae26329e9bc58d93201a81e357b460"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-preparation-budget.json",
+      "sha256": "54c3bda7b72a4c63a98bd65320c687a917cc8c07cdb8795e7bc1670c9bcc7294"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-cold-continuity.json",
+      "sha256": "d8df70bc0906b1f03d46bf99811981d29454f92de52b13a2b1a21b6532acb35d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-recovery-accounting-final.json",
+      "sha256": "85a08e3dfbfab7136f4208b86fe00aeda08d3de090d07eed7cd4437fe503a335"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-recovery-bridge-final.json",
+      "sha256": "3a6f22301c030b3a6314a7dad269243335e96f498a2e4e83af7fc1df2084dbc3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-admission-after-recovery.json",
+      "sha256": "a020655d801564794d48f352eb28c589e0ceb1ccf102cb12ba4af4c6a489bc2a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-windows-after-recovery.json",
+      "sha256": "f8f55c3851f1401d66c391c5dce978f8b8f07b954f7cd1cd8d1535dcd1d2c6c3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-entry-bound.json",
+      "sha256": "641fd0f31b09ddf957e0e99bbe5a48ef304fef0bb5ff53eeb0c58356f198d3cf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-b-bounded-bridge-final.json",
+      "sha256": "cdad38eb2a2a0126a7ad6155e609363883addf26ae6b757885336ce91e65277b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-pursuit-windows-final.json",
+      "sha256": "fd7cc986d3dccb7f54987ad45e0e766e670b5e7603669b9a37d3b769922d47be"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/execution-through52.json",
+      "sha256": "c35b83006328185446d947aaeb2603912829ed0ca889e1656fa6ed53953366e6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/root/continuity.json",
+      "sha256": "faeed53329574511d92bf6c2ed5a1a2e40a021b4012554ab804527ce57e89d81"
+    }
+  ],
+  "counts": {
+    "uniqueActualRuns": 52,
+    "financialSnapshots": 208,
+    "accountingAssertions": 29638,
+    "fixedDiagnostic": 12,
+    "natural": 40,
+    "byGrade": {
+      "low": 33,
+      "medium": 11,
+      "severe": 8
+    }
+  },
+  "decisions": [
+    {
+      "gate": "low-medium-maintenance-and-growth",
+      "result": "pass",
+      "facts": "A23 income463 / repairs384 / growth68 / cash24→35, fixed service and original capital intact."
+    },
+    {
+      "gate": "natural-severe-deep-and-recovery",
+      "result": "pass",
+      "facts": "Same natural A22 run returned deep contaminant and20 cash; actual low A23 returned30, repaired14 and restored capital."
+    },
+    {
+      "gate": "two-earned-functional-directions",
+      "result": "pass",
+      "facts": "Earned information/dash and control/dash action chains plus affordable ordinary one-use-and-retain-two alternatives; new A22 compass3 and boots3 matured A23."
+    },
+    {
+      "gate": "failed-branch-facility-recovery",
+      "result": "pass-with-fixed-recipe-limitation",
+      "facts": "B14 cash5 and service/capital debt0; cumulative income211 / repairs230, dash0 retained."
+    },
+    {
+      "gate": "bounded-entry-repeat-and-accounting",
+      "result": "pass",
+      "facts": "Entry two trips per grade and historical cancellation/persistence/integer contracts; total52 independent run accounting."
+    }
+  ],
+  "preservedInterruption": {
+    "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94",
+    "sameRunColdContinued": true,
+    "replacementSorties": 0,
+    "grants": 0,
+    "autosaveBeforeDiagnosticMs": 99.99
+  },
+  "rootVisualChecks": [
+    "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/1-search-8.png",
+    "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/1-return.png"
+  ],
+  "limits": [
+    "52 unique sorties include 12 fixed diagnostic and 40 natural; shared ancestry and disclosed geometry-assisted navigation are not a player study or a win-rate estimate.",
+    "A22 deep contaminant was actually returned and matured to a compass. Its quality and natural severe deep-kindling premium are not inferred.",
+    "A23 ordinary survey/dash and control/dash alternatives can each pay a normal use and leave a qualified single item with at least two uses; they are alternatives, not two simultaneously funded next trips. Four-second control still uses ancestral sandtimer3; another Q4 severe admission fails.",
+    "B repaid its own facility debt but spent ancestral dash reserves; dash0 and original fixed-recipe recovery failure remain. A never repays B.",
+    "Finite tool, weapon and offering costs remain explicit; no invented money exchange, infinite steady-state claim or general grade profit ordering.",
+    "Entry6 and the fixed entry-circle mechanism bound do not exclude every world or turning policy.",
+    "Historical sound-listening R100-R10, long audiovisual fatigue, real weak hardware and human final review stay in I14; R100 is active, finalAcceptance null."
+  ],
+  "qa": {
+    "path": "docs/qa/rift-r100-i13.md",
+    "sha256": "ad768d15d034321406c1c39bf6c6de872fa724d2439a516479df2b7aa9defa57",
+    "checks": {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-checks-final.json",
+      "sha256": "429c346acc06945180b444195519bf9501b0ff62ff7bca516b022bb2c9ab8ac3"
+    }
+  },
+  "rootChecks": {
+    "productionFilesUnchanged": 1397,
+    "originalArtifactsPreserved": 616,
+    "newWorldStudyToolsSyntaxPass": 21,
+    "trackedDiffWhitespace": "pass",
+    "boardBrowserPreview": "not-performed; prior browser file preview denied; static render integrity will be checked",
+    "gameStateBaseline": "Historical broad drift retained; not globally reset to mark unrelated sources reviewed."
+  }
+}

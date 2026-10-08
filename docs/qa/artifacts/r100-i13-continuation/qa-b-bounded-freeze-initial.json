@@ -1,0 +1,148 @@
+{
+  "recordedAt": "2026-10-08T10:22:04.631Z",
+  "status": "bounded-frozen-sources-and-observed-contract-check-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-bounded-freeze.mjs",
+    "sha256": "62e020419e8a52b71b779b67302152dcf3c38a34fd4e3bdee27423405a9e91d1"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/policy-freeze.json",
+    "sha256": "a58b0720429b8f39ef556ad18cf29327c32db6ef78ea136251685ae87e9c6637"
+  },
+  "executionAtAudit": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/execution.json",
+    "sha256": "5116b66f6ac6349b1b61f9c69d94705b5e0f9ff4ccbcba9e69e251f098435a52"
+  },
+  "taskSnapshot": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/task-preregistration.md",
+    "sha256": "76f84c796c5ee1f2318ca27e8de4521f910ad5827aabe6637b799e2ce3da9ec4"
+  },
+  "productionFiles": 1397,
+  "dependencies": 9,
+  "cases": [
+    {
+      "id": "b-bounded-functional",
+      "status": "running",
+      "reportAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/b-bounded-functional/report.json",
+        "sha256": "0f85b6c202a1c86673bab9857fddd44eed3d993fd2a1678414d116b4b9cf4311"
+      },
+      "journalAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/b-bounded-functional/i13/journey.jsonl",
+        "sha256": "cf1ce04f89c5e8f237db15c321651eb2c20fe36cddfeb1bbdfaecb143543047f"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/i13/4-after-preparation.save.json",
+        "sha256": "57c31bba1f4b2e8bba6d08981d3f52d9a89d66391853e164c4a8c9b932bd878b"
+      },
+      "completed": 0,
+      "expectedMaximum": 4,
+      "earlyStop": null,
+      "boundedObservedEvents": [
+        {
+          "line": 35,
+          "at": "2026-10-08T10:19:50.494Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-contaminant-safe-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 102,
+          "at": "2026-10-08T10:19:56.598Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-safe-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 190,
+          "at": "2026-10-08T10:20:03.915Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-2",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 241,
+          "at": "2026-10-08T10:20:08.608Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            },
+            {
+              "id": "r100-contaminant-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 271,
+          "at": "2026-10-08T10:20:11.330Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-contested-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        },
+        {
+          "line": 733,
+          "at": "2026-10-08T10:20:53.538Z",
+          "event": "bounded-admitted-targets",
+          "targets": [
+            {
+              "id": "r100-kindling-deep-1",
+              "admission": {
+                "allowed": true,
+                "reason": "first-attempt"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Source and cap checks do not themselves establish that a retry yielded new income or that debt was restored. Four raw saves and original-service bridge are required.",
+    "Bounded policy combines public function selection, reconsideration and second geometric direction. No single-factor economic cause claimed.",
+    "All geometric routing is diagnostic assistance; observed-source restrictions and later runtime window review remain separate."
+  ]
+}

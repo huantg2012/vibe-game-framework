@@ -1,0 +1,11 @@
+{
+  "status": "preregistered-task-snapshot-not-yet-located",
+  "tool": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/qa-functional-freeze-r1.mjs",
+    "sha256": "aa4cec1b8e57beacd273238ac60742ff6ba3e51c446907d037bbc936c1e67bba"
+  },
+  "expectedTaskSha256": "4dfd0af15afd4b22c371b75115042ecb1f4d7ab40fcf69c55b42dc266945ead3",
+  "observedLiveTaskSha256": "19b5af3d4627c0e81e47f82444b6808c436b22c73ddbf51cde5a2bcb246192ab",
+  "cause": "Live task was appended after execution froze. Audit refuses to treat changed text as frozen contract. Need an exact prior snapshot; no game or executor failure inferred.",
+  "outcome": "exit1 before JSON report creation; source/dependency hashes checked before guard"
+}

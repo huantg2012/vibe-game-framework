@@ -1,0 +1,245 @@
+{
+  "startedAt": "2026-10-08T10:03:04.215Z",
+  "planSha256": "3534d90f1b905b83fd8b50dd051ed11fa21644090d2d86b98d6add0090be6509",
+  "status": "completed",
+  "cases": [
+    {
+      "id": "a-qualified-functional",
+      "sourceBranch": "A",
+      "sourceStorage": "docs/qa/artifacts/r100-i13-continuation/a-new-directions/i13/browser-storage.json",
+      "sourceStorageSha256": "c96039e13cd4b090efe938bb05cab02bd784ea4eebf64216521973282bc542a4",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-new-directions/i13/4-after-preparation.save.json",
+        "sha256": "89a8f138a6bc4297ec68b0fb0f32416cf2b903c7b22a5a76910a0b1861acd89a"
+      },
+      "input": "docs/qa/artifacts/r100-i13-continuation/functional-selection/earned-storage.json",
+      "inputSha256": "7758726c7db4c583db2eb759e27c62e485af5fdefea1052acb2b996407874af9",
+      "steps": [
+        {
+          "grade": "severe",
+          "preparation": {
+            "id": "public-eligible-information-and-dash-fifo",
+            "active": [
+              {
+                "family": "survey",
+                "minimumPower": 128,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 3
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "requiredUses": [
+            2,
+            3
+          ],
+          "surveyDecision": true,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 2.5,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-control-fifo",
+            "active": [
+              {
+                "family": "suppress",
+                "minimumPower": 3,
+                "minimumUses": 2
+              },
+              {
+                "family": "solidify",
+                "minimumPower": 2.5,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 2.5,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-control-fifo",
+            "active": [
+              {
+                "family": "suppress",
+                "minimumPower": 3,
+                "minimumUses": 2
+              },
+              {
+                "family": "solidify",
+                "minimumPower": 2.5,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 2.5,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+          }
+        }
+      ],
+      "searchLimit": 6,
+      "ancestorRunIds": [
+        "63d77e65-1889-4624-a1e8-4d7989f255cf",
+        "f3ae18d6-2c46-49e5-8d96-21cd0e0a8e3b",
+        "ca6e3a1b-53c1-40f2-9c09-bc0ebf895327",
+        "97874d5b-0c9e-4199-abfc-61491ca13f5b",
+        "b7aa8a85-de4f-4413-a9ca-29d04f8c601b",
+        "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0",
+        "a8cbed61-55c0-4205-9356-535531bae725",
+        "c3b1b065-4154-41bd-938b-90033e8775a6",
+        "074b0dcb-02c8-4c24-a239-e654f963f44e",
+        "a6557e90-f8cd-4e91-a0fb-8d511aae077d",
+        "d1b034c1-0332-4467-817b-e4aeff5dd351",
+        "abcdad60-2750-47fc-ae26-adf20ef26c05",
+        "c494ba40-ca59-4eec-9fa4-2feddf194306",
+        "97fc69a8-59e5-4e6f-a683-b4550f685bd7",
+        "215f9d02-eca3-4427-b56a-d53a37d27e96",
+        "90bab9f2-7b2f-486a-8589-70dade82d77a"
+      ],
+      "freshItemIds": [
+        "WPN_ff7bbaa9-d411-4e37-8e69-22148848335e",
+        "CAT_ca6e3a1b-53c1-40f2-9c09-bc0ebf895327_r100-contaminant-contested-1",
+        "CAT_b7aa8a85-de4f-4413-a9ca-29d04f8c601b_r100-contaminant-contested-1",
+        "WPN_bc67d68d-9eac-49c6-aa6a-18f45f779520",
+        "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+        "WPN_083e90ea-ea31-4ed3-ad75-53794a1d11d9",
+        "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-safe-1",
+        "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+        "WPN_445d4b25-646f-4c5b-b59e-ed721590971b",
+        "WPN_3bb0f70d-1407-4ffb-a44b-ced1295931c0",
+        "CAT_c3b1b065-4154-41bd-938b-90033e8775a6_r100-contaminant-safe-1",
+        "WPN_a29da5c0-9eca-40a6-998d-94d70377034f",
+        "CAT_074b0dcb-02c8-4c24-a239-e654f963f44e_r100-contaminant-safe-1",
+        "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+        "WPN_0c1b85a7-182e-4ff3-b5ae-64a3dd4ca31a",
+        "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+        "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+        "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+        "WPN_dc953dc6-a64d-414d-af87-851540e4ef00",
+        "WPN_438813bf-f55d-40b5-8861-26093285a906",
+        "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+        "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+        "WPN_d20c10d8-9800-4524-8628-0d60bb958a4c",
+        "CAT_97fc69a8-59e5-4e6f-a683-b4550f685bd7_r100-contaminant-safe-1",
+        "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1"
+      ],
+      "initialReserve": 17,
+      "initialModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 100,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 54,
+          "maxHp": 130
+        }
+      ],
+      "expectedInitialSelection": {
+        "survey": {
+          "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-safe-1",
+            "runId": "a6557e90-f8cd-4e91-a0fb-8d511aae077d"
+          },
+          "lineage": "new-earlier-this-I13-branch",
+          "acquiredOrdinal": 10,
+          "offeredOrdinal": 10,
+          "maturedOrdinal": 11,
+          "name": "盲针罗盘",
+          "location": "stash",
+          "uses": 3,
+          "weight": 20,
+          "slot": "active",
+          "inert": false,
+          "family": "survey",
+          "power": 128,
+          "qualified": true,
+          "available": true
+        },
+        "dash": {
+          "id": "CAT_074b0dcb-02c8-4c24-a239-e654f963f44e_r100-contaminant-safe-1",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-safe-1",
+            "runId": "074b0dcb-02c8-4c24-a239-e654f963f44e"
+          },
+          "lineage": "new-earlier-this-I13-branch",
+          "acquiredOrdinal": 9,
+          "offeredOrdinal": 9,
+          "maturedOrdinal": 10,
+          "name": "空心梭",
+          "location": "stash",
+          "uses": 3,
+          "weight": 20,
+          "slot": "active",
+          "inert": false,
+          "family": "dash",
+          "power": 96,
+          "qualified": true,
+          "available": true
+        }
+      },
+      "status": "completed",
+      "exitCode": 0,
+      "report": "docs/qa/artifacts/r100-i13-continuation/functional-selection/a-qualified-functional/report.json",
+      "completed": 3
+    }
+  ],
+  "finishedAt": "2026-10-08T10:10:38.826Z"
+}

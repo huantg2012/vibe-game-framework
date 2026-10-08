@@ -1,0 +1,1928 @@
+{
+  "recordedAt": "2026-10-08T10:12:34.178Z",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-supply-summary.mjs",
+    "sha256": "996a72eb0099cc46d3047ef9a2d40128d6e94d3eb374c091c23808a8dfa53ab8"
+  },
+  "sources": [
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-bridge-fourteen-final.json",
+      "sha256": "0c6f536719506a015802a1272777b5b26db579328cb24c22d4fdedb7abe9e643"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-functional-bridge-final.json",
+      "sha256": "faa8870a8dcd8dc110f765f1d1998c6f3a13ed386321ad1b3af84a1bdd9a6026"
+    }
+  ],
+  "snapshots": [
+    {
+      "label": "A12-before-continuation",
+      "allPublicFamilies": {
+        "sight": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "dash": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 12,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+                "uses": 4,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 3,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 10,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-safe-1",
+                "uses": 4,
+                "acquired": 7,
+                "matured": 8
+              },
+              {
+                "id": "CAT_074b0dcb-02c8-4c24-a239-e654f963f44e_r100-contaminant-safe-1",
+                "uses": 3,
+                "acquired": 9,
+                "matured": 10
+              },
+              {
+                "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+                "uses": 3,
+                "acquired": 10,
+                "matured": 11
+              }
+            ]
+          }
+        },
+        "slow_zone": {
+          "ancestor": {
+            "items": 5,
+            "totalRemainingUses": 22,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "capacity": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "solidify": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 15,
+            "qualifiedAvailableUses": 10,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 12,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+                "uses": 6,
+                "acquired": 11,
+                "matured": 12
+              },
+              {
+                "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": 11,
+                "matured": 12
+              }
+            ]
+          }
+        },
+        "tripwire": {
+          "ancestor": {
+            "items": 4,
+            "totalRemainingUses": 18,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "survey": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 6,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": 6,
+                "matured": 7
+              },
+              {
+                "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+                "uses": 3,
+                "acquired": 10,
+                "matured": 11
+              }
+            ]
+          }
+        },
+        "sound_lure": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "suppress": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": 3
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": 7,
+                "matured": 8
+              }
+            ]
+          }
+        },
+        "resistance": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "silence": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 16,
+            "qualifiedAvailableUses": 16,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": 3
+              },
+              {
+                "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": 4
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "image_lure": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        }
+      },
+      "weaponUses": {
+        "ancestor": 1401,
+        "thisI13Branch": 540
+      },
+      "finitePairs": {
+        "control": {
+          "ready": true,
+          "example": {
+            "q": "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+            "f": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "surveyDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "silenceDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "freshSevereAdmission": {
+          "ready": true,
+          "example": {
+            "q": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        }
+      }
+    },
+    {
+      "label": "A16-before-natural-severe",
+      "allPublicFamilies": {
+        "sight": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 2,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "dash": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 12,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+                "uses": 4,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 6,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_074b0dcb-02c8-4c24-a239-e654f963f44e_r100-contaminant-safe-1",
+                "uses": 3,
+                "acquired": 9,
+                "matured": 10
+              },
+              {
+                "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+                "uses": 3,
+                "acquired": 10,
+                "matured": 11
+              }
+            ]
+          }
+        },
+        "slow_zone": {
+          "ancestor": {
+            "items": 5,
+            "totalRemainingUses": 22,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 9,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "capacity": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "solidify": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 15,
+            "qualifiedAvailableUses": 10,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 10,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+                "uses": 6,
+                "acquired": 11,
+                "matured": 12
+              },
+              {
+                "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+                "uses": 4,
+                "acquired": 11,
+                "matured": 12
+              }
+            ]
+          }
+        },
+        "tripwire": {
+          "ancestor": {
+            "items": 4,
+            "totalRemainingUses": 18,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "survey": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 4,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+                "uses": 3,
+                "acquired": 10,
+                "matured": 11
+              }
+            ]
+          }
+        },
+        "sound_lure": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "suppress": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": 3
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 1,
+            "qualifiedAvailableUses": 1,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "resistance": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "silence": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 16,
+            "qualifiedAvailableUses": 16,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": 3
+              },
+              {
+                "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": 4
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "image_lure": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        }
+      },
+      "weaponUses": {
+        "ancestor": 1588,
+        "thisI13Branch": 750
+      },
+      "finitePairs": {
+        "control": {
+          "ready": true,
+          "example": {
+            "q": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+            "f": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "surveyDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "silenceDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "freshSevereAdmission": {
+          "ready": true,
+          "example": {
+            "q": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        }
+      }
+    },
+    {
+      "label": "A17-after-natural-severe",
+      "allPublicFamilies": {
+        "sight": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 2,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "dash": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 12,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+                "uses": 4,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+                "uses": 3,
+                "acquired": 10,
+                "matured": 11
+              }
+            ]
+          }
+        },
+        "slow_zone": {
+          "ancestor": {
+            "items": 5,
+            "totalRemainingUses": 22,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 9,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "capacity": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "solidify": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 15,
+            "qualifiedAvailableUses": 10,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 10,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+                "uses": 6,
+                "acquired": 11,
+                "matured": 12
+              },
+              {
+                "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+                "uses": 4,
+                "acquired": 11,
+                "matured": 12
+              }
+            ]
+          }
+        },
+        "tripwire": {
+          "ancestor": {
+            "items": 4,
+            "totalRemainingUses": 18,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "survey": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 3,
+            "totalRemainingUses": 7,
+            "qualifiedAvailableUses": 7,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+                "uses": 2,
+                "acquired": 10,
+                "matured": 11
+              },
+              {
+                "id": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+                "uses": 4,
+                "acquired": 16,
+                "matured": 17
+              }
+            ]
+          }
+        },
+        "sound_lure": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "suppress": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": 3
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 1,
+            "qualifiedAvailableUses": 1,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "resistance": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "silence": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 16,
+            "qualifiedAvailableUses": 16,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": 3
+              },
+              {
+                "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": 4
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "image_lure": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        }
+      },
+      "weaponUses": {
+        "ancestor": 1584,
+        "thisI13Branch": 750
+      },
+      "finitePairs": {
+        "control": {
+          "ready": true,
+          "example": {
+            "q": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+            "f": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "surveyDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "silenceDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "freshSevereAdmission": {
+          "ready": true,
+          "example": {
+            "q": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        }
+      }
+    },
+    {
+      "label": "A19-after-two-low",
+      "allPublicFamilies": {
+        "sight": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "dash": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 12,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+                "uses": 4,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+                "uses": 3,
+                "acquired": 10,
+                "matured": 11
+              }
+            ]
+          }
+        },
+        "slow_zone": {
+          "ancestor": {
+            "items": 5,
+            "totalRemainingUses": 22,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 9,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "capacity": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "solidify": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 15,
+            "qualifiedAvailableUses": 10,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 2,
+            "totalRemainingUses": 8,
+            "qualifiedAvailableUses": 8,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+                "uses": 4,
+                "acquired": 11,
+                "matured": 12
+              },
+              {
+                "id": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+                "uses": 4,
+                "acquired": 11,
+                "matured": 12
+              }
+            ]
+          }
+        },
+        "tripwire": {
+          "ancestor": {
+            "items": 4,
+            "totalRemainingUses": 18,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "survey": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 3,
+            "totalRemainingUses": 7,
+            "qualifiedAvailableUses": 7,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+                "uses": 2,
+                "acquired": 10,
+                "matured": 11
+              },
+              {
+                "id": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+                "uses": 4,
+                "acquired": 16,
+                "matured": 17
+              }
+            ]
+          }
+        },
+        "sound_lure": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 5,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "suppress": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 5,
+            "qualifiedAvailableUses": 2,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+                "uses": 2,
+                "acquired": null,
+                "matured": 3
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 1,
+            "qualifiedAvailableUses": 1,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "resistance": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "silence": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 16,
+            "qualifiedAvailableUses": 16,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": 3
+              },
+              {
+                "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": 4
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "image_lure": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        }
+      },
+      "weaponUses": {
+        "ancestor": 1580,
+        "thisI13Branch": 750
+      },
+      "finitePairs": {
+        "control": {
+          "ready": true,
+          "example": {
+            "q": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+            "f": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "surveyDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "silenceDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "freshSevereAdmission": {
+          "ready": true,
+          "example": {
+            "q": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+            "f": "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        }
+      }
+    },
+    {
+      "label": "B7-before-recovery",
+      "allPublicFamilies": {
+        "sight": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "solidify": {
+          "ancestor": {
+            "items": 5,
+            "totalRemainingUses": 27,
+            "qualifiedAvailableUses": 22,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-safe-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_a2c6f9f2-f5c3-496d-b8d3-af4de048f12f_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": 1
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "dash": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 8,
+            "qualifiedAvailableUses": 8,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 3,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_71b452ce-75ff-4f77-8683-7b32f4679334_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": 6,
+                "matured": 7
+              }
+            ]
+          }
+        },
+        "slow_zone": {
+          "ancestor": {
+            "items": 5,
+            "totalRemainingUses": 22,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "capacity": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "tripwire": {
+          "ancestor": {
+            "items": 4,
+            "totalRemainingUses": 18,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "sound_lure": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "suppress": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 9,
+            "qualifiedAvailableUses": 6,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": 3
+              },
+              {
+                "id": "CAT_0ff5d0cc-4723-4460-a3ba-bc62b895a03d_r100-contaminant-safe-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "resistance": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "silence": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 16,
+            "qualifiedAvailableUses": 16,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": 3
+              },
+              {
+                "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": 4
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 5,
+            "qualifiedAvailableUses": 5,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": 1,
+                "matured": 4
+              }
+            ]
+          }
+        },
+        "survey": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "image_lure": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        }
+      },
+      "weaponUses": {
+        "ancestor": 1053,
+        "thisI13Branch": 0
+      },
+      "finitePairs": {
+        "control": {
+          "ready": true,
+          "example": {
+            "q": "CAT_0ff5d0cc-4723-4460-a3ba-bc62b895a03d_r100-contaminant-safe-1",
+            "f": "CAT_a2c6f9f2-f5c3-496d-b8d3-af4de048f12f_r100-contaminant-contested-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "surveyDash": {
+          "ready": false,
+          "example": null
+        },
+        "silenceDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+            "f": "CAT_71b452ce-75ff-4f77-8683-7b32f4679334_r100-contaminant-contested-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "freshSevereAdmission": {
+          "ready": false,
+          "example": null
+        }
+      }
+    },
+    {
+      "label": "B11-after-recovery",
+      "allPublicFamilies": {
+        "sight": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "solidify": {
+          "ancestor": {
+            "items": 5,
+            "totalRemainingUses": 27,
+            "qualifiedAvailableUses": 22,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-safe-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_a2c6f9f2-f5c3-496d-b8d3-af4de048f12f_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": 1
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "dash": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 8,
+            "qualifiedAvailableUses": 8,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "slow_zone": {
+          "ancestor": {
+            "items": 5,
+            "totalRemainingUses": 22,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "capacity": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 2,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "tripwire": {
+          "ancestor": {
+            "items": 4,
+            "totalRemainingUses": 18,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "sound_lure": {
+          "ancestor": {
+            "items": 2,
+            "totalRemainingUses": 12,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "suppress": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 9,
+            "qualifiedAvailableUses": 6,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": 3
+              },
+              {
+                "id": "CAT_0ff5d0cc-4723-4460-a3ba-bc62b895a03d_r100-contaminant-safe-1",
+                "uses": 3,
+                "acquired": null,
+                "matured": null
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "resistance": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 10,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 3,
+            "totalRemainingUses": 9,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "silence": {
+          "ancestor": {
+            "items": 3,
+            "totalRemainingUses": 16,
+            "qualifiedAvailableUses": 16,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+                "uses": 6,
+                "acquired": null,
+                "matured": 3
+              },
+              {
+                "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": null
+              },
+              {
+                "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": null,
+                "matured": 4
+              }
+            ]
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 5,
+            "qualifiedAvailableUses": 5,
+            "qualifiedSingleItemsAtLeastTwo": [
+              {
+                "id": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+                "uses": 5,
+                "acquired": 1,
+                "matured": 4
+              }
+            ]
+          }
+        },
+        "survey": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 3,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 0,
+            "totalRemainingUses": 0,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        },
+        "image_lure": {
+          "ancestor": {
+            "items": 1,
+            "totalRemainingUses": 4,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          },
+          "this-I13-branch": {
+            "items": 1,
+            "totalRemainingUses": 6,
+            "qualifiedAvailableUses": 0,
+            "qualifiedSingleItemsAtLeastTwo": []
+          }
+        }
+      },
+      "weaponUses": {
+        "ancestor": 1614,
+        "thisI13Branch": 0
+      },
+      "finitePairs": {
+        "control": {
+          "ready": true,
+          "example": {
+            "q": "CAT_0ff5d0cc-4723-4460-a3ba-bc62b895a03d_r100-contaminant-safe-1",
+            "f": "CAT_a2c6f9f2-f5c3-496d-b8d3-af4de048f12f_r100-contaminant-contested-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "surveyDash": {
+          "ready": false,
+          "example": null
+        },
+        "silenceDash": {
+          "ready": true,
+          "example": {
+            "q": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+            "f": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+            "weapon": "WPN_859e48e5-da7a-4ccd-99ce-74cdb4975604",
+            "weightTenths": 70,
+            "capacityBaselineTenths": 200,
+            "withoutOptionalPassive": true
+          }
+        },
+        "freshSevereAdmission": {
+          "ready": false,
+          "example": null
+        }
+      }
+    }
+  ],
+  "freshMaturationAcrossBoundary": {
+    "id": "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+    "source": {
+      "fragmentId": "frag-outdoor",
+      "nodeId": "r100-contaminant-safe-1",
+      "runId": "90bab9f2-7b2f-486a-8589-70dade82d77a"
+    },
+    "lineage": "new-earlier-this-I13-branch",
+    "acquiredOrdinal": 16,
+    "offeredOrdinal": 16,
+    "maturedOrdinal": 17,
+    "name": "盲针罗盘",
+    "location": "stash",
+    "uses": 4,
+    "weight": 20,
+    "slot": "active",
+    "inert": false,
+    "family": "survey",
+    "power": 128,
+    "qualified": true,
+    "available": true
+  },
+  "limits": [
+    "Public stock is all revealed families, including irrelevant and non-qualified abilities. Unidentified supply, waiting/offering slots, consumption and loss remain in the raw four-snapshot accounting reports; no hidden names are inferred.",
+    "FinitePairs readiness is inventory/slot/weight only; service D must independently be zero. B11 has D24, so its stock readiness cannot constitute recovery.",
+    "Do not add repeated snapshots or branches; each is the same actual inventory at a different moment or an isolated fork."
+  ]
+}

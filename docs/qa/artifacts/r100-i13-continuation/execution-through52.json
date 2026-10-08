@@ -1,0 +1,326 @@
+{
+  "recordedAt": "2026-10-08T11:09:18.708Z",
+  "scope": "52 unique actual sorties including original28; target heavy has two execution segments counted once",
+  "prior50": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/execution-through50.json",
+    "sha256": "5a6395995f8b1d2afb2eacdf8726bfd63e0e55350df089909ede673393c6b648"
+  },
+  "latest": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/execution-receipt.json",
+    "sha256": "69f58c3a173ad2659c0bdae9fbb17ac1bc7b6cc47cceaa0ab9503f9e2c02dac8"
+  },
+  "preservedFailure": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/failure-execution-receipt.json",
+    "sha256": "4dc6a2e930a3270c2b986fe1bb413c452d698d30aa2781b7997b3ffeef346a0a"
+  },
+  "priorActual": 50,
+  "newUniqueActual": 2,
+  "cumulativeActual": 52,
+  "newUniqueAttempts": [
+    {
+      "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94",
+      "plannedGrade": "severe",
+      "actualGrade": "severe",
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "world": "r100-cork-shelves",
+      "seed": 991458829,
+      "recipeId": "r100-native-v3:cork-shelves-severe",
+      "sameRunResumed": true,
+      "resume": {
+        "sourceStorageSha256": "6baf77ab32aad4d406c41b232d95c310191101879869fad3cf1c8c5806f4a1d1",
+        "checkpointSequence": 112,
+        "checkpointElapsedMs": 56447.73999999992,
+        "autosaveBeforeDiagnosticMs": 99.99000000000524
+      },
+      "searches": [
+        {
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-kindling-safe-1"
+          ]
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-contaminant-safe-1"
+          ]
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-2"
+          ]
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-1"
+          ]
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "kind": "contaminant",
+          "tier": "deep",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-contaminant-deep-1"
+          ]
+        }
+      ],
+      "income": 20,
+      "repairs": 12,
+      "growth": [
+        {
+          "kind": "growth",
+          "id": "thicken",
+          "publicText": "加厚\nLevel 3\n可刻入\n35 薪柴",
+          "cost": 35,
+          "level": 3,
+          "retainedReserve": 13
+        }
+      ],
+      "cash": {
+        "before": 46,
+        "returned": 66,
+        "after": 19
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 53,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 101,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 145
+        }
+      ],
+      "consumption": [
+        {
+          "id": "WPN_6b4c933e-e952-46aa-92c5-3aa5b8683c39",
+          "kind": "weapon",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-kindling-deep-1",
+            "runId": "1b82459c-cac6-452c-8590-b598edf496e3"
+          },
+          "before": 57,
+          "returned": 57,
+          "used": 0
+        },
+        {
+          "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-contested-1",
+            "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+          },
+          "before": 5,
+          "returned": 4,
+          "used": 1
+        },
+        {
+          "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-safe-1",
+            "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+          },
+          "before": 4,
+          "returned": 3,
+          "used": 1
+        }
+      ],
+      "recoveryStopFacts": null,
+      "fieldResult": {
+        "hp": 145,
+        "chaos": 85.04236387902468,
+        "elapsedMs": 78413.51000000037
+      }
+    },
+    {
+      "runId": "608f30e3-ad10-4f07-b54f-17b7d425ca4f",
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "world": "r100-gel-rafts",
+      "seed": 3078293538,
+      "recipeId": "r100-native-v3:gel-rafts-low",
+      "sameRunResumed": false,
+      "resume": null,
+      "searches": [
+        {
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-kindling-safe-1"
+          ]
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-contaminant-safe-1"
+          ]
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-2"
+          ]
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-1"
+          ]
+        },
+        {
+          "id": "r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "tier": "contested",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-contaminant-contested-1"
+          ]
+        },
+        {
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": true,
+          "actualCollectedNodeIds": [
+            "r100-kindling-deep-1"
+          ]
+        }
+      ],
+      "income": 30,
+      "repairs": 14,
+      "growth": [],
+      "cash": {
+        "before": 19,
+        "returned": 49,
+        "after": 35
+      },
+      "modules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 145
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 145
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 145
+        }
+      ],
+      "consumption": [
+        {
+          "id": "WPN_6b4c933e-e952-46aa-92c5-3aa5b8683c39",
+          "kind": "weapon",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-kindling-deep-1",
+            "runId": "1b82459c-cac6-452c-8590-b598edf496e3"
+          },
+          "before": 57,
+          "returned": 57,
+          "used": 0
+        },
+        {
+          "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-contested-1",
+            "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+          },
+          "before": 4,
+          "returned": 3,
+          "used": 1
+        },
+        {
+          "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-safe-1",
+            "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+          },
+          "before": 3,
+          "returned": 3,
+          "used": 0
+        }
+      ],
+      "recoveryStopFacts": {
+        "service": true,
+        "ready": true,
+        "standardPreparationUses": 2,
+        "severeQualificationUses": [
+          4,
+          3
+        ]
+      },
+      "fieldResult": {
+        "hp": 160,
+        "chaos": 48.68786702432461,
+        "elapsedMs": 67647.28999999963
+      }
+    }
+  ],
+  "cumulativeOutcomes": {
+    "extract": 52
+  },
+  "technicalInterruptions": 1,
+  "distinctReplacementSorties": 0,
+  "resourceGrants": 0,
+  "sourceBindingsVerified": 1397,
+  "serverLifecycle": {
+    "owned3033": "Stopped owned exec92399 after contexts closed; lsof no listener status1/stdout empty",
+    "user3027": "Not touched"
+  },
+  "clarification": "Old50 all preserved; one heavy plus one low adds2. Formal resume does not count as another heavy. Early ordinary recovery met; no third trip was started."
+}

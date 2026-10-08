@@ -44,10 +44,10 @@
   },
   "resume": {
     "iteration": "R100-I13",
-    "batch": "I13本轮28趟收口；P46验证路线已修，P47准备与恢复待整改",
-    "nextAction": "按I13任务末节预登记针对性时机/预算/同标准恢复诊断；保留A12和B7真实主链，旧局分支不抵自然新供给。当前不继续加样、不改奖励；I13未结案，I14未启动。",
-    "lastCompleted": "I13完成9固定诊断＋12自然续行＋7有因复验及独立资产核账；低中主链真实支付33成长且服务完整，新物消费链成立。原亏损、两次重度降低与B末服务债19保留。108世界/324等级既有正式内部资格保持，12/14轮已结。",
-    "headline": "I13待整改 · 28趟已审 · 12/14轮已结 · 108世界/324等级",
+    "batch": "I13有限内部验收已结案",
+    "nextAction": "I14依原计划待启动：真实弱设备、R100-R10实际听感与长听疲劳、用户整体终验；保留内部RC与已知有限证据边界。",
+    "lastCompleted": "52唯一实际出击、208原档/29638账断言；A23支付68成长且原服务/资本恢复，B14本支付费偿债但短冲0。自然重度deep污染物正式归返，后一低档恢复普通可付再备；一次同局中断完整保留。I13内部结案。",
+    "headline": "I13内部结案 · 13/14轮 · 108世界/324等级",
     "updatedDate": "2026-10-08",
     "evidenceRevision": "r100-native-v3-revision-6-internal-rc-20261008"
   },
@@ -7777,8 +7777,8 @@
       "dependencies": [
         "R100-I12"
       ],
-      "state": "changes-required",
-      "stage": "experience-review",
+      "state": "closed",
+      "stage": "close",
       "goal": "证明玩家主动选级形成持续内容深度，重度既值得冒险又不是强制日常。",
       "technical": "用自然库存与真实取整、消耗、供奉周转、死亡/弃局损失核算净收益；覆盖不同修复状态、技能/工具与负重，测试低档速刷、重档安全堆、反复取消及恢复重抽；必要的平衡修订使相关包/级证据失效并重验。",
       "visual": "审查多趟重度后的视觉/听觉疲劳、预兆辨认和低中吸引力；峰谷与世界身份不能因统一压力模板丢失。",
@@ -7809,8 +7809,10 @@
             "R100-E-I13-PAIRED-NINE",
             "R100-E-I13-NATURAL-TWELVE",
             "R100-E-I13-R2-SEVEN",
-            "R100-E-I13-FRESH-AND-SERVICE"
-          ]
+            "R100-E-I13-FRESH-AND-SERVICE",
+            "R100-E-I13-EXECUTION-52"
+          ],
+          "blocking": true
         },
         {
           "id": "cancel-persistence-integer-contracts",
@@ -7819,50 +7821,65 @@
           "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
           "evidenceIds": [
             "R100-E-I13-CONTRACTS"
-          ]
+          ],
+          "blocking": true
         },
         {
           "id": "natural-preparation-and-recovery",
-          "status": "changes-required",
-          "label": "两类自然准备、重度预算与后续恢复未成立",
+          "status": "pass",
+          "label": "两功能来源/作用、可付普通再备及自然重度deep归返后恢复",
           "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
           "evidenceIds": [
-            "R100-E-I13-NATURAL-TWELVE"
-          ]
+            "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY",
+            "R100-E-I13-AFFORDABLE-PREPARATION",
+            "R100-E-I13-BOUNDED-CLOSURE"
+          ],
+          "blocking": true
         },
         {
           "id": "sustainable-grade-value",
-          "status": "changes-required",
-          "label": "完整工具成本、长期等级价值与失败恢复仍未通过",
+          "status": "pass",
+          "label": "有限选级经营与完整资产披露；低中维护成长和B本支偿债",
           "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
           "evidenceIds": [
-            "R100-E-I13-FRESH-AND-SERVICE"
-          ]
+            "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY",
+            "R100-E-I13-BOUNDED-RECOVERY",
+            "R100-E-I13-AFFORDABLE-PREPARATION",
+            "R100-E-I13-BOUNDED-CLOSURE"
+          ],
+          "blocking": true
         },
         {
-          "id": "entry-farming-and-fatigue",
-          "status": "pending",
-          "label": "入口速刷真实往返与连续视听疲劳未验证",
+          "id": "entry-farming-repeat",
+          "status": "pass",
+          "label": "入口重复经营及固定圈机制边界（有限通过）",
           "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
-          "evidenceIds": []
+          "evidenceIds": [
+            "R100-E-I13-ENTRY-REPEAT"
+          ],
+          "historicalCombinedGate": "原入口经济/人类疲劳混合标签拆分；疲劳按原任务2026-10-04范围仍归R100-R10/I14。"
         },
         {
           "id": "unchanged-production-and-execution",
           "status": "pass",
-          "label": "生产1397来源保持，28趟冻结执行与依赖绑定通过",
+          "label": "生产1397来源保持，52唯一出击与同局中断归档",
           "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
           "evidenceIds": [
-            "R100-E-I13-EXECUTION-28"
-          ]
+            "R100-E-I13-EXECUTION-52",
+            "R100-E-I13-BOUNDED-CLOSURE"
+          ],
+          "blocking": true
         },
         {
           "id": "bounded-low-medium-maintenance-and-growth",
           "status": "pass",
-          "label": "限定低中主链12趟维持固定服务并真实支付33成长",
+          "label": "主链维护并累计真实支付68成长，原服务/资本恢复",
           "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
           "evidenceIds": [
-            "R100-E-I13-FRESH-AND-SERVICE"
-          ]
+            "R100-E-I13-FRESH-AND-SERVICE",
+            "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY"
+          ],
+          "blocking": true
         },
         {
           "id": "fresh-item-to-consumption",
@@ -7871,16 +7888,29 @@
           "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
           "evidenceIds": [
             "R100-E-I13-FRESH-AND-SERVICE"
-          ]
+          ],
+          "blocking": true
         },
         {
           "id": "limited-earned-item-action-windows",
           "status": "pass",
-          "label": "新烟斗Host压制及新手套消声覆盖真实翻找（限定窗口）",
+          "label": "新探查负信息、短冲、定身和既有烟斗/手套实际作用窗口",
           "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
           "evidenceIds": [
-            "R100-E-I13-FINAL-REVIEW"
-          ]
+            "R100-E-I13-FINAL-REVIEW",
+            "R100-E-I13-BOUNDED-CLOSURE"
+          ],
+          "blocking": true
+        },
+        {
+          "id": "human-audiovisual-fatigue-i14",
+          "status": "pending",
+          "blocking": false,
+          "label": "真实长听/视觉疲劳依历史R100-R10合同留I14，未代签",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [],
+          "transferredTo": "R100-I14",
+          "basis": "docs/tasks/rift-r100-i13.md 原预登记范围及最终设计裁决；非新增经济缺口转移。"
         }
       ],
       "issueIds": [
@@ -7896,16 +7926,1454 @@
         "R100-E-I13-R2-SEVEN",
         "R100-E-I13-FRESH-AND-SERVICE",
         "R100-E-I13-EXECUTION-28",
-        "R100-E-I13-FINAL-REVIEW"
+        "R100-E-I13-FINAL-REVIEW",
+        "R100-E-I13-CONTINUATION-FOURTEEN",
+        "R100-E-I13-FUNCTIONAL-THREE",
+        "R100-E-I13-BOUNDED-RECOVERY",
+        "R100-E-I13-PURSUIT-TWO",
+        "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY",
+        "R100-E-I13-AFFORDABLE-PREPARATION",
+        "R100-E-I13-EXECUTION-52",
+        "R100-E-I13-ENTRY-REPEAT",
+        "R100-E-I13-BOUNDED-CLOSURE",
+        "R100-E-I13-ACHIEVEMENT"
       ],
       "rework": {
-        "state": "open",
-        "reason": "28趟有限核验及有因路线修正完成，仍缺两类成套自然准备、B新增信息窗口、自然重度后恢复与完整长期经济证据；不因样本结束关闭I13。",
+        "state": "closed",
+        "reason": "五组有限内部门逐项成立；历史失败、祖先替补、B固定配方失败与定身再次重度预算不足保留，不外推无限经营。",
         "task": "docs/tasks/rift-r100-i13.md",
         "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
         "evidenceIds": [
-          "R100-E-I13-FRESH-AND-SERVICE",
-          "R100-E-I13-EXECUTION-28"
+          "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY",
+          "R100-E-I13-AFFORDABLE-PREPARATION",
+          "R100-E-I13-EXECUTION-52",
+          "R100-E-I13-ENTRY-REPEAT",
+          "R100-E-I13-BOUNDED-CLOSURE"
+        ]
+      },
+      "completedDate": "2026-10-08",
+      "execution": {
+        "state": "implemented",
+        "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+        "evidenceIds": [
+          "R100-E-I13-EXECUTION-52",
+          "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY",
+          "R100-E-I13-BOUNDED-CLOSURE"
+        ],
+        "summary": "验证执行器有因修正及52真实出击完成，生产/CSV不变；有界内部结案。"
+      },
+      "achievement": {
+        "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+        "qualifiedWorldIds": [
+          "amber-ribs",
+          "ash-strata",
+          "black-lacuna",
+          "bladder-weave",
+          "bleached-court",
+          "blister-field",
+          "blue-fault",
+          "braided-seam",
+          "buried-lamellae",
+          "chalk-divide",
+          "chalk-steps",
+          "cinder-ridge",
+          "clamped-shore",
+          "cleft-tableland",
+          "cork-shelves",
+          "crossed-casings",
+          "crushed-seam",
+          "crystal-fibre",
+          "curled-flats",
+          "double-return",
+          "draped-bay",
+          "ember-cushions",
+          "fallen-spines",
+          "felt-basin",
+          "felt-wedges",
+          "fibre-choke",
+          "fibre-scree",
+          "fibre-silt",
+          "fibre-stumpfield",
+          "film-laminate",
+          "flake-thicket",
+          "foam-trenches",
+          "fractured-estuary",
+          "frayed-outwash",
+          "gel-fibre",
+          "gel-rafts",
+          "grain-laminate",
+          "grain-weld",
+          "hollow-wreckage",
+          "husk-reef",
+          "ivory-basin",
+          "knotted-run",
+          "lacquer-court",
+          "laminate-shell",
+          "last-shelf",
+          "marrow-break",
+          "monolith-sill",
+          "notched-backwater",
+          "ochre-folds",
+          "offset-basins",
+          "offset-pan",
+          "pale-pressure",
+          "pale-sail",
+          "pallid-membrane",
+          "pinched-fan",
+          "pitch-forks",
+          "pleated-hide",
+          "porcelain-maw",
+          "pore-bank",
+          "pressed-dunes",
+          "pressed-rim",
+          "quiet-spur",
+          "quilted-scars",
+          "red-vault-fragments",
+          "resin-fall",
+          "resin-hollows",
+          "resin-sleeve",
+          "reversed-flow",
+          "rib-vault",
+          "ribbed-delta",
+          "rolled-fragments",
+          "root-cistern",
+          "ruptured-film",
+          "satin-fan",
+          "scab-islands",
+          "scalloped-reach",
+          "schist-shear",
+          "sentinel-mass",
+          "shard-switchback",
+          "shell-causeway",
+          "shell-chain",
+          "shell-gel-delta",
+          "shell-grit",
+          "shell-patchwork",
+          "shell-threads",
+          "short-fibre-mat",
+          "silk-catch",
+          "silt-colonnade",
+          "silt-gel",
+          "sloughed-court",
+          "splayed-fibres",
+          "spliced-reaches",
+          "splinter-rotunda",
+          "split-fall",
+          "split-rib-causeway",
+          "split-tows",
+          "staggered-cups",
+          "stepped-bowl",
+          "tendon-shelves",
+          "tension-membrane",
+          "thin-delta",
+          "three-shelves",
+          "torn-reservoir",
+          "violet-marrows",
+          "wax-tongues",
+          "wedged-hide",
+          "white-scarfield",
+          "woven-quarters"
+        ],
+        "gradeCases": [
+          {
+            "worldId": "amber-ribs",
+            "grade": "low"
+          },
+          {
+            "worldId": "amber-ribs",
+            "grade": "medium"
+          },
+          {
+            "worldId": "amber-ribs",
+            "grade": "severe"
+          },
+          {
+            "worldId": "ash-strata",
+            "grade": "low"
+          },
+          {
+            "worldId": "ash-strata",
+            "grade": "medium"
+          },
+          {
+            "worldId": "ash-strata",
+            "grade": "severe"
+          },
+          {
+            "worldId": "black-lacuna",
+            "grade": "low"
+          },
+          {
+            "worldId": "black-lacuna",
+            "grade": "medium"
+          },
+          {
+            "worldId": "black-lacuna",
+            "grade": "severe"
+          },
+          {
+            "worldId": "bladder-weave",
+            "grade": "low"
+          },
+          {
+            "worldId": "bladder-weave",
+            "grade": "medium"
+          },
+          {
+            "worldId": "bladder-weave",
+            "grade": "severe"
+          },
+          {
+            "worldId": "bleached-court",
+            "grade": "low"
+          },
+          {
+            "worldId": "bleached-court",
+            "grade": "medium"
+          },
+          {
+            "worldId": "bleached-court",
+            "grade": "severe"
+          },
+          {
+            "worldId": "blister-field",
+            "grade": "low"
+          },
+          {
+            "worldId": "blister-field",
+            "grade": "medium"
+          },
+          {
+            "worldId": "blister-field",
+            "grade": "severe"
+          },
+          {
+            "worldId": "blue-fault",
+            "grade": "low"
+          },
+          {
+            "worldId": "blue-fault",
+            "grade": "medium"
+          },
+          {
+            "worldId": "blue-fault",
+            "grade": "severe"
+          },
+          {
+            "worldId": "braided-seam",
+            "grade": "low"
+          },
+          {
+            "worldId": "braided-seam",
+            "grade": "medium"
+          },
+          {
+            "worldId": "braided-seam",
+            "grade": "severe"
+          },
+          {
+            "worldId": "buried-lamellae",
+            "grade": "low"
+          },
+          {
+            "worldId": "buried-lamellae",
+            "grade": "medium"
+          },
+          {
+            "worldId": "buried-lamellae",
+            "grade": "severe"
+          },
+          {
+            "worldId": "chalk-divide",
+            "grade": "low"
+          },
+          {
+            "worldId": "chalk-divide",
+            "grade": "medium"
+          },
+          {
+            "worldId": "chalk-divide",
+            "grade": "severe"
+          },
+          {
+            "worldId": "chalk-steps",
+            "grade": "low"
+          },
+          {
+            "worldId": "chalk-steps",
+            "grade": "medium"
+          },
+          {
+            "worldId": "chalk-steps",
+            "grade": "severe"
+          },
+          {
+            "worldId": "cinder-ridge",
+            "grade": "low"
+          },
+          {
+            "worldId": "cinder-ridge",
+            "grade": "medium"
+          },
+          {
+            "worldId": "cinder-ridge",
+            "grade": "severe"
+          },
+          {
+            "worldId": "clamped-shore",
+            "grade": "low"
+          },
+          {
+            "worldId": "clamped-shore",
+            "grade": "medium"
+          },
+          {
+            "worldId": "clamped-shore",
+            "grade": "severe"
+          },
+          {
+            "worldId": "cleft-tableland",
+            "grade": "low"
+          },
+          {
+            "worldId": "cleft-tableland",
+            "grade": "medium"
+          },
+          {
+            "worldId": "cleft-tableland",
+            "grade": "severe"
+          },
+          {
+            "worldId": "cork-shelves",
+            "grade": "low"
+          },
+          {
+            "worldId": "cork-shelves",
+            "grade": "medium"
+          },
+          {
+            "worldId": "cork-shelves",
+            "grade": "severe"
+          },
+          {
+            "worldId": "crossed-casings",
+            "grade": "low"
+          },
+          {
+            "worldId": "crossed-casings",
+            "grade": "medium"
+          },
+          {
+            "worldId": "crossed-casings",
+            "grade": "severe"
+          },
+          {
+            "worldId": "crushed-seam",
+            "grade": "low"
+          },
+          {
+            "worldId": "crushed-seam",
+            "grade": "medium"
+          },
+          {
+            "worldId": "crushed-seam",
+            "grade": "severe"
+          },
+          {
+            "worldId": "crystal-fibre",
+            "grade": "low"
+          },
+          {
+            "worldId": "crystal-fibre",
+            "grade": "medium"
+          },
+          {
+            "worldId": "crystal-fibre",
+            "grade": "severe"
+          },
+          {
+            "worldId": "curled-flats",
+            "grade": "low"
+          },
+          {
+            "worldId": "curled-flats",
+            "grade": "medium"
+          },
+          {
+            "worldId": "curled-flats",
+            "grade": "severe"
+          },
+          {
+            "worldId": "double-return",
+            "grade": "low"
+          },
+          {
+            "worldId": "double-return",
+            "grade": "medium"
+          },
+          {
+            "worldId": "double-return",
+            "grade": "severe"
+          },
+          {
+            "worldId": "draped-bay",
+            "grade": "low"
+          },
+          {
+            "worldId": "draped-bay",
+            "grade": "medium"
+          },
+          {
+            "worldId": "draped-bay",
+            "grade": "severe"
+          },
+          {
+            "worldId": "ember-cushions",
+            "grade": "low"
+          },
+          {
+            "worldId": "ember-cushions",
+            "grade": "medium"
+          },
+          {
+            "worldId": "ember-cushions",
+            "grade": "severe"
+          },
+          {
+            "worldId": "fallen-spines",
+            "grade": "low"
+          },
+          {
+            "worldId": "fallen-spines",
+            "grade": "medium"
+          },
+          {
+            "worldId": "fallen-spines",
+            "grade": "severe"
+          },
+          {
+            "worldId": "felt-basin",
+            "grade": "low"
+          },
+          {
+            "worldId": "felt-basin",
+            "grade": "medium"
+          },
+          {
+            "worldId": "felt-basin",
+            "grade": "severe"
+          },
+          {
+            "worldId": "felt-wedges",
+            "grade": "low"
+          },
+          {
+            "worldId": "felt-wedges",
+            "grade": "medium"
+          },
+          {
+            "worldId": "felt-wedges",
+            "grade": "severe"
+          },
+          {
+            "worldId": "fibre-choke",
+            "grade": "low"
+          },
+          {
+            "worldId": "fibre-choke",
+            "grade": "medium"
+          },
+          {
+            "worldId": "fibre-choke",
+            "grade": "severe"
+          },
+          {
+            "worldId": "fibre-scree",
+            "grade": "low"
+          },
+          {
+            "worldId": "fibre-scree",
+            "grade": "medium"
+          },
+          {
+            "worldId": "fibre-scree",
+            "grade": "severe"
+          },
+          {
+            "worldId": "fibre-silt",
+            "grade": "low"
+          },
+          {
+            "worldId": "fibre-silt",
+            "grade": "medium"
+          },
+          {
+            "worldId": "fibre-silt",
+            "grade": "severe"
+          },
+          {
+            "worldId": "fibre-stumpfield",
+            "grade": "low"
+          },
+          {
+            "worldId": "fibre-stumpfield",
+            "grade": "medium"
+          },
+          {
+            "worldId": "fibre-stumpfield",
+            "grade": "severe"
+          },
+          {
+            "worldId": "film-laminate",
+            "grade": "low"
+          },
+          {
+            "worldId": "film-laminate",
+            "grade": "medium"
+          },
+          {
+            "worldId": "film-laminate",
+            "grade": "severe"
+          },
+          {
+            "worldId": "flake-thicket",
+            "grade": "low"
+          },
+          {
+            "worldId": "flake-thicket",
+            "grade": "medium"
+          },
+          {
+            "worldId": "flake-thicket",
+            "grade": "severe"
+          },
+          {
+            "worldId": "foam-trenches",
+            "grade": "low"
+          },
+          {
+            "worldId": "foam-trenches",
+            "grade": "medium"
+          },
+          {
+            "worldId": "foam-trenches",
+            "grade": "severe"
+          },
+          {
+            "worldId": "fractured-estuary",
+            "grade": "low"
+          },
+          {
+            "worldId": "fractured-estuary",
+            "grade": "medium"
+          },
+          {
+            "worldId": "fractured-estuary",
+            "grade": "severe"
+          },
+          {
+            "worldId": "frayed-outwash",
+            "grade": "low"
+          },
+          {
+            "worldId": "frayed-outwash",
+            "grade": "medium"
+          },
+          {
+            "worldId": "frayed-outwash",
+            "grade": "severe"
+          },
+          {
+            "worldId": "gel-fibre",
+            "grade": "low"
+          },
+          {
+            "worldId": "gel-fibre",
+            "grade": "medium"
+          },
+          {
+            "worldId": "gel-fibre",
+            "grade": "severe"
+          },
+          {
+            "worldId": "gel-rafts",
+            "grade": "low"
+          },
+          {
+            "worldId": "gel-rafts",
+            "grade": "medium"
+          },
+          {
+            "worldId": "gel-rafts",
+            "grade": "severe"
+          },
+          {
+            "worldId": "grain-laminate",
+            "grade": "low"
+          },
+          {
+            "worldId": "grain-laminate",
+            "grade": "medium"
+          },
+          {
+            "worldId": "grain-laminate",
+            "grade": "severe"
+          },
+          {
+            "worldId": "grain-weld",
+            "grade": "low"
+          },
+          {
+            "worldId": "grain-weld",
+            "grade": "medium"
+          },
+          {
+            "worldId": "grain-weld",
+            "grade": "severe"
+          },
+          {
+            "worldId": "hollow-wreckage",
+            "grade": "low"
+          },
+          {
+            "worldId": "hollow-wreckage",
+            "grade": "medium"
+          },
+          {
+            "worldId": "hollow-wreckage",
+            "grade": "severe"
+          },
+          {
+            "worldId": "husk-reef",
+            "grade": "low"
+          },
+          {
+            "worldId": "husk-reef",
+            "grade": "medium"
+          },
+          {
+            "worldId": "husk-reef",
+            "grade": "severe"
+          },
+          {
+            "worldId": "ivory-basin",
+            "grade": "low"
+          },
+          {
+            "worldId": "ivory-basin",
+            "grade": "medium"
+          },
+          {
+            "worldId": "ivory-basin",
+            "grade": "severe"
+          },
+          {
+            "worldId": "knotted-run",
+            "grade": "low"
+          },
+          {
+            "worldId": "knotted-run",
+            "grade": "medium"
+          },
+          {
+            "worldId": "knotted-run",
+            "grade": "severe"
+          },
+          {
+            "worldId": "lacquer-court",
+            "grade": "low"
+          },
+          {
+            "worldId": "lacquer-court",
+            "grade": "medium"
+          },
+          {
+            "worldId": "lacquer-court",
+            "grade": "severe"
+          },
+          {
+            "worldId": "laminate-shell",
+            "grade": "low"
+          },
+          {
+            "worldId": "laminate-shell",
+            "grade": "medium"
+          },
+          {
+            "worldId": "laminate-shell",
+            "grade": "severe"
+          },
+          {
+            "worldId": "last-shelf",
+            "grade": "low"
+          },
+          {
+            "worldId": "last-shelf",
+            "grade": "medium"
+          },
+          {
+            "worldId": "last-shelf",
+            "grade": "severe"
+          },
+          {
+            "worldId": "marrow-break",
+            "grade": "low"
+          },
+          {
+            "worldId": "marrow-break",
+            "grade": "medium"
+          },
+          {
+            "worldId": "marrow-break",
+            "grade": "severe"
+          },
+          {
+            "worldId": "monolith-sill",
+            "grade": "low"
+          },
+          {
+            "worldId": "monolith-sill",
+            "grade": "medium"
+          },
+          {
+            "worldId": "monolith-sill",
+            "grade": "severe"
+          },
+          {
+            "worldId": "notched-backwater",
+            "grade": "low"
+          },
+          {
+            "worldId": "notched-backwater",
+            "grade": "medium"
+          },
+          {
+            "worldId": "notched-backwater",
+            "grade": "severe"
+          },
+          {
+            "worldId": "ochre-folds",
+            "grade": "low"
+          },
+          {
+            "worldId": "ochre-folds",
+            "grade": "medium"
+          },
+          {
+            "worldId": "ochre-folds",
+            "grade": "severe"
+          },
+          {
+            "worldId": "offset-basins",
+            "grade": "low"
+          },
+          {
+            "worldId": "offset-basins",
+            "grade": "medium"
+          },
+          {
+            "worldId": "offset-basins",
+            "grade": "severe"
+          },
+          {
+            "worldId": "offset-pan",
+            "grade": "low"
+          },
+          {
+            "worldId": "offset-pan",
+            "grade": "medium"
+          },
+          {
+            "worldId": "offset-pan",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pale-pressure",
+            "grade": "low"
+          },
+          {
+            "worldId": "pale-pressure",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pale-pressure",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pale-sail",
+            "grade": "low"
+          },
+          {
+            "worldId": "pale-sail",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pale-sail",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pallid-membrane",
+            "grade": "low"
+          },
+          {
+            "worldId": "pallid-membrane",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pallid-membrane",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pinched-fan",
+            "grade": "low"
+          },
+          {
+            "worldId": "pinched-fan",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pinched-fan",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pitch-forks",
+            "grade": "low"
+          },
+          {
+            "worldId": "pitch-forks",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pitch-forks",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pleated-hide",
+            "grade": "low"
+          },
+          {
+            "worldId": "pleated-hide",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pleated-hide",
+            "grade": "severe"
+          },
+          {
+            "worldId": "porcelain-maw",
+            "grade": "low"
+          },
+          {
+            "worldId": "porcelain-maw",
+            "grade": "medium"
+          },
+          {
+            "worldId": "porcelain-maw",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pore-bank",
+            "grade": "low"
+          },
+          {
+            "worldId": "pore-bank",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pore-bank",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pressed-dunes",
+            "grade": "low"
+          },
+          {
+            "worldId": "pressed-dunes",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pressed-dunes",
+            "grade": "severe"
+          },
+          {
+            "worldId": "pressed-rim",
+            "grade": "low"
+          },
+          {
+            "worldId": "pressed-rim",
+            "grade": "medium"
+          },
+          {
+            "worldId": "pressed-rim",
+            "grade": "severe"
+          },
+          {
+            "worldId": "quiet-spur",
+            "grade": "low"
+          },
+          {
+            "worldId": "quiet-spur",
+            "grade": "medium"
+          },
+          {
+            "worldId": "quiet-spur",
+            "grade": "severe"
+          },
+          {
+            "worldId": "quilted-scars",
+            "grade": "low"
+          },
+          {
+            "worldId": "quilted-scars",
+            "grade": "medium"
+          },
+          {
+            "worldId": "quilted-scars",
+            "grade": "severe"
+          },
+          {
+            "worldId": "red-vault-fragments",
+            "grade": "low"
+          },
+          {
+            "worldId": "red-vault-fragments",
+            "grade": "medium"
+          },
+          {
+            "worldId": "red-vault-fragments",
+            "grade": "severe"
+          },
+          {
+            "worldId": "resin-fall",
+            "grade": "low"
+          },
+          {
+            "worldId": "resin-fall",
+            "grade": "medium"
+          },
+          {
+            "worldId": "resin-fall",
+            "grade": "severe"
+          },
+          {
+            "worldId": "resin-hollows",
+            "grade": "low"
+          },
+          {
+            "worldId": "resin-hollows",
+            "grade": "medium"
+          },
+          {
+            "worldId": "resin-hollows",
+            "grade": "severe"
+          },
+          {
+            "worldId": "resin-sleeve",
+            "grade": "low"
+          },
+          {
+            "worldId": "resin-sleeve",
+            "grade": "medium"
+          },
+          {
+            "worldId": "resin-sleeve",
+            "grade": "severe"
+          },
+          {
+            "worldId": "reversed-flow",
+            "grade": "low"
+          },
+          {
+            "worldId": "reversed-flow",
+            "grade": "medium"
+          },
+          {
+            "worldId": "reversed-flow",
+            "grade": "severe"
+          },
+          {
+            "worldId": "rib-vault",
+            "grade": "low"
+          },
+          {
+            "worldId": "rib-vault",
+            "grade": "medium"
+          },
+          {
+            "worldId": "rib-vault",
+            "grade": "severe"
+          },
+          {
+            "worldId": "ribbed-delta",
+            "grade": "low"
+          },
+          {
+            "worldId": "ribbed-delta",
+            "grade": "medium"
+          },
+          {
+            "worldId": "ribbed-delta",
+            "grade": "severe"
+          },
+          {
+            "worldId": "rolled-fragments",
+            "grade": "low"
+          },
+          {
+            "worldId": "rolled-fragments",
+            "grade": "medium"
+          },
+          {
+            "worldId": "rolled-fragments",
+            "grade": "severe"
+          },
+          {
+            "worldId": "root-cistern",
+            "grade": "low"
+          },
+          {
+            "worldId": "root-cistern",
+            "grade": "medium"
+          },
+          {
+            "worldId": "root-cistern",
+            "grade": "severe"
+          },
+          {
+            "worldId": "ruptured-film",
+            "grade": "low"
+          },
+          {
+            "worldId": "ruptured-film",
+            "grade": "medium"
+          },
+          {
+            "worldId": "ruptured-film",
+            "grade": "severe"
+          },
+          {
+            "worldId": "satin-fan",
+            "grade": "low"
+          },
+          {
+            "worldId": "satin-fan",
+            "grade": "medium"
+          },
+          {
+            "worldId": "satin-fan",
+            "grade": "severe"
+          },
+          {
+            "worldId": "scab-islands",
+            "grade": "low"
+          },
+          {
+            "worldId": "scab-islands",
+            "grade": "medium"
+          },
+          {
+            "worldId": "scab-islands",
+            "grade": "severe"
+          },
+          {
+            "worldId": "scalloped-reach",
+            "grade": "low"
+          },
+          {
+            "worldId": "scalloped-reach",
+            "grade": "medium"
+          },
+          {
+            "worldId": "scalloped-reach",
+            "grade": "severe"
+          },
+          {
+            "worldId": "schist-shear",
+            "grade": "low"
+          },
+          {
+            "worldId": "schist-shear",
+            "grade": "medium"
+          },
+          {
+            "worldId": "schist-shear",
+            "grade": "severe"
+          },
+          {
+            "worldId": "sentinel-mass",
+            "grade": "low"
+          },
+          {
+            "worldId": "sentinel-mass",
+            "grade": "medium"
+          },
+          {
+            "worldId": "sentinel-mass",
+            "grade": "severe"
+          },
+          {
+            "worldId": "shard-switchback",
+            "grade": "low"
+          },
+          {
+            "worldId": "shard-switchback",
+            "grade": "medium"
+          },
+          {
+            "worldId": "shard-switchback",
+            "grade": "severe"
+          },
+          {
+            "worldId": "shell-causeway",
+            "grade": "low"
+          },
+          {
+            "worldId": "shell-causeway",
+            "grade": "medium"
+          },
+          {
+            "worldId": "shell-causeway",
+            "grade": "severe"
+          },
+          {
+            "worldId": "shell-chain",
+            "grade": "low"
+          },
+          {
+            "worldId": "shell-chain",
+            "grade": "medium"
+          },
+          {
+            "worldId": "shell-chain",
+            "grade": "severe"
+          },
+          {
+            "worldId": "shell-gel-delta",
+            "grade": "low"
+          },
+          {
+            "worldId": "shell-gel-delta",
+            "grade": "medium"
+          },
+          {
+            "worldId": "shell-gel-delta",
+            "grade": "severe"
+          },
+          {
+            "worldId": "shell-grit",
+            "grade": "low"
+          },
+          {
+            "worldId": "shell-grit",
+            "grade": "medium"
+          },
+          {
+            "worldId": "shell-grit",
+            "grade": "severe"
+          },
+          {
+            "worldId": "shell-patchwork",
+            "grade": "low"
+          },
+          {
+            "worldId": "shell-patchwork",
+            "grade": "medium"
+          },
+          {
+            "worldId": "shell-patchwork",
+            "grade": "severe"
+          },
+          {
+            "worldId": "shell-threads",
+            "grade": "low"
+          },
+          {
+            "worldId": "shell-threads",
+            "grade": "medium"
+          },
+          {
+            "worldId": "shell-threads",
+            "grade": "severe"
+          },
+          {
+            "worldId": "short-fibre-mat",
+            "grade": "low"
+          },
+          {
+            "worldId": "short-fibre-mat",
+            "grade": "medium"
+          },
+          {
+            "worldId": "short-fibre-mat",
+            "grade": "severe"
+          },
+          {
+            "worldId": "silk-catch",
+            "grade": "low"
+          },
+          {
+            "worldId": "silk-catch",
+            "grade": "medium"
+          },
+          {
+            "worldId": "silk-catch",
+            "grade": "severe"
+          },
+          {
+            "worldId": "silt-colonnade",
+            "grade": "low"
+          },
+          {
+            "worldId": "silt-colonnade",
+            "grade": "medium"
+          },
+          {
+            "worldId": "silt-colonnade",
+            "grade": "severe"
+          },
+          {
+            "worldId": "silt-gel",
+            "grade": "low"
+          },
+          {
+            "worldId": "silt-gel",
+            "grade": "medium"
+          },
+          {
+            "worldId": "silt-gel",
+            "grade": "severe"
+          },
+          {
+            "worldId": "sloughed-court",
+            "grade": "low"
+          },
+          {
+            "worldId": "sloughed-court",
+            "grade": "medium"
+          },
+          {
+            "worldId": "sloughed-court",
+            "grade": "severe"
+          },
+          {
+            "worldId": "splayed-fibres",
+            "grade": "low"
+          },
+          {
+            "worldId": "splayed-fibres",
+            "grade": "medium"
+          },
+          {
+            "worldId": "splayed-fibres",
+            "grade": "severe"
+          },
+          {
+            "worldId": "spliced-reaches",
+            "grade": "low"
+          },
+          {
+            "worldId": "spliced-reaches",
+            "grade": "medium"
+          },
+          {
+            "worldId": "spliced-reaches",
+            "grade": "severe"
+          },
+          {
+            "worldId": "splinter-rotunda",
+            "grade": "low"
+          },
+          {
+            "worldId": "splinter-rotunda",
+            "grade": "medium"
+          },
+          {
+            "worldId": "splinter-rotunda",
+            "grade": "severe"
+          },
+          {
+            "worldId": "split-fall",
+            "grade": "low"
+          },
+          {
+            "worldId": "split-fall",
+            "grade": "medium"
+          },
+          {
+            "worldId": "split-fall",
+            "grade": "severe"
+          },
+          {
+            "worldId": "split-rib-causeway",
+            "grade": "low"
+          },
+          {
+            "worldId": "split-rib-causeway",
+            "grade": "medium"
+          },
+          {
+            "worldId": "split-rib-causeway",
+            "grade": "severe"
+          },
+          {
+            "worldId": "split-tows",
+            "grade": "low"
+          },
+          {
+            "worldId": "split-tows",
+            "grade": "medium"
+          },
+          {
+            "worldId": "split-tows",
+            "grade": "severe"
+          },
+          {
+            "worldId": "staggered-cups",
+            "grade": "low"
+          },
+          {
+            "worldId": "staggered-cups",
+            "grade": "medium"
+          },
+          {
+            "worldId": "staggered-cups",
+            "grade": "severe"
+          },
+          {
+            "worldId": "stepped-bowl",
+            "grade": "low"
+          },
+          {
+            "worldId": "stepped-bowl",
+            "grade": "medium"
+          },
+          {
+            "worldId": "stepped-bowl",
+            "grade": "severe"
+          },
+          {
+            "worldId": "tendon-shelves",
+            "grade": "low"
+          },
+          {
+            "worldId": "tendon-shelves",
+            "grade": "medium"
+          },
+          {
+            "worldId": "tendon-shelves",
+            "grade": "severe"
+          },
+          {
+            "worldId": "tension-membrane",
+            "grade": "low"
+          },
+          {
+            "worldId": "tension-membrane",
+            "grade": "medium"
+          },
+          {
+            "worldId": "tension-membrane",
+            "grade": "severe"
+          },
+          {
+            "worldId": "thin-delta",
+            "grade": "low"
+          },
+          {
+            "worldId": "thin-delta",
+            "grade": "medium"
+          },
+          {
+            "worldId": "thin-delta",
+            "grade": "severe"
+          },
+          {
+            "worldId": "three-shelves",
+            "grade": "low"
+          },
+          {
+            "worldId": "three-shelves",
+            "grade": "medium"
+          },
+          {
+            "worldId": "three-shelves",
+            "grade": "severe"
+          },
+          {
+            "worldId": "torn-reservoir",
+            "grade": "low"
+          },
+          {
+            "worldId": "torn-reservoir",
+            "grade": "medium"
+          },
+          {
+            "worldId": "torn-reservoir",
+            "grade": "severe"
+          },
+          {
+            "worldId": "violet-marrows",
+            "grade": "low"
+          },
+          {
+            "worldId": "violet-marrows",
+            "grade": "medium"
+          },
+          {
+            "worldId": "violet-marrows",
+            "grade": "severe"
+          },
+          {
+            "worldId": "wax-tongues",
+            "grade": "low"
+          },
+          {
+            "worldId": "wax-tongues",
+            "grade": "medium"
+          },
+          {
+            "worldId": "wax-tongues",
+            "grade": "severe"
+          },
+          {
+            "worldId": "wedged-hide",
+            "grade": "low"
+          },
+          {
+            "worldId": "wedged-hide",
+            "grade": "medium"
+          },
+          {
+            "worldId": "wedged-hide",
+            "grade": "severe"
+          },
+          {
+            "worldId": "white-scarfield",
+            "grade": "low"
+          },
+          {
+            "worldId": "white-scarfield",
+            "grade": "medium"
+          },
+          {
+            "worldId": "white-scarfield",
+            "grade": "severe"
+          },
+          {
+            "worldId": "woven-quarters",
+            "grade": "low"
+          },
+          {
+            "worldId": "woven-quarters",
+            "grade": "medium"
+          },
+          {
+            "worldId": "woven-quarters",
+            "grade": "severe"
+          }
+        ],
+        "evidenceIds": [
+          "R100-E-I13-ACHIEVEMENT"
         ]
       }
     },
@@ -53650,6 +55118,100 @@
       "documentSha256": "f80dffe01977f23858bb4df905c8da3de0ad89f45b0e20fa064793dd780db4b1",
       "scope": "Director按Design/QA冻结文档复核28趟与资产裁决，独立重算最终证据和19执行依赖SHA；限定低中维护/成长与新物实际窗口成立，I13状态changes-required。",
       "limitations": "不是迭代结案、发布门或人审。生产未改，既有108/324与12/14保持；本轮28停止，后续最小诊断仅已写合同未执行。"
+    },
+    {
+      "id": "R100-E-I13-CONTINUATION-FOURTEEN",
+      "kind": "runtime",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-bridge-fourteen-final.json",
+      "scope": "续推14真实往返、56原档/8507独立断言；A4实际全低并保留重度降档，B4债19→24，入口每档固定首趟+自然续趟。三支入口同服务余量低−20/中−20/重−32。",
+      "limitations": "所有失败与祖先资产分账；探查负信息、短靴/卷尺及新控制工具窗口只按实际事件签。入口6趟非全世界刷取排除，B恢复未成，不能结案。"
+    },
+    {
+      "id": "R100-E-I13-FUNCTIONAL-THREE",
+      "kind": "runtime",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-functional-bridge-final.json",
+      "scope": "真实A16末态先按功能和单件余次准入再FIFO，1自然重度+2低档，12原档/1962断言；收入59/维修44，现金17→32，D0且102原缓冲恢复。连续A19收入370/维修329/成长33，同服务维护余量+41。",
+      "limitations": "自然重度仅safe/contested、deep0，该子门仍未过；空心梭1常规+2应急耗尽，余次/武器与祖先替补不折钱或掩盖。新17趟不是独立玩家研究。"
+    },
+    {
+      "id": "R100-E-I13-BOUNDED-RECOVERY",
+      "kind": "runtime",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-b-bounded-bridge-final.json",
+      "scope": "真实B11末态限定重评/第二几何方向及功能装配修正，3低到D0按约停止，12原档/1710断言。收入72/维修67，现金0→5，原服务债24→16→3→0且102资本恢复；B13两次有界复试实际取得13薪。",
+      "limitations": "原B14累计收入211/维修230，仍消耗初始现金19；本段用尽8次祖先短冲，期末无短冲，不称原配方或silence/dash已补齐。B12没有触发重评，不能把三趟收入提升归为纯路线因果。"
+    },
+    {
+      "id": "R100-E-I13-PURSUIT-TWO",
+      "kind": "runtime",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-pursuit-bridge-final.json",
+      "scope": "A19真实末态新怀表/短靴、定身赴短段与搜取双窗口的独立1重1低，按普通再备门早停。8原档/1366断言；收入43/维修29，现金32→46，D0和102资本0；低档两次定身均有真实短段/搜取窗口。",
+      "limitations": "重度仍deep0，计划INF01而正式最近命中INF03，accepted为空且未伪造控制许可；新增选靶整改未由此签通过。新怀表4→1、新短冲3→0，低档使用祖先短冲3，末再备依祖先库存；不称全新配套补回。29短段末一段观察跨过自然到期，下一观察撤销，不称整个步长始终冻结。"
+    },
+    {
+      "id": "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY",
+      "kind": "runtime",
+      "purpose": "i13-bounded-internal-closure",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-recovery-bridge-final.json",
+      "documentSha256": "3a6f22301c030b3a6314a7dad269243335e96f498a2e4e83af7fc1df2084dbc3",
+      "scope": "自然重度deep污染物真实归返；同局冷续保持既付成本，后一低档恢复原服务/资本。A23累计463收入/384修复/68成长、现金35。",
+      "limitations": "同局技术中断与原失败保留；不是新的重档样本或自然重档深薪收益证明。"
+    },
+    {
+      "id": "R100-E-I13-AFFORDABLE-PREPARATION",
+      "kind": "source",
+      "purpose": "i13-bounded-internal-closure",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-preparation-budget.json",
+      "documentSha256": "54c3bda7b72a4c63a98bd65320c687a917cc8c07cdb8795e7bc1670c9bcc7294",
+      "scope": "A期末两功能方向的来源/公开强度/单件余次/负重及付1后留2核验；新罗盘3与新靴3实际成熟。",
+      "limitations": "定身祖先沙漏3补位，Q4再重门不足；两方向二选一。B短冲0和固定组合未恢复保持。"
+    },
+    {
+      "id": "R100-E-I13-EXECUTION-52",
+      "kind": "runtime",
+      "purpose": "i13-bounded-internal-closure",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-run-binding.json",
+      "documentSha256": "6d619a1bf6573f53a4338b6185959f9a54ae26329e9bc58d93201a81e357b460",
+      "scope": "52唯一run，208原档、29638账断言；12固定诊断/40自然，低33/中11/重8；一次同局技术中断单列去重。",
+      "limitations": "有限诊断，非胜率/人审；历史48趟复核不计新增。"
+    },
+    {
+      "id": "R100-E-I13-ENTRY-REPEAT",
+      "kind": "source",
+      "purpose": "i13-bounded-internal-closure",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-entry-bound.json",
+      "documentSha256": "641fd0f31b09ddf957e0e99bbe5a48ef304fef0bb5ff53eeb0c58356f198d3cf",
+      "scope": "三档各两次真实入口速返与固定圈所得/修复机制边界，原服务余量低−20/中−20/重−32。",
+      "limitations": "不外推所有世界或转向策略；真人视听疲劳仍归历史I14。"
+    },
+    {
+      "id": "R100-E-I13-BOUNDED-CLOSURE",
+      "kind": "source",
+      "purpose": "i13-bounded-internal-closure",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13-continuation/root/closure-disposition.json",
+      "documentSha256": "dde7e13244140d8ab10cf7d124a072f4012a35c37fcc4b1ac59f150ebb78cb2a",
+      "scope": "Director结合独立Design/QA逐门签有限内部结案，所有失败、祖先成本、原服务/资本和当前可付预算保留。",
+      "limitations": "52 unique sorties include 12 fixed diagnostic and 40 natural; shared ancestry and disclosed geometry-assisted navigation are not a player study or a win-rate estimate. A22 deep contaminant was actually returned and matured to a compass. Its quality and natural severe deep-kindling premium are not inferred. A23 ordinary survey/dash and control/dash alternatives can each pay a normal use and leave a qualified single item with at least two uses; they are alternatives, not two simultaneously funded next trips. Four-second control still uses ancestral sandtimer3; another Q4 severe admission fails. B repaid its own facility debt but spent ancestral dash reserves; dash0 and original fixed-recipe recovery failure remain. A never repays B. Finite tool, weapon and offering costs remain explicit; no invented money exchange, infinite steady-state claim or general grade profit ordering. Entry6 and the fixed entry-circle mechanism bound do not exclude every world or turning policy. Historical sound-listening R100-R10, long audiovisual fatigue, real weak hardware and human final review stay in I14; R100 is active, finalAcceptance null."
+    },
+    {
+      "id": "R100-E-I13-ACHIEVEMENT",
+      "kind": "source",
+      "purpose": "iteration-achievement",
+      "iterationId": "R100-I13",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "achievementHash": "30dd9974d4c7b32ef7d69ec3852530e37afe9411350050bb0348f31ebe5a8d86",
+      "path": "docs/qa/artifacts/r100-i13-continuation/root/achievement.json",
+      "documentSha256": "e51ccf6d8c9b9f8a6625e9f9883892eca52743c2f1e74dd35c286901115f18d4",
+      "scope": "1397生产字节不变，108/324资格保留；I13内部有界验收，未发布。",
+      "limitations": "52 unique sorties include 12 fixed diagnostic and 40 natural; shared ancestry and disclosed geometry-assisted navigation are not a player study or a win-rate estimate. A22 deep contaminant was actually returned and matured to a compass. Its quality and natural severe deep-kindling premium are not inferred. A23 ordinary survey/dash and control/dash alternatives can each pay a normal use and leave a qualified single item with at least two uses; they are alternatives, not two simultaneously funded next trips. Four-second control still uses ancestral sandtimer3; another Q4 severe admission fails. B repaid its own facility debt but spent ancestral dash reserves; dash0 and original fixed-recipe recovery failure remain. A never repays B. Finite tool, weapon and offering costs remain explicit; no invented money exchange, infinite steady-state claim or general grade profit ordering. Entry6 and the fixed entry-circle mechanism bound do not exclude every world or turning policy. Historical sound-listening R100-R10, long audiovisual fatigue, real weak hardware and human final review stay in I14; R100 is active, finalAcceptance null."
     }
   ],
   "risks": [
@@ -53701,12 +55263,16 @@
       "owner": "design / qa",
       "iteration": "R100-I13",
       "response": "两类准备与自然供给，低中可持续、重度净收益/失败恢复和安全堆刷取并查；数据CSV化。",
-      "observedEvidence": "修订3真实成熟分支10趟重度落袋51/维修69，净薪−18，8撤2死；独立中档组效率不稳定。策略和世界未配对，不能断言档位因果。当前已建立可承担的高风险深搜和成长供给，不承诺高档稳定暴利。 I13修订6新28趟独立核账：修正验证路线后A连续12收入248/维修216/成长33、现金24→23、固定服务D0；原储藏缓冲少1HP另计。B连续7收入86/维修110、D19/同服务−43，原两次自然重度计划均降低。成套准备与长期供给未通过，不先改生产奖励。",
+      "observedEvidence": "修订3真实成熟分支10趟重度落袋51/维修69，净薪−18，8撤2死；独立中档组效率不稳定。策略和世界未配对，不能断言档位因果。当前已建立可承担的高风险深搜和成长供给，不承诺高档稳定暴利。 I13修订6新28趟独立核账：修正验证路线后A连续12收入248/维修216/成长33、现金24→23、固定服务D0；原储藏缓冲少1HP另计。B连续7收入86/维修110、D19/同服务−43，原两次自然重度计划均降低。成套准备与长期供给未通过，不先改生产奖励。 续推后累计52唯一run，A23收入463/维修384/成长68、现金35且服务/资本完整；B14本支付费恢复但全链维护−19、dash0。自然A22 deep污染物真归返，新罗盘/靴次低成熟；两方向普通可付准备通过。有限内部结案不抹历史亏损，不证明高档普遍占优或无限供给。",
       "evidenceIds": [
         "R100-E-COMPLETION-NATURAL-90",
         "R100-E-COMPLETION-P13-PREPARED",
         "R100-E-I13-FRESH-AND-SERVICE",
-        "R100-E-I13-EXECUTION-28"
+        "R100-E-I13-EXECUTION-28",
+        "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY",
+        "R100-E-I13-AFFORDABLE-PREPARATION",
+        "R100-E-I13-EXECUTION-52",
+        "R100-E-I13-BOUNDED-CLOSURE"
       ]
     },
     {
@@ -54494,16 +56060,25 @@
       "id": "R100-P47",
       "title": "自然准备的跨趟预算、信息收益与重度后恢复仍缺有效证据",
       "severity": "P1",
-      "status": "open",
+      "status": "resolved",
       "iteration": "R100-I13",
       "owner": "design / qa / code",
       "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
       "evidenceIds": [
         "R100-E-I13-NATURAL-TWELVE",
-        "R100-E-I13-FRESH-AND-SERVICE"
+        "R100-E-I13-FRESH-AND-SERVICE",
+        "R100-E-I13-CONTINUATION-FOURTEEN",
+        "R100-E-I13-FUNCTIONAL-THREE",
+        "R100-E-I13-TARGET-AND-SAME-RUN-RECOVERY",
+        "R100-E-I13-AFFORDABLE-PREPARATION",
+        "R100-E-I13-EXECUTION-52",
+        "R100-E-I13-ENTRY-REPEAT",
+        "R100-E-I13-BOUNDED-CLOSURE"
       ],
       "note": "B首低耗尽短靴，两次计划重度真实降低；探查未形成新增信息窗口，七趟末原服务欠修19且原功能未补回。新手套/烟斗单链不抵成套恢复。当前不据此判生产数值无解。",
-      "remainingRequirement": "按I13任务末节另行预登记最多4趟的时机/跨趟预算/同标准恢复诊断；保留A12、B7真实主链，旧局诊断分支不冒充新供给。本轮28后不再采样，后续实验尚未执行。"
+      "remainingRequirement": "无I13内部阻断；有限来源与原失败保持，不要求某固定配方永久回满。",
+      "resolvedDate": "2026-10-08",
+      "resolution": "选靶/信息使用/余次/路线及误报卡墙修正有实录；两方向普通可付准备、自然deep真归返、B本支付费服务恢复完成。Bdash0及A定身Q4不足未改成通过。"
     }
   ],
   "changeLog": [
@@ -54717,6 +56292,16 @@
       "date": "2026-10-08",
       "kind": "bounded-i13-review",
       "summary": "I13本轮28趟有限实跑收口。修复资格代理漏搜近处物的策略偏差；低中主链维护并真实支付33成长，新物消费链有证。P47成套准备、信息窗口、重度后恢复与完整长期经济门仍待整改，I13未结案；无生产源码/CSV变更，108/324与12/14保持。"
+    },
+    {
+      "date": "2026-10-08",
+      "kind": "human-i13-continue",
+      "summary": "用户明确“是否有需要我决策或提供额外信息的事项？没有的话你继续推进 I13”。当前未发现必需额外输入；继续修验证政策和补齐有限验收，不以旧28批次结束作为迭代停止理由。原changes-required门与原始实录保持。"
+    },
+    {
+      "date": "2026-10-08",
+      "kind": "bounded-i13-internal-closure",
+      "summary": "I13有因续推新增24、累计52唯一出击完成。5组有限内部门成立，P47有限解决，I13内部结案13/14；生产1397不变。原失败/祖先成本/B固定组合失败/A定身再重不足保持；I14按历史合同未启动，未授发布或新增人审。"
     }
   ],
   "qualityPlan": {

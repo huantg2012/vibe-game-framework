@@ -1,0 +1,91 @@
+{
+  "recordedAt": "2026-10-08T11:00:54.555Z",
+  "status": "bounded-paid-control-observation-check-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-control-window-audit.mjs",
+    "sha256": "d52cf06c9b0bf6c7a0b379baa41b6a832a300c676e343c250caeb2f0d4a0c22e"
+  },
+  "journal": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/journey.jsonl",
+    "sha256": "705a246cd2d7ae5c87ab9cd61ad5e61e1ed833a583ec8ed3401d4937b6701646"
+  },
+  "castCount": 1,
+  "acceptedEffects": 1,
+  "unacceptedCasts": [],
+  "shortLegs": 2,
+  "maxDistance": 8.549382400000127,
+  "maxObservedElapsedMs": 166.65000000000146,
+  "hitsObserved": 0,
+  "rows": [
+    {
+      "line": 670,
+      "keys": [
+        "w"
+      ],
+      "requestedInputMs": 120.87564713616732,
+      "distance": 8.549382400000127,
+      "observedElapsedMs": 166.65000000000146,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_03",
+          "controlActive": true,
+          "remainingTime": 5233.3499999999985,
+          "startTime": 50964.639999999825
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_03",
+          "controlActive": true,
+          "remainingTime": 5066.699999999997,
+          "startTime": 50964.639999999825
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 676,
+      "keys": [
+        "d",
+        "w"
+      ],
+      "requestedInputMs": 65,
+      "distance": 3.57087689471064,
+      "observedElapsedMs": 99.98000000001048,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_03",
+          "controlActive": true,
+          "remainingTime": 5033.369999999997,
+          "startTime": 50964.639999999825
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_03",
+          "controlActive": true,
+          "remainingTime": 4900.0499999999965,
+          "startTime": 50964.639999999825
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    }
+  ],
+  "limits": [
+    "Accepted paid effect and bounded observed movement are not isolated avoided-damage causality or proof of full 4-second coverage.",
+    "The final observation may occur after effect expiration; matching revocation checks no old permission is retained, not continuous video.",
+    "This script checks recorded public/paid observations, not browser performance, all hazards, or natural severe deep success."
+  ]
+}

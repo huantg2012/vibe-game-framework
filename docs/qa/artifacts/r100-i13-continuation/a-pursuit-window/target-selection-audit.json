@@ -1,0 +1,75 @@
+{
+  "recordedAt": "2026-10-08T10:37:34.150Z",
+  "scope": "Read-only current frozen A pursuit sample; no code/sample rewritten",
+  "sources": [
+    {
+      "file": "src/systems/catalog-ability-runtime.ts",
+      "sha256": "2b2a7a2695529df0b636f4c7c3b451832906382fd65bedefe9671c9068bde42b"
+    },
+    {
+      "file": "src/systems/tool-targeting.ts",
+      "sha256": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+    },
+    {
+      "file": "tools/world-study/r100-i13-pursuit-policy.mjs",
+      "sha256": "7ab6b72b1863aafc087465c0f3353303bf5eccca190b922fb1b0af2db72302b3"
+    }
+  ],
+  "evidence": {
+    "journal": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/i13/journey.jsonl",
+    "line": 399,
+    "intent": {
+      "role": "transit",
+      "targetId": "ENM_INF_01",
+      "leg": {
+        "start": {
+          "x": 932.5468305588267,
+          "y": 454.13454938892795
+        },
+        "end": {
+          "x": 940,
+          "y": 452
+        }
+      }
+    },
+    "actual": [
+      {
+        "effectId": "ability:3",
+        "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+        "targetId": "ENM_INF_03",
+        "controlActive": true,
+        "remainingTime": 3916.6400000000003,
+        "startTime": 31432.05999999972
+      }
+    ],
+    "accepted": [],
+    "normalVisibleDistances": [
+      {
+        "id": "ENM_INF_01",
+        "position": {
+          "x": 886.5362288079662,
+          "y": 414.98262378931764
+        },
+        "distance": 60.41397811461944
+      },
+      {
+        "id": "ENM_INF_03",
+        "position": {
+          "x": 880.2246270967734,
+          "y": 433.9606027080346
+        },
+        "distance": 56.076742949355015
+      }
+    ]
+  },
+  "finding": "The QA pursuit candidate uses Array.find first observed blocker. Production chooses the nearest living/control-admissible target within range, current facing half-plane, current visibility and line of sight; equal distances retain stable order. These are different selectors.",
+  "productionRules": {
+    "selector": "selectNearestVisibleTarget",
+    "halfAngleRadians": 1.5707963267948966,
+    "range": "Resolved public ability range",
+    "tie": "Stable existing target order",
+    "finalEligibility": "Actual production hard-control admission remains authoritative"
+  },
+  "conclusion": "Actual target INF03 differing from intended INF01 is consistent with formal selection; refusing to grant an INF01 permission was correct. Consumption alone proves no route window. No confirmed production selection defect.",
+  "possibleMethodCorrection": "If separately authorized, derive an expected nearest visible/clear target from only normal facts and public geometry after facing, admit only when no second visible enemy still blocks that short leg, then retain the actual paid target/control check. Do not change production targeting or control multiple enemies."
+}

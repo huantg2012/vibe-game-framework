@@ -1,0 +1,562 @@
+{
+  "recordedAt": "2026-10-08T11:07:24.019Z",
+  "status": "same-run-full-record-cold-continuity-pass-with-explicit-frame-drift",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-a-target-cold-continuity.mjs",
+    "sha256": "108e2ea95c6154e24f608280c2245d7554dd97ea4b2ce3aebd0cbb9fcca2f154"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/policy-freeze.json",
+    "sha256": "ea286d39d68e20f4fb8aa55282649c87c4c95c044ef09bb049cab98198f86f37"
+  },
+  "sourceStorage": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/i13/browser-storage.json",
+    "sha256": "6baf77ab32aad4d406c41b232d95c310191101879869fad3cf1c8c5806f4a1d1"
+  },
+  "input": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/earned-storage.json",
+    "sha256": "6baf77ab32aad4d406c41b232d95c310191101879869fad3cf1c8c5806f4a1d1"
+  },
+  "resumedSave": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/1-resumed.save.json",
+    "sha256": "76000e7a8728169fe110d95d18b9498249639314a70d8c367be23d05c6884a67"
+  },
+  "beforeInputDiagnostic": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/1-cold-resume-before-input-rejected-state.json",
+    "sha256": "bb308a719ce15d8df709a4c73f2fdeba1f6a5d026a9d600ef206353396f36cd9"
+  },
+  "runId": "b4582c78-5f9d-4a27-9416-164a8425fc94",
+  "sourceSequence": 112,
+  "firstCompleteSequence": 113,
+  "firstCompleteSimulationElapsedEqual": true,
+  "fullRecordExceptThreeFieldsEqual": true,
+  "threeFields": [
+    {
+      "path": "riftCheckpoint.sequence",
+      "before": 112,
+      "after": 113
+    },
+    {
+      "path": "checkpointChecksum",
+      "before": "2170f6b9",
+      "after": "b912a299"
+    },
+    {
+      "path": "riftCheckpoint.state.world.nativePresentation.audio.clock",
+      "before": 56431.079999999914,
+      "after": 56447.73999999992
+    }
+  ],
+  "firstObservedDiagnostic": {
+    "sequence": 114,
+    "simulationDeltaMs": 49.99000000000524,
+    "inventoryExact": true,
+    "playerPositionExact": true,
+    "hp": 145,
+    "carried": 20,
+    "allLeafDifferences": [
+      {
+        "path": "checkpoint.sequence",
+        "before": 112,
+        "after": 114
+      },
+      {
+        "path": "checkpoint.elapsedMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.run.elapsedMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.physics.elapsedMs",
+        "before": 14.406666666661962,
+        "after": 14.396666666661964
+      },
+      {
+        "path": "checkpoint.state.player.motionElapsedMs",
+        "before": 56880.37999999995,
+        "after": 56930.36999999995
+      },
+      {
+        "path": "checkpoint.state.player.lastDeltaMs",
+        "before": 16.659999999999854,
+        "after": 16.670000000000027
+      },
+      {
+        "path": "checkpoint.state.combat.enemies.0.cooldownRemainingMs",
+        "before": 1083.3500000000004,
+        "after": 1033.3600000000001
+      },
+      {
+        "path": "checkpoint.state.combat.enemies.0.engagedSinceMs",
+        "before": 1549.9600000000003,
+        "after": 1599.9500000000005
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.0.state.perceptionAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.entity.position.x",
+        "before": 774.3713957610256,
+        "after": 773.328969622632
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.entity.position.y",
+        "before": 93.25249403168277,
+        "after": 93.12660620068182
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.entity.bodyPosition.x",
+        "before": 764.3713957610256,
+        "after": 763.328969622632
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.entity.bodyPosition.y",
+        "before": 83.25249403168277,
+        "after": 83.12660620068182
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.entity.velocity.x",
+        "before": -20.848522767868978,
+        "after": -20.848522767868975
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.entity.velocity.y",
+        "before": -2.5177566200188854,
+        "after": -2.5177566200189325
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.entity.actualVelocity.y",
+        "before": -2.517756620018474,
+        "after": -2.5177566200193264
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.state.facingAngle",
+        "before": -3.021410375680303,
+        "after": -3.0214103756803006
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.state.perceptionAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.state.position.x",
+        "before": 774.3713957610256,
+        "after": 773.328969622632
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.state.position.y",
+        "before": 93.25249403168277,
+        "after": 93.12660620068182
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.state.velocity.x",
+        "before": -20.848522767868978,
+        "after": -20.848522767868975
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.1.state.velocity.y",
+        "before": -2.5177566200188854,
+        "after": -2.5177566200189325
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.2.entity.velocity.x",
+        "before": 0,
+        "after": -15.35420933742942
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.2.entity.velocity.y",
+        "before": 0,
+        "after": 14.326487902566887
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.2.state.perceptionAccumMs",
+        "before": 33.31999999999971,
+        "after": 83.30999999999972
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.2.state.stuckMs",
+        "before": 0,
+        "after": 16.670000000000027
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.2.state.velocity.x",
+        "before": 0,
+        "after": -15.35420933742942
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.2.state.velocity.y",
+        "before": 0,
+        "after": 14.326487902566887
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.2.controlProtectionRemainingMs",
+        "before": 0,
+        "after": 1983.33
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.entity.position.x",
+        "before": 442.59015363605596,
+        "after": 443.3475844326026
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.entity.position.y",
+        "before": 106.96590367083103,
+        "after": 107.69308905877747
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.entity.bodyPosition.x",
+        "before": 432.59015363605596,
+        "after": 433.3475844326026
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.entity.bodyPosition.y",
+        "before": 96.96590367083103,
+        "after": 97.69308905877747
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.entity.velocity.x",
+        "before": 15.148615930931665,
+        "after": 15.148615930931616
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.entity.velocity.y",
+        "before": 14.543707758928715,
+        "after": 14.543707758928766
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.state.facingAngle",
+        "before": 0.7650284371337142,
+        "after": 0.7650284371337176
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.state.perceptionAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.state.position.x",
+        "before": 442.59015363605596,
+        "after": 443.3475844326026
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.state.position.y",
+        "before": 106.96590367083103,
+        "after": 107.69308905877747
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.state.velocity.x",
+        "before": 15.148615930931665,
+        "after": 15.148615930931616
+      },
+      {
+        "path": "checkpoint.state.ai.enemies.3.state.velocity.y",
+        "before": 14.543707758928715,
+        "after": 14.543707758928766
+      },
+      {
+        "path": "checkpoint.state.tools.catalog.elapsedMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.tools.catalog.effects.0",
+        "before": {
+          "type": "object",
+          "sha256": "69ec09c48fc61445d9c347588ec17747ff3a104c7bd4f9471ad23a7ee97d7e5c",
+          "keys": [
+            "effectId",
+            "actionId",
+            "sourceInstanceId",
+            "definitionId",
+            "catalogVersion",
+            "resolvedParams",
+            "startTime",
+            "remainingTime",
+            "origin",
+            "position",
+            "targetId",
+            "controlActive",
+            "pulseElapsedMs",
+            "line",
+            "snapshot",
+            "echo",
+            "affectedEnemyIds",
+            "stops",
+            "previousPositions"
+          ]
+        },
+        "after": {
+          "absent": true
+        }
+      },
+      {
+        "path": "checkpoint.state.tools.elapsedMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.chaos.value",
+        "before": 56.34865900784923,
+        "after": 56.39602530192449
+      },
+      {
+        "path": "checkpoint.state.chaos.peak",
+        "before": 56.34865900784923,
+        "after": 56.39602530192449
+      },
+      {
+        "path": "checkpoint.state.chaos.clockMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.trail.elapsedMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.trail.visited.262.atMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.0.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.0.state.phase",
+        "before": 112.89547999999913,
+        "after": 112.99545999999913
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.1.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.1.state.phase",
+        "before": 114.9954799999991,
+        "after": 115.09545999999911
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.2.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.2.state.phase",
+        "before": 117.09547999999896,
+        "after": 117.19545999999896
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.3.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.3.state.phase",
+        "before": 119.19547999999891,
+        "after": 119.29545999999891
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.4.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.4.state.phase",
+        "before": 121.29547999999899,
+        "after": 121.39545999999899
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.5.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.5.state.phase",
+        "before": 123.39547999999898,
+        "after": 123.49545999999899
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.6.state.core.x",
+        "before": 122.06576282352951,
+        "after": 122.01636094117656
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.6.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.6.state.elapsedMs",
+        "before": 56447.7399999999,
+        "after": 56497.72999999991
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.6.state.phaseElapsedMs",
+        "before": 56447.7399999999,
+        "after": 56497.72999999991
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.7.state.core.x",
+        "before": 922.0657628235296,
+        "after": 922.0163609411766
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.7.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.7.state.elapsedMs",
+        "before": 56447.7399999999,
+        "after": 56497.72999999991
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.7.state.phaseElapsedMs",
+        "before": 56447.7399999999,
+        "after": 56497.72999999991
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.8.state.core.x",
+        "before": 538.0657628235296,
+        "after": 538.0163609411766
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.8.state.hearingAccumMs",
+        "before": 66.6699999999997,
+        "after": 0
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.8.state.elapsedMs",
+        "before": 56447.7399999999,
+        "after": 56497.72999999991
+      },
+      {
+        "path": "checkpoint.state.world.hosts.hosts.8.state.phaseElapsedMs",
+        "before": 56447.7399999999,
+        "after": 56497.72999999991
+      },
+      {
+        "path": "checkpoint.state.world.nativePresentation.elapsedMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.world.nativePresentation.lastElapsedMs",
+        "before": 56447.73999999992,
+        "after": 56497.72999999992
+      },
+      {
+        "path": "checkpoint.state.world.nativePresentation.audio.clock",
+        "before": 56431.079999999914,
+        "after": 56497.72999999992
+      }
+    ]
+  },
+  "inheritedExecutionBudget": {
+    "slots": [
+      {
+        "slot": 0,
+        "used": 1
+      },
+      {
+        "slot": 1,
+        "used": 1
+      }
+    ],
+    "controlRoles": [
+      {
+        "role": "search",
+        "used": 1
+      }
+    ],
+    "acceptedControls": [
+      {
+        "effectId": "ability:1",
+        "sourceInstanceId": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+        "targetId": "ENM_INF_03",
+        "controlActive": true,
+        "remainingTime": 5383.36,
+        "startTime": 50964.639999999825,
+        "role": "search"
+      }
+    ],
+    "dashWindows": [
+      {
+        "at": "2026-10-08T10:56:15.256Z",
+        "event": "paid-dash-actual-window",
+        "itemId": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+        "family": "dash",
+        "from": {
+          "x": 951.1961398192132,
+          "y": 304.37519075538563
+        },
+        "to": {
+          "x": 981.9999001,
+          "y": 273.57143047459886
+        },
+        "distance": 43.56309556117836,
+        "beforeHp": 160,
+        "afterHp": 160,
+        "elapsedBefore": 53464.51999999989,
+        "elapsedAfter": 53814.4999999999,
+        "visiblePressure": [
+          {
+            "id": "ENM_INF_01",
+            "position": {
+              "x": 894.409410421398,
+              "y": 308.7271845904799
+            },
+            "facing": -0.07648800308980841,
+            "attack": "idle",
+            "approaching": true
+          }
+        ],
+        "permission": {
+          "allowed": true,
+          "mode": "normal",
+          "reason": "within-preregistered-slot-budget"
+        }
+      }
+    ]
+  },
+  "budgetRestoreEvent": {
+    "line": 3,
+    "at": "2026-10-08T11:03:32.676Z",
+    "event": "same-run-execution-budget-restored",
+    "slots": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "roles": [
+      [
+        "search",
+        1
+      ]
+    ],
+    "actualOwnControls": [],
+    "restriction": "Only recorded spent budget restored; effects are not applied, only existing formal runtime revalidated."
+  },
+  "limits": [
+    "This cold recovery starts from the actual committed seq112,99.99ms before the diagnostic failure frame; it does not inject seq113 failure data.",
+    "The first committed restored record is exact across all game data except sequence/checksum and audio-clock alignment to restored simulation time. This does not certify perceptual audio continuity.",
+    "Before-input diagnostic occurs49.99ms later: AI/Host timers and motion advance and the16.9ms remaining freeze expires normally. Differences are explicitly listed, not erased.",
+    "End-of-run settlement, costs, later low trips and finite re-preparation are separate audits; a same-run segment is not an additional new departure."
+  ]
+}

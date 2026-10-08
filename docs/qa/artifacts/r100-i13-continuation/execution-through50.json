@@ -1,0 +1,425 @@
+{
+  "recordedAt": "2026-10-08T10:42:16.860Z",
+  "scope": "Execution through original28 plus renewed22 =50 actual sorties, retaining original failures and sampling boundaries",
+  "prior28": {
+    "file": "docs/qa/artifacts/r100-i13/overall-execution-receipt.json",
+    "sha256": "1d727cfcfd2b9f6689c946199efb1982b9c95efa1019ab0d7951df9bc16b8578",
+    "actual": 28
+  },
+  "renewedActual": 22,
+  "cumulativeActual": 50,
+  "renewedUniqueRunIds": 22,
+  "renewedGrades": {
+    "low": 16,
+    "medium": 2,
+    "severe": 4
+  },
+  "renewedPlannedGradesForExecutedTrips": {
+    "low": 15,
+    "severe": 5,
+    "medium": 2
+  },
+  "renewedOutcomes": {
+    "extract": 22
+  },
+  "renewedTechnicalFailures": 0,
+  "replacements": 0,
+  "resourceGrants": 0,
+  "workspaceProductionFilesMatched": 1397,
+  "ancestralOriginalArtifactGuard": "root/continuity.json covers old616 unchanged files",
+  "serverLifecycle": {
+    "owned3033": "Frozen1397 source remains alive awaiting root followup decision; all50 actual contexts are closed",
+    "owned3034": "npmdev smoke ready107ms HTTP200 and explicitly stopped",
+    "oldOwned3031and3032": "Stopped in original28 receipt; not restarted"
+  },
+  "batches": [
+    {
+      "directory": "docs/qa/artifacts/r100-i13-continuation",
+      "planSha256": "a0a5f4fbfe1cefd6a3acb3116d8d11a0e41b966f17d8be2b7c49d0667c36b72c",
+      "executionSha256": "26bb1dc19171d9a6f6c6113012fdbc4aad4a1c8dd00663ddc9c82f6e5839f10d",
+      "completed": 14,
+      "plannedMax": 14,
+      "status": "completed",
+      "cases": [
+        {
+          "id": "a-new-directions",
+          "report": "docs/qa/artifacts/r100-i13-continuation/a-new-directions/report.json",
+          "sha256": "925c9dc3ef7c0a4687e4a0d64e34ca487814afeb844d5e4e1911c1e18cfaa335",
+          "status": "completed",
+          "exitCode": 0,
+          "planned": 4,
+          "actual": 4,
+          "plannedStop": null,
+          "attempts": [
+            {
+              "runId": "c494ba40-ca59-4eec-9fa4-2feddf194306",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-pallid-membrane",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "97fc69a8-59e5-4e6f-a683-b4550f685bd7",
+              "plannedGrade": "severe",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-knotted-run",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "215f9d02-eca3-4427-b56a-d53a37d27e96",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-shell-grit",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "90bab9f2-7b2f-486a-8589-70dade82d77a",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-pitch-forks",
+              "controlledWorld": null,
+              "noStateInjection": true
+            }
+          ]
+        },
+        {
+          "id": "b-service-recovery",
+          "report": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/report.json",
+          "sha256": "5cd9f98647ace3eb7d9179cbaef243800dd606a7b9dbb0558015c5ca88dd5a27",
+          "status": "completed",
+          "exitCode": 0,
+          "planned": 4,
+          "actual": 4,
+          "plannedStop": null,
+          "attempts": [
+            {
+              "runId": "75e81d29-94d4-4687-a576-e6b0c6cbf804",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-braided-seam",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "a04cc983-c625-4ce5-945a-f3d98f882620",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-pressed-rim",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "a3e64a5a-02a9-4802-82be-eee9ff685897",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-hollow-wreckage",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "5509f6c5-360d-4e8e-92b0-556f94ba26ce",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-bleached-court",
+              "controlledWorld": null,
+              "noStateInjection": true
+            }
+          ]
+        },
+        {
+          "id": "entry-low",
+          "report": "docs/qa/artifacts/r100-i13-continuation/entry-low/report.json",
+          "sha256": "0594c180d10eaa975776df71a4feadbe4cf9eeaefaecbea6c9ea81d2a61ca2e0",
+          "status": "completed",
+          "exitCode": 0,
+          "planned": 2,
+          "actual": 2,
+          "plannedStop": null,
+          "attempts": [
+            {
+              "runId": "ae2d5ab8-b86c-4fea-a34b-47cf472b1a13",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-ash-strata",
+              "controlledWorld": "ash-strata",
+              "noStateInjection": false
+            },
+            {
+              "runId": "0252cf4a-72d2-4fb4-8d9c-2bdb6c6e22e9",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-ochre-folds",
+              "controlledWorld": null,
+              "noStateInjection": true
+            }
+          ]
+        },
+        {
+          "id": "entry-medium",
+          "report": "docs/qa/artifacts/r100-i13-continuation/entry-medium/report.json",
+          "sha256": "c65b93ab2ae17d0c4e2e4c90fbbd9ec9572c35bf395ace60602a2ec6e21fcced",
+          "status": "completed",
+          "exitCode": 0,
+          "planned": 2,
+          "actual": 2,
+          "plannedStop": null,
+          "attempts": [
+            {
+              "runId": "9acde61f-8055-43d2-896d-776bbe569bda",
+              "plannedGrade": "medium",
+              "actualGrade": "medium",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-ash-strata",
+              "controlledWorld": "ash-strata",
+              "noStateInjection": false
+            },
+            {
+              "runId": "997c7878-1acf-4dfc-9a58-078d303cdfc5",
+              "plannedGrade": "medium",
+              "actualGrade": "medium",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-marrow-break",
+              "controlledWorld": null,
+              "noStateInjection": true
+            }
+          ]
+        },
+        {
+          "id": "entry-severe",
+          "report": "docs/qa/artifacts/r100-i13-continuation/entry-severe/report.json",
+          "sha256": "974b480885dc49af239eb289fdd4dd193af53a830c68a4e335762096f7c9ad5c",
+          "status": "completed",
+          "exitCode": 0,
+          "planned": 2,
+          "actual": 2,
+          "plannedStop": null,
+          "attempts": [
+            {
+              "runId": "f5aed1df-7691-4c3f-8a0a-6124cbca88d9",
+              "plannedGrade": "severe",
+              "actualGrade": "severe",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-ash-strata",
+              "controlledWorld": "ash-strata",
+              "noStateInjection": false
+            },
+            {
+              "runId": "864a6773-2287-465e-8308-16102212b5ff",
+              "plannedGrade": "severe",
+              "actualGrade": "severe",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-tendon-shelves",
+              "controlledWorld": null,
+              "noStateInjection": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "docs/qa/artifacts/r100-i13-continuation/functional-selection",
+      "planSha256": "3534d90f1b905b83fd8b50dd051ed11fa21644090d2d86b98d6add0090be6509",
+      "executionSha256": "4d0b3e9b5baf40def07d38fdd7b50eec9a851bb44718c676f38f39efc8da9f85",
+      "completed": 3,
+      "plannedMax": 3,
+      "status": "completed",
+      "cases": [
+        {
+          "id": "a-qualified-functional",
+          "report": "docs/qa/artifacts/r100-i13-continuation/functional-selection/a-qualified-functional/report.json",
+          "sha256": "1a601fd019009754784dd115353a2c6101736d538cca500c7cb08e545ea3dd5f",
+          "status": "completed",
+          "exitCode": 0,
+          "planned": 3,
+          "actual": 3,
+          "plannedStop": null,
+          "attempts": [
+            {
+              "runId": "cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3",
+              "plannedGrade": "severe",
+              "actualGrade": "severe",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-pale-sail",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "f6cdd44f-ef72-4bcf-871c-139f65e00495",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-shell-threads",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-fibre-choke",
+              "controlledWorld": null,
+              "noStateInjection": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery",
+      "planSha256": "a58b0720429b8f39ef556ad18cf29327c32db6ef78ea136251685ae87e9c6637",
+      "executionSha256": "592b249315749ac0f449206b2fe786290083b7ec7de7d4d2c6f8d96de8857ea4",
+      "completed": 3,
+      "plannedMax": 4,
+      "status": "completed",
+      "cases": [
+        {
+          "id": "b-bounded-functional",
+          "report": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/b-bounded-functional/report.json",
+          "sha256": "bc71e06616604df24be1e565ac50f4c69e9de4ea9fc01497ce539c517857f5b9",
+          "status": "completed",
+          "exitCode": 0,
+          "planned": 4,
+          "actual": 3,
+          "plannedStop": {
+            "ordinal": 3,
+            "reason": "Actual fixed service baseline restored; boundedB ends immediately",
+            "modules": [
+              {
+                "id": "CORE",
+                "type": "CORE",
+                "hp": 53,
+                "maxHp": 130
+              },
+              {
+                "id": "STORAGE",
+                "type": "STORAGE",
+                "hp": 102,
+                "maxHp": 130
+              },
+              {
+                "id": "PURIFIER",
+                "type": "PURIFIER",
+                "hp": 52,
+                "maxHp": 130
+              }
+            ]
+          },
+          "attempts": [
+            {
+              "runId": "e1cfa446-89ba-472b-bdda-c24996e15d3f",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-ruptured-film",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "d6483f96-1602-4219-970a-11e981c7939d",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-flake-thicket",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "4cb6853b-f8a2-42eb-8f36-a7d5cd537075",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-stepped-bowl",
+              "controlledWorld": null,
+              "noStateInjection": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window",
+      "planSha256": "7fac3aa044f5123b2673fd5c4ad06d942b2781da5308b25a9a5ea4248fe7333a",
+      "executionSha256": "cf4da342bd9071b424afc8347dac705c6d756447d875f6b1f1499f871ad31fe6",
+      "completed": 2,
+      "plannedMax": 3,
+      "status": "completed",
+      "cases": [
+        {
+          "id": "a-pursuit-control",
+          "report": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/report.json",
+          "sha256": "8e87dd276b4f267ea570cbb1a14b4c9215013a1e5f5d3653b4f40d3e9acfaa01",
+          "status": "completed",
+          "exitCode": 0,
+          "planned": 3,
+          "actual": 2,
+          "plannedStop": {
+            "ordinal": 2,
+            "reason": "After an actual low trip service and ordinary two-function preparation restored; severe4/3 qualification remains distinct"
+          },
+          "attempts": [
+            {
+              "runId": "024df695-2804-475d-a3d1-a7d29b6faa6f",
+              "plannedGrade": "severe",
+              "actualGrade": "severe",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-fibre-silt",
+              "controlledWorld": null,
+              "noStateInjection": true
+            },
+            {
+              "runId": "2c2f1723-a1b1-40d9-914e-82a48640e411",
+              "plannedGrade": "low",
+              "actualGrade": "low",
+              "outcome": "extract",
+              "status": "completed-real-input",
+              "world": "r100-ivory-basin",
+              "controlledWorld": null,
+              "noStateInjection": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Finite actual economic and tool evidence; ancestry capital and replenishment are not erased by cash gains.",
+    "Both new natural severe trips had0deep searches; no natural-severe deep-value gate claimed.",
+    "First pursuit severe paid the actual nearest other target; refusal to grant wrong-target permission is retained.",
+    "B restoration used8ancestral dash charges; A latest ordinary readiness uses ancestral replacements while fresh watch1/boots0 remain explicit."
+  ]
+}

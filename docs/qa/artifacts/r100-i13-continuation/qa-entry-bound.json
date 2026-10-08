@@ -1,0 +1,359 @@
+{
+  "recordedDate": "2026-10-08",
+  "status": "source-model-bound-awaiting-real-input",
+  "tool": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/qa-entry-bound.mjs",
+    "sha256": "a76621c9197acd7c29ac6514dc5d7d276ed773953ffb548f834cfc7e29616b8d"
+  },
+  "sourceState": {
+    "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/i13/6-after-preparation.save.json",
+    "sha256": "412073388e9972d4b34f4f0c00419c83f77fe5387cd7ef1b1fd5937055d3c7a1"
+  },
+  "sourceReport": {
+    "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json",
+    "sha256": "a2ba48a20848a61aea1498b46d167441032609aa722d891239c3c3c8270a0ca0"
+  },
+  "sources": [
+    {
+      "path": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    {
+      "path": "src/systems/defense-engine.ts",
+      "sha256": "31006b129434b02e9ff6db85c643825be432af99140063c9cca6b76b4872c7de"
+    },
+    {
+      "path": "src/systems/impact-system.ts",
+      "sha256": "1f9ae2b615388fefea2df478ec19d5a0f9ab0fa77ff49c74fc3595fc1b4faa29"
+    },
+    {
+      "path": "src/systems/contaminant-catalog.ts",
+      "sha256": "9ed208132afd99cc1e17eb8b9bc10a9bf1cbd59377f111f1e6776b0694e27a4f"
+    },
+    {
+      "path": "src/systems/kindling-yield.ts",
+      "sha256": "2213e7ee61b9954820a772835e10016bd583ff958262dc0fd25477fd0c3ade29"
+    },
+    {
+      "path": "src/systems/contaminant-system.ts",
+      "sha256": "d0b42b355052401b60c0ed954a55bb5d6cfc8b5bcaaa2a7f47c423ab3ca3f23c"
+    },
+    {
+      "path": "data/contaminant-offerings.csv",
+      "sha256": "fd2a21cf3f0f8c1301c339c3afa49990f3ba433d94d7c941c7e8113ba31ad821"
+    }
+  ],
+  "validationHistory": [
+    "Initial pure-model run stopped before writing output: strict floating-point equality compared 12.000000000000002 with 12. Replaced only that numerical sanity assertion with 1e-10 tolerance; no game state, formula, or browser action changed."
+  ],
+  "fixedServiceTarget": {
+    "CORE": 51,
+    "STORAGE": 100,
+    "PURIFIER": 51
+  },
+  "originalCapitalTarget": {
+    "CORE": 51,
+    "STORAGE": 102,
+    "PURIFIER": 51
+  },
+  "repairCreditBefore": 0,
+  "rawDamage": {
+    "CORE": 59,
+    "STORAGE": 16,
+    "PURIFIER": 15
+  },
+  "offeringItems": [
+    {
+      "id": "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+      "kind": "contaminant",
+      "offering": {
+        "reduction": 0.35,
+        "chargeMultiplier": 1,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%"
+      }
+    },
+    {
+      "id": "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+      "kind": "contaminant",
+      "offering": {
+        "reduction": 0.35,
+        "chargeMultiplier": 1,
+        "summary": "供奉期间冲击伤害减少35%",
+        "description": "供奉期间冲击伤害减少35%"
+      }
+    },
+    {
+      "id": "WPN_e4fe8656-48b4-4cd7-bd92-40916a05986b",
+      "kind": "weapon",
+      "offering": null
+    },
+    {
+      "id": "WPN_438813bf-f55d-40b5-8861-26093285a906",
+      "kind": "weapon",
+      "offering": null
+    }
+  ],
+  "defenseResult": {
+    "finalDamagePerModule": {
+      "CORE": 25,
+      "STORAGE": 7,
+      "PURIFIER": 6
+    },
+    "sideEffects": [],
+    "kindlingGain": 0,
+    "stabilityChange": 0,
+    "scatterRedistributed": false,
+    "stitchEqualization": {},
+    "forecastCorrect": true,
+    "upgradeDiscount": 0,
+    "healOut": {},
+    "bonusCharges": {},
+    "toolUseGrants": 0,
+    "moduleSwapTriggered": false,
+    "slotDisclosures": [
+      {
+        "contaminantId": "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+        "type": "catalog",
+        "damageReductionPct": 0.35,
+        "damageBlocked": 31,
+        "kindlingGain": 0,
+        "stabilityChange": 0,
+        "upgradeDiscount": 0,
+        "sideEffects": [],
+        "toolUseGrant": false,
+        "moduleSwapTriggered": false,
+        "expandNullified": false,
+        "scatterRedistributed": false
+      },
+      {
+        "contaminantId": "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+        "type": "catalog",
+        "damageReductionPct": 0.35,
+        "damageBlocked": 21,
+        "kindlingGain": 0,
+        "stabilityChange": 0,
+        "upgradeDiscount": 0,
+        "sideEffects": [],
+        "toolUseGrant": false,
+        "moduleSwapTriggered": false,
+        "expandNullified": false,
+        "scatterRedistributed": false
+      }
+    ],
+    "repairBonusHp": 0
+  },
+  "projectedReturnedModules": [
+    {
+      "id": "CORE",
+      "type": "CORE",
+      "hp": 28,
+      "maxHp": 130
+    },
+    {
+      "id": "STORAGE",
+      "type": "STORAGE",
+      "hp": 94,
+      "maxHp": 130
+    },
+    {
+      "id": "PURIFIER",
+      "type": "PURIFIER",
+      "hp": 48,
+      "maxHp": 130
+    }
+  ],
+  "serviceRepair": [
+    {
+      "id": "CORE",
+      "target": 51,
+      "hp": 28,
+      "kindling": 6
+    },
+    {
+      "id": "STORAGE",
+      "target": 100,
+      "hp": 94,
+      "kindling": 2
+    },
+    {
+      "id": "PURIFIER",
+      "target": 51,
+      "hp": 48,
+      "kindling": 1
+    }
+  ],
+  "capitalRepair": [
+    {
+      "id": "CORE",
+      "target": 51,
+      "hp": 28,
+      "kindling": 6
+    },
+    {
+      "id": "STORAGE",
+      "target": 102,
+      "hp": 94,
+      "kindling": 2
+    },
+    {
+      "id": "PURIFIER",
+      "target": 51,
+      "hp": 48,
+      "kindling": 1
+    }
+  ],
+  "cases": [
+    {
+      "grade": "low",
+      "oldGeometrySource": {
+        "path": "docs/qa/artifacts/r100-i13/paired-ash-strata-low/report.json",
+        "sha256": "e07d91b6f7363e32ac864ed3d6934cca2e51ed266db902dbf6853b49a7e30278"
+      },
+      "world": "ash-strata",
+      "seed": 20261005,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "positionRadius": 320,
+      "searchCap": 2,
+      "nodesInsideRadius": [
+        {
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "base": 1,
+          "pos": {
+            "x": 452,
+            "y": 388
+          },
+          "radius": 192.16659439142902,
+          "possibleKindling": 6
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "base": 0,
+          "pos": {
+            "x": 404,
+            "y": 356
+          },
+          "radius": 145.98630072715724,
+          "possibleKindling": 0
+        }
+      ],
+      "fieldIncomeUpper": 6,
+      "firstReturnServiceRepair": 9,
+      "firstReturnMaintenanceUpper": -3,
+      "newBrowserGeometryAndActualInputsStillRequired": true
+    },
+    {
+      "grade": "medium",
+      "oldGeometrySource": {
+        "path": "docs/qa/artifacts/r100-i13/paired-ash-strata-medium/report.json",
+        "sha256": "46e21c291deb22ada540d0dc188599f11f60c8f6c42805b816161f92bee3efbb"
+      },
+      "world": "ash-strata",
+      "seed": 20261005,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "positionRadius": 320,
+      "searchCap": 2,
+      "nodesInsideRadius": [
+        {
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "base": 1,
+          "pos": {
+            "x": 452,
+            "y": 388
+          },
+          "radius": 192.16659439142902,
+          "possibleKindling": 6
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "base": 0,
+          "pos": {
+            "x": 388,
+            "y": 372
+          },
+          "radius": 128.2497563350512,
+          "possibleKindling": 0
+        }
+      ],
+      "fieldIncomeUpper": 6,
+      "firstReturnServiceRepair": 9,
+      "firstReturnMaintenanceUpper": -3,
+      "newBrowserGeometryAndActualInputsStillRequired": true
+    },
+    {
+      "grade": "severe",
+      "oldGeometrySource": {
+        "path": "docs/qa/artifacts/r100-i13/paired-ash-strata-severe/report.json",
+        "sha256": "0d7b5238ba49a24d91b17e39069de533f3fa2f2b034f7f626024e1bcd24f0652"
+      },
+      "world": "ash-strata",
+      "seed": 20261005,
+      "spawn": {
+        "x": 260,
+        "y": 380
+      },
+      "positionRadius": 320,
+      "searchCap": 2,
+      "nodesInsideRadius": [
+        {
+          "id": "r100-kindling-safe-1",
+          "kind": "kindling",
+          "tier": "safe",
+          "base": 1,
+          "pos": {
+            "x": 484,
+            "y": 356
+          },
+          "radius": 225.28204544525957,
+          "possibleKindling": 6
+        },
+        {
+          "id": "r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "tier": "safe",
+          "base": 0,
+          "pos": {
+            "x": 516,
+            "y": 404
+          },
+          "radius": 257.12253887981115,
+          "possibleKindling": 0
+        }
+      ],
+      "fieldIncomeUpper": 6,
+      "firstReturnServiceRepair": 9,
+      "firstReturnMaintenanceUpper": -3,
+      "newBrowserGeometryAndActualInputsStillRequired": true
+    }
+  ],
+  "conditionalRepeatedEntryBound": {
+    "finalCrestRawDamage": 90,
+    "maxNewContaminantsPerSelectedEntryReturn": 1,
+    "maxNewOfferingReduction": 0.45,
+    "comment": "At final crest every offering reaches its 3-charge maturity threshold on one impact. Newly obtained items cannot keep defending indefinitely. Weapons do not reduce impact damage.",
+    "conservativeSteadyDamageLowerPerReturn": 48.00000000000001,
+    "conservativeSteadyRepairLowerPerReturn": 12.000000000000002,
+    "incomeUpperPerReturn": 6,
+    "restrictions": "Conditional on repeatedly obtaining at most the selected radius set: one new catalog contaminant plus at most an added weapon; no external stock, no persistent free repair, fixed service/capital, final crest. Multiplicative defense has diminishing savings, so batching finite new offerings cannot increase total saved HP beyond 40.5 per acquired 45% item before rounding. Finite initial cash/HP/old offerings cannot be injected repeatedly. Does not cover other worlds/radii, newborn tide phases or every player strategy."
+  },
+  "limitations": [
+    "Pure source calculation and reuse of old identical geometry, not new actual returns. New evidence must confirm the same radius set, source state, non-skipped impact, and actual repairs.",
+    "No hidden node kind/tier/location may be passed into the gameplay selector; these are post-registration audit bounds only.",
+    "Matured old holdings and one-time earned repair credits are finite assets, never recurring free income.",
+    "This bound excludes a same-service positive-cash loop for this specified repeated entry budget at final crest; it does not claim a theorem over 108 worlds or every route."
+  ]
+}

@@ -1,0 +1,1118 @@
+{
+  "recordedAt": "2026-10-08T10:16:13.918Z",
+  "status": "exact-B11-debt-preserving-recovery-source-verified",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-b-retry-preflight.mjs",
+    "sha256": "4ce9f2bede8ba2bc358f4a4795c5f2600c48b2ff3acf46f242e0a3d2b532d4d9"
+  },
+  "sources": [
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-bridge-fourteen-final.json",
+      "sha256": "0c6f536719506a015802a1272777b5b26db579328cb24c22d4fdedb7abe9e643"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-fourteen-accounting-final.json",
+      "sha256": "f5b432ec9763bc7ac518a38efd76eaed4d9831f5008b32687fae7c626619472c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/report.json",
+      "sha256": "5cd9f98647ace3eb7d9179cbaef243800dd606a7b9dbb0558015c5ca88dd5a27"
+    }
+  ],
+  "sourceTerminal": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/i13/4-after-preparation.save.json",
+    "sha256": "57c31bba1f4b2e8bba6d08981d3f52d9a89d66391853e164c4a8c9b932bd878b"
+  },
+  "sourceStorage": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/i13/browser-storage.json",
+    "sha256": "93ff6c64d488edfc6e22a2fa0e684587a2a379da824f642837e455e5e154cff9"
+  },
+  "cycle": 53,
+  "reserve": 0,
+  "modules": [
+    {
+      "id": "CORE",
+      "type": "CORE",
+      "hp": 31,
+      "maxHp": 130
+    },
+    {
+      "id": "STORAGE",
+      "type": "STORAGE",
+      "hp": 24,
+      "maxHp": 130
+    },
+    {
+      "id": "PURIFIER",
+      "type": "PURIFIER",
+      "hp": 52,
+      "maxHp": 130
+    }
+  ],
+  "originalService": {
+    "CORE": 51,
+    "STORAGE": 100,
+    "PURIFIER": 51
+  },
+  "originalCapital": {
+    "CORE": 51,
+    "STORAGE": 102,
+    "PURIFIER": 51
+  },
+  "serviceDebt": 24,
+  "capitalDebt": 25,
+  "publicReadyTools": [
+    {
+      "id": "CAT_cacae3b1-506f-4488-8564-7892744fe206_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "cacae3b1-506f-4488-8564-7892744fe206"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": 1,
+      "name": "铜框单镜",
+      "location": "stash",
+      "uses": 2,
+      "weight": 20,
+      "slot": "passive",
+      "inert": false,
+      "family": "sight",
+      "power": 0,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "64720c8c-43aa-4fff-b0a5-76f829e10eea"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "停摆怀表",
+      "location": "stash",
+      "uses": 6,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "solidify",
+      "power": 4000,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "64720c8c-43aa-4fff-b0a5-76f829e10eea"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "回卷尺",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "dash",
+      "power": 72,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_bc200fa5-a2a4-46f5-9a25-b80ccfe62d34_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "bc200fa5-a2a4-46f5-9a25-b80ccfe62d34"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": 1,
+      "name": "铅字印章",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "slow_zone",
+      "power": 6000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_c0340f2e-c530-4d11-87a3-a4133c4e064f_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "c0340f2e-c530-4d11-87a3-a4133c4e064f"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "白膜鱼眼",
+      "location": "stash",
+      "uses": 2,
+      "weight": 20,
+      "slot": "passive",
+      "inert": false,
+      "family": "sight",
+      "power": 0,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_3838f4a1-9198-4192-a21f-f82922fbd8bb_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "3838f4a1-9198-4192-a21f-f82922fbd8bb"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": 1,
+      "name": "皱底挎包",
+      "location": "stash",
+      "uses": 4,
+      "weight": 20,
+      "slot": "passive",
+      "inert": false,
+      "family": "capacity",
+      "power": 0,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "琥珀甲虫",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "solidify",
+      "power": 2500,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_caccc9eb-c358-4422-b6a3-bf244219ff76_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 1,
+      "maturedOrdinal": 2,
+      "name": "木芯线轴",
+      "location": "stash",
+      "uses": 4,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "tripwire",
+      "power": 10000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "40c0b289-37f7-4905-80e5-a4d838360b0c"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "铅字印章",
+      "location": "stash",
+      "uses": 4,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "slow_zone",
+      "power": 6000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 1,
+      "maturedOrdinal": 2,
+      "name": "缺齿八音盒",
+      "location": "stash",
+      "uses": 6,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "sound_lure",
+      "power": 8000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_f60af7ae-a85d-4ebf-9258-b502459d8e3e_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "蜡封纽扣",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "solidify",
+      "power": 1000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_eb0b3d96-4344-4550-87e9-ba0b95e7eb73_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 1,
+      "maturedOrdinal": 2,
+      "name": "木芯线轴",
+      "location": "stash",
+      "uses": 4,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "tripwire",
+      "power": 10000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_eb0b3d96-4344-4550-87e9-ba0b95e7eb73_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 1,
+      "maturedOrdinal": 2,
+      "name": "灰釉齿",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "suppress",
+      "power": 1000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_bf5f3038-8316-49ab-be7a-5311d560517c_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "bf5f3038-8316-49ab-be7a-5311d560517c"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 2,
+      "maturedOrdinal": 3,
+      "name": "弯头钩针",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "tripwire",
+      "power": 10000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_7e932b8d-fc82-4e89-8264-62abfa8d1aa1_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "7e932b8d-fc82-4e89-8264-62abfa8d1aa1"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "陶衣药丸",
+      "location": "stash",
+      "uses": 4,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "resistance",
+      "power": 30000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 2,
+      "maturedOrdinal": 3,
+      "name": "凹心砚台",
+      "location": "stash",
+      "uses": 4,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "slow_zone",
+      "power": 6000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "回卷尺",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "dash",
+      "power": 72,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "87a1ee48-277c-4e0c-9d52-86eae5bc0c8d"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 2,
+      "maturedOrdinal": 3,
+      "name": "灰毡手套",
+      "location": "stash",
+      "uses": 6,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "silence",
+      "power": 5000,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_2e038080-3a09-4524-99db-dc30caf23768_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "2e038080-3a09-4524-99db-dc30caf23768"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 2,
+      "maturedOrdinal": 3,
+      "name": "陶壁炭盒",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "suppress",
+      "power": 5000,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_0ff5d0cc-4723-4460-a3ba-bc62b895a03d_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "0ff5d0cc-4723-4460-a3ba-bc62b895a03d"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "冷灰烟斗",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "suppress",
+      "power": 3000,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_0ff5d0cc-4723-4460-a3ba-bc62b895a03d_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "0ff5d0cc-4723-4460-a3ba-bc62b895a03d"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "凹心砚台",
+      "location": "stash",
+      "uses": 4,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "slow_zone",
+      "power": 6000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "空节苇管",
+      "location": "stash",
+      "uses": 6,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "sound_lure",
+      "power": 2000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "弯头钩针",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "tripwire",
+      "power": 10000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "空眼铜环",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "survey",
+      "power": 64,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "封底沙漏",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "solidify",
+      "power": 5500,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "55844805-dfdb-4c9a-9cda-516f3f1c9338"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "焦边围巾",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "silence",
+      "power": 8000,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_cdad99a1-204b-47e7-95d1-8ef718ad607d_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "cdad99a1-204b-47e7-95d1-8ef718ad607d"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "白膜鱼眼",
+      "location": "stash",
+      "uses": 2,
+      "weight": 20,
+      "slot": "passive",
+      "inert": false,
+      "family": "sight",
+      "power": 0,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_a3b4af24-23c3-4575-bbc6-a691120e86c6_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "a3b4af24-23c3-4575-bbc6-a691120e86c6"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "凹心砚台",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "slow_zone",
+      "power": 6000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_7234d0a8-a6b8-491d-818e-5dc10c35d3e8_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "7234d0a8-a6b8-491d-818e-5dc10c35d3e8"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "骨扣面罩",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "resistance",
+      "power": 30000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_7234d0a8-a6b8-491d-818e-5dc10c35d3e8_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "7234d0a8-a6b8-491d-818e-5dc10c35d3e8"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "骨扣面罩",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "resistance",
+      "power": 30000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_a2c6f9f2-f5c3-496d-b8d3-af4de048f12f_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "a2c6f9f2-f5c3-496d-b8d3-af4de048f12f"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": 1,
+      "name": "停摆怀表",
+      "location": "stash",
+      "uses": 6,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "solidify",
+      "power": 4000,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_a6f906e9-f260-49bf-a91d-ab3e0169f07b_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "a6f906e9-f260-49bf-a91d-ab3e0169f07b"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "银背袖镜",
+      "location": "stash",
+      "uses": 4,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "image_lure",
+      "power": 5000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "f4a259d9-7835-4ec5-92ff-7305ff97aa42"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": 3,
+      "maturedOrdinal": 4,
+      "name": "灰毡手套",
+      "location": "stash",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "silence",
+      "power": 5000,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "93e4d1e1-1ef4-4140-b7e9-148143ff7a7c"
+      },
+      "lineage": "new-earlier-this-I13-branch",
+      "acquiredOrdinal": 1,
+      "offeredOrdinal": 3,
+      "maturedOrdinal": 4,
+      "name": "灰毡手套",
+      "location": "carried",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "silence",
+      "power": 5000,
+      "qualified": true,
+      "available": true
+    },
+    {
+      "id": "CAT_0912b573-b688-4d37-878d-09a471c891d9_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "0912b573-b688-4d37-878d-09a471c891d9"
+      },
+      "lineage": "new-earlier-this-I13-branch",
+      "acquiredOrdinal": 7,
+      "offeredOrdinal": 7,
+      "maturedOrdinal": 8,
+      "name": "盐封药瓶",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "resistance",
+      "power": 30000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_75e81d29-94d4-4687-a576-e6b0c6cbf804_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "75e81d29-94d4-4687-a576-e6b0c6cbf804"
+      },
+      "lineage": "new-this-continuation",
+      "acquiredOrdinal": 8,
+      "offeredOrdinal": 8,
+      "maturedOrdinal": 9,
+      "name": "陶衣药丸",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "resistance",
+      "power": 30000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_75e81d29-94d4-4687-a576-e6b0c6cbf804_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "75e81d29-94d4-4687-a576-e6b0c6cbf804"
+      },
+      "lineage": "new-this-continuation",
+      "acquiredOrdinal": 8,
+      "offeredOrdinal": 8,
+      "maturedOrdinal": 9,
+      "name": "银背袖镜",
+      "location": "stash",
+      "uses": 6,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "image_lure",
+      "power": 5000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_a04cc983-c625-4ce5-945a-f3d98f882620_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "a04cc983-c625-4ce5-945a-f3d98f882620"
+      },
+      "lineage": "new-this-continuation",
+      "acquiredOrdinal": 9,
+      "offeredOrdinal": 9,
+      "maturedOrdinal": 10,
+      "name": "盐封药瓶",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "resistance",
+      "power": 30000,
+      "qualified": false,
+      "available": true
+    },
+    {
+      "id": "CAT_a3e64a5a-02a9-4802-82be-eee9ff685897_r100-contaminant-safe-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-safe-1",
+        "runId": "a3e64a5a-02a9-4802-82be-eee9ff685897"
+      },
+      "lineage": "new-this-continuation",
+      "acquiredOrdinal": 10,
+      "offeredOrdinal": 10,
+      "maturedOrdinal": 11,
+      "name": "折页票夹",
+      "location": "stash",
+      "uses": 2,
+      "weight": 10,
+      "slot": "passive",
+      "inert": false,
+      "family": "capacity",
+      "power": 0,
+      "qualified": false,
+      "available": true
+    }
+  ],
+  "eligible": {
+    "silence": [
+      {
+        "id": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "r100-contaminant-contested-1",
+          "runId": "93e4d1e1-1ef4-4140-b7e9-148143ff7a7c"
+        },
+        "lineage": "new-earlier-this-I13-branch",
+        "acquiredOrdinal": 1,
+        "offeredOrdinal": 3,
+        "maturedOrdinal": 4,
+        "name": "灰毡手套",
+        "location": "carried",
+        "uses": 5,
+        "weight": 20,
+        "slot": "active",
+        "inert": false,
+        "family": "silence",
+        "power": 5000,
+        "qualified": true,
+        "available": true
+      },
+      {
+        "id": "CAT_87a1ee48-277c-4e0c-9d52-86eae5bc0c8d_r100-contaminant-contested-1",
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "r100-contaminant-contested-1",
+          "runId": "87a1ee48-277c-4e0c-9d52-86eae5bc0c8d"
+        },
+        "lineage": "earned-ancestor-before-I13",
+        "acquiredOrdinal": null,
+        "offeredOrdinal": 2,
+        "maturedOrdinal": 3,
+        "name": "灰毡手套",
+        "location": "stash",
+        "uses": 6,
+        "weight": 20,
+        "slot": "active",
+        "inert": false,
+        "family": "silence",
+        "power": 5000,
+        "qualified": true,
+        "available": true
+      },
+      {
+        "id": "CAT_55844805-dfdb-4c9a-9cda-516f3f1c9338_r100-contaminant-safe-1",
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "r100-contaminant-safe-1",
+          "runId": "55844805-dfdb-4c9a-9cda-516f3f1c9338"
+        },
+        "lineage": "earned-ancestor-before-I13",
+        "acquiredOrdinal": null,
+        "offeredOrdinal": null,
+        "maturedOrdinal": null,
+        "name": "焦边围巾",
+        "location": "stash",
+        "uses": 5,
+        "weight": 20,
+        "slot": "active",
+        "inert": false,
+        "family": "silence",
+        "power": 8000,
+        "qualified": true,
+        "available": true
+      },
+      {
+        "id": "CAT_f4a259d9-7835-4ec5-92ff-7305ff97aa42_r100-contaminant-contested-1",
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "r100-contaminant-contested-1",
+          "runId": "f4a259d9-7835-4ec5-92ff-7305ff97aa42"
+        },
+        "lineage": "earned-ancestor-before-I13",
+        "acquiredOrdinal": null,
+        "offeredOrdinal": 3,
+        "maturedOrdinal": 4,
+        "name": "灰毡手套",
+        "location": "stash",
+        "uses": 5,
+        "weight": 20,
+        "slot": "active",
+        "inert": false,
+        "family": "silence",
+        "power": 5000,
+        "qualified": true,
+        "available": true
+      }
+    ],
+    "dash": [
+      {
+        "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "r100-contaminant-contested-1",
+          "runId": "64720c8c-43aa-4fff-b0a5-76f829e10eea"
+        },
+        "lineage": "earned-ancestor-before-I13",
+        "acquiredOrdinal": null,
+        "offeredOrdinal": null,
+        "maturedOrdinal": null,
+        "name": "回卷尺",
+        "location": "stash",
+        "uses": 3,
+        "weight": 20,
+        "slot": "active",
+        "inert": false,
+        "family": "dash",
+        "power": 72,
+        "qualified": true,
+        "available": true
+      },
+      {
+        "id": "CAT_4fb2c13b-4d3a-46df-8018-7ddc12b3a855_r100-contaminant-contested-1",
+        "source": {
+          "fragmentId": "frag-outdoor",
+          "nodeId": "r100-contaminant-contested-1",
+          "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855"
+        },
+        "lineage": "earned-ancestor-before-I13",
+        "acquiredOrdinal": null,
+        "offeredOrdinal": null,
+        "maturedOrdinal": null,
+        "name": "回卷尺",
+        "location": "stash",
+        "uses": 5,
+        "weight": 20,
+        "slot": "active",
+        "inert": false,
+        "family": "dash",
+        "power": 72,
+        "qualified": true,
+        "available": true
+      }
+    ]
+  },
+  "fifoEligibleSelection": {
+    "silence": {
+      "id": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "93e4d1e1-1ef4-4140-b7e9-148143ff7a7c"
+      },
+      "lineage": "new-earlier-this-I13-branch",
+      "acquiredOrdinal": 1,
+      "offeredOrdinal": 3,
+      "maturedOrdinal": 4,
+      "name": "灰毡手套",
+      "location": "carried",
+      "uses": 5,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "silence",
+      "power": 5000,
+      "qualified": true,
+      "available": true
+    },
+    "dash": {
+      "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+      "source": {
+        "fragmentId": "frag-outdoor",
+        "nodeId": "r100-contaminant-contested-1",
+        "runId": "64720c8c-43aa-4fff-b0a5-76f829e10eea"
+      },
+      "lineage": "earned-ancestor-before-I13",
+      "acquiredOrdinal": null,
+      "offeredOrdinal": null,
+      "maturedOrdinal": null,
+      "name": "回卷尺",
+      "location": "stash",
+      "uses": 3,
+      "weight": 20,
+      "slot": "active",
+      "inert": false,
+      "family": "dash",
+      "power": 72,
+      "qualified": true,
+      "available": true
+    }
+  },
+  "powerUnits": {
+    "silence": "milliseconds (>=5000)",
+    "dash": "pixels (>=48)"
+  },
+  "limits": [
+    "D24 remains owed; this admits only the separately authorized at-most4 low debt-recovery attempt, never severe qualification or recovery success.",
+    "Public function/power/single-item2 eligibility precedes actual acquired FIFO. Missing function means empty slot, not a grant or test-blocking prerequisite.",
+    "New glove5 persists, new tape is exhausted and absent. Remaining dash substitutes are ancestor stock, not new replenishment.",
+    "Prior11 attempts, costs and missed grades remain in cumulative B history; no A inventory is transferred."
+  ]
+}

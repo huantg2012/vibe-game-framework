@@ -1,0 +1,54 @@
+{
+  "recordedAt": "2026-10-08T10:06:11.151Z",
+  "status": "freeze-and-observed-state-binding-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-functional-freeze.mjs",
+    "sha256": "b51a4975827962fa8c59ac55563fc42fa9009a07b6565b628fd0e9501e922e5a"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/functional-selection/policy-freeze.json",
+    "sha256": "3534d90f1b905b83fd8b50dd051ed11fa21644090d2d86b98d6add0090be6509"
+  },
+  "executionAtAudit": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/functional-selection/execution.json",
+    "sha256": "11dfc8c5b4bbb3925414c96a475b30d09bdfff93245958b1ae6e79bd291c0541"
+  },
+  "taskSnapshot": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/root/functional-task-preregistration.md",
+    "sha256": "4dfd0af15afd4b22c371b75115042ecb1f4d7ab40fcf69c55b42dc266945ead3"
+  },
+  "initialGuardFailure": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/qa-functional-freeze-initial-failure.json",
+    "sha256": "4546907daf8a5c125157703411b8b2a0fa2914c83336165dfbe6c26b347a2f79"
+  },
+  "taskSnapshotRecovery": "Exact63933-byte prefix preserved by root; SHA equals preregistered task. Current task append remains intact. The additional functional execution rules were preregistered in this separate policy-freeze before startedAt; later task prose is not claimed to predate execution.",
+  "currentTaskMatchesFrozen": false,
+  "reportAtAudit": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/functional-selection/a-qualified-functional/report.json",
+    "sha256": "42708da66c50574128475a4600c3cd2a8039cb640762b49bd4ef683b9eb5a4bf"
+  },
+  "sourceTerminal": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-new-directions/i13/4-after-preparation.save.json",
+    "sha256": "89a8f138a6bc4297ec68b0fb0f32416cf2b903c7b22a5a76910a0b1861acd89a"
+  },
+  "completed": 1,
+  "expected": 3,
+  "reportStatus": "running",
+  "productionFiles": 1397,
+  "dependencies": 8,
+  "immutableSources": 14,
+  "actualAttempts": [
+    {
+      "ordinal": 1,
+      "grade": "severe",
+      "seed": 2322898903,
+      "world": "r100-pale-sail",
+      "runId": "cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3"
+    }
+  ],
+  "limits": [
+    "Only current completed attempts are bound; the four-save economic audit and useful effect review remain independent.",
+    "sourceControllerSha256 names immutable continuation parent, harnessSha256 names this actual functional-selection executor.",
+    "Prior14 and prior28 remain unchanged. Qualification-before-FIFO is a disclosed method correction, not a replacement success sample."
+  ]
+}

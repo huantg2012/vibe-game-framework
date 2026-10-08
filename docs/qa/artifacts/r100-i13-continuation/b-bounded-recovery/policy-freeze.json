@@ -1,0 +1,381 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-08T10:19:35.795Z",
+  "maxAttempts": 4,
+  "maxContexts": 1,
+  "gameUrl": "http://127.0.0.1:3033/",
+  "authorization": "Root explicitly approved B11 true-debt continuation for at most4 low trips with eligible functional preparation plus bounded public-observation target reconsideration and second pure geometry direction. Stop immediately when service51/100/51 is restored; no random extra acquisition runs.",
+  "preflight": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/qa-b-retry-preflight.json",
+    "sha256": "2a7402877c728197a0ee61a6b9642befafff2ef43af2dd4e3b555f012827d90a"
+  },
+  "sourceManifest": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/frozen-source/source-snapshot.json",
+    "sha256": "35b784df631cfe771c81f523b76d9549771682495e6f569becba02bb3e9597f0"
+  },
+  "dependencies": [
+    {
+      "file": "tools/world-study/r100-i13-bounded-journey.mjs",
+      "sha256": "6855b51dd82d9ef9fcb308f0293c893f55dff2e6a6f7856db55167826dcbec10"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-bounded.mjs",
+      "sha256": "1b7913c46c08bf4c4b7874ada17893a42760e74c67a78ac8d22d3769a640f399"
+    },
+    {
+      "file": "tools/world-study/r100-i13-retry-policy.mjs",
+      "sha256": "38e6bd457a2397bb00ca8a73e637b3c6bd471b36a98aeb53d91c996a8456ec33"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    }
+  ],
+  "immutablePriorSources": [
+    {
+      "file": "tools/world-study/r100-i13-continuation-journey.mjs",
+      "sha256": "fcd8989466b6902462dbcf6a309f5d8f703eaef02e9a3374be2f7d056205475f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "file": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-continuation.mjs",
+      "sha256": "16c7906e150c8228deb4ddd39b0e931ab14722f322e4e3fa8de44b0fdd2d1a65"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-journey.mjs",
+      "sha256": "22c34317b9add03c98117ec573383c11a3a350406549bc81dd9fa94d66d82c5f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-encounters.mjs",
+      "sha256": "8efa42af08bfac8cef42010ca312893a26f294a00214ddfab526721bf3dc4db2"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-r2.mjs",
+      "sha256": "4f09752de6e160921fee5f56bc74032d4d3fb9a5229e71b2277cc790997ba7ba"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13/overall-execution-receipt.json",
+      "sha256": "1d727cfcfd2b9f6689c946199efb1982b9c95efa1019ab0d7951df9bc16b8578"
+    },
+    {
+      "file": "tools/world-study/r100-i13-functional-journey.mjs",
+      "sha256": "10f2679b4076dc7f48ebb623cf398b0564eb1611ea2fcc3a7100d71c5dfdfc9d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/policy-freeze.json",
+      "sha256": "a0a5f4fbfe1cefd6a3acb3116d8d11a0e41b966f17d8be2b7c49d0667c36b72c"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/execution.json",
+      "sha256": "26bb1dc19171d9a6f6c6113012fdbc4aad4a1c8dd00663ddc9c82f6e5839f10d"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13-continuation/batch14-execution-receipt.json",
+      "sha256": "1bc1eeb7a362c664bb02e45f3b7462e0cfc2e302b3299d3ad1fcbdc621898629"
+    }
+  ],
+  "taskContract": {
+    "file": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/task-preregistration.md",
+    "sha256": "76f84c796c5ee1f2318ca27e8de4521f910ad5827aabe6637b799e2ce3da9ec4"
+  },
+  "originalTaskAtFreeze": {
+    "file": "docs/tasks/rift-r100-i13.md",
+    "sha256": "76f84c796c5ee1f2318ca27e8de4521f910ad5827aabe6637b799e2ce3da9ec4"
+  },
+  "cases": [
+    {
+      "id": "b-bounded-functional",
+      "sourceBranch": "B",
+      "stopAtService": true,
+      "sourceStorage": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/i13/browser-storage.json",
+      "sourceStorageSha256": "93ff6c64d488edfc6e22a2fa0e684587a2a379da824f642837e455e5e154cff9",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/b-service-recovery/i13/4-after-preparation.save.json",
+        "sha256": "57c31bba1f4b2e8bba6d08981d3f52d9a89d66391853e164c4a8c9b932bd878b"
+      },
+      "input": "docs/qa/artifacts/r100-i13-continuation/b-bounded-recovery/earned-storage.json",
+      "inputSha256": "7e0c9241f0c9e48e5669bd7f1ffc021a922c816ddc56ee193d5be71c554cad20",
+      "steps": [
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-silence-and-dash-fifo",
+            "active": [
+              {
+                "family": "silence",
+                "minimumPower": 5,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 2.5,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-silence-and-dash-fifo",
+            "active": [
+              {
+                "family": "silence",
+                "minimumPower": 5,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 2.5,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-silence-and-dash-fifo",
+            "active": [
+              {
+                "family": "silence",
+                "minimumPower": 5,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 2.5,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-silence-and-dash-fifo",
+            "active": [
+              {
+                "family": "silence",
+                "minimumPower": 5,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 2.5,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences"
+          }
+        }
+      ],
+      "searchLimit": 6,
+      "ancestorRunIds": [
+        "93e4d1e1-1ef4-4140-b7e9-148143ff7a7c",
+        "aa9db733-32b3-4636-a460-330b1a7cf1d2",
+        "a8d9bda4-1820-4f1c-abcf-ac3b7437ed64",
+        "6da99a8e-21f5-49a6-aa9b-f22708d9ce44",
+        "f4a84ff9-0eb3-4777-b6db-4bf96d85d52d",
+        "71b452ce-75ff-4f77-8683-7b32f4679334",
+        "0912b573-b688-4d37-878d-09a471c891d9",
+        "75e81d29-94d4-4687-a576-e6b0c6cbf804",
+        "a04cc983-c625-4ce5-945a-f3d98f882620",
+        "a3e64a5a-02a9-4802-82be-eee9ff685897",
+        "5509f6c5-360d-4e8e-92b0-556f94ba26ce"
+      ],
+      "freshItemIds": [
+        "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+        "CAT_f4a84ff9-0eb3-4777-b6db-4bf96d85d52d_r100-contaminant-contested-1",
+        "CAT_71b452ce-75ff-4f77-8683-7b32f4679334_r100-contaminant-contested-1",
+        "CAT_0912b573-b688-4d37-878d-09a471c891d9_r100-contaminant-safe-1",
+        "CAT_75e81d29-94d4-4687-a576-e6b0c6cbf804_r100-contaminant-safe-1",
+        "CAT_75e81d29-94d4-4687-a576-e6b0c6cbf804_r100-contaminant-contested-1",
+        "CAT_a04cc983-c625-4ce5-945a-f3d98f882620_r100-contaminant-safe-1",
+        "CAT_a3e64a5a-02a9-4802-82be-eee9ff685897_r100-contaminant-safe-1",
+        "CAT_5509f6c5-360d-4e8e-92b0-556f94ba26ce_r100-contaminant-safe-1",
+        "CAT_5509f6c5-360d-4e8e-92b0-556f94ba26ce_r100-contaminant-contested-1"
+      ],
+      "initialReserve": 0,
+      "initialModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 31,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 24,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 52,
+          "maxHp": 130
+        }
+      ],
+      "expectedInitialSelection": {
+        "silence": {
+          "id": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-contested-1",
+            "runId": "93e4d1e1-1ef4-4140-b7e9-148143ff7a7c"
+          },
+          "lineage": "new-earlier-this-I13-branch",
+          "acquiredOrdinal": 1,
+          "offeredOrdinal": 3,
+          "maturedOrdinal": 4,
+          "name": "灰毡手套",
+          "location": "carried",
+          "uses": 5,
+          "weight": 20,
+          "slot": "active",
+          "inert": false,
+          "family": "silence",
+          "power": 5000,
+          "qualified": true,
+          "available": true
+        },
+        "dash": {
+          "id": "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-contested-1",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-contested-1",
+            "runId": "64720c8c-43aa-4fff-b0a5-76f829e10eea"
+          },
+          "lineage": "earned-ancestor-before-I13",
+          "acquiredOrdinal": null,
+          "offeredOrdinal": null,
+          "maturedOrdinal": null,
+          "name": "回卷尺",
+          "location": "stash",
+          "uses": 3,
+          "weight": 20,
+          "slot": "active",
+          "inert": false,
+          "family": "dash",
+          "power": 72,
+          "qualified": true,
+          "available": true
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Combined method correction: eligible public silence>=5seconds/dash>=48px with single-item2uses before actual branch FIFO; unavailable functions remain empty. Ancestor replacements retain their provenance.",
+    "At most2 attempts per normally observed target. Retry requires at least5seconds and movement>=48px or another successful search, plus fresh normal blocker movement>=32px or natural5second memory expiry. No stationary cooldown wait.",
+    "If no explicit enemy originally blocked, move to a new observation point and normally see the target again; original live caution must still permit approach/search.",
+    "A second failed target attempt stays deferred for the trip. Original52px proximity and88px facing threat gates remain.",
+    "At most2 distinct geometry exploration goals; second is full-body reachable,>=128px from actual walked footprint and chosen by least visited256px neighborhood, then shortest body path. No node or enemy inputs.",
+    "At most18 outer decisions. Original hp30/chaos120/return145,25second target approach,42second geometry and6actual pickups always take precedence.",
+    "Normal1 per active slot, observed near-attack emergency expenditure, fixed service repair order, real offering FIFO and growth are unchanged.",
+    "B starts truecash0/modules31,24,52/serviceDebt24; original service51/100/51 restoration stops the batch immediately. At most4low; no reset, grant, replacement, A-stock transfer or chosen world.",
+    "This does not retrospectively rewrite any failed recovery and is not a single-factor route causal estimate."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "recordedAt": "2026-10-08T09:36:24.465Z",
+  "kind": "static-code-and-interface-audit",
+  "features": [
+    "COH-F021",
+    "COH-F014",
+    "COH-F007",
+    "COH-F052"
+  ],
+  "productionChanged": false,
+  "findings": [
+    {
+      "topic": "Range is not universally redundant",
+      "facts": [
+        "blind_needle_compass CSV range128px, duration6000ms, ordinary uses3.",
+        "Normal front sight224px, ambient80px; angle transition50–80degrees. Effective radius scales0.4–1 with48px floor, before vision ability multiplier.",
+        "Snapshot collects reachable positions independent of normal visibility. Natural turning, shrinkage and path-connected positions around opaque VOID can produce snapshot-only positions. Ordinary v3 solid boundaries are not automatically sight-opaque."
+      ],
+      "limits": [
+        "No claim that every map/run has a useful legal trigger.",
+        "No artificial turning or occlusion to manufacture novelty."
+      ]
+    },
+    {
+      "topic": "Actual public output",
+      "facts": [
+        "RiftScene passes current alive enemy positions, uncollected search positions, and live tool-target Host positions into collectToolRevealSnapshot.",
+        "The runtime pays one use and stores immutable enemy/node/core coordinates; minimap copies all three for six seconds. Empty is a paid valid snapshot.",
+        "No hidden content identity or enemy state is in the snapshot DTO."
+      ]
+    },
+    {
+      "topic": "Existing controller defect",
+      "facts": [
+        "unknownAhead can fire based only on an unseen walkable point90px ahead, without evidence a relevant target is within128 connected path range.",
+        "Only enemyPositions are used by the inherited input controller; node/core positions were recorded in runtime but not consumed as planning facts.",
+        "Survey snapshot coordinates enter risk memory, but old reports did not compare decisions before/after; consumption alone never proved information value."
+      ]
+    },
+    {
+      "topic": "New experiment trigger",
+      "facts": [
+        "Candidate positions come only from a normal observation within5seconds, now not normally visible.",
+        "Only these remembered coordinates are passed to the production pure path-range function; no current hidden position query.",
+        "A route planned with stale remembered threats must differ from a route excluding those uncertain remembered positions before a survey is allowed.",
+        "Paid static snapshot replaces in-range stale threat positions; an empty answer may remove a previous detour. Actual replanned movement and snapshot expiry are logged.",
+        "Host/pollution memory remains intact; no promise of safe future area."
+      ]
+    }
+  ],
+  "suspectedProductionDefects": [],
+  "qualification": "No specification/implementation mismatch confirmed in this static pass. Finite actual decision value remains to test.",
+  "bindings": [
+    {
+      "file": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    {
+      "file": "src/systems/visibility-system.ts",
+      "sha256": "b4a54956afc4a1f38457f496cb07496ac5acc53229ad627981bf638c8417df02"
+    },
+    {
+      "file": "src/scenes/rift-scene.ts",
+      "sha256": "6f39cad6e744c5de2985a21631dbb782f62a1c0a86652a2206ef29c195eaa43b"
+    },
+    {
+      "file": "src/systems/tool-targeting.ts",
+      "sha256": "f292104a3d7d25df48b4db3cf71cd799a79a9d50a44a3815fc4e62409158043e"
+    },
+    {
+      "file": "src/systems/catalog-ability-runtime.ts",
+      "sha256": "2b2a7a2695529df0b636f4c7c3b451832906382fd65bedefe9671c9068bde42b"
+    },
+    {
+      "file": "src/ui/minimap.ts",
+      "sha256": "dfbcf020b9e92ee73e6f6ec64817f838192c95ea49a7d222c691078f6b5aeb65"
+    },
+    {
+      "file": "data/contaminant-items.csv",
+      "sha256": "d0d7daaf2005ae91b490cdc3986af47efe7c98d5cd0d07523e2eeed2257d2634"
+    },
+    {
+      "file": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    }
+  ]
+}

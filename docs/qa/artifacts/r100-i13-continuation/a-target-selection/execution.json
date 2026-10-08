@@ -1,0 +1,285 @@
+{
+  "startedAt": "2026-10-08T10:55:12.647Z",
+  "planSha256": "a1870d611d25926be36147092a4c44cbdc52400e1323367e4fc49d3fdf481d71",
+  "status": "failed",
+  "cases": [
+    {
+      "id": "a-target-control",
+      "sourceBranch": "A",
+      "stopAfterLowPreparation": true,
+      "recoveryFunctions": [
+        {
+          "family": "solidify",
+          "minimumPower": 4
+        },
+        {
+          "family": "dash",
+          "minimumPower": 48
+        }
+      ],
+      "sourceStorage": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/i13/browser-storage.json",
+      "sourceStorageSha256": "50c077f9f3315a8bdc0d04ba364109532cabbdfa3255c008fbb572c6aa26c24b",
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/i13/2-after-preparation.save.json",
+        "sha256": "a33342615bfd2a81124204293b5ed7fb9a3e19a54a257302de7a8a7bb6b9c3bb"
+      },
+      "input": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/earned-storage.json",
+      "inputSha256": "e05d9a64a1a5dc38acbaf8a852a5a8189cc05ff1fd5b0dddbd9ea2d7c53a5b7d",
+      "steps": [
+        {
+          "grade": "severe",
+          "preparation": {
+            "id": "public-ancestor-backed-four-second-control-and-dash",
+            "active": [
+              {
+                "family": "solidify",
+                "minimumPower": 4,
+                "minimumUses": 4
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 3
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "requiredUses": [
+            4,
+            3
+          ],
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 4,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences",
+            "controlMaxPerTrip": 2,
+            "controlRoles": {
+              "transit": 1,
+              "search": 1
+            }
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-four-second-control-and-dash-recovery",
+            "active": [
+              {
+                "family": "solidify",
+                "minimumPower": 4,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 4,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences",
+            "controlMaxPerTrip": 2,
+            "controlRoles": {
+              "transit": 1,
+              "search": 1
+            }
+          }
+        },
+        {
+          "grade": "low",
+          "preparation": {
+            "id": "public-eligible-four-second-control-and-dash-recovery",
+            "active": [
+              {
+                "family": "solidify",
+                "minimumPower": 4,
+                "minimumUses": 2
+              },
+              {
+                "family": "dash",
+                "minimumPower": 48,
+                "minimumUses": 2
+              }
+            ],
+            "passive": {
+              "name": "黄铜背扣"
+            }
+          },
+          "surveyDecision": false,
+          "budget": {
+            "normalPerSlot": 1,
+            "protectNextPreparation": true,
+            "minimumPower": {
+              "survey": 128,
+              "dash": 48,
+              "suppress": 3,
+              "solidify": 4,
+              "silence": 5
+            },
+            "emergency": "Only dash against a currently observed windup/active attack within65px; record actual overspend and consequences",
+            "controlMaxPerTrip": 2,
+            "controlRoles": {
+              "transit": 1,
+              "search": 1
+            }
+          }
+        }
+      ],
+      "searchLimit": 6,
+      "ancestorRunIds": [
+        "63d77e65-1889-4624-a1e8-4d7989f255cf",
+        "f3ae18d6-2c46-49e5-8d96-21cd0e0a8e3b",
+        "ca6e3a1b-53c1-40f2-9c09-bc0ebf895327",
+        "97874d5b-0c9e-4199-abfc-61491ca13f5b",
+        "b7aa8a85-de4f-4413-a9ca-29d04f8c601b",
+        "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0",
+        "a8cbed61-55c0-4205-9356-535531bae725",
+        "c3b1b065-4154-41bd-938b-90033e8775a6",
+        "074b0dcb-02c8-4c24-a239-e654f963f44e",
+        "a6557e90-f8cd-4e91-a0fb-8d511aae077d",
+        "d1b034c1-0332-4467-817b-e4aeff5dd351",
+        "abcdad60-2750-47fc-ae26-adf20ef26c05",
+        "c494ba40-ca59-4eec-9fa4-2feddf194306",
+        "97fc69a8-59e5-4e6f-a683-b4550f685bd7",
+        "215f9d02-eca3-4427-b56a-d53a37d27e96",
+        "90bab9f2-7b2f-486a-8589-70dade82d77a",
+        "cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3",
+        "f6cdd44f-ef72-4bcf-871c-139f65e00495",
+        "f123d0d1-cdc5-4152-a55d-cf8eb7a000c2",
+        "024df695-2804-475d-a3d1-a7d29b6faa6f",
+        "2c2f1723-a1b1-40d9-914e-82a48640e411"
+      ],
+      "freshItemIds": [
+        "WPN_ff7bbaa9-d411-4e37-8e69-22148848335e",
+        "CAT_ca6e3a1b-53c1-40f2-9c09-bc0ebf895327_r100-contaminant-contested-1",
+        "CAT_b7aa8a85-de4f-4413-a9ca-29d04f8c601b_r100-contaminant-contested-1",
+        "WPN_bc67d68d-9eac-49c6-aa6a-18f45f779520",
+        "CAT_5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0_r100-contaminant-contested-1",
+        "WPN_083e90ea-ea31-4ed3-ad75-53794a1d11d9",
+        "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-safe-1",
+        "CAT_a8cbed61-55c0-4205-9356-535531bae725_r100-contaminant-contested-1",
+        "WPN_445d4b25-646f-4c5b-b59e-ed721590971b",
+        "WPN_3bb0f70d-1407-4ffb-a44b-ced1295931c0",
+        "CAT_c3b1b065-4154-41bd-938b-90033e8775a6_r100-contaminant-safe-1",
+        "WPN_a29da5c0-9eca-40a6-998d-94d70377034f",
+        "CAT_074b0dcb-02c8-4c24-a239-e654f963f44e_r100-contaminant-safe-1",
+        "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-safe-1",
+        "WPN_0c1b85a7-182e-4ff3-b5ae-64a3dd4ca31a",
+        "CAT_a6557e90-f8cd-4e91-a0fb-8d511aae077d_r100-contaminant-deep-1",
+        "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-safe-1",
+        "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+        "WPN_dc953dc6-a64d-414d-af87-851540e4ef00",
+        "WPN_438813bf-f55d-40b5-8861-26093285a906",
+        "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-safe-1",
+        "CAT_abcdad60-2750-47fc-ae26-adf20ef26c05_r100-contaminant-contested-1",
+        "WPN_d20c10d8-9800-4524-8628-0d60bb958a4c",
+        "CAT_97fc69a8-59e5-4e6f-a683-b4550f685bd7_r100-contaminant-safe-1",
+        "CAT_90bab9f2-7b2f-486a-8589-70dade82d77a_r100-contaminant-safe-1",
+        "CAT_cd2d8c9c-2e78-4f70-b3db-6dc532b9daa3_r100-contaminant-safe-1",
+        "CAT_f6cdd44f-ef72-4bcf-871c-139f65e00495_r100-contaminant-safe-1",
+        "CAT_f123d0d1-cdc5-4152-a55d-cf8eb7a000c2_r100-contaminant-safe-1",
+        "WPN_166aa2b1-2228-4f6b-9b3b-dd7a8c6a4d58",
+        "WPN_b030f7f4-f4b7-4c5d-9271-d6996a40e438",
+        "CAT_024df695-2804-475d-a3d1-a7d29b6faa6f_r100-contaminant-safe-1",
+        "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-safe-1",
+        "CAT_2c2f1723-a1b1-40d9-914e-82a48640e411_r100-contaminant-contested-1"
+      ],
+      "initialReserve": 46,
+      "initialModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 53,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 102,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 130
+        }
+      ],
+      "expectedInitialSelection": {
+        "solidify": {
+          "id": "CAT_4325cd09-97dc-4260-87f2-744ad2c83644_r100-contaminant-contested-1",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-contested-1",
+            "runId": "4325cd09-97dc-4260-87f2-744ad2c83644"
+          },
+          "lineage": "earned-ancestor-before-I13",
+          "acquiredOrdinal": null,
+          "offeredOrdinal": null,
+          "maturedOrdinal": null,
+          "name": "封底沙漏",
+          "location": "stash",
+          "uses": 5,
+          "weight": 20,
+          "slot": "active",
+          "inert": false,
+          "family": "solidify",
+          "power": 5500,
+          "qualified": true,
+          "available": true
+        },
+        "dash": {
+          "id": "CAT_e39384f8-7fc7-4f19-bd7e-da25b7761e94_r100-contaminant-safe-1",
+          "source": {
+            "fragmentId": "frag-outdoor",
+            "nodeId": "r100-contaminant-safe-1",
+            "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94"
+          },
+          "lineage": "earned-ancestor-before-I13",
+          "acquiredOrdinal": null,
+          "offeredOrdinal": null,
+          "maturedOrdinal": null,
+          "name": "断跟短靴",
+          "location": "stash",
+          "uses": 4,
+          "weight": 20,
+          "slot": "active",
+          "inert": false,
+          "family": "dash",
+          "power": 48,
+          "qualified": true,
+          "available": true
+        }
+      },
+      "status": "failed",
+      "exitCode": 1,
+      "report": "docs/qa/artifacts/r100-i13-continuation/a-target-selection/a-target-control/report.json",
+      "completed": 0,
+      "plannedStop": null
+    }
+  ],
+  "finishedAt": "2026-10-08T10:56:18.353Z"
+}

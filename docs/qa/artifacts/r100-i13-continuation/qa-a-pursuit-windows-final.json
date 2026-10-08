@@ -1,0 +1,1022 @@
+{
+  "recordedAt": "2026-10-08T10:45:15.123Z",
+  "status": "bounded-paid-control-observation-check-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-control-window-audit.mjs",
+    "sha256": "d52cf06c9b0bf6c7a0b379baa41b6a832a300c676e343c250caeb2f0d4a0c22e"
+  },
+  "journal": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/i13/journey.jsonl",
+    "sha256": "4cc2714bdf8358b2e0017394b4ec71a110cd5e45e8429189e520cff4e75497f2"
+  },
+  "castCount": 3,
+  "acceptedEffects": 2,
+  "unacceptedCasts": [
+    {
+      "line": 399,
+      "intent": {
+        "role": "transit",
+        "targetId": "ENM_INF_01",
+        "leg": {
+          "start": {
+            "x": 932.5468305588267,
+            "y": 454.13454938892795
+          },
+          "end": {
+            "x": 940,
+            "y": 452
+          }
+        }
+      },
+      "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+      "actual": [
+        {
+          "effectId": "ability:3",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_03",
+          "controlActive": true,
+          "remainingTime": 3916.6400000000003,
+          "startTime": 31432.05999999972
+        }
+      ],
+      "note": "Rejected intended permission is not evidence that no official effect occurred; inspect full raw event."
+    }
+  ],
+  "shortLegs": 29,
+  "maxDistance": 12.933064200000103,
+  "maxObservedElapsedMs": 199.9900000000016,
+  "hitsObserved": 0,
+  "rows": [
+    {
+      "line": 1521,
+      "keys": [
+        "a",
+        "s"
+      ],
+      "requestedInputMs": 140,
+      "distance": 10.281251799999783,
+      "observedElapsedMs": 183.32999999999447,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3883.3399999999992,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3700.010000000003,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1526,
+      "keys": [
+        "a",
+        "s"
+      ],
+      "requestedInputMs": 140,
+      "distance": 12.446388866666467,
+      "observedElapsedMs": 199.9900000000016,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3683.340000000002,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3466.6800000000007,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1530,
+      "keys": [
+        "d",
+        "s"
+      ],
+      "requestedInputMs": 104.0459744341892,
+      "distance": 7.674587980588671,
+      "observedElapsedMs": 150.01000000000204,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3450.0099999999998,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3299.999999999999,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1537,
+      "keys": [
+        "d",
+        "w"
+      ],
+      "requestedInputMs": 47.92961949397422,
+      "distance": 2.2838103558492038,
+      "observedElapsedMs": 83.31999999999607,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3250.0199999999973,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3150.0299999999975,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1541,
+      "keys": [
+        "d",
+        "w"
+      ],
+      "requestedInputMs": 95.48167136764053,
+      "distance": 8.023945786885974,
+      "observedElapsedMs": 149.98999999999796,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3150.0299999999975,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 3000.039999999998,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [
+        {
+          "id": "ENM_RWR_01",
+          "position": {
+            "x": 756.7445551417179,
+            "y": 300.71861474616867
+          },
+          "facing": 1.6726967553122583,
+          "attack": "idle",
+          "approaching": false
+        }
+      ],
+      "revocations": []
+    },
+    {
+      "line": 1545,
+      "keys": [
+        "s"
+      ],
+      "requestedInputMs": 41.92948207422744,
+      "distance": 1.2032832514331768,
+      "observedElapsedMs": 83.34000000000015,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 2983.3799999999974,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 2900.039999999998,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [
+        {
+          "id": "ENM_RWR_01",
+          "position": {
+            "x": 756.7445551417179,
+            "y": 300.71861474616867
+          },
+          "facing": 1.6726967553122583,
+          "attack": "idle",
+          "approaching": false
+        }
+      ],
+      "revocations": []
+    },
+    {
+      "line": 1549,
+      "keys": [
+        "d",
+        "s"
+      ],
+      "requestedInputMs": 65,
+      "distance": 4.221510799999792,
+      "observedElapsedMs": 116.69000000000233,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 2883.369999999997,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 2766.6799999999985,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1571,
+      "keys": [
+        "a",
+        "s"
+      ],
+      "requestedInputMs": 101.0158791270079,
+      "distance": 7.2512351999998605,
+      "observedElapsedMs": 149.98999999999796,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 1283.4400000000041,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 1133.4500000000048,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1575,
+      "keys": [
+        "s"
+      ],
+      "requestedInputMs": 140,
+      "distance": 10.876709109185994,
+      "observedElapsedMs": 183.31999999999607,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 1133.4500000000048,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 933.4600000000055,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1580,
+      "keys": [
+        "d",
+        "s"
+      ],
+      "requestedInputMs": 140,
+      "distance": 11.738018327848133,
+      "observedElapsedMs": 199.9900000000016,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 933.4600000000055,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 733.4700000000032,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1584,
+      "keys": [
+        "a",
+        "s"
+      ],
+      "requestedInputMs": 140,
+      "distance": 10.211827169095855,
+      "observedElapsedMs": 183.36000000000058,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 716.800000000005,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 533.4400000000043,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1591,
+      "keys": [
+        "s"
+      ],
+      "requestedInputMs": 140,
+      "distance": 11.67341732739735,
+      "observedElapsedMs": 183.3100000000013,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 500.12000000000313,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 316.81000000000256,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1595,
+      "keys": [
+        "d"
+      ],
+      "requestedInputMs": 39.23952513855116,
+      "distance": 2.650801125247961,
+      "observedElapsedMs": 100.02000000000044,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 266.8300000000008,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 166.81000000000256,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1599,
+      "keys": [
+        "d",
+        "s"
+      ],
+      "requestedInputMs": 65,
+      "distance": 3.571203466666616,
+      "observedElapsedMs": 99.97999999999956,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 150.1400000000043,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:1",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_INF_01",
+          "controlActive": true,
+          "remainingTime": 33.490000000001416,
+          "startTime": 16799.290000000023
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1899,
+      "keys": [
+        "d"
+      ],
+      "requestedInputMs": 140,
+      "distance": 10.280472600000166,
+      "observedElapsedMs": 183.32999999999447,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3883.349999999997,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3700.0200000000013,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1906,
+      "keys": [
+        "d",
+        "s"
+      ],
+      "requestedInputMs": 140,
+      "distance": 11.029847824082651,
+      "observedElapsedMs": 183.32000000000698,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3650.0200000000013,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3466.7,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1910,
+      "keys": [
+        "d",
+        "w"
+      ],
+      "requestedInputMs": 58.67695277395052,
+      "distance": 3.843446332135799,
+      "observedElapsedMs": 100.0199999999968,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3450.039999999999,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3333.36,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1915,
+      "keys": [
+        "a",
+        "w"
+      ],
+      "requestedInputMs": 52.44116793075949,
+      "distance": 3.1384488304949043,
+      "observedElapsedMs": 100.00000000000728,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3300.0399999999986,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3200.039999999998,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1919,
+      "keys": [
+        "w"
+      ],
+      "requestedInputMs": 140,
+      "distance": 11.316818846203125,
+      "observedElapsedMs": 183.30000000001746,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3183.3799999999974,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 3000.0799999999963,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1923,
+      "keys": [
+        "w"
+      ],
+      "requestedInputMs": 62.8405209911224,
+      "distance": 6.439016600000059,
+      "observedElapsedMs": 100,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 2983.4099999999953,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 2866.7299999999964,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1930,
+      "keys": [
+        "s"
+      ],
+      "requestedInputMs": 39.59966006687358,
+      "distance": 1.136235933333296,
+      "observedElapsedMs": 83.33000000000175,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 2833.3999999999946,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 2750.0699999999983,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1934,
+      "keys": [
+        "s"
+      ],
+      "requestedInputMs": 38.9256026261845,
+      "distance": 1.2444473333334258,
+      "observedElapsedMs": 83.33000000000175,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 2750.0699999999983,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 2650.0699999999956,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1938,
+      "keys": [
+        "d",
+        "w"
+      ],
+      "requestedInputMs": 65,
+      "distance": 4.220634200000266,
+      "observedElapsedMs": 116.65000000000873,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 2650.0699999999956,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 2533.4199999999923,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1957,
+      "keys": [
+        "a",
+        "w"
+      ],
+      "requestedInputMs": 140,
+      "distance": 9.848211399999828,
+      "observedElapsedMs": 183.30999999998312,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 1116.7999999999954,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 933.4899999999977,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1961,
+      "keys": [
+        "a",
+        "s"
+      ],
+      "requestedInputMs": 78.79463557739456,
+      "distance": 5.090653202262379,
+      "observedElapsedMs": 116.67999999998574,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 916.8199999999965,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 800.1399999999975,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1966,
+      "keys": [
+        "a"
+      ],
+      "requestedInputMs": 140,
+      "distance": 11.692903918424774,
+      "observedElapsedMs": 199.9899999999834,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 783.4699999999963,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 583.4799999999966,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1970,
+      "keys": [
+        "a"
+      ],
+      "requestedInputMs": 140,
+      "distance": 11.795984133333377,
+      "observedElapsedMs": 183.31999999999243,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 566.8199999999961,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 383.4999999999978,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1975,
+      "keys": [
+        "a"
+      ],
+      "requestedInputMs": 140,
+      "distance": 12.228537533333338,
+      "observedElapsedMs": 183.33000000000175,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 366.8399999999972,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 183.50999999999834,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "otherThreatsRetained": [],
+      "revocations": []
+    },
+    {
+      "line": 1981,
+      "keys": [
+        "a"
+      ],
+      "requestedInputMs": 140,
+      "distance": 12.933064200000103,
+      "observedElapsedMs": 183.34999999999854,
+      "hpDelta": 0,
+      "paidAtInput": [
+        {
+          "effectId": "ability:5",
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "targetId": "ENM_RWR_01",
+          "controlActive": true,
+          "remainingTime": 166.84999999999775,
+          "startTime": 44898.18999999993
+        }
+      ],
+      "paidAfter": [],
+      "otherThreatsRetained": [],
+      "revocations": [
+        {
+          "effectId": "ability:5",
+          "remainingBefore": 166.84999999999775,
+          "observedElapsed": 183.34999999999854,
+          "observationMayExtendBeyondControl": true,
+          "requestedInputMs": 140,
+          "revocationLine": 1978
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Accepted paid effect and bounded observed movement are not isolated avoided-damage causality or proof of full 4-second coverage.",
+    "The final observation may occur after effect expiration; matching revocation checks no old permission is retained, not continuous video.",
+    "This script checks recorded public/paid observations, not browser performance, all hazards, or natural severe deep success."
+  ]
+}

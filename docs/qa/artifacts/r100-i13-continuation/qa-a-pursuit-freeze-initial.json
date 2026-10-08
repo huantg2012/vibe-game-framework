@@ -1,0 +1,435 @@
+{
+  "recordedAt": "2026-10-08T10:35:23.158Z",
+  "status": "bounded-frozen-sources-and-observed-contract-check-pass",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13-continuation/qa-a-pursuit-freeze.mjs",
+    "sha256": "d3002a5fa39834206d92d8345a5818514f6e039ff01fc62d8d16566f0252f3e0"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/policy-freeze.json",
+    "sha256": "7fac3aa044f5123b2673fd5c4ad06d942b2781da5308b25a9a5ea4248fe7333a"
+  },
+  "executionAtAudit": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/execution.json",
+    "sha256": "23f3b307ad031b22306a2a596111286aa4a0bd5088181c877e2c6dfff9f6627f"
+  },
+  "taskSnapshot": {
+    "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/task-preregistration.md",
+    "sha256": "0a29ad6416f582984b6147383ce1b1be820835368a215af411bb0dc2119aa064"
+  },
+  "productionFiles": 1397,
+  "dependencies": 9,
+  "cases": [
+    {
+      "id": "a-pursuit-control",
+      "status": "running",
+      "reportAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/report.json",
+        "sha256": "87f3dd803e2e396395c2952913c305d0ebc863b24da2d30ff3d58c8150d839ad"
+      },
+      "journalAtAudit": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/a-pursuit-window/a-pursuit-control/i13/journey.jsonl",
+        "sha256": "1419f516db044155d94593887422c966d7ea34e2977bbe8c964a6d02053a2ead"
+      },
+      "sourceTerminal": {
+        "path": "docs/qa/artifacts/r100-i13-continuation/functional-selection/a-qualified-functional/i13/3-after-preparation.save.json",
+        "sha256": "06ac7fa02e006b506795b9940189fea8e156be313bc2c554ae2387883d1bcb97"
+      },
+      "completed": 0,
+      "expectedMaximum": 3,
+      "earlyStop": null,
+      "controlObservedEvents": [
+        {
+          "line": 326,
+          "at": "2026-10-08T10:33:25.181Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "pos": {
+              "x": 900,
+              "y": 196
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_03",
+              "position": {
+                "x": 745.0551707370563,
+                "y": 264.3768149756244
+              },
+              "facing": 1.6203885182183442,
+              "attack": "idle",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 741.4471747104158,
+                "y": 337.8935886483394
+              },
+              "end": {
+                "x": 748,
+                "y": 340
+              }
+            }
+          },
+          "otherVisibleEnemies": []
+        },
+        {
+          "line": 340,
+          "at": "2026-10-08T10:33:26.142Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "pos": {
+              "x": 900,
+              "y": 196
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 776.5907702600086,
+                "y": 290.93517678063984
+              },
+              "facing": 1.7409954644359387,
+              "attack": "idle",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 765.1700217745939,
+                "y": 357.3882581800911
+              },
+              "end": {
+                "x": 764,
+                "y": 364
+              }
+            }
+          },
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_03",
+              "position": {
+                "x": 748.9657522545418,
+                "y": 306.99806566320086
+              },
+              "facing": 1.2596645552925783,
+              "attack": "idle",
+              "approaching": true
+            }
+          ]
+        },
+        {
+          "line": 358,
+          "at": "2026-10-08T10:33:27.801Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "pos": {
+              "x": 900,
+              "y": 196
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 799.2631442938772,
+                "y": 359.0101884768406
+              },
+              "facing": 0.8882087534101031,
+              "attack": "idle",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 834.0187576589965,
+                "y": 405.99990010000005
+              },
+              "end": {
+                "x": 862.0149952067868,
+                "y": 405.54089773867855
+              }
+            }
+          },
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_03",
+              "position": {
+                "x": 785.5872446526075,
+                "y": 373.6036722624869
+              },
+              "facing": 0.6599460370599785,
+              "attack": "idle",
+              "approaching": true
+            }
+          ]
+        },
+        {
+          "line": 365,
+          "at": "2026-10-08T10:33:28.120Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "pos": {
+              "x": 900,
+              "y": 196
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 809.8713017639828,
+                "y": 368.58070409244584
+              },
+              "facing": 0.9492362711109474,
+              "attack": "idle",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 827.6428768122399,
+                "y": 397.14125499689396
+              },
+              "end": {
+                "x": 836,
+                "y": 396
+              }
+            }
+          },
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_03",
+              "position": {
+                "x": 796.1215965659112,
+                "y": 383.1046707326623
+              },
+              "facing": 0.4832510448560543,
+              "attack": "idle",
+              "approaching": true
+            }
+          ]
+        },
+        {
+          "line": 376,
+          "at": "2026-10-08T10:33:29.181Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "pos": {
+              "x": 900,
+              "y": 196
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 841.5171537275369,
+                "y": 394.7918179494936
+              },
+              "facing": 0.6635700670676097,
+              "attack": "idle",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 870.9740443033012,
+                "y": 420.1120649385937
+              },
+              "end": {
+                "x": 898.9740295119652,
+                "y": 420.0832844834903
+              }
+            }
+          },
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_03",
+              "position": {
+                "x": 834.5754708838929,
+                "y": 413.548497807567
+              },
+              "facing": 0.24612825036051872,
+              "attack": "idle",
+              "approaching": true
+            }
+          ]
+        },
+        {
+          "line": 395,
+          "at": "2026-10-08T10:33:30.631Z",
+          "event": "pursuit-control-decision-before",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "pos": {
+              "x": 900,
+              "y": 196
+            }
+          },
+          "candidate": {
+            "enemy": {
+              "id": "ENM_INF_01",
+              "position": {
+                "x": 884.6424904434493,
+                "y": 413.83911937586294
+              },
+              "facing": 0.6421557150019088,
+              "attack": "recover",
+              "approaching": true
+            },
+            "leg": {
+              "start": {
+                "x": 932.5468305588267,
+                "y": 454.13454938892795
+              },
+              "end": {
+                "x": 940,
+                "y": 452
+              }
+            }
+          },
+          "otherVisibleEnemies": [
+            {
+              "id": "ENM_INF_03",
+              "position": {
+                "x": 878.233598209103,
+                "y": 432.7844644592478
+              },
+              "facing": 0.4348608752067283,
+              "attack": "recover",
+              "approaching": true
+            }
+          ]
+        },
+        {
+          "line": 399,
+          "at": "2026-10-08T10:33:30.865Z",
+          "event": "paid-solidify-role-window",
+          "controlIntent": {
+            "role": "transit",
+            "targetId": "ENM_INF_01",
+            "leg": {
+              "start": {
+                "x": 932.5468305588267,
+                "y": 454.13454938892795
+              },
+              "end": {
+                "x": 940,
+                "y": 452
+              }
+            }
+          },
+          "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+          "actual": [
+            {
+              "effectId": "ability:3",
+              "sourceInstanceId": "CAT_d1b034c1-0332-4467-817b-e4aeff5dd351_r100-contaminant-contested-1",
+              "targetId": "ENM_INF_03",
+              "controlActive": true,
+              "remainingTime": 3916.6400000000003,
+              "startTime": 31432.05999999972
+            }
+          ],
+          "accepted": [],
+          "roles": [
+            [
+              "transit",
+              1
+            ]
+          ],
+          "beforeObservation": {
+            "visibleSearches": [],
+            "position": {
+              "x": 932.5468305588267,
+              "y": 454.13454938892795
+            },
+            "facing": -0.47111323433232266,
+            "hp": 160,
+            "chaos": 47.04843407843298,
+            "elapsedMs": 31298.739999999725,
+            "ended": false,
+            "enemies": [
+              {
+                "id": "ENM_INF_01",
+                "position": {
+                  "x": 886.5362288079662,
+                  "y": 414.98262378931764
+                },
+                "facing": 0.6477855677410551,
+                "attack": "recover",
+                "approaching": true
+              },
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 880.2246270967734,
+                  "y": 433.9606027080346
+                },
+                "facing": 0.4282799146424743,
+                "attack": "recover",
+                "approaching": true
+              }
+            ],
+            "hosts": [],
+            "visiblePollutionCells": [],
+            "remembered": [
+              {
+                "id": "ENM_INF_01",
+                "position": {
+                  "x": 886.5362288079662,
+                  "y": 414.98262378931764
+                },
+                "facing": 0.6477855677410551,
+                "attack": "recover",
+                "approaching": true,
+                "seen": 31298.739999999725
+              },
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 880.2246270967734,
+                  "y": 433.9606027080346
+                },
+                "facing": 0.4282799146424743,
+                "attack": "recover",
+                "approaching": true,
+                "seen": 31298.739999999725
+              }
+            ],
+            "normalVisibleEnemies": [
+              {
+                "id": "ENM_INF_01",
+                "position": {
+                  "x": 886.5362288079662,
+                  "y": 414.98262378931764
+                },
+                "facing": 0.6477855677410551,
+                "attack": "recover",
+                "approaching": true
+              },
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 880.2246270967734,
+                  "y": 433.9606027080346
+                },
+                "facing": 0.4282799146424743,
+                "attack": "recover",
+                "approaching": true
+              }
+            ],
+            "ownPaidControls": []
+          }
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Source and cap checks do not themselves establish that a retry yielded new income or that debt was restored. Four raw saves and original-service bridge are required.",
+    "New method explicitly changes Q transit/search roles and cap2, own-paid frozen-target risk handling and max24px/140ms input chunks. Other enemies/Host risks remain; useful action and deep outcome require separate review.",
+    "All geometric routing is diagnostic assistance; observed-source restrictions and later runtime window review remain separate."
+  ]
+}

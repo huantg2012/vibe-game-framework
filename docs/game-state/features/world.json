@@ -1118,6 +1118,16 @@
       {
         "path": "tools/recovery/check-minimap-world-scale.ts",
         "role": "test"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i13.md",
+        "role": "doc",
+        "note": "I13已授权续推；真实状态、预登记与有限证据边界。"
+      },
+      {
+        "path": "docs/qa/rift-r100-i13.md",
+        "role": "doc",
+        "note": "I13旧28失败保持，续推实际实录与独立结论另列。"
       }
     ],
     "dependsOn": [
@@ -1127,7 +1137,9 @@
     ],
     "evidence": [
       "COH-E-SRC-world",
-      "COH-E-HIST-PRODUCTION"
+      "COH-E-HIST-PRODUCTION",
+      "COH-E183",
+      "COH-E184"
     ],
     "unknowns": [
       "全图只读导航的测试不代表普通玩家可凭局部记忆顺利找到出口。"
@@ -1137,7 +1149,7 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "I01/I02人审、I03–I12内部结案，现12/14轮；修订6的108世界/324等级正式启用与内部资格保持。I13完成28趟有限实跑及独立资产核账：修正验证政策后，低中连续12趟支付33成长并维持固定服务；新物成熟后消费链成立。两类成套自然准备、重度后恢复与完整长期净回报仍待整改；I14弱设备/听感/人终验未启动，R100仍active。",
+    "summary": "I01/I02人审、I03–I13内部结案，13/14轮；108世界/324等级修订6正式资格保持。I13累计52唯一实际出击，A23维护/成长、自然重度深处带回与普通两方向可付再备成立，B14本支付费恢复设施。祖先消耗、B短冲0固定组合失败和A定身再重不足明确保留；I14听感/弱设备/用户终验未启动，R100仍active。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -2093,6 +2105,111 @@
         "path": "docs/qa/artifacts/r100-i13/bind-r2-accounting.mjs",
         "role": "code",
         "note": "R1→R2原存档逐项接续和原51/100/51服务债独立核账；防止受损起点降低基准。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-continuation-encounters.mjs",
+        "role": "test",
+        "note": "I13有界公开输入续推执行器；非生产机制。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-continuation-journey.mjs",
+        "role": "test",
+        "note": "I13有界公开输入续推执行器；非生产机制。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-continuation-policy.mjs",
+        "role": "test",
+        "note": "I13有界公开输入续推执行器；非生产机制。"
+      },
+      {
+        "path": "tools/world-study/run-r100-i13-continuation.mjs",
+        "role": "test",
+        "note": "I13有界公开输入续推执行器；非生产机制。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-functional-journey.mjs",
+        "role": "test",
+        "note": "I13隔离公开输入验证；具体修订、失败和执行范围见冻结证据。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-functional-policy.mjs",
+        "role": "test",
+        "note": "I13隔离公开输入验证；具体修订、失败和执行范围见冻结证据。"
+      },
+      {
+        "path": "tools/world-study/run-r100-i13-functional.mjs",
+        "role": "test",
+        "note": "I13隔离公开输入验证；具体修订、失败和执行范围见冻结证据。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-bounded-journey.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-pursuit-encounters.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-pursuit-journey.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-pursuit-policy.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-retry-policy.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-target-policy.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/run-r100-i13-bounded.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/run-r100-i13-pursuit.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-resume-journey.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-target-encounters.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-target-journey.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/run-r100-i13-target.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/r100-i13-resume-encounters.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
+      },
+      {
+        "path": "tools/world-study/run-r100-i13-resume.mjs",
+        "role": "test",
+        "note": "I13有因验证政策；原失败、真实库存与冻结版本分开保留。"
       }
     ],
     "dependsOn": [
@@ -2168,7 +2285,9 @@
       "COH-E179",
       "COH-E180",
       "COH-E181",
-      "COH-E182"
+      "COH-E182",
+      "COH-E183",
+      "COH-E184"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
@@ -2176,9 +2295,9 @@
       "翻找物来源修复只覆盖现有五来源及九组DEV母版；四种主形不等于新增四个合格世界。E134不外推采集后并行更新的地形材料，I01/I02的后续整体验收单列E138，不能倒改E134的实际证据范围。",
       "E136仅为用户认可翻找物形体差异和来源风格；显著性精修已取得E137有限证据，不由这条局部证据外推整体地图；2026-10-04的I01/I02明确验收另列E138。",
       "历史修订3的60正式新出发与60冷续、参考机GPU预算有界回收通过；其无Rift阶段≥50ms任务结论不外推修订4。新批仅记录自身实际性能采样，较弱真实硬件与整体发布长尾仍留I14。",
-      "旧132趟失败与修订3的90趟成长、三母版准备验证均保留原记录；不把历史有限完整体验视作修订4新几何自然搜撤通过。实际听感R10、弱设备I14及中重相对低档长期效率R07/I13保持。",
-      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13长期收益与I14听感R100-R10/弱设备/用户终验仍待。",
-      "I13本轮28趟有限实跑已完结，原验证路线遗漏近处物的偏差已修；低中12趟真实维护/成长与新物消费链仅有界成立。两次计划自然重度降低、原B成套准备未补回、末设施服务债19；不将祖先库存释放或正现金当作全成本可持续。下一次先预登记工具时机/跨趟预算/同标准恢复诊断，当前未执行。"
+      "旧132趟失败与修订3的90趟成长、三母版准备验证均保留原记录；不把历史有限完整体验视作修订4新几何自然搜撤通过。实际听感R10、弱设备I14保持；I13有限内部结案不删除R07旧亏损或推断中重总体长期效率。",
+      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13有限经营验收已通过，未证明无限稳态/总体等级收益排序；I14听感R100-R10/弱设备/用户终验仍待。",
+      "I13已以52唯一出击完成有限内部验收；B14短冲耗尽/固定配方未恢复、A23定身再次重度Q4不足、有限祖先消耗和原失败均保留。当前可付普通两方向不代表无限供给、所有档位期望收益或相同准备处处成立；详情见E183/E184。"
     ]
   }
 ]
