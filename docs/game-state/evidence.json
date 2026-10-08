@@ -6917,5 +6917,131 @@
         "role": "doc"
       }
     ]
+  },
+  {
+    "id": "COH-E181",
+    "kind": "automated",
+    "result": "pass",
+    "date": "2026-10-08",
+    "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034 + I13 QA tools",
+    "scope": "I13重新核账修订6原48趟192存档与修订3原90趟现金。原48的550落袋/267维修/314成长、祖先成熟83/104及当支新物47件/成熟21件已逐实例确认；当支新物尚无完整成熟后消费链。7项重新签存档哈希后的真实语义篡改被拒绝、正例与2修复额度边界通过。取消/保存重试16项、历史事务5项及363搜取/1800修复/94阈值/2保存链通过。",
+    "limitations": "重算历史实录，不是本轮新增48或90趟。正现金伴设施/武器资产消耗，工具无正式价格而未伪造汇率；部分死亡前挥击和遗失余次无法细分。0完整新供给使用链可能来自固定旧装备策略，不能直接判定游戏供给失败。合同检查不代签可持续净收益、真人体验或I13通过。",
+    "features": [
+      "COH-F001",
+      "COH-F003",
+      "COH-F004",
+      "COH-F021",
+      "COH-F022",
+      "COH-F023",
+      "COH-F024",
+      "COH-F027",
+      "COH-F028",
+      "COH-F029",
+      "COH-F030",
+      "COH-F044",
+      "COH-F045",
+      "COH-F052"
+    ],
+    "sources": [
+      {
+        "path": "docs/qa/rift-r100-i13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/historical-economy-audit-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/revision3-90-cash-recheck.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/accounting-negative-check-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/contracts/checks.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/contracts/source-preflight.json",
+        "role": "doc"
+      },
+      {
+        "path": "tools/qa/check-r100-i13-accounting.mjs",
+        "role": "code"
+      }
+    ]
+  },
+  {
+    "id": "COH-E182",
+    "kind": "runtime",
+    "result": "partial",
+    "date": "2026-10-08",
+    "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034 + I13 frozen QA policies",
+    "scope": "I13固定9＋随机自然12＋有因续行7，共28趟实际输入和112原存档独立核账。R2移除QA路线排除近处已见物的偏差。A连续12收入248/维修216/成长33、储备24→23，51/100/51固定服务D0；新烟斗与新手套搜得/成熟/消费来源链成立，手套真实消声覆盖一次完整翻找。B连续7收入86/维修110、原服务债D19，保留未恢复。",
+    "limitations": "固定9是同祖先/世界/种子的诊断，19自然趟分属共祖先两条链，非独立玩家研究；有披露的全地形路由辅助。A原储藏102缓冲期末101，尚需1薪补回；物件/武器无虚构货币价格。R1亏损全部保留，R2状态/随机世界/政策不同，非单因素因果。两次计划自然重度都因准备耗尽降低；新物单链不代表两类成套准备和长期供给通过。I13待整改；入口速刷、连续视听疲劳、弱设备和用户终验未签。",
+    "features": [
+      "COH-F001",
+      "COH-F003",
+      "COH-F004",
+      "COH-F021",
+      "COH-F022",
+      "COH-F023",
+      "COH-F024",
+      "COH-F027",
+      "COH-F028",
+      "COH-F029",
+      "COH-F030",
+      "COH-F044",
+      "COH-F045",
+      "COH-F052"
+    ],
+    "sources": [
+      {
+        "path": "docs/tasks/rift-r100-i13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/rift-r100-i13.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/paired-nine-accounting-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/natural-twelve-accounting-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/r2-seven-accounting-final.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/fresh-chain-binding.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/r2-policy-freeze.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/r2-metadata-erratum.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/bind-r2-accounting.mjs",
+        "role": "code"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/overall-execution-receipt.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i13/root-review-disposition.json",
+        "role": "doc"
+      }
+    ]
   }
 ]

@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-08T08:28:21.937Z",
+  "reason": "R1 inherited content-qualification routing (>320px and initial far travel), omitting ordinary already-visible nearby remains. This follow-up removes those QA-policy constraints without changing production reward or difficulty.",
+  "sourceManifest": "docs/qa/artifacts/r100-i13/frozen-source/source-snapshot.json",
+  "sourceManifestSha256": "8db19bc2364e77a45a473cf5d14079a532e11789d3e2caf4d2a421e9fd30281c",
+  "gameUrl": "http://127.0.0.1:3031/",
+  "journey": "tools/world-study/r100-i13-r2-journey.mjs",
+  "dependencies": [
+    {
+      "file": "tools/world-study/r100-i13-natural-journey.mjs",
+      "sha256": "658c29a0e4559e4197c15569567a21d85dc0ca561a39ce6d8040525054eb4ff6"
+    },
+    {
+      "file": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-journey.mjs",
+      "sha256": "22c34317b9add03c98117ec573383c11a3a350406549bc81dd9fa94d66d82c5f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-encounters.mjs",
+      "sha256": "8efa42af08bfac8cef42010ca312893a26f294a00214ddfab526721bf3dc4db2"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-r2.mjs",
+      "sha256": "4f09752de6e160921fee5f56bc74032d4d3fb9a5229e71b2277cc790997ba7ba"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    }
+  ],
+  "cases": [
+    {
+      "id": "r2-natural-maintenance",
+      "source": "natural-maintenance",
+      "schedule": [
+        "low",
+        "medium",
+        "low",
+        "medium",
+        "low",
+        "medium"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      },
+      "sourceReport": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json",
+      "sourceReportSha256": "87499adf877c008873c2f42d8109c7e88312e04ee948bd097832253887a1afbd",
+      "sourceStorage": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/i13/browser-storage.json",
+      "sourceStorageSha256": "1307972d40b497fb065141fa80691d45f52c17970a125e97ddee010039ad247e",
+      "input": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance-earned-storage.json",
+      "inputSha256": "5fdc2c7e64550555ad8795811100304b46eb161bc1be903742975daf966b9355",
+      "initialCycle": 48,
+      "initialReserve": 4,
+      "initialModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ]
+    },
+    {
+      "id": "r2-earned-glove",
+      "source": "natural-prepared-recovery",
+      "schedule": [
+        "low"
+      ],
+      "preparation": {
+        "id": "new-earned-glove",
+        "active": [
+          "灰毡手套",
+          null
+        ],
+        "passive": null,
+        "activeIds": [
+          "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+          null
+        ],
+        "silenceTrialItemId": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1"
+      },
+      "sourceReport": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json",
+      "sourceReportSha256": "94631435f587be2cdc00972adc4a1eb60529aced873664f49cd2733e58c0e12d",
+      "sourceStorage": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/i13/browser-storage.json",
+      "sourceStorageSha256": "b2f9309008fc9af4bcddff436a6c4f12650b9a3b9d0311676d9423ee0c743a08",
+      "input": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-earned-glove-earned-storage.json",
+      "inputSha256": "75a36289816f22861cb5fc543781b98e3acf891aa3a52e75f96be5e1361b40f9",
+      "initialCycle": 48,
+      "initialReserve": 0,
+      "initialModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 34,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 19,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 52,
+          "maxHp": 130
+        }
+      ]
+    }
+  ],
+  "newAttempts": 7,
+  "overallSampleLimit": 28,
+  "searchLimit": 6,
+  "limits": [
+    "After this batch sampling stops, including failed or incomplete cases.",
+    "Not a single-factor causal comparison: later earned states, normal random worlds and glove preparation differ; preserve every R1 result.",
+    "All normally observed candidates are eligible; source kind/tier/value are not used to route. Geometry aid, risk and return budgets remain.",
+    "A preserves original publicly named real preparation and fixed service targets51/100/51 before growth.",
+    "B is a newly acquired glove lifecycle/actual-silence window check, not recovery of survey/dash or proof that noise would otherwise alert an enemy.",
+    "Silence capture only reads existing runtime, channel and actual collection; no noise-method proxy, enemy setter, clock or reward edits."
+  ]
+}

@@ -1,0 +1,1727 @@
+{
+  "recordedAt": "2026-10-08T08:47:19.907Z",
+  "status": "completed-bounded-sampling-stopped",
+  "sampleLimit": 28,
+  "attemptCount": 28,
+  "uniqueRunIds": 28,
+  "plannedGrades": {
+    "low": 14,
+    "medium": 9,
+    "severe": 5
+  },
+  "actualGrades": {
+    "low": 16,
+    "medium": 9,
+    "severe": 3
+  },
+  "outcomes": {
+    "extract": 28
+  },
+  "downgradedAttempts": 2,
+  "technicalFailures": 0,
+  "replacements": 0,
+  "unusedOriginalBudget": 2,
+  "noFurtherSamples": true,
+  "phases": [
+    {
+      "name": "R1 first paired3",
+      "execution": {
+        "file": "docs/qa/artifacts/r100-i13/execution-first.json",
+        "sha256": "452fb7dede33c22fcc0c36dee9b00ee0ac17dfb1d9bd7181d7cdea1efb48c611"
+      },
+      "plan": {
+        "file": "docs/qa/artifacts/r100-i13/policy-freeze.json",
+        "sha256": "b8996558d6c2fbc0a7669c326c86fa343216c73fa6e51600dc5c2209ca71ffe3"
+      },
+      "status": "completed",
+      "startedAt": "2026-10-08T07:55:53.231Z",
+      "finishedAt": "2026-10-08T07:58:56.069Z",
+      "completed": 3
+    },
+    {
+      "name": "R1 remaining paired6",
+      "execution": {
+        "file": "docs/qa/artifacts/r100-i13/execution-remaining.json",
+        "sha256": "22f0f335063cde7cc2b57ac72f4ddd6899ab932d705253661e85246f2721fbd0"
+      },
+      "plan": {
+        "file": "docs/qa/artifacts/r100-i13/policy-freeze.json",
+        "sha256": "b8996558d6c2fbc0a7669c326c86fa343216c73fa6e51600dc5c2209ca71ffe3"
+      },
+      "status": "completed",
+      "startedAt": "2026-10-08T07:59:38.228Z",
+      "finishedAt": "2026-10-08T08:06:10.673Z",
+      "completed": 6
+    },
+    {
+      "name": "R1 natural12",
+      "execution": {
+        "file": "docs/qa/artifacts/r100-i13/execution-natural-service.json",
+        "sha256": "3bcc28d3384df001ab88caede09b576823e2b620dbb0ef146f335bf82449f4e1"
+      },
+      "plan": {
+        "file": "docs/qa/artifacts/r100-i13/natural-policy-freeze-v2.json",
+        "sha256": "17bcc5b291328ffe79135f985a9d476f1c440798aadba86924886e4f3b532588"
+      },
+      "status": "completed",
+      "startedAt": "2026-10-08T08:06:35.240Z",
+      "finishedAt": "2026-10-08T08:23:55.095Z",
+      "completed": 12
+    },
+    {
+      "name": "R2 bounded followups7",
+      "execution": {
+        "file": "docs/qa/artifacts/r100-i13/execution-r2.json",
+        "sha256": "2496f9a8edf0f0df6f6fecff13331ce58ad35546c76959cbef9ccf45ed2df1d6"
+      },
+      "plan": {
+        "file": "docs/qa/artifacts/r100-i13/r2-policy-freeze.json",
+        "sha256": "498fe4a48acf4e72032b9b3f128e1d077c1f84e09ae53d89717c5af2553dacfa"
+      },
+      "status": "completed",
+      "startedAt": "2026-10-08T08:28:22.006Z",
+      "finishedAt": "2026-10-08T08:45:01.921Z",
+      "completed": 7
+    }
+  ],
+  "reports": [
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-low/report.json",
+      "sha256": "e07d91b6f7363e32ac864ed3d6934cca2e51ed266db902dbf6853b49a7e30278"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-medium/report.json",
+      "sha256": "46e21c291deb22ada540d0dc188599f11f60c8f6c42805b816161f92bee3efbb"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-severe/report.json",
+      "sha256": "0d7b5238ba49a24d91b17e39069de533f3fa2f2b034f7f626024e1bcd24f0652"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-low/report.json",
+      "sha256": "c3337a9ca676a5b4b5b93aeb48c099371b3895ad153333e62a34db4ad9884c6d"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-medium/report.json",
+      "sha256": "750f4e7207eed1873ec027941b55c2367ba3b05a932dc7fca43e2bd8cacb2451"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-severe/report.json",
+      "sha256": "63ba9ec7bfb990ba4b953a386d1233c1a01c2db53abee4dd829f599ed57cf479"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-low/report.json",
+      "sha256": "bc50ed3146d55ab4573a6b71e1c5cf749e80a2da1b64904735ee249402771c97"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-medium/report.json",
+      "sha256": "773b4ad680070506aa55cf757ecb39e16fdd1c32b03d1df04d82a28cf7544c6a"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-severe/report.json",
+      "sha256": "752f71a60bba2f4bf381ca414be4b09d12f3abbe2d2d37bb178352fdbec5e6dd"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json",
+      "sha256": "87499adf877c008873c2f42d8109c7e88312e04ee948bd097832253887a1afbd"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json",
+      "sha256": "94631435f587be2cdc00972adc4a1eb60529aced873664f49cd2733e58c0e12d"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json",
+      "sha256": "a2ba48a20848a61aea1498b46d167441032609aa722d891239c3c3c8270a0ca0"
+    },
+    {
+      "file": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-earned-glove/report.json",
+      "sha256": "3cade3e8d0396593915e604ba42cf570e240b149429826f23e7e4a1321098838"
+    }
+  ],
+  "dependencyVerification": {
+    "status": "pass",
+    "checkedBindings": 19,
+    "uniqueFiles": 13,
+    "rows": [
+      {
+        "file": "tools/world-study/r100-i13-journey.mjs",
+        "sha256": "b0d1f21d4e914bcad04a94edf89a89c42783e5c169b2b2fa52efa3611a358f37",
+        "actualSha256": "b0d1f21d4e914bcad04a94edf89a89c42783e5c169b2b2fa52efa3611a358f37",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/derive-r100-i13-journey.mjs",
+        "sha256": "f71945db27d3c64a9b1db0d561788128dce6edd4e9f19b038b82ff1549790e81",
+        "actualSha256": "f71945db27d3c64a9b1db0d561788128dce6edd4e9f19b038b82ff1549790e81",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/run-r100-i13.mjs",
+        "sha256": "b3d8951ad3ceb1e4608c70f10b218bb0bef4f478c0ce1173dbb4f085466b8187",
+        "actualSha256": "b3d8951ad3ceb1e4608c70f10b218bb0bef4f478c0ce1173dbb4f085466b8187",
+        "match": true
+      },
+      {
+        "file": "tools/qa/r100-revision6-journey.mjs",
+        "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+        "actualSha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+        "match": true
+      },
+      {
+        "file": "tools/qa/r100-i09-costed-encounters.mjs",
+        "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01",
+        "actualSha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01",
+        "match": true
+      },
+      {
+        "file": "tools/qa/r100-i09-tool-slots.mjs",
+        "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c",
+        "actualSha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c",
+        "match": true
+      },
+      {
+        "file": "tools/qa/r100-observed-searches.mjs",
+        "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24",
+        "actualSha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24",
+        "match": true
+      },
+      {
+        "file": "tools/qa/i27-journey-driver.mjs",
+        "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914",
+        "actualSha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/r100-i13-journey.mjs",
+        "sha256": "b0d1f21d4e914bcad04a94edf89a89c42783e5c169b2b2fa52efa3611a358f37",
+        "actualSha256": "b0d1f21d4e914bcad04a94edf89a89c42783e5c169b2b2fa52efa3611a358f37",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/r100-i13-natural-journey.mjs",
+        "sha256": "658c29a0e4559e4197c15569567a21d85dc0ca561a39ce6d8040525054eb4ff6",
+        "actualSha256": "658c29a0e4559e4197c15569567a21d85dc0ca561a39ce6d8040525054eb4ff6",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/run-r100-i13-natural.mjs",
+        "sha256": "cb027536d142ae35584020f3be26e4fc6a5eede4705c509b75b050e850c29f46",
+        "actualSha256": "cb027536d142ae35584020f3be26e4fc6a5eede4705c509b75b050e850c29f46",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/r100-i13-natural-journey.mjs",
+        "sha256": "658c29a0e4559e4197c15569567a21d85dc0ca561a39ce6d8040525054eb4ff6",
+        "actualSha256": "658c29a0e4559e4197c15569567a21d85dc0ca561a39ce6d8040525054eb4ff6",
+        "match": true
+      },
+      {
+        "file": "tools/qa/r100-i09-costed-encounters.mjs",
+        "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01",
+        "actualSha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/r100-i13-r2-journey.mjs",
+        "sha256": "22c34317b9add03c98117ec573383c11a3a350406549bc81dd9fa94d66d82c5f",
+        "actualSha256": "22c34317b9add03c98117ec573383c11a3a350406549bc81dd9fa94d66d82c5f",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/r100-i13-r2-encounters.mjs",
+        "sha256": "8efa42af08bfac8cef42010ca312893a26f294a00214ddfab526721bf3dc4db2",
+        "actualSha256": "8efa42af08bfac8cef42010ca312893a26f294a00214ddfab526721bf3dc4db2",
+        "match": true
+      },
+      {
+        "file": "tools/world-study/run-r100-i13-r2.mjs",
+        "sha256": "4f09752de6e160921fee5f56bc74032d4d3fb9a5229e71b2277cc790997ba7ba",
+        "actualSha256": "4f09752de6e160921fee5f56bc74032d4d3fb9a5229e71b2277cc790997ba7ba",
+        "match": true
+      },
+      {
+        "file": "tools/qa/r100-i09-tool-slots.mjs",
+        "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c",
+        "actualSha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c",
+        "match": true
+      },
+      {
+        "file": "tools/qa/r100-observed-searches.mjs",
+        "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24",
+        "actualSha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24",
+        "match": true
+      },
+      {
+        "file": "tools/qa/i27-journey-driver.mjs",
+        "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914",
+        "actualSha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914",
+        "match": true
+      }
+    ],
+    "notes": [
+      "R1 natural-v1 was superseded before execution; the executed natural plan is v2.",
+      "R2 descriptive report fields inherit stale strategy/dependency prose. The independent r2-policy-freeze and r2-metadata-erratum provide the actual route and imported encounter binding. Raw reports and executed sources remain unchanged."
+    ],
+    "r2MetadataErratum": {
+      "file": "docs/qa/artifacts/r100-i13/r2-metadata-erratum.json",
+      "sha256": "668e2ea5570857ce97abe98e2f809b01bc411365c44590452af0ca861e8a7c70"
+    }
+  },
+  "productionVerification": {
+    "status": "identical-to-I12-RC",
+    "releaseCandidate": {
+      "file": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    "i12SourceManifest": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    "i13SourceManifest": {
+      "file": "docs/qa/artifacts/r100-i13/frozen-source/source-snapshot.json",
+      "sha256": "8db19bc2364e77a45a473cf5d14079a532e11789d3e2caf4d2a421e9fd30281c"
+    },
+    "comparedFileCount": 1397,
+    "workspaceMismatches": [],
+    "executedFrozenMismatches": [],
+    "manifestDifferences": [],
+    "method": "Compared exact1397 file-name/SHA256 maps, then independently hashed every current workspace and executed frozen source file against both manifests."
+  },
+  "services": {
+    "ownedOnly": true,
+    "ports": [
+      {
+        "port": 3031,
+        "command": "lsof -nP -iTCP:3031 -sTCP:LISTEN",
+        "exitCode": 1,
+        "listeners": [],
+        "status": "closed"
+      },
+      {
+        "port": 3032,
+        "command": "lsof -nP -iTCP:3032 -sTCP:LISTEN",
+        "exitCode": 1,
+        "listeners": [],
+        "status": "closed"
+      }
+    ],
+    "shutdown": [
+      {
+        "port": 3031,
+        "execSession": 77343,
+        "action": "SIGINT via owned exec stdin after all28 attempts completed",
+        "exitCode": 0
+      },
+      {
+        "port": 3032,
+        "execSession": 16301,
+        "action": "npm dev smoke server stopped intentionally after HTTP200 smoke, before R2",
+        "exitCode": 130
+      }
+    ],
+    "userServersModified": false,
+    "temporaryFrozenSourcePreserved": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-ECDBTy"
+  },
+  "checks": [
+    {
+      "file": "docs/qa/artifacts/r100-i13/code-verification.json",
+      "sha256": "1b910c3c4a9f75a0920b269392804fb1f20145b696423f3260cf2d2453784d39"
+    },
+    {
+      "file": "docs/qa/artifacts/r100-i13/r2-code-verification.json",
+      "sha256": "ce44762bc51ad1784d1b01abbac6192832317ad9821c83a93efbf99a5f9807de"
+    }
+  ],
+  "attempts": [
+    {
+      "phase": "R1 first paired3",
+      "caseId": "paired-ash-strata-low",
+      "ordinal": 1,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:folded-slab-low"
+      },
+      "runId": "57ad62a3-2018-4d46-ae48-5db8e1184002",
+      "world": null,
+      "controlledWorld": "ash-strata",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 24,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 31,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-low/report.json"
+    },
+    {
+      "phase": "R1 first paired3",
+      "caseId": "paired-ash-strata-medium",
+      "ordinal": 1,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:folded-slab-medium"
+      },
+      "runId": "3ec64858-8008-4647-b78e-50efb880f2a8",
+      "world": null,
+      "controlledWorld": "ash-strata",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 17,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 24,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-medium/report.json"
+    },
+    {
+      "phase": "R1 first paired3",
+      "caseId": "paired-ash-strata-severe",
+      "ordinal": 1,
+      "plannedGrade": "severe",
+      "actualGrade": "severe",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:folded-slab-severe"
+      },
+      "runId": "715b4389-9abd-4eef-a670-0946e19d06e8",
+      "world": null,
+      "controlledWorld": "ash-strata",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 33,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 40,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-severe/report.json"
+    },
+    {
+      "phase": "R1 remaining paired6",
+      "caseId": "paired-fibre-silt-low",
+      "ordinal": 1,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:fibre-silt-low"
+      },
+      "runId": "b4a87158-f6cc-4cd7-8b96-4e2146e12d56",
+      "world": null,
+      "controlledWorld": "fibre-silt",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 17,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 24,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-low/report.json"
+    },
+    {
+      "phase": "R1 remaining paired6",
+      "caseId": "paired-fibre-silt-medium",
+      "ordinal": 1,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:fibre-silt-medium"
+      },
+      "runId": "61d1f366-1350-4c20-a034-ea9e2b6752b8",
+      "world": null,
+      "controlledWorld": "fibre-silt",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 17,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 24,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-medium/report.json"
+    },
+    {
+      "phase": "R1 remaining paired6",
+      "caseId": "paired-fibre-silt-severe",
+      "ordinal": 1,
+      "plannedGrade": "severe",
+      "actualGrade": "severe",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:fibre-silt-severe"
+      },
+      "runId": "57fe6824-77ff-4758-8fe8-8e9136a551a1",
+      "world": null,
+      "controlledWorld": "fibre-silt",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 20,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 27,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-severe/report.json"
+    },
+    {
+      "phase": "R1 remaining paired6",
+      "caseId": "paired-white-scarfield-low",
+      "ordinal": 1,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:white-scarfield-low"
+      },
+      "runId": "c157b24f-b2e1-42c8-92fe-3427ab0566b8",
+      "world": null,
+      "controlledWorld": "white-scarfield",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 14,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 21,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-low/report.json"
+    },
+    {
+      "phase": "R1 remaining paired6",
+      "caseId": "paired-white-scarfield-medium",
+      "ordinal": 1,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:white-scarfield-medium"
+      },
+      "runId": "68ccced8-c08f-4354-a679-29291f5cdaa7",
+      "world": null,
+      "controlledWorld": "white-scarfield",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 17,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 24,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-medium/report.json"
+    },
+    {
+      "phase": "R1 remaining paired6",
+      "caseId": "paired-white-scarfield-severe",
+      "ordinal": 1,
+      "plannedGrade": "severe",
+      "actualGrade": "severe",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 20261005,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:white-scarfield-severe"
+      },
+      "runId": "f130b3b2-81ad-49b4-8d28-a1fedc040cd3",
+      "world": null,
+      "controlledWorld": "white-scarfield",
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 33,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 40,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-severe/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-maintenance",
+      "ordinal": 1,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 1483206851,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:hollow-wreckage-low"
+      },
+      "runId": "63d77e65-1889-4624-a1e8-4d7989f255cf",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 24,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 31,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-maintenance",
+      "ordinal": 2,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 1269635640,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:fibre-silt-medium"
+      },
+      "runId": "f3ae18d6-2c46-49e5-8d96-21cd0e0a8e3b",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 17,
+      "repairSpent": 21,
+      "growthSpent": 0,
+      "initialReserve": 31,
+      "finalReserve": 27,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 52,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-maintenance",
+      "ordinal": 3,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 2510526502,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:knotted-run-low"
+      },
+      "runId": "ca6e3a1b-53c1-40f2-9c09-bc0ebf895327",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 7,
+      "repairSpent": 20,
+      "growthSpent": 0,
+      "initialReserve": 27,
+      "finalReserve": 14,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 100,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 52,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-maintenance",
+      "ordinal": 4,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 2939585086,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:folded-slab-medium"
+      },
+      "runId": "97874d5b-0c9e-4199-abfc-61491ca13f5b",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 14,
+      "repairSpent": 23,
+      "growthSpent": 0,
+      "initialReserve": 14,
+      "finalReserve": 5,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 101,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-maintenance",
+      "ordinal": 5,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 1105759432,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:quiet-spur-low"
+      },
+      "runId": "b7aa8a85-de4f-4413-a9ca-29d04f8c601b",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 17,
+      "repairSpent": 22,
+      "growthSpent": 0,
+      "initialReserve": 5,
+      "finalReserve": 0,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 98,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 54,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-maintenance",
+      "ordinal": 6,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 3293319296,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:shell-gel-delta-medium"
+      },
+      "runId": "5ecb5242-f2dd-4cfd-9d7b-09cf48db36b0",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 27,
+      "repairSpent": 23,
+      "growthSpent": 0,
+      "initialReserve": 0,
+      "finalReserve": 4,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-prepared-recovery",
+      "ordinal": 1,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 2871167941,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:shell-patchwork-low"
+      },
+      "runId": "93e4d1e1-1ef4-4140-b7e9-148143ff7a7c",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 24,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 24,
+      "finalReserve": 31,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-prepared-recovery",
+      "ordinal": 2,
+      "plannedGrade": "severe",
+      "actualGrade": "low",
+      "downgraded": true,
+      "gradeDecision": {
+        "plannedGrade": "severe",
+        "actualGrade": "low",
+        "eligible": false,
+        "tools": [
+          {
+            "name": "盲针罗盘",
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-contested-1",
+            "uses": 1
+          },
+          {
+            "name": "断跟短靴",
+            "id": null,
+            "uses": 0
+          }
+        ],
+        "moduleFacts": [
+          {
+            "type": "CORE",
+            "hp": 51,
+            "required": 51
+          },
+          {
+            "type": "STORAGE",
+            "hp": 103,
+            "required": 100
+          },
+          {
+            "type": "PURIFIER",
+            "hp": 51,
+            "required": 51
+          }
+        ],
+        "reason": "Insufficient declared preparation or service capital; actual low recovery, not severe completion"
+      },
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 3148148527,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:pressed-rim-low"
+      },
+      "runId": "aa9db733-32b3-4636-a460-330b1a7cf1d2",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 7,
+      "repairSpent": 20,
+      "growthSpent": 0,
+      "initialReserve": 31,
+      "finalReserve": 18,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 100,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 52,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-prepared-recovery",
+      "ordinal": 3,
+      "plannedGrade": "severe",
+      "actualGrade": "low",
+      "downgraded": true,
+      "gradeDecision": {
+        "plannedGrade": "severe",
+        "actualGrade": "low",
+        "eligible": false,
+        "tools": [
+          {
+            "name": "盲针罗盘",
+            "id": null,
+            "uses": 0
+          },
+          {
+            "name": "断跟短靴",
+            "id": null,
+            "uses": 0
+          }
+        ],
+        "moduleFacts": [
+          {
+            "type": "CORE",
+            "hp": 51,
+            "required": 51
+          },
+          {
+            "type": "STORAGE",
+            "hp": 100,
+            "required": 100
+          },
+          {
+            "type": "PURIFIER",
+            "hp": 52,
+            "required": 51
+          }
+        ],
+        "reason": "Insufficient declared preparation or service capital; actual low recovery, not severe completion"
+      },
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 2778555392,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:fractured-estuary-low"
+      },
+      "runId": "a8d9bda4-1820-4f1c-abcf-ac3b7437ed64",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 0,
+      "repairSpent": 18,
+      "growthSpent": 0,
+      "initialReserve": 18,
+      "finalReserve": 0,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 51,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 89,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 52,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-prepared-recovery",
+      "ordinal": 4,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 3298938939,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:satin-fan-low"
+      },
+      "runId": "6da99a8e-21f5-49a6-aa9b-f22708d9ce44",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 17,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 0,
+      "finalReserve": 0,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 73,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-prepared-recovery",
+      "ordinal": 5,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 1015811574,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:pallid-membrane-low"
+      },
+      "runId": "f4a84ff9-0eb3-4777-b6db-4bf96d85d52d",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 9,
+      "repairSpent": 9,
+      "growthSpent": 0,
+      "initialReserve": 0,
+      "finalReserve": 0,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 20,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 57,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 54,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json"
+    },
+    {
+      "phase": "R1 natural12",
+      "caseId": "natural-prepared-recovery",
+      "ordinal": 6,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 432458663,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:cinder-ridge-low"
+      },
+      "runId": "71b452ce-75ff-4f77-8683-7b32f4679334",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 8,
+      "repairSpent": 8,
+      "growthSpent": 0,
+      "initialReserve": 0,
+      "finalReserve": 0,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 34,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 19,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 52,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json"
+    },
+    {
+      "phase": "R2 bounded followups7",
+      "caseId": "r2-natural-maintenance",
+      "ordinal": 1,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 1617711435,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:frayed-outwash-low"
+      },
+      "runId": "a8cbed61-55c0-4205-9356-535531bae725",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 30,
+      "repairSpent": 22,
+      "growthSpent": 0,
+      "initialReserve": 4,
+      "finalReserve": 12,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 100,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 52,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json"
+    },
+    {
+      "phase": "R2 bounded followups7",
+      "caseId": "r2-natural-maintenance",
+      "ordinal": 2,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 23163443,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:black-lacuna-medium"
+      },
+      "runId": "c3b1b065-4154-41bd-938b-90033e8775a6",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 23,
+      "repairSpent": 12,
+      "growthSpent": 0,
+      "initialReserve": 12,
+      "finalReserve": 23,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json"
+    },
+    {
+      "phase": "R2 bounded followups7",
+      "caseId": "r2-natural-maintenance",
+      "ordinal": 3,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 1414041716,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:schist-shear-low"
+      },
+      "runId": "074b0dcb-02c8-4c24-a239-e654f963f44e",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 23,
+      "repairSpent": 16,
+      "growthSpent": 0,
+      "initialReserve": 23,
+      "finalReserve": 30,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 100,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json"
+    },
+    {
+      "phase": "R2 bounded followups7",
+      "caseId": "r2-natural-maintenance",
+      "ordinal": 4,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 3456526326,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:sloughed-court-medium"
+      },
+      "runId": "a6557e90-f8cd-4e91-a0fb-8d511aae077d",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 23,
+      "repairSpent": 17,
+      "growthSpent": 0,
+      "initialReserve": 30,
+      "finalReserve": 36,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 101,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json"
+    },
+    {
+      "phase": "R2 bounded followups7",
+      "caseId": "r2-natural-maintenance",
+      "ordinal": 5,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 2940195884,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:three-shelves-low"
+      },
+      "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 30,
+      "repairSpent": 15,
+      "growthSpent": 33,
+      "initialReserve": 36,
+      "finalReserve": 18,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 54,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 103,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 51,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json"
+    },
+    {
+      "phase": "R2 bounded followups7",
+      "caseId": "r2-natural-maintenance",
+      "ordinal": 6,
+      "plannedGrade": "medium",
+      "actualGrade": "medium",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 2078722403,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:lacquer-court-medium"
+      },
+      "runId": "abcdad60-2750-47fc-ae26-adf20ef26c05",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 13,
+      "repairSpent": 8,
+      "growthSpent": 0,
+      "initialReserve": 18,
+      "finalReserve": 23,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 53,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 101,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 54,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json"
+    },
+    {
+      "phase": "R2 bounded followups7",
+      "caseId": "r2-earned-glove",
+      "ordinal": 1,
+      "plannedGrade": "low",
+      "actualGrade": "low",
+      "downgraded": false,
+      "gradeDecision": null,
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "seed": {
+        "seed": 1934126489,
+        "fragmentTypeId": "frag-outdoor",
+        "recipeId": "r100-native-v3:offset-pan-low"
+      },
+      "runId": "0912b573-b688-4d37-878d-09a471c891d9",
+      "world": null,
+      "controlledWorld": null,
+      "resourceInjection": false,
+      "navigationWarning": null,
+      "income": 21,
+      "repairSpent": 21,
+      "growthSpent": 0,
+      "initialReserve": 0,
+      "finalReserve": 0,
+      "finalModules": [
+        {
+          "id": "CORE",
+          "type": "CORE",
+          "hp": 52,
+          "maxHp": 130
+        },
+        {
+          "id": "STORAGE",
+          "type": "STORAGE",
+          "hp": 27,
+          "maxHp": 130
+        },
+        {
+          "id": "PURIFIER",
+          "type": "PURIFIER",
+          "hp": 53,
+          "maxHp": 130
+        }
+      ],
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-earned-glove/report.json"
+    }
+  ],
+  "limitations": [
+    "Accounting and ability semantics are independently reviewed by QA/Design; this is execution/source verification, not economic acceptance.",
+    "All28 extracts do not imply no population death risk. Controlled9 are disclosed fixed-world diagnostics.",
+    "No costs converted from tools/weapon charges into invented kindling values.",
+    "No production src/data changes and no additional browser samples after the declared28."
+  ]
+}

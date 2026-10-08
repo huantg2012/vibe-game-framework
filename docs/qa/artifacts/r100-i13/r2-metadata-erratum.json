@@ -1,0 +1,53 @@
+{
+  "recordedAt": "2026-10-08T08:33:39.009Z",
+  "scope": "R2 descriptive metadata erratum only; raw reports and frozen running controllers remain byte-for-byte unchanged.",
+  "planPath": "docs/qa/artifacts/r100-i13/r2-policy-freeze.json",
+  "planSha256": "498fe4a48acf4e72032b9b3f128e1d077c1f84e09ae53d89717c5af2553dacfa",
+  "appliesTo": [
+    "docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json",
+    "docs/qa/artifacts/r100-i13/r2-earned-glove/report.json"
+  ],
+  "corrections": [
+    {
+      "field": "strategy",
+      "problem": "Inherited description still says farther than320px and fixed far travel. This is stale R1 prose.",
+      "actual": "The R2 controller observes immediately on entry; eligibleObservedTargets admits every actually observed uncollected non-deferred node. Body-supported routing chooses among observed targets. The far geometry goal is traveled only when no eligible observed targets remain. Risk, return and total actual pickup budgets remain unchanged. No hidden content kind, tier or value is used for target eligibility or ordering.",
+      "evidence": [
+        {
+          "file": "tools/world-study/r100-i13-r2-journey.mjs",
+          "line": 230
+        },
+        {
+          "file": "tools/world-study/r100-i13-r2-journey.mjs",
+          "line": 499
+        }
+      ]
+    },
+    {
+      "field": "harnessDependencies",
+      "problem": "Inherited dependency list names the original encounter module; the actual imported module is r100-i13-r2-encounters.mjs. Other inherited dependency hashes remain factual.",
+      "actualImport": "tools/world-study/r100-i13-r2-encounters.mjs",
+      "authoritativeDependencies": "r2-policy-freeze.json.dependencies",
+      "evidence": [
+        {
+          "file": "tools/world-study/r100-i13-r2-journey.mjs",
+          "line": 25
+        }
+      ]
+    }
+  ],
+  "frozenSources": [
+    {
+      "file": "tools/world-study/r100-i13-r2-journey.mjs",
+      "sha256": "22c34317b9add03c98117ec573383c11a3a350406549bc81dd9fa94d66d82c5f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-encounters.mjs",
+      "sha256": "8efa42af08bfac8cef42010ca312893a26f294a00214ddfab526721bf3dc4db2"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-r2.mjs",
+      "sha256": "4f09752de6e160921fee5f56bc74032d4d3fb9a5229e71b2277cc790997ba7ba"
+    }
+  ]
+}

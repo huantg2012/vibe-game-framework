@@ -1,0 +1,1358 @@
+{
+  "version": 1,
+  "recordedDate": "2026-10-08",
+  "status": "bounded-cross-report-accounting-pass",
+  "tool": {
+    "path": "docs/qa/artifacts/r100-i13/bind-r2-accounting.mjs",
+    "sha256": "8885b476f67f28ab9ea92d77df24f9722a0d5a38caa74ec9fff3fa37c8c3de0d"
+  },
+  "freeze": {
+    "path": "docs/qa/artifacts/r100-i13/r2-policy-freeze.json",
+    "sha256": "498fe4a48acf4e72032b9b3f128e1d077c1f84e09ae53d89717c5af2553dacfa"
+  },
+  "sourceAndEightDependenciesMatched": true,
+  "originalFixedServiceTarget": {
+    "CORE": 51,
+    "STORAGE": 100,
+    "PURIFIER": 51
+  },
+  "branches": [
+    {
+      "role": "maintenance",
+      "r1": {
+        "path": "docs/qa/artifacts/r100-i13/natural-maintenance/report.json",
+        "sha256": "87499adf877c008873c2f42d8109c7e88312e04ee948bd097832253887a1afbd"
+      },
+      "r2": {
+        "path": "docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json",
+        "sha256": "a2ba48a20848a61aea1498b46d167441032609aa722d891239c3c3c8270a0ca0"
+      },
+      "exactR1ToR2State": true,
+      "startingDebt": {
+        "bonusModule": null,
+        "modules": [
+          {
+            "id": "CORE",
+            "hp": 52,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "STORAGE",
+            "hp": 103,
+            "target": 100,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "PURIFIER",
+            "hp": 51,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          }
+        ],
+        "kindling": 0
+      },
+      "endingDebt": {
+        "bonusModule": null,
+        "modules": [
+          {
+            "id": "CORE",
+            "hp": 53,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "STORAGE",
+            "hp": 101,
+            "target": 100,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "PURIFIER",
+            "hp": 54,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          }
+        ],
+        "kindling": 0
+      },
+      "originalR1StartingReserve": 24,
+      "segmentStartingReserve": 4,
+      "segmentEndingReserve": 23,
+      "totals": {
+        "attempts": 6,
+        "income": 142,
+        "repair": 90,
+        "growth": 33,
+        "cashMaintenanceMargin": 52,
+        "sameOriginalServiceMargin": 52,
+        "fieldMs": 523612.3200000096,
+        "preparationAndEntryWallMs": 21912,
+        "returnAndManagementWallMs": 445167,
+        "outcomes": {
+          "extract": 6
+        }
+      },
+      "originalCapitalTarget": {
+        "CORE": 51,
+        "STORAGE": 102,
+        "PURIFIER": 51
+      },
+      "originalCapitalDebtAtR2End": {
+        "bonusModule": null,
+        "modules": [
+          {
+            "id": "CORE",
+            "hp": 53,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "STORAGE",
+            "hp": 101,
+            "target": 102,
+            "missing": 1,
+            "kindling": 1,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "PURIFIER",
+            "hp": 54,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          }
+        ],
+        "kindling": 1
+      },
+      "cumulativeR1R2": {
+        "totals": {
+          "attempts": 12,
+          "income": 248,
+          "repair": 216,
+          "growth": 33,
+          "cashMaintenanceMargin": 32,
+          "sameOriginalServiceMargin": 32,
+          "fieldMs": 1049991.2300000268,
+          "preparationAndEntryWallMs": 43872,
+          "returnAndManagementWallMs": 927978,
+          "outcomes": {
+            "extract": 12
+          }
+        },
+        "startingDebt": {
+          "bonusModule": null,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "target": 51,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            },
+            {
+              "id": "STORAGE",
+              "hp": 102,
+              "target": 100,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "target": 51,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            }
+          ],
+          "kindling": 0
+        },
+        "endingDebt": {
+          "bonusModule": null,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 53,
+              "target": 51,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            },
+            {
+              "id": "STORAGE",
+              "hp": 101,
+              "target": 100,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 54,
+              "target": 51,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            }
+          ],
+          "kindling": 0
+        },
+        "reserveChange": -1,
+        "byGrade": {
+          "low": {
+            "attempts": 6,
+            "income": 131,
+            "repair": 112,
+            "growth": 33,
+            "cashMaintenanceMargin": 19,
+            "sameOriginalServiceMargin": 18,
+            "fieldMs": 486363.81000000273,
+            "preparationAndEntryWallMs": 22278,
+            "returnAndManagementWallMs": 464386,
+            "outcomes": {
+              "extract": 6
+            }
+          },
+          "medium": {
+            "attempts": 6,
+            "income": 117,
+            "repair": 104,
+            "growth": 0,
+            "cashMaintenanceMargin": 13,
+            "sameOriginalServiceMargin": 14,
+            "fieldMs": 563627.4200000241,
+            "preparationAndEntryWallMs": 21594,
+            "returnAndManagementWallMs": 463592,
+            "outcomes": {
+              "extract": 6
+            }
+          }
+        }
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "runId": "a8cbed61-55c0-4205-9356-535531bae725",
+          "world": "r100-frayed-outwash",
+          "grade": "low",
+          "outcome": "extract",
+          "income": 30,
+          "repair": 22,
+          "growth": 0,
+          "reserveBefore": 4,
+          "reserveAfter": 12,
+          "beforeDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 103,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 51,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "afterDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 100,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "cashMaintenanceMargin": 8,
+          "sameOriginalServiceMargin": 8,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 100,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 52,
+              "maxHp": 130
+            }
+          ],
+          "extraHpAboveOriginalService": [
+            {
+              "id": "CORE",
+              "hp": 1
+            },
+            {
+              "id": "STORAGE",
+              "hp": 0
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 1
+            }
+          ],
+          "fieldMs": 86063.22000000013,
+          "recordedOperatorTiming": {
+            "preparationStartedAt": "2026-10-08T08:28:28.796Z",
+            "preparationStartedMs": 1791448108796,
+            "preparationAndEntryWallMs": 4138,
+            "returnAndManagementStartedMs": 1791448199232,
+            "returnAndManagementWallMs": 80253
+          },
+          "growthActions": []
+        },
+        {
+          "ordinal": 2,
+          "runId": "c3b1b065-4154-41bd-938b-90033e8775a6",
+          "world": "r100-black-lacuna",
+          "grade": "medium",
+          "outcome": "extract",
+          "income": 23,
+          "repair": 12,
+          "growth": 0,
+          "reserveBefore": 12,
+          "reserveAfter": 23,
+          "beforeDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 100,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "afterDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 103,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 53,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "cashMaintenanceMargin": 11,
+          "sameOriginalServiceMargin": 11,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 103,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 53,
+              "maxHp": 130
+            }
+          ],
+          "extraHpAboveOriginalService": [
+            {
+              "id": "CORE",
+              "hp": 1
+            },
+            {
+              "id": "STORAGE",
+              "hp": 3
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 2
+            }
+          ],
+          "fieldMs": 88646.47000000013,
+          "recordedOperatorTiming": {
+            "preparationStartedAt": "2026-10-08T08:31:19.495Z",
+            "preparationStartedMs": 1791448279495,
+            "preparationAndEntryWallMs": 3571,
+            "returnAndManagementStartedMs": 1791448372190,
+            "returnAndManagementWallMs": 76008
+          },
+          "growthActions": []
+        },
+        {
+          "ordinal": 3,
+          "runId": "074b0dcb-02c8-4c24-a239-e654f963f44e",
+          "world": "r100-schist-shear",
+          "grade": "low",
+          "outcome": "extract",
+          "income": 23,
+          "repair": 16,
+          "growth": 0,
+          "reserveBefore": 23,
+          "reserveAfter": 30,
+          "beforeDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 103,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 53,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "afterDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 100,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 53,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "cashMaintenanceMargin": 7,
+          "sameOriginalServiceMargin": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 100,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 53,
+              "maxHp": 130
+            }
+          ],
+          "extraHpAboveOriginalService": [
+            {
+              "id": "CORE",
+              "hp": 1
+            },
+            {
+              "id": "STORAGE",
+              "hp": 0
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 2
+            }
+          ],
+          "fieldMs": 98896.01999999826,
+          "recordedOperatorTiming": {
+            "preparationStartedAt": "2026-10-08T08:34:08.212Z",
+            "preparationStartedMs": 1791448448212,
+            "preparationAndEntryWallMs": 3634,
+            "returnAndManagementStartedMs": 1791448551073,
+            "returnAndManagementWallMs": 73457
+          },
+          "growthActions": []
+        },
+        {
+          "ordinal": 4,
+          "runId": "a6557e90-f8cd-4e91-a0fb-8d511aae077d",
+          "world": "r100-sloughed-court",
+          "grade": "medium",
+          "outcome": "extract",
+          "income": 23,
+          "repair": 17,
+          "growth": 0,
+          "reserveBefore": 30,
+          "reserveAfter": 36,
+          "beforeDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 100,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 53,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "afterDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 101,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 53,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "cashMaintenanceMargin": 6,
+          "sameOriginalServiceMargin": 6,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 101,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 53,
+              "maxHp": 130
+            }
+          ],
+          "extraHpAboveOriginalService": [
+            {
+              "id": "CORE",
+              "hp": 1
+            },
+            {
+              "id": "STORAGE",
+              "hp": 1
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 2
+            }
+          ],
+          "fieldMs": 90079.70000000532,
+          "recordedOperatorTiming": {
+            "preparationStartedAt": "2026-10-08T08:37:04.549Z",
+            "preparationStartedMs": 1791448624549,
+            "preparationAndEntryWallMs": 3611,
+            "returnAndManagementStartedMs": 1791448718555,
+            "returnAndManagementWallMs": 71223
+          },
+          "growthActions": []
+        },
+        {
+          "ordinal": 5,
+          "runId": "d1b034c1-0332-4467-817b-e4aeff5dd351",
+          "world": "r100-three-shelves",
+          "grade": "low",
+          "outcome": "extract",
+          "income": 30,
+          "repair": 15,
+          "growth": 33,
+          "reserveBefore": 36,
+          "reserveAfter": 18,
+          "beforeDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 101,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 53,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "afterDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 54,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 103,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 51,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "cashMaintenanceMargin": 15,
+          "sameOriginalServiceMargin": 15,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 54,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 103,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 51,
+              "maxHp": 130
+            }
+          ],
+          "extraHpAboveOriginalService": [
+            {
+              "id": "CORE",
+              "hp": 3
+            },
+            {
+              "id": "STORAGE",
+              "hp": 3
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 0
+            }
+          ],
+          "fieldMs": 84813.28000000416,
+          "recordedOperatorTiming": {
+            "preparationStartedAt": "2026-10-08T08:39:49.801Z",
+            "preparationStartedMs": 1791448789801,
+            "preparationAndEntryWallMs": 3422,
+            "returnAndManagementStartedMs": 1791448878348,
+            "returnAndManagementWallMs": 71454
+          },
+          "growthActions": [
+            {
+              "kind": "growth",
+              "id": "growth_chaos_resist",
+              "publicText": "渗透抗性\nLevel 4\n可刻入\n33 薪柴",
+              "cost": 33,
+              "level": 4,
+              "retainedReserve": 16
+            }
+          ]
+        },
+        {
+          "ordinal": 6,
+          "runId": "abcdad60-2750-47fc-ae26-adf20ef26c05",
+          "world": "r100-lacquer-court",
+          "grade": "medium",
+          "outcome": "extract",
+          "income": 13,
+          "repair": 8,
+          "growth": 0,
+          "reserveBefore": 18,
+          "reserveAfter": 23,
+          "beforeDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 54,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 103,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 51,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "afterDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 53,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 101,
+                "target": 100,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 54,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 0
+          },
+          "cashMaintenanceMargin": 5,
+          "sameOriginalServiceMargin": 5,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 53,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 101,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 54,
+              "maxHp": 130
+            }
+          ],
+          "extraHpAboveOriginalService": [
+            {
+              "id": "CORE",
+              "hp": 2
+            },
+            {
+              "id": "STORAGE",
+              "hp": 1
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 3
+            }
+          ],
+          "fieldMs": 75113.63000000165,
+          "recordedOperatorTiming": {
+            "preparationStartedAt": "2026-10-08T08:42:29.831Z",
+            "preparationStartedMs": 1791448949831,
+            "preparationAndEntryWallMs": 3536,
+            "returnAndManagementStartedMs": 1791449028896,
+            "returnAndManagementWallMs": 72772
+          },
+          "growthActions": []
+        }
+      ]
+    },
+    {
+      "role": "fresh-glove-only",
+      "r1": {
+        "path": "docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json",
+        "sha256": "94631435f587be2cdc00972adc4a1eb60529aced873664f49cd2733e58c0e12d"
+      },
+      "r2": {
+        "path": "docs/qa/artifacts/r100-i13/r2-earned-glove/report.json",
+        "sha256": "3cade3e8d0396593915e604ba42cf570e240b149429826f23e7e4a1321098838"
+      },
+      "exactR1ToR2State": true,
+      "startingDebt": {
+        "bonusModule": null,
+        "modules": [
+          {
+            "id": "CORE",
+            "hp": 34,
+            "target": 51,
+            "missing": 17,
+            "kindling": 5,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "STORAGE",
+            "hp": 19,
+            "target": 100,
+            "missing": 81,
+            "kindling": 21,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "PURIFIER",
+            "hp": 52,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          }
+        ],
+        "kindling": 26
+      },
+      "endingDebt": {
+        "bonusModule": null,
+        "modules": [
+          {
+            "id": "CORE",
+            "hp": 52,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "STORAGE",
+            "hp": 27,
+            "target": 100,
+            "missing": 73,
+            "kindling": 19,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "PURIFIER",
+            "hp": 53,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          }
+        ],
+        "kindling": 19
+      },
+      "originalR1StartingReserve": 24,
+      "segmentStartingReserve": 0,
+      "segmentEndingReserve": 0,
+      "totals": {
+        "attempts": 1,
+        "income": 21,
+        "repair": 21,
+        "growth": 0,
+        "cashMaintenanceMargin": 0,
+        "sameOriginalServiceMargin": 7,
+        "fieldMs": 94562.90000000043,
+        "preparationAndEntryWallMs": 4553,
+        "returnAndManagementWallMs": 79209,
+        "outcomes": {
+          "extract": 1
+        }
+      },
+      "originalCapitalTarget": {
+        "CORE": 51,
+        "STORAGE": 102,
+        "PURIFIER": 51
+      },
+      "originalCapitalDebtAtR2End": {
+        "bonusModule": null,
+        "modules": [
+          {
+            "id": "CORE",
+            "hp": 52,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "STORAGE",
+            "hp": 27,
+            "target": 102,
+            "missing": 75,
+            "kindling": 19,
+            "sharedBonusAssigned": 0
+          },
+          {
+            "id": "PURIFIER",
+            "hp": 53,
+            "target": 51,
+            "missing": 0,
+            "kindling": 0,
+            "sharedBonusAssigned": 0
+          }
+        ],
+        "kindling": 19
+      },
+      "cumulativeR1R2": {
+        "totals": {
+          "attempts": 7,
+          "income": 86,
+          "repair": 110,
+          "growth": 0,
+          "cashMaintenanceMargin": -24,
+          "sameOriginalServiceMargin": -43,
+          "fieldMs": 517862.63000000047,
+          "preparationAndEntryWallMs": 27314,
+          "returnAndManagementWallMs": 442049,
+          "outcomes": {
+            "extract": 7
+          }
+        },
+        "startingDebt": {
+          "bonusModule": null,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 51,
+              "target": 51,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            },
+            {
+              "id": "STORAGE",
+              "hp": 102,
+              "target": 100,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 51,
+              "target": 51,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            }
+          ],
+          "kindling": 0
+        },
+        "endingDebt": {
+          "bonusModule": null,
+          "modules": [
+            {
+              "id": "CORE",
+              "hp": 52,
+              "target": 51,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            },
+            {
+              "id": "STORAGE",
+              "hp": 27,
+              "target": 100,
+              "missing": 73,
+              "kindling": 19,
+              "sharedBonusAssigned": 0
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 53,
+              "target": 51,
+              "missing": 0,
+              "kindling": 0,
+              "sharedBonusAssigned": 0
+            }
+          ],
+          "kindling": 19
+        },
+        "reserveChange": -24,
+        "byGrade": {
+          "low": {
+            "attempts": 7,
+            "income": 86,
+            "repair": 110,
+            "growth": 0,
+            "cashMaintenanceMargin": -24,
+            "sameOriginalServiceMargin": -43,
+            "fieldMs": 517862.63000000047,
+            "preparationAndEntryWallMs": 27314,
+            "returnAndManagementWallMs": 442049,
+            "outcomes": {
+              "extract": 7
+            }
+          }
+        }
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "runId": "0912b573-b688-4d37-878d-09a471c891d9",
+          "world": "r100-offset-pan",
+          "grade": "low",
+          "outcome": "extract",
+          "income": 21,
+          "repair": 21,
+          "growth": 0,
+          "reserveBefore": 0,
+          "reserveAfter": 0,
+          "beforeDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 34,
+                "target": 51,
+                "missing": 17,
+                "kindling": 5,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 19,
+                "target": 100,
+                "missing": 81,
+                "kindling": 21,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 26
+          },
+          "afterDebt": {
+            "bonusModule": null,
+            "modules": [
+              {
+                "id": "CORE",
+                "hp": 52,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "STORAGE",
+                "hp": 27,
+                "target": 100,
+                "missing": 73,
+                "kindling": 19,
+                "sharedBonusAssigned": 0
+              },
+              {
+                "id": "PURIFIER",
+                "hp": 53,
+                "target": 51,
+                "missing": 0,
+                "kindling": 0,
+                "sharedBonusAssigned": 0
+              }
+            ],
+            "kindling": 19
+          },
+          "cashMaintenanceMargin": 0,
+          "sameOriginalServiceMargin": 7,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 52,
+              "maxHp": 130
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 27,
+              "maxHp": 130
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 53,
+              "maxHp": 130
+            }
+          ],
+          "extraHpAboveOriginalService": [
+            {
+              "id": "CORE",
+              "hp": 1
+            },
+            {
+              "id": "STORAGE",
+              "hp": 0
+            },
+            {
+              "id": "PURIFIER",
+              "hp": 2
+            }
+          ],
+          "fieldMs": 94562.90000000043,
+          "recordedOperatorTiming": {
+            "preparationStartedAt": "2026-10-08T08:28:28.789Z",
+            "preparationStartedMs": 1791448108789,
+            "preparationAndEntryWallMs": 4553,
+            "returnAndManagementStartedMs": 1791448208137,
+            "returnAndManagementWallMs": 79209
+          },
+          "growthActions": []
+        }
+      ]
+    }
+  ],
+  "freshChain": {
+    "id": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+    "definitionId": "gray_felt_glove",
+    "source": {
+      "fragmentId": "frag-outdoor",
+      "nodeId": "r100-contaminant-contested-1",
+      "runId": "93e4d1e1-1ef4-4140-b7e9-148143ff7a7c"
+    },
+    "obtained": {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json",
+        "sha256": "94631435f587be2cdc00972adc4a1eb60529aced873664f49cd2733e58c0e12d"
+      },
+      "ordinal": 1,
+      "runId": "93e4d1e1-1ef4-4140-b7e9-148143ff7a7c"
+    },
+    "offered": {
+      "ordinal": 3,
+      "runId": "a8d9bda4-1820-4f1c-abcf-ac3b7437ed64"
+    },
+    "matured": {
+      "ordinal": 4,
+      "runId": "6da99a8e-21f5-49a6-aa9b-f22708d9ce44",
+      "uses": 6
+    },
+    "equippedAndConsumed": {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i13/r2-earned-glove/report.json",
+        "sha256": "3cade3e8d0396593915e604ba42cf570e240b149429826f23e7e4a1321098838"
+      },
+      "ordinal": 1,
+      "runId": "0912b573-b688-4d37-878d-09a471c891d9",
+      "entryUses": 6,
+      "returnedUses": 5,
+      "actions": [
+        [
+          "catalog:0912b573-b688-4d37-878d-09a471c891d9:1",
+          {
+            "itemId": "CAT_93e4d1e1-1ef4-4140-b7e9-148143ff7a7c_r100-contaminant-contested-1",
+            "broken": false,
+            "usesLeft": 5,
+            "definitionId": "gray_felt_glove",
+            "catalogVersion": "contaminant-v1"
+          }
+        ]
+      ]
+    },
+    "status": "same-item-natural-acquisition-offering-maturity-equip-consumption-chain-verified",
+    "effectSemantics": "Separate actual window review required; charge receipts alone do not establish useful silence."
+  },
+  "limitations": [
+    "R2 standalone audit uses segment-initial local HP for its diagnostic debt; this bridge is authoritative for original 51/100/51 comparisons.",
+    "B begins with 26 kindling of pre-existing service debt; it is not reset to zero or described as healthy.",
+    "The glove is newly acquired within R1, not an old earned ancestor item merely because it enters R2 already mature.",
+    "This one supply chain is not recovery of the original compass/dash pair and does not establish sustainable full-loadout or weapon supply.",
+    "R1 and R2 different policies, worlds, tides, equipment and timing preclude a single-cause estimate or general long-term balance claim."
+  ]
+}

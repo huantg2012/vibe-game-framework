@@ -1,0 +1,1050 @@
+{
+  "recordedDate": "2026-10-08",
+  "status": "pass",
+  "type": "read-only historical cash reconciliation; not a new run or complete asset valuation",
+  "source": {
+    "path": "docs/qa/artifacts/r100-p13/natural-outcomes.json",
+    "sha256": "e78fd7e91f31409d82fe80921c4752261393d3a58040057b5f19919773d46a00"
+  },
+  "sequences": [
+    {
+      "id": "low-growth",
+      "origin": "independent-new-save",
+      "sources": [
+        {
+          "path": "docs/qa/artifacts/r100-p13/natural-low/report.json",
+          "sha256": "0adc38487f140abe78c5bd94f7de637dd345eed1021fe4824588502222cf8a68"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-p13/natural-low-continuation/report.json",
+          "sha256": "817472badcf0b86362fefe79c91a351dc4df19d463131d04da416dbbe7a84544"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-p13/natural-low-final/report.json",
+          "sha256": "87f283e511dc4ddaccb4083f61d360129371939ff1e325af8aee2bd8e89ccc16"
+        }
+      ],
+      "trips": 30,
+      "byGrade": {
+        "low": {
+          "trips": 30,
+          "banked": 408,
+          "repair": 183,
+          "growth": 205,
+          "cashAfterRepair": 225,
+          "deaths": 0
+        },
+        "medium": {
+          "trips": 0,
+          "banked": 0,
+          "repair": 0,
+          "growth": 0,
+          "cashAfterRepair": 0,
+          "deaths": 0
+        },
+        "severe": {
+          "trips": 0,
+          "banked": 0,
+          "repair": 0,
+          "growth": 0,
+          "cashAfterRepair": 0,
+          "deaths": 0
+        }
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "2e6ede84-8ba3-45f1-840b-a22215fca161",
+          "banked": 5,
+          "repair": 0,
+          "growth": 0,
+          "cashAfterRepair": 5
+        },
+        {
+          "ordinal": 2,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "27f9bc4a-3c2f-4678-a76b-cde5c182457a",
+          "banked": 8,
+          "repair": 0,
+          "growth": 10,
+          "cashAfterRepair": 8
+        },
+        {
+          "ordinal": 3,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "4a7e878e-0fa5-4ebc-8825-70cee1b4aff9",
+          "banked": 8,
+          "repair": 4,
+          "growth": 0,
+          "cashAfterRepair": 4
+        },
+        {
+          "ordinal": 4,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "cacae3b1-506f-4488-8564-7892744fe206",
+          "banked": 8,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 3
+        },
+        {
+          "ordinal": 5,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "64720c8c-43aa-4fff-b0a5-76f829e10eea",
+          "banked": 8,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 3
+        },
+        {
+          "ordinal": 6,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "bc200fa5-a2a4-46f5-9a25-b80ccfe62d34",
+          "banked": 8,
+          "repair": 6,
+          "growth": 9,
+          "cashAfterRepair": 2
+        },
+        {
+          "ordinal": 7,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "bdfe22dd-b4ae-41b8-9091-2e0958bdf38b",
+          "banked": 14,
+          "repair": 2,
+          "growth": 10,
+          "cashAfterRepair": 12
+        },
+        {
+          "ordinal": 8,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "69bafc8a-7f3f-4c1b-babe-f556a8c8d41f",
+          "banked": 8,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 3
+        },
+        {
+          "ordinal": 9,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "c0340f2e-c530-4d11-87a3-a4133c4e064f",
+          "banked": 14,
+          "repair": 4,
+          "growth": 11,
+          "cashAfterRepair": 10
+        },
+        {
+          "ordinal": 10,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "3838f4a1-9198-4192-a21f-f82922fbd8bb",
+          "banked": 14,
+          "repair": 5,
+          "growth": 12,
+          "cashAfterRepair": 9
+        },
+        {
+          "ordinal": 11,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "caccc9eb-c358-4422-b6a3-bf244219ff76",
+          "banked": 14,
+          "repair": 6,
+          "growth": 0,
+          "cashAfterRepair": 8
+        },
+        {
+          "ordinal": 12,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "9248dc7b-753c-4b6a-ac6d-16956305b181",
+          "banked": 14,
+          "repair": 6,
+          "growth": 12,
+          "cashAfterRepair": 8
+        },
+        {
+          "ordinal": 13,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "40c0b289-37f7-4905-80e5-a4d838360b0c",
+          "banked": 5,
+          "repair": 10,
+          "growth": 0,
+          "cashAfterRepair": -5
+        },
+        {
+          "ordinal": 14,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "fa3c944a-fd24-4f87-9c66-dca8d26ba574",
+          "banked": 5,
+          "repair": 6,
+          "growth": 0,
+          "cashAfterRepair": -1
+        },
+        {
+          "ordinal": 15,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "e39384f8-7fc7-4f19-bd7e-da25b7761e94",
+          "banked": 8,
+          "repair": 8,
+          "growth": 0,
+          "cashAfterRepair": 0
+        },
+        {
+          "ordinal": 16,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "f60af7ae-a85d-4ebf-9258-b502459d8e3e",
+          "banked": 14,
+          "repair": 3,
+          "growth": 0,
+          "cashAfterRepair": 11
+        },
+        {
+          "ordinal": 17,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "01f753b0-56e8-4336-933a-6ed35452096a",
+          "banked": 14,
+          "repair": 6,
+          "growth": 13,
+          "cashAfterRepair": 8
+        },
+        {
+          "ordinal": 18,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "eb0b3d96-4344-4550-87e9-ba0b95e7eb73",
+          "banked": 20,
+          "repair": 5,
+          "growth": 14,
+          "cashAfterRepair": 15
+        },
+        {
+          "ordinal": 19,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "4e999d83-66d8-4467-9676-9893580741b0",
+          "banked": 8,
+          "repair": 7,
+          "growth": 0,
+          "cashAfterRepair": 1
+        },
+        {
+          "ordinal": 20,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "d3e17171-6467-4e02-a4a2-a327ee789067",
+          "banked": 15,
+          "repair": 8,
+          "growth": 0,
+          "cashAfterRepair": 7
+        },
+        {
+          "ordinal": 21,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "bf5f3038-8316-49ab-be7a-5311d560517c",
+          "banked": 13,
+          "repair": 8,
+          "growth": 16,
+          "cashAfterRepair": 5
+        },
+        {
+          "ordinal": 22,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "53f7d5c9-fbe2-42cd-a263-d71c567511f6",
+          "banked": 20,
+          "repair": 5,
+          "growth": 17,
+          "cashAfterRepair": 15
+        },
+        {
+          "ordinal": 23,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "11d5a88b-9729-472e-aa23-0d2e871c94b9",
+          "banked": 15,
+          "repair": 17,
+          "growth": 0,
+          "cashAfterRepair": -2
+        },
+        {
+          "ordinal": 24,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "7e932b8d-fc82-4e89-8264-62abfa8d1aa1",
+          "banked": 19,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 14
+        },
+        {
+          "ordinal": 25,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "4fb2c13b-4d3a-46df-8018-7ddc12b3a855",
+          "banked": 25,
+          "repair": 6,
+          "growth": 18,
+          "cashAfterRepair": 19
+        },
+        {
+          "ordinal": 26,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "87a1ee48-277c-4e0c-9d52-86eae5bc0c8d",
+          "banked": 19,
+          "repair": 7,
+          "growth": 19,
+          "cashAfterRepair": 12
+        },
+        {
+          "ordinal": 27,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "2e038080-3a09-4524-99db-dc30caf23768",
+          "banked": 25,
+          "repair": 10,
+          "growth": 0,
+          "cashAfterRepair": 15
+        },
+        {
+          "ordinal": 28,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "0ff5d0cc-4723-4460-a3ba-bc62b895a03d",
+          "banked": 25,
+          "repair": 8,
+          "growth": 21,
+          "cashAfterRepair": 17
+        },
+        {
+          "ordinal": 29,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "f30ae9fd-a28c-4cd8-be91-6d566bb5b7ec",
+          "banked": 10,
+          "repair": 8,
+          "growth": 0,
+          "cashAfterRepair": 2
+        },
+        {
+          "ordinal": 30,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "4325cd09-97dc-4260-87f2-744ad2c83644",
+          "banked": 25,
+          "repair": 8,
+          "growth": 23,
+          "cashAfterRepair": 17
+        }
+      ]
+    },
+    {
+      "id": "medium-growth",
+      "origin": "independent-new-save",
+      "sources": [
+        {
+          "path": "docs/qa/artifacts/r100-p13/natural-medium/report.json",
+          "sha256": "b6b3f80e2d9ea38f161911f8ee38d53f0b8bc34e0da55742e571cc72d34f9808"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-p13/natural-medium-continuation/report.json",
+          "sha256": "071a60fb923f33eb725f13f8480d27ef2028db1bec6d0559408bbef0b338e643"
+        }
+      ],
+      "trips": 30,
+      "byGrade": {
+        "low": {
+          "trips": 15,
+          "banked": 117,
+          "repair": 79,
+          "growth": 10,
+          "cashAfterRepair": 38,
+          "deaths": 0
+        },
+        "medium": {
+          "trips": 15,
+          "banked": 91,
+          "repair": 89,
+          "growth": 30,
+          "cashAfterRepair": 2,
+          "deaths": 7
+        },
+        "severe": {
+          "trips": 0,
+          "banked": 0,
+          "repair": 0,
+          "growth": 0,
+          "cashAfterRepair": 0,
+          "deaths": 0
+        }
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "19fda700-a4fc-4778-a90c-693bfdac8ab9",
+          "banked": 5,
+          "repair": 0,
+          "growth": 0,
+          "cashAfterRepair": 5
+        },
+        {
+          "ordinal": 2,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "21297909-9f28-41d6-b359-7a8d7cb46e4f",
+          "banked": 5,
+          "repair": 0,
+          "growth": 4,
+          "cashAfterRepair": 5
+        },
+        {
+          "ordinal": 3,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "c92b64aa-e08e-4e7a-994b-27498cd82bdb",
+          "banked": 5,
+          "repair": 4,
+          "growth": 0,
+          "cashAfterRepair": 1
+        },
+        {
+          "ordinal": 4,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "ac9f0982-9bef-4126-8fdf-bf71fb2bca41",
+          "banked": 5,
+          "repair": 4,
+          "growth": 6,
+          "cashAfterRepair": 1
+        },
+        {
+          "ordinal": 5,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "86db4153-86fe-413b-a895-e63b7433bfad",
+          "banked": 11,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 6
+        },
+        {
+          "ordinal": 6,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "9d368744-21e6-4cc0-873a-0f5d55e9958f",
+          "banked": 14,
+          "repair": 6,
+          "growth": 9,
+          "cashAfterRepair": 8
+        },
+        {
+          "ordinal": 7,
+          "grade": "medium",
+          "outcome": "death",
+          "runId": "162423fe-329e-44a9-9852-3bb7457a5c71",
+          "banked": 0,
+          "repair": 4,
+          "growth": 0,
+          "cashAfterRepair": -4
+        },
+        {
+          "ordinal": 8,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "9f4eb4b9-1d66-4209-8db0-149af6b442dc",
+          "banked": 5,
+          "repair": 2,
+          "growth": 0,
+          "cashAfterRepair": 3
+        },
+        {
+          "ordinal": 9,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "4ef5d510-4b4c-47a0-9738-cf73842d9320",
+          "banked": 11,
+          "repair": 3,
+          "growth": 0,
+          "cashAfterRepair": 8
+        },
+        {
+          "ordinal": 10,
+          "grade": "medium",
+          "outcome": "death",
+          "runId": "356e32b1-fe75-4e02-b879-58e3db80b772",
+          "banked": 0,
+          "repair": 4,
+          "growth": 0,
+          "cashAfterRepair": -4
+        },
+        {
+          "ordinal": 11,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "f4f7ed13-b1d1-4779-ab65-a66ae2636509",
+          "banked": 8,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 3
+        },
+        {
+          "ordinal": 12,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "8a885079-3217-4b13-8d12-bd899df95d9e",
+          "banked": 17,
+          "repair": 6,
+          "growth": 10,
+          "cashAfterRepair": 11
+        },
+        {
+          "ordinal": 13,
+          "grade": "medium",
+          "outcome": "death",
+          "runId": "c7f15f10-37cb-4fb7-b0f4-e199499cc16c",
+          "banked": 0,
+          "repair": 6,
+          "growth": 0,
+          "cashAfterRepair": -6
+        },
+        {
+          "ordinal": 14,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "4852dfe0-b481-4006-8bf0-26fa15a9ed37",
+          "banked": 8,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 3
+        },
+        {
+          "ordinal": 15,
+          "grade": "medium",
+          "outcome": "death",
+          "runId": "6138ad48-0399-4dc6-badd-992dd9707450",
+          "banked": 0,
+          "repair": 4,
+          "growth": 0,
+          "cashAfterRepair": -4
+        },
+        {
+          "ordinal": 16,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "930171d1-8e2f-48bd-a787-a936f753e271",
+          "banked": 8,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 3
+        },
+        {
+          "ordinal": 17,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "bbcd4c9a-494d-426d-a470-8c68d1b4c7fa",
+          "banked": 8,
+          "repair": 6,
+          "growth": 0,
+          "cashAfterRepair": 2
+        },
+        {
+          "ordinal": 18,
+          "grade": "medium",
+          "outcome": "death",
+          "runId": "764ea218-240a-4693-b611-661b1ee24964",
+          "banked": 0,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": -5
+        },
+        {
+          "ordinal": 19,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "13945e3d-cfb5-4166-8228-fed309023ce3",
+          "banked": 14,
+          "repair": 10,
+          "growth": 0,
+          "cashAfterRepair": 4
+        },
+        {
+          "ordinal": 20,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "1e1dced3-04d2-464b-a8ed-c10fcf9bc3d0",
+          "banked": 5,
+          "repair": 7,
+          "growth": 0,
+          "cashAfterRepair": -2
+        },
+        {
+          "ordinal": 21,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "8f780a31-fcab-47f6-8a10-eb20c02eeb36",
+          "banked": 11,
+          "repair": 6,
+          "growth": 0,
+          "cashAfterRepair": 5
+        },
+        {
+          "ordinal": 22,
+          "grade": "medium",
+          "outcome": "death",
+          "runId": "b998789e-1788-4353-a8ee-b335ff2fa114",
+          "banked": 0,
+          "repair": 6,
+          "growth": 0,
+          "cashAfterRepair": -6
+        },
+        {
+          "ordinal": 23,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "a65f355c-4b57-44ee-9051-6c63d3fa13f9",
+          "banked": 5,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 0
+        },
+        {
+          "ordinal": 24,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "02dfb9b4-c187-4cfc-bfc0-03f8a5da7091",
+          "banked": 14,
+          "repair": 6,
+          "growth": 0,
+          "cashAfterRepair": 8
+        },
+        {
+          "ordinal": 25,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "3e384f79-d7ff-422d-992b-e37995359fd4",
+          "banked": 8,
+          "repair": 8,
+          "growth": 0,
+          "cashAfterRepair": 0
+        },
+        {
+          "ordinal": 26,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "f351e272-6d82-4ecd-a18b-ef4c2b9ed16b",
+          "banked": 11,
+          "repair": 7,
+          "growth": 11,
+          "cashAfterRepair": 4
+        },
+        {
+          "ordinal": 27,
+          "grade": "medium",
+          "outcome": "death",
+          "runId": "1e566cab-d3a6-4dc4-80f6-3bb300323f72",
+          "banked": 0,
+          "repair": 9,
+          "growth": 0,
+          "cashAfterRepair": -9
+        },
+        {
+          "ordinal": 28,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "d40fdecf-4058-479c-8a6c-c7f20e1b91d4",
+          "banked": 11,
+          "repair": 11,
+          "growth": 0,
+          "cashAfterRepair": 0
+        },
+        {
+          "ordinal": 29,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "9b5c480b-60b0-4d1a-bf1f-c4cbb77c71ca",
+          "banked": 11,
+          "repair": 11,
+          "growth": 0,
+          "cashAfterRepair": 0
+        },
+        {
+          "ordinal": 30,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "1c23bb01-8911-44ef-ac12-edeca4f4784d",
+          "banked": 8,
+          "repair": 8,
+          "growth": 0,
+          "cashAfterRepair": 0
+        }
+      ]
+    },
+    {
+      "id": "prepared-natural",
+      "origin": "branch-of-real-low-return12",
+      "sources": [
+        {
+          "path": "docs/qa/artifacts/r100-p13/prepared-natural/report.json",
+          "sha256": "0b4ed2895c0ddd726dacd4df70208dd4c375acce40a2184415e2d90fb16c2b82"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-p13/prepared-natural-final/report.json",
+          "sha256": "fdc6bd62a4191cc1a5b15f71ce3a03bc0095f68feae93c1ab4a7c0d07fef4819"
+        }
+      ],
+      "trips": 30,
+      "byGrade": {
+        "low": {
+          "trips": 10,
+          "banked": 165,
+          "repair": 80,
+          "growth": 63,
+          "cashAfterRepair": 85,
+          "deaths": 0
+        },
+        "medium": {
+          "trips": 10,
+          "banked": 170,
+          "repair": 94,
+          "growth": 65,
+          "cashAfterRepair": 76,
+          "deaths": 0
+        },
+        "severe": {
+          "trips": 10,
+          "banked": 51,
+          "repair": 69,
+          "growth": 13,
+          "cashAfterRepair": -18,
+          "deaths": 2
+        }
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "3a392282-ae66-4b4f-8d32-ce723f6d36ff",
+          "banked": 14,
+          "repair": 10,
+          "growth": 0,
+          "cashAfterRepair": 4
+        },
+        {
+          "ordinal": 2,
+          "grade": "severe",
+          "outcome": "extract",
+          "runId": "c82167f4-e2b7-4947-98f8-bd9a1fafb876",
+          "banked": 3,
+          "repair": 7,
+          "growth": 0,
+          "cashAfterRepair": -4
+        },
+        {
+          "ordinal": 3,
+          "grade": "severe",
+          "outcome": "extract",
+          "runId": "03b0e61b-73c6-4577-aba1-dfd964cdf049",
+          "banked": 0,
+          "repair": 7,
+          "growth": 0,
+          "cashAfterRepair": -7
+        },
+        {
+          "ordinal": 4,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "9e57e958-0582-438e-ad15-a7a17cdb14d9",
+          "banked": 2,
+          "repair": 4,
+          "growth": 0,
+          "cashAfterRepair": -2
+        },
+        {
+          "ordinal": 5,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "a397879e-3975-4041-b4e7-c2a8958abba9",
+          "banked": 14,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": 9
+        },
+        {
+          "ordinal": 6,
+          "grade": "severe",
+          "outcome": "death",
+          "runId": "053b0afd-f408-4d2d-b76d-a6dc0f9f2875",
+          "banked": 0,
+          "repair": 5,
+          "growth": 0,
+          "cashAfterRepair": -5
+        },
+        {
+          "ordinal": 7,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "db2f0e05-b0d6-4c7a-996c-98bfa63d8d1f",
+          "banked": 5,
+          "repair": 8,
+          "growth": 0,
+          "cashAfterRepair": -3
+        },
+        {
+          "ordinal": 8,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "b08a3121-77b0-46c9-9611-548b1883fad6",
+          "banked": 17,
+          "repair": 7,
+          "growth": 0,
+          "cashAfterRepair": 10
+        },
+        {
+          "ordinal": 9,
+          "grade": "severe",
+          "outcome": "extract",
+          "runId": "d7ba2449-1c52-4060-93d4-cc4ff4537ec7",
+          "banked": 19,
+          "repair": 7,
+          "growth": 13,
+          "cashAfterRepair": 12
+        },
+        {
+          "ordinal": 10,
+          "grade": "severe",
+          "outcome": "extract",
+          "runId": "e7b90d9f-9980-4e7b-8a48-eeb586b60336",
+          "banked": 5,
+          "repair": 6,
+          "growth": 0,
+          "cashAfterRepair": -1
+        },
+        {
+          "ordinal": 11,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "b002a3d1-3174-4f83-af71-fb158acfa6c5",
+          "banked": 22,
+          "repair": 6,
+          "growth": 14,
+          "cashAfterRepair": 16
+        },
+        {
+          "ordinal": 12,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "70a1fdb6-e2a6-4515-991a-746994155965",
+          "banked": 17,
+          "repair": 20,
+          "growth": 0,
+          "cashAfterRepair": -3
+        },
+        {
+          "ordinal": 13,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "3c9d4911-d397-446e-8b0a-3ff96e47318f",
+          "banked": 10,
+          "repair": 11,
+          "growth": 0,
+          "cashAfterRepair": -1
+        },
+        {
+          "ordinal": 14,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "42823725-0ab8-4ac2-8935-d0aa8800364a",
+          "banked": 14,
+          "repair": 9,
+          "growth": 0,
+          "cashAfterRepair": 5
+        },
+        {
+          "ordinal": 15,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "525acf87-88fa-4761-9a3d-00a9302fbf2a",
+          "banked": 30,
+          "repair": 14,
+          "growth": 16,
+          "cashAfterRepair": 16
+        },
+        {
+          "ordinal": 16,
+          "grade": "severe",
+          "outcome": "death",
+          "runId": "37ed9b2a-96a7-4524-953f-090611b7442f",
+          "banked": 0,
+          "repair": 2,
+          "growth": 0,
+          "cashAfterRepair": -2
+        },
+        {
+          "ordinal": 17,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "f04cbdc0-cf9a-45e9-9e7f-1584d3df54b9",
+          "banked": 17,
+          "repair": 15,
+          "growth": 0,
+          "cashAfterRepair": 2
+        },
+        {
+          "ordinal": 18,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "ebaae6b1-6454-4b41-ac15-370928fd5ce1",
+          "banked": 19,
+          "repair": 9,
+          "growth": 0,
+          "cashAfterRepair": 10
+        },
+        {
+          "ordinal": 19,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "77aaadf9-a8cb-4f64-a7cb-5e82925b625d",
+          "banked": 34,
+          "repair": 9,
+          "growth": 35,
+          "cashAfterRepair": 25
+        },
+        {
+          "ordinal": 20,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "f8588d80-effa-498c-a47e-39aca41bc3e5",
+          "banked": 25,
+          "repair": 5,
+          "growth": 19,
+          "cashAfterRepair": 20
+        },
+        {
+          "ordinal": 21,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "9306eb82-57be-48c8-9c81-0c0103a0fa10",
+          "banked": 16,
+          "repair": 4,
+          "growth": 21,
+          "cashAfterRepair": 12
+        },
+        {
+          "ordinal": 22,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "a816323f-28cb-484c-9c9a-275bbb2d990b",
+          "banked": 22,
+          "repair": 7,
+          "growth": 0,
+          "cashAfterRepair": 15
+        },
+        {
+          "ordinal": 23,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "f9dd2a90-468f-4539-ac11-a098ec25da60",
+          "banked": 16,
+          "repair": 6,
+          "growth": 23,
+          "cashAfterRepair": 10
+        },
+        {
+          "ordinal": 24,
+          "grade": "low",
+          "outcome": "extract",
+          "runId": "4a379678-7fcc-4ea8-aa6a-acc8b605e3e5",
+          "banked": 17,
+          "repair": 7,
+          "growth": 0,
+          "cashAfterRepair": 10
+        },
+        {
+          "ordinal": 25,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "13fa886f-caca-4077-9e94-f79c730c0341",
+          "banked": 10,
+          "repair": 7,
+          "growth": 0,
+          "cashAfterRepair": 3
+        },
+        {
+          "ordinal": 26,
+          "grade": "severe",
+          "outcome": "extract",
+          "runId": "6387aff0-839e-4cd4-9e13-cf224404848f",
+          "banked": 0,
+          "repair": 10,
+          "growth": 0,
+          "cashAfterRepair": -10
+        },
+        {
+          "ordinal": 27,
+          "grade": "severe",
+          "outcome": "extract",
+          "runId": "6193376a-6e0c-4a7b-b305-29c3f6c1a5f8",
+          "banked": 18,
+          "repair": 9,
+          "growth": 0,
+          "cashAfterRepair": 9
+        },
+        {
+          "ordinal": 28,
+          "grade": "severe",
+          "outcome": "extract",
+          "runId": "48768c7e-1aca-4711-a00f-2a41c06c6fc2",
+          "banked": 0,
+          "repair": 8,
+          "growth": 0,
+          "cashAfterRepair": -8
+        },
+        {
+          "ordinal": 29,
+          "grade": "severe",
+          "outcome": "extract",
+          "runId": "b92a00e4-58fd-4f8f-8000-0f6605f1ae51",
+          "banked": 6,
+          "repair": 8,
+          "growth": 0,
+          "cashAfterRepair": -2
+        },
+        {
+          "ordinal": 30,
+          "grade": "medium",
+          "outcome": "extract",
+          "runId": "c7d1f0a3-7c05-4524-9f72-7d53f0371a3b",
+          "banked": 14,
+          "repair": 11,
+          "growth": 0,
+          "cashAfterRepair": 3
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Revision3 historical ledger; current geometry is revision6.",
+    "Only recorded cash, actual management costs and failure denominators were rechecked here. No new play or full old-inventory audit.",
+    "No invented kindling prices for tools/offering slots; afterRepairNet is not full asset profit.",
+    "Two independent fresh saves plus one earned shared-ancestor branch; no paired grade causality."
+  ]
+}

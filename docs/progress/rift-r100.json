@@ -44,10 +44,10 @@
   },
   "resume": {
     "iteration": "R100-I13",
-    "batch": "I10–I12已结案；I13尚未启动",
-    "nextAction": "下一项已规划工作为I13等级选择、自然准备与长期净回报；随后I14真实弱设备、实际听感R100-R10与用户终验。当前只完成用户授权的I10–I12。",
-    "lastCompleted": "修订6的108世界/324等级已正式接入并完成内部资格绑定；I10/I11/I12按72/92/108顺序结案。用户授权性能74项、资源10同图/18混合和8语义反例抽查；原失败及未测范围保留。",
-    "headline": "I10–I12完成 · 12/14轮 · 108世界/324等级",
+    "batch": "I13本轮28趟收口；P46验证路线已修，P47准备与恢复待整改",
+    "nextAction": "按I13任务末节预登记针对性时机/预算/同标准恢复诊断；保留A12和B7真实主链，旧局分支不抵自然新供给。当前不继续加样、不改奖励；I13未结案，I14未启动。",
+    "lastCompleted": "I13完成9固定诊断＋12自然续行＋7有因复验及独立资产核账；低中主链真实支付33成长且服务完整，新物消费链成立。原亏损、两次重度降低与B末服务债19保留。108世界/324等级既有正式内部资格保持，12/14轮已结。",
+    "headline": "I13待整改 · 28趟已审 · 12/14轮已结 · 108世界/324等级",
     "updatedDate": "2026-10-08",
     "evidenceRevision": "r100-native-v3-revision-6-internal-rc-20261008"
   },
@@ -7777,8 +7777,8 @@
       "dependencies": [
         "R100-I12"
       ],
-      "state": "planned",
-      "stage": "not-started",
+      "state": "changes-required",
+      "stage": "experience-review",
       "goal": "证明玩家主动选级形成持续内容深度，重度既值得冒险又不是强制日常。",
       "technical": "用自然库存与真实取整、消耗、供奉周转、死亡/弃局损失核算净收益；覆盖不同修复状态、技能/工具与负重，测试低档速刷、重档安全堆、反复取消及恢复重抽；必要的平衡修订使相关包/级证据失效并重验。",
       "visual": "审查多趟重度后的视觉/听觉疲劳、预兆辨认和低中吸引力；峰谷与世界身份不能因统一压力模板丢失。",
@@ -7796,10 +7796,118 @@
         "专家代理观察不称真人研究；用户实际反馈单列"
       ],
       "exit": "108/324资格保持，等级选择和可持续准备/净回报证据通过；未通过则继续整改，不因内容数量完成而发布。",
-      "actualRevision": null,
-      "gateResults": [],
-      "issueIds": [],
-      "evidenceIds": []
+      "actualRevision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "gateResults": [
+        {
+          "id": "cash-asset-accounting",
+          "status": "pass",
+          "label": "现金、设施、成长及新旧物件独立核账（限定证据）",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [
+            "R100-E-I13-ACCOUNTING",
+            "R100-E-I13-ACCOUNTING-NEGATIVES",
+            "R100-E-I13-PAIRED-NINE",
+            "R100-E-I13-NATURAL-TWELVE",
+            "R100-E-I13-R2-SEVEN",
+            "R100-E-I13-FRESH-AND-SERVICE"
+          ]
+        },
+        {
+          "id": "cancel-persistence-integer-contracts",
+          "status": "pass",
+          "label": "取消/恢复/事务与整数所得合同",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [
+            "R100-E-I13-CONTRACTS"
+          ]
+        },
+        {
+          "id": "natural-preparation-and-recovery",
+          "status": "changes-required",
+          "label": "两类自然准备、重度预算与后续恢复未成立",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [
+            "R100-E-I13-NATURAL-TWELVE"
+          ]
+        },
+        {
+          "id": "sustainable-grade-value",
+          "status": "changes-required",
+          "label": "完整工具成本、长期等级价值与失败恢复仍未通过",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [
+            "R100-E-I13-FRESH-AND-SERVICE"
+          ]
+        },
+        {
+          "id": "entry-farming-and-fatigue",
+          "status": "pending",
+          "label": "入口速刷真实往返与连续视听疲劳未验证",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": []
+        },
+        {
+          "id": "unchanged-production-and-execution",
+          "status": "pass",
+          "label": "生产1397来源保持，28趟冻结执行与依赖绑定通过",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [
+            "R100-E-I13-EXECUTION-28"
+          ]
+        },
+        {
+          "id": "bounded-low-medium-maintenance-and-growth",
+          "status": "pass",
+          "label": "限定低中主链12趟维持固定服务并真实支付33成长",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [
+            "R100-E-I13-FRESH-AND-SERVICE"
+          ]
+        },
+        {
+          "id": "fresh-item-to-consumption",
+          "status": "pass",
+          "label": "当支新物搜得→成熟→实际消费链（单件限定）",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [
+            "R100-E-I13-FRESH-AND-SERVICE"
+          ]
+        },
+        {
+          "id": "limited-earned-item-action-windows",
+          "status": "pass",
+          "label": "新烟斗Host压制及新手套消声覆盖真实翻找（限定窗口）",
+          "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+          "evidenceIds": [
+            "R100-E-I13-FINAL-REVIEW"
+          ]
+        }
+      ],
+      "issueIds": [
+        "R100-P46",
+        "R100-P47"
+      ],
+      "evidenceIds": [
+        "R100-E-I13-ACCOUNTING",
+        "R100-E-I13-ACCOUNTING-NEGATIVES",
+        "R100-E-I13-CONTRACTS",
+        "R100-E-I13-PAIRED-NINE",
+        "R100-E-I13-NATURAL-TWELVE",
+        "R100-E-I13-R2-SEVEN",
+        "R100-E-I13-FRESH-AND-SERVICE",
+        "R100-E-I13-EXECUTION-28",
+        "R100-E-I13-FINAL-REVIEW"
+      ],
+      "rework": {
+        "state": "open",
+        "reason": "28趟有限核验及有因路线修正完成，仍缺两类成套自然准备、B新增信息窗口、自然重度后恢复与完整长期经济证据；不因样本结束关闭I13。",
+        "task": "docs/tasks/rift-r100-i13.md",
+        "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+        "evidenceIds": [
+          "R100-E-I13-FRESH-AND-SERVICE",
+          "R100-E-I13-EXECUTION-28"
+        ]
+      }
     },
     {
       "id": "R100-I14",
@@ -53452,6 +53560,96 @@
         "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/root-closure-approval.json",
         "sha256": "7df9f47a7ebd3b6ccc459d5c64969777d97fe3f4bb78f41b629cb444afc4c79a"
       }
+    },
+    {
+      "id": "R100-E-I13-ACCOUNTING",
+      "kind": "automated",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/historical-economy-audit-final.json",
+      "documentSha256": "87e82d5a888c8f2e148c0103cf78cdb6baceb6ecc91c2f6c6d38883cd89a9daa",
+      "scope": "独立重核修订6原48趟192存档、23379断言，现金/维修/成长及祖先和当支新物来源分账。",
+      "limitations": "只读重核历史，不是新增48趟；工具/武器不虚构薪柴汇率，不代签当前长期净收益。"
+    },
+    {
+      "id": "R100-E-I13-ACCOUNTING-NEGATIVES",
+      "kind": "automated",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/accounting-negative-check-final.json",
+      "documentSha256": "107e1026c687e53406a97f9419c680a0c31270a785dbb81923725e48c4518da3",
+      "scope": "7项篡改真实存档并重签文件哈希的语义反例被拒绝，原始正例及一次性维修额度两边界通过。",
+      "limitations": "核账器正确性检查，不是生产游戏体验或完整经济证明。"
+    },
+    {
+      "id": "R100-E-I13-CONTRACTS",
+      "kind": "automated",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/contracts/checks.json",
+      "documentSha256": "0f5f25de3a74cd25168cef64c6d2b30313a42c556e2eb57571dd92936f2d04c7",
+      "scope": "16项异步出发、5项近期世界事务、363实际薪柴结算、1800修复对比、94阈值及2保存链通过。",
+      "limitations": "现有有界合同；不关闭未实测入口速刷、长期经营或用户体验。"
+    },
+    {
+      "id": "R100-E-I13-PAIRED-NINE",
+      "kind": "runtime",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/paired-nine-accounting-final.json",
+      "documentSha256": "96242fdb13d6c68972337e3f7b77f07edc5d5c8af14e34894be5ffa4b1bd9295",
+      "scope": "修订6三个固定世界×三级共9实际输入配对诊断；9撤0死，36存档4611断言。",
+      "limitations": "共用cycle42已赚得成熟祖先；显式固定世界/种子与全地形路由辅助，不代表初见自然世界或总体胜率。"
+    },
+    {
+      "id": "R100-E-I13-NATURAL-TWELVE",
+      "kind": "runtime",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/natural-twelve-accounting-final.json",
+      "documentSha256": "331dab9b9f955141f699f6f3ff54fa86d08d39fd735a6c0707c1aeb080e90600",
+      "scope": "R1两条各6趟自然随机续行完成，48存档6042断言；A收入106/修126，B65/89且原服务欠修26。",
+      "limitations": "B计划2次重度均降低，无重度后恢复证据。已确认继承验证政策排除距入口320像素内已见目标，亏损不能单独归因生产奖励。"
+    },
+    {
+      "id": "R100-E-I13-R2-SEVEN",
+      "kind": "runtime",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/r2-seven-accounting-final.json",
+      "documentSha256": "55592280903bbca652fb1a13da2fcb113f27848e91b9e8a84174cbcbe836cb31",
+      "scope": "R2限定7趟实际续行全部完成，28存档4027断言；A修正路线后6趟收入142/维修90/成长33。",
+      "limitations": "只修QA策略；随机世界、实际末态与策略变化，不是单因素对照或长期净收益。"
+    },
+    {
+      "id": "R100-E-I13-FRESH-AND-SERVICE",
+      "kind": "runtime",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/fresh-chain-binding.json",
+      "documentSha256": "3ffef9badf8648e4af8f32b841619e4ea0962bab89f09403a9b88e2d541f17a0",
+      "scope": "R1→R2两支真实末态逐项相同，8冻结依赖与原51/100/51服务标准独立核实；A连续12同服务余量32、真实成长33，B连续7余量−43/欠修19；新物搜得/成熟/消费链成立。",
+      "limitations": "保留原储藏102缓冲到101的1薪差额；新物单链不代表成套工具持续补回。B原两次自然重度降低，不能称重度后恢复。"
+    },
+    {
+      "id": "R100-E-I13-EXECUTION-28",
+      "kind": "runtime",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/overall-execution-receipt.json",
+      "documentSha256": "1d727cfcfd2b9f6689c946199efb1982b9c95efa1019ab0d7951df9bc16b8578",
+      "scope": "28唯一真实runId，实际低16/中9/重3；全部撤离（含1空返）、技术失败0/替换0。19执行依赖绑定与1397生产文件一致核实；自建3031/3032服务关闭。",
+      "limitations": "固定9诊断与19自然趟分开；并行环境不用于性能结论。执行成功不代表持续准备、完整净收益、人审或发布通过。"
+    },
+    {
+      "id": "R100-E-I13-FINAL-REVIEW",
+      "kind": "source",
+      "purpose": "i13-bounded-review",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "path": "docs/qa/artifacts/r100-i13/root-review-disposition.json",
+      "documentSha256": "f80dffe01977f23858bb4df905c8da3de0ad89f45b0e20fa064793dd780db4b1",
+      "scope": "Director按Design/QA冻结文档复核28趟与资产裁决，独立重算最终证据和19执行依赖SHA；限定低中维护/成长与新物实际窗口成立，I13状态changes-required。",
+      "limitations": "不是迭代结案、发布门或人审。生产未改，既有108/324与12/14保持；本轮28停止，后续最小诊断仅已写合同未执行。"
     }
   ],
   "risks": [
@@ -53503,10 +53701,12 @@
       "owner": "design / qa",
       "iteration": "R100-I13",
       "response": "两类准备与自然供给，低中可持续、重度净收益/失败恢复和安全堆刷取并查；数据CSV化。",
-      "observedEvidence": "修订3真实成熟分支10趟重度落袋51/维修69，净薪−18，8撤2死；独立中档组效率不稳定。策略和世界未配对，不能断言档位因果。当前已建立可承担的高风险深搜和成长供给，不承诺高档稳定暴利。",
+      "observedEvidence": "修订3真实成熟分支10趟重度落袋51/维修69，净薪−18，8撤2死；独立中档组效率不稳定。策略和世界未配对，不能断言档位因果。当前已建立可承担的高风险深搜和成长供给，不承诺高档稳定暴利。 I13修订6新28趟独立核账：修正验证路线后A连续12收入248/维修216/成长33、现金24→23、固定服务D0；原储藏缓冲少1HP另计。B连续7收入86/维修110、D19/同服务−43，原两次自然重度计划均降低。成套准备与长期供给未通过，不先改生产奖励。",
       "evidenceIds": [
         "R100-E-COMPLETION-NATURAL-90",
-        "R100-E-COMPLETION-P13-PREPARED"
+        "R100-E-COMPLETION-P13-PREPARED",
+        "R100-E-I13-FRESH-AND-SERVICE",
+        "R100-E-I13-EXECUTION-28"
       ]
     },
     {
@@ -54273,6 +54473,37 @@
         },
         "limitations": "原kind→harness缺口与修复、小合同及初次dry失败保留。本次仅8代表性实际语义反例通过，不宣称89全量。"
       }
+    },
+    {
+      "id": "R100-P46",
+      "title": "内容资格验证路线排除了近处已见合法收获",
+      "severity": "P1",
+      "status": "resolved",
+      "iteration": "R100-I13",
+      "owner": "code / qa",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-R2-SEVEN",
+        "R100-E-I13-EXECUTION-28"
+      ],
+      "note": "QA方法偏差，不是已确认的生产经济缺陷。R1真实亏损全部保留。",
+      "resolution": "R2冻结派生执行器取消距入口320像素目标门与首段强制远行，沿原可见信息/身体路径/风险退路预算实走7趟；原报告两处继承旧文案由独立勘误明确。",
+      "remainingRequirement": "修正后有限低中维护/成长成立；不扩大成普遍长期收益或单因素因果。"
+    },
+    {
+      "id": "R100-P47",
+      "title": "自然准备的跨趟预算、信息收益与重度后恢复仍缺有效证据",
+      "severity": "P1",
+      "status": "open",
+      "iteration": "R100-I13",
+      "owner": "design / qa / code",
+      "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+      "evidenceIds": [
+        "R100-E-I13-NATURAL-TWELVE",
+        "R100-E-I13-FRESH-AND-SERVICE"
+      ],
+      "note": "B首低耗尽短靴，两次计划重度真实降低；探查未形成新增信息窗口，七趟末原服务欠修19且原功能未补回。新手套/烟斗单链不抵成套恢复。当前不据此判生产数值无解。",
+      "remainingRequirement": "按I13任务末节另行预登记最多4趟的时机/跨趟预算/同标准恢复诊断；保留A12、B7真实主链，旧局诊断分支不冒充新供给。本轮28后不再采样，后续实验尚未执行。"
     }
   ],
   "changeLog": [
@@ -54476,6 +54707,16 @@
       "date": "2026-10-08",
       "kind": "verification",
       "note": "I10→I11→I12内部结案：累计72/216、92/276、108/324，现12/14。324生产、342等价、48自然及原生成/固定过程等沿用完成证据；按用户“无需全量”指示，74完整性能样本、10同图+18混合资源及8实际语义反例通过，1性能中断/33未启动保留。新增56实施状态补登记、艺术limitations格式转换两次dry失败均归档；第三次dry/独审/写入及三步CAS均通过。I13/I14planned、R10unverified、版本active、finalAcceptance null，无新增人审或发布批准。"
+    },
+    {
+      "date": "2026-10-08",
+      "kind": "execution",
+      "note": "用户“推迭代13”授权启动R100-I13。以当前修订6内部RC为基线，先核旧48趟完整资产及有限三级对照，再按证据修正。I01–I12结案、人审范围、I14未启动与finalAcceptance null保持。"
+    },
+    {
+      "date": "2026-10-08",
+      "kind": "bounded-i13-review",
+      "summary": "I13本轮28趟有限实跑收口。修复资格代理漏搜近处物的策略偏差；低中主链维护并真实支付33成长，新物消费链有证。P47成套准备、信息窗口、重度后恢复与完整长期经济门仍待整改，I13未结案；无生产源码/CSV变更，108/324与12/14保持。"
     }
   ],
   "qualityPlan": {

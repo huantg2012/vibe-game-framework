@@ -1,0 +1,91 @@
+{
+  "status": "pass",
+  "recordedDate": "2026-10-08",
+  "tool": {
+    "path": "tools/qa/check-r100-i13-accounting.mjs",
+    "sha256": "4c8e910b3d2d009b3809224952063501bf5c437ea4df372d82e54229fb77eb20"
+  },
+  "method": "Mutate real historical state and rehash all four saved files; rejection must come from economic/ownership semantics, not stale bytes.",
+  "cases": [
+    {
+      "name": "unaltered-real-receipt",
+      "expectedFailure": null,
+      "exitCode": 0,
+      "actualFailures": [],
+      "savedBytesRehashedAfterMutation": true,
+      "outcome": "pass"
+    },
+    {
+      "name": "unpaid-extra-cash",
+      "expectedFailure": "Repair and growth cash reconcile",
+      "exitCode": 1,
+      "actualFailures": [
+        "Repair and growth cash reconcile"
+      ],
+      "savedBytesRehashedAfterMutation": true,
+      "outcome": "pass"
+    },
+    {
+      "name": "free-tool-refill-at-management",
+      "expectedFailure": "Management does not refill or mature equipment",
+      "exitCode": 1,
+      "actualFailures": [
+        "Management does not refill or mature equipment"
+      ],
+      "savedBytesRehashedAfterMutation": true,
+      "outcome": "pass"
+    },
+    {
+      "name": "base-held-item-swallowed",
+      "expectedFailure": "Base-held asset remains owned",
+      "exitCode": 1,
+      "actualFailures": [
+        "Base-held asset remains owned"
+      ],
+      "savedBytesRehashedAfterMutation": true,
+      "outcome": "pass"
+    },
+    {
+      "name": "unreceipted-maturity",
+      "expectedFailure": "Maturity has actual offering receipt",
+      "exitCode": 1,
+      "actualFailures": [
+        "Maturity has actual offering receipt"
+      ],
+      "savedBytesRehashedAfterMutation": true,
+      "outcome": "pass"
+    },
+    {
+      "name": "dead-equipped-tool-retained",
+      "expectedFailure": "Death removes carried assets",
+      "exitCode": 1,
+      "actualFailures": [
+        "Death removes carried assets"
+      ],
+      "savedBytesRehashedAfterMutation": true,
+      "outcome": "pass"
+    },
+    {
+      "name": "same-run-free-departure-resource",
+      "expectedFailure": "No departure facility fixture",
+      "exitCode": 1,
+      "actualFailures": [
+        "No departure facility fixture"
+      ],
+      "savedBytesRehashedAfterMutation": true,
+      "outcome": "pass"
+    },
+    {
+      "name": "ancestor-maturity-relabelled-new-supply",
+      "expectedFailure": "Existing item retains original acquisition source",
+      "exitCode": 1,
+      "actualFailures": [
+        "Existing item retains original acquisition source"
+      ],
+      "savedBytesRehashedAfterMutation": true,
+      "outcome": "pass"
+    }
+  ],
+  "integerRepairBonusCases": 2,
+  "gameRuntimeModified": false
+}

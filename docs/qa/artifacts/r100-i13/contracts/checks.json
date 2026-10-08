@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-08",
+  "revision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "async-entry",
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx --import ./tools/recovery/register-css.mjs tools/recovery/check-async-entry.ts",
+      "exitCode": 0,
+      "tool": "tools/recovery/check-async-entry.ts",
+      "toolSha256": "37ca4d61e0d4c581d3dd96790f66c62d0bf1e5237b71fcfb925360842ef3be1a",
+      "log": "docs/qa/artifacts/r100-i13/contracts/async-entry.log",
+      "logSha256": "297b3b0366ba9a670595d0b156517ff024df7c9e7fd02d03c8fee9b29fc66f3a",
+      "scope": "16 session/persistence受控异步场景，通过取消、失败保存重试同冻结身份、替换字节防护；渲染适配。"
+    },
+    {
+      "name": "world-history",
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/inventory/check-world-history.ts",
+      "exitCode": 0,
+      "tool": "tools/inventory/check-world-history.ts",
+      "toolSha256": "7346089d4cc61a5001e2f44f68f7abaaad6587d1a68ba987553c8811dd79a226",
+      "log": "docs/qa/artifacts/r100-i13/contracts/world-history.log",
+      "logSha256": "8400e464d2daf105b12c5b36638466a10dd73def52f85febef420fb779142888",
+      "scope": "5库存/世界历史事务检查；无自然玩法或浏览器证据。"
+    },
+    {
+      "name": "kindling-yield",
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/qa/check-i31-kindling-yield.ts",
+      "exitCode": 0,
+      "tool": "tools/qa/check-i31-kindling-yield.ts",
+      "toolSha256": "fa5256054b0dfa6416bd62e0698e6ede6e5c92ed6bb1e3c2ef4a8db158c04f73",
+      "log": "docs/qa/artifacts/r100-i13/contracts/kindling-yield.log",
+      "logSha256": "79448746fd39224e1291ff2963919dd1079df8dcdb55d28390f2bdc5ff9f3b1e",
+      "scope": "363实际搜取结算、1800修复对照、94最小阈值、2受控修复保存重载链。"
+    }
+  ],
+  "limitations": "控制夹具只验证所列合同；预期注入失败日志保留。没有替代自然经营、长期经济或真人体验。"
+}

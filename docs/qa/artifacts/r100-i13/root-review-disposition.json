@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-08",
+  "reviewer": "director / root",
+  "status": "changes-required",
+  "iteration": "R100-I13",
+  "sourceRevision": "184bda63ac76cbd5b2240b04cd2f6c551af11034",
+  "productionChanged": false,
+  "decision": "本轮28趟有界核验完成并停止新增样本；I13未结案，P46已修、P47待整改，I14未启动。",
+  "counts": {
+    "newActualTrips": 28,
+    "fixedDiagnosticTrips": 9,
+    "naturalTripsAcrossTwoBranches": 19,
+    "actualGrades": {
+      "low": 16,
+      "medium": 9,
+      "severe": 3
+    },
+    "extractsIncludingOneEmpty": 28,
+    "technicalFailures": 0,
+    "replacements": 0,
+    "accountedSnapshotFiles": 112,
+    "accountingAssertions": 14680,
+    "productionSourceFilesUnchanged": 1397,
+    "qualifiedWorlds": 108,
+    "qualifiedGradeCases": 324,
+    "closedIterations": 12
+  },
+  "reviewedDocuments": [
+    {
+      "path": "docs/tasks/rift-r100-i13.md",
+      "sha256": "d5e821856ac130ee16498c0efa82b214f9823c1ac16516c310601db710317bd9"
+    },
+    {
+      "path": "docs/qa/rift-r100-i13.md",
+      "sha256": "dc4b2d2596fe09d473ffd15ce5401b8c1c06f7a1f1396d52b2a28fc1a682a871"
+    }
+  ],
+  "sourceReceipt": {
+    "path": "docs/qa/artifacts/r100-i13/overall-execution-receipt.json",
+    "sha256": "1d727cfcfd2b9f6689c946199efb1982b9c95efa1019ab0d7951df9bc16b8578"
+  },
+  "independentlyRecheckedFinalHashes": [
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-low/report.json",
+      "sha256": "e07d91b6f7363e32ac864ed3d6934cca2e51ed266db902dbf6853b49a7e30278"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-medium/report.json",
+      "sha256": "46e21c291deb22ada540d0dc188599f11f60c8f6c42805b816161f92bee3efbb"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-ash-strata-severe/report.json",
+      "sha256": "0d7b5238ba49a24d91b17e39069de533f3fa2f2b034f7f626024e1bcd24f0652"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-low/report.json",
+      "sha256": "c3337a9ca676a5b4b5b93aeb48c099371b3895ad153333e62a34db4ad9884c6d"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-medium/report.json",
+      "sha256": "750f4e7207eed1873ec027941b55c2367ba3b05a932dc7fca43e2bd8cacb2451"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-fibre-silt-severe/report.json",
+      "sha256": "63ba9ec7bfb990ba4b953a386d1233c1a01c2db53abee4dd829f599ed57cf479"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-low/report.json",
+      "sha256": "bc50ed3146d55ab4573a6b71e1c5cf749e80a2da1b64904735ee249402771c97"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-medium/report.json",
+      "sha256": "773b4ad680070506aa55cf757ecb39e16fdd1c32b03d1df04d82a28cf7544c6a"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/paired-white-scarfield-severe/report.json",
+      "sha256": "752f71a60bba2f4bf381ca414be4b09d12f3abbe2d2d37bb178352fdbec5e6dd"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json",
+      "sha256": "87499adf877c008873c2f42d8109c7e88312e04ee948bd097832253887a1afbd"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json",
+      "sha256": "94631435f587be2cdc00972adc4a1eb60529aced873664f49cd2733e58c0e12d"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-natural-maintenance/report.json",
+      "sha256": "a2ba48a20848a61aea1498b46d167441032609aa722d891239c3c3c8270a0ca0"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/r2-earned-glove/report.json",
+      "sha256": "3cade3e8d0396593915e604ba42cf570e240b149429826f23e7e4a1321098838"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13/code-verification.json",
+      "sha256": "1b910c3c4a9f75a0920b269392804fb1f20145b696423f3260cf2d2453784d39"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13/r2-code-verification.json",
+      "sha256": "ce44762bc51ad1784d1b01abbac6192832317ad9821c83a93efbf99a5f9807de"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13/historical-economy-audit-final.json",
+      "sha256": "87e82d5a888c8f2e148c0103cf78cdb6baceb6ecc91c2f6c6d38883cd89a9daa"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13/paired-nine-accounting-final.json",
+      "sha256": "96242fdb13d6c68972337e3f7b77f07edc5d5c8af14e34894be5ffa4b1bd9295"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13/natural-twelve-accounting-final.json",
+      "sha256": "331dab9b9f955141f699f6f3ff54fa86d08d39fd735a6c0707c1aeb080e90600"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13/r2-seven-accounting-final.json",
+      "sha256": "55592280903bbca652fb1a13da2fcb113f27848e91b9e8a84174cbcbe836cb31"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13/accounting-negative-check-final.json",
+      "sha256": "107e1026c687e53406a97f9419c680a0c31270a785dbb81923725e48c4518da3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13/fresh-chain-binding.json",
+      "sha256": "3ffef9badf8648e4af8f32b841619e4ea0962bab89f09403a9b88e2d541f17a0"
+    }
+  ],
+  "executionDependencyBindingsRehashed": 19,
+  "acceptedWithinScope": [
+    "所有实际现金、维修、成长、存档续接、物件来源及消费核账通过。",
+    "限定低中连续12趟维持51/100/51服务、真实支付33成长；收入248、维修216、期末现金23，原储藏102缓冲期末101另计1薪。",
+    "当支新烟斗压制Host并覆盖翻找、新手套消声覆盖翻找均有有限实际窗口。",
+    "R2纠正已见目标距离门与先远行政策；原失败、亏损、未执行重度及元数据勘误保留。"
+  ],
+  "remaining": [
+    "原B未取得实际新增信息窗口；两次自然重度因工具耗尽降低，不能计算为自然重度通过。",
+    "两类成套功能准备与重度后恢复未成立；B连续7趟末原服务债19、同服务余量−43。",
+    "工具/武器机会成本、长期期望回报、实际入口速刷和视听疲劳未验收。",
+    "I14实际弱设备、真实审听及用户终验未启动。"
+  ],
+  "nextAction": "按已冻结任务末节先预登记最多4趟的探查时机/跨趟预算/同标准恢复诊断，现未执行；保留A12、B7真实主链，旧局分支不代新供给。",
+  "indexBaseline": "沿用旧全域基线；开工已存在559项来源漂移，只增量复核本轮范围，不以全域baseline --reviewed抹掉未核实漂移。",
+  "readingPreview": {
+    "status": "not-verified",
+    "reason": "CUA安全策略拒绝file://本地HTML预览；未尝试绕过。静态台账生成和链接检查另记，不称浏览器通过。"
+  },
+  "authorization": "本轮按持续授权本地提交相关成果，不推送；独立CLAUDE.md改动排除。",
+  "formatOnlyCorrection": {
+    "path": "docs/qa/rift-r100-i13.md",
+    "previousSha256": "da6829d42dcbe5cd9899336993e8c1d5b0d58da6364a9be41a87f5ba4d704ccc",
+    "change": "根暂存检查发现6处Markdown双空格硬换行，改为反斜线硬换行；原语义和所有实录保持，最终引用SHA重新绑定。"
+  }
+}

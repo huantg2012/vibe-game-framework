@@ -1,0 +1,57 @@
+{
+  "recordedAt": "2026-10-08T08:33:39.010Z",
+  "scope": "R2 QA tooling verification only. Production src/data remain unchanged. Browser executions and accounting are separate evidence.",
+  "checks": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "node --check <all eight tools/world-study/*r100-i13*.mjs>",
+      "exitCode": 0
+    },
+    {
+      "command": "node --import tsx tools/world-study/r100-i13-r2-journey.mjs --check-return-policy",
+      "environment": "schedule/preparation/storage loaded exactly from r2-policy-freeze.json case0; TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json",
+      "exitCode": 0
+    },
+    {
+      "command": "SHA256 of frozen R2 sources compared to r2-policy-freeze.json",
+      "exitCode": 0
+    }
+  ],
+  "attemptHistory": [
+    {
+      "command": "R2 --check-return-policy without required QA_I13_* environment",
+      "exitCode": 1,
+      "reason": "Preflight asserted schedule.length=0 differs from default rounds=12 before self-check. No browser opened. Retried once with frozen case environment, passed."
+    }
+  ],
+  "previousChecks": "docs/qa/artifacts/r100-i13/code-verification.json",
+  "missingGates": [
+    {
+      "gate": "lint",
+      "status": "not-configured",
+      "note": "package.json has no lint script; syntax checks are not a semantic linter."
+    },
+    {
+      "gate": "npm test",
+      "status": "not-configured",
+      "note": "Existing explicit contract/self-check commands used; full repository suite owned by root."
+    }
+  ],
+  "files": [
+    {
+      "file": "tools/world-study/r100-i13-r2-journey.mjs",
+      "sha256": "22c34317b9add03c98117ec573383c11a3a350406549bc81dd9fa94d66d82c5f"
+    },
+    {
+      "file": "tools/world-study/r100-i13-r2-encounters.mjs",
+      "sha256": "8efa42af08bfac8cef42010ca312893a26f294a00214ddfab526721bf3dc4db2"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-r2.mjs",
+      "sha256": "4f09752de6e160921fee5f56bc74032d4d3fb9a5229e71b2277cc790997ba7ba"
+    }
+  ]
+}

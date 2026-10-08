@@ -797,6 +797,16 @@
       {
         "path": "docs/qa/iteration-31.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i13.md",
+        "role": "doc",
+        "note": "R100等级经济子范围；不重开不相关I28长期平衡。"
+      },
+      {
+        "path": "docs/qa/rift-r100-i13.md",
+        "role": "doc",
+        "note": "原始资产核账与有限实际续行分别取证，不代签普遍平衡。"
       }
     ],
     "dependsOn": [
@@ -818,7 +828,9 @@
       "COH-E-I30-R8-MOTION",
       "COH-E-I30-R8-TRANSACTIONS",
       "COH-E101",
-      "COH-E102"
+      "COH-E102",
+      "COH-E181",
+      "COH-E182"
     ],
     "unknowns": [
       "I31已实现GR-05整数产出读法与下一收益阈值；玩家是否更容易判断修复收益尚待人审，未据此改经济或重启I28长期采样。",
@@ -871,6 +883,16 @@
       {
         "path": "src/scenes/offering-stand-visual.ts",
         "role": "code"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i13.md",
+        "role": "doc",
+        "note": "R100等级经济子范围；不重开不相关I28长期平衡。"
+      },
+      {
+        "path": "docs/qa/rift-r100-i13.md",
+        "role": "doc",
+        "note": "原始资产核账与有限实际续行分别取证，不代签普遍平衡。"
       }
     ],
     "dependsOn": [
@@ -888,7 +910,9 @@
       "COH-E-I29-R2-AUTO",
       "COH-E-I29-R2-RUNTIME",
       "COH-E155",
-      "COH-E156"
+      "COH-E156",
+      "COH-E181",
+      "COH-E182"
     ],
     "unknowns": []
   },
@@ -896,7 +920,7 @@
     "id": "COH-F029",
     "title": "永久蜕变、容量成长与装置加厚",
     "domain": "progression",
-    "summary": "22步线性蜕变、只买下一项；Level/最高级、单次与累计效果独立。R100起步生命/薪柴亲和费用调整为4/6，后20项保留，全路线419；旧已购效果和已付款不重算。价格由CSV生成，真实低档12趟已支付64并购得前7项，持续经营验证另见P13。",
+    "summary": "22步线性蜕变、只买下一项；Level/最高级、单次与累计效果独立。R100起步生命/薪柴亲和费用调整为4/6，后20项保留，全路线419；旧已购效果和已付款不重算。价格由CSV生成，真实低档12趟已支付64并购得前7项，持续经营验证另见P13。 I13当前修订6低中主链12趟进一步真实支付33将渗透抗性3→4；服务维持与长期工具再生产分别验收。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1070,6 +1094,16 @@
       {
         "path": "docs/qa/artifacts/r100-p13/review.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i13.md",
+        "role": "doc",
+        "note": "R100等级经济子范围；不重开不相关I28长期平衡。"
+      },
+      {
+        "path": "docs/qa/rift-r100-i13.md",
+        "role": "doc",
+        "note": "原始资产核账与有限实际续行分别取证，不代签普遍平衡。"
       }
     ],
     "dependsOn": [
@@ -1095,7 +1129,9 @@
       "COH-E101",
       "COH-E102",
       "COH-E155",
-      "COH-E156"
+      "COH-E156",
+      "COH-E181",
+      "COH-E182"
     ],
     "unknowns": [
       "R3限定验证通过；22步顺序与线性加厚时机的原局部证据保留；当前R100总价419，90趟实际成长另列E155/E156，长期采样沿I28挂起。",
@@ -1150,6 +1186,16 @@
       {
         "path": "docs/qa/iteration-30-r8.md",
         "role": "doc"
+      },
+      {
+        "path": "docs/tasks/rift-r100-i13.md",
+        "role": "doc",
+        "note": "R100等级经济子范围；不重开不相关I28长期平衡。"
+      },
+      {
+        "path": "docs/qa/rift-r100-i13.md",
+        "role": "doc",
+        "note": "原始资产核账与有限实际续行分别取证，不代签普遍平衡。"
       }
     ],
     "dependsOn": [
@@ -1168,7 +1214,9 @@
       "COH-E-I29-R2-FORECAST-LEAK",
       "COH-E-I29-R3-AUTO",
       "COH-E-I29-R3-RUNTIME",
-      "COH-E-I30-R8-INTEGRATION"
+      "COH-E-I30-R8-INTEGRATION",
+      "COH-E181",
+      "COH-E182"
     ],
     "unknowns": [
       "R8已记录真实出入场和交易，未专门重复全部预告承诺排列；总QA不将这部分推定为全面通过；既有 I29 证据按原版本/范围保留，不冒充本轮重跑。"

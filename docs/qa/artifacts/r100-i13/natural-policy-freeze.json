@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-08T07:58:37.320Z",
+  "basePlan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/policy-freeze.json",
+  "basePlanSha256": "b8996558d6c2fbc0a7669c326c86fa343216c73fa6e51600dc5c2209ca71ffe3",
+  "sourceController": {
+    "file": "tools/world-study/r100-i13-journey.mjs",
+    "sha256": "b0d1f21d4e914bcad04a94edf89a89c42783e5c169b2b2fa52efa3611a358f37"
+  },
+  "controller": {
+    "file": "tools/world-study/r100-i13-natural-journey.mjs",
+    "sha256": "2a7bd74fd4f3c60042260b79836e98bc079ca9e9453095af7f17dd7996055893"
+  },
+  "operator": {
+    "file": "tools/world-study/run-r100-i13-natural.mjs",
+    "sha256": "13538188e682954c75dba455eba991f3f2b4dcb581ed1900f126643982a072dd"
+  },
+  "serviceTargets": {
+    "CORE": 51,
+    "STORAGE": 100,
+    "PURIFIER": 51
+  },
+  "cases": [
+    {
+      "id": "natural-maintenance",
+      "kind": "normal-random-continuation",
+      "batch": "natural",
+      "world": null,
+      "schedule": [
+        "low",
+        "medium",
+        "low",
+        "medium",
+        "low",
+        "medium"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "natural-prepared-recovery",
+      "kind": "normal-random-continuation",
+      "batch": "natural",
+      "world": null,
+      "schedule": [
+        "low",
+        "severe",
+        "severe",
+        "low",
+        "low",
+        "low"
+      ],
+      "preparation": {
+        "id": "B",
+        "active": [
+          "盲针罗盘",
+          "断跟短靴"
+        ],
+        "passive": "黄铜背扣"
+      }
+    }
+  ],
+  "totalAttempts": 12,
+  "changes": [
+    "Actual repair target changes from QA floor50 to initial usable service floor51/100/51; growth waits for all targets.",
+    "All route, timing, visibility, actual-item selection and settlement logic match paired I13 controller."
+  ],
+  "limitations": [
+    "Same earned ancestor, two disclosed branches; no population or causal claim.",
+    "Underfunded repairs retain actual loss; this does not guarantee sustainability.",
+    "Declared preparation shortages stay empty; no resetting after loss."
+  ]
+}

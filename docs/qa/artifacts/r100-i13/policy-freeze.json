@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-08T07:55:53.199Z",
+  "gameUrl": "http://127.0.0.1:3031/",
+  "sourceManifest": "docs/qa/artifacts/r100-i13/frozen-source/source-snapshot.json",
+  "sourceManifestSha256": "8db19bc2364e77a45a473cf5d14079a532e11789d3e2caf4d2a421e9fd30281c",
+  "sourceStorage": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/browser-storage.json",
+  "sourceStorageSha256": "cdc3563bb28de772f8f8d873ff53491d3642bac2bd0d91ea096ba3947ef8e342",
+  "baselineReport": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/report.json",
+  "baselineReportSha256": "6a5127735b3fcdf5149d45981c54d51046cdb084989d08219f2285a436954b20",
+  "mappedStorage": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/earned-storage.json",
+  "mappedStorageSha256": "96f87b3324e88e1769134dce69a2ec6ae43fe6e427fa9a297295e6e0e2743ce5",
+  "initialSaveSha256": "f4d2b8a9ff16068bdce0fb26b6234c8b5f0fb1b4da5d05dbb2e3467132cebf38",
+  "initialCycle": 42,
+  "initialReserve": 24,
+  "initialModules": [
+    {
+      "id": "CORE",
+      "type": "CORE",
+      "hp": 51,
+      "maxHp": 130
+    },
+    {
+      "id": "STORAGE",
+      "type": "STORAGE",
+      "hp": 102,
+      "maxHp": 130
+    },
+    {
+      "id": "PURIFIER",
+      "type": "PURIFIER",
+      "hp": 51,
+      "maxHp": 130
+    }
+  ],
+  "initialEquipment": {
+    "weaponId": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+    "toolIds": [
+      null,
+      "CAT_64720c8c-43aa-4fff-b0a5-76f829e10eea_r100-contaminant-safe-1",
+      null,
+      "CAT_4a7e878e-0fa5-4ebc-8825-70cee1b4aff9_r100-contaminant-contested-1"
+    ],
+    "defenseIds": [
+      "CAT_a2c6f9f2-f5c3-496d-b8d3-af4de048f12f_r100-contaminant-contested-1",
+      "CAT_cacae3b1-506f-4488-8564-7892744fe206_r100-contaminant-contested-1",
+      "CAT_bc200fa5-a2a4-46f5-9a25-b80ccfe62d34_r100-contaminant-safe-1",
+      "CAT_3838f4a1-9198-4192-a21f-f82922fbd8bb_r100-contaminant-safe-1"
+    ]
+  },
+  "controller": "tools/world-study/r100-i13-journey.mjs",
+  "dependencies": [
+    {
+      "file": "tools/world-study/r100-i13-journey.mjs",
+      "sha256": "b0d1f21d4e914bcad04a94edf89a89c42783e5c169b2b2fa52efa3611a358f37"
+    },
+    {
+      "file": "tools/world-study/derive-r100-i13-journey.mjs",
+      "sha256": "f71945db27d3c64a9b1db0d561788128dce6edd4e9f19b038b82ff1549790e81"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13.mjs",
+      "sha256": "b3d8951ad3ceb1e4608c70f10b218bb0bef4f478c0ce1173dbb4f085466b8187"
+    },
+    {
+      "file": "tools/qa/r100-revision6-journey.mjs",
+      "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+    },
+    {
+      "file": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    }
+  ],
+  "cases": [
+    {
+      "id": "paired-ash-strata-low",
+      "kind": "fixed-world-diagnostic",
+      "batch": "first",
+      "world": "ash-strata",
+      "seed": 20261005,
+      "schedule": [
+        "low"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "paired-ash-strata-medium",
+      "kind": "fixed-world-diagnostic",
+      "batch": "first",
+      "world": "ash-strata",
+      "seed": 20261005,
+      "schedule": [
+        "medium"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "paired-ash-strata-severe",
+      "kind": "fixed-world-diagnostic",
+      "batch": "first",
+      "world": "ash-strata",
+      "seed": 20261005,
+      "schedule": [
+        "severe"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "paired-fibre-silt-low",
+      "kind": "fixed-world-diagnostic",
+      "batch": "remaining",
+      "world": "fibre-silt",
+      "seed": 20261005,
+      "schedule": [
+        "low"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "paired-fibre-silt-medium",
+      "kind": "fixed-world-diagnostic",
+      "batch": "remaining",
+      "world": "fibre-silt",
+      "seed": 20261005,
+      "schedule": [
+        "medium"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "paired-fibre-silt-severe",
+      "kind": "fixed-world-diagnostic",
+      "batch": "remaining",
+      "world": "fibre-silt",
+      "seed": 20261005,
+      "schedule": [
+        "severe"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "paired-white-scarfield-low",
+      "kind": "fixed-world-diagnostic",
+      "batch": "remaining",
+      "world": "white-scarfield",
+      "seed": 20261005,
+      "schedule": [
+        "low"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "paired-white-scarfield-medium",
+      "kind": "fixed-world-diagnostic",
+      "batch": "remaining",
+      "world": "white-scarfield",
+      "seed": 20261005,
+      "schedule": [
+        "medium"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "paired-white-scarfield-severe",
+      "kind": "fixed-world-diagnostic",
+      "batch": "remaining",
+      "world": "white-scarfield",
+      "seed": 20261005,
+      "schedule": [
+        "severe"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "natural-maintenance",
+      "kind": "normal-random-continuation",
+      "batch": "natural",
+      "world": null,
+      "schedule": [
+        "low",
+        "medium",
+        "low",
+        "medium",
+        "low",
+        "medium"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "natural-prepared-recovery",
+      "kind": "normal-random-continuation",
+      "batch": "natural",
+      "world": null,
+      "schedule": [
+        "low",
+        "severe",
+        "severe",
+        "low",
+        "low",
+        "low"
+      ],
+      "preparation": {
+        "id": "B",
+        "active": [
+          "盲针罗盘",
+          "断跟短靴"
+        ],
+        "passive": "黄铜背扣"
+      }
+    }
+  ],
+  "totalAttempts": 21,
+  "searchLimit": 6,
+  "limits": [
+    "Shared earned ancestor; fixed worlds are diagnostics, not independent natural supply.",
+    "Grade pairs hold initial save/world/requested seed/preparation policy, not layout or movement transcript.",
+    "Public declared preparation only; same-name genuine stock may replace depleted pieces; missing tools remain empty, never granted.",
+    "Policy15 keeps modules at 50; this QA threshold is not a design maintenance standard. Account service-capital loss separately.",
+    "Geometry-assisted expert routing; no human fun, global economics or performance claim.",
+    "No replacement after gameplay death/empty return; stop the affected branch on technical failure."
+  ]
+}

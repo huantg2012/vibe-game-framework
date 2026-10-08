@@ -1,0 +1,67 @@
+{
+  "recordedAt": "2026-10-08T08:07:46.049Z",
+  "scope": "Code-agent tooling checks; no production code/data changed. Browser journey evidence is separate.",
+  "checks": [
+    {
+      "command": "npx tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "node --check <each of the five listed tools>",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/world-study/derive-r100-i13-journey.mjs --check",
+      "exitCode": 0
+    },
+    {
+      "command": "TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/qa/r100-revision6-journey.mjs --check-return-policy",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/qa/r100-i09-continuous.mjs --self-check",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run dev -- --host 127.0.0.1 --port 3032 --strictPort",
+      "status": "started-ready",
+      "readyMs": 133,
+      "httpStatus": 200,
+      "shutdown": "Owned server stopped intentionally after smoke"
+    }
+  ],
+  "missingGates": [
+    {
+      "gate": "lint",
+      "status": "not-configured",
+      "evidence": "package.json has no lint script or lint dependency; JS syntax checks are not a semantic linter"
+    },
+    {
+      "gate": "npm test",
+      "status": "not-configured",
+      "evidence": "Existing check:* and named node self-checks were used; no claim of the entire project contract suite by this subtask"
+    }
+  ],
+  "files": [
+    {
+      "file": "tools/world-study/derive-r100-i13-journey.mjs",
+      "sha256": "f71945db27d3c64a9b1db0d561788128dce6edd4e9f19b038b82ff1549790e81"
+    },
+    {
+      "file": "tools/world-study/r100-i13-journey.mjs",
+      "sha256": "b0d1f21d4e914bcad04a94edf89a89c42783e5c169b2b2fa52efa3611a358f37"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13.mjs",
+      "sha256": "b3d8951ad3ceb1e4608c70f10b218bb0bef4f478c0ce1173dbb4f085466b8187"
+    },
+    {
+      "file": "tools/world-study/run-r100-i13-natural.mjs",
+      "sha256": "cb027536d142ae35584020f3be26e4fc6a5eede4705c509b75b050e850c29f46"
+    },
+    {
+      "file": "tools/world-study/r100-i13-natural-journey.mjs",
+      "sha256": "658c29a0e4559e4197c15569567a21d85dc0ca561a39ce6d8040525054eb4ff6"
+    }
+  ]
+}

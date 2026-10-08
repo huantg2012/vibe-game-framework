@@ -1,0 +1,81 @@
+{
+  "version": 2,
+  "supersedesUnexecutedPlan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-policy-freeze.json",
+  "admission": "Requested severe requires both equipped declared active tools with at least one use and service targets met; otherwise actual low, never counted severe",
+  "createdAt": "2026-10-08T08:00:18.109Z",
+  "basePlan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/policy-freeze.json",
+  "basePlanSha256": "b8996558d6c2fbc0a7669c326c86fa343216c73fa6e51600dc5c2209ca71ffe3",
+  "sourceController": {
+    "file": "tools/world-study/r100-i13-journey.mjs",
+    "sha256": "b0d1f21d4e914bcad04a94edf89a89c42783e5c169b2b2fa52efa3611a358f37"
+  },
+  "controller": {
+    "file": "tools/world-study/r100-i13-natural-journey.mjs",
+    "sha256": "658c29a0e4559e4197c15569567a21d85dc0ca561a39ce6d8040525054eb4ff6"
+  },
+  "operator": {
+    "file": "tools/world-study/run-r100-i13-natural.mjs",
+    "sha256": "cb027536d142ae35584020f3be26e4fc6a5eede4705c509b75b050e850c29f46"
+  },
+  "serviceTargets": {
+    "CORE": 51,
+    "STORAGE": 100,
+    "PURIFIER": 51
+  },
+  "cases": [
+    {
+      "id": "natural-maintenance",
+      "kind": "normal-random-continuation",
+      "batch": "natural",
+      "world": null,
+      "schedule": [
+        "low",
+        "medium",
+        "low",
+        "medium",
+        "low",
+        "medium"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      }
+    },
+    {
+      "id": "natural-prepared-recovery",
+      "kind": "normal-random-continuation",
+      "batch": "natural",
+      "world": null,
+      "schedule": [
+        "low",
+        "severe",
+        "severe",
+        "low",
+        "low",
+        "low"
+      ],
+      "preparation": {
+        "id": "B",
+        "active": [
+          "盲针罗盘",
+          "断跟短靴"
+        ],
+        "passive": "黄铜背扣"
+      }
+    }
+  ],
+  "totalAttempts": 12,
+  "changes": [
+    "Actual repair target changes from QA floor50 to initial usable service floor51/100/51; growth waits for all targets.",
+    "All route, timing, visibility, actual-item selection and settlement logic match paired I13 controller."
+  ],
+  "limitations": [
+    "Same earned ancestor, two disclosed branches; no population or causal claim.",
+    "Underfunded repairs retain actual loss; this does not guarantee sustainability.",
+    "Declared preparation shortages stay empty; no resetting after loss."
+  ]
+}

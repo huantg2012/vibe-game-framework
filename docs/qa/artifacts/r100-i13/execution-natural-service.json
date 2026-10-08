@@ -1,0 +1,64 @@
+{
+  "startedAt": "2026-10-08T08:06:35.240Z",
+  "planSha256": "17bcc5b291328ffe79135f985a9d476f1c440798aadba86924886e4f3b532588",
+  "status": "completed",
+  "cases": [
+    {
+      "id": "natural-maintenance",
+      "kind": "normal-random-continuation",
+      "batch": "natural",
+      "world": null,
+      "schedule": [
+        "low",
+        "medium",
+        "low",
+        "medium",
+        "low",
+        "medium"
+      ],
+      "preparation": {
+        "id": "A",
+        "active": [
+          "冷灰烟斗",
+          "停摆怀表"
+        ],
+        "passive": "黄铜背扣"
+      },
+      "status": "completed",
+      "startedAt": "2026-10-08T08:06:35.241Z",
+      "exitCode": 0,
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-maintenance/report.json",
+      "completed": 6,
+      "finishedAt": "2026-10-08T08:23:55.094Z"
+    },
+    {
+      "id": "natural-prepared-recovery",
+      "kind": "normal-random-continuation",
+      "batch": "natural",
+      "world": null,
+      "schedule": [
+        "low",
+        "severe",
+        "severe",
+        "low",
+        "low",
+        "low"
+      ],
+      "preparation": {
+        "id": "B",
+        "active": [
+          "盲针罗盘",
+          "断跟短靴"
+        ],
+        "passive": "黄铜背扣"
+      },
+      "status": "completed",
+      "startedAt": "2026-10-08T08:06:35.242Z",
+      "exitCode": 0,
+      "report": "/Users/yilungao/coh/docs/qa/artifacts/r100-i13/natural-prepared-recovery/report.json",
+      "completed": 6,
+      "finishedAt": "2026-10-08T08:20:12.451Z"
+    }
+  ],
+  "finishedAt": "2026-10-08T08:23:55.095Z"
+}
