@@ -1,0 +1,95 @@
+{
+  "status": "prepared-ready-awaiting-exclusive-browser",
+  "worlds": [
+    "white-scarfield",
+    "black-lacuna",
+    "ochre-folds",
+    "violet-marrows"
+  ],
+  "wholeBatchReady": true,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/execution-plan.json",
+    "sha256": "933ba58a8e2db0977d271ba71c227d736c740688ea5e7fbc20b978cbbc31e032"
+  },
+  "rootReviews": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/normal-admission.json",
+      "sha256": "544b02eb5cc4480c1c5b62ad2264183b8de6e682995db1169639a47ded4dec09"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/independent-review.json",
+      "sha256": "f9fb1c06635a1c58ebdfac1f0f5388897315a864e4b293aec3f7de4236cfc846"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-medium/independent-review.json",
+      "sha256": "08bfc334b78b0181e7a2eb1a43876c3739f8351e513ed1ea9502075b537c2848"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/independent-review.json",
+      "sha256": "c8a817c17f56596c6e209013540436f4bc8daa988f591895f9809e5a3be8607f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ochre-near-tear-medium/independent-review.json",
+      "sha256": "acaedec117a0e03dc1fa69914a3e176d46bd0c0e393210451c1d2bba184978c2"
+    }
+  ],
+  "generationSummary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/generation-summary.json",
+    "sha256": "f31b49866a6b29ab8cf5c11452e67bf4aa614ccf437e1ee83f31597437871c3a"
+  },
+  "executionPlanCheck": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/execution-plan-check.json",
+    "sha256": "13966f568c10e00fdf765756a9a39fc02a702379897aaf9ccdb7293f260a3290"
+  },
+  "dependencies": [
+    {
+      "path": "tools/qa/r100-i07-i09-coverage.mjs",
+      "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8"
+    },
+    {
+      "path": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "46f93fbee706a09ca9a35a0df52ca6053ac8d59904fcb602917137906a3b482c"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    }
+  ],
+  "play": {
+    "cases": 24,
+    "command": "/usr/local/bin/node",
+    "args": [
+      "tools/qa/r100-i07-i09-coverage.mjs"
+    ],
+    "env": {
+      "GAME_URL": "http://127.0.0.1:3121/",
+      "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-current-qualified/execution-plan.json",
+      "QA_BATCH_ID": "B13",
+      "QA_WORLDS": "white-scarfield,black-lacuna,ochre-folds,violet-marrows",
+      "QA_GRADES": "low,medium,severe",
+      "QA_SEEDS": "20261005,3075192741",
+      "QA_CONCURRENCY": "1",
+      "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+      "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play",
+      "QA_STOP_ON_FAILURE": "1",
+      "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-current-qualified/worker-observations",
+      "QA_WORKER_OBSERVER_FAILURE_FILE": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-current-qualified/worker-observation-first-error.json",
+      "NODE_OPTIONS": "--import /Users/yilungao/coh/tools/qa/r100-worker-observer.mjs",
+      "DEBUG": "pw:browser"
+    }
+  },
+  "method": "Original earned save, policy15 revision6 guard-only adapter, all three grades and two original seeds. Current3121; Worker/network errors remain observable and stop future cases only after the active child closes. Does not grant gameplay/entry/performance/P36 approval."
+}

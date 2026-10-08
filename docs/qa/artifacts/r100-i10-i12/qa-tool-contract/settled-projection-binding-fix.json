@@ -1,0 +1,87 @@
+{
+  "status": "pass",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "helper": {
+    "path": "tools/qa/r100-settled-projection-continuity.mjs",
+    "sha256": "a360233a4ed2b86730dc28f9ce7841d6b8db8cc79669e984a35990a25e330615"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-settled-projection-continuity.mjs",
+    "sha256": "83035403ef7a4f721256664a8faa4a8e3c0dd968d04caa2d504308c9b5a9a6ed"
+  },
+  "checks": [
+    {
+      "name": "actual old paths including settled-sheet",
+      "status": "pass"
+    },
+    {
+      "name": "selected new bundle",
+      "status": "pass"
+    },
+    {
+      "name": "selected new clamp",
+      "status": "pass"
+    },
+    {
+      "name": "old branch enters new construction",
+      "status": "pass"
+    },
+    {
+      "name": "old constructor changed",
+      "status": "pass"
+    },
+    {
+      "name": "new branch unknown arguments",
+      "status": "pass"
+    },
+    {
+      "name": "shared size contract changed",
+      "status": "pass"
+    },
+    {
+      "name": "prefix check weakened",
+      "status": "pass"
+    },
+    {
+      "name": "module executed initializer",
+      "status": "pass"
+    },
+    {
+      "name": "array binding default execution",
+      "status": "pass"
+    },
+    {
+      "name": "object binding computed execution",
+      "status": "pass"
+    },
+    {
+      "name": "object binding default execution",
+      "status": "pass"
+    },
+    {
+      "name": "module runtime import",
+      "status": "pass"
+    },
+    {
+      "name": "unreviewed export",
+      "status": "pass"
+    }
+  ],
+  "scope": "Actual frozen AST/default-path proof and adversarial mutations only; no game execution or changed-world approval.",
+  "proof": {
+    "status": "pass",
+    "newProfiles": [
+      "settled-bundle",
+      "settled-clamp"
+    ],
+    "selectedInstances": 2,
+    "scope": "Only an inert module and two unselected construction4 dispatch branches are added. Previous legal profile validation, shared Builder and all old constructors remain AST-exact. No changed authored world, material choice, entry/performance or new visual approval is inherited."
+  }
+}

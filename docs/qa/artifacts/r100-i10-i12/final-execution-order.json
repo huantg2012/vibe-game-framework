@@ -1,0 +1,196 @@
+{
+  "status": "planned-not-executed",
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "pathContract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-artifact-contract.json",
+    "sha256": "74a2dd6c7ae289dbb0a839db004313d1bc15714a45cfe8ed63855c1149e6bf53"
+  },
+  "inputPolicyRevision": 15,
+  "source": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+  "port": "Chosen only when final enabled source is frozen; use manifest.actualPort and verify source bytes.",
+  "stages": [
+    {
+      "id": "complete-content",
+      "requires": "All14 bounded normal reviews + base8064 and extra2592 + historical7488 reviewed inheritance + original336 real processes and inherited312. Keep rejected originals/empty/death. Current P36 failures preserved."
+    },
+    {
+      "id": "activate-freeze",
+      "requires": [
+        "complete-content"
+      ],
+      "actions": "Change only new56 enabled flags, codegen/check, verify per-world frozen recipe continuity, publish108 package index and immutable final source; no hidden art/content edits."
+    },
+    {
+      "id": "selection",
+      "requires": [
+        "activate-freeze"
+      ],
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-world-selection.ts",
+        "--out",
+        "docs/qa/artifacts/r100-i10-i12/selection-final108"
+      ],
+      "expected": "Actual enabled108, 32768 samples per policy, original reachability/weight/repeat/neighbor checks. Required before natural48.",
+      "env": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      }
+    },
+    {
+      "id": "production",
+      "requires": [
+        "selection"
+      ],
+      "command": [
+        "node",
+        "tools/qa/r100-i09-final-probe.mjs",
+        "--probe",
+        "production",
+        "--source",
+        "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+        "--output",
+        "docs/qa/artifacts/r100-i10-i12/production-final108",
+        "--expected-worlds",
+        "108",
+        "--expected-revision",
+        "6",
+        "--stop-on-failure",
+        "--observe-workers"
+      ],
+      "scope": "324 formal departures + same-context page reload cold identity/history/body recovery; tracked Worker observations and stop-on-failure."
+    },
+    {
+      "id": "equivalence",
+      "requires": [
+        "production"
+      ],
+      "command": [
+        "node",
+        "tools/qa/r100-i09-final-probe.mjs",
+        "--probe",
+        "equivalence",
+        "--source",
+        "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+        "--output",
+        "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108",
+        "--expected-worlds",
+        "108",
+        "--expected-revision",
+        "6"
+      ],
+      "scope": "324 currentr6 plus18 originalr1 gold. Not legacy2\u20135 evidence."
+    },
+    {
+      "id": "natural48",
+      "requires": [
+        "equivalence"
+      ],
+      "command": [
+        "node",
+        "tools/qa/r100-i09-continuous.mjs"
+      ],
+      "env": {
+        "GAME_URL": "FINAL_SOURCE_URL",
+        "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+        "QA_EXPANSION_PLAN": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+        "QA_SELECTION_REPORT": "docs/qa/artifacts/r100-i10-i12/selection-final108/selection.json",
+        "QA_OUTPUT_DIR": "docs/qa/artifacts/r100-i10-i12/continuous-final108",
+        "QA_POST_RETURN_MANAGEMENT": "1"
+      },
+      "scope": "Four continued earned-save branches\u00d712; no forced world/seed, no loss replacement. Report each branch12 to root. Original save/tool/cost/history chains required."
+    },
+    {
+      "id": "natural-review",
+      "requires": [
+        "natural48"
+      ],
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/qa/r100-revision6-review-continuous.mjs",
+        "--input",
+        "docs/qa/artifacts/r100-i10-i12/continuous-final108",
+        "--output",
+        "docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json"
+      ],
+      "scope": "Automatic raw re-accounting and separate root bounded experience review; no death-to-extract reinterpretation.",
+      "env": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+      }
+    },
+    {
+      "id": "controlled-capabilities-presentation",
+      "owner": "root",
+      "tool": {
+        "path": "tools/qa/prepare-r100-controlled-matrices.mjs",
+        "sha256": "652a68a425c08eff106faf973c48df886e7e874bca6641814c14312eb8885829"
+      },
+      "requires": [
+        "activate-freeze"
+      ],
+      "scope": "Final frozen actual closure: capability1536 plus existing984/64/224; presentation108\u00d73\u00d78\u00d76=15552 recorded-renderer contracts. Run only one CPU task, preferably while natural48 uses sole nonperformance Chrome. Finish CPU before performance. Not actual GPU, audio or journey evidence."
+    },
+    {
+      "id": "budget",
+      "requires": [
+        "natural-review",
+        "controlled-capabilities-presentation"
+      ],
+      "command": [
+        "node",
+        "tools/qa/r100-i09-final-probe.mjs",
+        "--probe",
+        "budget",
+        "--source",
+        "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+        "--output",
+        "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108",
+        "--expected-worlds",
+        "108",
+        "--expected-revision",
+        "6"
+      ],
+      "scope": "Exclusive CPU and Chrome:108 severe\u00d7alive>=60s, original bare route and thresholds. Preserve short/death/error identity; no automatic reruns."
+    },
+    {
+      "id": "lifecycle",
+      "requires": [
+        "budget"
+      ],
+      "command": [
+        "node",
+        "tools/qa/r100-i09-final-probe.mjs",
+        "--probe",
+        "lifecycle",
+        "--source",
+        "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+        "--output",
+        "docs/qa/artifacts/r100-i10-i12/lifecycle-final108",
+        "--expected-worlds",
+        "108",
+        "--expected-revision",
+        "6"
+      ],
+      "scope": "Exclusive10 identical +324 ordered world/grade rebuilds and12 warmed/GC samples. Root Shader ownership receipt required independently."
+    },
+    {
+      "id": "bind-review",
+      "requires": [
+        "lifecycle"
+      ],
+      "tool": {
+        "path": "tools/qa/r100-bind-i10-i12.mjs",
+        "sha256": "66dc64028d4359560b88d04da4a0004d0d0353ef45630adbb66f3c7ff8f8ae55"
+      },
+      "scope": "Actual raw summaries + complete source graph +108 art index +root technical/Shader/experience reviews. Dry proposal first; no automatic human/audio approval or iteration closure. Root sound-disposition remains separate R10/I14 boundary."
+    }
+  ],
+  "failurePolicy": "Each stage uses a fresh directory. Preserve initial failure, exact source/inputs/seed and running identity. Diagnose before any separately authorized fixed-identity recheck. Never advance through a hard contract failure.",
+  "resourcePolicy": "One QA Chrome and at most one heavy CPU task; both exclusive for budget/lifecycle. No routine second browser."
+}

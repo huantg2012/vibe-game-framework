@@ -1,0 +1,14 @@
+{
+  "status": "auditor-assertion-correction-no-product-failure",
+  "at": "2026-10-07T15:05:05.872Z",
+  "attempt1": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/audit-final-static-readiness-attempt1.mjs",
+    "sha256": "04c14b3804af50af915d03290f531760dd8aaa0c5eaffbb5450afbf88b118773",
+    "exitCode": 1,
+    "location": "audit-final-static-readiness.mjs:86",
+    "failure": "Expected full R100_PACKAGE_MANIFEST to retain old aggregate hash after its catalog dependency hash changed. Actual differed only in the expected aggregate hash field; inspect codegen formula and recompute before comparing.",
+    "productOrEvidenceChanged": false,
+    "gameOrBrowserExecuted": false
+  },
+  "scope": "Development of the independent static audit only; not a repeated compatibility or runtime execution."
+}

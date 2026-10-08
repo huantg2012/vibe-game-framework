@@ -1,0 +1,3758 @@
+{
+  "status": "bounded-author-low-severe-pass",
+  "at": "2026-10-07T08:04:05.180Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/report.json",
+    "sha256": "6c1f7bd64fbf077c4f9db82b474f6c3f1ffbdbfb3f8fc5fa1753698da96d1881"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/plan.json",
+    "sha256": "203b81b422e83ddfec499cdc6cf83c005acd5f8d80658203e71114ff089b99ad"
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "All46 original PNGs personally viewed. Eleven repaired worlds at low and severe, requested seed20261005, actual WASD, normal FOV/light and active pressure, no equipped tools. This receipt supplements the separate47-image medium review; it is not full gameplay qualification.",
+  "machineResult": {
+    "completedCases": 22,
+    "worlds": 11,
+    "imageCount": 46,
+    "errors": [],
+    "browserClosed": true
+  },
+  "limitations": [
+    "Only illuminated local faces and boundary relationships shown; not whole-map coverage, successful search-return, dynamic fatigue, audio listening or human approval.",
+    "Geometry macro-navigation uses the floor model; these are controlled art capture routes, not visible-only natural play. Enemies, darkness and actual damage remain active.",
+    "Actual standing positions and threats differ among grades and rejected versions. Requested goals are reused, but this is not a pixel-aligned comparison. Viewport1440×1000; PNG1136×758.",
+    "Prior body30 tests cover author intent routes/24px stations, not every camera goal pointwise. Captures separately record actual WASD arrival, facing and identity.",
+    "Original rejected images and source identities remain unchanged. Root independent review and final-source/dependency binding remain separate."
+  ],
+  "worlds": [
+    {
+      "worldId": "crushed-seam",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "01低母床没有整圈黑切边，03两厚压口和中间裸床可辨；低重近面均保持浅床与高断端的区别。",
+      "limitations": [
+        "部分高体被画幅截断，背面和灯外母床不签。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "crushed-seam",
+            "grade": "low",
+            "package": {
+              "id": "r100-crushed-seam",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "folded-slab": {
+                  "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                  "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                  "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+                }
+              },
+              "dependencyHash": "e7c043a0",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=crushed-seam&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/crushed-seam-low/recipe.json",
+            "sha256": "6c95dfbc41cc3556da3c2e74c2355f1ae1f4006cd76145492f3b6514b7d7baeb"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/crushed-seam-low/01-material-approach-north.png",
+              "sha256": "bc6fb59a61d23ead247434269823e3d6cbe76e0aa0ecb953c709da56dab1e591",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 500,
+                "y": 516,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 500,
+                  "y": 516
+                },
+                "lookAtMaterialPoint": {
+                  "x": 450,
+                  "y": 420
+                },
+                "purpose": "连续低母床"
+              },
+              "routeTarget": {
+                "x": 500,
+                "y": 516
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 1.6656729899164189,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 501.66286710641987,
+                  "y": 515.9033589335535
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.263953231999977,
+                "elapsedMs": 6749.700000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 501.66286710641987,
+                  "y": 515.9033589335535
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.282911335999977,
+                "elapsedMs": 6849.800000000001
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/crushed-seam-low/03-material-approach-east.png",
+              "sha256": "e4e58c593d145210bdc5bb0e2afc0969f00b33dbab07e9c448046978c2c83c94",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "03-material-approach",
+                "x": 500,
+                "y": 540,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 500,
+                  "y": 540
+                },
+                "lookAtMaterialPoint": {
+                  "x": 585,
+                  "y": 473
+                },
+                "purpose": "下侧双母层断口"
+              },
+              "routeTarget": {
+                "x": 500,
+                "y": 540
+              },
+              "actualAngle": 0.0004398229715050772,
+              "facing": "east",
+              "actualDistanceFromGoal": 9.220284997653732,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 507.5900598898201,
+                  "y": 545.2349447281612
+                },
+                "facingAngle": 0.0004398229715050772,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.421946911999974,
+                "elapsedMs": 7583.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 507.5900598898201,
+                  "y": 545.2349447281612
+                },
+                "facingAngle": 0.0004398229715050772,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.440906911999974,
+                "elapsedMs": 7683.1
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "crushed-seam",
+            "grade": "severe",
+            "package": {
+              "id": "r100-crushed-seam",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "folded-slab": {
+                  "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                  "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                  "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+                }
+              },
+              "dependencyHash": "5e5b19c8",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=crushed-seam&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/crushed-seam-severe/recipe.json",
+            "sha256": "c6aebfe8bb1ea122ff8cbba13504f4e4def84a4247c4dc05579019d7e849d5d5"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/crushed-seam-severe/01-material-approach-north.png",
+              "sha256": "acb77c89447730accf3f97469b9a021afb998df9275ec1114fe1dc2805224a98",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 500,
+                "y": 516,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 500,
+                  "y": 516
+                },
+                "lookAtMaterialPoint": {
+                  "x": 450,
+                  "y": 420
+                },
+                "purpose": "连续低母床"
+              },
+              "routeTarget": {
+                "x": 500,
+                "y": 516
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 9.054517666969867,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 500.62081333764814,
+                  "y": 506.9667901064313
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.260988543999865,
+                "elapsedMs": 6533.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 500.62081333764814,
+                  "y": 506.9667901064313
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.311538431999864,
+                "elapsedMs": 6633.1
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/crushed-seam-severe/03-material-approach-east.png",
+              "sha256": "418c6d19b88989e93e44bf0ab70ab637424cb672a856965e382d6cc7422d0aa2",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "03-material-approach",
+                "x": 500,
+                "y": 540,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 500,
+                  "y": 540
+                },
+                "lookAtMaterialPoint": {
+                  "x": 585,
+                  "y": 473
+                },
+                "purpose": "下侧双母层断口"
+              },
+              "routeTarget": {
+                "x": 500,
+                "y": 540
+              },
+              "actualAngle": 0,
+              "facing": "east",
+              "actualDistanceFromGoal": 8.971231050130147,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 506.5508431162154,
+                  "y": 546.1293915702582
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.74971161599985,
+                "elapsedMs": 7499.699999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 506.5508431162154,
+                  "y": 546.1293915702582
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.800276671999846,
+                "elapsedMs": 7599.699999999999
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "fibre-scree",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "03相向厚蓝束与中间裸床清楚；04米色低尾向紫床贴地过渡，没有旧四边框。",
+      "limitations": [
+        "重04近灯敌人及左下侵蚀覆盖部分床；未把被遮表面计入通过。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "fibre-scree",
+            "grade": "low",
+            "package": {
+              "id": "r100-fibre-scree",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "fibre-knot": {
+                  "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                  "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                  "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+                }
+              },
+              "dependencyHash": "9c2ead6a",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=fibre-scree&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fibre-scree-low/recipe.json",
+            "sha256": "c3b0c968c16ac73b6d52fa2d51d860ad061d3d519241b618779edba485d3b390"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fibre-scree-low/03-material-approach-north.png",
+              "sha256": "319e30e25f9f7564b41204fbedd1569ae7bb07bca43dfaadfaa3e325e5850998",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "03-material-approach",
+                "x": 548,
+                "y": 508,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 548,
+                  "y": 508
+                },
+                "lookAtMaterialPoint": {
+                  "x": 550,
+                  "y": 400
+                },
+                "purpose": "两团中间曲床"
+              },
+              "routeTarget": {
+                "x": 548,
+                "y": 508
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 3.933864483044659,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 547.7282097852046,
+                  "y": 504.07553572444573
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.203910703999988,
+                "elapsedMs": 6433.000000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 547.7282097852046,
+                  "y": 504.07553572444573
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.222866911999986,
+                "elapsedMs": 6533.000000000001
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fibre-scree-low/04-material-approach-west.png",
+              "sha256": "16ed71c34faa285f7a09b2b1096c53a74ebbbc5d74f208ed7dbea38f237699aa",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 756,
+                "y": 588,
+                "faces": [
+                  "west"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 756,
+                  "y": 588
+                },
+                "lookAtMaterialPoint": {
+                  "x": 650,
+                  "y": 608
+                },
+                "purpose": "低屑与外返路"
+              },
+              "routeTarget": {
+                "x": 756,
+                "y": 588
+              },
+              "actualAngle": 3.141592653589793,
+              "facing": "west",
+              "actualDistanceFromGoal": 9.446709252190924,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 748.0253024934833,
+                  "y": 593.0640414073135
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.354105831999966,
+                "elapsedMs": 12499.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 748.0253024934833,
+                  "y": 593.0640414073135
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.379385199999966,
+                "elapsedMs": 12632.900000000001
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "fibre-scree",
+            "grade": "severe",
+            "package": {
+              "id": "r100-fibre-scree",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "fibre-knot": {
+                  "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                  "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                  "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+                }
+              },
+              "dependencyHash": "5bd825a2",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=fibre-scree&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fibre-scree-severe/recipe.json",
+            "sha256": "6a8d773d1c1e9c5dc0564eca236da7df1607eda1fe1ebc6b31836e7509a2ad8a"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fibre-scree-severe/03-material-approach-north.png",
+              "sha256": "36d6e2b29561e29e4d266125d5e7b591482175e606054ac8ae142aa6b5eb310f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "03-material-approach",
+                "x": 548,
+                "y": 508,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 548,
+                  "y": 508
+                },
+                "lookAtMaterialPoint": {
+                  "x": 550,
+                  "y": 400
+                },
+                "purpose": "两团中间曲床"
+              },
+              "routeTarget": {
+                "x": 548,
+                "y": 508
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 3.9897532457870506,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 547.2839129383536,
+                  "y": 504.0750349960272
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.218867007999858,
+                "elapsedMs": 6449.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 547.2839129383536,
+                  "y": 504.0750349960272
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.269416895999857,
+                "elapsedMs": 6549.7
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fibre-scree-severe/04-material-approach-west.png",
+              "sha256": "f73ee16f1a39b2af0bdbec090ab1dfcfa2cf9f2d31ab49dabd2c52bb3a2063d5",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 756,
+                "y": 588,
+                "faces": [
+                  "west"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 756,
+                  "y": 588
+                },
+                "lookAtMaterialPoint": {
+                  "x": 650,
+                  "y": 608
+                },
+                "purpose": "低屑与外返路"
+              },
+              "routeTarget": {
+                "x": 756,
+                "y": 588
+              },
+              "actualAngle": 3.141592653589793,
+              "facing": "west",
+              "actualDistanceFromGoal": 8.06431560561709,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 749.7198665608937,
+                  "y": 593.0589633497406
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.2298019199998,
+                "elapsedMs": 12366.099999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 749.7198665608937,
+                  "y": 593.0589633497406
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.314065215999804,
+                "elapsedMs": 12449.400000000001
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "gel-rafts",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "02/05粉色薄层向蓝床平缓相接，原闭合边和直角接缝没有复现；05所见高厚头仍有明确体积。",
+      "limitations": [
+        "上部真实吞光/侵蚀覆盖与重05敌人遮挡范围不签；只审照见的薄层和厚头。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "gel-rafts",
+            "grade": "low",
+            "package": {
+              "id": "r100-gel-rafts",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "gel-flow": {
+                  "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+                  "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+                  "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+                }
+              },
+              "dependencyHash": "e5c52a2c",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=gel-rafts&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/gel-rafts-low/recipe.json",
+            "sha256": "c38b0b43cf1a6f216163d9c01c26f034c02867751cf800c9a2aa751dd22a0572"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/gel-rafts-low/02-material-approach-north.png",
+              "sha256": "2ff88fb1d7b49ec700d40ca253828f2b78cd362470026d0e6015316c7c84756e",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "02-material-approach",
+                "x": 332,
+                "y": 580,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 332,
+                  "y": 580
+                },
+                "lookAtMaterialPoint": {
+                  "x": 350,
+                  "y": 475
+                },
+                "purpose": "左侧断低脂片"
+              },
+              "routeTarget": {
+                "x": 332,
+                "y": 580
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 15.004111240511342,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 332.0420550558603,
+                  "y": 564.995947697708
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.515059775999994,
+                "elapsedMs": 2799.9
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 332.0420550558603,
+                  "y": 564.995947697708
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.534021671999994,
+                "elapsedMs": 2899.9
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/gel-rafts-low/05-material-approach-west.png",
+              "sha256": "cfda40657afff7f24202d24ba791789bf6e56977ee36f4e138dac5c2726a9f4b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "05-material-approach",
+                "x": 836,
+                "y": 484,
+                "faces": [
+                  "west"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 836,
+                  "y": 484
+                },
+                "lookAtMaterialPoint": {
+                  "x": 742,
+                  "y": 430
+                },
+                "purpose": "东侧两低片"
+              },
+              "routeTarget": {
+                "x": 836,
+                "y": 484
+              },
+              "actualAngle": 3.1410899987652243,
+              "facing": "west",
+              "actualDistanceFromGoal": 4.79493598496015,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 831.3720231793874,
+                  "y": 482.74571070014207
+                },
+                "facingAngle": 3.1410899987652243,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.31302709599996,
+                "elapsedMs": 12282.800000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 831.3720231793874,
+                  "y": 482.74571070014207
+                },
+                "facingAngle": 3.1410899987652243,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 17.33830835999996,
+                "elapsedMs": 12416.2
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "gel-rafts",
+            "grade": "severe",
+            "package": {
+              "id": "r100-gel-rafts",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "gel-flow": {
+                  "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+                  "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+                  "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+                }
+              },
+              "dependencyHash": "66747f4e",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=gel-rafts&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/gel-rafts-severe/recipe.json",
+            "sha256": "3a652e14962eaaf5fc94eda3603f00042312444e0ad6bed3a0b1d9465384e9ab"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/gel-rafts-severe/02-material-approach-north.png",
+              "sha256": "b511448e4119379600f961590d3449f0a5b1c8ef2995632bc0294bba96e6b702",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "02-material-approach",
+                "x": 332,
+                "y": 580,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 332,
+                  "y": 580
+                },
+                "lookAtMaterialPoint": {
+                  "x": 350,
+                  "y": 475
+                },
+                "purpose": "左侧断低脂片"
+              },
+              "routeTarget": {
+                "x": 332,
+                "y": 580
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 17.71320999923441,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 332.55671609135817,
+                  "y": 562.2955407970026
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.381921087999938,
+                "elapsedMs": 2816.6000000000004
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 332.55671609135817,
+                  "y": 562.2955407970026
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.432481087999935,
+                "elapsedMs": 2916.6000000000004
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/gel-rafts-severe/05-material-approach-west.png",
+              "sha256": "43250e2de9420a604eddb294eb7a9b145ed4d7d787c5e4f6538ab23481bd9604",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "05-material-approach",
+                "x": 836,
+                "y": 484,
+                "faces": [
+                  "west"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 836,
+                  "y": 484
+                },
+                "lookAtMaterialPoint": {
+                  "x": 742,
+                  "y": 430
+                },
+                "purpose": "东侧两低片"
+              },
+              "routeTarget": {
+                "x": 836,
+                "y": 484
+              },
+              "actualAngle": 3.141592653589793,
+              "facing": "west",
+              "actualDistanceFromGoal": 9.65997985226505,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 826.5480765037337,
+                  "y": 482.0059205214196
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.364604991999837,
+                "elapsedMs": 12332.9
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 826.5480765037337,
+                  "y": 482.0059205214196
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.46571487999984,
+                "elapsedMs": 12432.9
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "pinched-fan",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "01高颗粒肩压灰色卷端的厚薄关系保留；04浅灰膜贴回地面，无完整黑圈或尖纸边。",
+      "limitations": [
+        "左侧红灰材料色界仍偏直，保留为视觉弱项；高卷面真实锐切边不等于已消除的浅面缺陷。低04敌人遮部分近床。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "pinched-fan",
+            "grade": "low",
+            "package": {
+              "id": "r100-pinched-fan",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "granular-ridge": {
+                  "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                  "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                  "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+                },
+                "membrane-rim": {
+                  "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+                  "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+                  "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+                }
+              },
+              "dependencyHash": "5eaf8e0e",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=pinched-fan&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/pinched-fan-low/recipe.json",
+            "sha256": "51d2ca5f6ea83fb9d286c4df87267517d92826d99aac8d7fcc8221a6ae2af8eb"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/pinched-fan-low/01-material-approach-east.png",
+              "sha256": "ce1b051e8d82b1d4d0d269a38dda33b39024a62e0550bacf6b4e9be0b8d59a8e",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 276,
+                "y": 348,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 276,
+                  "y": 348
+                },
+                "lookAtMaterialPoint": {
+                  "x": 410,
+                  "y": 345
+                },
+                "purpose": "左粒肩压起膜根"
+              },
+              "routeTarget": {
+                "x": 276,
+                "y": 348
+              },
+              "actualAngle": 0,
+              "facing": "east",
+              "actualDistanceFromGoal": 10.901696749726437,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 286.89888541182137,
+                  "y": 348.247565754868
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 26.20075575999999,
+                "elapsedMs": 6416.499999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 286.89888541182137,
+                  "y": 348.247565754868
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 26.21971386399999,
+                "elapsedMs": 6516.400000000001
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/pinched-fan-low/04-material-approach-west.png",
+              "sha256": "976e41b9e3f30a005ea341df2ba1be6c07abae7feca72855d3a1fc595c13121f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 876,
+                "y": 508,
+                "faces": [
+                  "west"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 876,
+                  "y": 508
+                },
+                "lookAtMaterialPoint": {
+                  "x": 787,
+                  "y": 447
+                },
+                "purpose": "可踩东低膜面"
+              },
+              "routeTarget": {
+                "x": 876,
+                "y": 508
+              },
+              "actualAngle": 3.141592653589793,
+              "facing": "west",
+              "actualDistanceFromGoal": 9.783873949917957,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 866.8695892747244,
+                  "y": 511.5156492224986
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 32.34799062399992,
+                "elapsedMs": 19799.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 866.8695892747244,
+                  "y": 511.5156492224986
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 32.39222809599992,
+                "elapsedMs": 19915.9
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "pinched-fan",
+            "grade": "severe",
+            "package": {
+              "id": "r100-pinched-fan",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "granular-ridge": {
+                  "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                  "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                  "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+                },
+                "membrane-rim": {
+                  "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+                  "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+                  "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+                }
+              },
+              "dependencyHash": "78817f07",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=pinched-fan&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/pinched-fan-severe/recipe.json",
+            "sha256": "42e86a388a8c67a06cfeb9f3ae4dd103d5aa887b9c961f58eb5ed81c61f45e7e"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/pinched-fan-severe/01-material-approach-east.png",
+              "sha256": "67297b73018f32a1f72be6dec1463006d9533afa2703f5a9ecb5f39ceacca091",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 276,
+                "y": 348,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 276,
+                  "y": 348
+                },
+                "lookAtMaterialPoint": {
+                  "x": 410,
+                  "y": 345
+                },
+                "purpose": "左粒肩压起膜根"
+              },
+              "routeTarget": {
+                "x": 276,
+                "y": 348
+              },
+              "actualAngle": 0,
+              "facing": "east",
+              "actualDistanceFromGoal": 6.279474654715393,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 282.00556496640274,
+                  "y": 346.16560871853113
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 23.494205695999884,
+                "elapsedMs": 5016.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 282.00556496640274,
+                  "y": 346.16560871853113
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 23.54476569599988,
+                "elapsedMs": 5116.4
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/pinched-fan-severe/04-material-approach-west.png",
+              "sha256": "24de54ac8aee1209963d6b0108861147c20449d9baf65a534000e16e2c99bb55",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 876,
+                "y": 508,
+                "faces": [
+                  "west"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 876,
+                  "y": 508
+                },
+                "lookAtMaterialPoint": {
+                  "x": 787,
+                  "y": 447
+                },
+                "purpose": "可踩东低膜面"
+              },
+              "routeTarget": {
+                "x": 876,
+                "y": 508
+              },
+              "actualAngle": 3.141592653589793,
+              "facing": "west",
+              "actualDistanceFromGoal": 9.979412929717704,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 866.709806013463,
+                  "y": 511.644307631681
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 30.151001023999616,
+                "elapsedMs": 18182.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 866.709806013463,
+                  "y": 511.644307631681
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 30.201561023999613,
+                "elapsedMs": 18282.6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "spliced-reaches",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "01/04长米色浅束床不再用整段硬斜线封边，近侧层理与床面连续；所见真缺地边独立可读。",
+      "limitations": [
+        "04仍有明显继承的对称纤维图案，是长程疲劳待观察项；此处不据静帧签全程变化。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "spliced-reaches",
+            "grade": "low",
+            "package": {
+              "id": "r100-spliced-reaches",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "fibre-knot": {
+                  "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                  "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                  "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+                }
+              },
+              "dependencyHash": "441a85fa",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=spliced-reaches&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/spliced-reaches-low/recipe.json",
+            "sha256": "e6f067e73666ccb908132ada616bb582a9950d40c8aba03db26b8393ddbccc7b"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/spliced-reaches-low/01-material-approach-north.png",
+              "sha256": "83760da694179c1821544a518ba61d0c4d65e297852251906c39bd0e86aebbd8",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 388,
+                "y": 620,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 388,
+                  "y": 620
+                },
+                "lookAtMaterialPoint": {
+                  "x": 341,
+                  "y": 522
+                },
+                "purpose": "左侧南低束床"
+              },
+              "routeTarget": {
+                "x": 388,
+                "y": 620
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 10.308522648068335,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 390.56757197225636,
+                  "y": 610.0163527028935
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.69832903199999,
+                "elapsedMs": 3766.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 390.56757197225636,
+                  "y": 610.0163527028935
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.717287135999989,
+                "elapsedMs": 3866.5
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/spliced-reaches-low/04-material-approach-north.png",
+              "sha256": "c206210e88798a711b3d9a80db7427911b5365255ca67dc7f5ede02be1ea692f",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 732,
+                "y": 364,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 732,
+                  "y": 364
+                },
+                "lookAtMaterialPoint": {
+                  "x": 726,
+                  "y": 255
+                },
+                "purpose": "北侧右床"
+              },
+              "routeTarget": {
+                "x": 732,
+                "y": 364
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 12.194511091628891,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 731.5578232460593,
+                  "y": 351.8135082783381
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.134594231999944,
+                "elapsedMs": 16616
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 731.5578232460593,
+                  "y": 351.8135082783381
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.156711071999943,
+                "elapsedMs": 16732.7
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "spliced-reaches",
+            "grade": "severe",
+            "package": {
+              "id": "r100-spliced-reaches",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "fibre-knot": {
+                  "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                  "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                  "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+                }
+              },
+              "dependencyHash": "0bd09a0f",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=spliced-reaches&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/spliced-reaches-severe/recipe.json",
+            "sha256": "9c7049c63ec7e69bb3cd148d8148bf48533942e5791d666737579e32b4af0678"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/spliced-reaches-severe/01-material-approach-north.png",
+              "sha256": "5a92d46b61ff4ac9acdd1acf76f257566e49c351703e4a723d582a6464331c6b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 388,
+                "y": 620,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 388,
+                  "y": 620
+                },
+                "lookAtMaterialPoint": {
+                  "x": 341,
+                  "y": 522
+                },
+                "purpose": "左侧南低束床"
+              },
+              "routeTarget": {
+                "x": 388,
+                "y": 620
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 12.229190554280585,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 389.5265984818667,
+                  "y": 607.8664680044075
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.870649215999915,
+                "elapsedMs": 3783.1000000000004
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 389.5265984818667,
+                  "y": 607.8664680044075
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.921199103999914,
+                "elapsedMs": 3883.1000000000004
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/spliced-reaches-severe/04-material-approach-north.png",
+              "sha256": "5f744edf88d87e2551735b2be6dc742bf71de8b7e2b293312255838387f82d41",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 732,
+                "y": 364,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 732,
+                  "y": 364
+                },
+                "lookAtMaterialPoint": {
+                  "x": 726,
+                  "y": 255
+                },
+                "purpose": "北侧右床"
+              },
+              "routeTarget": {
+                "x": 732,
+                "y": 364
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 11.517455484419314,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 730.1397056289184,
+                  "y": 352.6337743428831
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 22.878623231999676,
+                "elapsedMs": 15666
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 730.1397056289184,
+                  "y": 352.6337743428831
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 22.937611583999672,
+                "elapsedMs": 15782.7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "white-scarfield",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "01/04浅灰静床没有完整黑圈，04近脚薄沿与右侧真实缺地分开。",
+      "limitations": [
+        "高蓝体仅露少量，不能代替完整形体审查；重04敌人在角色前遮住一部分床。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "white-scarfield",
+            "grade": "low",
+            "package": {
+              "id": "r100-white-scarfield",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "granular-ridge": {
+                  "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                  "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                  "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+                }
+              },
+              "dependencyHash": "e7c1f89a",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=white-scarfield&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/white-scarfield-low/recipe.json",
+            "sha256": "3780b8c8b918b73744d1a319249749470d0b03f118b2c73eeeab0f3c5fb9cda4"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/white-scarfield-low/01-material-approach-north.png",
+              "sha256": "58866e74c82efb984bc5ef00721e09d43b5fd450c1d2f2585df64ecd1e7ddd04",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 404,
+                "y": 484,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 404,
+                  "y": 484
+                },
+                "lookAtMaterialPoint": {
+                  "x": 354,
+                  "y": 389
+                },
+                "purpose": "西侧浅砂低床"
+              },
+              "routeTarget": {
+                "x": 404,
+                "y": 484
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 4.311297649487438,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 405.25009333858804,
+                  "y": 479.8739178307632
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.884768399999988,
+                "elapsedMs": 4749.799999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 405.25009333858804,
+                  "y": 479.8739178307632
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 15.906885239999987,
+                "elapsedMs": 4866.4
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/white-scarfield-low/04-material-approach-north.png",
+              "sha256": "026340a6689ed78eef83d606d05954ea52a3bfaf729cbec9ed69794a2a782167",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 788,
+                "y": 548,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 788,
+                  "y": 548
+                },
+                "lookAtMaterialPoint": {
+                  "x": 814,
+                  "y": 443
+                },
+                "purpose": "东浅床与真实缺地边"
+              },
+              "routeTarget": {
+                "x": 788,
+                "y": 548
+              },
+              "actualAngle": -1.570482167529541,
+              "facing": "north",
+              "actualDistanceFromGoal": 6.704670522363242,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 788.7069387660964,
+                  "y": 541.3327033668482
+                },
+                "facingAngle": -1.570482167529541,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.218232783999962,
+                "elapsedMs": 11782.800000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 788.7069387660964,
+                  "y": 541.3327033668482
+                },
+                "facingAngle": -1.570482167529541,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.234035943999963,
+                "elapsedMs": 11866.2
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "white-scarfield",
+            "grade": "severe",
+            "package": {
+              "id": "r100-white-scarfield",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "granular-ridge": {
+                  "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                  "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                  "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+                }
+              },
+              "dependencyHash": "b219f1bd",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=white-scarfield&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/white-scarfield-severe/recipe.json",
+            "sha256": "4afcf1f38f1d10fc64bbc1c9c7178bb2dc119d16ad6040b982b4ea2463ef7ff7"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/white-scarfield-severe/01-material-approach-north.png",
+              "sha256": "5b475ead815c97a06eaecdc9448c1d47087646e0445ab961265217d532168b1e",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 404,
+                "y": 484,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 404,
+                  "y": 484
+                },
+                "lookAtMaterialPoint": {
+                  "x": 354,
+                  "y": 389
+                },
+                "purpose": "西侧浅砂低床"
+              },
+              "routeTarget": {
+                "x": 404,
+                "y": 484
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 4.066668904115393,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 404.61159970134815,
+                  "y": 479.97958437708115
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.42676876799989,
+                "elapsedMs": 4883.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 404.61159970134815,
+                  "y": 479.97958437708115
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.477323711999887,
+                "elapsedMs": 4983.1
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/white-scarfield-severe/04-material-approach-north.png",
+              "sha256": "a4ea4da8da4e8eec6ca2c16302f8a94f9fbf520b0201cdb10ae14f04bd33e4bf",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 788,
+                "y": 548,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 788,
+                  "y": 548
+                },
+                "lookAtMaterialPoint": {
+                  "x": 814,
+                  "y": 443
+                },
+                "purpose": "东浅床与真实缺地边"
+              },
+              "routeTarget": {
+                "x": 788,
+                "y": 548
+              },
+              "actualAngle": -1.5702936719703218,
+              "facing": "north",
+              "actualDistanceFromGoal": 4.575644010885994,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 789.2547979269751,
+                  "y": 543.5997727016874
+                },
+                "facingAngle": -1.5702936719703218,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 25.718479487999844,
+                "elapsedMs": 11982.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 789.2547979269751,
+                  "y": 543.5997727016874
+                },
+                "facingAngle": -1.5702936719703218,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 25.83647641599985,
+                "elapsedMs": 12099.5
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "black-lacuna",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "01/04灰紫浅床连续贴地，无旧完整折角黑圈；真实缺地唇与灰色可走表面可区别。",
+      "limitations": [
+        "近灯热点弱化局部细节，重04右下侵蚀覆盖部分面；不能签整个560×320母床。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "black-lacuna",
+            "grade": "low",
+            "package": {
+              "id": "r100-black-lacuna",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "gel-flow": {
+                  "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+                  "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+                  "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+                }
+              },
+              "dependencyHash": "62a70803",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=black-lacuna&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/black-lacuna-low/recipe.json",
+            "sha256": "01a64635870896eb63034d7dd4c3634cea00b0da56c7f5c39a7abea887a12a97"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/black-lacuna-low/01-material-approach-east.png",
+              "sha256": "308b5b219570a491fce1bb336847855a1c9ebfd996925e22077c53733bb05b04",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 348,
+                "y": 508,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 348,
+                  "y": 508
+                },
+                "lookAtMaterialPoint": {
+                  "x": 446,
+                  "y": 460
+                },
+                "purpose": "西侧宽裸口"
+              },
+              "routeTarget": {
+                "x": 348,
+                "y": 508
+              },
+              "actualAngle": 0,
+              "facing": "east",
+              "actualDistanceFromGoal": 7.100440182210332,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 353.9175030688709,
+                  "y": 504.07579202754863
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 15.723603975999989,
+                "elapsedMs": 3899.7999999999997
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 353.9175030688709,
+                  "y": 504.07579202754863
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 15.74256587199999,
+                "elapsedMs": 3999.9
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/black-lacuna-low/04-material-approach-east.png",
+              "sha256": "6c139daea44bfc9f4c21a425d7945e193ac77c28865fdfc6d5e0c06c71bf55c1",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 612,
+                "y": 588,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 612,
+                  "y": 588
+                },
+                "lookAtMaterialPoint": {
+                  "x": 700,
+                  "y": 523
+                },
+                "purpose": "南侧低薄尾"
+              },
+              "routeTarget": {
+                "x": 612,
+                "y": 588
+              },
+              "actualAngle": 0.00006283185307315309,
+              "facing": "east",
+              "actualDistanceFromGoal": 8.192773870609665,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 618.4536237987634,
+                  "y": 593.0470073864598
+                },
+                "facingAngle": 0.00006283185307315309,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.76636795199997,
+                "elapsedMs": 9399.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 618.4536237987634,
+                  "y": 593.0470073864598
+                },
+                "facingAngle": 0.00006283185307315309,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.78532605599997,
+                "elapsedMs": 9499.6
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "black-lacuna",
+            "grade": "severe",
+            "package": {
+              "id": "r100-black-lacuna",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "gel-flow": {
+                  "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+                  "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+                  "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+                }
+              },
+              "dependencyHash": "1c7fd9b1",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=black-lacuna&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/black-lacuna-severe/recipe.json",
+            "sha256": "6be672217fb0446da2812ee768928b6248854d9ff02536fe967f097d88dac770"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/black-lacuna-severe/01-material-approach-east.png",
+              "sha256": "0d66ad67ca573e571a59af12a4bb3b4bf7e270bb3fd6db2bf903b81fa109bec2",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 348,
+                "y": 508,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 348,
+                  "y": 508
+                },
+                "lookAtMaterialPoint": {
+                  "x": 446,
+                  "y": 460
+                },
+                "purpose": "西侧宽裸口"
+              },
+              "routeTarget": {
+                "x": 348,
+                "y": 508
+              },
+              "actualAngle": -0.0002513274122875053,
+              "facing": "east",
+              "actualDistanceFromGoal": 8.925255100185781,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 355.8970103009389,
+                  "y": 503.8409848629445
+                },
+                "facingAngle": -0.0002513274122875053,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 16.963335807999915,
+                "elapsedMs": 3966.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 355.8970103009389,
+                  "y": 503.8409848629445
+                },
+                "facingAngle": -0.0002513274122875053,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.01390086399991,
+                "elapsedMs": 4066.5
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/black-lacuna-severe/04-material-approach-east.png",
+              "sha256": "7c409fd9b552b2bf8d7fa4592ee1d2950856396648f907faeb56aa1e3d661802",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 612,
+                "y": 588,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 612,
+                  "y": 588
+                },
+                "lookAtMaterialPoint": {
+                  "x": 700,
+                  "y": 523
+                },
+                "purpose": "南侧低薄尾"
+              },
+              "routeTarget": {
+                "x": 612,
+                "y": 588
+              },
+              "actualAngle": 0,
+              "facing": "east",
+              "actualDistanceFromGoal": 1.8202262457564828,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 612.6119951148222,
+                  "y": 589.714259480118
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 19.979957759999788,
+                "elapsedMs": 9932.900000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 612.6119951148222,
+                  "y": 589.714259480118
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.038946111999785,
+                "elapsedMs": 10049.599999999999
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "violet-marrows",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "01紫色外皮、粉色孔断面与孔壁/封底在低重均可辨；04低外皮不再有硬叉形轮廓，浅接蓝床。",
+      "limitations": [
+        "04前方敌人遮住上侧一部分；仍存在源色块和折向，但不再用黑圈冒充厚度。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "violet-marrows",
+            "grade": "low",
+            "package": {
+              "id": "r100-violet-marrows",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "granular-ridge": {
+                  "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                  "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                  "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+                },
+                "organization:porous-marrow": {
+                  "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+                  "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+                  "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+                }
+              },
+              "dependencyHash": "96355bd2",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=violet-marrows&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/violet-marrows-low/recipe.json",
+            "sha256": "ca742aeb381f0d11238150969c71dcf0f5a92e4a48da0d3841c4415c7c32154d"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/violet-marrows-low/01-material-approach-north.png",
+              "sha256": "9775bbfc855101b9dff9ec79df6e0eeca5ab59393a80c3c0debea7469eb21148",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 468,
+                "y": 468,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 468,
+                  "y": 468
+                },
+                "lookAtMaterialPoint": {
+                  "x": 410,
+                  "y": 377
+                },
+                "purpose": "短粗孔芯真实断面"
+              },
+              "routeTarget": {
+                "x": 468,
+                "y": 468
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 7.919952143052338,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 469.87507234487356,
+                  "y": 460.3052130861388
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.232347543999975,
+                "elapsedMs": 6583.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 469.87507234487356,
+                  "y": 460.3052130861388
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.251307543999975,
+                "elapsedMs": 6683.1
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/violet-marrows-low/04-material-approach-north.png",
+              "sha256": "c312fbbfecd337e3cc1cecfa56fb9bdee6fa46a52e343fa969e5d05c5eb51e52",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 700,
+                "y": 348,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 700,
+                  "y": 348
+                },
+                "lookAtMaterialPoint": {
+                  "x": 729,
+                  "y": 244
+                },
+                "purpose": "完整低外皮"
+              },
+              "routeTarget": {
+                "x": 700,
+                "y": 348
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 14.352071818225337,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 702.7873286001885,
+                  "y": 333.92119448425865
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.63849129599995,
+                "elapsedMs": 13932.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 702.7873286001885,
+                  "y": 333.92119448425865
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.67641508799995,
+                "elapsedMs": 14032.8
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "violet-marrows",
+            "grade": "severe",
+            "package": {
+              "id": "r100-violet-marrows",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "granular-ridge": {
+                  "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+                  "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+                  "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+                },
+                "organization:porous-marrow": {
+                  "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+                  "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+                  "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+                }
+              },
+              "dependencyHash": "fb8fdd1e",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=violet-marrows&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/violet-marrows-severe/recipe.json",
+            "sha256": "e6ed6f828b1bc83b98f6af70b0c7ce4b50c11abd388711f9cc08d684ea76819e"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/violet-marrows-severe/01-material-approach-north.png",
+              "sha256": "64423fdf035ad2b147470aa8cf702092406dc5dc8d5bf7e5b2cf5bcb7f104e7e",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 468,
+                "y": 468,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 468,
+                  "y": 468
+                },
+                "lookAtMaterialPoint": {
+                  "x": 410,
+                  "y": 377
+                },
+                "purpose": "短粗孔芯真实断面"
+              },
+              "routeTarget": {
+                "x": 468,
+                "y": 468
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 1.7116144317210045,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 469.41170164308255,
+                  "y": 467.0321557802034
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.797525247999882,
+                "elapsedMs": 5616.299999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 469.41170164308255,
+                  "y": 467.0321557802034
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.85651865599988,
+                "elapsedMs": 5733.1
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/violet-marrows-severe/04-material-approach-north.png",
+              "sha256": "840a59eb6025eaed10bbe4f8420d8f4bca25f7a2793173a8ac10429f1ed1daf2",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 700,
+                "y": 348,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 700,
+                  "y": 348
+                },
+                "lookAtMaterialPoint": {
+                  "x": 729,
+                  "y": 244
+                },
+                "purpose": "完整低外皮"
+              },
+              "routeTarget": {
+                "x": 700,
+                "y": 348
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 3.3414141045371144,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 700.8755685765201,
+                  "y": 344.7753406558506
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 24.67364697599974,
+                "elapsedMs": 13199.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 700.8755685765201,
+                  "y": 344.7753406558506
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 24.75789004799974,
+                "elapsedMs": 13282.7
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "fractured-estuary",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "01/02/05三段浅床无原硬圈和尖叉贴片；02两侧红高肩与左侧真缺地保持厚度和边界，05近侧浅层连续。",
+      "limitations": [
+        "05下侧真实吞光/侵蚀覆盖处及灯外支路不签；低重残骸与场内状况不同，不是像素同机位对照。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "fractured-estuary",
+            "grade": "low",
+            "package": {
+              "id": "r100-fractured-estuary",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "folded-slab": {
+                  "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                  "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                  "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+                },
+                "gel-flow": {
+                  "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+                  "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+                  "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+                }
+              },
+              "dependencyHash": "7c62c4de",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=fractured-estuary&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fractured-estuary-low/recipe.json",
+            "sha256": "c1b0d3c678fd474e886d9828ae4a54750311ca7895912d11870e4605b997861d"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fractured-estuary-low/01-material-approach-east.png",
+              "sha256": "4e9ea7e71dcdc534e2bb030ee16c8eb83c12cbf36bf895184e488e8c1e02d6fb",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 292,
+                "y": 228,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 292,
+                  "y": 228
+                },
+                "lookAtMaterialPoint": {
+                  "x": 400,
+                  "y": 238
+                },
+                "purpose": "上低层支床"
+              },
+              "routeTarget": {
+                "x": 292,
+                "y": 228
+              },
+              "actualAngle": -0.00006283185306610317,
+              "facing": "east",
+              "actualDistanceFromGoal": 5.736226803619846,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 297.4723787652877,
+                  "y": 226.28029985410396
+                },
+                "facingAngle": -0.00006283185306610317,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.70484876799995,
+                "elapsedMs": 14349.400000000001
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 297.4723787652877,
+                  "y": 226.28029985410396
+                },
+                "facingAngle": -0.00006283185306610317,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 17.72380687199995,
+                "elapsedMs": 14449.400000000001
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fractured-estuary-low/02-material-approach-south.png",
+              "sha256": "4e3d0c6628d6da6220e5179decf3d4dfe8d74eaaadbf6d2fe2762765973fe4c3",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "02-material-approach",
+                "x": 500,
+                "y": 316,
+                "faces": [
+                  "south"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 500,
+                  "y": 316
+                },
+                "lookAtMaterialPoint": {
+                  "x": 572,
+                  "y": 396
+                },
+                "purpose": "两床汇入地颈"
+              },
+              "routeTarget": {
+                "x": 500,
+                "y": 316
+              },
+              "actualAngle": 1.5707963267948966,
+              "facing": "south",
+              "actualDistanceFromGoal": 4.052831452505555,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 499.93319017563766,
+                  "y": 320.05228074419665
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.611728319999933,
+                "elapsedMs": 19132.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 499.93319017563766,
+                  "y": 320.05228074419665
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.633845159999932,
+                "elapsedMs": 19249.2
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fractured-estuary-low/05-original-route-boundary-east.png",
+              "sha256": "d1ad8c0f22f552831fa6e9c4109d5635907fc2bfff6e971081c1209f5c0d4aec",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "05-original-route-boundary",
+                "x": 300,
+                "y": 580,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 300,
+                  "y": 580
+                },
+                "lookAtMaterialPoint": {
+                  "x": 400,
+                  "y": 580
+                },
+                "purpose": "补下支床进入汇颈的低层，原01只覆盖上支床。",
+                "existingSweptPathEvidence": {
+                  "low": {
+                    "kind": "spawnRoute",
+                    "routeIndex": 3,
+                    "pointIndex": 14
+                  },
+                  "medium": {
+                    "kind": "spawnRoute",
+                    "routeIndex": 3,
+                    "pointIndex": 14
+                  },
+                  "severe": {
+                    "kind": "spawnRoute",
+                    "routeIndex": 3,
+                    "pointIndex": 14
+                  }
+                },
+                "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+              },
+              "routeTarget": {
+                "x": 300,
+                "y": 580
+              },
+              "actualAngle": 0.00006283185307298655,
+              "facing": "east",
+              "actualDistanceFromGoal": 4.636941639378762,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 304.5854430793773,
+                  "y": 580.6891585686876
+                },
+                "facingAngle": 0.00006283185307298655,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.185345751999904,
+                "elapsedMs": 27432.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 304.5854430793773,
+                  "y": 580.6891585686876
+                },
+                "facingAngle": 0.00006283185307298655,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.207468279999905,
+                "elapsedMs": 27548.9
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "fractured-estuary",
+            "grade": "severe",
+            "package": {
+              "id": "r100-fractured-estuary",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "folded-slab": {
+                  "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                  "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                  "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+                },
+                "gel-flow": {
+                  "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+                  "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+                  "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+                }
+              },
+              "dependencyHash": "d80c8f21",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=fractured-estuary&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fractured-estuary-severe/recipe.json",
+            "sha256": "1ed9e9ba49406019328a997788f833d280a124a4e45a83cff01fa9b312d78175"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fractured-estuary-severe/01-material-approach-east.png",
+              "sha256": "ada1de4c877cf59217e433dc2685ae0a7a08f94f57db396e30269620d200c1d8",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 292,
+                "y": 228,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 292,
+                  "y": 228
+                },
+                "lookAtMaterialPoint": {
+                  "x": 400,
+                  "y": 238
+                },
+                "purpose": "上低层支床"
+              },
+              "routeTarget": {
+                "x": 292,
+                "y": 228
+              },
+              "actualAngle": 0,
+              "facing": "east",
+              "actualDistanceFromGoal": 5.43563948312107,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 295.9774891171551,
+                  "y": 224.2951711357503
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.67365708799973,
+                "elapsedMs": 13282.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 295.9774891171551,
+                  "y": 224.2951711357503
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 21.724212031999727,
+                "elapsedMs": 13382.8
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fractured-estuary-severe/02-material-approach-south.png",
+              "sha256": "eca008d57c7c88672cfbbffe496046b80e7375f3513398deb468a1c36a6d28c6",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "02-material-approach",
+                "x": 500,
+                "y": 316,
+                "faces": [
+                  "south"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 500,
+                  "y": 316
+                },
+                "lookAtMaterialPoint": {
+                  "x": 572,
+                  "y": 396
+                },
+                "purpose": "两床汇入地颈"
+              },
+              "routeTarget": {
+                "x": 500,
+                "y": 316
+              },
+              "actualAngle": 1.5707963267948966,
+              "facing": "south",
+              "actualDistanceFromGoal": 8.342241488346408,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 500.57738003929376,
+                  "y": 324.3222367990891
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 24.2605342079996,
+                "elapsedMs": 18399.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 500.57738003929376,
+                  "y": 324.3222367990891
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 24.311099263999598,
+                "elapsedMs": 18499.3
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/fractured-estuary-severe/05-original-route-boundary-east.png",
+              "sha256": "2fd6edf0c42e610fc2a0387e4da587bea00a2133ec4526127a0934a33d7706ad",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "05-original-route-boundary",
+                "x": 300,
+                "y": 580,
+                "faces": [
+                  "east"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 300,
+                  "y": 580
+                },
+                "lookAtMaterialPoint": {
+                  "x": 400,
+                  "y": 580
+                },
+                "purpose": "补下支床进入汇颈的低层，原01只覆盖上支床。",
+                "existingSweptPathEvidence": {
+                  "low": {
+                    "kind": "spawnRoute",
+                    "routeIndex": 3,
+                    "pointIndex": 14
+                  },
+                  "medium": {
+                    "kind": "spawnRoute",
+                    "routeIndex": 3,
+                    "pointIndex": 14
+                  },
+                  "severe": {
+                    "kind": "spawnRoute",
+                    "routeIndex": 3,
+                    "pointIndex": 14
+                  }
+                },
+                "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+              },
+              "routeTarget": {
+                "x": 300,
+                "y": 580
+              },
+              "actualAngle": 0,
+              "facing": "east",
+              "actualDistanceFromGoal": 7.347004913979582,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 306.53958991735533,
+                  "y": 583.3484690410492
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 28.86973548799924,
+                "elapsedMs": 27515.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 306.53958991735533,
+                  "y": 583.3484690410492
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 28.920300543999236,
+                "elapsedMs": 27615.6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "shell-patchwork",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "03所见高壳曲面与脚沿保持，04近脚粉色浅皮不再有旧长黑边和硬角，能读为贴地过渡。",
+      "limitations": [
+        "03高壳绿色细层仍偏平行，作为已知弱项；04左高体受画幅截断，上方长色界保留，未签完整接触线或壳背。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "shell-patchwork",
+            "grade": "low",
+            "package": {
+              "id": "r100-shell-patchwork",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "broken-shell": {
+                  "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                  "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                  "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+                },
+                "membrane-rim": {
+                  "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+                  "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+                  "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+                }
+              },
+              "dependencyHash": "c0347c3a",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=shell-patchwork&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/shell-patchwork-low/recipe.json",
+            "sha256": "535359660affcdfbfb72d51b0ca0a1ad7d431a1c9f0fdb27160b4f56566ac000"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/shell-patchwork-low/03-material-approach-north.png",
+              "sha256": "6f6513c6861c648db78cb55c3869e478d3de2a7a16263980305e8163e26c4a73",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "03-material-approach",
+                "x": 580,
+                "y": 588,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 580,
+                  "y": 588
+                },
+                "lookAtMaterialPoint": {
+                  "x": 650,
+                  "y": 505
+                },
+                "purpose": "南厚壳夹低皮"
+              },
+              "routeTarget": {
+                "x": 580,
+                "y": 588
+              },
+              "actualAngle": -1.5707334949418237,
+              "facing": "north",
+              "actualDistanceFromGoal": 8.593629053059905,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 586.2207655083347,
+                  "y": 582.0710425206527
+                },
+                "facingAngle": -1.5707334949418237,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.04908523999999,
+                "elapsedMs": 5616.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 586.2207655083347,
+                  "y": 582.0710425206527
+                },
+                "facingAngle": -1.5707334949418237,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.06804334399999,
+                "elapsedMs": 5716.5
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/shell-patchwork-low/04-material-approach-north.png",
+              "sha256": "846e17c18cca304684eb0ed3cecb0a9a7451b9001238dc4e17bd0d797e397921",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 732,
+                "y": 508,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 732,
+                  "y": 508
+                },
+                "lookAtMaterialPoint": {
+                  "x": 765,
+                  "y": 405
+                },
+                "purpose": "东侧大低壳面"
+              },
+              "routeTarget": {
+                "x": 732,
+                "y": 508
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 4.407752616117784,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 731.7672500482496,
+                  "y": 503.59839681651636
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.775846687999973,
+                "elapsedMs": 9449.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 731.7672500482496,
+                  "y": 503.59839681651636
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.794810479999974,
+                "elapsedMs": 9549.7
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "shell-patchwork",
+            "grade": "severe",
+            "package": {
+              "id": "r100-shell-patchwork",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "broken-shell": {
+                  "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                  "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                  "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+                },
+                "membrane-rim": {
+                  "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+                  "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+                  "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+                }
+              },
+              "dependencyHash": "c3d9516f",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=shell-patchwork&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/shell-patchwork-severe/recipe.json",
+            "sha256": "5d13060fda3e0e672c3fb014b40cc7c76494eb201a7feb844e70fc72f81ebe20"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/shell-patchwork-severe/03-material-approach-north.png",
+              "sha256": "92b7164329b113c4f4a4d472f4fd38b830b248a8d083e9c5e374a439a2136d43",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "03-material-approach",
+                "x": 580,
+                "y": 588,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 580,
+                  "y": 588
+                },
+                "lookAtMaterialPoint": {
+                  "x": 650,
+                  "y": 505
+                },
+                "purpose": "南厚壳夹低皮"
+              },
+              "routeTarget": {
+                "x": 580,
+                "y": 588
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 8.43301217200303,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 585.9955767887152,
+                  "y": 582.069675113135
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.831243711999868,
+                "elapsedMs": 5683.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 585.9955767887152,
+                  "y": 582.069675113135
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.881788543999868,
+                "elapsedMs": 5783
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/shell-patchwork-severe/04-material-approach-north.png",
+              "sha256": "8942df6086116daac2d356634784ae4857feb69e2456b92a35c8b509a087123b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 732,
+                "y": 508,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 732,
+                  "y": 508
+                },
+                "lookAtMaterialPoint": {
+                  "x": 765,
+                  "y": 405
+                },
+                "purpose": "东侧大低壳面"
+              },
+              "routeTarget": {
+                "x": 732,
+                "y": 508
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 10.503162468195745,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 728.5437702742806,
+                  "y": 498.0817895809592
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.81142611199979,
+                "elapsedMs": 9599.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 728.5437702742806,
+                  "y": 498.0817895809592
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.86197094399979,
+                "elapsedMs": 9699.6
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "worldId": "woven-quarters",
+      "status": "bounded-author-low-severe-pass",
+      "finding": "01蓝主面在低重均可读出交织短纤团，与棕色长束副材及紫床区分；04床面/残骸近侧可辨。",
+      "limitations": [
+        "新增主材证据来自01；04不是主面替代证据。低04敌人遮近床，重04该处无敌，不能冒称完全等压或逐像素同机位。"
+      ],
+      "scope": "Personally viewed all original low/severe PNGs listed for this world; only lit local material and boundary content is approved.",
+      "cases": [
+        {
+          "grade": "low",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "woven-quarters",
+            "grade": "low",
+            "package": {
+              "id": "r100-woven-quarters",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "fibre-knot": {
+                  "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                  "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                  "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+                },
+                "membrane-rim": {
+                  "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+                  "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+                  "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+                },
+                "organization:short-fibre-loose": {
+                  "definition": "06b98bb318c7f8440c6c576a6f0472aac78c13a198f65fe8ffcc1b1a266dd328",
+                  "surface": "c7bd9b26d16d9dd374d4d61e2b42eb13cee3a5e0980cee07e292b5db8d4112dd",
+                  "solid": "cf673c46a193dd9f50bf1c26a0218bced7c335af8b52e9adb5b3f6c0f50246dd"
+                }
+              },
+              "dependencyHash": "6ca51211",
+              "grade": "low"
+            },
+            "runtimeGrade": "low",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=woven-quarters&grade=low&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/woven-quarters-low/recipe.json",
+            "sha256": "1add3d0b07e8201870ac8a593d3563b427d6c31b4baba88ecd7793ff2abd3f54"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/woven-quarters-low/01-material-approach-north.png",
+              "sha256": "5be1defeb7e9f5d71535e27999efa68b3e27b71a33174915a99555c07090f309",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 468,
+                "y": 372,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 468,
+                  "y": 372
+                },
+                "lookAtMaterialPoint": {
+                  "x": 400,
+                  "y": 289
+                },
+                "purpose": "西北唯一厚毡"
+              },
+              "routeTarget": {
+                "x": 468,
+                "y": 372
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 4.386043844872249,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 467.9606976449639,
+                  "y": 367.6141322484564
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.488306911999974,
+                "elapsedMs": 7933
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 467.9606976449639,
+                  "y": 367.6141322484564
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 16.510427543999974,
+                "elapsedMs": 8049.700000000001
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/woven-quarters-low/04-material-approach-south.png",
+              "sha256": "a4710f090cf901232c881e7480a886f1fba41b6aaf21b88ceffcbe8f73e0cbc4",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "low",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 772,
+                "y": 452,
+                "faces": [
+                  "south"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 772,
+                  "y": 452
+                },
+                "lookAtMaterialPoint": {
+                  "x": 780,
+                  "y": 560
+                },
+                "purpose": "东侧可踩静片"
+              },
+              "routeTarget": {
+                "x": 772,
+                "y": 452
+              },
+              "actualAngle": 1.5707963267948966,
+              "facing": "south",
+              "actualDistanceFromGoal": 8.594527496957074,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 772.658282517301,
+                  "y": 460.5692804262299
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.12195359999994,
+                "elapsedMs": 14949.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 772.658282517301,
+                  "y": 460.5692804262299
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.15986980799994,
+                "elapsedMs": 15049.4
+              }
+            }
+          ]
+        },
+        {
+          "grade": "severe",
+          "requestedSeed": 20261005,
+          "identity": {
+            "requestedSeed": 20261005,
+            "worldId": "woven-quarters",
+            "grade": "severe",
+            "package": {
+              "id": "r100-woven-quarters",
+              "algorithm": "r100-native",
+              "version": 3,
+              "algorithmRevision": 6,
+              "materials": {
+                "fibre-knot": {
+                  "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                  "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                  "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+                },
+                "membrane-rim": {
+                  "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+                  "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+                  "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+                },
+                "organization:short-fibre-loose": {
+                  "definition": "06b98bb318c7f8440c6c576a6f0472aac78c13a198f65fe8ffcc1b1a266dd328",
+                  "surface": "c7bd9b26d16d9dd374d4d61e2b42eb13cee3a5e0980cee07e292b5db8d4112dd",
+                  "solid": "cf673c46a193dd9f50bf1c26a0218bced7c335af8b52e9adb5b3f6c0f50246dd"
+                }
+              },
+              "dependencyHash": "e0c38652",
+              "grade": "severe"
+            },
+            "runtimeGrade": "severe",
+            "url": "http://127.0.0.1:3121/r100-gym.html?world=woven-quarters&grade=severe&seed=20261005&loadout=bare",
+            "viewport": {
+              "width": 1440,
+              "height": 1000
+            }
+          },
+          "recipe": {
+            "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/woven-quarters-severe/recipe.json",
+            "sha256": "28f3f8828088b5ea80ee2967b0497207df6562534836fae154d7f7e978e894dd"
+          },
+          "images": [
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/woven-quarters-severe/01-material-approach-north.png",
+              "sha256": "ef8ab11081279d87082f06bc6e511d474b4a750947f2bb93c57e7a5bc83afd50",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "01-material-approach",
+                "x": 468,
+                "y": 372,
+                "faces": [
+                  "north"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 468,
+                  "y": 372
+                },
+                "lookAtMaterialPoint": {
+                  "x": 400,
+                  "y": 289
+                },
+                "purpose": "西北唯一厚毡"
+              },
+              "routeTarget": {
+                "x": 468,
+                "y": 372
+              },
+              "actualAngle": -1.5707963267948966,
+              "facing": "north",
+              "actualDistanceFromGoal": 4.383673791379806,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 468.9445430253584,
+                  "y": 367.71929510682213
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.069897983999837,
+                "elapsedMs": 8133
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 468.9445430253584,
+                  "y": 367.71929510682213
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.120468095999836,
+                "elapsedMs": 8232.9
+              }
+            },
+            {
+              "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/woven-quarters-severe/04-material-approach-south.png",
+              "sha256": "ae966a34f28ce618a6805f8dd0998455832e7ed14f19fb24c46a5b6acde7f800",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "grade": "severe",
+              "requestedGoal": {
+                "label": "04-material-approach",
+                "x": 772,
+                "y": 452,
+                "faces": [
+                  "south"
+                ],
+                "authorSupportedBodyPoint": {
+                  "x": 772,
+                  "y": 452
+                },
+                "lookAtMaterialPoint": {
+                  "x": 780,
+                  "y": 560
+                },
+                "purpose": "东侧可踩静片"
+              },
+              "routeTarget": {
+                "x": 772,
+                "y": 452
+              },
+              "actualAngle": 1.5707963267948966,
+              "facing": "south",
+              "actualDistanceFromGoal": 7.928598920030985,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 770.8288378063351,
+                  "y": 459.84162355324753
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 22.533136639999704,
+                "elapsedMs": 14982.699999999999
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 770.8288378063351,
+                  "y": 459.84162355324753
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 22.583681471999704,
+                "elapsedMs": 15082.699999999999
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

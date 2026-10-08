@@ -1,0 +1,146 @@
+{
+  "status": "planned-not-executed",
+  "createdAt": "2026-10-07T09:46:42.772344+00:00",
+  "priorOrder": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-execution-order.json",
+    "sha256": "ae80adfacf5241c3d5e65d86b7592a7f7bb686f518f9817c26891ec3f8779517"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "stage": "After authorized enabled108 codegen/final-source, before final selection and browser production. One CPU; not during budget/lifecycle. No automatic retry.",
+  "activation": {
+    "checker": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-enable/check-packages.mjs",
+      "sha256": "e2b82bc6f3044a979c905aca685ee11048d5f682ddd08fff0191a0ab21375c39"
+    },
+    "before": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-enable/before.json",
+      "sha256": "e846780aef477a5a958a4184d495830937ceab0bf85328e36813f2394a4925ab"
+    },
+    "beforeLog": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-enable/before.log",
+      "sha256": "80c86ec56e5096a1c21ecbed46a60a8487341f2cf2d470d70a9f33d9ebf11076"
+    },
+    "beforeStatus": "pass-324-valid-recipes-52-enabled",
+    "afterStatus": "pending-actual-activation",
+    "expected": "Only new56 enabled CSV fields, all324 full recipe/dependencyHash exact and pre-enable recipes still admissible."
+  },
+  "checks": [
+    {
+      "id": "general-recovery",
+      "command": [
+        "npm",
+        "run",
+        "check:rift-recovery"
+      ],
+      "harness": [
+        {
+          "path": "tools/recovery/check.mjs",
+          "sha256": "66188b292f7cbc04a0c9029b9c5d43ca1698d8c7f218d50548687142b6734397"
+        }
+      ],
+      "env": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json",
+        "BROWSER": "none"
+      },
+      "log": "docs/qa/artifacts/r100-i10-i12/final-compatibility/general-recovery.log"
+    },
+    {
+      "id": "frozen-chaos",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-frozen-chaos.ts"
+      ],
+      "harness": [
+        {
+          "path": "tools/world-study/check-r100-frozen-chaos.ts",
+          "sha256": "2e5fca75aa09526103fd2734f1b11a2ac367c3585d5636fe3aaf079a1a6ef11b"
+        }
+      ],
+      "env": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json",
+        "BROWSER": "none"
+      },
+      "log": "docs/qa/artifacts/r100-i10-i12/final-compatibility/frozen-chaos.log"
+    },
+    {
+      "id": "frozen-recipe",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-frozen-recipe.ts"
+      ],
+      "harness": [
+        {
+          "path": "tools/world-study/check-r100-frozen-recipe.ts",
+          "sha256": "1a00f81e9f7170a9640e4bc5d1995dd46bf88fa262eb7cd0e0a8c6ee1bd70f6b"
+        }
+      ],
+      "env": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json",
+        "BROWSER": "none"
+      },
+      "log": "docs/qa/artifacts/r100-i10-i12/final-compatibility/frozen-recipe.log"
+    },
+    {
+      "id": "grade-host",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-master-pollution.ts"
+      ],
+      "harness": [
+        {
+          "path": "tools/world-study/check-master-pollution.ts",
+          "sha256": "785c7ba1a23e2b6ea138e3aabdf97c8d15937523dec8c729de51c83040324efb"
+        }
+      ],
+      "env": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json",
+        "BROWSER": "none"
+      },
+      "log": "docs/qa/artifacts/r100-i10-i12/final-compatibility/grade-host.log"
+    },
+    {
+      "id": "revision6-contract",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-revision6-contract.ts",
+        "--organizations",
+        "--extended-profiles"
+      ],
+      "harness": [
+        {
+          "path": "tools/world-study/check-r100-revision6-contract.ts",
+          "sha256": "39c91602bd09ceea7133b8748edddfcc2008f6ce9b2d248861726d2ad3d636ea"
+        }
+      ],
+      "env": {
+        "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json",
+        "BROWSER": "none"
+      },
+      "log": "docs/qa/artifacts/r100-i10-i12/final-compatibility/revision6-contract.log"
+    }
+  ],
+  "sourceBinding": "Execution receipt must bind final source SHA and pre/post actual runtime files; source changes fail. Frozen r3/r4/r5 closures and dispatch are separately tied by existing reviewed continuity, never relabelled as 342 current+r1 results.",
+  "historicalRecovery": {
+    "revision5Exact156": {
+      "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projection-exact-execution.json",
+      "sha256": "ddd422d03ed4183ac7338ae7489ca45db7663290bc0171e15bdfac3f5b538422"
+    },
+    "reviewedOld52": {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/independent-review.json",
+      "sha256": "2168637d4bc9fb70f3652ead770a74a0acf0dbe21fca4fa4d8758b1d34987da7"
+    },
+    "scope": "Do not rebake the156 prior maps/surfaces. Final continuity must retain the archived executors, recovery dispatch and selected grade data; current general recovery includes actual60 revision2 identities."
+  },
+  "scope": "Add explicit existing recovery/grade contracts and enable-only recipe proof to the previously frozen final order. No game execution, source activation, result or approval claimed by this plan."
+}

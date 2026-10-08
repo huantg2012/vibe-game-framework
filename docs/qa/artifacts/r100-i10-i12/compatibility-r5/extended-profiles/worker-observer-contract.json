@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "createdAt": "2026-10-07T05:36:12.778Z",
+  "observer": {
+    "path": "tools/qa/r100-worker-observer.mjs",
+    "sha256": "4d33a18e9f6eb27bfed28821daa7237b674a8beeba90a8397756e8ee7d86c676"
+  },
+  "assertions": [
+    "Original launch/context this, arguments and returned object identity retained",
+    "Only CDP Target.setDiscoverTargets requested",
+    "Repeated successful traffic counted without repeated raw rows",
+    "Exact unnormalized URL catalogue reused across independent context counters",
+    "Failed requests and HTTP errors retained individually",
+    "Pending imports retained at crash/close",
+    "Page, console and CDP target failure details retained",
+    "Worker creation and close retain matching instance IDs",
+    "Context close releases accounting and flush preserves only active contexts",
+    "Restore affects original launch and does not change browser input or game code"
+  ],
+  "scope": "Fake event forwarding and bounded logging contract; no browser launch, actual Worker reproduction, runtime correctness or performance claim."
+}

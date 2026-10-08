@@ -1,0 +1,39 @@
+{
+  "status": "prepared-not-started",
+  "original": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-final96-preparation.json",
+    "sha256": "bb0dd1b8011acb6b75102ef753be6372b95126711a5632e4eea33fd309fbb057"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-final96-plan-v2.json",
+    "sha256": "db61345507ad447d923d7729b2c06c20bc6e822f6238efc2ed74204250aceac9"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/run-current3121-final96-v2.mjs",
+    "sha256": "d6bb496103f772f005c694266671f0c5956dffb0431e3e991359d0c32ba08bfe"
+  },
+  "retainedFailures": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining60.json",
+      "sha256": "839d67b62a68dcad3c59facbb96a2ec97749b484eef176607fe8d1236d7d5c94"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuation-after-current60.json",
+      "sha256": "e21b38618676bf081dd3c65fe9631a3e59e88145487394e4925723fe47e4d050"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/diagnosis.json",
+      "sha256": "3cb80d7d7bb41476c4a32e1cb0c1fa3bec377fb8dd407bf577ec7b97360c5f51"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/independent-attribution-shapes.json",
+      "sha256": "3a4db8ea75dbaddbb8afd3469612c8c5b7d5f5f665a5efaf7deb54cf4ab3509c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-recheck-observation.json",
+      "sha256": "3e9378a32a7a328d8634006ab8084f458e83d131384b2e05613ef4f95a3d9c25"
+    }
+  ],
+  "exactStageInputs": true,
+  "change": "Only predecessor evidence and output names; original96source/stages/commands/policy/seeds unchanged."
+}

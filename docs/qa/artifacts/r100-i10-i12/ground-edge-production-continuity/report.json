@@ -1,0 +1,1228 @@
+{
+  "status": "pass",
+  "purpose": "r100-ground-edge-production-behavior",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "sha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-ground-edge-behavior.mjs",
+    "sha256": "315d9a333046dd2485ae1cd704de309c5cec4896a2d518621a2bba0423fb0db2"
+  },
+  "worlds": [
+    "cleft-tableland"
+  ],
+  "grades": [
+    "low",
+    "medium",
+    "severe"
+  ],
+  "seeds": [
+    20261005,
+    3075192741
+  ],
+  "executors": [
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity/before.mjs",
+      "sha256": "aee2769ead8533abe9bfde9ed37a43538698294ba306d40dfe0c8dae7b2b186b",
+      "dependencies": [
+        {
+          "path": "src/generation/legacy-r100-v2/executor.js",
+          "sha256": "bc5117ae07ff61565a1076b466ed1addf14b67691573a6acefe9fb47af1af06f"
+        },
+        {
+          "path": "src/generation/legacy-r100-v3/executor.js",
+          "sha256": "8aa337fb4687b45206db5db496bbe1a0a5269975b002cb2d1a7880c89870be78"
+        },
+        {
+          "path": "src/generation/legacy-r100-v5/executor-recovery.js",
+          "sha256": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6"
+        },
+        {
+          "path": "src/generation/legacy-r100-v4/executor.js",
+          "sha256": "90a5a6e4c122923c872ebaa623461b6f7217b37fc41c2c1854d2f07c049399f7"
+        },
+        {
+          "path": "src/generated/r100-world-appearance.ts",
+          "sha256": "1edd78ba0cd94ca090c902d1a2173255508f88f795f914baf411cf0f2560cdc0"
+        },
+        {
+          "path": "src/generation/world-study/r100-world-appearance.ts",
+          "sha256": "019e641e9c7471a6a58d250d44a8341c35fd58ad6f007b5abffc668578c76f4a"
+        },
+        {
+          "path": "src/generated/r100-package-manifest.ts",
+          "sha256": "9409900ef0e9c6d530db5a0a76aa5c64a4f29d7dcbf964e700a9a97902c3216f"
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "5ceae20a89297bb9ef035a57258c6dc197ea1c5708c8ed0336d20e77d82eb885"
+        },
+        {
+          "path": "src/generated/rift-expedition-grade-data.ts",
+          "sha256": "8abb62cb1d601290e97edede8d190394664075e2ae0219bafe149ae6868daf71"
+        },
+        {
+          "path": "src/generated/rift-pollution-grade-data.ts",
+          "sha256": "b0d255ab0efd5acdb3a5edb2d5b30017a7521b09de3b5a6c6852b77b9a63d69c"
+        },
+        {
+          "path": "src/generated/r100-world-selection.ts",
+          "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+        },
+        {
+          "path": "src/utils/random.ts",
+          "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+        },
+        {
+          "path": "src/generation/seed-fork.ts",
+          "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+        },
+        {
+          "path": "src/generation/world-study/pollution-grade.ts",
+          "sha256": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0"
+        },
+        {
+          "path": "src/types/rift-world-history.ts",
+          "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+        },
+        {
+          "path": "src/generation/world-study/r100-world-selection.ts",
+          "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-cellular.ts",
+          "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-expansion.ts",
+          "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-ground.ts",
+          "sha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-ground-edge.ts",
+          "sha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-geometry.ts",
+          "sha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-erosion.ts",
+          "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+        },
+        {
+          "path": "src/generated/rift-world-space-data.ts",
+          "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+        },
+        {
+          "path": "src/generation/world-study/space-profile.ts",
+          "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+        },
+        {
+          "path": "src/generation/world-study/r100-package.ts",
+          "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+        },
+        {
+          "path": "src/generation/legacy-rift-v2/arithmetic-executor.js",
+          "sha256": "7cb7efec95c81dc35415273b31e90ba6a5847f11225848e9f32c3c7bc2c9d6d5"
+        },
+        {
+          "path": "src/generation/legacy-rift-v2/binary64-fma.ts",
+          "sha256": "a6a356d4b722ac4268e922c5fd576fcda1f3ee77457b5594538a255aa5594ed1"
+        },
+        {
+          "path": "src/generation/legacy-rift-v2/fdlibm-atan2.ts",
+          "sha256": "03f61c093cf96b72763971e1271173564cac7822863486aa5ecf49668bf8199c"
+        },
+        {
+          "path": "src/generation/rift-generation-identity.ts",
+          "sha256": "3dc102724053672adc37d32b7f8aa3b502a229dbbe3f5508b8149d74cc654afd"
+        },
+        {
+          "path": "src/generation/legacy-rift-v2/executor.js",
+          "sha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074"
+        },
+        {
+          "path": "src/generation/legacy-rift-generation.ts",
+          "sha256": "4d77303290a1c083941e9ad38b87d411e6fe9a9142ef745b6eb459f0a1e31b33"
+        },
+        {
+          "path": "src/types/rift-checkpoint.ts",
+          "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+        },
+        {
+          "path": "src/config/constants.ts",
+          "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+        },
+        {
+          "path": "src/generated/build-lab-data.ts",
+          "sha256": "bdd7c9218b394e9f877207378e1b375138be8b024416f2c38334b7b704cde672"
+        },
+        {
+          "path": "src/entities/form-renderers/d/environment-pixels.ts",
+          "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+        },
+        {
+          "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+          "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+        },
+        {
+          "path": "src/generated/rift-fragment-data.ts",
+          "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+        },
+        {
+          "path": "src/generation/atmosphere.ts",
+          "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+        },
+        {
+          "path": "src/generation/fragment-roll.ts",
+          "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+        },
+        {
+          "path": "src/generation/palette-quantize.ts",
+          "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+        },
+        {
+          "path": "src/generation/preview-paint.ts",
+          "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+        },
+        {
+          "path": "src/entities/form-renderers/d/fragment-ramp.ts",
+          "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+        },
+        {
+          "path": "src/entities/form-renderers/d/paint-genome/topology.ts",
+          "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+        },
+        {
+          "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+          "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+        },
+        {
+          "path": "src/types/game-types.ts",
+          "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+        },
+        {
+          "path": "src/generation/world-study/r100-pollution.ts",
+          "sha256": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f"
+        },
+        {
+          "path": "src/generation/outline-mask.ts",
+          "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+        },
+        {
+          "path": "src/generation/world-study/master-ground-field.ts",
+          "sha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-raster.ts",
+          "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+        },
+        {
+          "path": "src/generated/rift-world-profile-data.ts",
+          "sha256": "9550a5faca9e262d2ccf7679d29fd4b0306e883785bf352b31f3007c13d39fe8"
+        },
+        {
+          "path": "src/generation/world-study/profiles.ts",
+          "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "sha256": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/tile-grid.ts",
+          "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+        },
+        {
+          "path": "src/generation/world-study/r100-generated-scenes.ts",
+          "sha256": "6b3c974c97025874e5cb7fa3e3dd29147a1397616d003852e52cde5685f57d73"
+        },
+        {
+          "path": "src/generation/world-study/r100-master-world.ts",
+          "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+        },
+        {
+          "path": "src/generated/enemy-data.ts",
+          "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+        },
+        {
+          "path": "src/generated/contamination-body-data.ts",
+          "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+        },
+        {
+          "path": "src/generated/contamination-lexicon-data.ts",
+          "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+        },
+        {
+          "path": "src/generated/contamination-family-data.ts",
+          "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+        },
+        {
+          "path": "src/generation/contamination-draw.ts",
+          "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+        },
+        {
+          "path": "src/utils/grid-raycast.ts",
+          "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+        },
+        {
+          "path": "src/utils/math.ts",
+          "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+        },
+        {
+          "path": "src/systems/ai/behaviors.ts",
+          "sha256": "f09a058a249d00a2acbd778f5a56b55ba7c6724d34481600ae705b8cbfc5d11d"
+        },
+        {
+          "path": "src/generation/world-study/r100-patrol-windows.ts",
+          "sha256": "80bd1a32f5e528f416a3d33c28bbe7f9a20fd23c2eb7cb9674c628d145c790f2"
+        },
+        {
+          "path": "src/generation/world-study/r100-expedition.ts",
+          "sha256": "3d62896b06faccee9e902806a8bb71827c84efa2775d5a2f07d69a05a6d771b1"
+        },
+        {
+          "path": "src/generation/world-study/r100-native-data.ts",
+          "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+        },
+        {
+          "path": "src/generation/world-study/r100-production-map.ts",
+          "sha256": "87509365a644732c6783c58390f37488985822b3e5f53639bb62ea2c34f82883"
+        }
+      ]
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity/after.mjs",
+      "sha256": "6730e16ff0b465b3cbce27b9ceeee044f3db6fd8cf99ab0bbf15d751d4c91b3e",
+      "dependencies": [
+        {
+          "path": "src/generation/legacy-r100-v2/executor.js",
+          "sha256": "bc5117ae07ff61565a1076b466ed1addf14b67691573a6acefe9fb47af1af06f"
+        },
+        {
+          "path": "src/generation/legacy-r100-v3/executor.js",
+          "sha256": "8aa337fb4687b45206db5db496bbe1a0a5269975b002cb2d1a7880c89870be78"
+        },
+        {
+          "path": "src/generation/legacy-r100-v5/executor-recovery.js",
+          "sha256": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6"
+        },
+        {
+          "path": "src/generation/legacy-r100-v4/executor.js",
+          "sha256": "90a5a6e4c122923c872ebaa623461b6f7217b37fc41c2c1854d2f07c049399f7"
+        },
+        {
+          "path": "src/generated/r100-world-appearance.ts",
+          "sha256": "f43b3fec04bd0776fb3d580a8302d9229aaee0c23d0975156d1c864c28a32925"
+        },
+        {
+          "path": "src/generation/world-study/r100-world-appearance.ts",
+          "sha256": "019e641e9c7471a6a58d250d44a8341c35fd58ad6f007b5abffc668578c76f4a"
+        },
+        {
+          "path": "src/generated/r100-package-manifest.ts",
+          "sha256": "e0447ec5c7100498b70fa7f5e3d8e2639032a28c33ca0a26fb910b5433635019"
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "80bf749ee4e5f2ded5f34e5b0f78c39dceff28a00dd934db6d5236b0f1848c33"
+        },
+        {
+          "path": "src/generated/rift-expedition-grade-data.ts",
+          "sha256": "8abb62cb1d601290e97edede8d190394664075e2ae0219bafe149ae6868daf71"
+        },
+        {
+          "path": "src/generated/rift-pollution-grade-data.ts",
+          "sha256": "b0d255ab0efd5acdb3a5edb2d5b30017a7521b09de3b5a6c6852b77b9a63d69c"
+        },
+        {
+          "path": "src/generated/r100-world-selection.ts",
+          "sha256": "21bcaedf40a4369904d1138d372dfff15fd271b493c2a84a4157459a11483182"
+        },
+        {
+          "path": "src/utils/random.ts",
+          "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+        },
+        {
+          "path": "src/generation/seed-fork.ts",
+          "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+        },
+        {
+          "path": "src/generation/world-study/pollution-grade.ts",
+          "sha256": "6d4d009cce7cca97417fefd26137f42c297a51cbe50e9b7ad56aa1091d7483e0"
+        },
+        {
+          "path": "src/types/rift-world-history.ts",
+          "sha256": "45b1706e9135d8ec8a8915cc905f52aacca0a86f0c3c41321dbaa2aab59d7c80"
+        },
+        {
+          "path": "src/generation/world-study/r100-world-selection.ts",
+          "sha256": "97c1589ab4130af4af148ec5cdc5a9702fd197def3fa0109744266dce8cc1d40"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-cellular.ts",
+          "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-expansion.ts",
+          "sha256": "1cc30eb544916f5ca962666faaec6018e52ec603bdce4ae77097f84ad12cc2d6"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-ground.ts",
+          "sha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-ground-edge.ts",
+          "sha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-geometry.ts",
+          "sha256": "4647804769c42d2f4142d847186a99907b6d4b4fd4f7a1166a5fc6d6662ec916"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-erosion.ts",
+          "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+        },
+        {
+          "path": "src/generated/rift-world-space-data.ts",
+          "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+        },
+        {
+          "path": "src/generation/world-study/space-profile.ts",
+          "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+        },
+        {
+          "path": "src/generation/world-study/r100-package.ts",
+          "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+        },
+        {
+          "path": "src/generation/legacy-rift-v2/arithmetic-executor.js",
+          "sha256": "7cb7efec95c81dc35415273b31e90ba6a5847f11225848e9f32c3c7bc2c9d6d5"
+        },
+        {
+          "path": "src/generation/legacy-rift-v2/binary64-fma.ts",
+          "sha256": "a6a356d4b722ac4268e922c5fd576fcda1f3ee77457b5594538a255aa5594ed1"
+        },
+        {
+          "path": "src/generation/legacy-rift-v2/fdlibm-atan2.ts",
+          "sha256": "03f61c093cf96b72763971e1271173564cac7822863486aa5ecf49668bf8199c"
+        },
+        {
+          "path": "src/generation/rift-generation-identity.ts",
+          "sha256": "3dc102724053672adc37d32b7f8aa3b502a229dbbe3f5508b8149d74cc654afd"
+        },
+        {
+          "path": "src/generation/legacy-rift-v2/executor.js",
+          "sha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074"
+        },
+        {
+          "path": "src/generation/legacy-rift-generation.ts",
+          "sha256": "4d77303290a1c083941e9ad38b87d411e6fe9a9142ef745b6eb459f0a1e31b33"
+        },
+        {
+          "path": "src/types/rift-checkpoint.ts",
+          "sha256": "462c70371d977239fa9c0c93bb17c6e2fe7620bd56375b346e832e300e607621"
+        },
+        {
+          "path": "src/config/constants.ts",
+          "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+        },
+        {
+          "path": "src/generated/build-lab-data.ts",
+          "sha256": "bdd7c9218b394e9f877207378e1b375138be8b024416f2c38334b7b704cde672"
+        },
+        {
+          "path": "src/entities/form-renderers/d/environment-pixels.ts",
+          "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+        },
+        {
+          "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+          "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+        },
+        {
+          "path": "src/generated/rift-fragment-data.ts",
+          "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+        },
+        {
+          "path": "src/generation/atmosphere.ts",
+          "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+        },
+        {
+          "path": "src/generation/fragment-roll.ts",
+          "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+        },
+        {
+          "path": "src/generation/palette-quantize.ts",
+          "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+        },
+        {
+          "path": "src/generation/preview-paint.ts",
+          "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+        },
+        {
+          "path": "src/entities/form-renderers/d/fragment-ramp.ts",
+          "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+        },
+        {
+          "path": "src/entities/form-renderers/d/paint-genome/topology.ts",
+          "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+        },
+        {
+          "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+          "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+        },
+        {
+          "path": "src/types/game-types.ts",
+          "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+        },
+        {
+          "path": "src/generation/world-study/r100-pollution.ts",
+          "sha256": "3eb662b7a0e6de61bb18c579a321eb294f3eb906e40df7f226edf12894d7a27f"
+        },
+        {
+          "path": "src/generation/outline-mask.ts",
+          "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+        },
+        {
+          "path": "src/generation/world-study/master-ground-field.ts",
+          "sha256": "45ba4df23a0cf25c2abab53d39c9a108280f1826bbe29f5925d0e4cb8b353783"
+        },
+        {
+          "path": "src/generation/world-study/native-volume-raster.ts",
+          "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+        },
+        {
+          "path": "src/generated/rift-world-profile-data.ts",
+          "sha256": "9550a5faca9e262d2ccf7679d29fd4b0306e883785bf352b31f3007c13d39fe8"
+        },
+        {
+          "path": "src/generation/world-study/profiles.ts",
+          "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+        },
+        {
+          "path": "src/systems/ai/physical-grid.ts",
+          "sha256": "c6e5c884f02d7f39ea274c282a7342a47a9dc6ff711e5c1be78f4d6629b2eeab"
+        },
+        {
+          "path": "src/systems/tile-grid.ts",
+          "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+        },
+        {
+          "path": "src/generation/world-study/r100-generated-scenes.ts",
+          "sha256": "6b3c974c97025874e5cb7fa3e3dd29147a1397616d003852e52cde5685f57d73"
+        },
+        {
+          "path": "src/generation/world-study/r100-master-world.ts",
+          "sha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+        },
+        {
+          "path": "src/generated/enemy-data.ts",
+          "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+        },
+        {
+          "path": "src/generated/contamination-body-data.ts",
+          "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+        },
+        {
+          "path": "src/generated/contamination-lexicon-data.ts",
+          "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+        },
+        {
+          "path": "src/generated/contamination-family-data.ts",
+          "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+        },
+        {
+          "path": "src/generation/contamination-draw.ts",
+          "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+        },
+        {
+          "path": "src/utils/grid-raycast.ts",
+          "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+        },
+        {
+          "path": "src/utils/math.ts",
+          "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+        },
+        {
+          "path": "src/systems/ai/behaviors.ts",
+          "sha256": "f09a058a249d00a2acbd778f5a56b55ba7c6724d34481600ae705b8cbfc5d11d"
+        },
+        {
+          "path": "src/generation/world-study/r100-patrol-windows.ts",
+          "sha256": "80bd1a32f5e528f416a3d33c28bbe7f9a20fd23c2eb7cb9674c628d145c790f2"
+        },
+        {
+          "path": "src/generation/world-study/r100-expedition.ts",
+          "sha256": "3d62896b06faccee9e902806a8bb71827c84efa2775d5a2f07d69a05a6d771b1"
+        },
+        {
+          "path": "src/generation/world-study/r100-native-data.ts",
+          "sha256": "69c3ed29e6dc6951916419d0ffb5c297d98b2358cccad615fd75dd9c155123e0"
+        },
+        {
+          "path": "src/generation/world-study/r100-production-map.ts",
+          "sha256": "87509365a644732c6783c58390f37488985822b3e5f53639bb62ea2c34f82883"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "seed": 20261005,
+      "before": {
+        "world": "cleft-tableland",
+        "grade": "low",
+        "seed": 20261005,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "b36599e4430516efd6eae656a0ff2ae1d0f1c3fbc9ce2ce113a2dc6074be1c58",
+          "production": "c2089afdf39204db0585ea9438f7288e1a7785a47be101585ea26e9a1d688de3",
+          "nativeBehavior": "be3fafb26f292cadb45faecd9b70ae390eba6c7772cafe3e10e093a48da8940a",
+          "behaviorDiagnostics": "60098ecab9e7ad626eaf128064dd7a443d63de065cbe1275678497551338250f",
+          "physicalRaster": "7b74493a3e731542abba0a2d6dd50abc400d6dbe2532cbc3b95c5823f237b9de",
+          "blockingMeshes": "392422d938b257ce7b2169beb0b6ae3aaf77129b9bbbf54f9e31b021b428a8e4",
+          "nonEdgeMeshes": "cd05ee055e885bccaec5a8f243bd157e0501baae3aa8da14806bc439377168b5"
+        },
+        "observed": {
+          "packageHash": "ee432185",
+          "signature": "60f366c7",
+          "geometryFingerprint": "e54b7f3b",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2148,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "282f019d6738d6392c0d223d1513e1aaa9e3a67a08b8e78b6a17fec5511eff89",
+            "cellHeight": "b6c717acd73f86535693e48455c93d45f766d934ef9e45d90bf0e8ba6b7e3b5b",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "26ddb96e860ff67833a5992782d34f1d71d3a4d2a8ab1eb5ec3656a13d3da33a",
+            "material": "92674ac81a2664f01733021e7931719aa6fc473247d08b87900629d40bea257a",
+            "region": "2ab821428b811442b20678099237c0af1c3fb82d4769f7fb4f2a4ea38f6c2481",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "20c644c813f67b8125512596111de5d2f6d8dcc84902a4048622ce81a675cf9d",
+            "normals": "fd67088e934a7551b8a50f5010411747d9c52277b872d593f63a72c1846b682d",
+            "uv": "34dd9d17fd2b00604cff8533ab84fc9b340be818755383b6138f4c8f62aef792",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "d314a1b8ed9c2eb3092779c3ac4b38afe7816116b02b83994932e0970870ee4d"
+          },
+          "edgeMesh": "df1ab131590a82a5d65cd1c7507e3e217e53a10a07cd9f11d9c97a2553a953de"
+        }
+      },
+      "after": {
+        "world": "cleft-tableland",
+        "grade": "low",
+        "seed": 20261005,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "b36599e4430516efd6eae656a0ff2ae1d0f1c3fbc9ce2ce113a2dc6074be1c58",
+          "production": "c2089afdf39204db0585ea9438f7288e1a7785a47be101585ea26e9a1d688de3",
+          "nativeBehavior": "be3fafb26f292cadb45faecd9b70ae390eba6c7772cafe3e10e093a48da8940a",
+          "behaviorDiagnostics": "60098ecab9e7ad626eaf128064dd7a443d63de065cbe1275678497551338250f",
+          "physicalRaster": "7b74493a3e731542abba0a2d6dd50abc400d6dbe2532cbc3b95c5823f237b9de",
+          "blockingMeshes": "392422d938b257ce7b2169beb0b6ae3aaf77129b9bbbf54f9e31b021b428a8e4",
+          "nonEdgeMeshes": "cd05ee055e885bccaec5a8f243bd157e0501baae3aa8da14806bc439377168b5"
+        },
+        "observed": {
+          "packageHash": "ee432185",
+          "signature": "5e39f354",
+          "geometryFingerprint": "810cc952",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2173,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "282f019d6738d6392c0d223d1513e1aaa9e3a67a08b8e78b6a17fec5511eff89",
+            "cellHeight": "c5ed715a210dcda3bef5236cad724de1e1add06e7a7db008bcb28142dce537b0",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "169d372e8f4f9616ed8e7763dd61d8f3127449d279ffaff9cb8b5cbb6edb5244",
+            "material": "4a0579abb91435314ef9d79c2961603e45686ec331a679fbc3ae7178abce3587",
+            "region": "62ce51181b7de9d0e66f4a245cbc9bbc77ea1fad72e383c647fd6e8230de9fb3",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "2caacaaf3a85e9bddc9d9f33c40bba0b641f65467ea0254022eb93f44a49f08a",
+            "normals": "f162e29410becea865765ea3e6d4b0a75cde37c0c65cee12833c094292f7acf1",
+            "uv": "bf7ab82bbb7fe8f2d7e89f1b7731f506d03918d2bf90de5d0581f9cb1d0811ac",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "7a809f7535b05928cf83111dcfb9c494585ca58fcb1ddf9ce079cc54c80bb854"
+          },
+          "edgeMesh": "29c1fa6a5571db209bb04d2cf6f71161d150a7be98f118981e994bc189da4f96"
+        }
+      },
+      "behaviorExact": true,
+      "identityExact": false,
+      "changedRasterFields": [
+        "cellHeight",
+        "objectId",
+        "material",
+        "region",
+        "heightField",
+        "normals",
+        "uv",
+        "ambientOcclusion"
+      ]
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "seed": 3075192741,
+      "before": {
+        "world": "cleft-tableland",
+        "grade": "low",
+        "seed": 3075192741,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "e30fa1944047a87101f548b4c22ce555134843262060a7097e5ba3fc7fa55a31",
+          "production": "2cdd522baacf53af876a5859d6baf115dd5fd65f26a5427e9628e33badb066b0",
+          "nativeBehavior": "6a4bf982bc48415d9b81249b5ab9e67c88d2afeaab4efe2967e4aae4a032e8ad",
+          "behaviorDiagnostics": "c1b4aee4803345e96259cc978a3233d4e24ce2fdda6ce357260fbbcefd831b45",
+          "physicalRaster": "7b74493a3e731542abba0a2d6dd50abc400d6dbe2532cbc3b95c5823f237b9de",
+          "blockingMeshes": "bc77ef7a83dd172c6763a6c5a0c2fc68213dde34ced8c2eda3af33638e48fe1e",
+          "nonEdgeMeshes": "5e2d64fe51bbcc4f9f499e53bfd313dccb6b9698e2347c9a92f6daa8076fceb9"
+        },
+        "observed": {
+          "packageHash": "ee432185",
+          "signature": "3c606844",
+          "geometryFingerprint": "e54b7f3b",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2148,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "282f019d6738d6392c0d223d1513e1aaa9e3a67a08b8e78b6a17fec5511eff89",
+            "cellHeight": "b6c717acd73f86535693e48455c93d45f766d934ef9e45d90bf0e8ba6b7e3b5b",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "26ddb96e860ff67833a5992782d34f1d71d3a4d2a8ab1eb5ec3656a13d3da33a",
+            "material": "92674ac81a2664f01733021e7931719aa6fc473247d08b87900629d40bea257a",
+            "region": "2ab821428b811442b20678099237c0af1c3fb82d4769f7fb4f2a4ea38f6c2481",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "20c644c813f67b8125512596111de5d2f6d8dcc84902a4048622ce81a675cf9d",
+            "normals": "fd67088e934a7551b8a50f5010411747d9c52277b872d593f63a72c1846b682d",
+            "uv": "34dd9d17fd2b00604cff8533ab84fc9b340be818755383b6138f4c8f62aef792",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "d314a1b8ed9c2eb3092779c3ac4b38afe7816116b02b83994932e0970870ee4d"
+          },
+          "edgeMesh": "08e03efb523278ffb3bc98bb8eedd542bcc998d01a995afa90acc2b268994f83"
+        }
+      },
+      "after": {
+        "world": "cleft-tableland",
+        "grade": "low",
+        "seed": 3075192741,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "e30fa1944047a87101f548b4c22ce555134843262060a7097e5ba3fc7fa55a31",
+          "production": "2cdd522baacf53af876a5859d6baf115dd5fd65f26a5427e9628e33badb066b0",
+          "nativeBehavior": "6a4bf982bc48415d9b81249b5ab9e67c88d2afeaab4efe2967e4aae4a032e8ad",
+          "behaviorDiagnostics": "c1b4aee4803345e96259cc978a3233d4e24ce2fdda6ce357260fbbcefd831b45",
+          "physicalRaster": "7b74493a3e731542abba0a2d6dd50abc400d6dbe2532cbc3b95c5823f237b9de",
+          "blockingMeshes": "bc77ef7a83dd172c6763a6c5a0c2fc68213dde34ced8c2eda3af33638e48fe1e",
+          "nonEdgeMeshes": "5e2d64fe51bbcc4f9f499e53bfd313dccb6b9698e2347c9a92f6daa8076fceb9"
+        },
+        "observed": {
+          "packageHash": "ee432185",
+          "signature": "6c5f198f",
+          "geometryFingerprint": "810cc952",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2173,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "282f019d6738d6392c0d223d1513e1aaa9e3a67a08b8e78b6a17fec5511eff89",
+            "cellHeight": "c5ed715a210dcda3bef5236cad724de1e1add06e7a7db008bcb28142dce537b0",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "169d372e8f4f9616ed8e7763dd61d8f3127449d279ffaff9cb8b5cbb6edb5244",
+            "material": "4a0579abb91435314ef9d79c2961603e45686ec331a679fbc3ae7178abce3587",
+            "region": "62ce51181b7de9d0e66f4a245cbc9bbc77ea1fad72e383c647fd6e8230de9fb3",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "2caacaaf3a85e9bddc9d9f33c40bba0b641f65467ea0254022eb93f44a49f08a",
+            "normals": "f162e29410becea865765ea3e6d4b0a75cde37c0c65cee12833c094292f7acf1",
+            "uv": "bf7ab82bbb7fe8f2d7e89f1b7731f506d03918d2bf90de5d0581f9cb1d0811ac",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "7a809f7535b05928cf83111dcfb9c494585ca58fcb1ddf9ce079cc54c80bb854"
+          },
+          "edgeMesh": "27cdde4ee8d31f5bb521785b1f9346946cb13a9aac1304b0a681d2b713f855fd"
+        }
+      },
+      "behaviorExact": true,
+      "identityExact": false,
+      "changedRasterFields": [
+        "cellHeight",
+        "objectId",
+        "material",
+        "region",
+        "heightField",
+        "normals",
+        "uv",
+        "ambientOcclusion"
+      ]
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "seed": 20261005,
+      "before": {
+        "world": "cleft-tableland",
+        "grade": "medium",
+        "seed": 20261005,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "d06bd264e2f1f6372eaa088d1aeae960fa9d443e2cc4b41805e22c2dabc08e5e",
+          "production": "2dfda65dcccf560d98c3408a83de8a6872b0a9ed56798fa6b82fc08d201d7dd2",
+          "nativeBehavior": "00a36478637bdeb0bd13c79c1967830b658f8819132fc0a1c902ae0af2d5be26",
+          "behaviorDiagnostics": "c392f9207ede6f8761ceb4166ca124e70c6f23e9eb478a911843c69ac6db1f7c",
+          "physicalRaster": "b10378b6744dc0c9e8c79f71459e57c944eb357a10437bbb0d4211a4ee55cf47",
+          "blockingMeshes": "32a9bf4b622bbb9f4adeacbaeb62530bce41e2af4b5a5151cffa191daca3a052",
+          "nonEdgeMeshes": "55bf6d9ee4df55209a6c69646eefcd122f5d5b25dec76d952f9f2f8163a6d4f6"
+        },
+        "observed": {
+          "packageHash": "4992b5c1",
+          "signature": "0dd39d54",
+          "geometryFingerprint": "341370d9",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2148,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "549c94c5d4acb8ea1052d0ba92d4eb4eb30b2a617af879ba446a557404f2c657",
+            "cellHeight": "5ed04f4b24645610d41b743a556f939f7d5ed24a0b2938f4ec052d237d7514bd",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "bcc32744d184ea6e4bcf359effbaa5ad26a975d0c60d9b0797e5f8f6eb52456e",
+            "material": "8f252091e1d93de6d897adb53689a395690fa1ef366e259ba9eb7cd8d0b63f55",
+            "region": "9843a995957a0bf54dce8661ceb2f8e93d8c54486bafb39a2bef3b242c9e11af",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "46ee7eff28b64486265ccbc5dd40bbe55c9113d9fd57b94abb4be4d03ec8e6e2",
+            "normals": "c1c0fadda89c1aefab2d499b6418d9278165376d915b9c31c670cab2553adb6b",
+            "uv": "ea2f4d97ba578cacc838e6f91de8c100017b89b666f9a3c27c86f167eab02bde",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "789129a03625cf3269019e8844e9dbf304d1f8cbc78d2cb4a43cd84a1d26d183"
+          },
+          "edgeMesh": "596c59ac0ca807e6a3b90b54850ae77ff9ba467246f7690357db20c051ce191e"
+        }
+      },
+      "after": {
+        "world": "cleft-tableland",
+        "grade": "medium",
+        "seed": 20261005,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "d06bd264e2f1f6372eaa088d1aeae960fa9d443e2cc4b41805e22c2dabc08e5e",
+          "production": "2dfda65dcccf560d98c3408a83de8a6872b0a9ed56798fa6b82fc08d201d7dd2",
+          "nativeBehavior": "00a36478637bdeb0bd13c79c1967830b658f8819132fc0a1c902ae0af2d5be26",
+          "behaviorDiagnostics": "c392f9207ede6f8761ceb4166ca124e70c6f23e9eb478a911843c69ac6db1f7c",
+          "physicalRaster": "b10378b6744dc0c9e8c79f71459e57c944eb357a10437bbb0d4211a4ee55cf47",
+          "blockingMeshes": "32a9bf4b622bbb9f4adeacbaeb62530bce41e2af4b5a5151cffa191daca3a052",
+          "nonEdgeMeshes": "55bf6d9ee4df55209a6c69646eefcd122f5d5b25dec76d952f9f2f8163a6d4f6"
+        },
+        "observed": {
+          "packageHash": "4992b5c1",
+          "signature": "47f34aa0",
+          "geometryFingerprint": "3d166e1e",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2173,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "549c94c5d4acb8ea1052d0ba92d4eb4eb30b2a617af879ba446a557404f2c657",
+            "cellHeight": "e048172f63372087361fcee4c3c68d349447c386c7532e4823150be93fb484f6",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "4dedb6c28b85808027a57fbb4b53d46f436b10ea6b113340d2871b0f3c45881a",
+            "material": "0ee3ccbe6418120b1a4069de154f644543423e95462c3f7914e8c7b965d00a7e",
+            "region": "1b0eff72928aece3518633685295be3e56d00908f8896022e53d641258823409",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "c224f1d297e005759aab2675f7990e24e0e94e57cb914f04e1b8fd8e7ddd074d",
+            "normals": "5a796833c2174ac58e64fda5a02ff1aa7f91c429f3f5431392288977baf87430",
+            "uv": "5aca03ef7b386c5e87c6d333810842df2db7ae5c20049ba41f3d6b1916d38803",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "6a66fdee8f8117f5c8e56ceb81601382e3caa33aa5eb1b0c3c5c4fd26ad12402"
+          },
+          "edgeMesh": "7f4f96fa14e8a2f147f12cf1f1274d7c92476466a4495850327c7ba20683830d"
+        }
+      },
+      "behaviorExact": true,
+      "identityExact": false,
+      "changedRasterFields": [
+        "cellHeight",
+        "objectId",
+        "material",
+        "region",
+        "heightField",
+        "normals",
+        "uv",
+        "ambientOcclusion"
+      ]
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "seed": 3075192741,
+      "before": {
+        "world": "cleft-tableland",
+        "grade": "medium",
+        "seed": 3075192741,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "691b5cdb3ddd1d84907affb77ee3bf4d5162d7696ea338965ea499896b504f81",
+          "production": "91a69d8b605a3db399267ece585e00920a229b553ca3d91926df3160aacb4866",
+          "nativeBehavior": "c5c5f201c9c9b3a76397480797e577d3e9ff9f619fa0c0c623d43834aacd9689",
+          "behaviorDiagnostics": "d0f341f67e0cc8c89cbc62730e13ee0b79f92203ee59a01c47558c7ac27b36b6",
+          "physicalRaster": "b10378b6744dc0c9e8c79f71459e57c944eb357a10437bbb0d4211a4ee55cf47",
+          "blockingMeshes": "08854891fa6841369763c4afa02d1750fc7e36d6b20bd8479da8807d6a3315fe",
+          "nonEdgeMeshes": "bb46c9ad218b3dffd06cffb5fe47c00e0c40f7e557250fcf3744710e1e2bb017"
+        },
+        "observed": {
+          "packageHash": "4992b5c1",
+          "signature": "8c81e233",
+          "geometryFingerprint": "341370d9",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2148,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "549c94c5d4acb8ea1052d0ba92d4eb4eb30b2a617af879ba446a557404f2c657",
+            "cellHeight": "5ed04f4b24645610d41b743a556f939f7d5ed24a0b2938f4ec052d237d7514bd",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "bcc32744d184ea6e4bcf359effbaa5ad26a975d0c60d9b0797e5f8f6eb52456e",
+            "material": "8f252091e1d93de6d897adb53689a395690fa1ef366e259ba9eb7cd8d0b63f55",
+            "region": "9843a995957a0bf54dce8661ceb2f8e93d8c54486bafb39a2bef3b242c9e11af",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "46ee7eff28b64486265ccbc5dd40bbe55c9113d9fd57b94abb4be4d03ec8e6e2",
+            "normals": "c1c0fadda89c1aefab2d499b6418d9278165376d915b9c31c670cab2553adb6b",
+            "uv": "ea2f4d97ba578cacc838e6f91de8c100017b89b666f9a3c27c86f167eab02bde",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "789129a03625cf3269019e8844e9dbf304d1f8cbc78d2cb4a43cd84a1d26d183"
+          },
+          "edgeMesh": "2238894cea7bcaa5e4399bd9820354214bee662e7462caa4e3005f18fa3ed09f"
+        }
+      },
+      "after": {
+        "world": "cleft-tableland",
+        "grade": "medium",
+        "seed": 3075192741,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "691b5cdb3ddd1d84907affb77ee3bf4d5162d7696ea338965ea499896b504f81",
+          "production": "91a69d8b605a3db399267ece585e00920a229b553ca3d91926df3160aacb4866",
+          "nativeBehavior": "c5c5f201c9c9b3a76397480797e577d3e9ff9f619fa0c0c623d43834aacd9689",
+          "behaviorDiagnostics": "d0f341f67e0cc8c89cbc62730e13ee0b79f92203ee59a01c47558c7ac27b36b6",
+          "physicalRaster": "b10378b6744dc0c9e8c79f71459e57c944eb357a10437bbb0d4211a4ee55cf47",
+          "blockingMeshes": "08854891fa6841369763c4afa02d1750fc7e36d6b20bd8479da8807d6a3315fe",
+          "nonEdgeMeshes": "bb46c9ad218b3dffd06cffb5fe47c00e0c40f7e557250fcf3744710e1e2bb017"
+        },
+        "observed": {
+          "packageHash": "4992b5c1",
+          "signature": "bcf61277",
+          "geometryFingerprint": "3d166e1e",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2173,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "549c94c5d4acb8ea1052d0ba92d4eb4eb30b2a617af879ba446a557404f2c657",
+            "cellHeight": "e048172f63372087361fcee4c3c68d349447c386c7532e4823150be93fb484f6",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "4dedb6c28b85808027a57fbb4b53d46f436b10ea6b113340d2871b0f3c45881a",
+            "material": "0ee3ccbe6418120b1a4069de154f644543423e95462c3f7914e8c7b965d00a7e",
+            "region": "1b0eff72928aece3518633685295be3e56d00908f8896022e53d641258823409",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "c224f1d297e005759aab2675f7990e24e0e94e57cb914f04e1b8fd8e7ddd074d",
+            "normals": "5a796833c2174ac58e64fda5a02ff1aa7f91c429f3f5431392288977baf87430",
+            "uv": "5aca03ef7b386c5e87c6d333810842df2db7ae5c20049ba41f3d6b1916d38803",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "6a66fdee8f8117f5c8e56ceb81601382e3caa33aa5eb1b0c3c5c4fd26ad12402"
+          },
+          "edgeMesh": "abc5c9b28fa4da1545b351911b1c7da22f706cb26dceb3c7b6ef123d65eb13c7"
+        }
+      },
+      "behaviorExact": true,
+      "identityExact": false,
+      "changedRasterFields": [
+        "cellHeight",
+        "objectId",
+        "material",
+        "region",
+        "heightField",
+        "normals",
+        "uv",
+        "ambientOcclusion"
+      ]
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "seed": 20261005,
+      "before": {
+        "world": "cleft-tableland",
+        "grade": "severe",
+        "seed": 20261005,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "421505e9c3c171d7b505e161da2808ad0c62b62bc5e37f0aaf1ea7c36ac08044",
+          "production": "4d3e6c9ab6638e6213089cc9421fa3085e3812d07774f681248b44f163d55a4f",
+          "nativeBehavior": "9298bc22f1dcfcead5d27d354eaf348e2d31dc2f1acc7903cd4f9126de58d2fa",
+          "behaviorDiagnostics": "e7a9f556774bae2520e09098d6fe59fdfcccf0667bda5f53a8a7942b75a0a5ee",
+          "physicalRaster": "b10378b6744dc0c9e8c79f71459e57c944eb357a10437bbb0d4211a4ee55cf47",
+          "blockingMeshes": "0ea596861ee8f9b9635e2b7f0b09c84662804ceeb333d17ced40bcbf426971fa",
+          "nonEdgeMeshes": "2f59b4180175b6bcb5d5176b5a357cb0c185fc380afbbe70cbae985a97fb1b8b"
+        },
+        "observed": {
+          "packageHash": "6c057d1d",
+          "signature": "8ec6c8ab",
+          "geometryFingerprint": "e1306772",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2148,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "549c94c5d4acb8ea1052d0ba92d4eb4eb30b2a617af879ba446a557404f2c657",
+            "cellHeight": "764635912925fc0d87579aa0f67f648087dd61313e1f86eebc1746eb83d9de70",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "92cf064c8c45e5210ec28763d71366145222afade90759474d07f2b855f3f2a4",
+            "material": "1266feae566a21c44410fc089ac5cc5900fcadb859f7c5c3aecfa49a3b80e760",
+            "region": "954b2e208d59b912f1f7e28a61b3de853e0477b834236638396329aec4e8a189",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "1911c7e0f2e80af60aa92107060a8e955dd91e2a4c6e97063d467f85ee9a4331",
+            "normals": "b9268f2ce174cebe70d2db1a7a8c1b0c83cbf7175c34a646ceb9426718a9ff48",
+            "uv": "1cfde35aa95b02eaf2d349a4fb4cdb00fdc79899673c9b10c7a5b19f90a9e31c",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "2bb03b95d3ce061a9fb596db22cdb1b7a80e1e41bc33ab42d23b82d9dc812db9"
+          },
+          "edgeMesh": "36d7337f13e8faaa7ec2bf4cbf82ffecc737918e52cf572253212e981f226907"
+        }
+      },
+      "after": {
+        "world": "cleft-tableland",
+        "grade": "severe",
+        "seed": 20261005,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "421505e9c3c171d7b505e161da2808ad0c62b62bc5e37f0aaf1ea7c36ac08044",
+          "production": "4d3e6c9ab6638e6213089cc9421fa3085e3812d07774f681248b44f163d55a4f",
+          "nativeBehavior": "9298bc22f1dcfcead5d27d354eaf348e2d31dc2f1acc7903cd4f9126de58d2fa",
+          "behaviorDiagnostics": "e7a9f556774bae2520e09098d6fe59fdfcccf0667bda5f53a8a7942b75a0a5ee",
+          "physicalRaster": "b10378b6744dc0c9e8c79f71459e57c944eb357a10437bbb0d4211a4ee55cf47",
+          "blockingMeshes": "0ea596861ee8f9b9635e2b7f0b09c84662804ceeb333d17ced40bcbf426971fa",
+          "nonEdgeMeshes": "2f59b4180175b6bcb5d5176b5a357cb0c185fc380afbbe70cbae985a97fb1b8b"
+        },
+        "observed": {
+          "packageHash": "6c057d1d",
+          "signature": "2eb5116a",
+          "geometryFingerprint": "34bfcb95",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2173,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "549c94c5d4acb8ea1052d0ba92d4eb4eb30b2a617af879ba446a557404f2c657",
+            "cellHeight": "8bbd5ac08a0f12bc8de958eefc50ddd5e7f5fd4ee86de88d0f541eaa0faca251",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "12bcda33760684f9b8e01842d5680c363281acf3355897b7801220e301c7c4a1",
+            "material": "2f3905d9dfe8dd47cefc2b2ea9b28a7a49d683e2f5dddae6bb62762f8a49d5a4",
+            "region": "7477964d2fc69871df5dd420c52e06ff71062016db723e3d81a5847c3da52b9b",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "1154137b6aa0b6298386462d837fa61a13ef953367c9264242a65d50a83b4f68",
+            "normals": "d915fef7e703c2a4a284d6bb7613243358cb5cffa3821315f436d6900b7ba53a",
+            "uv": "90fb505771be79a753c3b1ae8d29c44a64f5553beedaaa4e625b6ccbc0be8845",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "73df7c85594a4590088077c9e5fc7fc474da19a5105414c198f33d0d6b123a0d"
+          },
+          "edgeMesh": "fe0343c6c81a09204ece6eda42586f24a8853ab3e28b5f26b661ed7c64cbdaba"
+        }
+      },
+      "behaviorExact": true,
+      "identityExact": false,
+      "changedRasterFields": [
+        "cellHeight",
+        "objectId",
+        "material",
+        "region",
+        "heightField",
+        "normals",
+        "uv",
+        "ambientOcclusion"
+      ]
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "seed": 3075192741,
+      "before": {
+        "world": "cleft-tableland",
+        "grade": "severe",
+        "seed": 3075192741,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "73ccce786891b99257b4024fb392590a4964c72a21e894675eb59114a10becc4",
+          "production": "654aa4d081e1135ba6d94f6fd6721dd8217b859065797c7606f4b470d2e98fd0",
+          "nativeBehavior": "d53f07f33574d1650b1748212aa845c6c679f6bcb423e50fa05e9670ccd6338b",
+          "behaviorDiagnostics": "761449d16b478dbc67194ef91f0b55184c8d7ad390dd8a9084ed5a3141c9beee",
+          "physicalRaster": "b10378b6744dc0c9e8c79f71459e57c944eb357a10437bbb0d4211a4ee55cf47",
+          "blockingMeshes": "ac4ccf74533cca55c60b9aad6cb539c0bfbfa06dd5e4239061f1515a64b5b055",
+          "nonEdgeMeshes": "7f4c416db588807422e6b8ea9c90c433f3c2a4f397ed3e8a618033b9f2b2396e"
+        },
+        "observed": {
+          "packageHash": "6c057d1d",
+          "signature": "4068a405",
+          "geometryFingerprint": "e1306772",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2148,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "549c94c5d4acb8ea1052d0ba92d4eb4eb30b2a617af879ba446a557404f2c657",
+            "cellHeight": "764635912925fc0d87579aa0f67f648087dd61313e1f86eebc1746eb83d9de70",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "92cf064c8c45e5210ec28763d71366145222afade90759474d07f2b855f3f2a4",
+            "material": "1266feae566a21c44410fc089ac5cc5900fcadb859f7c5c3aecfa49a3b80e760",
+            "region": "954b2e208d59b912f1f7e28a61b3de853e0477b834236638396329aec4e8a189",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "1911c7e0f2e80af60aa92107060a8e955dd91e2a4c6e97063d467f85ee9a4331",
+            "normals": "b9268f2ce174cebe70d2db1a7a8c1b0c83cbf7175c34a646ceb9426718a9ff48",
+            "uv": "1cfde35aa95b02eaf2d349a4fb4cdb00fdc79899673c9b10c7a5b19f90a9e31c",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "2bb03b95d3ce061a9fb596db22cdb1b7a80e1e41bc33ab42d23b82d9dc812db9"
+          },
+          "edgeMesh": "703409386219dc8c6a4ec741b22658735371f7c8506d9b12515905dcc521c1d5"
+        }
+      },
+      "after": {
+        "world": "cleft-tableland",
+        "grade": "severe",
+        "seed": 3075192741,
+        "algorithmRevision": 6,
+        "exact": {
+          "recipe": "73ccce786891b99257b4024fb392590a4964c72a21e894675eb59114a10becc4",
+          "production": "654aa4d081e1135ba6d94f6fd6721dd8217b859065797c7606f4b470d2e98fd0",
+          "nativeBehavior": "d53f07f33574d1650b1748212aa845c6c679f6bcb423e50fa05e9670ccd6338b",
+          "behaviorDiagnostics": "761449d16b478dbc67194ef91f0b55184c8d7ad390dd8a9084ed5a3141c9beee",
+          "physicalRaster": "b10378b6744dc0c9e8c79f71459e57c944eb357a10437bbb0d4211a4ee55cf47",
+          "blockingMeshes": "ac4ccf74533cca55c60b9aad6cb539c0bfbfa06dd5e4239061f1515a64b5b055",
+          "nonEdgeMeshes": "7f4c416db588807422e6b8ea9c90c433f3c2a4f397ed3e8a618033b9f2b2396e"
+        },
+        "observed": {
+          "packageHash": "6c057d1d",
+          "signature": "f17d4824",
+          "geometryFingerprint": "34bfcb95",
+          "sourceHash": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57",
+          "triangles": 2173,
+          "raster": {
+            "config": "c9ddcdc0e73d6d75c4ea4163946d64ceea6dd4c61068a289c51be8fc76631009",
+            "width": "e39eef82f61b21e2e7f762fcc4307358f165757f2e77ec855d6992f7e0191932",
+            "height": "f7b856c054de7ccced087ad4f9413380ec494e40abc818b840aaad990ca3c5bc",
+            "pixelSize": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+            "cellSize": "2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+            "columns": "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848",
+            "rows": "7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4",
+            "occupancy": "e7eed046575fe1d73fa03307d5af61a26699536ed6753376b1c04034647cc4a1",
+            "optical": "549c94c5d4acb8ea1052d0ba92d4eb4eb30b2a617af879ba446a557404f2c657",
+            "cellHeight": "8bbd5ac08a0f12bc8de958eefc50ddd5e7f5fd4ee86de88d0f541eaa0faca251",
+            "matter": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "objectId": "12bcda33760684f9b8e01842d5680c363281acf3355897b7801220e301c7c4a1",
+            "material": "2f3905d9dfe8dd47cefc2b2ea9b28a7a49d683e2f5dddae6bb62762f8a49d5a4",
+            "region": "7477964d2fc69871df5dd420c52e06ff71062016db723e3d81a5847c3da52b9b",
+            "family": "a1e2501db61cb47f65d69cdeea576769a2ea5527a43be5125d6d570f3a284cd8",
+            "heightField": "1154137b6aa0b6298386462d837fa61a13ef953367c9264242a65d50a83b4f68",
+            "normals": "d915fef7e703c2a4a284d6bb7613243358cb5cffa3821315f436d6900b7ba53a",
+            "uv": "90fb505771be79a753c3b1ae8d29c44a64f5553beedaaa4e625b6ccbc0be8845",
+            "occupiedPixels": "a18706b4c8f99c1c0465f2106624b1c1e23bb9a2e1c55a6f384f28a15a952ad9",
+            "ambientOcclusion": "73df7c85594a4590088077c9e5fc7fc474da19a5105414c198f33d0d6b123a0d"
+          },
+          "edgeMesh": "5e071cceaee2c418640b54ede9e41b932ab3f2f544d28ed4bdd829f97c95191f"
+        }
+      },
+      "behaviorExact": true,
+      "identityExact": false,
+      "changedRasterFields": [
+        "cellHeight",
+        "objectId",
+        "material",
+        "region",
+        "heightField",
+        "normals",
+        "uv",
+        "ambientOcclusion"
+      ]
+    }
+  ],
+  "scope": "Six fixed production identities for already-qualified cleft only. Authored recipe, deployed content/support/Host/pollution and blocking meshes must remain exact. Ground-edge pixels, Z/normals and generation signatures are reported separately; no art or complete-source inheritance is granted here.",
+  "sourceBeforeAndAfterExact": true
+}

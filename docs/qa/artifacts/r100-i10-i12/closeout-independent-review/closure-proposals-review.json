@@ -1,0 +1,263 @@
+{
+  "status": "pass-bounded-proposal-review-not-applied",
+  "reviewer": "i12_qa",
+  "at": "2026-10-08T07:18:35.083Z",
+  "sequence": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/proposal-sequence.json",
+    "sha256": "0b3a54560dd830cbf6cb0381195c87be242181fdd0407b0672ec2a265d59ed47"
+  },
+  "config": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/completed-inputs.sampled.json",
+    "sha256": "aefbc28c4f3f14260ee53163853771269213cb31b2724b2dc373ed0064d34476"
+  },
+  "rootApproval": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/root-closure-approval.json",
+    "sha256": "7df9f47a7ebd3b6ccc459d5c64969777d97fe3f4bb78f41b629cb444afc4c79a"
+  },
+  "rcManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+    "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+  },
+  "immutableBoundLedger": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.after-bind.json",
+    "sha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d"
+  },
+  "liveLedger": {
+    "path": "docs/progress/rift-r100.json",
+    "sha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d"
+  },
+  "mayCasApplyInOrder": true,
+  "applied": false,
+  "steps": [
+    {
+      "iterationId": "R100-I10",
+      "closedBefore": 9,
+      "closedAfter": 10,
+      "worlds": 72,
+      "gradeCases": 216,
+      "blockingGates": 14,
+      "changedTopLevel": [
+        "iterations",
+        "evidence"
+      ],
+      "expectedPreviousLedgerSha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d",
+      "proposedLedger": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i10-ledger-proposal.json",
+        "sha256": "9df81931ec2301e417d52d31afe671474a9ade6faee68b1f51aa4e50d9b85c49"
+      }
+    },
+    {
+      "iterationId": "R100-I11",
+      "closedBefore": 10,
+      "closedAfter": 11,
+      "worlds": 92,
+      "gradeCases": 276,
+      "blockingGates": 14,
+      "changedTopLevel": [
+        "iterations",
+        "evidence"
+      ],
+      "expectedPreviousLedgerSha256": "9df81931ec2301e417d52d31afe671474a9ade6faee68b1f51aa4e50d9b85c49",
+      "proposedLedger": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i11-ledger-proposal.json",
+        "sha256": "d25938673ab63d8fcc8ef7dceb6530f966c8e62823317c71b0fa5846c077ef84"
+      }
+    },
+    {
+      "iterationId": "R100-I12",
+      "closedBefore": 11,
+      "closedAfter": 12,
+      "worlds": 108,
+      "gradeCases": 324,
+      "blockingGates": 15,
+      "changedTopLevel": [
+        "version",
+        "iterations",
+        "evidence",
+        "issues"
+      ],
+      "expectedPreviousLedgerSha256": "d25938673ab63d8fcc8ef7dceb6530f966c8e62823317c71b0fa5846c077ef84",
+      "proposedLedger": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i12-ledger-proposal.json",
+        "sha256": "e8f8e2412c6d574fa0b13336ac72f6e376866ed45fbf10002bc4529d1b9a6be4"
+      }
+    }
+  ],
+  "history": {
+    "retainedOld52InvalidationHistory": 52,
+    "detailedSample": "ash-strata prior invalidated flag/reason/revision/manifest/human evidence retained",
+    "originalEvidencePrefixUnchanged": true
+  },
+  "performance": {
+    "completed": 74,
+    "withoutCompletedMeasurement": 34,
+    "samples": [
+      {
+        "worldId": "ash-strata",
+        "performance": {
+          "measured": true,
+          "grade": "severe",
+          "originalCaseIndex": 0,
+          "status": "completed-60-second-sample",
+          "completedSamples": 74,
+          "totalWorlds": 108
+        }
+      },
+      {
+        "worldId": "marrow-break",
+        "performance": {
+          "measured": true,
+          "grade": "severe",
+          "originalCaseIndex": 73,
+          "status": "completed-60-second-sample",
+          "completedSamples": 74,
+          "totalWorlds": 108
+        }
+      },
+      {
+        "worldId": "felt-wedges",
+        "performance": {
+          "measured": false,
+          "grade": null,
+          "originalCaseIndex": null,
+          "status": "interrupted-not-qualified-as-measurement",
+          "completedSamples": 74,
+          "totalWorlds": 108
+        }
+      },
+      {
+        "worldId": "pore-bank",
+        "performance": {
+          "measured": false,
+          "grade": null,
+          "originalCaseIndex": null,
+          "status": "not-started",
+          "completedSamples": 74,
+          "totalWorlds": 108
+        }
+      }
+    ]
+  },
+  "boundaries": {
+    "version": "active",
+    "finalAcceptance": null,
+    "humanApproved": 0,
+    "pendingIterations": [
+      "R100-I13",
+      "R100-I14"
+    ],
+    "audio": "listeningPass false; R10 unverified/required and no waiver",
+    "releaseGateResults": "unchanged",
+    "onlyI12ExtraChanges": [
+      "releaseManifest",
+      "P45 sampled verification with old text retained"
+    ]
+  },
+  "auditOperations": [
+    {
+      "status": "corrected-read-type-error",
+      "detail": "First read-only command incorrectly tried JSON.parse on builder .mjs; corrected to byte-SHA."
+    },
+    {
+      "status": "corrected-audit-field-name",
+      "detail": "Second read-only command expected actualListeningVerified; actual unchanged audio contract is listeningPass:false plus releaseGate pending-actual-listening/waived:false. Corrected audit to actual schema."
+    }
+  ],
+  "scope": "Limited static review of 3 proposal diffs, exact scopes, root/RC/8-result refs, recorded checkPlan reports, history and 4 performance annotation samples. No tests/matrices/browser/baseline/89 or 2951-input re-audit.",
+  "applicationCondition": "Root may CAS apply I10 then I11 then I12 only at each exact predecessor SHA and must run checkPlan after each. This review applies nothing and grants no release, human or listening approval.",
+  "inputsUnchanged": true,
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/proposal-sequence.json",
+      "sha256": "0b3a54560dd830cbf6cb0381195c87be242181fdd0407b0672ec2a265d59ed47"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/completed-inputs.sampled.json",
+      "sha256": "aefbc28c4f3f14260ee53163853771269213cb31b2724b2dc373ed0064d34476"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/root-closure-approval.json",
+      "sha256": "7df9f47a7ebd3b6ccc459d5c64969777d97fe3f4bb78f41b629cb444afc4c79a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    {
+      "path": "docs/progress/rift-r100.json",
+      "sha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.before-bind.after-implementation-record.json",
+      "sha256": "ebdd3a627dbeb4069407270b28c9a601ac5bf8a5a3d45452915e096144750132"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/plan.json",
+      "sha256": "c122e4e972f2f572f126aded1ef132dd203f87d32e9e33458fdced9b2cc5eae2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+      "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/sampled-negative-check.json",
+      "sha256": "f5e15ee6945cc917a6478a00e0f2d326fb168da8ae9d04c2c866a3a32e477dc2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-audio-root-disposition.json",
+      "sha256": "d5c33c68f41b2c783020a7f2bdaa0de0008df130334c95cc7acfd45142951534"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.after-bind.json",
+      "sha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/application.json",
+      "sha256": "01228367cdf2411c642eea986a385f63fb7d283f35714766c266874f4b52b6d6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/proposal-builder.mjs",
+      "sha256": "d3996919407d836887254656ff68a682e6f7bb213512584e1a25637db1a706b7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i10-ledger-proposal.json",
+      "sha256": "9df81931ec2301e417d52d31afe671474a9ade6faee68b1f51aa4e50d9b85c49"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i10-validation.json",
+      "sha256": "9e4c8157c0297e6a0b2b74b4e458ab2a1ddaa19e949186a00c8fb7503ebf425f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i10-achievement.json",
+      "sha256": "e40bc43c929485d4b283d5919b438d88ce406c135772f572788aa85ccb86c08c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i11-ledger-proposal.json",
+      "sha256": "d25938673ab63d8fcc8ef7dceb6530f966c8e62823317c71b0fa5846c077ef84"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i11-validation.json",
+      "sha256": "82f23bd3e13e00cbff00e07d40f21bcef477383333f76fab55e3a9ce97491de3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i11-achievement.json",
+      "sha256": "547967e72974b3ed0519c872849500100315e40994a8d28a26a7c90a8d8445b8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i12-ledger-proposal.json",
+      "sha256": "e8f8e2412c6d574fa0b13336ac72f6e376866ed45fbf10002bc4529d1b9a6be4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i12-validation.json",
+      "sha256": "26c5a0f18baba879fb7c4f6f01cd02dea023c4a999647104cd4d4b154b87d26d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i12-achievement.json",
+      "sha256": "b7eafab8d5eb936ff7c1dd49b87e1858977d37792e49a39e299f5377946dbc24"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 status: APPROVED
 created-by: code agent (mode A)
 created-date: 2026-07-22
-last-modified: 2026-10-06
+last-modified: 2026-10-08
 approved-date: 2026-07-22
 changed-this-slice: true
 note: Foundation Step 2。已通过独立技术审查并经人最终批准。**开发练习场（2026-08-20）**：独立 `gym.html`，入口 `docs/dev/gym.md`。角色程序像素 HOW：`docs/art/actor-pixels.md`。玩家加厚像素已接出击（DEC-068）。裂隙地面污染氛围簇已下线（DEC-104 / I8-G）。整团胀缩活层技术已锁（DEC-070）；应用改为占漆宿主（DEC-071 / DEC-104）。迷雾下亮度人终审 PASS（2026-08-28）。污染句法已接到出击（DEC-073 / DEC-076 / DEC-077），**COMPLETE（2026-08-28，体验已验证）**；遭遇识别旁白是同一套体系的识别面（DEC-074 / DEC-075）。**迭代 2 COMPLETE（练习场）。迭代 3（DEC-084）COMPLETE（2026-08-28，人试玩裂隙 PASS）。迭代 4（DEC-085 / DEC-086）COMPLETE（2026-08-28，人再滚甲大厅 PASS）。****迭代 5（DEC-087 / DEC-088 / DEC-098）：** 甲外形基因谱；`tools/contam-preview/` 论证不进 `src/**`；双路径 DEC-ARCH-013（I5-J 已交：出击 `d-mixed` 占地 = `attachJiaGenomeD`；不升生产 ramp）。I5-N：基因谱甲必须消费朝向与信号相。**I5-T：** 三种生物已翻出击（灯柱 / 栏柱仍 gym）。**迭代 6（DEC-088 / DEC-089 / DEC-090 / DEC-092 / DEC-093 / DEC-094）：** 碎片配色 / 世界美术；色温分组量化服务第二层；四张可生成（只开旧图书馆）；DEC-093 放弃底色色温承担身份；DEC-094 质量语法 / 渍色 / 划痕先等价再拆档；共享地面量化 DEC-ARCH-014。生产渲染器已迁入 `src/entities/form-renderers/`（I3-B）；A/B/C 冻结对照留 gym。合同 `docs/tasks/iteration-5.md`、`docs/tasks/iteration-6.md`。
@@ -78,7 +78,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `PlayerConfig.readMovementInput` 只接受DEV巡查意图，真实键盘优先；`MasterPatrol` 在最终身体网格找路线，移动、加速、碰撞、动画仍归Player。作者小场景不计入108世界或324等级资格；I02实际美术和运行证据归[任务](tasks/rift-r100-i02.md)、[独立美术记录](art/rift-r100-i02-review.md)及[QA](qa/rift-r100-i02.md)。
 
-## R100 I10—I12：地床分路与修订6（实施中）
+## R100 I10—I12：地床分路与修订6（内部结案）
 
 `native-volume-ground.ts`独立拥有构造版本4的宽断床、倒束、夹岸与撕膜；`native-volume-geometry.ts`显式按版本/profile分派，旧v1–v3不换实现。`native-volume-erosion.ts`共享CSV解析及冻结配方恢复校验；作者多边形编入原`MasterDefinition.erosion`，由同一个8px地表存在网格表达真实缺地；不因此生成Host或赋予普通实体吞光能力。`native-volume-ground-edge.ts`只在实际存在的地表格内建立浅断沿，归首个主材低浮雕所有，不另生阻挡层。完整身体路线在最终缺地和实体叠加后检查，不从仅含几何中心的路线推断可通。具体数据语法、大小和退化拒绝见[地图spec](specs/system-map-generation.md)。
 
@@ -86,7 +86,7 @@ prepared-only作用域要求完整配方键缓存和身份吻合，任何miss/�
 
 `native-volume-pleated-tear.ts`实现显式v3 `pleated-tear`的短裂口，裁去裂口内原顶面，补真实斜壁和封底；发光材质及joint同源。`native-volume-settled-sheet.ts`实现显式v4 `settled-sheet/settled-fan`：原轮廓分片经共享网格细分，沿边距离控制浅层逐渐贴入地表，无直立外围裙边或整片透明度补丁。`native-volume-settled-projection.ts`另为显式`settled-bundle/clamp`复用原builder的完整XY三角域，拆分重叠边段以取得合并后的外沿；共用高度场及局部UV让附接碎端保持相接，倒束只在新分支四分细化。四种浅层都只接收显式非阻挡且高度≤6px实例，不改变地表存在网格或人物碰撞。形体登记、CSV编译、恢复校验和包依赖一并包含五个新增profile；旧修订5闭包保持原实现并拒绝新profile。未注册的短纤候选builder不计入已启用架构或世界资格。
 
-`legacy-r100-v5/executor.js`从`d194be4c`的68个依赖封存生成、验证及预烤；`freeze-native-r100-revision5.mjs --check`核对完整闭包。正式恢复引入独立`executor-recovery.js`：先由`derive-native-r100-revision5.mjs`移除内部不可能的历史分派，再由`project-native-r100-revision5.mjs`严格证明目录只有ID成员查询后只留52个ID；原始和两级派生文件均保留，未改外层revision1–5同步接口。`check-r100-revision5-projection.ts`逐一核对原156配方、完整地图与四层RGBA哈希。新包保持version3/内容version2并显式标记algorithmRevision6；保存的revision5由封存验证/生成/预烤处理，不读取新CSV重算。当前调用接口保持，资格与来源连续性由[I10–I12 QA](qa/rift-r100-i10-i12.md)单独确认，模块存在不代表108世界已完成。
+`legacy-r100-v5/executor.js`从`d194be4c`的68个依赖封存生成、验证及预烤；`freeze-native-r100-revision5.mjs --check`核对完整闭包。正式恢复引入独立`executor-recovery.js`：先由`derive-native-r100-revision5.mjs`移除内部不可能的历史分派，再由`project-native-r100-revision5.mjs`严格证明目录只有ID成员查询后只留52个ID；原始和两级派生文件均保留，未改外层revision1–5同步接口。`check-r100-revision5-projection.ts`逐一核对原156配方、完整地图与四层RGBA哈希。新包保持version3/内容version2并显式标记algorithmRevision6；保存的revision5由封存验证/生成/预烤处理，不读取新CSV重算。当前调用接口保持；108世界/324等级的来源连续性与内部资格已实际绑定，I10–I12按用户授权抽查范围结案。生成与正式进入/冷续证据、74性能样本及18混合生命周期的范围归[I10–I12 QA](qa/rift-r100-i10-i12.md)，I13经济和I14弱设备/听感/用户终验仍待。
 
 ## R100 I07—I09：扩展形体与连续选择
 

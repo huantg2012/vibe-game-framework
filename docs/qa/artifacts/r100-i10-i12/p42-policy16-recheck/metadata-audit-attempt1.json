@@ -1,0 +1,6 @@
+{
+  "status": "postprocess-schema-assertion-corrected",
+  "originalError": "undefined !== 0 when reading networkSummary.pendingCount",
+  "actualObserverSchema": "network-summary stores pending as an array; corrected assertion requires deepEqual(pending, [])",
+  "scope": "Only postprocessing after both real executions completed. No game/controller/source/save/report edits or gameplay retry. Failed check happened before summary output writes."
+}

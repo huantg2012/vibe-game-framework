@@ -1,0 +1,319 @@
+{
+  "double-return": {
+    "batch": "b12",
+    "routes": [
+      {
+        "name": "inside-short-turns",
+        "points": [
+          [
+            579,
+            635
+          ],
+          [
+            613,
+            553
+          ],
+          [
+            514,
+            478
+          ],
+          [
+            602,
+            387
+          ],
+          [
+            567,
+            250
+          ],
+          [
+            551,
+            155
+          ]
+        ],
+        "bounds": [
+          440,
+          130,
+          660,
+          668
+        ]
+      },
+      {
+        "name": "outside-wide-return",
+        "points": [
+          [
+            579,
+            635
+          ],
+          [
+            846,
+            607
+          ],
+          [
+            876,
+            408
+          ],
+          [
+            846,
+            189
+          ],
+          [
+            551,
+            155
+          ]
+        ],
+        "bounds": [
+          520,
+          125,
+          925,
+          675
+        ]
+      }
+    ],
+    "relations": {
+      "walkableSurfaceObjects": [
+        1
+      ],
+      "routeLengthOrder": [
+        "inside-short-turns",
+        "outside-wide-return"
+      ],
+      "nearest": "cleft-tableland",
+      "difference": [
+        "中央长静床被两处实缺地从侧面分隔，南北连颈通向外返路",
+        "三个短断肩使床内换侧，东侧绕整条裂地更远更宽"
+      ]
+    }
+  },
+  "offset-basins": {
+    "batch": "b12",
+    "routes": [
+      {
+        "name": "offset-inner-mouths",
+        "points": [
+          [
+            484,
+            411
+          ],
+          [
+            594,
+            404
+          ],
+          [
+            754,
+            407
+          ],
+          [
+            808,
+            536
+          ]
+        ],
+        "bounds": [
+          440,
+          360,
+          855,
+          580
+        ]
+      },
+      {
+        "name": "shared-west-return",
+        "points": [
+          [
+            397,
+            581
+          ],
+          [
+            301,
+            427
+          ],
+          [
+            289,
+            251
+          ],
+          [
+            327,
+            171
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "disjointSolidObjects": [
+        1,
+        2
+      ],
+      "nearest": "porcelain-maw",
+      "difference": [
+        "两湾前后错位、开口同向偏东，厚端高低不等",
+        "东侧断唇短接和西侧完整外床并存，不是对口收喉"
+      ]
+    }
+  },
+  "pinched-fan": {
+    "batch": "b12",
+    "routes": [
+      {
+        "name": "bare-middle-tear",
+        "points": [
+          [
+            571,
+            616
+          ],
+          [
+            571,
+            451
+          ],
+          [
+            570,
+            274
+          ]
+        ],
+        "bounds": [
+          534,
+          230,
+          615,
+          655
+        ]
+      },
+      {
+        "name": "outer-fan-rim",
+        "points": [
+          [
+            297,
+            557
+          ],
+          [
+            235,
+            421
+          ],
+          [
+            282,
+            216
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "low-fan-eastern-cross",
+        "points": [
+          [
+            696,
+            578
+          ],
+          [
+            833,
+            487
+          ],
+          [
+            877,
+            359
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          6
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        1,
+        2
+      ],
+      "barePoint": [
+        572,
+        451
+      ],
+      "nearest": "satin-fan",
+      "difference": [
+        "两粒肩各挤起一件真实膜褶，中央表皮真分开露地",
+        "低扇面可踩、夹点阻挡，形成中穿床和外膜缘两种转折"
+      ]
+    }
+  },
+  "spliced-reaches": {
+    "batch": "b12",
+    "routes": [
+      {
+        "name": "diagonal-bed-splice",
+        "points": [
+          [
+            347,
+            618
+          ],
+          [
+            429,
+            461
+          ],
+          [
+            549,
+            406
+          ],
+          [
+            672,
+            350
+          ],
+          [
+            733,
+            181
+          ]
+        ],
+        "bounds": [
+          275,
+          140,
+          805,
+          665
+        ]
+      },
+      {
+        "name": "short-cross-return",
+        "points": [
+          [
+            716,
+            509
+          ],
+          [
+            637,
+            529
+          ],
+          [
+            560,
+            403
+          ],
+          [
+            398,
+            405
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "walkableSurfaceObjects": [
+        1,
+        2,
+        3
+      ],
+      "nearest": "braided-seam",
+      "difference": [
+        "两条长床之间只有一段斜横接，两个断束只占接点",
+        "从南侧左床换到北侧右床，地形缺失令同侧直进终止而非三纵床连续横连"
+      ]
+    }
+  }
+}

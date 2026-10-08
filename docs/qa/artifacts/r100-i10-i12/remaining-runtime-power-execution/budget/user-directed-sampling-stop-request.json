@@ -1,0 +1,25 @@
+{
+  "status": "user-directed-sampling-stop-requested",
+  "requestedAt": "2026-10-08T06:35:54.652658+00:00",
+  "authority": {
+    "userInstruction": "\u4e0d\u7528\u505a\u5168\u91cf\u6d4b\u8bd5\uff0c\u62bd\u67e5\u5373\u53ef",
+    "rootInstruction": "Immediately stop remaining full budget queue, preserve all original reports and logs; unfinished current case is separately identified, not a failed replacement; lifecycle not started."
+  },
+  "originalReportStatus": "running",
+  "completedAtStopRequest": 74,
+  "passedAtStopRequest": 74,
+  "currentCaseAtStopRequest": {
+    "index": 74,
+    "world": "felt-wedges",
+    "grade": "severe",
+    "seed": 20261004,
+    "status": "running",
+    "startedAt": "2026-10-08T06:35:19.143Z"
+  },
+  "target": {
+    "pid": 94802,
+    "signal": "SIGTERM",
+    "verifiedProcess": "94802 94758 /usr/local/bin/node tools/qa/check-r100-runtime-budget.mjs"
+  },
+  "originalToolAndReportUnmodified": true
+}

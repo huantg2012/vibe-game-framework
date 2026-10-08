@@ -1,0 +1,302 @@
+{
+  "schemaVersion": 1,
+  "status": "read-only-readiness-audit-open-actions",
+  "createdAt": "2026-10-07T09:47:07.164503+00:00",
+  "reviewer": "identity_shapes",
+  "featureIds": [
+    "COH-F052",
+    "COH-F011",
+    "COH-F008",
+    "COH-F002",
+    "COH-F049"
+  ],
+  "scope": "Read existing task/plan/source/evidence only. No map, browser, matrix or regression executed; no product/data/board/frozen-plan mutation and no final qualification granted. Inputs record this read, not later concurrent revisions.",
+  "inputs": [
+    {
+      "path": "docs/tasks/rift-r100-i10.md",
+      "sha256": "2d93f9beb0efdebce4cd6f77cb22d4d586687831d174808b478955a65fe158fe"
+    },
+    {
+      "path": "docs/tasks/rift-r100-i11.md",
+      "sha256": "a0f5b091625658f7ba74ca56b3312fdeb26554a3bdf076a01fbaacd11063eaff"
+    },
+    {
+      "path": "docs/tasks/rift-r100-i12.md",
+      "sha256": "3b4f82c63cb423272f12602f1c5e6db66ffa62150802a81008925687499b00e0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-execution-order.json",
+      "sha256": "ae80adfacf5241c3d5e65d86b7592a7f7bb686f518f9817c26891ec3f8779517"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/plan.draft.json",
+      "sha256": "aa31a28f57e935fa42a153527b6c9cbaf61fb64ce5892ba14debeef585f16585"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/pending-fields.json",
+      "sha256": "1ffce68c3782541e63284030c2a5346b5fe29166b901432d899c088d062c45ce"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/contract.json",
+      "sha256": "45aed9b1f8f28bb0af0cc47dd36a58c87bb074a214d22acdcf7abd990cb1379b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-document-update-plan.json",
+      "sha256": "d7cb18884eae5cfe9a80a8d754c604758326200c7bc21d6bed14cd060e9b433f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-enable/check-packages.mjs",
+      "sha256": "e2b82bc6f3044a979c905aca685ee11048d5f682ddd08fff0191a0ab21375c39"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-enable/before.json",
+      "sha256": "e846780aef477a5a958a4184d495830937ceab0bf85328e36813f2394a4925ab"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/archive-build-checks.json",
+      "sha256": "8e3216f713f5ff99b63e823adf571d8c39cd71aa30769ef063c31f4966a23e34"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/focused-checks.json",
+      "sha256": "98dd4f90a4ecf128fa09745c1c3dffa31a01d49bf57d60dce9b3feaaf1e538c1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projection-exact-execution.json",
+      "sha256": "ddd422d03ed4183ac7338ae7489ca45db7663290bc0171e15bdfac3f5b538422"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p19-revision5-closure/projection-exact-156.json",
+      "sha256": "173cdebbe0126ee2ec4d389f26a05d78f00b07d6684e2ef1d8c23122b5299c18"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/independent-review.json",
+      "sha256": "2168637d4bc9fb70f3652ead770a74a0acf0dbe21fca4fa4d8758b1d34987da7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/audio-i12-root-disposition.json",
+      "sha256": "5cb5fa689c97752de3838a50ed1d308d2060d90c8244714425841500b0985ad4"
+    },
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "66dc64028d4359560b88d04da4a0004d0d0353ef45630adbb66f3c7ff8f8ae55"
+    },
+    {
+      "path": "tools/recovery/check.mjs",
+      "sha256": "66188b292f7cbc04a0c9029b9c5d43ca1698d8c7f218d50548687142b6734397"
+    },
+    {
+      "path": "tools/recovery/check-native-generation-revision.ts",
+      "sha256": "f225fba97dcc328f5fe2ee36e809907413f08e0f7314c42ddda18ee39b6a4f8e"
+    },
+    {
+      "path": "tools/recovery/check-async-entry.ts",
+      "sha256": "37ca4d61e0d4c581d3dd96790f66c62d0bf1e5237b71fcfb925360842ef3be1a"
+    },
+    {
+      "path": "tools/world-study/check-r100-frozen-chaos.ts",
+      "sha256": "2e5fca75aa09526103fd2734f1b11a2ac367c3585d5636fe3aaf079a1a6ef11b"
+    },
+    {
+      "path": "tools/world-study/check-r100-frozen-recipe.ts",
+      "sha256": "1a00f81e9f7170a9640e4bc5d1995dd46bf88fa262eb7cd0e0a8c6ee1bd70f6b"
+    },
+    {
+      "path": "tools/world-study/check-master-pollution.ts",
+      "sha256": "785c7ba1a23e2b6ea138e3aabdf97c8d15937523dec8c729de51c83040324efb"
+    },
+    {
+      "path": "tools/world-study/check-r100-revision6-contract.ts",
+      "sha256": "39c91602bd09ceea7133b8748edddfcc2008f6ce9b2d248861726d2ad3d636ea"
+    },
+    {
+      "path": "tools/world-study/check-r100-revision5-only.ts",
+      "sha256": "9420c6504d8494d48bbb75af52f53e2dd984ca4ce40ff646bb941c3c6f6a9309"
+    },
+    {
+      "path": "src/generation/world-study/r100-package.ts",
+      "sha256": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4"
+    },
+    {
+      "path": "src/generation/world-study/r100-production-map.ts",
+      "sha256": "87509365a644732c6783c58390f37488985822b3e5f53639bb62ea2c34f82883"
+    },
+    {
+      "path": "src/managers/rift-recovery.ts",
+      "sha256": "dbe9ac569320c6c3df6680f13c61913d2901b30da287d9e8adf185882810dfa4"
+    },
+    {
+      "path": "data/rift-pollution-grades.csv",
+      "sha256": "e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066"
+    },
+    {
+      "path": "data/rift-expedition-grades.csv",
+      "sha256": "e218b81edb14f2206e0f2d35c1f01955cadace5ece2ee262f6dccfb53fded78c"
+    }
+  ],
+  "conclusion": "No new unarranged gameplay mechanism or content batch was identified. Two closeout integration actions remain: bind final-source narrow recovery/grade regression explicitly, and consume the already-planned non-binder closure gates independently. All actual final runtime results remain pending until generated.",
+  "actions": [
+    {
+      "id": "READINESS-1",
+      "kind": "missing-final-source-execution-entry",
+      "owner": "identity_pipeline",
+      "finding": "Final execution order does not explicitly bind current-source generic recovery and grade/rule regression. Existing342 equivalence is324r6+18r1 and must not substitute for revision2–5 or numerical integration. Peer confirmed this scheduling/linkage gap.",
+      "resolution": "Append a final execution supplement without altering the frozen original plan; execute the existing commands below in the final enabled source safe window, one CPU at a time, storing command, source manifest SHA, full logs and exit codes. Keep original failure if any; do not repeat the156 map/RGBA matrix.",
+      "commands": [
+        {
+          "command": [
+            "npm",
+            "run",
+            "check:rift-recovery"
+          ],
+          "purpose": "Current source save/departure/admission and immutable legacy recovery; existing31, not a new matrix."
+        },
+        {
+          "command": [
+            "node",
+            "--import",
+            "tsx",
+            "tools/world-study/check-r100-frozen-chaos.ts"
+          ],
+          "env": {
+            "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+          },
+          "purpose": "Caller mutation, exact saved curve, cold resume, mismatched grade/invalid rate refusal; no maps."
+        },
+        {
+          "command": [
+            "node",
+            "--import",
+            "tsx",
+            "tools/world-study/check-r100-frozen-recipe.ts"
+          ],
+          "env": {
+            "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+          },
+          "purpose": "Three saved grades authoritative under unrelated catalog/rules/material additions, six map builds; not rebaking156."
+        },
+        {
+          "command": [
+            "node",
+            "--import",
+            "tsx",
+            "tools/world-study/check-master-pollution.ts"
+          ],
+          "env": {
+            "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+          },
+          "purpose": "Existing three-grade integral/rate, pause/resume/resistance/chase,18 actual Host admissions, real paint2/4 and volume1 per second/sight0.7."
+        },
+        {
+          "command": [
+            "node",
+            "--import",
+            "tsx",
+            "tools/world-study/check-r100-revision6-contract.ts"
+          ],
+          "env": {
+            "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+          },
+          "purpose": "Existing re-sealed invalid recipe, missing selected material dependency, unsupported profile/version and old5 rejection contracts; no maps."
+        }
+      ],
+      "mustBindInheritance": [
+        "Archived r2/r3/r4 executors+manifests and r5 executor-recovery+manifest-recovery bytes to final source",
+        "Current r100-package validation and r100-production-map dispatch, surface dispatch, shared restore/admission and actual Worker protocol/client changes through their reviewed scopes",
+        "Original freeze checks, r5 projection156, current-old52 equality/source graph; no arbitrary generic recovery inference from per-world geometry-only bridges"
+      ]
+    },
+    {
+      "id": "READINESS-2",
+      "kind": "closure-composition-boundary",
+      "owner": "root",
+      "finding": "Binder intentionally does not decide all iteration gates. A successful324 per-world binding cannot automatically satisfy natural48, actual108 selection, controlled1536/15552, audio engineering continuity, human listening or release approval.",
+      "resolution": "Before sequential I10/I11/I12 closure, root independently requires real final-source selection, four exactly12 natural branches+automatic review+bounded root experience, exact1536/15552 controlled reports, and final-source audio reuse/listening-entry continuity. Retain R10 hearing as I14 release blocker.",
+      "alreadyArranged": true,
+      "requiresNewMechanismOrMatrix": false
+    }
+  ],
+  "enableOnly": {
+    "status": "prepared-before-executed-after-pending",
+    "script": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-enable/check-packages.mjs",
+      "sha256": "e2b82bc6f3044a979c905aca685ee11048d5f682ddd08fff0191a0ab21375c39"
+    },
+    "before": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-enable/before.json",
+      "sha256": "e846780aef477a5a958a4184d495830937ceab0bf85328e36813f2394a4925ab"
+    },
+    "afterCommand": [
+      "node",
+      "--import",
+      "tsx",
+      "docs/qa/artifacts/r100-i10-i12/final-enable/check-packages.mjs",
+      "after"
+    ],
+    "afterEnvironment": {
+      "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+    },
+    "assertions": [
+      "Exactly56 false→true CSV flags and old52 preserved",
+      "324 full recipe JSON/dependency hashes exact",
+      "All324 pre-enable recipes still valid",
+      "Runtime package source unchanged"
+    ],
+    "limit": "Before is not proof that activation or final formal selection/entry has happened."
+  },
+  "legacyAndFailClosed": [
+    {
+      "revision": "2",
+      "existingCoverage": "check-native-generation-revision uses60 actual I06 browser identities, compares entire payload with frozenv2, validates old signature, rejects relabeledrevision/changedcontent/unknownfuture. It is included in the31-command suite.",
+      "finalRequirement": "Bind/run current suite and exact frozen module. Not a new60 browser matrix."
+    },
+    {
+      "revision": "3/4",
+      "existingCoverage": "Current validator/map dispatch use explicit immutable revision3/4 imports. archive-build-checks records reproducible freeze2/3/4/5 checks. Final342 does not exercise these revisions.",
+      "finalRequirement": "Verify final-source executor/manifests and dispatch closure against existing reviewed historical evidence; if a selected closure changed, scope its actual repair rather than claim342 covers it. No evidence here of absent-module browser recovery injection."
+    },
+    {
+      "revision": "5",
+      "existingCoverage": "P19 actual projection-exact156 binds all52×3 prior recipes, full recovered payloads and all four originalRGBA hashes; explicit unknownrevision/unknownworld/malformed appearance reject. Retained full/original/derivative files stay available.",
+      "finalRequirement": "Final executor-recovery, manifest and validators/dispatch SHA continuity. No repeated156 bake required."
+    },
+    {
+      "revision": "6 and saved identity",
+      "existingCoverage": "validR100ProductionRecipe returns false for absent/malformed package, unknown revision/world and missing or changed selected material dependency. createR100ProductionMap throws Invalid or unavailable native world package; recovery validates identity and original signature. Existing revision6-contract re-seals malformed selected dependencies, so rejection is schema/integrity rather than stalehash only.",
+      "finalRequirement": "Current narrow contract and full saved-admission suite; final324 cold continuations cover valid savedr6.",
+      "limit": "Unknown package/dependency fail-closed is distinct from transient transport failure. Controlled first-request abort/retry proves bounded Worker recovery, not all historical-chunk unavailability or natural P36 root cause."
+    }
+  ],
+  "pressureAndDistinctness": {
+    "frozenNumerics": "CSV low/medium/severe paint2/4/6,volume1/2/3,baseChaos .24→.34/.42→.60/.64→.96; exact integration and savedcurve policy are shared. Enemy2/3/4 and tiercounts/values follow expedition CSV. No parameter change requested.",
+    "coverage": "Fixed-generation admission checks quotas/content/support/safe retreat and savedHost phase; explicit pollution/chaos contracts cover rates and contact mathematics. Per-world normal art+nearest-neighbor cards govern108 distinctness separately from selection statistics.",
+    "limit": "Neither nominal severe nor fixed expert-route success proves every trip is deeply pressured or long-term profitable. Preserve shallow/near-only/empty/death cases. Natural48 bounded experience is additional; I13 economy balance remains outside these closures."
+  },
+  "documentAlignment": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/contract.json",
+      "finding": "Older descriptive field runtimeBindings still says production/equivalence only and nonClosure calls performance/resource separate. Current binder actually validates all four reports/bindings plus Shaderreview. Supplement/final docs should name current four, without altering original historical contract or weakening actual validator."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-document-update-plan.json",
+      "finding": "Final art replacements, historicalhuman/currenttechnical separation, game-state/render and R10 boundaries are already assigned; they are pending updates, not missing mechanisms."
+    }
+  ],
+  "closureOrder": [
+    "Finish B12–B14 original fixed processes, preserve invalid/near/empty and independent/root limited reviews; complete336 canonical aggregation",
+    "Confirm full generation inheritance/source graph and corrected current-art replacement scopes",
+    "Run authorized enabled-only after324 recipe proof; freeze actual108 final source/packages and bind selectedsource/audio assets",
+    "Run final-source existing narrow regression supplement; final selection→324formal→342equivalence→natural48+independent review; controlled1536/15552 on same source",
+    "Run108×60s budget and10same+324mixed lifecycle with exclusive CPU+Chrome; root exact12sample Shader review",
+    "Bind final art,technical and actual runtime; run real baseline+negative checks; root binder write",
+    "Root independently verifies non-binder gates and limited audio disposition; closeI10→I11→I12 with exact72/92/108 scopes, preserve historical/human/R10/I13/I14 limits; render/check/state/docs"
+  ],
+  "notExecuted": [
+    "No regressions or browser/maps during this audit",
+    "No final enabled source, final runtime result or closure inferred from prepared path",
+    "No change to original frozen plans, failed records, QA thresholds or seed lists"
+  ]
+}

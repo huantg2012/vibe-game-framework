@@ -1,0 +1,23 @@
+{
+  "status": "bounded-code-review-pass-not-final-executed",
+  "reviewer": "root",
+  "date": "2026-10-07",
+  "reviewedInputs": [
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "5724fe2533502415da7bd02c9e78b27c5b4c51dc944c5ccac8d8f8fc1f1412d6"
+    },
+    {
+      "path": "tools/qa/check-r100-expansion-binding.mjs",
+      "sha256": "a8954222a356d21492afffc0136fa657509486937ba4e26b0dc07e395631a9b6"
+    }
+  ],
+  "findings": [
+    "r6最终production绑定必须显式启用逐例错误停止和Worker观察，唯一观察器源码SHA须匹配。",
+    "绑定报告进一步回读所有原始JSONL，验证各文件SHA与唯一性，再按world×3重算观察统计；成功case不能掩盖console或Worker错误。",
+    "补充负例覆盖缺失选项/原始观察、被改观察器、缺context、重封错误日志和伪造无错汇总。"
+  ],
+  "limitations": [
+    "这里只是工具与负例设计的独立审查；未运行最终324进入/恢复，不解释历史间歇根因。"
+  ]
+}

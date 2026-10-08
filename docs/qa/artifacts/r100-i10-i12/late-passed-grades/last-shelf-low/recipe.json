@@ -1,0 +1,302 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "last-shelf",
+    "label": "断岸余台",
+    "description": "断岸余台的原生材料与完整搜撤地段",
+    "material": "granular",
+    "surface": {
+      "substrate": "granular",
+      "coating": "granular",
+      "organization": "patches",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 3813931,
+      "floor": 8547411,
+      "floorLight": 12034952,
+      "materialDark": 6115649,
+      "materialMid": 10982001,
+      "materialLight": 13811873,
+      "faceLight": 15062239,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 8547411,
+      "groundLight": 12034952,
+      "groundDark": 3813931,
+      "wall": 10982001,
+      "wallLight": 13811873,
+      "wallDark": 6115649
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "last-shelf",
+    "ground": {
+      "dark": 3813931,
+      "mid": 8547411,
+      "light": 12034952
+    },
+    "solid": {
+      "dark": 6115649,
+      "mid": 10982001,
+      "light": 13811873
+    },
+    "cleaved": {
+      "dark": 7430766,
+      "mid": 12429238,
+      "light": 15062239
+    },
+    "secondary": {
+      "dark": 1976637,
+      "mid": 4347253,
+      "light": 9018293
+    },
+    "groundPattern": "grains",
+    "patternScale": 256,
+    "patternStrength": 0.32,
+    "secondaryCoverage": 0.14,
+    "textureContrast": 1.14,
+    "quietCoverage": 0.65
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "last-shelf-low",
+    "family": "granular-ridge",
+    "grade": "low",
+    "label": "断岸余台",
+    "profile": "last-shelf",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 19,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "granular-ridge",
+        "role": "relief",
+        "x": 690,
+        "y": 391,
+        "rotation": 1.52,
+        "length": 540,
+        "width": 450,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.3784,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle",
+        "groundEdgeWidth": 8
+      },
+      {
+        "id": 2,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 786,
+        "y": 242,
+        "rotation": -0.08,
+        "length": 135,
+        "width": 58,
+        "height": 38,
+        "thickness": 11,
+        "fold": 0.5456,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 3,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 817,
+        "y": 476,
+        "rotation": 0.12,
+        "length": 145,
+        "width": 66,
+        "height": 44,
+        "thickness": 12,
+        "fold": 0.6072,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 1024,
+          "y": 72
+        },
+        {
+          "x": 866,
+          "y": 72
+        },
+        {
+          "x": 805,
+          "y": 135
+        },
+        {
+          "x": 847,
+          "y": 199
+        },
+        {
+          "x": 1024,
+          "y": 210
+        }
+      ],
+      [
+        {
+          "x": 1024,
+          "y": 318
+        },
+        {
+          "x": 836,
+          "y": 306
+        },
+        {
+          "x": 767,
+          "y": 363
+        },
+        {
+          "x": 805,
+          "y": 419
+        },
+        {
+          "x": 1024,
+          "y": 442
+        }
+      ],
+      [
+        {
+          "x": 1024,
+          "y": 562
+        },
+        {
+          "x": 862,
+          "y": 554
+        },
+        {
+          "x": 792,
+          "y": 614
+        },
+        {
+          "x": 847,
+          "y": 696
+        },
+        {
+          "x": 1024,
+          "y": 715
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "package": {
+    "id": "r100-last-shelf",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "folded-slab": {
+        "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+        "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+        "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+      },
+      "granular-ridge": {
+        "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+        "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+        "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+      }
+    },
+    "dependencyHash": "75de9264",
+    "grade": "low"
+  }
+}

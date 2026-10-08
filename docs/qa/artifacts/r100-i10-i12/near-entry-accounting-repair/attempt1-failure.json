@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "command": "node tools/qa/check-r100-play-qualification.mjs",
+  "exitCode": 1,
+  "stdout": "contract.log",
+  "error": "AssertionError at check-r100-play-qualification.mjs:125: expected emptyReturns=0, actual=1",
+  "diagnosis": "New fixture expectation omitted the existing ash-strata severe seed3075192741 actual empty return. Raw report has zero target/terminal pickups; accounting preserved it correctly. No gameplay was run or changed."
+}

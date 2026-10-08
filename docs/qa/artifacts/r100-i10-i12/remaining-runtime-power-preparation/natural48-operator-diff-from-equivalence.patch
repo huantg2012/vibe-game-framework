@@ -1,0 +1,171 @@
+--- docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-equivalence.py
++++ docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-natural48.py
+@@ -1,4 +1,4 @@
+-"""Execute only the root-dispatched equivalence stage once; keep its frozen utility unchanged."""
++"""Execute the root-dispatched original natural48 and its automatic summary once; preserve every outcome."""
+ import hashlib
+ import json
+ import os
+@@ -13,10 +13,10 @@
+ 
+ BASE = pathlib.Path('docs/qa/artifacts/r100-i10-i12')
+ PREP = BASE / 'remaining-runtime-power-preparation'
+-SCRIPT = PREP / 'execute-equivalence.py'
++SCRIPT = PREP / 'execute-natural48.py'
+ REVIEW = PREP / 'root-review.json'
+ REVIEW_SHA = '5f410fb6451db5467a6d20667bec3a83715101d39f8a38afe0714c2297807463'
+-assert sys.argv[1:] == ['--root-dispatch-equivalence']
++assert sys.argv[1:] == ['--root-dispatch-natural48']
+ 
+ def now():
+     return datetime.now(timezone.utc)
+@@ -53,6 +53,8 @@
+         return False
+     return ('tools/qa/r100-i09-final-probe.mjs' in argv
+             or 'tools/world-study/check-r100-browser-equivalence.mjs' in argv
++            or 'tools/qa/r100-i09-continuous.mjs' in argv
++            or 'tools/qa/r100-revision6-journey.mjs' in argv
+             or 'playwright_chromiumdev_profile-' in argv
+             or argv.startswith(('/usr/bin/caffeinate', 'caffeinate ')))
+ 
+@@ -61,10 +63,10 @@
+ assert review['status'] == 'operational-protocol-approved-awaiting-stage-dispatch'
+ assert sha(review['candidate']['path']) == review['candidate']['sha256']
+ plan = read(review['candidate']['path'])
+-stage = next(item for item in plan['stages'] if item['id'] == 'equivalence')
++stage = next(item for item in plan['stages'] if item['id'] == 'natural48')
+ assert stage['argv'][2:] == stage['unchangedOriginalStage']['args']
+ assert stage['argv'][:2] == ['-i', '/usr/local/bin/node']
+-assert stage['envOverrides'] == {'GAME_URL': 'http://127.0.0.1:3122/', 'NODE_OPTIONS': '', 'DEBUG': ''}
++assert stage['envOverrides'] == {'GAME_URL': 'http://127.0.0.1:3122/', 'QA_SOURCE_MANIFEST': 'docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json', 'QA_EXPANSION_PLAN': 'docs/qa/artifacts/r100-i10-i12/qualification-plan.json', 'QA_SELECTION_REPORT': 'docs/qa/artifacts/r100-i10-i12/selection-final108/selection.json', 'QA_OUTPUT_DIR': 'docs/qa/artifacts/r100-i10-i12/continuous-final108', 'QA_POST_RETURN_MANAGEMENT': '1', 'NODE_OPTIONS': '', 'DEBUG': ''}
+ refs = {}
+ 
+ def collect(value):
+@@ -79,9 +81,26 @@
+             collect(item)
+ 
+ collect(plan)
++expansion_path = stage['envOverrides']['QA_EXPANSION_PLAN']
++expansion = read(expansion_path)
++natural = expansion['continuousNatural']
++assert natural['policyRevision'] == 15 and natural['totalTrips'] == 48
++assert natural['branches'] == ['low', 'medium', 'severe', 'alternating']
++assert sha(natural['storage']) == natural['storageSha256']
++refs[expansion_path] = sha(expansion_path)
++refs[natural['storage']] = natural['storageSha256']
++refs[stage['envOverrides']['QA_SELECTION_REPORT']] = sha(stage['envOverrides']['QA_SELECTION_REPORT'])
++for derivation_path in [str(BASE / 'controller-revision6/derivation.json'), str(BASE / 'controller-revision6/reviewer-derivation.json')]:
++    derivation = read(derivation_path)
++    assert derivation['algorithmRevision'] == 6 and derivation['inputPolicyRevision'] == 15
++    refs[derivation_path] = sha(derivation_path)
++    for name in ['original', 'executor', 'tool']:
++        item = derivation[name]
++        assert sha(item['path']) == item['sha256']
++        refs[item['path']] = item['sha256']
+ refs[str(REVIEW)] = REVIEW_SHA
+ refs[str(SCRIPT)] = sha(SCRIPT)
+-refs[str(PREP / 'equivalence-operator-command.json')] = sha(PREP / 'equivalence-operator-command.json')
++refs[str(PREP / 'natural48-operator-command.json')] = sha(PREP / 'natural48-operator-command.json')
+ for file, expected in refs.items():
+     assert sha(file) == expected, file
+ source = read(plan['finalSource']['path'])
+@@ -117,14 +136,14 @@
+ started = now()
+ argv = [stage['executable'], *stage['argv']]
+ write(audit / 'dispatch.json', {
+-    'status': 'root-dispatched-equivalence-once', 'startedAt': started.isoformat(),
+-    'rootDispatch': 'Root explicitly dispatched equivalence342 after its gallery Chrome closed; this records that message and does not invent a signed protocol.',
++    'status': 'root-dispatched-natural48-once', 'startedAt': started.isoformat(),
++    'rootDispatch': 'Root explicitly dispatched original policy15 natural48 and original offline review after galleryv4 Chrome closed; this records that message, not a fabricated signed protocol.',
+     'rootOperationalReview': ref(REVIEW), 'candidate': review['candidate'], 'operatorSource': ref(SCRIPT),
+-    'operatorCommand': ref(PREP / 'equivalence-operator-command.json'), 'argv': argv,
++    'operatorCommand': ref(PREP / 'natural48-operator-command.json'), 'argv': argv,
+     'envOverrides': stage['envOverrides'], 'source': plan['finalSource'],
+     'frozenRefs': [{'path': file, 'sha256': expected} for file, expected in refs.items()],
+     'sourceFilesBefore': 1397, 'operatorPid': os.getpid(), 'operatorPpid': os.getppid(),
+-    'exclusiveHeavyCpuAndQaBrowser': True, 'automaticRetry': False,
++    'exclusiveQaBrowser': True, 'heavyCpuReserved': False, 'earnedStorageSource': {'path': natural['storage'], 'sha256': natural['storageSha256']}, 'automaticRetry': False,
+ })
+ log = (audit / 'command.log').open('x')
+ proc = None
+@@ -137,11 +156,26 @@
+     proc = subprocess.Popen(argv, cwd=stage['cwd'], env={**os.environ, **stage['envOverrides']},
+                             stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+     write(audit / 'launch.json', {'at': now().isoformat(), 'pid': proc.pid, 'ppid': os.getpid(), 'argv': argv})
+-    print(json.dumps({'status': 'launched-equivalence-once', 'pid': proc.pid, 'at': now().isoformat()}), flush=True)
++    print(json.dumps({'status': 'launched-natural48-once', 'pid': proc.pid, 'at': now().isoformat()}), flush=True)
+     deadline = time.monotonic() + 5
+     next_sample = time.monotonic()
+     browser_seen = False
++    next_technical_check = time.monotonic()
++    next_progress = time.monotonic()
+     while proc.poll() is None:
++        if time.monotonic() >= next_technical_check:
++            run_file = out / 'execution.json'
++            if run_file.exists():
++                run_state = read(run_file)
++                failures = [row for row in run_state.get('branches', [])
++                            if row.get('status') == 'failed-script' or row.get('exitCode') not in [None, 0]]
++                if run_state.get('status') == 'failed' or failures:
++                    raise RuntimeError('Natural wrapper recorded a technical branch failure: ' + json.dumps(failures))
++                if time.monotonic() >= next_progress:
++                    print(json.dumps({'status': 'natural48-running', 'at': now().isoformat(),
++                                      'branches': run_state.get('branches', [])}), flush=True)
++                    next_progress = time.monotonic() + 300
++            next_technical_check = time.monotonic() + 1
+         if time.monotonic() >= next_sample:
+             rows = processes()
+             owned = {proc.pid}
+@@ -222,28 +256,36 @@
+         verify_source()
+     except Exception as error:
+         problems.append({'type': 'SourceChanged', 'message': str(error)})
+-    binding = read(out / 'source-binding.json') if (out / 'source-binding.json').exists() else None
+-    report = read(out / 'browser-equivalence.json') if (out / 'browser-equivalence.json').exists() else None
+-    if exit_code != 0 or not binding or binding['status'] != 'pass':
+-        problems.append({'type': 'FrozenProbeNotPassed', 'exitCode': exit_code, 'bindingStatus': binding.get('status') if binding else None})
+-    if not report or report['status'] != 'pass' or len(report['results']) != 342:
+-        problems.append({'type': 'IncompleteEquivalence', 'status': report.get('status') if report else None})
+-    elif (sum(row['revision'] == 6 for row in report['results']) != 324
+-          or sum(row['revision'] == 1 for row in report['results']) != 18
+-          or not all(row['exactIdentity'] and row['actual'] == row['expected'] for row in report['results'])):
+-        problems.append({'type': 'EquivalenceIdentityMismatch'})
++    binding = read(out / 'execution.json') if (out / 'execution.json').exists() else None
++    report = read(out / 'summary.json') if (out / 'summary.json').exists() else None
++    policy = read(out / 'policy-freeze.json') if (out / 'policy-freeze.json').exists() else None
++    if exit_code != 0 or not binding or binding['status'] != 'completed-attempts-pending-summary':
++        problems.append({'type': 'NaturalWrapperNotCompleted', 'exitCode': exit_code, 'status': binding.get('status') if binding else None})
++    if (not report or report['status'] != 'completed-continuous-samples-pending-review'
++            or report.get('sourceValid') is not True or report.get('validatedTrips') != 48):
++        problems.append({'type': 'IncompleteNaturalSummary', 'status': report.get('status') if report else None})
++    elif (len(report['branches']) != 4 or any(row['validatedTrips'] != 12 or not row['completed'] or row['issues'] for row in report['branches'])):
++        problems.append({'type': 'InvalidNaturalBranchCoverage'})
++    if policy:
++        for item in policy['fixedFiles']:
++            if sha(item['file']) != item['sha256']:
++                problems.append({'type': 'FrozenNaturalInputChanged', 'path': item['file']})
++    # Deaths, empty returns and diagnosis flags are data, never altered or rerolled.
+     receipt = {
+-        'status': 'pass-equivalence342' if not problems else 'failed-preserved-no-retry',
++        'status': 'completed-natural48-summary-pending-offline-review' if not problems else 'failed-preserved-no-retry',
+         'startedAt': started.isoformat(), 'endedAt': ended.isoformat(), 'wallSeconds': (ended-started).total_seconds(),
+-        'operatorSource': ref(SCRIPT), 'operatorCommand': ref(PREP / 'equivalence-operator-command.json'),
++        'operatorSource': ref(SCRIPT), 'operatorCommand': ref(PREP / 'natural48-operator-command.json'),
+         'rootReview': ref(REVIEW), 'source': plan['finalSource'], 'sourceFilesBeforeAndAfter': 1397,
+         'exitCode': exit_code, 'launchPid': proc.pid if proc else None, 'knownProcessTree': list(known.values()),
+         'ownedIdleAssertionPids': sorted(owners), 'powerSamples': samples, 'noSystemSleep': not sleeps,
+         'ownedProcessesClosed': not alive, 'ownedAssertionsReleased': not remaining,
+-        'sourceBinding': ref(out / 'source-binding.json') if binding else None,
+-        'report': ref(out / 'browser-equivalence.json') if report else None,
+-        'actualIdentities': len(report['results']) if report else 0, 'problems': problems,
+-        'nextStage': 'Stop here; root reviews and dispatches the next stage separately.', 'automaticRetry': False,
++        'naturalExecution': ref(out / 'execution.json') if binding else None,
++        'summary': ref(out / 'summary.json') if report else None,
++        'policyFreeze': ref(out / 'policy-freeze.json') if policy else None,
++        'actualTrips': report['validatedTrips'] if report else 0, 'problems': problems,
++        'outcomes': {row['policy']: row['outcomes'] for row in report['branches']} if report else {},
++        'experienceApproval': 'pending-independent-root-review',
++        'nextStage': 'Only the already-dispatched original offline review may run next; then stop for root experience review. No budget or new trips.', 'automaticRetry': False,
+     }
+     write(audit / 'execution.json', receipt)
+     print(json.dumps({'status': receipt['status'], 'receipt': ref(audit / 'execution.json'), 'problems': problems}), flush=True)

@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "status": "proposed-awaiting-root-scope-disposition",
+  "draft": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.draft.json",
+    "sha256": "9f4d01a4e9ecd922845bb533177913fb096ee74075aa4970c8440e9375264053"
+  },
+  "candidateOnly": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "unchangedDraft": true,
+  "approval": null,
+  "independentGeometryReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-art-cleft-replacement-independent-shapes.json",
+    "sha256": "8465bcd0e13eed5dca85b02897505e23cef35d39f21eeca5e929fc79971f0d3c"
+  },
+  "replacements": [
+    {
+      "worldId": "cleft-tableland",
+      "oldEvidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b01-final-art-review.json",
+          "sha256": "900b2168abb106f53f3f8bcf369219e4417b5e8be7815dcee4fa1bd3a90a25cd",
+          "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+          "sourceManifestSha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b01-independent-art-review.json",
+          "sha256": "6c09736b3782a9f8a04032fa6cf6f06ec7a19a1a1cdf80fb31b070a2f6b44c28",
+          "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+          "sourceManifestSha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+        }
+      ],
+      "affectedScope": "The authored ground-edge surface changed from independent cell pyramids to a continuous narrow shoulder. Full3103 pixels are not continuous through this change.",
+      "beforeHelper": {
+        "path": "src/generation/world-study/native-volume-ground-edge.ts",
+        "sha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d"
+      },
+      "afterHelper": {
+        "path": "src/generation/world-study/native-volume-ground-edge.ts",
+        "sha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc"
+      },
+      "replacementEvidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-final-art-review.json",
+          "sha256": "b92fb88b13e4dfcb34246e164831bfa3874c8495ec026bb2a4299a0f8aadeee5",
+          "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+          "sourceManifestSha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-independent-art-review.json",
+          "sha256": "84db0b3c950aa73341c63f2c7391f97a6eb3dd65d1b8c29db37b6fc8cde9364b",
+          "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+          "sourceManifestSha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+        }
+      ],
+      "authorScopeVerbatim": {
+        "worldId": "cleft-tableland",
+        "status": "bounded-edge-recheck-author-pass",
+        "grades": [
+          "low",
+          "medium",
+          "severe"
+        ],
+        "finding": "两颈受影响岸沿三档复审，连续母面及裸床/缺地的近身区分保持；绿色侵蚀增加时未重新形成规则锥齿。",
+        "limits": "只复查共享地沿变动；不把3103原图改标3105，不重新签其整个关卡资格。"
+      },
+      "rootScopeVerbatim": {
+        "issue": "R100-P25",
+        "verdict": "resolved in listed normal views",
+        "evidence": "thin-delta近长直岸由逐格独立三角尖峰变成连续窄厚边；braided及scalloped的斜沿保留地形8px阶梯，但没有原栅栏状孤立锥齿。cleft三档近侧窄沿复查未破坏既有厚面/裂颈读法。"
+      },
+      "coverage": {
+        "authorImages": [
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/02-upper-neck-west.png",
+            "sha256": "caabbe00a936c5e441517e9aed1375dbc14b9fb5f5205d37cd211d6f29db2d42",
+            "grade": "medium"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/03-lower-neck-west.png",
+            "sha256": "f532acdb096ccfe9d582be0682fa69c76c2c0ebdc6eace8124c9bc80a4917320",
+            "grade": "medium"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/02-upper-neck-west.png",
+            "sha256": "35811f91fabb8f4c8a2840a31853af8637f2eec78dea24411c12f73a6f04759d",
+            "grade": "low"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/03-lower-neck-west.png",
+            "sha256": "3edb5312e1173301bca1d6b3e80d66c94ab46b6b4caea5de44deb1fb4377ca17",
+            "grade": "low"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/02-upper-neck-west.png",
+            "sha256": "a4642cea908b68686db99a7c012b978278441bfcb091f1121a207dee281ee439",
+            "grade": "severe"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/03-lower-neck-west.png",
+            "sha256": "37260216461384fbce23aedafe73e0a82fb2280eb969d0dc6d9eb61ce4d0ae43",
+            "grade": "severe"
+          }
+        ],
+        "independentRootImages": [
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/02-upper-neck-west.png",
+            "sha256": "caabbe00a936c5e441517e9aed1375dbc14b9fb5f5205d37cd211d6f29db2d42",
+            "grade": "medium"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/03-lower-neck-west.png",
+            "sha256": "f532acdb096ccfe9d582be0682fa69c76c2c0ebdc6eace8124c9bc80a4917320",
+            "grade": "medium"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/02-upper-neck-west.png",
+            "sha256": "35811f91fabb8f4c8a2840a31853af8637f2eec78dea24411c12f73a6f04759d",
+            "grade": "low"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/02-upper-neck-west.png",
+            "sha256": "a4642cea908b68686db99a7c012b978278441bfcb091f1121a207dee281ee439",
+            "grade": "severe"
+          },
+          {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/03-lower-neck-west.png",
+            "sha256": "37260216461384fbce23aedafe73e0a82fb2280eb969d0dc6d9eb61ce4d0ae43",
+            "grade": "severe"
+          }
+        ],
+        "grades": [
+          "low",
+          "medium",
+          "severe"
+        ]
+      },
+      "sufficiencyReason": "Later author review explicitly rechecks both affected neck edges at all three grades. Root actually reviewed five listed3105 images spanning all grades. Native authored world data, appearance, remains and selected material dependencies are unchanged; only the used edge rendering changed. This supports current local continuous material face, neck and nearby matter/VOID boundary readability, not a new whole-world art review.",
+      "proposedCurrentScope": "3105三档专项复审覆盖两颈受影响近岸、连续母面与裸床/缺地的已照见区分；root亲看中档上下颈、低档上颈、重档上下颈。3103原基础材质与连体造型观察保留为历史事实，不宣称整世界像素连续或3105全新完整美术复验。",
+      "proposedCurrentLimitations": [
+        "Only the affected near-bank and neck surfaces are rechecked, not the complete world.",
+        "Root reviewed medium upper/lower neck, low upper neck, severe upper/lower neck; low lower-neck review is author-only.",
+        "Original3103 first-approach observation and its limitations stay with historicalEvidence, not mislabeled as3105 coverage.",
+        "Unlit far surfaces, whole-map play, fatigue, listening and human approval remain outside scope."
+      ],
+      "proposedDisposition": "In final output only, move the two cleft3103 active evidence entries into historicalEvidence with original source/SHA and supersededBy links to the3105 receipts plus root scope disposition. Keep existing3105 entries current; preserve original draft and raw files. Do not remove the shared3103 receipts from other B01 worlds.",
+      "limitations": [
+        "Edge-only recheck; no whole-map/all-surface/all-seed claim.",
+        "Low-grade root evidence shows the upper neck; author additionally reviewed the lower neck.",
+        "No new complete-play, dynamic fatigue, listening or human acceptance claim.",
+        "This map is not a continuity proof for any changed pixels and must not become a boundedPlayContinuity art edge."
+      ],
+      "remainingGap": "Final target/hash and direct applicable continuity of the replacement3105 source to final source remain pending."
+    }
+  ],
+  "accounting": {
+    "originalWorldEvidenceBindings": 262,
+    "proposedCurrentBindings": 260,
+    "preservedHistoricalBindings": 2,
+    "distinctOriginalReceiptSourceCombinations": 82,
+    "distinctProposedCurrentCombinations": 82,
+    "reason": "The same two3103 receipt/source combinations remain current evidence for the other three B01 worlds."
+  },
+  "scope": "File-level replacement proposal. No new images, no new visual review, no final qualification."
+}

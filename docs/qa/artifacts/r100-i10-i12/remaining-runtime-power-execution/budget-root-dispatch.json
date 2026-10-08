@@ -1,0 +1,35 @@
+{
+  "status": "root-explicitly-dispatched-budget-once-exclusive-window",
+  "at": "2026-10-08T05:14:31.240564+00:00",
+  "rootExperienceReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/independent-experience-review.json",
+    "sha256": "a99125cad5b6d615803645e81833ff6949eef4eb488137ec0e01207f8c8bf008"
+  },
+  "rootPowerProtocolReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/root-review.json",
+    "sha256": "5f410fb6451db5467a6d20667bec3a83715101d39f8a38afe0714c2297807463"
+  },
+  "operatorSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-budget.py",
+    "sha256": "1a4876b977d434a38e25ef89e9b71c0d176533016710854e50b79651b0520430"
+  },
+  "operatorCommand": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/budget-operator-command.json",
+    "sha256": "b2b6c277f2b8ca4450a57cc1df388c3ff8ea963c8cc77fe94d800fb68a103c19"
+  },
+  "authorizationSource": "Direct root NEW_TASK message in this agent thread after the bounded experience pass; this record does not fabricate a new root signature.",
+  "authorizedScope": {
+    "worlds": 108,
+    "grade": "severe",
+    "seed": 20261004,
+    "heldKeySegments": 12,
+    "requestedWallMsPerSegment": 5100,
+    "minimumActualAliveGameMs": 60000,
+    "originalOrderToolsSourceThresholdsUnchanged": true,
+    "attemptsAllowed": 1,
+    "automaticRetry": false
+  },
+  "exclusiveWindow": "Root explicitly reserved the complete CPU and sole QA Chrome window; root, QA and art remain idle.",
+  "duringMeasurement": "Only lightweight owned-process, pmset and progress sampling; no full-source hashing, tests, builds or additional browsers.",
+  "afterStage": "Verify original source/tool bindings, OS window and owned-resource release; stop for root review without starting lifecycle."
+}

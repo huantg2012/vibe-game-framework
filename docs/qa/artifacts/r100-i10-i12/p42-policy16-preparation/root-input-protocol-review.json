@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "status": "approved-bounded-input-protocol-only",
+  "reviewer": "root",
+  "at": "2026-10-07T13:02:53.237159+00:00",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/candidate-v2.json",
+    "sha256": "8a5460ad6999697a0533e9f3b54335ae0748679373e7f9757687139fbcd76983"
+  },
+  "independentReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/policy16-candidate-independent-review.json",
+    "sha256": "e4ce211946a7dc2dbf1c30f3df42818f7c2ce7533b16db69ae7bac84ff3af85a"
+  },
+  "independentV2Addendum": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/policy16-candidate-v2-independent-addendum.json",
+    "sha256": "6d0415882ec16a4a172ccc522a03c24476b59595184d1dfb00222e8a97628ff6"
+  },
+  "reviewedFiles": [
+    {
+      "path": "tools/qa/r100-i12-recheck-budget.mjs",
+      "sha256": "5795b280b50339a67e52aa323a52eb50db7fb6a38df10a904db7764ae912f528"
+    },
+    {
+      "path": "tools/qa/r100-i12-recheck-journey.mjs",
+      "sha256": "747ed743b89fb26aee9a3185ca9f57eae8cbdaf0d8e0e36e77c4f2a314e9127d"
+    },
+    {
+      "path": "tools/qa/r100-i12-recheck-encounters.mjs",
+      "sha256": "c86d641469950f61905e1beb7e7d9ddba4074b611c609fd78349d1e3c1a0cbd5"
+    },
+    {
+      "path": "tools/qa/r100-i12-recheck-coverage.mjs",
+      "sha256": "7a581e0af91150056cb12b78f6ea66b153f420d7a68ceed3cf452e136d4a4800"
+    },
+    {
+      "path": "tools/qa/r100-i12-recheck-budget.test.mjs",
+      "sha256": "c7266cac3a3e317b0bbce90c0be8f01fe9acd76b572ea5e797c183536566bb3d"
+    }
+  ],
+  "reviewedDiffs": [
+    {
+      "original": {
+        "path": "tools/qa/r100-revision6-journey.mjs",
+        "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-recheck-journey.mjs",
+        "sha256": "747ed743b89fb26aee9a3185ca9f57eae8cbdaf0d8e0e36e77c4f2a314e9127d"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/r100-i12-recheck-journey.diff",
+        "sha256": "39afe6933ebf394f3d7acb4a439ff231d3b911d93f54369539a3d0a11daadce9"
+      }
+    },
+    {
+      "original": {
+        "path": "tools/qa/r100-i09-costed-encounters.mjs",
+        "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-recheck-encounters.mjs",
+        "sha256": "c86d641469950f61905e1beb7e7d9ddba4074b611c609fd78349d1e3c1a0cbd5"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/r100-i12-recheck-encounters.diff",
+        "sha256": "c1dd93825d01d0e70788d96549fc28c0afaf565d80d1dd0190d40f20416a713e"
+      }
+    },
+    {
+      "original": {
+        "path": "tools/qa/r100-i07-i09-coverage.mjs",
+        "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-recheck-coverage.mjs",
+        "sha256": "7a581e0af91150056cb12b78f6ea66b153f420d7a68ceed3cf452e136d4a4800"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/r100-i12-recheck-coverage-v2.diff",
+        "sha256": "4e48e28e8c7c4f1e18e94ace40b960458a19ef85401d10faef51cfae3a2309e8"
+      }
+    }
+  ],
+  "validator": {
+    "path": "tools/qa/r100-i12-controller-supplement.mjs",
+    "sha256": "e1c9b33dcfd43e0f1714b339f10051fbf1861f07ad37abac11ac8ddd529c45a8"
+  },
+  "summary": {
+    "path": "tools/qa/r100-play-qualification.mjs",
+    "sha256": "1c831d2965c8e637c04844ffd17b0df687e4e0c831a14a3347dcd0ed1062e4d0"
+  },
+  "rootVerification": {
+    "boundaryChecks": 14,
+    "boundaryExitCode": 0,
+    "returnPolicyCommand": "env TSX_TSCONFIG_PATH=tools/contam-preview/tsconfig.json node --import tsx tools/qa/r100-i12-recheck-journey.mjs --check-return-policy",
+    "returnPolicyExitCode": 0,
+    "predicateChecks": 30,
+    "independentPredicateChecks": 24,
+    "freshnessCheck": "Initial v1 approval stopped before writing when wrapper differed; v2 records its sole fresh-output guard, and its independent incremental review is bound here."
+  },
+  "decision": "批准白砂重档两原种子各一次明确policy16补充过程。修正三处敌方strike枚举；一次真实拒搜之后，同一已观察非入口目标最多一次额外有界重接近/搜取。此为输入策略补充而非游戏地图或平衡修复，原两种子死亡/空返仍入总账。",
+  "preserved": [
+    "原policy15与依赖不修改",
+    "原source3121和完整generation identity不变",
+    "原earned存档与装备准备方式、所有资源/消耗规则不变",
+    "原每趟实际收取上限1和非入口>320px不变",
+    "原HP/chaos/回程预算不变",
+    "原两种子均执行且无自动重试/替代种子",
+    "B14释放后使用唯一QA浏览器"
+  ],
+  "limits": "5000ms保守停止、250ms动作余量，含释放键的实际游戏时间不得超过6000ms。异步卡顿可能物理超时；一旦实测超时/异常/按键未释放，保留原记录并判整趟invalid，不能资格。",
+  "qualification": "只有两原流程连同新增过程一起被精确summary重算、实际非入口拾取并同趟结算extract才可能关闭P42。代码测试、root批准或脚本exit0均不代表搜撤通过；P43另行诊断。"
+}

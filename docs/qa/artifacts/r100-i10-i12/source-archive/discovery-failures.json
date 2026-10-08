@@ -1,0 +1,18 @@
+{
+  "status": "retained-tool-discovery-errors-not-game-failures",
+  "attempts": [
+    {
+      "attempt": 1,
+      "error": "AssertionError [ERR_ASSERTION]: Noncanonical path: ../b07-refined-source/source-snapshot.json",
+      "stack": "relativeName :21 -> add :91 -> walk :123 -> visit :129",
+      "change": "Document-relative links resolved within repository only; frozen file entry restrictions unchanged."
+    },
+    {
+      "attempt": 2,
+      "error": "AssertionError [ERR_ASSERTION]: Missing bound source: b07-identity-source/source-snapshot.json",
+      "stack": "add :98 -> walk :127 -> visit :133",
+      "disposition": "Stopped after second failure; root approved explicit aliases grounded in the already-bound historical art index."
+    }
+  ],
+  "originalSnapshotOrGameFilesChanged": false
+}

@@ -1,0 +1,61 @@
+{
+  "status": "candidate-not-authorized-to-execute",
+  "expectedApprovedProtocol": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/approved-protocol.json",
+  "command": "/usr/local/bin/node",
+  "args": [
+    "tools/qa/r100-i12-recheck-coverage.mjs"
+  ],
+  "env": {
+    "GAME_URL": "http://127.0.0.1:3121/",
+    "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-current-qualified/execution-plan.json",
+    "QA_BATCH_ID": "B13",
+    "QA_WORLDS": "white-scarfield",
+    "QA_GRADES": "severe",
+    "QA_SEEDS": "20261005,3075192741",
+    "QA_CONCURRENCY": "1",
+    "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+    "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play",
+    "QA_STOP_ON_FAILURE": "1",
+    "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/worker-observations",
+    "QA_WORKER_OBSERVER_FAILURE_FILE": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/worker-observation-first-error.json",
+    "NODE_OPTIONS": "--import /Users/yilungao/coh/tools/qa/r100-worker-observer.mjs",
+    "DEBUG": "pw:browser",
+    "QA_CONTROLLER_SUPPLEMENT": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/approved-protocol.json"
+  },
+  "cases": [
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 20261005,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+      }
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 3075192741,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+      }
+    }
+  ],
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/execution-plan.json",
+    "sha256": "933ba58a8e2db0977d271ba71c227d736c740688ea5e7fbc20b978cbbc31e032"
+  },
+  "output": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck",
+  "originalReportsRetained": true,
+  "scope": [
+    "Only both white-scarfield severe original seeds, once each, original earned save and source3121.",
+    "Run only after root protocol approval and independent QA review, after B14 releases sole browser.",
+    "Technical errors stop future cases; no automatic retries or alternate seeds. Root must adjudicate further action.",
+    "5000ms conservative stop plus250ms action reserve; <=6000ms actual clock including cleanup required. Async stall >6000ms is failed, never qualified.",
+    "Original HP>30, chaos<120, known return budget<145, non-entry>320px and actual pickup limit1 retained.",
+    "Bounded input reaches only one previously observed target after the first real visible-opponent-too-close rejection.",
+    "Original failures and both new results must be aggregated together; no completeness or gameplay approval inferred from script exit."
+  ]
+}

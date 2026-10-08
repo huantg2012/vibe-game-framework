@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "status": "pass-isolated-metadata-predicate",
+  "at": "2026-10-08T01:39:08.606Z",
+  "scope": "Four method-specific positive and four resealed wrong-harness fixtures. Synthetic source/report/observer metadata; actual harness/wrapper/observer source hashes. No buildProposal or real final108 baseline executed.",
+  "priorGap": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/harness-path-gap.json",
+    "sha256": "e9ef2377ff6ce8206e4afd29c7c72d6bbd0b9c8dee1bd1cbd060c122f1396a2c"
+  },
+  "binder": {
+    "path": "tools/qa/r100-bind-i10-i12.mjs",
+    "sha256": "f2139f859ea10a5d8a06a0004d14937936d60e64886e9dfd3b43fc0ef485ed07"
+  },
+  "results": [
+    {
+      "kind": "production",
+      "expectedHarness": {
+        "path": "tools/qa/check-r100-production-browser.mjs",
+        "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+      },
+      "alteredHarness": {
+        "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+        "sha256": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc"
+      },
+      "correctMetadata": "accepted",
+      "resealedWrongMethod": "rejected",
+      "error": "AssertionError [ERR_ASSERTION]: production: wrong runtime harness\n+ actual - expected\n\n+ 'tools/world-study/check-r100-browser-equivalence.mjs'\n- 'tools/qa/check-r100-production-browser.mjs'\n"
+    },
+    {
+      "kind": "equivalence",
+      "expectedHarness": {
+        "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+        "sha256": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc"
+      },
+      "alteredHarness": {
+        "path": "tools/qa/check-r100-production-browser.mjs",
+        "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+      },
+      "correctMetadata": "accepted",
+      "resealedWrongMethod": "rejected",
+      "error": "AssertionError [ERR_ASSERTION]: equivalence: wrong runtime harness\n+ actual - expected\n\n+ 'tools/qa/check-r100-production-browser.mjs'\n- 'tools/world-study/check-r100-browser-equivalence.mjs'\n"
+    },
+    {
+      "kind": "budget",
+      "expectedHarness": {
+        "path": "tools/qa/check-r100-runtime-budget.mjs",
+        "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+      },
+      "alteredHarness": {
+        "path": "tools/qa/check-r100-production-browser.mjs",
+        "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+      },
+      "correctMetadata": "accepted",
+      "resealedWrongMethod": "rejected",
+      "error": "AssertionError [ERR_ASSERTION]: budget: wrong runtime harness\n+ actual - expected\n\n+ 'tools/qa/check-r100-production-browser.mjs'\n- 'tools/qa/check-r100-runtime-budget.mjs'\n"
+    },
+    {
+      "kind": "lifecycle",
+      "expectedHarness": {
+        "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+        "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+      },
+      "alteredHarness": {
+        "path": "tools/qa/check-r100-production-browser.mjs",
+        "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+      },
+      "correctMetadata": "accepted",
+      "resealedWrongMethod": "rejected",
+      "error": "AssertionError [ERR_ASSERTION]: lifecycle: wrong runtime harness\n+ actual - expected\n\n+ 'tools/qa/check-r100-production-browser.mjs'\n- 'tools/qa/check-r100-gym-lifecycle.mjs'\n"
+    }
+  ],
+  "inspectedChange": "Each known runtime kind has one expected harness path before the existing byte-SHA check. No runtime harness or product source change is required.",
+  "inputs": [
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "f2139f859ea10a5d8a06a0004d14937936d60e64886e9dfd3b43fc0ef485ed07"
+    },
+    {
+      "path": "tools/qa/check-r100-production-browser.mjs",
+      "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    },
+    {
+      "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+      "sha256": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/harness-path-gap.json",
+      "sha256": "e9ef2377ff6ce8206e4afd29c7c72d6bbd0b9c8dee1bd1cbd060c122f1396a2c"
+    }
+  ],
+  "inputsUnchanged": true,
+  "remaining": "Run all four negatives through the actual final-plan buildProposal baseline after all genuine final reports exist."
+}

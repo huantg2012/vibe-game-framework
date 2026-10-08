@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "oldWorldRowsExact": 98,
+  "oldWorldsExact": 98,
+  "oldDefinitionsExact": 294,
+  "authorizedChangedWorlds": 10,
+  "authorizedChangedInstances": 21,
+  "oldSelectedProfileMeshesExact": 1263,
+  "oldSolidProfileMeshesExact": 897,
+  "oldSettledSheetFanSourceExact": true,
+  "scope": "All 108 before-input geometry constructions compared against saved pre-change dispatcher/ground/settled module. Ground-edge additions excluded from per-instance geometry; actual Master body/contacts cover final worlds. No RGBA or normal-view approval.",
+  "sources": [
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "b9d56c768a33fc855661d37912bc28df76dfecd66fe75414a21cfc57b489e2a8"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-settled-sheet.ts",
+      "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-settled-projection.ts",
+      "sha256": "c3758e2dbf0639158c17ad3d9b4998fe8d9f341129ccf000f723e0b81e84ddb6"
+    },
+    {
+      "path": "data/rift-native-worlds.csv",
+      "sha256": "f8d64f1c96a7ef494552118f762ce675b0a1ad9f12cb1e02f1d9a63f61b6397b"
+    },
+    {
+      "path": "src/generated/r100-native-worlds.ts",
+      "sha256": "12011f423a12c145cf0ca377336c609460ed2d1e02b553de49d1d8dc4e627b47"
+    }
+  ],
+  "executors": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/previous-geometry.mjs",
+      "sha256": "a5c0e95c29db48aa0f2c26f22fa57e105e8053ac16a18fa7c2d6406046977201"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/current-geometry.mjs",
+      "sha256": "5adb5ea4b08da3e9998053ec93a7d3f86d8bd38731184b483819d3654d79acc9"
+    }
+  ]
+}

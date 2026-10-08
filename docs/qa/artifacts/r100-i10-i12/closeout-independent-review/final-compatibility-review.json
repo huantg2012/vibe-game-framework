@@ -1,0 +1,236 @@
+{
+  "schema": "coh.qa.final-compatibility-independent-review.v1",
+  "status": "pass-five-original-commands-on-final108",
+  "reviewedAt": "2026-10-07T14:54:08.355Z",
+  "featureIds": [
+    "F052",
+    "F044",
+    "F005"
+  ],
+  "auditor": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/audit-final-compatibility.mjs",
+    "sha256": "85e59dd166ffdb9d43baf6d99d33f8b9ac04cd4dac8e7cfc5ecb74186c4c4fa1"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/execution.json",
+    "sha256": "a78156db7d58858892edaf143ac70861acb78ad718d721efdb7d725101a35d16"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "preparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-preparation.json",
+    "sha256": "6928c47f461dda37bb9777aac5b4992a418ed362e8f92075b805a5bae9ce4dee"
+  },
+  "sourceBinding": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/source-binding.json",
+    "sha256": "029982c0278f4ea38e9b42a1a9ab09e569231c2f00d3287fbeff4ee4769c2c3b"
+  },
+  "recoveryRunner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/input-sources/tools/recovery/check.mjs",
+    "sha256": "66188b292f7cbc04a0c9029b9c5d43ca1698d8c7f218d50548687142b6734397"
+  },
+  "executionFacts": {
+    "firstAttemptOnly": true,
+    "sequentialCommands": 5,
+    "recoveryChildChecks": 31,
+    "commandExitCodes": [
+      {
+        "id": "general-recovery",
+        "exitCode": 0,
+        "elapsedMs": 412905,
+        "log": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/general-recovery.log",
+          "sha256": "74909ff047998ccbcc76f2eca146c7174b5fe5e11567b4812f57f1c5018d056b"
+        }
+      },
+      {
+        "id": "frozen-chaos",
+        "exitCode": 0,
+        "elapsedMs": 139,
+        "log": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/frozen-chaos.log",
+          "sha256": "dec98068124184714b551ace6994dc373ffa9af46d9a4427cab840111219b9d0"
+        }
+      },
+      {
+        "id": "frozen-recipe",
+        "exitCode": 0,
+        "elapsedMs": 6265,
+        "log": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/frozen-recipe.log",
+          "sha256": "1b68341e0d4bc6ca41ff80ff248988393ef93d41b5a4fe33d68c9d9d47418687"
+        }
+      },
+      {
+        "id": "grade-host",
+        "exitCode": 0,
+        "elapsedMs": 1855,
+        "log": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/grade-host.log",
+          "sha256": "1b3a28de17d85523d281a9dd962d97bfcebae6e4902a273fc8b697eb0d6bb129"
+        }
+      },
+      {
+        "id": "revision6-contract",
+        "exitCode": 0,
+        "elapsedMs": 269,
+        "log": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/revision6-contract.log",
+          "sha256": "e3ea2c6683f4e6d6de975bd99e7732904227d8ff5a67d4010d60e9b73e34426b"
+        }
+      }
+    ],
+    "runtimeSourceFileCount": 1397,
+    "enabledWorldCount": 108,
+    "toolAndSupportFiles": 66,
+    "historicalReadFixtures": 7,
+    "boundaryChecks": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/before-sha.json",
+        "sha256": "9416827a73439de04567df004f280824d17c761dee3c1bfbd295a3ddb9b31c07",
+        "at": "2026-10-07T14:44:55.954Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/after-sha.json",
+        "sha256": "edae41b4523842da9463b28e856157e5adb409baac5485adb3b7a6768fa4b8e0",
+        "at": "2026-10-07T14:52:00.476Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/general-recovery-before-sha.json",
+        "sha256": "dd1546558aad9c6607ce762b135b73379b04ff64209c5eeb4ac4f692f711750b",
+        "at": "2026-10-07T14:44:56.234Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/general-recovery-after-sha.json",
+        "sha256": "3ff6d16c7653c55c949ec1f3cae97f4b1e94834f505782a096b4f2f8232047b5",
+        "at": "2026-10-07T14:51:49.433Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/frozen-chaos-before-sha.json",
+        "sha256": "6dbd72b2949795136130913cba93fc1e026a681d458960c0e9cd0d66d922ab7a",
+        "at": "2026-10-07T14:51:49.704Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/frozen-chaos-after-sha.json",
+        "sha256": "571dd9b266a1118625dbd19ae5aeeafa6ecae2af87e8d2b7819130c7748ae1d3",
+        "at": "2026-10-07T14:51:50.114Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/frozen-recipe-before-sha.json",
+        "sha256": "8dbd10c0ad1294b5613ebf576ee008139dd2e6b030caa0f0c283ad109dbe7629",
+        "at": "2026-10-07T14:51:50.393Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/frozen-recipe-after-sha.json",
+        "sha256": "fee4ec9e85989816104909cf33810992dec41cc6787db713119a053c2de3804e",
+        "at": "2026-10-07T14:51:56.933Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/grade-host-before-sha.json",
+        "sha256": "ce22438b3f942328d08c8aee63f83658a90e24353e9cf782fb2deea94926c46d",
+        "at": "2026-10-07T14:51:57.206Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/grade-host-after-sha.json",
+        "sha256": "7343a8c01a0036854e72d9f0be2beee14bec7bc48cfe3334e92bdb6d58746189",
+        "at": "2026-10-07T14:51:59.338Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/revision6-contract-before-sha.json",
+        "sha256": "23a8af3391a3308735464244b0393dc7fc1dad16f715950fe04fef02291b81c6",
+        "at": "2026-10-07T14:51:59.609Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/revision6-contract-after-sha.json",
+        "sha256": "f8d0fa93a5394997f0ab03d2a16ce1c68c646f747bf8ba69f285dc062dbf1c55",
+        "at": "2026-10-07T14:52:00.155Z",
+        "runtimeFileCount": 1397,
+        "harnessAndFixtureCount": 73
+      }
+    ],
+    "executionRoot": "/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-final-compatibility-kRLldO",
+    "isolatedProducedOutputs": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/generated-output/docs/qa/artifacts/iteration-28/reveal-persistence/authoritative-plan.json",
+        "sha256": "d1cb3ec3cad1bdf77680e84d36b94596d4aa4d46d7f6894e790567d3edd88aa3"
+      }
+    ],
+    "protectedHistoricalOutputs": [
+      {
+        "path": "docs/qa/artifacts/iteration-28/reveal-persistence/authoritative-plan.json",
+        "sha256": "d1cb3ec3cad1bdf77680e84d36b94596d4aa4d46d7f6894e790567d3edd88aa3"
+      }
+    ],
+    "dependencyRuntime": {
+      "path": "/Users/yilungao/coh/node_modules",
+      "kind": "existing installed node_modules, external to frozen source manifest",
+      "packageLock": {
+        "path": "package-lock.json",
+        "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+      },
+      "packages": {
+        "tsx": {
+          "version": "4.23.1",
+          "sha256": "116662201c06041c63de8837cf7bf6743f79a10187d0a210b377476071550a40"
+        },
+        "esbuild": {
+          "version": "0.21.5",
+          "sha256": "0f35e0d63bd60a43ed85879604a40f7e9688b321904cf28a95be5b1bc629559c"
+        },
+        "typescript": {
+          "version": "5.9.3",
+          "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+        }
+      }
+    }
+  },
+  "observedCoverage": {
+    "recovery": "31 unchanged sequential child checks reached successful runner exit. Logs include 16 async-entry checks, 60 actual prior revision2 browser identities/full payloads, cold v1/v2/unversioned fixtures, arithmetic fallback, actual isolated workers and 12/12 worker cleanup.",
+    "frozenChaos": "Frozen pollution curves: caller mutation, cold resume, grade mismatch, invalid rate and legacy absence passed",
+    "frozenRecipe": "PASS 3 frozen v3 grades retain identical complete native payloads after authoring/catalog/material additions",
+    "gradeHost": {
+      "scope": "native DEV grades only; 18 actual Host admissions, full paint support, safe routes, chaos frames/pause/resistance/chase/resume; not visual or player approval",
+      "admissions": 18,
+      "grades": [
+        "low",
+        "medium",
+        "severe"
+      ]
+    },
+    "revision6": "PASS revision6 package contract: 22 re-sealed invalid native schemas, 23 organization negatives, 28 extended-profile negatives; valid authored erosion/edge and three dedicated organization dependency fixtures accepted. Synthetic package contracts only; no map/art/gameplay claim."
+  },
+  "expectedFailureInjectionObservation": {
+    "controlledWorkerTimeouts": 2,
+    "result": "Both legacy ControlledWorker pre-ack failure scenarios consumed the shared60000ms deadline after product startup retry; raw errors were retained and the corresponding preservation/rescue assertions passed. No command retry or test alteration was performed."
+  },
+  "limitations": [
+    "No browser, GPU, natural48 selection, lifecycle/performance, art/audio or complete I10–I12 acceptance is asserted by these CPU checks.",
+    "The source manifest excludes tools/node_modules; exact73 tool/support/fixture bytes were separately copied/archived. Existing installed dependency versions and package-lock are disclosed, not claimed as a frozen dependency archive.",
+    "Recovery31 completion is established by the exact sequential runner and exit0 with actual logs; per-child exit telemetry was not inserted.",
+    "Historical revision3/4/5 closure continuity remains a separate evidence obligation; these checks must not be relabelled as all342 current+r1 cases."
+  ]
+}

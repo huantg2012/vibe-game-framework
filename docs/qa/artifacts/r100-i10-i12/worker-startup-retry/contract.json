@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "cases": [
+    "module failure retries once with exact request, no detached inputs, and rejects stale first-attempt handlers",
+    "second startup failure stops without a third Worker and retains original failure",
+    "attempt guard rejects stale closures even if an injected factory reuses its port object",
+    "started-error does not retry computation or transfer",
+    "result-error does not retry computation or transfer",
+    "transfer-error does not retry computation or transfer",
+    "malformed does not retry computation or transfer",
+    "cancel during retry delay never starts a replacement",
+    "second Worker uses remaining original deadline, not a fresh timeout",
+    "deadline before retry delay ends creates no replacement",
+    "aborting synchronously in factory still terminates new Worker without posting",
+    "postMessage clone failure is not treated as a module startup failure",
+    "factory failure remains terminal",
+    "wrong request ack ignored; legacy result without ack remains compatible"
+  ],
+  "scope": "Deterministic transport lifecycle, not browser network reproduction or gameplay qualification."
+}

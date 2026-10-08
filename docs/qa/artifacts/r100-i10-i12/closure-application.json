@@ -1,0 +1,96 @@
+{
+  "status": "applied-i10-i11-i12-sampled-closure",
+  "reviewer": "root",
+  "startedAt": "2026-10-08T07:19:34.298Z",
+  "sequence": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/proposal-sequence.json",
+    "sha256": "0b3a54560dd830cbf6cb0381195c87be242181fdd0407b0672ec2a265d59ed47"
+  },
+  "independentReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/closure-proposals-review.json",
+    "sha256": "d251e452f5aaeb6e2a591dd3852f7e870b91a43966af9b59da56aefb3b284ad6"
+  },
+  "boundLedgerSnapshot": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.after-bind.json",
+    "sha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d"
+  },
+  "rootReview": "Root实阅提案逐步差异、72/92/108范围与14/14/15门、RC及P45有限变更；独立抽查4个世界的性能覆盖、历史失效及人审边界。",
+  "steps": [
+    {
+      "iterationId": "R100-I10",
+      "beforeSha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d",
+      "afterSha256": "9df81931ec2301e417d52d31afe671474a9ade6faee68b1f51aa4e50d9b85c49",
+      "proposal": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i10-ledger-proposal.json",
+        "sha256": "9df81931ec2301e417d52d31afe671474a9ade6faee68b1f51aa4e50d9b85c49"
+      },
+      "checkPlan": {
+        "ok": true,
+        "counts": {
+          "candidates": 108,
+          "qualified": 108,
+          "production": 108,
+          "humanApproved": 0,
+          "qualifiedGradeCases": 324,
+          "productionGradeCases": 324
+        }
+      },
+      "closedIterations": 10
+    },
+    {
+      "iterationId": "R100-I11",
+      "beforeSha256": "9df81931ec2301e417d52d31afe671474a9ade6faee68b1f51aa4e50d9b85c49",
+      "afterSha256": "d25938673ab63d8fcc8ef7dceb6530f966c8e62823317c71b0fa5846c077ef84",
+      "proposal": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i11-ledger-proposal.json",
+        "sha256": "d25938673ab63d8fcc8ef7dceb6530f966c8e62823317c71b0fa5846c077ef84"
+      },
+      "checkPlan": {
+        "ok": true,
+        "counts": {
+          "candidates": 108,
+          "qualified": 108,
+          "production": 108,
+          "humanApproved": 0,
+          "qualifiedGradeCases": 324,
+          "productionGradeCases": 324
+        }
+      },
+      "closedIterations": 11
+    },
+    {
+      "iterationId": "R100-I12",
+      "beforeSha256": "d25938673ab63d8fcc8ef7dceb6530f966c8e62823317c71b0fa5846c077ef84",
+      "afterSha256": "e8f8e2412c6d574fa0b13336ac72f6e376866ed45fbf10002bc4529d1b9a6be4",
+      "proposal": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i12-ledger-proposal.json",
+        "sha256": "e8f8e2412c6d574fa0b13336ac72f6e376866ed45fbf10002bc4529d1b9a6be4"
+      },
+      "checkPlan": {
+        "ok": true,
+        "counts": {
+          "candidates": 108,
+          "qualified": 108,
+          "production": 108,
+          "humanApproved": 0,
+          "qualifiedGradeCases": 324,
+          "productionGradeCases": 324
+        }
+      },
+      "closedIterations": 12
+    }
+  ],
+  "endedAt": "2026-10-08T07:19:34.459Z",
+  "finalLedger": {
+    "path": "docs/progress/rift-r100.json",
+    "sha256": "e8f8e2412c6d574fa0b13336ac72f6e376866ed45fbf10002bc4529d1b9a6be4"
+  },
+  "versionStatus": "active",
+  "pendingIterations": [
+    "R100-I13",
+    "R100-I14"
+  ],
+  "finalAcceptance": null,
+  "releaseApproval": false,
+  "humanApproval": false
+}

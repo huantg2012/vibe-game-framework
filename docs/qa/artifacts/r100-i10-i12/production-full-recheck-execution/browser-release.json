@@ -1,0 +1,26 @@
+{
+  "status": "production-owned-browser-processes-released-to-root",
+  "at": "2026-10-08T02:42:38.182708+00:00",
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/execution.json",
+    "sha256": "4213b98e952a2063718fe9770eab0dfc5606337349dc0969f248f3cea2cad54b"
+  },
+  "strictCompletion": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/completion-verification.json",
+    "sha256": "09b3c0ffee345f61aa6e0598cf5988fec283d4a76b0e7bda57fa2fe5ee68b53d"
+  },
+  "oldOwnedPidsStillPresent": [],
+  "powerSamples": 125,
+  "activeSamplesAllOwnedCaffeinate10358": true,
+  "lastSample": {
+    "sequence": 125,
+    "at": "2026-10-08T02:39:13.663127+00:00",
+    "sample": {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/samples/0125.json",
+      "sha256": "53a242fa549b81341095e2aabfb6348c5dfe80ca959d276c8708542f2b74ebc2"
+    },
+    "interpretation": "The final ps/pmset sample straddles utility exit. It preserves the observed node/caffeinate rows and absent idle assertion. The original operator checks proc.poll() before rejecting a missing live-run assertion; final cleanup independently confirms no owned process or assertion."
+  },
+  "extraPublicationCheckCorrection": "An initial standalone release-receipt check incorrectly required the final ps sample to be empty and stopped before writing any receipt. This invalid non-atomic-sample assumption was removed; the actual final sample and original runtime logic/results remain unchanged. This check verifies no original owned PID remains.",
+  "nextOwner": "root gallery review (root separately confirmed its browser subsequently closed); no following runtime launched by this receipt"
+}

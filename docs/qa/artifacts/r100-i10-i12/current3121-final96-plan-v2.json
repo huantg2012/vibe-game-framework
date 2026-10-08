@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-after-explicit-b10-environment-reconciliation",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "predecessor": {
+    "output": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/reconciliation.json",
+    "status": "completed-original24-with-retained-environment-attempt",
+    "commands": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play-commands.json",
+      "sha256": "232bbf52db15e76db6d2fe4ec4544cb7e03d008e65e9c1bd5de7d06bb677db77"
+    }
+  },
+  "chainPredecessor": {
+    "output": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/execution.json",
+    "status": "completed-recheck-and-original12",
+    "plan": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/plan.json",
+      "sha256": "c646b8ea89aa6a9f2a27d964a818913e2b25e6d1628e7b6e218d7841cf4b3e0a"
+    },
+    "stages": [
+      "012-same-identity-recheck",
+      "remaining-original12"
+    ]
+  },
+  "stages": [
+    {
+      "id": "B11-original24",
+      "folder": "b11-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/run-play.mjs",
+        "sha256": "71508edf934d7fc2dbaf7e1e1ac23b1a4f7a4f0816f2a8b9a006d74adedbc6bc"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/play-commands.json",
+        "sha256": "9f4ef2b638e1b1cb2ff08ab27ce8c4991aba96cf65ff4ae47b9dfb7f30ab4851"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B12-original24",
+      "folder": "b12-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/run-play.mjs",
+        "sha256": "a756d06a5d2d9160d5b9daf07a51b6474eb40d63502d4f59fed5600a6bcc5d52"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play-commands.json",
+        "sha256": "75734580125996fc1eac72fd18b57d2b3bbf6a7a8ae32ba7991a2f87915c4a00"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B13-original24",
+      "folder": "b13-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/run-play.mjs",
+        "sha256": "ebc1fad1d789f01b7a577db1dff89ef332d52b52a1cad270ac65f90ecf934f4b"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play-commands.json",
+        "sha256": "421691b5f4730efb3f02961a3a89dd63f751ae59b3a6c91f713306b4dfc7cc51"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B14-original24",
+      "folder": "b14-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/run-play.mjs",
+        "sha256": "eea1235b62a56141d5ce6532c9d7303bac6b23326a94726b76f47b73efd4bda3"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play-commands.json",
+        "sha256": "0af52f727be1dd910bc7da41fa9fcfceac783589e776e0b258d2832f7175415e"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    }
+  ],
+  "retainedFailures": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining60.json",
+      "sha256": "839d67b62a68dcad3c59facbb96a2ec97749b484eef176607fe8d1236d7d5c94"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuation-after-current60.json",
+      "sha256": "e21b38618676bf081dd3c65fe9631a3e59e88145487394e4925723fe47e4d050"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/diagnosis.json",
+      "sha256": "3cb80d7d7bb41476c4a32e1cb0c1fa3bec377fb8dd407bf577ec7b97360c5f51"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/independent-attribution-shapes.json",
+      "sha256": "3a4db8ea75dbaddbb8afd3469612c8c5b7d5f5f665a5efaf7deb54cf4ab3509c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-dev-interference/012-recheck-observation.json",
+      "sha256": "3e9378a32a7a328d8634006ab8084f458e83d131384b2e05613ef4f95a3d9c25"
+    }
+  ],
+  "previousPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-final96-plan.json",
+    "sha256": "84ff65f3a8cd835c839cacc15c0e179adc56bba6fed5b47ca78d0eabf2f59f31"
+  }
+}

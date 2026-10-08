@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-waiting-B07-complete-and-art22-handoff",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "predecessor": {
+    "output": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play-execution.json",
+    "commands": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play-commands.json",
+      "sha256": "b3d4f2008e1a68516ea113ee696bbf4ffc459af8375eedea30c81c125c7590b4"
+    },
+    "cases": 24,
+    "status": "completed-script"
+  },
+  "stages": [
+    {
+      "id": "B08-original24",
+      "folder": "b08-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/run-play.mjs",
+        "sha256": "e33e449fad2ed44f207a0ad36a43a6910cfb4bf4fe3ae594ae6a94c8c10cfeec"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-commands.json",
+        "sha256": "22cbd7eb36552b1f7788943cf28a338b7e1c9a5340a560b95dfa7351df9bd88e"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B06-short-fibre-original12",
+      "folder": "b06-short-fibre-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/run-play.mjs",
+        "sha256": "cfe4ce9f38dc9228a06d525b7e8f2d4762ee10a93baac8b7b36f0f3d85244b33"
+      },
+      "args": [],
+      "cases": 12,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/play-commands.json",
+        "sha256": "93fa07d345e3f71bcd4d836dd2a918dfd77d386b0725ed433ab7c4bd3c7c767c"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B09-original24",
+      "folder": "b09-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/run-play.mjs",
+        "sha256": "d2fc9925ab2fafd95ae7ef55cde88280faa4d3e0cc0ee1ea1175b57e9b1854ca"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/play-commands.json",
+        "sha256": "c1424c6ea637708b035b9ca87044c85734c3d591a43b2bce05bb036026a43ac9"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B10-original24",
+      "folder": "b10-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/run-play.mjs",
+        "sha256": "aefe54115981e70b16985ad714ec4469cab25863ecfbf502b04d39b0848ecb9b"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play-commands.json",
+        "sha256": "232bbf52db15e76db6d2fe4ec4544cb7e03d008e65e9c1bd5de7d06bb677db77"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    }
+  ],
+  "method": "Original84 fixed processes, no repeated porous or B07 case. Sole Chrome only after explicit art22 close; stop after any failed child, preserving original inputs/seed/source/report."
+}

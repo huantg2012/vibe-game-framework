@@ -1,0 +1,91 @@
+{
+  "status": "pass",
+  "startedAt": "2026-10-07T07:10:46.952341+00:00",
+  "steps": [
+    {
+      "name": "codegen",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/package-readiness-3121/codegen.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "manifest-check",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/package-readiness-3121/manifest-check.log",
+      "logSha256": "167630b61e6f16cd768c720c2fb8a6478e12346bb7a2a9129e412f879284ca4e"
+    },
+    {
+      "name": "package-contract",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-revision6-contract.ts",
+        "--organizations",
+        "--extended-profiles"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/package-readiness-3121/package-contract.log",
+      "logSha256": "e3ea2c6683f4e6d6de975bd99e7732904227d8ff5a67d4010d60e9b73e34426b"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/package-readiness-3121/typecheck.log",
+      "logSha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "tools/world-study/check-r100-revision6-contract.ts",
+        "src/generated/r100-package-manifest.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/package-readiness-3121/diff-check.log",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "before": {
+    "src/generation/world-study/native-volume-settled-projection.ts": "c3758e2dbf0639158c17ad3d9b4998fe8d9f341129ccf000f723e0b81e84ddb6",
+    "src/generation/world-study/native-volume-ground.ts": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24",
+    "src/generation/world-study/native-volume-geometry.ts": "b9d56c768a33fc855661d37912bc28df76dfecd66fe75414a21cfc57b489e2a8",
+    "data/rift-native-worlds.csv": "f8d64f1c96a7ef494552118f762ce675b0a1ad9f12cb1e02f1d9a63f61b6397b",
+    "data/rift-world-appearance.csv": "8fc9ea2cac80fda4bba849f01e7b5096dd7fb3212acfaef6bf983f89ea0a9cca",
+    "src/generated/r100-native-worlds.ts": "12011f423a12c145cf0ca377336c609460ed2d1e02b553de49d1d8dc4e627b47",
+    "src/generated/r100-world-appearance.ts": "11b5690fc573f4a4085d3816b51fdbd6f7008b582b735bcdf7ecffb427c6e387"
+  },
+  "lint": "No lint script/configured runner; scoped git diff --check is whitespace only, not a claimed lint pass.",
+  "after": {
+    "src/generation/world-study/native-volume-settled-projection.ts": "c3758e2dbf0639158c17ad3d9b4998fe8d9f341129ccf000f723e0b81e84ddb6",
+    "src/generation/world-study/native-volume-ground.ts": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24",
+    "src/generation/world-study/native-volume-geometry.ts": "b9d56c768a33fc855661d37912bc28df76dfecd66fe75414a21cfc57b489e2a8",
+    "data/rift-native-worlds.csv": "f8d64f1c96a7ef494552118f762ce675b0a1ad9f12cb1e02f1d9a63f61b6397b",
+    "data/rift-world-appearance.csv": "8fc9ea2cac80fda4bba849f01e7b5096dd7fb3212acfaef6bf983f89ea0a9cca",
+    "src/generated/r100-native-worlds.ts": "12011f423a12c145cf0ca377336c609460ed2d1e02b553de49d1d8dc4e627b47",
+    "src/generated/r100-world-appearance.ts": "11b5690fc573f4a4085d3816b51fdbd6f7008b582b735bcdf7ecffb427c6e387"
+  },
+  "finishedAt": "2026-10-07T07:10:51.963468+00:00",
+  "manifest": {
+    "path": "src/generated/r100-package-manifest.ts",
+    "sha256": "82c2c846ed09d0bdaf837e0c6f6dc1b9ee1c12ad800f7209034a56dd6aa3e3ce"
+  }
+}

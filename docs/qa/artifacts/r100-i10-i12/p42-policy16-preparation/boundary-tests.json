@@ -1,0 +1,42 @@
+{
+  "at": "2026-10-07T12:56:18.053483+00:00",
+  "command": [
+    "node",
+    "tools/qa/r100-i12-recheck-budget.test.mjs"
+  ],
+  "exitCode": 0,
+  "test": {
+    "path": "tools/qa/r100-i12-recheck-budget.test.mjs",
+    "sha256": "c7266cac3a3e317b0bbce90c0be8f01fe9acd76b572ea5e797c183536566bb3d"
+  },
+  "result": {
+    "status": "pass",
+    "checks": 14,
+    "policy": {
+      "maxPerTrip": 1,
+      "maxElapsedMs": 6000,
+      "earlyStopMs": 5000,
+      "actionReserveMs": 250,
+      "minimumEntryDistance": 320,
+      "maxPickups": 3
+    },
+    "results": [
+      "single claim per whole trip, known non-entry target and original one-pickup limit",
+      "nested real driver holds/presses and direct E channel include actual game time",
+      "insufficient time for a complete nested hold prevents its first key-down",
+      "deadline during E search releases E and latches stop across caught exceptions",
+      "async input stall beyond 6000ms is invalid and forbids subsequent dangerous input",
+      "ended reached inside caution/input stops before another action",
+      "HP30 reached inside caution/input stops before another action",
+      "chaos120 reached inside caution/input stops before another action",
+      "paused reached inside caution/input stops before another action",
+      "known return reserve reached during asynchronous route read prevents input",
+      "route calculation time is included and rechecked after its await",
+      "exception cleanup is measured and retained as a failed supplemental action",
+      "failed key release cannot report all keys released",
+      "all three stale active checks corrected against the real renderer enum"
+    ]
+  },
+  "stderr": "",
+  "purpose": "Persist final candidate output and hashes for independent review; no browser opened."
+}

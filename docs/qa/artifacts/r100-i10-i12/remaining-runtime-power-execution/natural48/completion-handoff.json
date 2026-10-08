@@ -1,0 +1,304 @@
+{
+  "status": "complete-data-and-resource-handoff-pending-root-experience",
+  "at": "2026-10-08T05:02:32.777922+00:00",
+  "naturalExecution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/natural48/execution.json",
+    "sha256": "8a6f52d3854bbdbc6436fe3bb198faaeade0190da6ac7a4d82b8cc1ac5e5335a"
+  },
+  "offlineReviewExecution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/natural-review/execution.json",
+    "sha256": "f2f4bcb8c72baed06cff06f05fa176263fcca1466e762ece5182b31ba6dc541f"
+  },
+  "summary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/summary.json",
+    "sha256": "cc5c4f17cb2877f49fa6d82505f44e0b8a8d8757c83656793ba542fcdceceae4"
+  },
+  "review": {
+    "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json",
+    "sha256": "6d05a42e693c94b0c304e038916d40bce280482c275b5c0012925974d90450c2"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "sourceScope": {
+    "exactWorkingAndFrozenFilesBeforeAfter": 1397,
+    "servedHttpAnchorsBeforeAfter": 14,
+    "full1393HttpAuditIsFromSeparateFinalProbes": true
+  },
+  "reviewInputsStillExact": [
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/summary.json",
+      "sha256": "cc5c4f17cb2877f49fa6d82505f44e0b8a8d8757c83656793ba542fcdceceae4"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/policy-freeze.json",
+      "sha256": "ea7d65b6f66e24b2cbe770ea45b9b3746ac249ed3861134f4353c7ba546e0d79"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/low/report.json",
+      "sha256": "c1ccabf3979884cd40e46d62af8eeb2fbbf42b9cb2feaf187564cb2423184958"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/journey.jsonl",
+      "sha256": "4d256360267b9d9092815715bc7987ce72448a46808c56b218379bbcbbf952d6"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/report.json",
+      "sha256": "6e42b7a260112e8bee0fdc9c58cbc658787f2c6540a7a698575eaad76706aee8"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/journey.jsonl",
+      "sha256": "db8080c1a6cada28bedbf7be9c29af3d308a6fc413adedcbdcfa2bb4470096e4"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/report.json",
+      "sha256": "67511eff84a339c4caa2832cb376fd97086a73cbf603dd432dd5bab455bd9e83"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/journey.jsonl",
+      "sha256": "65a93ec5af9c4678dd2cd6e643d642aedc1ab80de2210f89245a405658a2a962"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/report.json",
+      "sha256": "6a5127735b3fcdf5149d45981c54d51046cdb084989d08219f2285a436954b20"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/journey.jsonl",
+      "sha256": "2a30cadbbfe15487e671cd266c339edc802122f4523a6510582fb7edb7d348c8"
+    }
+  ],
+  "frozenNaturalInputCount": 31,
+  "metrics": {
+    "trips": 48,
+    "searchedRemains": 100,
+    "actualPickups": 100,
+    "nearEntryPickups": 0,
+    "fieldMs": 3956558.3800001033,
+    "searchesPerFieldMinute": 1.5164694726430004,
+    "extractedRemains": 99,
+    "extractedRemainsPerFieldMinute": 1.5013047779165702,
+    "searchAndExtract": 42,
+    "emptyReturns": 4,
+    "nearEntryOnlyReturns": 0,
+    "deaths": 2,
+    "reserveDelta": -31,
+    "repairSpent": 267,
+    "growthSpent": 314,
+    "returnedItems": 47,
+    "destroyedItems": 58,
+    "deathLostActiveTools": 4,
+    "tools": {
+      "Q": {
+        "attempts": 79,
+        "consumed": 76,
+        "noConsumption": 3
+      },
+      "F": {
+        "attempts": 52,
+        "consumed": 47,
+        "noConsumption": 5
+      },
+      "G": {
+        "attempts": 80,
+        "consumed": 63,
+        "noConsumption": 17
+      }
+    }
+  },
+  "gradeCounts": {
+    "low": 16,
+    "medium": 16,
+    "severe": 16
+  },
+  "mandatoryDiagnosis": [],
+  "uncoveredToolKeys": [],
+  "branches": [
+    {
+      "policy": "low",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/report.json",
+        "sha256": "c1ccabf3979884cd40e46d62af8eeb2fbbf42b9cb2feaf187564cb2423184958"
+      },
+      "metrics": {
+        "trips": 12,
+        "searchedRemains": 24,
+        "actualPickups": 24,
+        "nearEntryPickups": 0,
+        "fieldMs": 945928.8600000178,
+        "searchesPerFieldMinute": 1.5223132107418447,
+        "extractedRemains": 24,
+        "extractedRemainsPerFieldMinute": 1.5223132107418447,
+        "searchAndExtract": 11,
+        "emptyReturns": 1,
+        "nearEntryOnlyReturns": 0,
+        "deaths": 0,
+        "reserveDelta": -9,
+        "repairSpent": 77,
+        "growthSpent": 78,
+        "returnedItems": 8,
+        "destroyedItems": 11,
+        "deathLostActiveTools": 0,
+        "tools": {
+          "Q": {
+            "attempts": 15,
+            "consumed": 15,
+            "noConsumption": 0
+          },
+          "F": {
+            "attempts": 7,
+            "consumed": 5,
+            "noConsumption": 2
+          },
+          "G": {
+            "attempts": 20,
+            "consumed": 15,
+            "noConsumption": 5
+          }
+        }
+      }
+    },
+    {
+      "policy": "medium",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/report.json",
+        "sha256": "6e42b7a260112e8bee0fdc9c58cbc658787f2c6540a7a698575eaad76706aee8"
+      },
+      "metrics": {
+        "trips": 12,
+        "searchedRemains": 27,
+        "actualPickups": 27,
+        "nearEntryPickups": 0,
+        "fieldMs": 1211051.5600000462,
+        "searchesPerFieldMinute": 1.3376804535059914,
+        "extractedRemains": 26,
+        "extractedRemainsPerFieldMinute": 1.2881367330057694,
+        "searchAndExtract": 10,
+        "emptyReturns": 1,
+        "nearEntryOnlyReturns": 0,
+        "deaths": 1,
+        "reserveDelta": -11,
+        "repairSpent": 60,
+        "growthSpent": 78,
+        "returnedItems": 16,
+        "destroyedItems": 20,
+        "deathLostActiveTools": 2,
+        "tools": {
+          "Q": {
+            "attempts": 26,
+            "consumed": 24,
+            "noConsumption": 2
+          },
+          "F": {
+            "attempts": 14,
+            "consumed": 13,
+            "noConsumption": 1
+          },
+          "G": {
+            "attempts": 26,
+            "consumed": 25,
+            "noConsumption": 1
+          }
+        }
+      }
+    },
+    {
+      "policy": "severe",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/report.json",
+        "sha256": "67511eff84a339c4caa2832cb376fd97086a73cbf603dd432dd5bab455bd9e83"
+      },
+      "metrics": {
+        "trips": 12,
+        "searchedRemains": 19,
+        "actualPickups": 19,
+        "nearEntryPickups": 0,
+        "fieldMs": 895297.4800000245,
+        "searchesPerFieldMinute": 1.2733197908699225,
+        "extractedRemains": 19,
+        "extractedRemainsPerFieldMinute": 1.2733197908699225,
+        "searchAndExtract": 9,
+        "emptyReturns": 2,
+        "nearEntryOnlyReturns": 0,
+        "deaths": 1,
+        "reserveDelta": -15,
+        "repairSpent": 63,
+        "growthSpent": 50,
+        "returnedItems": 10,
+        "destroyedItems": 14,
+        "deathLostActiveTools": 2,
+        "tools": {
+          "Q": {
+            "attempts": 28,
+            "consumed": 27,
+            "noConsumption": 1
+          },
+          "F": {
+            "attempts": 13,
+            "consumed": 12,
+            "noConsumption": 1
+          },
+          "G": {
+            "attempts": 14,
+            "consumed": 11,
+            "noConsumption": 3
+          }
+        }
+      }
+    },
+    {
+      "policy": "alternating",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/report.json",
+        "sha256": "6a5127735b3fcdf5149d45981c54d51046cdb084989d08219f2285a436954b20"
+      },
+      "metrics": {
+        "trips": 12,
+        "searchedRemains": 30,
+        "actualPickups": 30,
+        "nearEntryPickups": 0,
+        "fieldMs": 904280.4800000143,
+        "searchesPerFieldMinute": 1.9905328488346574,
+        "extractedRemains": 30,
+        "extractedRemainsPerFieldMinute": 1.9905328488346574,
+        "searchAndExtract": 12,
+        "emptyReturns": 0,
+        "nearEntryOnlyReturns": 0,
+        "deaths": 0,
+        "reserveDelta": 4,
+        "repairSpent": 67,
+        "growthSpent": 108,
+        "returnedItems": 13,
+        "destroyedItems": 13,
+        "deathLostActiveTools": 0,
+        "tools": {
+          "Q": {
+            "attempts": 10,
+            "consumed": 10,
+            "noConsumption": 0
+          },
+          "F": {
+            "attempts": 18,
+            "consumed": 17,
+            "noConsumption": 1
+          },
+          "G": {
+            "attempts": 20,
+            "consumed": 12,
+            "noConsumption": 8
+          }
+        }
+      }
+    }
+  ],
+  "freshResources": {
+    "originalOwnedAlive": [],
+    "qaChromeMains": [],
+    "naturalAndReviewerIdleAssertionsReleased": true
+  },
+  "originalFailuresPreserved": true,
+  "experienceApproval": "pending-independent-root-review",
+  "budgetStarted": false,
+  "lifecycleStarted": false,
+  "nextAction": "Stop at the explicitly requested stage boundary; root separately dispatches each exclusive performance stage."
+}

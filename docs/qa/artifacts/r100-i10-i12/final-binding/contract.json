@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-not-executed",
+  "binder": "tools/qa/r100-bind-i10-i12.mjs",
+  "qualificationPlan": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+  "requiredPlanFields": {
+    "version": 1,
+    "qualificationPlan": "hash-bound frozen plan",
+    "packages": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+    "finalSource": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "historicalBinding": "docs/qa/artifacts/r100-i07-i09/final-binding/plan.json",
+    "historicalGeneration": "docs/qa/artifacts/r100-i07-i09/qualification-policy/final52-summary.json",
+    "historicalPlay": "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json",
+    "inheritance": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/independent-review.json",
+    "generation": "new56 base48 summary; 8064 unique cases only",
+    "expandedHoldoutI11": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary.json",
+    "expandedHoldoutI12": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary.json",
+    "play": "new56 double-original-seed summary; 336 processes only",
+    "production": "docs/qa/artifacts/r100-i10-i12/production-final108/report.json",
+    "equivalence": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/browser-equivalence.json",
+    "art": "final108 normal-view root-reviewed aggregate, exact per-world package hashes",
+    "technicalReview": "independent-technical-pass; exact finalSourceSha256 and all generation/play/inheritance/production/equivalence references",
+    "runtimeBindings": "one strict source-binding each for production and equivalence",
+    "generationSources": "for each current generation summary group: summary path, groupId, source path/sha256, harnessSources[] matching all tools dependencies with dependencyPath/path/sha256",
+    "continuity": "hash-bound per-world source edges reaching final source. Old revision5\u21926 inheritance is a separate explicit root-approved edge; arbitrary changed surfaces cannot use exact continuity.",
+    "boundedPlayContinuity": "Optional hash-bound root approved-bounded reviews; only exact original world/grade/seed recipes can traverse these edges for actual play. They never bind CPU generation or old art."
+  },
+  "receiptShape": {
+    "path": "repository-relative actual file",
+    "sha256": "64 lowercase hexadecimal characters"
+  },
+  "counts": {
+    "historicalBaseRevision5": 7488,
+    "newBaseRevision6": 8064,
+    "extraI11": 2208,
+    "extraI12": 384,
+    "allFixedSeedProcesses": 648,
+    "currentFormal": 324,
+    "currentEquivalence": 342
+  },
+  "nonClosure": "Binder only proposes/optionally writes per-world technical, bounded visual, fixed-play and formal-entry evidence. It preserves iteration/issue/release/audio state and never grants human approval. Natural48, 108 performance/resource and selection plus independent reviews remain separate closure gates.",
+  "pending": [
+    "Actual final108 full dry proposal and real-evidence corruption checks",
+    "Final root decision and listening scope are not machine assigned",
+    "Ground-edge cleft144 CPU rerun and play-only edge actual-source chain; original reports and changed visuals remain separate"
+  ]
+}

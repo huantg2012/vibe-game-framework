@@ -1,0 +1,2548 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+    "authorCamera": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-author-preflight/camera-supported.json",
+      "sha256": "12ce52e42435d6a24c2f45983b84bc5114e7086720b282df9d3cf99064dcda59"
+    },
+    "scope": "Prepared real-WASD normal-FOV material approaches only. No browser started; actual requested seed, recipe grade and facing must be verified by capture. CPU support is not a visual pass.",
+    "omitted": [
+      {
+        "world": "woven-quarters",
+        "reason": "Old short-fibre candidate remains visually rejected in two related worlds. Hold this case until root selects approved material; do not knowingly recapture an unresolved material as new evidence."
+      }
+    ],
+    "cases": [
+      {
+        "world": "fractured-estuary",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-material-approach",
+            "x": 292,
+            "y": 228,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 292,
+              "y": 228
+            },
+            "lookAtMaterialPoint": {
+              "x": 400,
+              "y": 238
+            },
+            "purpose": "上低层支床"
+          },
+          {
+            "label": "02-material-approach",
+            "x": 500,
+            "y": 316,
+            "faces": [
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 500,
+              "y": 316
+            },
+            "lookAtMaterialPoint": {
+              "x": 572,
+              "y": 396
+            },
+            "purpose": "两床汇入地颈"
+          },
+          {
+            "label": "03-material-approach",
+            "x": 556,
+            "y": 372,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 593,
+              "y": 271
+            },
+            "purpose": "汇口上胶肩"
+          },
+          {
+            "label": "04-material-approach",
+            "x": 748,
+            "y": 564,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 748,
+              "y": 564
+            },
+            "lookAtMaterialPoint": {
+              "x": 662,
+              "y": 499
+            },
+            "purpose": "汇口下胶肩"
+          },
+          {
+            "label": "05-original-route-boundary",
+            "x": 300,
+            "y": 580,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 300,
+              "y": 580
+            },
+            "lookAtMaterialPoint": {
+              "x": 400,
+              "y": 580
+            },
+            "purpose": "补下支床进入汇颈的低层，原01只覆盖上支床。",
+            "existingSweptPathEvidence": {
+              "low": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 14
+              },
+              "medium": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 14
+              },
+              "severe": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 14
+              }
+            },
+            "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+          }
+        ]
+      },
+      {
+        "world": "shell-patchwork",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-material-approach",
+            "x": 540,
+            "y": 388,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 495,
+              "y": 291
+            },
+            "purpose": "北厚壳夹皮"
+          },
+          {
+            "label": "02-material-approach",
+            "x": 508,
+            "y": 484,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 508,
+              "y": 484
+            },
+            "lookAtMaterialPoint": {
+              "x": 556,
+              "y": 388
+            },
+            "purpose": "不规则中裸床"
+          },
+          {
+            "label": "03-material-approach",
+            "x": 580,
+            "y": 588,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 588
+            },
+            "lookAtMaterialPoint": {
+              "x": 650,
+              "y": 505
+            },
+            "purpose": "南厚壳夹低皮"
+          },
+          {
+            "label": "04-material-approach",
+            "x": 732,
+            "y": 508,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 732,
+              "y": 508
+            },
+            "lookAtMaterialPoint": {
+              "x": 765,
+              "y": 405
+            },
+            "purpose": "东侧大低壳面"
+          }
+        ]
+      },
+      {
+        "world": "last-shelf",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-material-approach",
+            "x": 764,
+            "y": 348,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 764,
+              "y": 348
+            },
+            "lookAtMaterialPoint": {
+              "x": 786,
+              "y": 242
+            },
+            "purpose": "上台短裂肩"
+          },
+          {
+            "label": "02-material-approach",
+            "x": 724,
+            "y": 532,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 724,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 817,
+              "y": 476
+            },
+            "purpose": "下台高完整断端"
+          },
+          {
+            "label": "03-material-approach",
+            "x": 756,
+            "y": 308,
+            "faces": [
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 756,
+              "y": 308
+            },
+            "lookAtMaterialPoint": {
+              "x": 684,
+              "y": 388
+            },
+            "purpose": "连续内侧颗粒床"
+          },
+          {
+            "label": "04-material-approach",
+            "x": 820,
+            "y": 564,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 820,
+              "y": 564
+            },
+            "lookAtMaterialPoint": {
+              "x": 922,
+              "y": 532
+            },
+            "purpose": "下探台真实终止边"
+          },
+          {
+            "label": "05-original-route-boundary",
+            "x": 948,
+            "y": 268,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 948,
+              "y": 268
+            },
+            "lookAtMaterialPoint": null,
+            "purpose": "补上台外探及相邻真实缺地边，原04只覆盖下台。",
+            "existingSweptPathEvidence": {
+              "low": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 134
+              },
+              "medium": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 134
+              },
+              "severe": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 134
+              }
+            },
+            "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+          }
+        ]
+      }
+    ],
+    "reviewChecklist": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/checklist.json",
+      "sha256": "f2e82e38ba8230ff447aad1b31d20e1aacca22fbc948bddffbaddd7c84f1943c"
+    },
+    "supplementSource": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/supplement-existing-route-points.json",
+      "sha256": "1feb0c3b63a848c18c7673660fbb3f893a4a1c42005dc9927bf3affc02925f9d"
+    },
+    "originalPreparedPlan": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-medium-prepared/plan.json",
+      "sha256": "de520447c7bb05a763102391857bc97de699d46e73fc66603c5cae17efd9c103"
+    },
+    "sourcePurpose": "New actual images on3120, not relabelled historical images or inherited art approval. Selected definitions/profile choices and material SHAs match original successful body evidence. Runtime WASD/facing/identity remains mandatory."
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "fractured-estuary",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-material-approach",
+            "x": 292,
+            "y": 228,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 292,
+              "y": 228
+            },
+            "lookAtMaterialPoint": {
+              "x": 400,
+              "y": 238
+            },
+            "purpose": "上低层支床"
+          },
+          "route": {
+            "requested": {
+              "label": "01-material-approach",
+              "x": 292,
+              "y": 228,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 292,
+                "y": 228
+              },
+              "lookAtMaterialPoint": {
+                "x": 400,
+                "y": 238
+              },
+              "purpose": "上低层支床"
+            },
+            "actual": {
+              "x": 292,
+              "y": 228
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 484,
+                "y": 588
+              },
+              {
+                "x": 484,
+                "y": 356
+              },
+              {
+                "x": 476,
+                "y": 356
+              },
+              {
+                "x": 476,
+                "y": 348
+              },
+              {
+                "x": 460,
+                "y": 348
+              },
+              {
+                "x": 460,
+                "y": 340
+              },
+              {
+                "x": 444,
+                "y": 340
+              },
+              {
+                "x": 444,
+                "y": 332
+              },
+              {
+                "x": 436,
+                "y": 332
+              },
+              {
+                "x": 436,
+                "y": 324
+              },
+              {
+                "x": 420,
+                "y": 324
+              },
+              {
+                "x": 420,
+                "y": 316
+              },
+              {
+                "x": 404,
+                "y": 316
+              },
+              {
+                "x": 404,
+                "y": 308
+              },
+              {
+                "x": 396,
+                "y": 308
+              },
+              {
+                "x": 396,
+                "y": 300
+              },
+              {
+                "x": 292,
+                "y": 300
+              },
+              {
+                "x": 292,
+                "y": 228
+              }
+            ],
+            "length": 840,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/01-material-approach-east.png",
+              "sha256": "ab3af729ed343dd2ca01c01add14d5215a1299d91e07af0c53d52e4ab84f633b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.0004398229715119051,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 298.57538176051304,
+                  "y": 225.890209637893
+                },
+                "facingAngle": -0.0004398229715119051,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.059747601999508,
+                "elapsedMs": 15332.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 298.57538176051304,
+                  "y": 225.890209637893
+                },
+                "facingAngle": -0.0004398229715119051,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 20.0929242839995,
+                "elapsedMs": 15432.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-material-approach",
+            "x": 500,
+            "y": 316,
+            "faces": [
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 500,
+              "y": 316
+            },
+            "lookAtMaterialPoint": {
+              "x": 572,
+              "y": 396
+            },
+            "purpose": "两床汇入地颈"
+          },
+          "route": {
+            "requested": {
+              "label": "02-material-approach",
+              "x": 500,
+              "y": 316,
+              "faces": [
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 500,
+                "y": 316
+              },
+              "lookAtMaterialPoint": {
+                "x": 572,
+                "y": 396
+              },
+              "purpose": "两床汇入地颈"
+            },
+            "actual": {
+              "x": 500,
+              "y": 316
+            },
+            "points": [
+              {
+                "x": 300,
+                "y": 228
+              },
+              {
+                "x": 492,
+                "y": 228
+              },
+              {
+                "x": 492,
+                "y": 308
+              },
+              {
+                "x": 500,
+                "y": 308
+              },
+              {
+                "x": 500,
+                "y": 316
+              }
+            ],
+            "length": 288,
+            "originConnector": {
+              "origin": {
+                "x": 298.57538176051304,
+                "y": 225.890209637893
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 3621,
+                "x": 300,
+                "y": 228,
+                "distance": 2.5457322130024753
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/02-material-approach-south.png",
+              "sha256": "42b0c903542730956fd4a9bc8cf002eb32b2ec4350ecc5e878f2314b5e504ea3",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707334949418166,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 500.5060388099641,
+                  "y": 315.9257232978697
+                },
+                "facingAngle": 1.5707334949418166,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.630213407999424,
+                "elapsedMs": 20065.8
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 500.5060388099641,
+                  "y": 315.9257232978697
+                },
+                "facingAngle": 1.5707334949418166,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 21.66339672599942,
+                "elapsedMs": 20165.9
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-material-approach",
+            "x": 556,
+            "y": 372,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 556,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 593,
+              "y": 271
+            },
+            "purpose": "汇口上胶肩"
+          },
+          "route": {
+            "requested": {
+              "label": "03-material-approach",
+              "x": 556,
+              "y": 372,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 556,
+                "y": 372
+              },
+              "lookAtMaterialPoint": {
+                "x": 593,
+                "y": 271
+              },
+              "purpose": "汇口上胶肩"
+            },
+            "actual": {
+              "x": 556,
+              "y": 372
+            },
+            "points": [
+              {
+                "x": 500,
+                "y": 316
+              },
+              {
+                "x": 500,
+                "y": 324
+              },
+              {
+                "x": 508,
+                "y": 324
+              },
+              {
+                "x": 508,
+                "y": 332
+              },
+              {
+                "x": 516,
+                "y": 332
+              },
+              {
+                "x": 516,
+                "y": 340
+              },
+              {
+                "x": 524,
+                "y": 340
+              },
+              {
+                "x": 524,
+                "y": 348
+              },
+              {
+                "x": 556,
+                "y": 348
+              },
+              {
+                "x": 556,
+                "y": 372
+              }
+            ],
+            "length": 112,
+            "originConnector": {
+              "origin": {
+                "x": 500.5060388099641,
+                "y": 315.9257232978697
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5054,
+                "x": 500,
+                "y": 316,
+                "distance": 0.5114609522429041
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/03-material-approach-north.png",
+              "sha256": "71145bf48ca27953094f45f6c4479434300a8452399d2ebd93ec905fe734342b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 554.7053957478677,
+                  "y": 357.47423467126754
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 22.526033591999415,
+                "elapsedMs": 22765.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 554.7053957478677,
+                  "y": 357.47423467126754
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 22.559206955999418,
+                "elapsedMs": 22865.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-material-approach",
+            "x": 748,
+            "y": 564,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 748,
+              "y": 564
+            },
+            "lookAtMaterialPoint": {
+              "x": 662,
+              "y": 499
+            },
+            "purpose": "汇口下胶肩"
+          },
+          "route": {
+            "requested": {
+              "label": "04-material-approach",
+              "x": 748,
+              "y": 564,
+              "faces": [
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 748,
+                "y": 564
+              },
+              "lookAtMaterialPoint": {
+                "x": 662,
+                "y": 499
+              },
+              "purpose": "汇口下胶肩"
+            },
+            "actual": {
+              "x": 748,
+              "y": 564
+            },
+            "points": [
+              {
+                "x": 556,
+                "y": 356
+              },
+              {
+                "x": 556,
+                "y": 524
+              },
+              {
+                "x": 564,
+                "y": 524
+              },
+              {
+                "x": 564,
+                "y": 540
+              },
+              {
+                "x": 572,
+                "y": 540
+              },
+              {
+                "x": 572,
+                "y": 556
+              },
+              {
+                "x": 580,
+                "y": 556
+              },
+              {
+                "x": 580,
+                "y": 572
+              },
+              {
+                "x": 588,
+                "y": 572
+              },
+              {
+                "x": 588,
+                "y": 580
+              },
+              {
+                "x": 604,
+                "y": 580
+              },
+              {
+                "x": 604,
+                "y": 588
+              },
+              {
+                "x": 748,
+                "y": 588
+              },
+              {
+                "x": 748,
+                "y": 564
+              }
+            ],
+            "length": 448,
+            "originConnector": {
+              "origin": {
+                "x": 554.7053957478677,
+                "y": 357.47423467126754
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5701,
+                "x": 556,
+                "y": 356,
+                "distance": 1.9619806409866583
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/04-material-approach-west.png",
+              "sha256": "e4c70570d29cdd50dd5d9184d6f9e7eb8b764a3bfd523aa6583f4f247ea2b114",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 739.1713895926496,
+                  "y": 563.3960188552162
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 28.92685087199934,
+                "elapsedMs": 31248.7
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 739.1713895926496,
+                  "y": 563.3960188552162
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 28.993217507999336,
+                "elapsedMs": 31348.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "05-original-route-boundary",
+            "x": 300,
+            "y": 580,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 300,
+              "y": 580
+            },
+            "lookAtMaterialPoint": {
+              "x": 400,
+              "y": 580
+            },
+            "purpose": "补下支床进入汇颈的低层，原01只覆盖上支床。",
+            "existingSweptPathEvidence": {
+              "low": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 14
+              },
+              "medium": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 14
+              },
+              "severe": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 14
+              }
+            },
+            "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+          },
+          "route": {
+            "requested": {
+              "label": "05-original-route-boundary",
+              "x": 300,
+              "y": 580,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 300,
+                "y": 580
+              },
+              "lookAtMaterialPoint": {
+                "x": 400,
+                "y": 580
+              },
+              "purpose": "补下支床进入汇颈的低层，原01只覆盖上支床。",
+              "existingSweptPathEvidence": {
+                "low": {
+                  "kind": "spawnRoute",
+                  "routeIndex": 3,
+                  "pointIndex": 14
+                },
+                "medium": {
+                  "kind": "spawnRoute",
+                  "routeIndex": 3,
+                  "pointIndex": 14
+                },
+                "severe": {
+                  "kind": "spawnRoute",
+                  "routeIndex": 3,
+                  "pointIndex": 14
+                }
+              },
+              "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+            },
+            "actual": {
+              "x": 300,
+              "y": 580
+            },
+            "points": [
+              {
+                "x": 740,
+                "y": 564
+              },
+              {
+                "x": 708,
+                "y": 564
+              },
+              {
+                "x": 708,
+                "y": 572
+              },
+              {
+                "x": 700,
+                "y": 572
+              },
+              {
+                "x": 700,
+                "y": 580
+              },
+              {
+                "x": 692,
+                "y": 580
+              },
+              {
+                "x": 692,
+                "y": 588
+              },
+              {
+                "x": 300,
+                "y": 588
+              },
+              {
+                "x": 300,
+                "y": 580
+              }
+            ],
+            "length": 472,
+            "originConnector": {
+              "origin": {
+                "x": 739.1713895926496,
+                "y": 563.3960188552162
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9052,
+                "x": 740,
+                "y": 564,
+                "distance": 1.0253723374578567
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/05-original-route-boundary-east.png",
+              "sha256": "5b1c22bf05846bd948a6e916c57cef1d3ce9e3ab84f88b80cc1348e8023ee464",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 305.9930294436488,
+                  "y": 578.0522782135135
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 85,
+                "chaos": 34.169078519999516,
+                "elapsedMs": 39148.399999999994
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 305.9930294436488,
+                  "y": 578.0522782135135
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 85,
+                "chaos": 34.25754967199952,
+                "elapsedMs": 39281.7
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "fractured-estuary",
+        "grade": "medium",
+        "package": {
+          "id": "r100-fractured-estuary",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "c75e11c7",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=fractured-estuary&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/recipe.json",
+        "sha256": "9245164587ef89e9a0ace1b3f94d65f00b4a0d80eadc613a3ff36daadca65e55"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 305.9930294436488,
+          "y": 578.0522782135135
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 85,
+        "chaos": 34.25754967199952,
+        "elapsedMs": 39281.7
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 305.9930294436488,
+          "y": 578.0522782135135
+        },
+        "facingAngle": 0,
+        "facing4": "right",
+        "hp": 85,
+        "chaos": 35.053849763999544,
+        "elapsedMs": 40481.7
+      }
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-material-approach",
+            "x": 540,
+            "y": 388,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 540,
+              "y": 388
+            },
+            "lookAtMaterialPoint": {
+              "x": 495,
+              "y": 291
+            },
+            "purpose": "北厚壳夹皮"
+          },
+          "route": {
+            "requested": {
+              "label": "01-material-approach",
+              "x": 540,
+              "y": 388,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 540,
+                "y": 388
+              },
+              "lookAtMaterialPoint": {
+                "x": 495,
+                "y": 291
+              },
+              "purpose": "北厚壳夹皮"
+            },
+            "actual": {
+              "x": 540,
+              "y": 388
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 500,
+                "y": 588
+              },
+              {
+                "x": 500,
+                "y": 444
+              },
+              {
+                "x": 508,
+                "y": 444
+              },
+              {
+                "x": 508,
+                "y": 428
+              },
+              {
+                "x": 516,
+                "y": 428
+              },
+              {
+                "x": 516,
+                "y": 412
+              },
+              {
+                "x": 524,
+                "y": 412
+              },
+              {
+                "x": 524,
+                "y": 404
+              },
+              {
+                "x": 532,
+                "y": 404
+              },
+              {
+                "x": 532,
+                "y": 388
+              },
+              {
+                "x": 540,
+                "y": 388
+              }
+            ],
+            "length": 544,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/01-material-approach-north.png",
+              "sha256": "cdff4e1d47c67e65e587c5fcdf63a041266f3c5d1f91744baa78f8bf0c549eaa",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707334949418235,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 542.2665519874502,
+                  "y": 380.65949384015295
+                },
+                "facingAngle": -1.5707334949418235,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.174085067999705,
+                "elapsedMs": 9649.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 542.2665519874502,
+                  "y": 380.65949384015295
+                },
+                "facingAngle": -1.5707334949418235,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.2072617499997,
+                "elapsedMs": 9749.6
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-material-approach",
+            "x": 508,
+            "y": 484,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 508,
+              "y": 484
+            },
+            "lookAtMaterialPoint": {
+              "x": 556,
+              "y": 388
+            },
+            "purpose": "不规则中裸床"
+          },
+          "route": {
+            "requested": {
+              "label": "02-material-approach",
+              "x": 508,
+              "y": 484,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 508,
+                "y": 484
+              },
+              "lookAtMaterialPoint": {
+                "x": 556,
+                "y": 388
+              },
+              "purpose": "不规则中裸床"
+            },
+            "actual": {
+              "x": 508,
+              "y": 484
+            },
+            "points": [
+              {
+                "x": 540,
+                "y": 380
+              },
+              {
+                "x": 500,
+                "y": 380
+              },
+              {
+                "x": 500,
+                "y": 484
+              },
+              {
+                "x": 508,
+                "y": 484
+              }
+            ],
+            "length": 152,
+            "originConnector": {
+              "origin": {
+                "x": 542.2665519874502,
+                "y": 380.65949384015295
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 6083,
+                "x": 540,
+                "y": 380,
+                "distance": 2.3605486728754266
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/02-material-approach-north.png",
+              "sha256": "a42e83d7921cc2b9dffb048e5cf809a2d2bd90b0e0dfd3b5d50d7f26a212e6d6",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 509.4267531939003,
+                  "y": 477.7310393582231
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.174982993999578,
+                "elapsedMs": 12666.1
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 509.4267531939003,
+                  "y": 477.7310393582231
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.202631887999576,
+                "elapsedMs": 12749.5
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-material-approach",
+            "x": 580,
+            "y": 588,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 580,
+              "y": 588
+            },
+            "lookAtMaterialPoint": {
+              "x": 650,
+              "y": 505
+            },
+            "purpose": "南厚壳夹低皮"
+          },
+          "route": {
+            "requested": {
+              "label": "03-material-approach",
+              "x": 580,
+              "y": 588,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 580,
+                "y": 588
+              },
+              "lookAtMaterialPoint": {
+                "x": 650,
+                "y": 505
+              },
+              "purpose": "南厚壳夹低皮"
+            },
+            "actual": {
+              "x": 580,
+              "y": 588
+            },
+            "points": [
+              {
+                "x": 508,
+                "y": 484
+              },
+              {
+                "x": 508,
+                "y": 516
+              },
+              {
+                "x": 516,
+                "y": 516
+              },
+              {
+                "x": 516,
+                "y": 524
+              },
+              {
+                "x": 524,
+                "y": 524
+              },
+              {
+                "x": 524,
+                "y": 540
+              },
+              {
+                "x": 532,
+                "y": 540
+              },
+              {
+                "x": 532,
+                "y": 548
+              },
+              {
+                "x": 548,
+                "y": 548
+              },
+              {
+                "x": 548,
+                "y": 556
+              },
+              {
+                "x": 572,
+                "y": 556
+              },
+              {
+                "x": 572,
+                "y": 564
+              },
+              {
+                "x": 580,
+                "y": 564
+              },
+              {
+                "x": 580,
+                "y": 588
+              }
+            ],
+            "length": 176,
+            "originConnector": {
+              "origin": {
+                "x": 509.4267531939003,
+                "y": 477.7310393582231
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 7743,
+                "x": 508,
+                "y": 484,
+                "distance": 6.429268403516279
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/03-material-approach-north.png",
+              "sha256": "3ab4196713e8da26c5fdef62693bcd46dfbd45107ca3243e5d7e216f337a3a7d",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 582.4300486173713,
+                  "y": 585.4755489222241
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.651426633999414,
+                "elapsedMs": 17115.899999999998
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 582.4300486173713,
+                  "y": 585.4755489222241
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 20.67907220999941,
+                "elapsedMs": 17199.3
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-material-approach",
+            "x": 732,
+            "y": 508,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 732,
+              "y": 508
+            },
+            "lookAtMaterialPoint": {
+              "x": 765,
+              "y": 405
+            },
+            "purpose": "东侧大低壳面"
+          },
+          "route": {
+            "requested": {
+              "label": "04-material-approach",
+              "x": 732,
+              "y": 508,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 732,
+                "y": 508
+              },
+              "lookAtMaterialPoint": {
+                "x": 765,
+                "y": 405
+              },
+              "purpose": "东侧大低壳面"
+            },
+            "actual": {
+              "x": 732,
+              "y": 508
+            },
+            "points": [
+              {
+                "x": 580,
+                "y": 588
+              },
+              {
+                "x": 732,
+                "y": 588
+              },
+              {
+                "x": 732,
+                "y": 508
+              }
+            ],
+            "length": 232,
+            "originConnector": {
+              "origin": {
+                "x": 582.4300486173713,
+                "y": 585.4755489222241
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9416,
+                "x": 580,
+                "y": 588,
+                "distance": 3.5039962224397585
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/04-material-approach-north.png",
+              "sha256": "935f432af45df32ec85a2505de61fca1cfc14bebce13161b44735f7a31939bac",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 731.1949485265028,
+                  "y": 503.80842278891595
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 21.923279075999396,
+                "elapsedMs": 20949.199999999997
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 731.1949485265028,
+                  "y": 503.80842278891595
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 21.950931287999396,
+                "elapsedMs": 21032.5
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shell-patchwork",
+        "grade": "medium",
+        "package": {
+          "id": "r100-shell-patchwork",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "ff76ec6a",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=shell-patchwork&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/recipe.json",
+        "sha256": "117252e5cd7782c819da00acc1e8fc217c5dc69ad27d4f03baf6143481d4c60a"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 731.1949485265028,
+          "y": 503.80842278891595
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 21.950931287999396,
+        "elapsedMs": 21032.5
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 731.1949485265028,
+          "y": 503.80842278891595
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 22.34907469799939,
+        "elapsedMs": 22232.399999999998
+      }
+    },
+    {
+      "world": "last-shelf",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-material-approach",
+            "x": 764,
+            "y": 348,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 764,
+              "y": 348
+            },
+            "lookAtMaterialPoint": {
+              "x": 786,
+              "y": 242
+            },
+            "purpose": "上台短裂肩"
+          },
+          "route": {
+            "requested": {
+              "label": "01-material-approach",
+              "x": 764,
+              "y": 348,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 764,
+                "y": 348
+              },
+              "lookAtMaterialPoint": {
+                "x": 786,
+                "y": 242
+              },
+              "purpose": "上台短裂肩"
+            },
+            "actual": {
+              "x": 764,
+              "y": 348
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 724,
+                "y": 588
+              },
+              {
+                "x": 724,
+                "y": 428
+              },
+              {
+                "x": 732,
+                "y": 428
+              },
+              {
+                "x": 732,
+                "y": 420
+              },
+              {
+                "x": 756,
+                "y": 420
+              },
+              {
+                "x": 756,
+                "y": 348
+              },
+              {
+                "x": 764,
+                "y": 348
+              }
+            ],
+            "length": 808,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/01-material-approach-north.png",
+              "sha256": "a9f87970a5f59d7670e3bb12d926683fd8f99f2f78326a07a74f2b3bc1a84c52",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 764.2798130279184,
+                  "y": 338.66045099074546
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 18.97037520599959,
+                "elapsedMs": 12049.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 764.2798130279184,
+                  "y": 338.66045099074546
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 19.009086311999585,
+                "elapsedMs": 12166.1
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-material-approach",
+            "x": 724,
+            "y": 532,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 724,
+              "y": 532
+            },
+            "lookAtMaterialPoint": {
+              "x": 817,
+              "y": 476
+            },
+            "purpose": "下台高完整断端"
+          },
+          "route": {
+            "requested": {
+              "label": "02-material-approach",
+              "x": 724,
+              "y": 532,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 724,
+                "y": 532
+              },
+              "lookAtMaterialPoint": {
+                "x": 817,
+                "y": 476
+              },
+              "purpose": "下台高完整断端"
+            },
+            "actual": {
+              "x": 724,
+              "y": 532
+            },
+            "points": [
+              {
+                "x": 764,
+                "y": 340
+              },
+              {
+                "x": 724,
+                "y": 340
+              },
+              {
+                "x": 724,
+                "y": 532
+              }
+            ],
+            "length": 232,
+            "originConnector": {
+              "origin": {
+                "x": 764.2798130279184,
+                "y": 338.66045099074546
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5471,
+                "x": 764,
+                "y": 340,
+                "distance": 1.3684615006596597
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/02-material-approach-east.png",
+              "sha256": "76b253256c0b22e2abac9c91255e7639e9c85029e3476329857eeee3bc7ecb6b",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 728.4317220675262,
+                  "y": 533.7192534484121
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 24.64124243999957,
+                "elapsedMs": 16132.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 728.4317220675262,
+                  "y": 533.7192534484121
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 24.70762234799957,
+                "elapsedMs": 16232.599999999999
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-material-approach",
+            "x": 756,
+            "y": 308,
+            "faces": [
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 756,
+              "y": 308
+            },
+            "lookAtMaterialPoint": {
+              "x": 684,
+              "y": 388
+            },
+            "purpose": "连续内侧颗粒床"
+          },
+          "route": {
+            "requested": {
+              "label": "03-material-approach",
+              "x": 756,
+              "y": 308,
+              "faces": [
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 756,
+                "y": 308
+              },
+              "lookAtMaterialPoint": {
+                "x": 684,
+                "y": 388
+              },
+              "purpose": "连续内侧颗粒床"
+            },
+            "actual": {
+              "x": 756,
+              "y": 308
+            },
+            "points": [
+              {
+                "x": 732,
+                "y": 532
+              },
+              {
+                "x": 724,
+                "y": 532
+              },
+              {
+                "x": 724,
+                "y": 428
+              },
+              {
+                "x": 732,
+                "y": 428
+              },
+              {
+                "x": 732,
+                "y": 420
+              },
+              {
+                "x": 756,
+                "y": 420
+              },
+              {
+                "x": 756,
+                "y": 308
+              }
+            ],
+            "length": 264,
+            "originConnector": {
+              "origin": {
+                "x": 728.4317220675262,
+                "y": 533.7192534484121
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 8539,
+                "x": 732,
+                "y": 532,
+                "distance": 3.960863519897756
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/03-material-approach-south.png",
+              "sha256": "586cf0e10253f05bbf4ad8184d521542c4bd3fac8093d6b4f43ebc4944c87be8",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5706706630887575,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 757.9999706490025,
+                  "y": 314.69574617978975
+                },
+                "facingAngle": 1.5706706630887575,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 28.224556355999283,
+                "elapsedMs": 21532.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 757.9999706490025,
+                  "y": 314.69574617978975
+                },
+                "facingAngle": 1.5706706630887575,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 28.290922991999278,
+                "elapsedMs": 21632.3
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-material-approach",
+            "x": 820,
+            "y": 564,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 820,
+              "y": 564
+            },
+            "lookAtMaterialPoint": {
+              "x": 922,
+              "y": 532
+            },
+            "purpose": "下探台真实终止边"
+          },
+          "route": {
+            "requested": {
+              "label": "04-material-approach",
+              "x": 820,
+              "y": 564,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 820,
+                "y": 564
+              },
+              "lookAtMaterialPoint": {
+                "x": 922,
+                "y": 532
+              },
+              "purpose": "下探台真实终止边"
+            },
+            "actual": {
+              "x": 820,
+              "y": 564
+            },
+            "points": [
+              {
+                "x": 756,
+                "y": 316
+              },
+              {
+                "x": 724,
+                "y": 316
+              },
+              {
+                "x": 724,
+                "y": 500
+              },
+              {
+                "x": 732,
+                "y": 500
+              },
+              {
+                "x": 732,
+                "y": 508
+              },
+              {
+                "x": 740,
+                "y": 508
+              },
+              {
+                "x": 740,
+                "y": 516
+              },
+              {
+                "x": 764,
+                "y": 516
+              },
+              {
+                "x": 764,
+                "y": 524
+              },
+              {
+                "x": 820,
+                "y": 524
+              },
+              {
+                "x": 820,
+                "y": 564
+              }
+            ],
+            "length": 376,
+            "originConnector": {
+              "origin": {
+                "x": 757.9999706490025,
+                "y": 314.69574617978975
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5086,
+                "x": 756,
+                "y": 316,
+                "distance": 2.3876684494302487
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/04-material-approach-east.png",
+              "sha256": "cf46ffdd1b319e59b216d96ddacc36f33d861cc8152a8fa43f915874e0b1be17",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 829.9999001,
+                  "y": 565.9999001
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 85,
+                "chaos": 33.05758169999892,
+                "elapsedMs": 28815.4
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 829.9999001,
+                  "y": 565.9999001
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 85,
+                "chaos": 33.11289275999892,
+                "elapsedMs": 28898.7
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "05-original-route-boundary",
+            "x": 948,
+            "y": 268,
+            "faces": [
+              "east"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 948,
+              "y": 268
+            },
+            "lookAtMaterialPoint": null,
+            "purpose": "补上台外探及相邻真实缺地边，原04只覆盖下台。",
+            "existingSweptPathEvidence": {
+              "low": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 134
+              },
+              "medium": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 134
+              },
+              "severe": {
+                "kind": "spawnRoute",
+                "routeIndex": 3,
+                "pointIndex": 134
+              }
+            },
+            "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+          },
+          "route": {
+            "requested": {
+              "label": "05-original-route-boundary",
+              "x": 948,
+              "y": 268,
+              "faces": [
+                "east"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 948,
+                "y": 268
+              },
+              "lookAtMaterialPoint": null,
+              "purpose": "补上台外探及相邻真实缺地边，原04只覆盖下台。",
+              "existingSweptPathEvidence": {
+                "low": {
+                  "kind": "spawnRoute",
+                  "routeIndex": 3,
+                  "pointIndex": 134
+                },
+                "medium": {
+                  "kind": "spawnRoute",
+                  "routeIndex": 3,
+                  "pointIndex": 134
+                },
+                "severe": {
+                  "kind": "spawnRoute",
+                  "routeIndex": 3,
+                  "pointIndex": 134
+                }
+              },
+              "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+            },
+            "actual": {
+              "x": 948,
+              "y": 268
+            },
+            "points": [
+              {
+                "x": 828,
+                "y": 564
+              },
+              {
+                "x": 724,
+                "y": 564
+              },
+              {
+                "x": 724,
+                "y": 428
+              },
+              {
+                "x": 732,
+                "y": 428
+              },
+              {
+                "x": 732,
+                "y": 420
+              },
+              {
+                "x": 756,
+                "y": 420
+              },
+              {
+                "x": 756,
+                "y": 348
+              },
+              {
+                "x": 764,
+                "y": 348
+              },
+              {
+                "x": 764,
+                "y": 340
+              },
+              {
+                "x": 772,
+                "y": 340
+              },
+              {
+                "x": 772,
+                "y": 332
+              },
+              {
+                "x": 780,
+                "y": 332
+              },
+              {
+                "x": 780,
+                "y": 324
+              },
+              {
+                "x": 796,
+                "y": 324
+              },
+              {
+                "x": 796,
+                "y": 316
+              },
+              {
+                "x": 804,
+                "y": 316
+              },
+              {
+                "x": 804,
+                "y": 308
+              },
+              {
+                "x": 812,
+                "y": 308
+              },
+              {
+                "x": 812,
+                "y": 300
+              },
+              {
+                "x": 820,
+                "y": 300
+              },
+              {
+                "x": 820,
+                "y": 292
+              },
+              {
+                "x": 948,
+                "y": 292
+              },
+              {
+                "x": 948,
+                "y": 268
+              }
+            ],
+            "length": 624,
+            "originConnector": {
+              "origin": {
+                "x": 829.9999001,
+                "y": 565.9999001
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9063,
+                "x": 828,
+                "y": 564,
+                "distance": 2.828285844811296
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/05-original-route-boundary-east.png",
+              "sha256": "86869ac111f1d05d30d651fca4f9692d3adad485a566bb58621e3ada547985fc",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": -0.00006283185306632522,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 955.894549427326,
+                  "y": 264.3144041982694
+                },
+                "facingAngle": -0.00006283185306632522,
+                "facing4": "right",
+                "hp": 55,
+                "chaos": 40.19100962399942,
+                "elapsedMs": 39565
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 955.894549427326,
+                  "y": 264.3144041982694
+                },
+                "facingAngle": -0.00006283185306632522,
+                "facing4": "right",
+                "hp": 55,
+                "chaos": 40.24630741199942,
+                "elapsedMs": 39648.3
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "last-shelf",
+        "grade": "medium",
+        "package": {
+          "id": "r100-last-shelf",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "f36a6ba3",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=last-shelf&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/recipe.json",
+        "sha256": "20d2aa0f2b8fbb527b72551ea11889567e44a110f4b3562f64e618a28c103354"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 955.894549427326,
+          "y": 264.3144041982694
+        },
+        "facingAngle": -0.00006283185306632522,
+        "facing4": "right",
+        "hp": 55,
+        "chaos": 40.24630741199942,
+        "elapsedMs": 39648.3
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 955.894549427326,
+          "y": 264.3144041982694
+        },
+        "facingAngle": -0.00006283185306632522,
+        "facing4": "right",
+        "hp": 55,
+        "chaos": 41.04258095999942,
+        "elapsedMs": 40848.2
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

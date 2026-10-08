@@ -1,0 +1,80 @@
+{
+  "status": "pass",
+  "proof": {
+    "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity/report.json",
+    "sha256": "04dd4d576c7537e6ea19a25bfc82d0af04cf9ff1edb98bef3b20fdc09b3628e2"
+  },
+  "originalPlay": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play-summary.json",
+    "sha256": "189405794bf98ce6a3c1b1e927aa8820646e9fc693df94edc93e6bc23bd589ba"
+  },
+  "cases": [
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "seed": 20261005,
+      "raw": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/001-cleft-tableland-low-20261005/report.json",
+        "sha256": "daa67df451bfbcc04b415b49dec27cf05db3400386cdbce053b8fbbd13467ee6"
+      },
+      "recipeSha256": "b36599e4430516efd6eae656a0ff2ae1d0f1c3fbc9ce2ce113a2dc6074be1c58",
+      "actualRecipeMatches": true
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "seed": 3075192741,
+      "raw": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/002-cleft-tableland-low-3075192741/report.json",
+        "sha256": "f817769bf9de91c5fa2eadf20a431ead81f2ffce64dbcb3ab06fe09f677d09dd"
+      },
+      "recipeSha256": "e30fa1944047a87101f548b4c22ce555134843262060a7097e5ba3fc7fa55a31",
+      "actualRecipeMatches": true
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "seed": 20261005,
+      "raw": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/003-cleft-tableland-medium-20261005/report.json",
+        "sha256": "4549d1dfaaf4af00d3020b6c5224ca361427d5a7e9c3451ab83721ab1fe800cc"
+      },
+      "recipeSha256": "d06bd264e2f1f6372eaa088d1aeae960fa9d443e2cc4b41805e22c2dabc08e5e",
+      "actualRecipeMatches": true
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "seed": 3075192741,
+      "raw": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/004-cleft-tableland-medium-3075192741/report.json",
+        "sha256": "6dd5f86f8fa21b50b89a0b0816f67aa11e0b0f56622ece41bdca012b94a1f27f"
+      },
+      "recipeSha256": "691b5cdb3ddd1d84907affb77ee3bf4d5162d7696ea338965ea499896b504f81",
+      "actualRecipeMatches": true
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "seed": 20261005,
+      "raw": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/005-cleft-tableland-severe-20261005/report.json",
+        "sha256": "d3b52c962d8750edb5cca261ab6dd75d5d96597a2aef9b9b8d3e29da12bd782b"
+      },
+      "recipeSha256": "421505e9c3c171d7b505e161da2808ad0c62b62bc5e37f0aaf1ea7c36ac08044",
+      "actualRecipeMatches": true
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "seed": 3075192741,
+      "raw": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/play/006-cleft-tableland-severe-3075192741/report.json",
+        "sha256": "842765e132e879b563e64c9d1e49aaa399cf7033393de0d445a24cbec1b0e092"
+      },
+      "recipeSha256": "73ccce786891b99257b4024fb392590a4964c72a21e894675eb59114a10becc4",
+      "actualRecipeMatches": true
+    }
+  ],
+  "scope": "Read-only original browser identities match the six regenerated production recipes, ignoring only dependencyHash as already declared by the root-reviewed probe. Runtime identity signature and native map metadata signature are different hash layers and are not compared to each other. No new game execution."
+}

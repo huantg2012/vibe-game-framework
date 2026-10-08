@@ -1,0 +1,43 @@
+{
+  "status": "pass-sampled-lifecycle",
+  "startedAt": "2026-10-08T06:57:28.517Z",
+  "endedAt": "2026-10-08T06:59:06.168Z",
+  "operator": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/execute-lifecycle-sampled.mjs",
+    "sha256": "6b88cbb884bd0d1e2d67dc1fecb8d9c5d7e7541a9880c1c616f770e43e8fcae1"
+  },
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/lifecycle-execution-plan.json",
+    "sha256": "36ce96061e68e5c3c3601a5c4e1ef9ba9aa97a60924d93094f3041beb51d8e9e"
+  },
+  "samplingAmendment": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+    "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+  },
+  "sourceBinding": {
+    "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/source-binding.json",
+    "sha256": "1b223c82d366bf6fd2e2eb91f7a9bfad17876e927f78ae44f77d163cd2540b5b"
+  },
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/report.json",
+    "sha256": "8f4c573d859c323ac51445efcc7cfbb0ff48ac18e6992980b1018362f4fe19eb"
+  },
+  "exitCode": 0,
+  "signal": null,
+  "powerSamples": 5,
+  "ownedIdleAssertionPids": [
+    46347
+  ],
+  "noSystemSleep": true,
+  "ownedProcessesClosed": true,
+  "ownedAssertionsReleased": true,
+  "actualIdenticalRebuilds": 10,
+  "actualMixedRebuilds": 18,
+  "retainedSamples": 12,
+  "reportSteps": 37,
+  "countMeaning": "Configured identical/mixed operations; 37 original report steps include setup, warmups, baseline and return. No exact internal scene-construction count is asserted.",
+  "full334Claimed": false,
+  "automaticRetry": false,
+  "problems": [],
+  "nextStage": "Stop; root and QA independently review the actual sampled report and Shader evidence."
+}

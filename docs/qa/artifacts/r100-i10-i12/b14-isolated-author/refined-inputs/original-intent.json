@@ -1,0 +1,387 @@
+{
+  "fractured-estuary": {
+    "batch": "b14",
+    "routes": [
+      {
+        "name": "upper-sheet-to-neck",
+        "points": [
+          [
+            262,
+            225
+          ],
+          [
+            475,
+            252
+          ],
+          [
+            558,
+            394
+          ]
+        ],
+        "bounds": [
+          220,
+          175,
+          640,
+          433
+        ]
+      },
+      {
+        "name": "lower-sheet-to-neck",
+        "points": [
+          [
+            297,
+            581
+          ],
+          [
+            467,
+            567
+          ],
+          [
+            558,
+            394
+          ]
+        ],
+        "bounds": [
+          255,
+          350,
+          690,
+          640
+        ]
+      },
+      {
+        "name": "neck-upper-return",
+        "points": [
+          [
+            558,
+            394
+          ],
+          [
+            724,
+            264
+          ],
+          [
+            899,
+            235
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "neck-short-side-bay",
+        "points": [
+          [
+            558,
+            394
+          ],
+          [
+            752,
+            564
+          ],
+          [
+            899,
+            614
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "walkableSurfaceObjects": [
+        1,
+        2,
+        3
+      ],
+      "nearest": "pressed-rim",
+      "difference": [
+        "两条真实留地支流汇入同一个地颈，再分为上宽床和下侧湾",
+        "胶只挤成汇口旁两短断肩，角色先汇合后分叉而非绕高胶头双尾"
+      ]
+    }
+  },
+  "woven-quarters": {
+    "batch": "b14",
+    "routes": [
+      {
+        "name": "cut-diagonal-upper-route",
+        "points": [
+          [
+            382,
+            467
+          ],
+          [
+            417,
+            341
+          ],
+          [
+            640,
+            334
+          ],
+          [
+            775,
+            353
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "cut-diagonal-lower-route",
+        "points": [
+          [
+            434,
+            619
+          ],
+          [
+            561,
+            635
+          ],
+          [
+            745,
+            662
+          ],
+          [
+            880,
+            537
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "east-open-court",
+        "points": [
+          [
+            862,
+            623
+          ],
+          [
+            876,
+            440
+          ],
+          [
+            859,
+            222
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          2,
+          5
+        ],
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        1,
+        3,
+        4
+      ],
+      "nearest": "felt-wedges",
+      "difference": [
+        "四片压毡只有西北一片翻起，两粗长纤实际接两侧低片",
+        "两条短真实缺地切去对角直连，其余宽床保留，不是三厚楔聚头"
+      ]
+    }
+  },
+  "shell-patchwork": {
+    "batch": "b14",
+    "routes": [
+      {
+        "name": "irregular-bare-middle",
+        "points": [
+          [
+            504,
+            652
+          ],
+          [
+            540,
+            538
+          ],
+          [
+            559,
+            414
+          ],
+          [
+            669,
+            330
+          ],
+          [
+            731,
+            216
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "low-shell-west-return",
+        "points": [
+          [
+            276,
+            562
+          ],
+          [
+            235,
+            398
+          ],
+          [
+            342,
+            210
+          ]
+        ],
+        "bounds": null
+      },
+      {
+        "name": "east-low-shell-return",
+        "points": [
+          [
+            863,
+            586
+          ],
+          [
+            902,
+            423
+          ],
+          [
+            821,
+            212
+          ]
+        ],
+        "bounds": null
+      }
+    ],
+    "relations": {
+      "contacts": [
+        [
+          1,
+          5
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "walkableSurfaceObjects": [
+        1,
+        2,
+        6
+      ],
+      "nearest": "buried-lamellae",
+      "difference": [
+        "两块大低壳间的短厚端夹住膜折，材料在局部破接处真实相碰",
+        "不规则裸床从拼片中穿过，不是层片逐渐被颗粒埋没或完整等距格网"
+      ]
+    }
+  },
+  "last-shelf": {
+    "batch": "b14",
+    "routes": [
+      {
+        "name": "upper-surviving-shelf",
+        "points": [
+          [
+            650,
+            282
+          ],
+          [
+            755,
+            292
+          ],
+          [
+            899,
+            282
+          ],
+          [
+            945,
+            266
+          ]
+        ],
+        "bounds": [
+          610,
+          216,
+          965,
+          305
+        ]
+      },
+      {
+        "name": "lower-surviving-shelf",
+        "points": [
+          [
+            651,
+            522
+          ],
+          [
+            757,
+            542
+          ],
+          [
+            916,
+            531
+          ],
+          [
+            947,
+            506
+          ]
+        ],
+        "bounds": [
+          610,
+          443,
+          965,
+          550
+        ]
+      },
+      {
+        "name": "shared-inland-return",
+        "points": [
+          [
+            651,
+            522
+          ],
+          [
+            614,
+            389
+          ],
+          [
+            650,
+            282
+          ]
+        ],
+        "bounds": [
+          565,
+          245,
+          705,
+          570
+        ]
+      }
+    ],
+    "relations": {
+      "walkableSurfaceObjects": [
+        1
+      ],
+      "nearest": "scalloped-reach",
+      "difference": [
+        "三次真缺地削去东沿后只留两处外探余台，内侧一整片宽床共同接通",
+        "每台只一短层肩给近距识别，身体要侧探到真实终点再返回而非进入三个凹湾"
+      ]
+    }
+  }
+}

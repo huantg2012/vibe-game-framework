@@ -1,0 +1,108 @@
+{
+  "status": "prepared-not-executed",
+  "at": "2026-10-07T13:00:27.756056+00:00",
+  "files": [
+    {
+      "path": "tools/qa/r100-i12-recheck-budget.mjs",
+      "sha256": "5795b280b50339a67e52aa323a52eb50db7fb6a38df10a904db7764ae912f528"
+    },
+    {
+      "path": "tools/qa/r100-i12-recheck-journey.mjs",
+      "sha256": "747ed743b89fb26aee9a3185ca9f57eae8cbdaf0d8e0e36e77c4f2a314e9127d"
+    },
+    {
+      "path": "tools/qa/r100-i12-recheck-encounters.mjs",
+      "sha256": "c86d641469950f61905e1beb7e7d9ddba4074b611c609fd78349d1e3c1a0cbd5"
+    },
+    {
+      "path": "tools/qa/r100-i12-recheck-coverage.mjs",
+      "sha256": "7a581e0af91150056cb12b78f6ea66b153f420d7a68ceed3cf452e136d4a4800"
+    },
+    {
+      "path": "tools/qa/r100-i12-recheck-budget.test.mjs",
+      "sha256": "c7266cac3a3e317b0bbce90c0be8f01fe9acd76b572ea5e797c183536566bb3d"
+    }
+  ],
+  "diffs": [
+    {
+      "original": {
+        "path": "tools/qa/r100-revision6-journey.mjs",
+        "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-recheck-journey.mjs",
+        "sha256": "747ed743b89fb26aee9a3185ca9f57eae8cbdaf0d8e0e36e77c4f2a314e9127d"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/r100-i12-recheck-journey.diff",
+        "sha256": "39afe6933ebf394f3d7acb4a439ff231d3b911d93f54369539a3d0a11daadce9"
+      }
+    },
+    {
+      "original": {
+        "path": "tools/qa/r100-i09-costed-encounters.mjs",
+        "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-recheck-encounters.mjs",
+        "sha256": "c86d641469950f61905e1beb7e7d9ddba4074b611c609fd78349d1e3c1a0cbd5"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/r100-i12-recheck-encounters.diff",
+        "sha256": "c1dd93825d01d0e70788d96549fc28c0afaf565d80d1dd0190d40f20416a713e"
+      }
+    },
+    {
+      "original": {
+        "path": "tools/qa/r100-i07-i09-coverage.mjs",
+        "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-recheck-coverage.mjs",
+        "sha256": "7a581e0af91150056cb12b78f6ea66b153f420d7a68ceed3cf452e136d4a4800"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/r100-i12-recheck-coverage-v2.diff",
+        "sha256": "4e48e28e8c7c4f1e18e94ace40b960458a19ef85401d10faef51cfae3a2309e8"
+      }
+    }
+  ],
+  "boundaryTests": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/boundary-tests.json",
+    "sha256": "3155ee53fd0d84533bf7a9cccad04f57cff3ea2f2929f5b5b871169cce42c54c"
+  },
+  "syntaxChecks": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/syntax-checks.json",
+    "sha256": "52ee263c8768a16b4b968908a633eb5291387d8960992f697e3734b09307d5f9"
+  },
+  "protocolCandidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/protocol-candidate-v2.json",
+    "sha256": "472c6107589ff98d18d94955e5617d1061e12b1540667370d73c02e8562dc5a3"
+  },
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/execution-plan.json",
+    "sha256": "0d22c4389ca6671e7a9342f5e3c2c33fc84774f62dfdbe7f7d06ac18ec8369c8"
+  },
+  "changes": [
+    "Three visible attack enum active checks become strike in private controller copies.",
+    "One whole-trip observed-target reapproach/search budget around the original goRift/caution/search; original refusal remains a separate search row.",
+    "Real game elapsed guard instruments keyboard/waits and full driver holds; threshold/exception stops release held keys.",
+    "Supplementary report binds originalSearchIndex, triggerElapsedMs, start/end/max game clocks, actual E attempt, actual pickups, errors and key cleanup.",
+    "Root-approved protocol required before wrapper opens a browser; exact source/storage/executor/dependencies/cases and original-report bindings checked."
+  ],
+  "limitations": [
+    "Browser/event-loop stalls cannot be guaranteed absent; any measured overrun is a failed process.",
+    "Boundary fixtures verify the guard and real journey-driver inputs; they do not establish gameplay success.",
+    "The original encounter implementation is otherwise unchanged, including visible tool-window rules. No enemy/map/resource or product changes."
+  ],
+  "priorCandidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/candidate.json",
+    "sha256": "2ccb5fad11fc9c644776290d090c1db68876dbffdedc37d5f839feb0c2ff23aa"
+  },
+  "revision": 2,
+  "revisionChange": "One assertion rejects any existing output directory before preflight. No other code or input policy changes.",
+  "syntaxChecksV2": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/syntax-checks-v2.json",
+    "sha256": "ad5260dca234083a9a49428e444aaaa7cdb0f2c24865be19e4401c630f4dda8b"
+  }
+}

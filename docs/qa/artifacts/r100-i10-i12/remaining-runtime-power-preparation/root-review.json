@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-08T01:57:34.136Z",
+  "reviewer": "root",
+  "status": "operational-protocol-approved-awaiting-stage-dispatch",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/commands.json",
+    "sha256": "c507d38209a081fc62466650e11d8bba982aff08758cc73a687bf41e4aed4d45"
+  },
+  "originalCommandPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/commands.json",
+    "sha256": "24a0e53e23461cbe5978ee5fa6c0e0b35d323d139c0b36b9e74f6cc790944361"
+  },
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "checkedFileReferences": 23,
+  "checks": {
+    "allFourOriginalStageRecordsExact": true,
+    "argsOnlyUtilityScopedCaffeinatePrefix": true,
+    "envOnlyResolvesFrozenPort": true,
+    "noOutputExists": true,
+    "frozenToolReferencesExact": true,
+    "noAutomaticRetries": true,
+    "fullCpuAndBrowserExclusivityForPerformance": true
+  },
+  "approvedScope": "Use only temporary utility-scoped idle-sleep prevention and lightweight owned-process/power auditing for the unchanged four frozen commands. After current production and gallery review, root dispatches each stage at its actual boundary. This receipt starts no stage and records no runtime pass.",
+  "limitations": "Does not prevent or authorize manual/lid sleep; no thresholds, real measured duration, controller policy, world/seed selection, stored outcomes or frozen source/tool changes. Any technical, source or power failure preserves original artifacts and stops at that stage."
+}

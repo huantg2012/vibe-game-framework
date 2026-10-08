@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate-index-consistent-final-binding-pending",
+  "reviewer": "i12_art",
+  "at": "2026-10-07T12:24:59.232Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.draft.json",
+      "sha256": "9f4d01a4e9ecd922845bb533177913fb096ee74075aa4970c8440e9375264053"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-art-evidence-replacement-map.json",
+      "sha256": "63e5b96f8bdb1895e3fabe42d823ab84826249fa7f521822de5c3825b4e56f7d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-art-evidence-replacement-root-disposition.json",
+      "sha256": "ac861638f65ae33360a0dbb4a848c46593f95e3004c8b1fe0162efc102188310"
+    }
+  ],
+  "output": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.candidate.json",
+    "sha256": "2678a053270592a3b37ddf7d6a587da4f73e24b3e4884931e1a3db0948596867"
+  },
+  "facts": {
+    "worldRows": 108,
+    "uniqueWorldRows": 108,
+    "historical52": 52,
+    "new56WithExistingThreeGradeReceipts": 56,
+    "originalEvidenceBindings": 262,
+    "currentEvidenceBindings": 260,
+    "cleftBindingsMovedToHistorical": 2,
+    "distinctReceiptSourcePairs": 82,
+    "allNamedCurrentAndHistoricalInputHashesExact": true,
+    "changedRows": [
+      "cleft-tableland"
+    ],
+    "other107RowsDeepEqual": true,
+    "finalSourceAndDependencyHashesRemainNull": true
+  },
+  "scopeDisposition": {
+    "worldId": "cleft-tableland",
+    "currentScope": "3105三档专项复审覆盖两颈受影响近岸、连续母面与裸床/缺地的已照见区分；root亲看中档上下颈、低档上颈、重档上下颈。3103原基础材质与连体造型观察保留为历史事实，不宣称整世界像素连续或3105全新完整美术复验。",
+    "currentLimitations": [
+      "Only the affected near-bank and neck surfaces are rechecked, not the complete world.",
+      "Root reviewed medium upper/lower neck, low upper neck, severe upper/lower neck; low lower-neck review is author-only.",
+      "Original3103 first-approach observation and its limitations stay with historicalEvidence, not mislabeled as3105 coverage.",
+      "Unlit far surfaces, whole-map play, fatigue, listening and human approval remain outside scope."
+    ],
+    "preservedHistorical3103Entries": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-final-art-review.json",
+        "sha256": "900b2168abb106f53f3f8bcf369219e4417b5e8be7815dcee4fa1bd3a90a25cd",
+        "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+        "sourceManifestSha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659",
+        "role": "author",
+        "worldScope": "cleft-tableland"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-independent-art-review.json",
+        "sha256": "6c09736b3782a9f8a04032fa6cf6f06ec7a19a1a1cdf80fb31b070a2f6b44c28",
+        "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+        "sourceManifestSha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659",
+        "role": "root",
+        "worldScope": "cleft-tableland"
+      }
+    ],
+    "current3105Entries": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-final-art-review.json",
+        "sha256": "b92fb88b13e4dfcb34246e164831bfa3874c8495ec026bb2a4299a0f8aadeee5",
+        "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+        "sourceManifestSha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60",
+        "role": "author",
+        "worldScope": "cleft-tableland"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-independent-art-review.json",
+        "sha256": "84db0b3c950aa73341c63f2c7391f97a6eb3dd65d1b8c29db37b6fc8cde9364b",
+        "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+        "sourceManifestSha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60",
+        "role": "root",
+        "worldScope": "cleft-tableland"
+      }
+    ]
+  },
+  "remaining": [
+    "Exact final enabled108 source/package hashes and direct applicable visual continuity remain pending.",
+    "B13 original003 transport failures and same-identity clean replay must remain separate.",
+    "Remaining B13/B14 process frames will be independently sampled after execution.",
+    "Natural48, formal324, performance/resource lifetime and root technical disposition are separate.",
+    "R10 subjective audio is not listened or approved here; I14 release gate remains."
+  ],
+  "limits": [
+    "No original draft, receipt, PNG, source manifest or historical decision was modified.",
+    "This index audit reads existing scopes and hashes; it does not personally view all linked PNGs or renew prior human approval.",
+    "Current260 bindings are references, not260 new visual judgements."
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-awaiting-explicit-browser-handoff",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "stages": [
+    {
+      "id": "B06-porous-original-remaining11",
+      "folder": "b06-porous-repaired-play",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/run.mjs",
+        "sha256": "1e25295f69f10622f825dccc797a6e9b84ba997c479997a57dd69d1cd5b59ef7"
+      },
+      "args": [
+        "--exclusive-window"
+      ],
+      "cases": 11,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/plan.json",
+        "sha256": "9ac1356ccb3e46c1cf05e6a7e6afe10257dfa2328418f336382f1c0199c105ff"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b06-porous-repaired-play/execution.json",
+      "completedStatus": "completed-original11"
+    },
+    {
+      "id": "B07-original24",
+      "folder": "b07-refined-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/run-play.mjs",
+        "sha256": "e5745f2c67c238110fcf3b7521d934329de02e7ac25931559c814b527f694aee"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play-commands.json",
+        "sha256": "37807c64ead4eaa2d4405331de21f7c4c043aec7eadc723aebf17424c024f31a"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B08-original24",
+      "folder": "b08-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/run-play.mjs",
+        "sha256": "e33e449fad2ed44f207a0ad36a43a6910cfb4bf4fe3ae594ae6a94c8c10cfeec"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-commands.json",
+        "sha256": "4f85935c25f6313f2b855a618ea09753abd4817d5c69ff072cd7b34dd597e84c"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B06-short-fibre-original12",
+      "folder": "b06-short-fibre-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/run-play.mjs",
+        "sha256": "cfe4ce9f38dc9228a06d525b7e8f2d4762ee10a93baac8b7b36f0f3d85244b33"
+      },
+      "args": [],
+      "cases": 12,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/play-commands.json",
+        "sha256": "6891f8fa6b6e3c2b94106298dc263577b85d458105ce819a95c8feb662801d7a"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    }
+  ],
+  "continuation": "B09 and B10 original24 each are next, prepared separately once their remaining normal-view review receipts exist. This plan does not approve those pending reviews.",
+  "limits": "One Chrome, one case at a time; each child must close and retain its report before any next stage. An error halts the queue, without automatic retry or alternate seed. No original successful journey is repeated."
+}

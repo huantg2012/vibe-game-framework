@@ -1,0 +1,209 @@
+import { SPATIAL_SLICE_GROUND, SPATIAL_SLICE_OPENINGS, SPATIAL_SLICE_PLACEMENTS, SPATIAL_SLICE_SCENES, SPATIAL_SLICE_WATER } from '@/generated/spatial-slice-data';
+import type { GeneratedRiftLayout } from '@/generation/types';
+import type { BuildLabLoadoutId } from '@/generated/build-lab-data';
+import { TileType } from '@/types/game-types';
+import { createSpatialStudyLayout, type SpatialFixtureDefinition, type SpatialFixturePlacement } from './fixture';
+import { sampleWaterCurtain, type WaterCurtainDefinition, type WaterCurtainFrame } from './water-curtain';
+import { GroundHeightField, type GroundLandformDefinition } from './stage/ground-height';
+
+export type SpatialSliceMode = 'stage' | 'vista';
+export interface SlicePoint { x: number; y: number }
+export interface SeaColumn { field: number; top: number; bottom: number }
+export interface SlicePresentation {
+  update(elapsedMs: number): void;
+  /** Update information memory before the complete frame is saved, without rendering. */
+  prepareFrame?(elapsedMs: number): void;
+  exportRuntimeState?(): unknown;
+  validateRuntimeState?(state: unknown): boolean;
+  restoreRuntimeState?(state: unknown): void;
+  snapshot(): Record<string, unknown>;
+  destroy(): void;
+}
+export const SLICE_SCENE = SPATIAL_SLICE_SCENES[0];
+export const SLICE_WATER = SPATIAL_SLICE_WATER[0];
+
+export interface SpatialSliceSceneDefinition extends SpatialFixtureDefinition {
+  readonly name: string; readonly loadout: BuildLabLoadoutId;
+  readonly seaFrontY: number; readonly seaTopHeight: number; readonly seaBottomHeight: number;
+  readonly reefCol: number | null; readonly reefRow: number | null; readonly reefHeight: number | null;
+}
+export interface SpatialSliceOpening {
+  readonly id: string; readonly x: number; readonly y: number;
+  readonly radiusX: number; readonly radiusY: number; readonly driftX: number; readonly driftY: number;
+  readonly phase: number; readonly angle: number;
+}
+export interface SpatialSliceData {
+  readonly scene: SpatialSliceSceneDefinition;
+  readonly water: Omit<WaterCurtainDefinition, 'footprint'> & { readonly outline: string; readonly fallTravelMs: number };
+  readonly placements: readonly SpatialFixturePlacement[];
+  readonly openings: readonly SpatialSliceOpening[];
+  readonly ground: readonly GroundLandformDefinition[];
+}
+/** Frozen local data remains the default for old callers and the Vista study. */
+export const LOCAL_SLICE_DATA: SpatialSliceData = {
+  scene: SLICE_SCENE, water: SLICE_WATER, placements: SPATIAL_SLICE_PLACEMENTS,
+  openings: SPATIAL_SLICE_OPENINGS, ground: SPATIAL_SLICE_GROUND,
+};
+
+/** Geometry belongs to the world. Both renderers consume these same flowing
+ * openings, real ground, water contact polygon and deterministic world clock. */
+export class SpatialSliceWorld {
+  readonly layout: GeneratedRiftLayout;
+  readonly width: number;
+  readonly height: number;
+  readonly ground: GroundHeightField;
+  readonly definition: SpatialSliceSceneDefinition;
+  readonly waterDefinition: SpatialSliceData['water'];
+  readonly water: WaterCurtainFrame = { phase: 'quiet', cycle: 0, progress: 0, extension: 0, active: false };
+  readonly waterOutline: SlicePoint[];
+  readonly reef: { x: number; y: number; height: number };
+  readonly openings: readonly SpatialSliceOpening[];
+  private readonly seaMotions: { definition: SpatialSliceOpening; phase: number; cx: number; cy: number; cos: number; sin: number }[];
+  private seaMotionTime = NaN;
+  private readonly baseWater: SlicePoint[];
+  private nextHit = 0;
+  hits = 0;
+  attempts = 0;
+  elapsedMs = 0;
+
+  constructor(readonly seed: number, private readonly data: SpatialSliceData = LOCAL_SLICE_DATA) {
+    this.definition = data.scene;
+    this.waterDefinition = data.water;
+    this.openings = data.openings;
+    this.seaMotions = this.openings.map(h => ({ definition:h,phase:0,cx:0,cy:0,
+      cos:Math.cos(h.angle*Math.PI/180),sin:Math.sin(h.angle*Math.PI/180) }));
+    this.layout = createSpatialStudyLayout(seed, data.scene, data.placements);
+    this.width = this.layout.tileMap.cols * this.layout.tileMap.tileSize;
+    this.height = this.layout.tileMap.rows * this.layout.tileMap.tileSize;
+    this.ground = new GroundHeightField(this.width, this.height, data.ground);
+    this.baseWater = data.water.outline.split('|').map(p => {
+      const [x, y] = p.split(':').map(Number); return { x: x!, y: y! };
+    });
+    this.waterOutline = this.baseWater.map(() => ({ x: 0, y: 0 }));
+    const { reefCol, reefRow, reefHeight } = data.scene;
+    const reefValues = [reefCol, reefRow, reefHeight];
+    if (reefValues.some(value => value === null) && !reefValues.every(value => value === null)) {
+      throw new Error('An omitted datum reef requires all three columns to be empty');
+    }
+    this.reef = reefCol === null || reefRow === null || reefHeight === null
+      ? { x: 0, y: 0, height: 0 }
+      : { x: (reefCol + .5) * 32, y: (reefRow + .5) * 32, height: reefHeight };
+    this.advance(0, this.layout.spawnPoint, true, () => false);
+  }
+
+  /** Positive inside the suspended body, negative in air. Natural openings do
+   * not follow the player and do not modify the authoritative walkable floor. */
+  seaField(x: number, y: number, elapsedMs = this.elapsedMs): number {
+    const t = elapsedMs / 1000, seedPhase = this.seed * .11;
+    // The moving openings have one pose per world instant. Dense geometry,
+    // normals and both presenters reuse it instead of recomputing its motion
+    // for every vertex. This cache contains no player or perception state.
+    if (this.seaMotionTime !== elapsedMs) {
+      this.seaMotionTime=elapsedMs;
+      for (const motion of this.seaMotions) {
+        const h=motion.definition;
+        motion.phase=t*.12+h.phase+seedPhase;
+        motion.cx=h.x+Math.sin(motion.phase)*h.driftX;
+        motion.cy=h.y+Math.sin(motion.phase*.79+1.4)*h.driftY;
+      }
+    }
+    let field = Math.min(1.2, (this.definition.seaFrontY + 25 * Math.sin(x / 154 + t * .13) - y) / 42,
+      (x + 96) / 70, (this.width + 96 - x) / 70, (y + 130) / 70);
+    for (const motion of this.seaMotions) {
+      const { definition:h,phase,cx,cy,cos,sin }=motion;
+      const wx = x - cx + Math.sin(y / 69 + phase) * 11;
+      const wy = y - cy + Math.sin(x / 87 - phase * .7) * 9;
+      const dy = (-wx * sin + wy * cos) / h.radiusY;
+      const dx = (wx * cos + wy * sin) / h.radiusX * (1 + .17 * Math.sin(dy * 2.8 + h.phase));
+      const angle = Math.atan2(dy, dx);
+      const distance = Math.hypot(dx, dy);
+      const edge = distance - (1 + .14 * Math.sin(angle * 3 + h.phase + t * .11)
+        + .08 * Math.sin(angle * 5 - h.phase + t * .17));
+      field = Math.min(field, edge);
+    }
+    return field;
+  }
+
+  sampleSea(x: number, y: number, elapsedMs: number, out: SeaColumn): SeaColumn {
+    const t = elapsedMs / 1000;
+    out.field = this.seaField(x, y, elapsedMs);
+    const rim = Math.max(0, 1 - Math.abs(out.field) * 3.2);
+    out.top = this.definition.seaTopHeight + Math.sin(x / 167 + y / 237 - t * .31) * 12
+      + Math.sin(x / 71 - y / 173 + t * .57) * 5 - rim * 15;
+    out.bottom = this.definition.seaBottomHeight + Math.sin(x / 201 - y / 187 + t * .24) * 10
+      + Math.sin(y / 98 + t * .41) * 6 + rim * 13;
+    const swell = Math.sin(x / 260 - y / 170 + t * .16) * 40
+      + Math.sin(x / 180 + y / 250 - t * .21) * 22;
+    out.top += swell;
+    out.bottom += swell * .68;
+    out.top = Math.max(out.top, out.bottom + 68);
+    // The near-right body curls upward as a real volume. This leaves an air
+    // corridor beneath its belly, so an interior fall can be seen from the
+    // shared fixed camera without relocating its source to the outer edge.
+    const curlWidth = Math.exp(-Math.pow((x - this.waterDefinition.x) / 185, 4));
+    const curl = Math.max(0, y - (this.waterDefinition.y - 32)) * .96 * curlWidth;
+    out.top += curl;
+    out.bottom += curl;
+    return out;
+  }
+
+  isFloor(x: number, y: number): boolean {
+    const map = this.layout.tileMap, col = Math.floor(x / map.tileSize), row = Math.floor(y / map.tileSize);
+    return col >= 0 && row >= 0 && col < map.cols && row < map.rows && map.tiles[row]![col] === TileType.FLOOR;
+  }
+
+  groundHeightAt(x: number, y: number): number { return this.ground.heightAt(x, y); }
+
+  advance(elapsedMs: number, player: Readonly<SlicePoint>, ended: boolean,
+    applyHit: (source: string, damage: number) => boolean): void {
+    this.prepare(elapsedMs);
+    this.resolveContact(player, ended, applyHit);
+  }
+
+  /** A world with melee-controlled environment objects prepares its authoritative
+   * phase before Combat, then resolves contact after the same frame's swing. */
+  prepare(elapsedMs: number): void {
+    this.elapsedMs = elapsedMs;
+    const wasActive = this.water.active;
+    sampleWaterCurtain(this.water, elapsedMs, this.waterDefinition);
+    const t = elapsedMs / 1000;
+    for (let i = 0; i < this.baseWater.length; i++) {
+      const base = this.baseWater[i]!, point = this.waterOutline[i]!;
+      // Different tongues travel at different speeds, preserving the broad
+      // authored asymmetry instead of decorating a circle with edge noise.
+      point.x = this.waterDefinition.x + base.x * (1 + .06 * Math.sin(t * 1.1 + i * .9)) + Math.sin(t * .64) * 3;
+      point.y = this.waterDefinition.y + base.y * (1 + .07 * Math.sin(t * .83 - i * .7));
+    }
+    if (!this.water.active || !wasActive) this.nextHit = elapsedMs;
+  }
+
+  resolveContact(player: Readonly<SlicePoint>, ended: boolean,
+    applyHit: (source: string, damage: number) => boolean): void {
+    if (ended || !this.water.active || this.elapsedMs < this.nextHit || !this.isInsideWater(player)) return;
+    this.nextHit = this.elapsedMs + this.waterDefinition.hitIntervalMs;
+    this.attempts++;
+    if (applyHit(`environment:${this.waterDefinition.id}`, this.waterDefinition.damage)) this.hits++;
+  }
+
+  isInsideWater(point: Readonly<SlicePoint>): boolean { return pointInPolygon(point, this.waterOutline); }
+
+  signature(): string {
+    const input = JSON.stringify({ seed: this.seed, scene: this.data.scene, water: this.data.water,
+      placements: this.data.placements, openings: this.data.openings, ground: this.data.ground });
+    let hash = 2166136261;
+    for (let i = 0; i < input.length; i++) hash = Math.imul(hash ^ input.charCodeAt(i), 16777619);
+    return (hash >>> 0).toString(16).padStart(8, '0');
+  }
+}
+
+export function pointInPolygon(point: Readonly<SlicePoint>, polygon: readonly SlicePoint[]): boolean {
+  let inside = false;
+  for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+    const a = polygon[j]!, b = polygon[i]!;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const cross = (point.x - a.x) * dy - (point.y - a.y) * dx;
+    if (Math.abs(cross) < 1e-7 && (point.x - a.x) * (point.x - b.x) + (point.y - a.y) * (point.y - b.y) <= 0) return true;
+    if ((a.y > point.y) !== (b.y > point.y) && point.x < (b.x - a.x) * (point.y - a.y) / (b.y - a.y) + a.x) inside = !inside;
+  }
+  return inside;
+}

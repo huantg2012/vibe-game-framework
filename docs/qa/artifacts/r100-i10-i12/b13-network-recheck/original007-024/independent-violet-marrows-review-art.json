@@ -1,0 +1,381 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-fixed-process-and-frame-observation",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T12:48:40.643Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "world": "violet-marrows",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "cases": [
+    {
+      "originalIndex": 19,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/013-violet-marrows-low-20261005/report.json",
+        "sha256": "39337993e5f6a11564a86c3e95bbaeb62691eb2c1a5332e51685bc387ceadb05"
+      },
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "c288a0dc",
+      "dependencyHash": "96355bd2",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 33348.62999999976,
+      "hp": 145,
+      "chaos": 29.82559694018958,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.4862867611367
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 20332.50999999987,
+          "hp": 145,
+          "chaos": 27.551840301756403
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 20,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/014-violet-marrows-low-3075192741/report.json",
+        "sha256": "b8080962e80798e630f03b1b6cda2eef1bdbb1fa0849718dd00b8b2345a2ac85"
+      },
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "d78d99b1",
+      "dependencyHash": "96355bd2",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 61380.859999999746,
+      "hp": 145,
+      "chaos": 48.609551813503344,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 609.3143687785476
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 48214.729999999894,
+          "hp": 145,
+          "chaos": 46.30959026659233
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 21,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/015-violet-marrows-medium-20261005/report.json",
+        "sha256": "0f460db762a45407e21d86ef7f5dd048acb72a51ba76196f7efa9bdafb6c1622"
+      },
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "5eae7b26",
+      "dependencyHash": "ba22c716",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 46681.46999999999,
+      "hp": 145,
+      "chaos": 38.270691191582216,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 512.562191348523
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 28732.209999999784,
+          "hp": 145,
+          "chaos": 32.78353865380997
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 22,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/016-violet-marrows-medium-3075192741/report.json",
+        "sha256": "c4ea9d9a67b8595c3ef002d4b0a73110d6643cccd01e4a3ee9a6d6f7d3d1b3c5"
+      },
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "21774414",
+      "dependencyHash": "ba22c716",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 42164.97999999991,
+      "hp": 145,
+      "chaos": 36.8899841560095,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 609.3143687785476
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 30448.77999999976,
+          "hp": 145,
+          "chaos": 33.308300200066725
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 23,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/017-violet-marrows-severe-20261005/report.json",
+        "sha256": "0035496d04e5a26b467333e0eddbbdb847a40d903144326db9cfd105af23a175"
+      },
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "97a0d06a",
+      "dependencyHash": "fb8fdd1e",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 86596.55000000048,
+      "hp": 115,
+      "chaos": 102.29636173231738,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "kind": "contaminant",
+          "distanceFromEntry": 817.6062622069378
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "attempted": false,
+          "reason": "visible-opponent-too-close",
+          "elapsedMs": 22665.789999999848,
+          "hp": 145,
+          "chaos": 38.37579108159424
+        },
+        {
+          "id": "r100-contaminant-deep-1",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 62597.51,
+          "hp": 115,
+          "chaos": 75.63967085874664
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 24,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/018-violet-marrows-severe-3075192741/report.json",
+        "sha256": "f38314572f7f96ea01503ff29bc58eb9a4d9f4e055d064136ceb6f961253d98b"
+      },
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "3e6d3c0a",
+      "dependencyHash": "fb8fdd1e",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 59247.61999999995,
+      "hp": 145,
+      "chaos": 52.07893798924788,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 610.5735008989499
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 44064.87999999995,
+          "hp": 145,
+          "chaos": 44.548299413502285
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "counts": {
+    "originalProcesses": 6,
+    "nonEntrySearchAndExtract": 6,
+    "trueEmptyReturns": 0,
+    "deaths": 0
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/013-violet-marrows-low-20261005/low/1-far-exploration.png",
+      "sha256": "e749a8f7b50ae7fbfb4b736be453315169f22403d5e7d443624ce67019e7dc15",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "正常肩灯下紫色长厚侧面、浅粉髓孔面和冷灰床同时可见，人物在近端提供尺度；孔群未读成黑通路。仅一长体局部，不能覆盖三体组织；顶部孔群与直长侧面仍有规律重复感。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/015-violet-marrows-medium-20261005/medium/1-search-1.png",
+      "sha256": "e50b398b0077c213a3b0b867c630bfb3c86ac18e3a463eb8797c5996683fe4c2",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "取回一件残渣的提示与145HP、冷灰带方向纹底床同帧，紫色残骸和黑绿污染体分开；没有完整髓芯主体，不扩为全形图审。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/017-violet-marrows-severe-20261005/severe/1-search-3.png",
+      "sha256": "5001e7d157a917c8b703d2bce00dab3cd2e14a13ab25744807e7139764db9f96",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "115HP/75混乱时完成深部残渣拾取；照亮地床、紫色残骸、黑绿宿主仍可分，绿色侵蚀覆盖视野，局部身体余量可见但不证明全过程避险可读。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/017-violet-marrows-severe-20261005/severe/1-field-result.png",
+      "sha256": "b9931ef93329225838b8ef059a12ed3681bfade942b6ad743780c6ee4f7eff7e",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "返回显示115/145HP、1件树脂团、87秒、峰值混乱102；属于实际带回，不能因0薪柴算空返。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/018-violet-marrows-severe-3075192741/severe/1-far-exploration.png",
+      "sha256": "2ab1a19e9fe573980cbe51f57abacdd3f56220f8c2892c6f94722f91ad9d4ecd",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "冷灰宽床跨两粉紫材料局部，地床有实际明暗和方向纹；下侧孔面局部可见，上方大圆形暗面不等于真缺地，未靠此帧签全周边。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/018-violet-marrows-severe-3075192741/severe/1-field-result.png",
+      "sha256": "6b1be6a4df1d859ecf45179f7859309bfe4b137532bfca0280a6862ecab5a39f",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "第二重档145HP、6薪柴、59秒、峰值混乱52返回，与第一重档受伤深拾取分列，不套用同一压力经历。"
+    }
+  ],
+  "findings": [
+    "六个原种子过程均有同趟非入口拾取并带回；其中四次带残渣、两次带6薪柴，0薪柴不等于空返。",
+    "首重档先跳过近敌争夺点，再完成深部残渣，115HP/102.30混乱归来；次重档145HP/52.08混乱带6薪柴归来，保留不同压力。",
+    "所看紫皮、粉孔面和冷灰床在正常灯下局部分开，既有污染绿独立；不声称三个主体和大通缝均已覆盖。"
+  ],
+  "retainedWeaknesses": [
+    "近处长侧面和孔群排列仍较规律；正常局部识别不替代人对整体造型、重复感和审美的判断。",
+    "高混乱绿色覆盖时仍只看离散静帧，没有临界动态、完整撤路与峰后恢复证据。"
+  ],
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/013-violet-marrows-low-20261005/low/1-far-exploration.png",
+      "sha256": "e749a8f7b50ae7fbfb4b736be453315169f22403d5e7d443624ce67019e7dc15",
+      "reason": "正常肩灯下紫色长厚侧面、浅粉髓孔面和冷灰床同时可见，人物在近端提供尺度；孔群未读成黑通路。仅一长体局部，不能覆盖三体组织；顶部孔群与直长侧面仍有规律重复感。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/017-violet-marrows-severe-20261005/severe/1-search-3.png",
+      "sha256": "5001e7d157a917c8b703d2bce00dab3cd2e14a13ab25744807e7139764db9f96",
+      "reason": "115HP/75混乱时完成深部残渣拾取；照亮地床、紫色残骸、黑绿宿主仍可分，绿色侵蚀覆盖视野，局部身体余量可见但不证明全过程避险可读。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/017-violet-marrows-severe-20261005/severe/1-field-result.png",
+      "sha256": "b9931ef93329225838b8ef059a12ed3681bfade942b6ad743780c6ee4f7eff7e",
+      "reason": "返回显示115/145HP、1件树脂团、87秒、峰值混乱102；属于实际带回，不能因0薪柴算空返。"
+    }
+  ],
+  "limits": [
+    "Original fixed fixtures and policy15, not natural48.",
+    "Six normal PNGs personally viewed; no continuous video, hands-on play, audio, GPU/performance or human aesthetic approval.",
+    "Does not remedy either white-scarfield/severe or ochre-folds/severe pair failures."
+  ],
+  "pixelModelsScope": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+    "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+  }
+}

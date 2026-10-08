@@ -1,0 +1,173 @@
+{
+  "status": "prepared-not-executed",
+  "at": "2026-10-07T14:28:59.242527+00:00",
+  "issue": "R100-P43",
+  "diagnosis": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-melee-input/review.json",
+    "sha256": "4614d65e6cbd885556858c85167c195fa3168eecaf4255888cbdfc5d006d0ade"
+  },
+  "files": [
+    {
+      "path": "tools/qa/r100-i12-turn-align.mjs",
+      "sha256": "8e68e5aa7242ad6c07ba4c108b9f18e37dff589e5acc942f5e3f077569583150"
+    },
+    {
+      "path": "tools/qa/r100-i12-turn-encounters.mjs",
+      "sha256": "1b1f703bb2f3785f3aa2117fa66c47012fc26f0ebe8334f26aa5253175730b51"
+    },
+    {
+      "path": "tools/qa/r100-i12-turn-journey.mjs",
+      "sha256": "5a2b1d80111d075397810420f771e5c8c731b3f71cdfa0868f46ae95afcfd473"
+    },
+    {
+      "path": "tools/qa/r100-i12-turn-coverage.mjs",
+      "sha256": "093959b8c34ca8295d250b65daf9b2ce418ecc7b7ef2ef92ab85c4c0ec6766c5"
+    },
+    {
+      "path": "tools/qa/r100-i12-turn-align.test.mjs",
+      "sha256": "fada6ada85ce54e1b288ba861537d92299c80dfb0bb48ca3ab3f1068c371b7c3"
+    }
+  ],
+  "diffs": [
+    {
+      "original": {
+        "path": "tools/qa/r100-revision6-journey.mjs",
+        "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-turn-journey.mjs",
+        "sha256": "5a2b1d80111d075397810420f771e5c8c731b3f71cdfa0868f46ae95afcfd473"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/r100-i12-turn-journey.diff",
+        "sha256": "880e8daa77dfb32756dcc314246c5c90fb166542d03fbcfb8d2554982f205dc0"
+      }
+    },
+    {
+      "original": {
+        "path": "tools/qa/r100-i09-costed-encounters.mjs",
+        "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-turn-encounters.mjs",
+        "sha256": "1b1f703bb2f3785f3aa2117fa66c47012fc26f0ebe8334f26aa5253175730b51"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/r100-i12-turn-encounters.diff",
+        "sha256": "6d89165ef32c71f166a59ae142a9eef07be91bad8ca049c7e9d62cd9fb00689c"
+      }
+    },
+    {
+      "original": {
+        "path": "tools/qa/r100-i07-i09-coverage.mjs",
+        "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8"
+      },
+      "candidate": {
+        "path": "tools/qa/r100-i12-turn-coverage.mjs",
+        "sha256": "093959b8c34ca8295d250b65daf9b2ce418ecc7b7ef2ef92ab85c4c0ec6766c5"
+      },
+      "diff": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/r100-i12-turn-coverage-v2.diff",
+        "sha256": "2a104f8a729b062ee0a933dea91f0e5be4e61f2301ebc95138a8dfede2841f5c"
+      }
+    }
+  ],
+  "boundaryTests": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/boundary-tests.json",
+    "sha256": "7b9c2589038d8939da9bcb261cf74f1892168ed2fd4745f4382367d47b877a25"
+  },
+  "syntaxAndReturnPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/syntax-and-return-policy-checks.json",
+    "sha256": "044c780985034bdca3737604c9f758ee56e814a2cc79e0460f2df8d980108555"
+  },
+  "protocolCandidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/protocol-candidate-v2.json",
+    "sha256": "30d48763a2c32a3446edf075485d6fa35b378285a7944ce7cc645974e4ce9b4e"
+  },
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/execution-plan.json",
+    "sha256": "d6e89054a8ea3371bf70a0a451a51d88e7a9bdf6ce096b83b8ac5d0681c86db5"
+  },
+  "sourceArchive": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive-v2.json",
+    "sha256": "662ca946b13bb80540718dfafaf3ad61464bb90db8abd58f480fd25bad867abc"
+  },
+  "changes": [
+    "Only two existing eligible defensive Space sites route through the bounded alignment helper.",
+    "At most3 actual direction-key wait requests<=60ms each; current player angle is read, never assigned.",
+    "Final target is the same currently visible opponent, within original<=37 or<40px, error<=25degrees and not windup/strike; thresholds preserve original health/risk requirements.",
+    "Report/JSONL facingChecks exactly match, including turn inputs and Space evidence, actual whole clock, releases and errors.",
+    "Directional request180ms is not claimed to bound total actual key-held time; whole check+Space+cleanup is<=1000ms actual game time.",
+    "Original policy15 and signed16 are unchanged; old missing strike checks outside this narrow melee permission remain as originally frozen.",
+    "V2 only corrects the wrapper integration: policy17 controller/journey validators, its frozen guard dependency, and the actual per-case/per-grade original journey.jsonl event array as the fifth argument. Other four candidate code files remain byte-identical to V1."
+  ],
+  "limitations": [
+    "No browser has run this policy; boundary pass is not game qualification or hit evidence.",
+    "Angle normalization is10 decimal places to remove floating error at the mathematical25 degree edge.",
+    "Outer original navigation/return policy and its cached observed return-budget estimate remain; no prediction of hidden attacks, future pressure or enemy damage."
+  ],
+  "candidateRevision": 2,
+  "previousCandidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/candidate.json",
+    "sha256": "6d52b2546171d31367df7ff6eb817dc8c2b673284116dc9877362a4bdb0c5868"
+  },
+  "incrementalDiff": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/r100-i12-turn-coverage-v1-to-v2.diff",
+    "sha256": "e88719b3e89275a8de58598c1841fb9e176be456d5a9a08782b1f705ffb523c3"
+  },
+  "wrapperDependencies": [
+    {
+      "path": "tools/qa/r100-i12-facing-supplement.mjs",
+      "sha256": "b21c89be8dc1e6d86a1d2d0337afaf1b641aed2891effc9d0834ec06c8f31672"
+    },
+    {
+      "path": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "46f93fbee706a09ca9a35a0df52ca6053ac8d59904fcb602917137906a3b482c"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "path": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    }
+  ],
+  "externalExecutionDependencies": [
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    }
+  ],
+  "wrapperChecks": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/wrapper-v2-checks.json",
+    "sha256": "afeb68795b50ecc31edf7806c4d24fbd34126d24d7bc4b49c05811f1d256f98f"
+  },
+  "independentReviewInputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/boundary-review.json",
+      "sha256": "001fc77f4b196b1dcee20cb40d58ccb382a5f8877dc7ebc4e67499b388eccd28"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/guard-review-v2.json",
+      "sha256": "f50be11e722d79aebb0479f4c7b2b7ebaef44700754a24db11d83a5444db9a13"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/wrapper-v2-protection-review.json",
+      "sha256": "b0e7b960765d5254ff16b5878f2342fd39649a5305a34cd31068ca47231b049f"
+    }
+  ],
+  "postprocessor": {
+    "source": {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/reconcile-execution.mjs",
+      "sha256": "ce0091c1dd272039ab08db7ca4d24790bccd085c23f50dab3d07535bf2b66555"
+    },
+    "syntax": "pass",
+    "status": "prepared-not-executed",
+    "scope": "Read-only actual-run reconciliation; no browser or input."
+  }
+}

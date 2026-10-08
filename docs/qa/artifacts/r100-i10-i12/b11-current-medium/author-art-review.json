@@ -1,0 +1,569 @@
+{
+  "status": "mixed-bounded-review",
+  "at": "2026-10-07T06:54:52.137Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/report.json",
+    "sha256": "62233c2944196289a76734f77226a35f23c75e617a045f37393e6908a45a4383"
+  },
+  "scope": "All 18 original PNGs personally viewed. Normal FOV/light, fixed requested seed20261005, real WASD with active pressure. Static floor planning; not visible-only natural play.",
+  "limitations": [
+    "Only illuminated local faces/relationships shown; no complete-map, full search-return, economic, audio, dynamic fatigue or human approval.",
+    "Different actual poses and pressure; not pixel-aligned comparisons.",
+    "Rejected local surfaces do not imply collision or runtime failure; unchanged readable areas retain only their observed scope."
+  ],
+  "worlds": [
+    {
+      "worldId": "crushed-seam",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "crushed-seam",
+        "grade": "medium",
+        "package": {
+          "id": "r100-crushed-seam",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "9e644d96",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=crushed-seam&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "01/02 两块大灰低母床仍以长直截边与完整多边形面分离，压在地上的片状读法过强；03/04/05 褐色厚压口、上下离断片、蓝裸床与近脚边界可读。",
+      "limitations": [
+        "拒绝限低母床落地；并非所有四短件都与母层接触，只有中间两件接母床，上下离断。未签所有背面。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/crushed-seam-medium/01-material-approach-north.png",
+          "sha256": "f878d1802af419837a342aac476d60372e939969f52303461c962ee117c3b0df",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 501.44106399590873,
+              "y": 515.8835949680388
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.211914837999803,
+            "elapsedMs": 6749.799999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/crushed-seam-medium/02-material-approach-east.png",
+          "sha256": "07dbc31a8dc6e610977bf2172e59e4b1c604c5c8c00945fc41515a24617d705a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.00043982297150169103,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 480.949399011442,
+              "y": 415.20870661026214
+            },
+            "facingAngle": -0.00043982297150169103,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.024794975999722,
+            "elapsedMs": 9199.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/crushed-seam-medium/03-material-approach-east.png",
+          "sha256": "3c380933126eeb7753fc0493f5ef06b906f851f694c2ab4c48e97dd9276a8bcc",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 505.6354090720898,
+              "y": 544.8868014652827
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.942739583999597,
+            "elapsedMs": 11966.199999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/crushed-seam-medium/04-material-approach-east.png",
+          "sha256": "9c8d33b268a86b8838e4985f5946fbf877dc6d9429aff27a8ac7d0d1438a9109",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 457.5176737429054,
+              "y": 287.535735648825
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 20.629318799999425,
+            "elapsedMs": 17049.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/crushed-seam-medium/05-material-approach-east.png",
+          "sha256": "ea3d867d969ee1d5bf65d67abbabe9bb667eef84386f294dd2c2f842ee6645d0",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 440.89534116992115,
+              "y": 593.7953912218343
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 22.33802575799937,
+            "elapsedMs": 22199.2
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "husk-reef",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "husk-reef",
+        "grade": "medium",
+        "package": {
+          "id": "r100-husk-reef",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "5404f0dd",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=husk-reef&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-medium-pass",
+      "finding": "01/04 不等厚壳及中间裸床、02 单独短壳与外绕、03 低紫皮和近侧壳体层级可分；近脚厚边清晰。",
+      "limitations": [
+        "青色细平行层线仍属共享画法弱项；仅这些受光面，不签壳背或全图。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/husk-reef-medium/01-material-approach-west.png",
+          "sha256": "dc45a5aadbfa25a48c19f77da826472b80821aedbfb81c2d83132fd78ac661b3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.1412784943244336,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 474.7441495050754,
+              "y": 322.4946013480249
+            },
+            "facingAngle": 3.1412784943244336,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.74918737199964,
+            "elapsedMs": 11382.8
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/husk-reef-medium/02-material-approach-west.png",
+          "sha256": "b1b0b3962f02d24c711a24382062e41b0534302171166783a4be7f0c5efa0a67",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.1413413261775007,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 694.8955679753946,
+              "y": 368.34158295342377
+            },
+            "facingAngle": 3.1413413261775007,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 20.142694283999454,
+            "elapsedMs": 15582.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/husk-reef-medium/03-material-approach-north.png",
+          "sha256": "30487f25cea8d33f8ce8f905e6365cc46a2c9f3068094d38ef65b4bea26cf51d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 739.6028535013905,
+              "y": 532.9065158422897
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 24.624688937999366,
+            "elapsedMs": 19465.899999999998
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/husk-reef-medium/04-material-approach-east.png",
+          "sha256": "d9ffc8bb138dece5f4d56c986b73b365a63a8440266c5ee7e48247bd8687a7f9",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 243.12066937160313,
+              "y": 487.5753990611089
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 32.47697483399876,
+            "elapsedMs": 31298.7
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "fibre-scree",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "fibre-scree",
+        "grade": "medium",
+        "package": {
+          "id": "r100-fibre-scree",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "eec5ef3e",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=fibre-scree&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "01/02 蓝长束有交叠厚端，03 两组间裸床可见；但04 浅色可走低尾以完整斜四边片覆盖地表，长直边与纸片感仍明显。",
+      "limitations": [
+        "拒绝限低散片落地，不否定两组实体蓝束；04 真实敌人位于局部画面下方，被遮处不评。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/fibre-scree-medium/01-material-approach-east.png",
+          "sha256": "55e9f6b0c6bcee643f5d5bf0927c090c14d480b09e393fbde288b5fc29feaabb",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 246.87595406082602,
+              "y": 330.57737551656226
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.56493138199986,
+            "elapsedMs": 4799.799999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/fibre-scree-medium/02-material-approach-north.png",
+          "sha256": "744272c49f0578d206b8df70080ce111e10913527826c80a1503c571be74cf36",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887575,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 715.2060269791596,
+              "y": 581.6511294135211
+            },
+            "facingAngle": -1.5706706630887575,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 22.04493686399938,
+            "elapsedMs": 21315.9
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/fibre-scree-medium/03-material-approach-north.png",
+          "sha256": "eafd914d732c0968f8f9e035f36fac040291338b2b62d4787a3cdae6bc210494",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 546.9609146718421,
+              "y": 503.3502345650061
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 23.244894881999354,
+            "elapsedMs": 24932.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/fibre-scree-medium/04-material-approach-west.png",
+          "sha256": "84ecf9db2698005e38125b02e0f35cd98c488d61799394a0bf55192b9b0b3b44",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.1413413261775007,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 751.0226923800983,
+              "y": 593.9858690805968
+            },
+            "facingAngle": 3.1413413261775007,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 25.163734097999342,
+            "elapsedMs": 30715.5
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "gel-rafts",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "gel-rafts",
+        "grade": "medium",
+        "package": {
+          "id": "r100-gel-rafts",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "c085fa31",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=gel-rafts&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "01/04 两高胶头体积和紫胶/蓝床分离；02/04/05 多个低胶面有明显直角拼接、三角尖和硬长直缝，宽薄流胶面未自然落地。",
+      "limitations": [
+        "03 主要照到地床，高体局部在灯外，不能补签整高头；拒绝低面不是碰撞失败。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/gel-rafts-medium/01-material-approach-west.png",
+          "sha256": "f9e42cb0601e12fd4bdcbb5edf6a32a27f8fa6aa8836c191134aa04fa008dc82",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 542.5314610833715,
+              "y": 329.57848808144513
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.897609399999748,
+            "elapsedMs": 8816.3
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/gel-rafts-medium/02-material-approach-north.png",
+          "sha256": "d6482b67760e63c67d3c19f0075fecbfb0835a62e3ac5986ea1b2b8f5c47401a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887433,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 330.81283694782894,
+              "y": 575.6366616044437
+            },
+            "facingAngle": -1.5706706630887433,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 20.966629997999405,
+            "elapsedMs": 18065.9
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/gel-rafts-medium/03-material-approach-west.png",
+          "sha256": "abc0f3406cd62b6e45b5e4c6e28323e215428d03208500f2c3408def0e9badd8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 652.7630837826365,
+              "y": 482.0692185993897
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 23.42737824599937,
+            "elapsedMs": 25482.300000000003
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/gel-rafts-medium/04-material-approach-south.png",
+          "sha256": "d28c1f591b4302007922957a83eb70954dd266bcab02820d8412d13e3ab36ab5",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5711104860602556,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 781.4271171159729,
+              "y": 482.0692185993897
+            },
+            "facingAngle": 1.5711104860602556,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 24.168373913999382,
+            "elapsedMs": 27715.600000000002
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/gel-rafts-medium/05-material-approach-west.png",
+          "sha256": "0cea906cea70e84f92080bff0b3aafc28f395e33b11d4247286df15cfca015d7",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 826.8766171159743,
+              "y": 482.0692185993897
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 24.63841174799938,
+            "elapsedMs": 29132.2
+          }
+        }
+      ]
+    }
+  ]
+}

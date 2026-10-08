@@ -1,0 +1,120 @@
+{
+  "status": "same-source-scale-study-art-pending",
+  "hypothesis": "512px atom worldSize384→900 expands each source fibre group in world pixels without adding detail, changing geometry or reducing logical resolution.",
+  "records": [
+    {
+      "worldId": "short-fibre-mat",
+      "rotation": 0,
+      "meshSha256": "224e0433d879966ad69ee1ea44698c39fe8590fc9ad4ccc398b99ef5cc95fee8",
+      "sameSourceSha256": "cf673c46a193dd9f50bf1c26a0218bced7c335af8b52e9adb5b3f6c0f50246dd",
+      "beforeWorld384": {
+        "candidate": true,
+        "file": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated/short-fibre-mat-east-after.png",
+        "sha256": "97896e38d5ac7af93636f24de58b1d5f6aeb74e22025705e149402679a135832"
+      },
+      "afterWorld900": {
+        "candidate": true,
+        "file": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-world900/short-fibre-mat-east-after.png",
+        "sha256": "d6344d04f6eac4ea9bdd24ae7bc8f636fa1e060bbecc74f59150b78874d5e919",
+        "worldSize": 900,
+        "logicalPixels": 512,
+        "sampleWindows": {
+          "skin": {
+            "left": 13,
+            "top": 13,
+            "width": 486,
+            "height": 205,
+            "sourceWidth": 512,
+            "minU": -121.5,
+            "minV": -83.47577667236328,
+            "scale": 0.5688888888888889,
+            "offsetU": 176.85699652777777,
+            "offsetV": 101.85924678096066
+          },
+          "cleaved": {
+            "left": 13,
+            "top": 282,
+            "width": 486,
+            "height": 215,
+            "sourceWidth": 512,
+            "minU": -121.5,
+            "minV": -83.47577667236328,
+            "scale": 0.5688888888888889,
+            "offsetU": 176.85699652777777,
+            "offsetV": 111.13008011429399
+          },
+          "loose": {
+            "left": 13,
+            "top": 282,
+            "width": 486,
+            "height": 215,
+            "sourceWidth": 512,
+            "minU": -121.5,
+            "minV": -83.47577667236328,
+            "scale": 0.5688888888888889,
+            "offsetU": 176.85699652777777,
+            "offsetV": 111.13008011429399
+          }
+        }
+      }
+    },
+    {
+      "worldId": "felt-wedges",
+      "rotation": 1.5707963267948966,
+      "meshSha256": "02d09ca494d8e329fc7e3147854cb2b4a765325e948d5036eb9140bc55e015f6",
+      "sameSourceSha256": "cf673c46a193dd9f50bf1c26a0218bced7c335af8b52e9adb5b3f6c0f50246dd",
+      "beforeWorld384": {
+        "candidate": true,
+        "file": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated/felt-wedges-south-after.png",
+        "sha256": "690f6e6a048f50eaee3abd6bac3edf427ac8bca2dae699859cc4d58771fba138"
+      },
+      "afterWorld900": {
+        "candidate": true,
+        "file": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-world900/felt-wedges-south-after.png",
+        "sha256": "108388df72cda540c35072154f5a512ab695ebbb1938ff7c9c6aadb84d5566ba",
+        "worldSize": 900,
+        "logicalPixels": 512,
+        "sampleWindows": {
+          "skin": {
+            "left": 13,
+            "top": 13,
+            "width": 486,
+            "height": 205,
+            "sourceWidth": 512,
+            "minU": -121.5,
+            "minV": -83.47577667236328,
+            "scale": 0.5688888888888889,
+            "offsetU": 176.85699652777777,
+            "offsetV": 101.85924678096066
+          },
+          "cleaved": {
+            "left": 13,
+            "top": 282,
+            "width": 486,
+            "height": 215,
+            "sourceWidth": 512,
+            "minU": -121.5,
+            "minV": -83.47577667236328,
+            "scale": 0.5688888888888889,
+            "offsetU": 176.85699652777777,
+            "offsetV": 111.13008011429399
+          },
+          "loose": {
+            "left": 13,
+            "top": 282,
+            "width": 486,
+            "height": 215,
+            "sourceWidth": 512,
+            "minU": -121.5,
+            "minV": -83.47577667236328,
+            "scale": 0.5688888888888889,
+            "offsetU": 176.85699652777777,
+            "offsetV": 111.13008011429399
+          }
+        }
+      }
+    }
+  ],
+  "productionChanged": false,
+  "scope": "Two isolated bodies, identical mesh/palette/light and candidate source; no normal game FOV."
+}

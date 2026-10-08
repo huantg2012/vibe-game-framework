@@ -1,0 +1,1289 @@
+{
+  "status": "bounded-author-low-severe-pass",
+  "at": "2026-10-07T07:17:37.615Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/report.json",
+    "sha256": "c54adb757543f72dd693e5e838adf881ad774ceb276eef5a9d05504b58077c35"
+  },
+  "scope": "All 38 original PNGs personally viewed; fixed requested seed20261005, real WASD, normal FOV/light and active pressure. Static floor planning, not visible-only natural play.",
+  "limitations": [
+    "Only illuminated local faces and relationships; no complete-map, full search-return, economy, audio, dynamic fatigue or human approval.",
+    "Actual poses/enemies/pressure differ; comparable directions, not pixel-aligned frames.",
+    "No new explicit art obstruction found in reviewed frames; rejected surfaces in other worlds remain rejected pending current-source review."
+  ],
+  "worlds": [
+    {
+      "worldId": "chalk-divide",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "chalk-divide",
+        "grade": "low",
+        "package": {
+          "id": "r100-chalk-divide",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "a8557c02",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=chalk-divide&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧中浅色片层与粗短截体的断口、紫灰裸床可辨，01两侧不等轮廓、02侧厚端及04近侧颗粒面未出现新贴地硬圈。",
+      "limits": "重02/04与低04有敌人遮挡；04仅局部，不能穷尽所有横口或后壁。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/chalk-divide-low/01-material-approach-north.png",
+          "sha256": "c3f829080663004f3d0c5ae0a8bfe2f32b693d24562fa9da46b7fc75f3fcdb96",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 363.4385771048811,
+              "y": 547.0727674077162
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.682525239999991,
+            "elapsedMs": 3683.0999999999995
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/chalk-divide-low/02-material-approach-east.png",
+          "sha256": "8b0837e5cd4ae543e97db9700cc70d979a1f49c4e756e900e708df154514075d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.00006283185306960037,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 369.3668709580235,
+              "y": 262.9085916052637
+            },
+            "facingAngle": -0.00006283185306960037,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.47565616799998,
+            "elapsedMs": 7866.3
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/chalk-divide-low/04-material-approach-north.png",
+          "sha256": "e5ee483d020dbdb814ae6c17ea0cfd3f305a1b49d7e2eee966269863b9bf204d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 755.5918062534029,
+              "y": 546.6592700115702
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 85,
+            "chaos": 25.468054191999915,
+            "elapsedMs": 17932.600000000002
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "chalk-divide",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "chalk-divide",
+        "grade": "severe",
+        "package": {
+          "id": "r100-chalk-divide",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "c7a3ec53",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=chalk-divide&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧中浅色片层与粗短截体的断口、紫灰裸床可辨，01两侧不等轮廓、02侧厚端及04近侧颗粒面未出现新贴地硬圈。",
+      "limits": "重02/04与低04有敌人遮挡；04仅局部，不能穷尽所有横口或后壁。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/chalk-divide-severe/01-material-approach-north.png",
+          "sha256": "956e3e190d6639bc103ef0827cc27a282ecd1524cf0e59e4df838c9bc2898133",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 364.34551060114075,
+              "y": 546.4352671170353
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.6599741226666,
+            "elapsedMs": 3366.5999999999995
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/chalk-divide-severe/02-material-approach-east.png",
+          "sha256": "bc0915d79b817ba35a4d9a9b6fc35620bdc49c9eb66f43cabf29e13907507588",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 370.9539979054318,
+              "y": 263.4142813377365
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.79182641066651,
+            "elapsedMs": 7582.999999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/chalk-divide-severe/04-material-approach-north.png",
+          "sha256": "cbd2a3dafd3b41f7931880fc8a00d1997ea4e8b11b6e34dcf786f604090267a8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5704821675295446,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 755.6097041821878,
+              "y": 551.7975458915366
+            },
+            "facingAngle": -1.5704821675295446,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 35.527187882666254,
+            "elapsedMs": 17649.3
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "red-vault-fragments",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "red-vault-fragments",
+        "grade": "low",
+        "package": {
+          "id": "r100-red-vault-fragments",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "e0e31e8e",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=red-vault-fragments&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧02的红外背/灰弯内壁、04异向厚片夹口与冷蓝床清楚；污染绿与材料本色保持分离。",
+      "limits": "01主要看裸床和灯边短壁，不据此签完整巨体。灰内面绿层线较规则，属于保留的同族近邻弱点；04重档有敌人。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/red-vault-fragments-low/01-material-approach-north.png",
+          "sha256": "7f958296ca0cfddcfa18f0b900314e238394d639523ac8b1583baadb4ddb7a4a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 484.303702149816,
+              "y": 497.1045709663008
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.014320183999985,
+            "elapsedMs": 5433.200000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/red-vault-fragments-low/02-material-approach-east.png",
+          "sha256": "cd1acdb4478a01b5918bd78ea370d984688d1ee95999031fe37ba1ef79a540fc",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 570.9580365372354,
+              "y": 390.78573470649394
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.662099959999974,
+            "elapsedMs": 8849.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/red-vault-fragments-low/04-material-approach-south.png",
+          "sha256": "57198083baee24186279824164c8b6f7fce2bde2334b503d67fcc7378ee05c3a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 694.1754872542349,
+              "y": 476.87766677501367
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 17.610062039999956,
+            "elapsedMs": 13849.500000000002
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "red-vault-fragments",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "red-vault-fragments",
+        "grade": "severe",
+        "package": {
+          "id": "r100-red-vault-fragments",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "2794e5bb",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=red-vault-fragments&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧02的红外背/灰弯内壁、04异向厚片夹口与冷蓝床清楚；污染绿与材料本色保持分离。",
+      "limits": "01主要看裸床和灯边短壁，不据此签完整巨体。灰内面绿层线较规则，属于保留的同族近邻弱点；04重档有敌人。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/red-vault-fragments-severe/01-material-approach-north.png",
+          "sha256": "0b65dcc9a129d9e17723a6e8fd14cfd871d1c5c153b79ebc4bbfdb67faf88d81",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 485.5202820189621,
+              "y": 493.3565633495414
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.109318655999857,
+            "elapsedMs": 6233.099999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/red-vault-fragments-severe/02-material-approach-east.png",
+          "sha256": "74d72d730ffc7e5e0e82f5f2e4f11e2679758fe4235adb8dc81bb2d0b7852fd3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 572.3292795910744,
+              "y": 394.65185439518245
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.75245292799978,
+            "elapsedMs": 9482.900000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/red-vault-fragments-severe/04-material-approach-south.png",
+          "sha256": "f1871cccac56aa264d4b2bc9b0b4844983f97d1fe5e5f6402d3cad89bee1b387",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 693.7863959010225,
+              "y": 472.3811359594888
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 22.17922675199969,
+            "elapsedMs": 14282.7
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "notched-backwater",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "notched-backwater",
+        "grade": "low",
+        "package": {
+          "id": "r100-notched-backwater",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "3bac302b",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=notched-backwater&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧01两不等厚臂及中路、02近侧亮断面与暗内面、04外侧厚头和蓝床可辨；重档本色/污染分开。",
+      "limits": "04只有一个近角，重档吞光实体与敌人遮挡，不证明整圈回流路或所有背面。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/notched-backwater-low/01-material-approach-north.png",
+          "sha256": "18cf75a894a67b6b02abe7bbf333dda5528d46ef78d681b96ab1db08c334d0e6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 572.8326673385216,
+              "y": 630.6096748407828
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.270268807999983,
+            "elapsedMs": 6783.099999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/notched-backwater-low/02-material-approach-west.png",
+          "sha256": "2464be582cb27e036cd7cf579db7a922ce13b7084320496578e3d2f0da51c40d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.6347521055972,
+              "y": 466.270889295455
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 16.845365423999972,
+            "elapsedMs": 9816.3
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/notched-backwater-low/04-material-approach-west.png",
+          "sha256": "c98bd9089322aa87208e906dab85be8695d1119303ea440a03451b9720340e6e",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1415298217367273,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 564.6801404271,
+              "y": 199.48503275421882
+            },
+            "facingAngle": -3.1415298217367273,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.717491295999956,
+            "elapsedMs": 14416.100000000002
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "notched-backwater",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "notched-backwater",
+        "grade": "severe",
+        "package": {
+          "id": "r100-notched-backwater",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "d4ce65ba",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=notched-backwater&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧01两不等厚臂及中路、02近侧亮断面与暗内面、04外侧厚头和蓝床可辨；重档本色/污染分开。",
+      "limits": "04只有一个近角，重档吞光实体与敌人遮挡，不证明整圈回流路或所有背面。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/notched-backwater-severe/01-material-approach-north.png",
+          "sha256": "fb1cbd1fd0e32a4ac296ede08087f0c84325544944ad120116ffae15171966ca",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887537,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 572.9701072820671,
+              "y": 637.1828616121388
+            },
+            "facingAngle": -1.5706706630887537,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.286278655999855,
+            "elapsedMs": 6583.1
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/notched-backwater-severe/02-material-approach-west.png",
+          "sha256": "3126822a06f980bc8f289357d3f0d53e30fb8dc79f855ce3c3a98a5fdfffe351",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 555.4512429328397,
+              "y": 463.6409260240597
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.760886335999796,
+            "elapsedMs": 9499.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/notched-backwater-severe/04-material-approach-west.png",
+          "sha256": "74952199b3485845d427698565a1099e3b6b360c95b76326674cc8a4a2464820",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.141341326177508,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 565.4807090470953,
+              "y": 201.71807830685333
+            },
+            "facingAngle": -3.141341326177508,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 21.993858623999714,
+            "elapsedMs": 13916.099999999999
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "crossed-casings",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "crossed-casings",
+        "grade": "low",
+        "package": {
+          "id": "r100-crossed-casings",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "16eff902",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=crossed-casings&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧01短高壳、02宽弯壳、04另向短壳的尺度/方向与棕地可读，粉断面和蓝外皮分层，脚线清楚。",
+      "limits": "04低重都有吞光敌人，02不展示全体交叉关系；规则绿层纹仍是共同弱点。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/crossed-casings-low/01-material-approach-west.png",
+          "sha256": "e02a22957fb73ab84e51a005eca208be3ebc474942c93d5e50573a749be1d09a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 445.6359459334941,
+              "y": 603.0535335071722
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 16.033273863999984,
+            "elapsedMs": 5533
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/crossed-casings-low/02-material-approach-north.png",
+          "sha256": "d284bc4cf83c02ec2e5bd49d93cd52a5e759fad1f6fe0d59c89591b5b3addb27",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 460.39943226132743,
+              "y": 439.1317040016924
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.665248583999972,
+            "elapsedMs": 8866.2
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/crossed-casings-low/04-material-approach-north.png",
+          "sha256": "6a8d0e9feaca552d4880b5394189ed267cbdc524c326d59d3cda520a03dd47f0",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 250.01199492212626,
+              "y": 596.4707945340109
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.140911071999945,
+            "elapsedMs": 16649.3
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "crossed-casings",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "crossed-casings",
+        "grade": "severe",
+        "package": {
+          "id": "r100-crossed-casings",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "1c90f626",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=crossed-casings&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧01短高壳、02宽弯壳、04另向短壳的尺度/方向与棕地可读，粉断面和蓝外皮分层，脚线清楚。",
+      "limits": "04低重都有吞光敌人，02不展示全体交叉关系；规则绿层纹仍是共同弱点。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/crossed-casings-severe/01-material-approach-west.png",
+          "sha256": "20d90b91fb0fc7e924260e6dd9e2921c3e20e824d95a5f3ad784fc3b909aa1b5",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 455.5535575415405,
+              "y": 606.3078774912285
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.477354047999892,
+            "elapsedMs": 4983.099999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/crossed-casings-severe/02-material-approach-north.png",
+          "sha256": "a523c5abfcbed8c751e522046deb3def40eeb417517b1ce8e5ce5ab85d8118da",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 460.90576858005926,
+              "y": 440.15271678706534
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.85084678399983,
+            "elapsedMs": 7699.599999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/crossed-casings-severe/04-material-approach-north.png",
+          "sha256": "5c5245accc58ee0b14b326c4feabdb9a605cd05c83b2a5203e8417d6c8972e03",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887575,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 254.11216756265026,
+              "y": 594.8198780340939
+            },
+            "facingAngle": -1.5706706630887575,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 22.263505215999686,
+            "elapsedMs": 14449.3
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "fibre-stumpfield",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "fibre-stumpfield",
+        "grade": "low",
+        "package": {
+          "id": "r100-fibre-stumpfield",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "85196cec",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=fibre-stumpfield&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧褐色粗短束、参差厚断头、粉紫/蓝裸床关系可辨；01对置近头、02内部换侧、04独立短端保持材质方向。",
+      "limits": "这里只是照见的局部错列，不能据静帧签整条路线变化/持续新鲜度；局部较亮断端纹理有所减弱。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/fibre-stumpfield-low/01-material-approach-north.png",
+          "sha256": "2eb135ab88aa9cc9e0d3c4051492249db32c8c388c14632e748b95cb5abad8ea",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887535,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 458.6558574645624,
+              "y": 630.2846163527743
+            },
+            "facingAngle": -1.5706706630887535,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.954279551999988,
+            "elapsedMs": 5116.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/fibre-stumpfield-low/02-material-approach-east.png",
+          "sha256": "044925b2dc9059096680d7770548c42b5aa095b21dabb6a5e289e4545a9c6b41",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0.00025132741228584,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 459.1333037803788,
+              "y": 461.0592352554772
+            },
+            "facingAngle": 0.00025132741228584,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.210432335999947,
+            "elapsedMs": 17016.100000000002
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/fibre-stumpfield-low/04-material-approach-west.png",
+          "sha256": "d77829b651fce82626b3e0fc8785de72bab52762d93e6584a42c77ee3b08f348",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 517.4310881770189,
+              "y": 294.91455739410463
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.924560735999933,
+            "elapsedMs": 20782.5
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "fibre-stumpfield",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "fibre-stumpfield",
+        "grade": "severe",
+        "package": {
+          "id": "r100-fibre-stumpfield",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "a77d95a0",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=fibre-stumpfield&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧褐色粗短束、参差厚断头、粉紫/蓝裸床关系可辨；01对置近头、02内部换侧、04独立短端保持材质方向。",
+      "limits": "这里只是照见的局部错列，不能据静帧签整条路线变化/持续新鲜度；局部较亮断端纹理有所减弱。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/fibre-stumpfield-severe/01-material-approach-north.png",
+          "sha256": "3cd1de4e13a10f0b8ed5418e6c650e485564b9371045e763de90d9791d9fc654",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887555,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 459.3984175004357,
+              "y": 628.9273579912201
+            },
+            "facingAngle": -1.5706706630887555,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.536317119999886,
+            "elapsedMs": 5099.700000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/fibre-stumpfield-severe/02-material-approach-east.png",
+          "sha256": "4f27cfa4ecf9d4722f9512228ee945b2664b8d50bcd4d97bf976b2c2a8a43858",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0.0002513274122923903,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 457.8342892844462,
+              "y": 462.74869711512736
+            },
+            "facingAngle": 0.0002513274122923903,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 23.42632454399964,
+            "elapsedMs": 16749.3
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/fibre-stumpfield-severe/04-material-approach-west.png",
+          "sha256": "75f0c78221cfb1f2e42818d229f23e488a7a3305a02132f190eb98d64080f6a7",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1415298217367207,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 517.6812327762793,
+              "y": 293.98328622826097
+            },
+            "facingAngle": -3.1415298217367207,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 25.364385407999514,
+            "elapsedMs": 20582.5
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "ochre-folds",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "ochre-folds",
+        "grade": "low",
+        "package": {
+          "id": "r100-ochre-folds",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "e74991e7",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=ochre-folds&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "八帧赭色宽折面、蓝暗断边与浅灰裸床分开；05近侧两向实际照到第三件短撕口、绿侵蚀与折面，低重都能辨认局部凹口。",
+      "limits": "01/04较远不能替代05；重04敌人贴近，重05南侧部分被吞光敌人遮挡。只核第三件近口，不推广每条折缝/所有侧面。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/ochre-folds-low/01-pleated-tear-1-north.png",
+          "sha256": "96b0e44319b98035d7c3099426e5ba698b613a085a8bde0aeb550c75b205cf1c",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 445.2481022823059,
+              "y": 367.3812093970994
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.29553174399998,
+            "elapsedMs": 6916.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/ochre-folds-low/04-pleated-tear-4-east.png",
+          "sha256": "f840459f29dbaef7813c27db9b9ffed40a9bcd949a91ceefa52c78be22a1971c",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 689.8791504941616,
+              "y": 649.7701763969878
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.166172743999944,
+            "elapsedMs": 16782.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/ochre-folds-low/05-third-tear-near-east.png",
+          "sha256": "98074b76dd62db224c42b82a71aa94611c0381ca4a582ce6ab524ecd7b6f589a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 803.0422153036676,
+              "y": 565.5249956493134
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.022497351999927,
+            "elapsedMs": 21299.1
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/ochre-folds-low/05-third-tear-near-south.png",
+          "sha256": "e2f87ec174785b61c49eafa3cb34968a9f9017941c2b21facec1a13e69283326",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707334949418303,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 800.6296326142581,
+              "y": 568.904505613604
+            },
+            "facingAngle": 1.5707334949418303,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 19.095169135999924,
+            "elapsedMs": 21682.4
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "ochre-folds",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "ochre-folds",
+        "grade": "severe",
+        "package": {
+          "id": "r100-ochre-folds",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "ddf2e336",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=ochre-folds&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "八帧赭色宽折面、蓝暗断边与浅灰裸床分开；05近侧两向实际照到第三件短撕口、绿侵蚀与折面，低重都能辨认局部凹口。",
+      "limits": "01/04较远不能替代05；重04敌人贴近，重05南侧部分被吞光敌人遮挡。只核第三件近口，不推广每条折缝/所有侧面。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/ochre-folds-severe/01-pleated-tear-1-north.png",
+          "sha256": "1e518735d4e0c753da39b172f8e300fbfcbc75e507bb351275ac85fcb01fd829",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 443.4251529479307,
+              "y": 367.6423566426609
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.7665565226665,
+            "elapsedMs": 7533
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/ochre-folds-severe/04-pleated-tear-4-east.png",
+          "sha256": "779841e21791ffc5b9c3f8ccf0b23a86de86f6a354ed07260de83fb6b32b539a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0.00025132741228561795,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 691.7368354161011,
+              "y": 648.2261388976658
+            },
+            "facingAngle": 0.00025132741228561795,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 28.218395818666274,
+            "elapsedMs": 18315.899999999998
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/ochre-folds-severe/05-third-tear-near-east.png",
+          "sha256": "72c50c6ca463a808dc747208fea4a97053fd85d51bf8952aebb1083721e630f6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 797.3566443301402,
+              "y": 562.9567534582811
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 34.51034634666623,
+            "elapsedMs": 22849
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/ochre-folds-severe/05-third-tear-near-south.png",
+          "sha256": "d74ea3486b3ffcf8827ba8b9afe4dbc067354de21f1459e3d94ff4f24a9ec672",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 797.3566443301402,
+              "y": 570.401753458281
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 34.70416810666623,
+            "elapsedMs": 23232.399999999998
+          }
+        }
+      ]
+    }
+  ]
+}

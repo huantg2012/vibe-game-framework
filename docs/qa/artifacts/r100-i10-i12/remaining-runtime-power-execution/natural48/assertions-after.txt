@@ -1,0 +1,22 @@
+2026-10-08 12:58:51 +0800 
+Assertion status system-wide:
+   BackgroundTask                 0
+   ApplePushServiceTask           0
+   UserIsActive                   1
+   PreventUserIdleDisplaySleep    0
+   SoftwareUpdateTask             0
+   PreventSystemSleep             0
+   ExternalMedia                  0
+   InternalPreventDisplaySleep    1
+   PreventUserIdleSystemSleep     1
+   NetworkClientActive            0
+Listed by owning process:
+   pid 330(powerd): [0x0023665a000185dd] 03:31:42 PreventUserIdleSystemSleep named: "Powerd - Prevent sleep while display is on"  
+   pid 330(powerd): [0x00237b64001083fd] 00:01:06 InternalPreventDisplaySleep named: "com.apple.powermanagement.delayDisplayOff"  
+	Timeout will fire in 233 secs Action=TimeoutActionTurnOff
+   pid 395(runningboardd): [0x002397f800018375] 00:00:00 PreventUserIdleSystemSleep named: "xpcservice<com.tencent.iOA.ticket([osservice<com.tencent.iOA.startup(501)>:52970])(501)>{vt hash: 0}:21110395-21110-2144926:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 21110. 
+   pid 401(WindowServer): [0x0023607f0009a483] 01:24:41 UserIsActive named: "com.apple.iohideventsystem.queue.tickle serviceID:1002818e3 service:AppleMultitouchDevice product:Apple Internal Keyboard / Trackpad eventType:11"  
+	Timeout will fire in 5718 secs Action=TimeoutActionRelease
+Kernel Assertions: 0x100=MAGICWAKE
+   id=556  level=255 0x100=MAGICWAKE creat=2026/8/10 18:03  mod=2026/10/8 09:40 description=en0 owner=IOSkywalkNetworkBSDClient

@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "typecheck": {
+    "command": "npx tsc --noEmit",
+    "exitCode": 0,
+    "log": "typecheck.log"
+  },
+  "syntaxAndScopedDiff": "pass",
+  "lint": {
+    "status": "not-configured",
+    "scriptExists": false
+  },
+  "existingTests": {
+    "accountingChecks": 14,
+    "binderChecks": 40
+  },
+  "devSmoke": "dev-smoke.json",
+  "gameplayReexecution": false
+}

@@ -1,0 +1,67 @@
+{
+  "status": "bounded-read-only-review-no-new-blocker",
+  "reviewer": "identity_shapes",
+  "scope": "独立只读审root的Worker请求生命周期、真实客户端/worker ACK与14个假时钟合同；同时复核本人作者的受控浏览器结果，仅作为证据一致性复查，不冒充第二名独立浏览器作者。未执行新测试/地图/浏览器。",
+  "findings": [],
+  "checked": [
+    "仅匹配请求id且首次未ACK onerror重试一次；started/result/error会确认已开始，显式compute/transfer/clone/constructor错误不重试。",
+    "单一原deadline保留，120ms重试timer可取消；取消/超时释放两个timer与abort监听，旧Worker先拆回调再terminate。",
+    "active同时检查current对象和attempt序号，工厂复用port仍拒过期闭包；14th合同直接捕获旧handler证明此点。",
+    "两个生产Worker在真实compute前发送ACK；客户端保原input/自增id一份request，发送无transferlist。新Worker只复用同一请求，非换seed/配方。",
+    "14合同覆盖persistent第二失败、取消延迟、原deadline、postMessage clone失败、同步factory abort、错误id ACK与legacy结果；纯合同不承担真实Chrome网络证明。",
+    "同3120预选ash-strata/medium/20261005的3contexts：baseline+两次独立首脚本abort，generation37及surface40 typedbuffers、别名/metadata完整摘要相等，generation只忽略明确耗时generationMs。",
+    "两个注入requestfailed保留，其他pageerror/console-error/crash/HTTPerror均0；加严validator对原3contexts及6注入JS错误负例成功，不覆原toolSHA。",
+    "5个可观察成功Worker在context关闭前自结束；初始脚本abort未暴露可调试context，失败对象terminate依赖纯合同，不伪称浏览器已观察。"
+  ],
+  "limits": [
+    "本浏览器工具为本人作者，root已有独审是其独立审查来源。",
+    "同源单配方受控恢复不等于自然ERR_NETWORK_CHANGED原因、全108资格、最终324或性能。",
+    "没有重跑root14合同，仅读源码并核原通过收据与7个输入源码SHA一致；此前首次缺Phaser shim调用失败和浏览器首计数失败继续保留。"
+  ],
+  "evidence": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-retry/contract.json",
+      "sha256": "f9b72f3792b9ed3f8e089ad470dd0ec6cdc4eca92beab1e5420ef89ee2778bec"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-retry/report.json",
+      "sha256": "559d02b4fe9ea51e99f9568526f217bf19877585a9102552da196aefd285adac"
+    },
+    {
+      "path": "tools/recovery/check-worker-startup-retry.ts",
+      "sha256": "380cf2f069c33ffdf6b3ede0503ee491dfacad156e710ea973b03567adb86234"
+    },
+    {
+      "path": "src/utils/worker-request.ts",
+      "sha256": "daffb6b048af03e206c50756dbfe5ecc66763e5a222a44081de66e4ef8395e87"
+    },
+    {
+      "path": "src/generation/rift-generation-client.ts",
+      "sha256": "eadc68f5d3ed49d53fc0d251b5e316d97aba91acbf2e2a3b23aad1153eb57e1b"
+    },
+    {
+      "path": "src/generation/rift-generation-worker.ts",
+      "sha256": "2d38af7ac34d11b44669b2775e81ae2b092277611eb37bd61e6008af0bb40567"
+    },
+    {
+      "path": "src/systems/r100-world/surface-preparation-client.ts",
+      "sha256": "864d605301d0323257cf455bd9710e9245517dd1691bdd7616cae91eba488ce0"
+    },
+    {
+      "path": "src/systems/r100-world/surface-preparation-worker.ts",
+      "sha256": "6082f9ff20ab38d5db9a877a368c5fa4cc1ebc1569f8090931296a99d65be00a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/report.json",
+      "sha256": "39da8da164c9003675c35b5d5dcd2cb15e0b5658f9f52d494203f09470e076a4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/strengthened-validator.json",
+      "sha256": "2a9f4b98dd48a0302df97ad7fc0a6abe674f0f92091ca121be92feb7d7f4eadc"
+    },
+    {
+      "path": "tools/qa/check-r100-worker-startup-browser.mjs",
+      "sha256": "edf6967e001baac2dc556a682b80a56099b73ddefd29f19131e88aabbae6ea7e"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-awaiting-original60-completion",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "predecessor": {
+    "output": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play-execution.json",
+    "commands": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play-commands.json",
+      "sha256": "232bbf52db15e76db6d2fe4ec4544cb7e03d008e65e9c1bd5de7d06bb677db77"
+    },
+    "cases": 24,
+    "status": "completed-script"
+  },
+  "chainPredecessor": {
+    "output": "docs/qa/artifacts/r100-i10-i12/current3120-remaining60.json",
+    "status": "completed-original60",
+    "plan": {
+      "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining60-plan.json",
+      "sha256": "250452a463b67bf815c3ba4f9b6dec3ded23798c28d12765e254b6ed703120b8"
+    },
+    "stages": [
+      "B06-short-fibre-original12",
+      "B09-original24",
+      "B10-original24"
+    ]
+  },
+  "stages": [
+    {
+      "id": "B11-original24",
+      "folder": "b11-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/run-play.mjs",
+        "sha256": "71508edf934d7fc2dbaf7e1e1ac23b1a4f7a4f0816f2a8b9a006d74adedbc6bc"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/play-commands.json",
+        "sha256": "9f4ef2b638e1b1cb2ff08ab27ce8c4991aba96cf65ff4ae47b9dfb7f30ab4851"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B12-original24",
+      "folder": "b12-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/run-play.mjs",
+        "sha256": "a756d06a5d2d9160d5b9daf07a51b6474eb40d63502d4f59fed5600a6bcc5d52"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play-commands.json",
+        "sha256": "75734580125996fc1eac72fd18b57d2b3bbf6a7a8ae32ba7991a2f87915c4a00"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B13-original24",
+      "folder": "b13-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/run-play.mjs",
+        "sha256": "ebc1fad1d789f01b7a577db1dff89ef332d52b52a1cad270ac65f90ecf934f4b"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play-commands.json",
+        "sha256": "421691b5f4730efb3f02961a3a89dd63f751ae59b3a6c91f713306b4dfc7cc51"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    },
+    {
+      "id": "B14-original24",
+      "folder": "b14-current-qualified",
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/run-play.mjs",
+        "sha256": "eea1235b62a56141d5ce6532c9d7303bac6b23326a94726b76f47b73efd4bda3"
+      },
+      "args": [],
+      "cases": 24,
+      "plan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play-commands.json",
+        "sha256": "0af52f727be1dd910bc7da41fa9fcfceac783589e776e0b258d2832f7175415e"
+      },
+      "output": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play-execution.json",
+      "completedStatus": "completed-script"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "predecessor": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-execution.json",
+    "sha256": "751bbded253b38de53c4f99b3a56dd5fde98646f3c2e9218a481b302c39974fe"
+  },
+  "status": "failed",
+  "pid": 7720,
+  "startedAt": "2026-10-07T08:20:05.753Z",
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining60-plan.json",
+    "sha256": "250452a463b67bf815c3ba4f9b6dec3ded23798c28d12765e254b6ed703120b8"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/run-current3120-remaining60.mjs",
+    "sha256": "c66f640976ce28af7bf9504a8df2d5bdfe12be72d5082542dc22fd1c0a20e486"
+  },
+  "stages": [
+    {
+      "id": "B06-short-fibre-original12",
+      "cases": 12,
+      "code": 0,
+      "signal": null,
+      "elapsedSeconds": 465.163,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/play-queue-launch.log",
+        "sha256": "45ccc6bd739f96613f7fe91ee7131b1987c78874ded3657019b71ec548475ef6"
+      },
+      "execution": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/play-execution.json",
+        "sha256": "a6c763abc8a151d56a8986a175a777298ed23d7671086d85b3892a7c78060510"
+      }
+    },
+    {
+      "id": "B09-original24",
+      "cases": 24,
+      "code": 0,
+      "signal": null,
+      "elapsedSeconds": 942.396,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/play-queue-launch.log",
+        "sha256": "4beb7b8e811c2471a6d26771199daaceeaa41ad9b2ee1d3e46b5c1c8a0de8e66"
+      },
+      "execution": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/play-execution.json",
+        "sha256": "cb7371c93fed9278be6a03017ae63a36aa1334217519f7b1e0d4dffcbd3fbef7"
+      }
+    },
+    {
+      "id": "B10-original24",
+      "cases": 24,
+      "code": 1,
+      "signal": null,
+      "elapsedSeconds": 512.679,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/play-queue-launch.log",
+        "sha256": "f572e96c9df3c6b1e2ae4b175f7ce5a442da4ba236d2725ca7cfce4b47d11271"
+      }
+    }
+  ],
+  "current": "B10-original24",
+  "error": "AssertionError [ERR_ASSERTION]: Original failure retained; no later stage is launched\n\n1 !== 0\n\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/run-current3120-remaining60.mjs:35:30\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+  "finishedAt": "2026-10-07T08:52:06.201Z"
+}

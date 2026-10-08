@@ -1,0 +1,14 @@
+{
+  "status": "PASS-QA-helper-contract",
+  "positive": 5,
+  "negative": [
+    "duplicate batch",
+    "both CSV rows absent",
+    "one CSV row absent",
+    "CSV row differs",
+    "bounded start outside",
+    "bounded end outside",
+    "same start/end outside"
+  ],
+  "scope": "Exercises actual CLI/row/bounds helpers only. No catalog generation, map, browser or game evidence."
+}

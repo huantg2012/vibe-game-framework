@@ -1,0 +1,356 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b11-source/source-snapshot.json",
+  "sourceManifestSha256": "62d24106bf6f02b12ff775aec6b66f1c77035a1b04e38a1a88d9e3a5d3a68381",
+  "authorCamera": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-author-preflight/camera-supported.json",
+    "sha256": "ec8b4851a3dee3ae8c3da569e82087682311a86557ad476188e1917a5e6d26d4"
+  },
+  "scope": "Prepared real-WASD normal-FOV material approaches only. No browser started; actual requested seed, recipe grade and facing must be verified by capture. CPU support is not a visual pass.",
+  "omitted": [],
+  "cases": [
+    {
+      "world": "crushed-seam",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 500,
+          "y": 516,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 500,
+            "y": 516
+          },
+          "lookAtMaterialPoint": {
+            "x": 450,
+            "y": 420
+          },
+          "purpose": "连续低母床"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 476,
+          "y": 420,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 476,
+            "y": 420
+          },
+          "lookAtMaterialPoint": {
+            "x": 566,
+            "y": 360
+          },
+          "purpose": "上侧母层压口"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 500,
+          "y": 540,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 500,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 585,
+            "y": 473
+          },
+          "purpose": "下侧双母层断口"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 452,
+          "y": 292,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 452,
+            "y": 292
+          },
+          "lookAtMaterialPoint": {
+            "x": 531,
+            "y": 215
+          },
+          "purpose": "上端离断片"
+        },
+        {
+          "label": "05-material-approach",
+          "x": 436,
+          "y": 588,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 436,
+            "y": 588
+          },
+          "lookAtMaterialPoint": {
+            "x": 542,
+            "y": 608
+          },
+          "purpose": "下端离断片"
+        }
+      ]
+    },
+    {
+      "world": "husk-reef",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 484,
+          "y": 324,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 484,
+            "y": 324
+          },
+          "lookAtMaterialPoint": {
+            "x": 375,
+            "y": 325
+          },
+          "purpose": "高低三背残段"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 700,
+          "y": 364,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 700,
+            "y": 364
+          },
+          "lookAtMaterialPoint": {
+            "x": 610,
+            "y": 423
+          },
+          "purpose": "中段横断端"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 740,
+          "y": 540,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 740,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 765,
+            "y": 435
+          },
+          "purpose": "东侧倒伏低皮"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 236,
+          "y": 492,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 236,
+            "y": 492
+          },
+          "lookAtMaterialPoint": {
+            "x": 335,
+            "y": 535
+          },
+          "purpose": "下侧独立残背"
+        }
+      ]
+    },
+    {
+      "world": "fibre-scree",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 244,
+          "y": 332,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 244,
+            "y": 332
+          },
+          "lookAtMaterialPoint": {
+            "x": 371,
+            "y": 331
+          },
+          "purpose": "西侧同向断束交接"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 716,
+          "y": 588,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 716,
+            "y": 588
+          },
+          "lookAtMaterialPoint": {
+            "x": 716,
+            "y": 430
+          },
+          "purpose": "东侧反向断束交接"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 548,
+          "y": 508,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 548,
+            "y": 508
+          },
+          "lookAtMaterialPoint": {
+            "x": 550,
+            "y": 400
+          },
+          "purpose": "两团中间曲床"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 756,
+          "y": 588,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 756,
+            "y": 588
+          },
+          "lookAtMaterialPoint": {
+            "x": 650,
+            "y": 608
+          },
+          "purpose": "低屑与外返路"
+        }
+      ]
+    },
+    {
+      "world": "gel-rafts",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 548,
+          "y": 332,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 548,
+            "y": 332
+          },
+          "lookAtMaterialPoint": {
+            "x": 439,
+            "y": 314
+          },
+          "purpose": "左组唯一厚端"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 332,
+          "y": 580,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 332,
+            "y": 580
+          },
+          "lookAtMaterialPoint": {
+            "x": 350,
+            "y": 475
+          },
+          "purpose": "左侧断低脂片"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 660,
+          "y": 484,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 660,
+            "y": 484
+          },
+          "lookAtMaterialPoint": {
+            "x": 553,
+            "y": 492
+          },
+          "purpose": "两组之间宽返床"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 780,
+          "y": 484,
+          "faces": [
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 780,
+            "y": 484
+          },
+          "lookAtMaterialPoint": {
+            "x": 709,
+            "y": 565
+          },
+          "purpose": "右组唯一厚端"
+        },
+        {
+          "label": "05-material-approach",
+          "x": 836,
+          "y": 484,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 836,
+            "y": 484
+          },
+          "lookAtMaterialPoint": {
+            "x": 742,
+            "y": 430
+          },
+          "purpose": "东侧两低片"
+        }
+      ]
+    }
+  ],
+  "reviewChecklist": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/checklist.json",
+    "sha256": "f2e82e38ba8230ff447aad1b31d20e1aacca22fbc948bddffbaddd7c84f1943c"
+  },
+  "supplementSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/supplement-existing-route-points.json",
+    "sha256": "1feb0c3b63a848c18c7673660fbb3f893a4a1c42005dc9927bf3affc02925f9d"
+  }
+}

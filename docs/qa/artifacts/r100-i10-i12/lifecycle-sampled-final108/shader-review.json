@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-independent-shader-pass",
+  "reviewer": "root",
+  "date": "2026-10-08",
+  "validationMode": "sampled",
+  "samplingAmendment": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+    "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+  },
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/report.json",
+    "sha256": "8f4c573d859c323ac51445efcc7cfbb0ff48ac18e6992980b1018362f4fe19eb"
+  },
+  "sourceBinding": {
+    "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/source-binding.json",
+    "sha256": "1b223c82d366bf6fd2e2eb91f7a9bfad17876e927f78ae44f77d163cd2540b5b"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/lifecycle-sampled/execution.json",
+    "sha256": "3ff6f5c5192d623d1479d596b724cfedd72a5bbcb4b405d660416924200eea4f"
+  },
+  "reviewedSource": {
+    "path": "src/systems/r100-world/surface-renderer.ts",
+    "sha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd"
+  },
+  "scope": "实阅原始12个double-GC样本及surface-renderer编译/链接/销毁所有权。抽查执行独占CPU和QA Chrome，1397份冻结/工作树及1393 served文件前后精确；5电源样本、无系统休眠、自有进程/断言释放。",
+  "reviewedShaderSamples": [
+    {
+      "label": "warmed-baseline",
+      "created": 78,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-1",
+      "created": 80,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-2",
+      "created": 82,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-3",
+      "created": 84,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-4",
+      "created": 86,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-5",
+      "created": 88,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-6",
+      "created": 90,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-7",
+      "created": 92,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-8",
+      "created": 94,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-9",
+      "created": 96,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "identical-10",
+      "created": 98,
+      "live": 64,
+      "active": 62
+    },
+    {
+      "label": "after-mixed-18",
+      "created": 138,
+      "live": 64,
+      "active": 62
+    }
+  ],
+  "ownershipConclusion": "Shader累计created从78到138是新构造计数；12样本live固定64、active固定62，Program active固定32、GL active固定1。成功链接后两个Shader已标记delete，随program删除/上下文丢弃释放关联；destroy有幂等保护并删除texture、buffer和program。编译失败删除失败Shader，构造catch丢弃自有context；该异常分支仅源码检查，没有运行故障注入。观测支持有限重建窗口中所有权回收有界。",
+  "retainedGrowthMaximumBytes": 1447018,
+  "activeResourceBaseline": {
+    "Texture": 384,
+    "Framebuffer": 69,
+    "Renderbuffer": 69,
+    "Program": 32,
+    "Shader": 62,
+    "Buffer": 11,
+    "WebGL2": 1
+  },
+  "limitations": "按用户“不用做全量测试，抽查即可”的实际原文授权执行。性能只含74个完整重档样本，第75项被用户指示停止、33项未启动；原failed报告与外层operator退出码缺失及103.175835秒电源观测缺口保留。资源只含6族重档预热、10次同图、18个低档切换及12次GC样本，不是全库334重建。参考机结果不替代I13经济或I14弱设备、R100-R10听感和用户终验。 资源计数来自浏览器wrapper，不证明GPU驱动实际字节或立即释放；heap增长仍为正，不外推无限重建。"
+}

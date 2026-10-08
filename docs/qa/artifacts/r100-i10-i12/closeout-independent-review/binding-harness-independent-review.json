@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "status": "pass-independent-explicit-historical-harness-binding-review",
+  "createdAt": "2026-10-07T12:35:28.301Z",
+  "reviewer": "i12_qa",
+  "tool": {
+    "path": "tools/qa/r100-bind-i10-i12.mjs",
+    "sha256": "6e840c397f80331dc5bb2c5afa15707d6001b1aa60a8a387b36565b95c2a2407"
+  },
+  "scope": "Static integration review plus9 bounded predicate checks on exact real historical receipts. No final108 proposal, map, browser, qualification run or ledger write.",
+  "findings": [
+    "The optional explicit list is validated before the generation loop. Each original groupId occurs exactly once and retains the immutable source manifest path and SHA.",
+    "The generation loop still reads the original frozen-source receipt. Every runtime dependency remains tied to snapshot.sources; only QA tools use the archivedHarness branch.",
+    "Tool dependencyPath coverage must exactly equal the original raw generation dependencies. The repository file digest must equal its supplied SHA and the executed dependency SHA.",
+    "Actual CLI reader constrains files to the repository, checks realpath containment and checks for concurrent changes before --write; an external/symlink path is not a supported bypass.",
+    "Explicit supplement, including an empty/null/bad list, does not fall back. Only an absent field retains legacy temporary-path behavior; the final plan must actually include the completed11-row field.",
+    "The parent48 checks bind current binder/harness SHA. This review additionally binds the exact supplementary and historical receipts that those checks used."
+  ],
+  "observedRepositoryHarnessPaths": [
+    "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/generation-harness-sources/03b8b3b8fe98eb74da45f164d13eb96cf1c8b6df20f2badd192b271a04b57d76/check-r100-library.ts",
+    "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/generation-harness-sources/0132952581cf7b60af9dfca6b3129e7622700622f83e84120aed084f229a31bd/check-r100-library.ts"
+  ],
+  "checks": [
+    {
+      "name": "All11 exact historical groups validate with a reader limited to the two repository copies",
+      "status": "pass"
+    },
+    {
+      "name": "Permuting the11 rows preserves identity and coverage",
+      "status": "pass"
+    },
+    {
+      "name": "Same count with an unknown group id cannot replace an original group",
+      "status": "pass"
+    },
+    {
+      "name": "Another valid preserved historical tool cannot be swapped across SHA versions",
+      "status": "pass"
+    },
+    {
+      "name": "Missing harnessSources fails instead of selecting the old temporary branch",
+      "status": "pass"
+    },
+    {
+      "name": "Missing dependencyPath cannot claim coverage",
+      "status": "pass"
+    },
+    {
+      "name": "Keeping correct source and dependency identities cannot hide corrupted content",
+      "status": "pass"
+    },
+    {
+      "name": "Truncated bytes fail even when all metadata remains unchanged",
+      "status": "pass"
+    },
+    {
+      "name": "Null explicit supplement rejects; only actual undefined permits historical compatibility",
+      "status": "pass"
+    }
+  ],
+  "parentContractChecks": 48,
+  "disposition": {
+    "finding": "QA-CLOSE-01",
+    "status": "tool-consumption-path-reviewed-final-plan-pending",
+    "remaining": "Populate final plan.historicalGenerationSources with this exact11-row supplement and run the real final proposal after all runtime gates. Merely updating the tool does not complete the final binding."
+  },
+  "limitations": [
+    "No product/gameplay result is inferred",
+    "white-scarfield severe remains independently unqualified",
+    "Original35-source archive boundaries and original manifests remain unchanged",
+    "Final complete binding cannot yet be exercised without pending artifacts"
+  ],
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/historical-generation-harness-supplement.json",
+      "sha256": "7487ab29c41db02b242e0b0951b6c5c10d7ed2a29f5928c91516d9825127a388"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-binding/plan.json",
+      "sha256": "1f6eac57f9b6ac14568d82c4e372b867c80036a75dd10a9d4052d53fa8df0784"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/qualification-policy/final52-summary.json",
+      "sha256": "1d66b70fa3e6ec73f812b3d8e3eb48551480be033591df6b3ffc022798692159"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/binding-harness-supplement-contracts.json",
+      "sha256": "61601ce07a883218fd4baacedb1ef2ffdd0187772d54067982e3e0021145724f"
+    }
+  ],
+  "self": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/audit-harness-binding.mjs",
+    "sha256": "e2f8193c2e0963301caa5503cc7d76068bb98f3c4392d44500b787d0e927b5ff"
+  }
+}

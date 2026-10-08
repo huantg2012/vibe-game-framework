@@ -1,0 +1,144 @@
+{
+  "status": "read-only-existing-route-points-not-viewed",
+  "scope": "只在既有成功report中查坐标，未生成新地图、未改变原机位/路径；四补点各三档完整20px旧扫掠引用存在。",
+  "points": [
+    {
+      "world": "double-return",
+      "bodyPoint": {
+        "x": 548,
+        "y": 156
+      },
+      "sameOriginalAllGradeSweptPath": true,
+      "allGradeEvidence": {
+        "low": {
+          "kind": "spawnRoute",
+          "routeIndex": 5,
+          "pointIndex": 98
+        },
+        "medium": {
+          "kind": "spawnRoute",
+          "routeIndex": 5,
+          "pointIndex": 98
+        },
+        "severe": {
+          "kind": "spawnRoute",
+          "routeIndex": 5,
+          "pointIndex": 98
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/fracture-refined/body12/report.json",
+        "sha256": "03f684ee8e783f9d39a2bc6608fc9949ace8927113864924a6a7f2bb5113895b"
+      },
+      "purpose": "补北颈及两条原返路共同终点；朝实际缺地边，不用南颈图代替。",
+      "notExecuted": true,
+      "lookAt": null,
+      "reason": "原有目标不足以锁定受光边，现场按真实edge朝向记录；此准备不猜新的目标坐标。"
+    },
+    {
+      "world": "ochre-folds",
+      "bodyPoint": {
+        "x": 804,
+        "y": 564
+      },
+      "sameOriginalAllGradeSweptPath": true,
+      "allGradeEvidence": {
+        "low": {
+          "kind": "spawnRoute",
+          "routeIndex": 6,
+          "pointIndex": 87
+        },
+        "medium": {
+          "kind": "spawnRoute",
+          "routeIndex": 6,
+          "pointIndex": 87
+        },
+        "severe": {
+          "kind": "spawnRoute",
+          "routeIndex": 6,
+          "pointIndex": 89
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/body12/report.json",
+        "sha256": "a83aed464b5fb04aa6f3d3e2c187ae6475e823e6b79a9e78933f85e901ff3574"
+      },
+      "purpose": "补第3实例真实短裂纹，采用已提供近joint证据；仅签该实例。",
+      "notExecuted": true,
+      "lookAt": {
+        "x": 851.9053575059312,
+        "y": 601.2919960678724
+      },
+      "angleRadians": 0.6614627951574688
+    },
+    {
+      "world": "fractured-estuary",
+      "bodyPoint": {
+        "x": 300,
+        "y": 580
+      },
+      "sameOriginalAllGradeSweptPath": true,
+      "allGradeEvidence": {
+        "low": {
+          "kind": "spawnRoute",
+          "routeIndex": 3,
+          "pointIndex": 14
+        },
+        "medium": {
+          "kind": "spawnRoute",
+          "routeIndex": 3,
+          "pointIndex": 14
+        },
+        "severe": {
+          "kind": "spawnRoute",
+          "routeIndex": 3,
+          "pointIndex": 14
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-author-preflight/body12/report.json",
+        "sha256": "7e699129b342c5427cc70355b8ec220737792a1723b4f37ad462385d58388280"
+      },
+      "purpose": "补下支床进入汇颈的低层，原01只覆盖上支床。",
+      "notExecuted": true,
+      "lookAt": {
+        "x": 400,
+        "y": 580
+      },
+      "angleRadians": 0.0
+    },
+    {
+      "world": "last-shelf",
+      "bodyPoint": {
+        "x": 948,
+        "y": 268
+      },
+      "sameOriginalAllGradeSweptPath": true,
+      "allGradeEvidence": {
+        "low": {
+          "kind": "spawnRoute",
+          "routeIndex": 3,
+          "pointIndex": 134
+        },
+        "medium": {
+          "kind": "spawnRoute",
+          "routeIndex": 3,
+          "pointIndex": 134
+        },
+        "severe": {
+          "kind": "spawnRoute",
+          "routeIndex": 3,
+          "pointIndex": 134
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-author-preflight/body12/report.json",
+        "sha256": "7e699129b342c5427cc70355b8ec220737792a1723b4f37ad462385d58388280"
+      },
+      "purpose": "补上台外探及相邻真实缺地边，原04只覆盖下台。",
+      "notExecuted": true,
+      "lookAt": null,
+      "reason": "原有目标不足以锁定受光边，现场按真实edge朝向记录；此准备不猜新的目标坐标。"
+    }
+  ]
+}

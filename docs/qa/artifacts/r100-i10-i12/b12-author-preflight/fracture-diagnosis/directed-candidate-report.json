@@ -1,0 +1,223 @@
+{
+  "scope": "Pure candidate geometry at original medium seed. Original declared intent-route points/segments and all original stations checked (spawn BFS paths may reroute) against candidate solids only; original terrain is unchanged, but this is not the actual3/12 admission. Marker ownership uses the same XY pixel-centre/highest-Z rule; official raster remains decisive.",
+  "results": [
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "original",
+        "updates": {}
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 3,
+          "visible": 3,
+          "owners": {
+            "4": 3
+          },
+          "bounds": {
+            "minX": 458.45444640138834,
+            "minY": 503.7366225915691,
+            "maxX": 570.6326426352651,
+            "maxY": 577.943112664228,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalStationPointsSupported": true,
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": 33.06509183040839
+    },
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "longer140",
+        "updates": {
+          "4": {
+            "length": 140
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 4,
+          "visible": 4,
+          "owners": {
+            "4": 4
+          },
+          "bounds": {
+            "minX": 440.10241036663086,
+            "minY": 503.11211048086415,
+            "maxX": 588.2750666100121,
+            "maxY": 577.9044075960447,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalStationPointsSupported": true,
+      "allOriginalActualMediumRoutePointsSupported": false,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": {
+        "x": 596,
+        "y": 556
+      },
+      "gapY": 32.440579719703464
+    },
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "longer150-square-axis",
+        "updates": {
+          "4": {
+            "length": 150,
+            "rotation": 0
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 6,
+          "visible": 6,
+          "owners": {
+            "4": 6
+          },
+          "bounds": {
+            "minX": 433.45,
+            "minY": 505.30434890351654,
+            "maxX": 593.505,
+            "maxY": 578.1043489035166,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalStationPointsSupported": true,
+      "allOriginalActualMediumRoutePointsSupported": false,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": {
+        "x": 596,
+        "y": 556
+      },
+      "gapY": 34.63281814235586
+    },
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "longer160-square-axis",
+        "updates": {
+          "4": {
+            "length": 160,
+            "rotation": 0
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 7,
+          "visible": 7,
+          "owners": {
+            "4": 7
+          },
+          "bounds": {
+            "minX": 428.2,
+            "minY": 505.30434890351654,
+            "maxX": 598.552,
+            "maxY": 578.1043489035166,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalStationPointsSupported": true,
+      "allOriginalActualMediumRoutePointsSupported": false,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": {
+        "x": 604,
+        "y": 556
+      },
+      "gapY": 34.63281814235586
+    },
+    {
+      "id": "pinched-fan",
+      "candidate": {
+        "label": "south32-48",
+        "updates": {
+          "5": {
+            "y": 356
+          },
+          "6": {
+            "y": 405
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 5,
+          "projected": 30,
+          "visible": 24,
+          "owners": {
+            "3": 6,
+            "5": 24
+          },
+          "bounds": {
+            "minX": 327.1015863553686,
+            "minY": 268.9421656991191,
+            "maxX": 495.04016820220653,
+            "maxY": 423.7455571758162,
+            "maxZ": 35
+          }
+        },
+        {
+          "id": 6,
+          "projected": 30,
+          "visible": 24,
+          "owners": {
+            "4": 6,
+            "6": 24
+          },
+          "bounds": {
+            "minX": 650.5965749725619,
+            "minY": 339.67729434951684,
+            "maxX": 815.0680146706503,
+            "maxY": 477.3395278828507,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "projectedAreaEstimate": 12144
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "projectedAreaEstimate": 4688
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "projectedAreaEstimate": 13664
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "projectedAreaEstimate": 2352
+        }
+      ],
+      "allOriginalStationPointsSupported": true,
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": null
+    }
+  ]
+}

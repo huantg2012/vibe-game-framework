@@ -1,0 +1,45 @@
+{
+  "status": "applied-final-world-binding-exact-negative-baseline",
+  "reviewer": "root",
+  "at": "2026-10-08T07:08:54.030Z",
+  "exitCode": 0,
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/plan.json",
+    "sha256": "c122e4e972f2f572f126aded1ef132dd203f87d32e9e33458fdced9b2cc5eae2"
+  },
+  "prebind": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.before-bind.after-implementation-record.json",
+    "sha256": "ebdd3a627dbeb4069407270b28c9a601ac5bf8a5a3d45452915e096144750132"
+  },
+  "afterBind": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.after-bind.json",
+    "sha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d"
+  },
+  "negativeCheck": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/sampled-negative-check.json",
+    "sha256": "f5e15ee6945cc917a6478a00e0f2d326fb168da8ae9d04c2c866a3a32e477dc2"
+  },
+  "binder": {
+    "path": "tools/qa/r100-bind-i10-i12.mjs",
+    "sha256": "af7c227633fac649c90e23e0de2bfab827b2db888d2a1980ed809fb354d4148f"
+  },
+  "stdout": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/write.stdout.json",
+    "sha256": "f54585dceb75efef5f708f15eb64b192d3b39abffb2e9a1333adac44422f6575"
+  },
+  "stderr": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/write.stderr.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "counts": {
+    "candidates": 108,
+    "qualified": 108,
+    "production": 108,
+    "humanApproved": 0,
+    "qualifiedGradeCases": 324,
+    "productionGradeCases": 324
+  },
+  "scope": "432项逐世界证据写入；108资格/324正式等级；旧52已知过渡失效追加历史后恢复。迭代状态仍未关闭。",
+  "validationMode": "sampled",
+  "full89Claim": false
+}

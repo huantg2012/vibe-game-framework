@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "executionStatus": "planned-no-game-samples",
+  "worlds": [
+    "crushed-seam",
+    "husk-reef",
+    "fibre-scree",
+    "gel-rafts",
+    "double-return",
+    "offset-basins",
+    "pinched-fan",
+    "spliced-reaches",
+    "white-scarfield",
+    "black-lacuna",
+    "ochre-folds",
+    "violet-marrows",
+    "fractured-estuary",
+    "woven-quarters",
+    "shell-patchwork",
+    "last-shelf"
+  ],
+  "seedPolicy": {
+    "mode": "expanded-holdout-only",
+    "qualificationPlan": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    "stage": "I12"
+  },
+  "groups": [
+    {
+      "id": "I12-additional-eight",
+      "worlds": [
+        "crushed-seam",
+        "husk-reef",
+        "fibre-scree",
+        "gel-rafts",
+        "double-return",
+        "offset-basins",
+        "pinched-fan",
+        "spliced-reaches",
+        "white-scarfield",
+        "black-lacuna",
+        "ochre-folds",
+        "violet-marrows",
+        "fractured-estuary",
+        "woven-quarters",
+        "shell-patchwork",
+        "last-shelf"
+      ],
+      "attempts": [
+        "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/generation"
+      ]
+    }
+  ],
+  "scope": "Only predeclared additional8 seeds. Preserve original48 separately; final binding must prove corresponding base source continuity to the frozen executor used here. No game result is implied by this plan."
+}

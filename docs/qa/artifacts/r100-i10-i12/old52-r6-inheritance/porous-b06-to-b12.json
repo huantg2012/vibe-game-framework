@@ -1,0 +1,63 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+    "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-source/source-snapshot.json",
+    "sha256": "dace95f2a592111ec52c17917739aaa6cded86a0817ade1d9b810e3a0da51dc0"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "marrow-break",
+      "contentSha256": "2f3aebc658ad38c1115219950cc5ff36d1466032a462f9cea15c05a30ee173a9",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "pore-bank",
+      "contentSha256": "46c8015f376ff67e018d668e84ac69dc06de59d7bfb43574d5ffca8eb21059c9",
+      "enabledBefore": false,
+      "enabledAfter": false
+    }
+  ],
+  "materialDependencyKeys": [
+    "granular-ridge",
+    "organization:porous-marrow"
+  ],
+  "unchangedFiles": 1384,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-package-manifest.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

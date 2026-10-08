@@ -1,0 +1,100 @@
+{
+  "status": "bounded-controlled-transport-pass",
+  "createdAt": "2026-10-07T06:32:09.799000+00:00",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/report.json",
+    "sha256": "39da8da164c9003675c35b5d5dcd2cb15e0b5658f9f52d494203f09470e076a4"
+  },
+  "events": {
+    "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/events.jsonl",
+    "sha256": "dbd7120c8efe180d201cf50510ae3f103f98e4f1ffb891aaad8fec373f0d40f5"
+  },
+  "tool": {
+    "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/tool.mjs",
+    "sha256": "8aa41a86b227aa4e208cb50f3b90dc9a1aa901ee21fe5af20acf78023f0268a4"
+  },
+  "stdout": {
+    "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/stdout.log",
+    "sha256": "3fc3fb20f19d1b0c8426a0db0cd9a71b523992b57972554facaa4209bb431a0c"
+  },
+  "processCleanup": {
+    "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/owned-process-after.json",
+    "sha256": "80ceae1b350f1a6cc95f35614c5bfd7692a74fbb37b8db802769474416d2d9d9"
+  },
+  "firstAttemptPreserved": {
+    "report": {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-1/report.json",
+      "sha256": "0d97e0ed97de6b639fd546218c3e92ebd87c4a4535b9f8677e3b735fd98e1da7"
+    },
+    "tool": {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-1/tool.mjs",
+      "sha256": "00da23ecc82cd3868cf5fb2008ebbe9fe902be8ab0eeef6608b8e05ebb7c6dcd"
+    },
+    "diagnosis": {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-1/diagnosis.json",
+      "sha256": "5f22ea3ed3f5fd9cb2a3100006b5efb22138eccdded144a19cdf5c25e6226a4c"
+    },
+    "meaning": "Initial aborted module had no Playwright execution context; the first report failed a QA event-count assertion, not the recovered generation result. Root approved the single bounded correction; only one follow-up browser run was executed."
+  },
+  "manualEventReview": [
+    {
+      "name": "same-source-no-fault",
+      "injectedTransportFailures": 0,
+      "otherBrowserErrors": 0,
+      "observedWorkersCreated": 2,
+      "observedWorkersClosed": 2,
+      "allObservedWorkersClosedBeforeContext": true
+    },
+    {
+      "name": "generation-initial-script-once",
+      "injectedTransportFailures": 1,
+      "otherBrowserErrors": 0,
+      "observedWorkersCreated": 1,
+      "observedWorkersClosed": 1,
+      "allObservedWorkersClosedBeforeContext": true
+    },
+    {
+      "name": "surface-initial-script-once",
+      "injectedTransportFailures": 1,
+      "otherBrowserErrors": 0,
+      "observedWorkersCreated": 2,
+      "observedWorkersClosed": 2,
+      "allObservedWorkersClosedBeforeContext": true
+    }
+  ],
+  "comparison": {
+    "generationExactExceptGenerationMs": true,
+    "surfaceWholeResultExact": true,
+    "sameOriginalRecipe": true,
+    "allInputBuffersRetained": true,
+    "transportRequestId": "Default clients called once per stage. Internal retry request.id equality is covered by the separate pure contract; this browser test does not intercept postMessage."
+  },
+  "sourceBinding": {
+    "frozenFilesBeforeAndAfter": 1396,
+    "servedRequestedFilesVerified": 97,
+    "helper": {
+      "path": "src/utils/worker-request.ts",
+      "frozenSha256": "daffb6b048af03e206c50756dbfe5ecc66763e5a222a44081de66e4ef8395e87",
+      "workingSha256": "daffb6b048af03e206c50756dbfe5ecc66763e5a222a44081de66e4ef8395e87"
+    }
+  },
+  "separatePureContract": {
+    "receipt": {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-retry/contract.json",
+      "sha256": "f9b72f3792b9ed3f8e089ad470dd0ec6cdc4eca92beab1e5420ef89ee2778bec"
+    },
+    "cases": 14,
+    "scope": "Persistent startup failure stops after2, cancellation during retry delay, and computation errors are verified in separate fake-clock contracts, not represented as browser observations."
+  },
+  "observationLimits": [
+    "The first aborted script does not expose a page.worker execution context. Its JavaScript object termination is not directly observable here; the pure contract covers that lifecycle.",
+    "Request.id retry equality is covered by the separate pure contract. This browser test does not wrap postMessage; original request value graph and actual result identity are exact.",
+    "Generation output comparison excludes only outer generationMs telemetry. No other result field is ignored.",
+    "This is controlled transport on one preselected recipe, not natural gameplay, final324 qualification, or performance.",
+    "process-after.txt is an unfiltered Chrome helper observation and includes normal user Chrome under PID508; owned-process-after.json is the explicit headless/Playwright marker check and has zero matches."
+  ]
+}

@@ -1,0 +1,408 @@
+{
+  "schemaVersion": 1,
+  "status": "static-reference-and-scope-check-pass-browser-unverified",
+  "reviewer": "i12_art",
+  "revision": 4,
+  "previousStaticCheck": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.check-v3.json",
+    "sha256": "6779e4495ac1fb45e8d71953ae3bdb714f43606f7132dac4296e79d536b5bf16"
+  },
+  "checkedAt": "2026-10-08T02:43:53.979Z",
+  "features": [
+    "F052",
+    "F012"
+  ],
+  "html": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+    "sha256": "b68da40194dea28956b95b6361bd1b19cca2c7d21ea197242d347d569a53a534"
+  },
+  "data": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+    "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+  },
+  "authority": {
+    "artReview": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.json",
+      "sha256": "f22a0bcda8d3c2812520260df5331f8c316657c209698b1efa279aab833b9e83"
+    },
+    "rootBindingReview": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-art-root-review.json",
+      "sha256": "c0b765ab2c9ee7e41216a5148d65cb67643faf04054ae86bf09ed244ecd8694b"
+    },
+    "finalSource": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    "finalPackageIndex": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+      "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+    }
+  },
+  "summary": {
+    "worlds": 108,
+    "gradeSlots": 324,
+    "slotsWithDirectNormalFrames": 270,
+    "slotsExplicitlyWithoutDirectFrames": 54,
+    "new56ThreeGradeCoverage": 56,
+    "uniqueNormalPngs": 793,
+    "frameBindings": 793,
+    "proofReferences": 1134,
+    "uniqueActiveReceiptFiles": 79,
+    "sourceManifests": 27,
+    "continuityReceipts": 29,
+    "worldScopeAndLimitationsPreserved": 108,
+    "originalWorldSourceLabelsPreserved": true,
+    "originalFramesCopiedOrAltered": false,
+    "diagnosticFramesSelected": 0,
+    "worldsWithExplicitDesignedNeighbors": 88,
+    "neighborTargetsAllExist": true,
+    "dimensions": {
+      "1440×960": 20,
+      "1136×758": 773
+    },
+    "gradeBasis": {
+      "explicit-record-grade": 552,
+      "existing-medium-art-route-in-signed-receipt": 162,
+      "grade-named-normal-frame-in-signed-receipt": 79
+    },
+    "staticHtmlLocalLinks": 10,
+    "duplicateDomIds": 0,
+    "scriptSyntaxValid": true,
+    "scriptDomIdReferencesExist": true,
+    "embeddedDataEqualsCompanionData": true,
+    "offlineNoFetchOrExternalDependencies": true,
+    "consumedFilesRechecked": 1056,
+    "consumedBytesRechecked": 160628537,
+    "concurrentMutationDetected": false
+  },
+  "thumbnailCssContract": {
+    "selector": ".card-open img",
+    "declarations": {
+      "display": "block",
+      "width": "100%",
+      "height": "auto",
+      "aspect-ratio": "1.5",
+      "object-fit": "contain",
+      "image-rendering": "pixelated",
+      "background": "#030405"
+    },
+    "explicitHeightAutoOverridesHtmlDimensionAttribute": true,
+    "stableBoxAspectRatio": 1.5,
+    "originalDimensionAttributesRetained": true,
+    "objectFitContainPreservesCompleteImage": true,
+    "oldCssRejectedForMissingHeightAuto": true,
+    "onlyDeclaredCssAndStaticCheckLinkChanged": true,
+    "allScriptAndEmbeddedDataBytesUnchanged": true,
+    "mathematicalExpectedImageBoxHeights": [
+      {
+        "width": 300,
+        "height": 200
+      },
+      {
+        "width": 325.5,
+        "height": 217
+      },
+      {
+        "width": 480,
+        "height": 320
+      }
+    ],
+    "mathematicalExamplesAreNotMeasuredBrowserBounds": true,
+    "originalBrowserReviewPreserved": {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/report.json",
+      "sha256": "a19b5e1105f99dc9d3a1e1426ddf68735be543915d7f0e4efe60bcabab4ee158"
+    },
+    "rootBrowserReviewAndScreenshotsPreserved": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review.mjs",
+        "sha256": "37a97a9e841e444a3e1ac163a7f00b7f94133e00fb817ed60d4fd215646e28dd",
+        "bytes": 7886
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/01-default.png",
+        "sha256": "831e7d52d234d1004940547cce144943db6f8e8358480320f2803b46d1a153c7",
+        "bytes": 194894
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/02-viewer.png",
+        "sha256": "a7bd98eecbfb0909c42704d9fae5f41c4ecfdd986d940b133224959b4fd11d4f",
+        "bytes": 274737
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/03-last-world-severe.png",
+        "sha256": "8e9d9e58f2764369c845a0a9c3eb7d8b305ffd86921cfefcbf6a228c58a79a66",
+        "bytes": 202953
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/04-filter.png",
+        "sha256": "d207e6e6fd8379e84039008184cdfc58edd1d9ec7d56bf0f6c73c2317fbb668a",
+        "bytes": 158173
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/05-explicit-historical-missing.png",
+        "sha256": "8eb817eada94c186420a3bfcdb3f261597fbd0d7f398730bde323faeb6d466e9",
+        "bytes": 154259
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/report.json",
+        "sha256": "a19b5e1105f99dc9d3a1e1426ddf68735be543915d7f0e4efe60bcabab4ee158",
+        "bytes": 4064
+      }
+    ],
+    "currentHtmlBrowserBoundsAndScreenshotRecheckPending": true
+  },
+  "existingEntryGap": {
+    "previous32Gallery": {
+      "path": "docs/qa/interactive/r100-i07-i09-worlds.html",
+      "sha256": "e55d5b80d33e05a4c24d11f00a74da318fc0a7c933923b15221e0402480da3e5",
+      "worlds": 32,
+      "doesNotCoverFinal108": true
+    },
+    "original20Entry": "docs/qa/interactive/r100-world-identity.html",
+    "reason": "Existing entries cover 32 and original20 separately and do not expose the final108 signed source binding or new56. A new unified browsing projection was necessary."
+  },
+  "selectionRules": [
+    "Only normal PNGs listed in the current world-scoped active final-art receipts; diagnostic attribution-only receipts, historical/rejected/failure branches and ambiguous paths are excluded.",
+    "Frame world must agree with its path and any explicit receipt world. Grade comes from explicit record fields or the original signed normal-frame/medium-art-route index; different grade labels may not be silently substituted.",
+    "Preferred order gives current3121 reviewed source and root-receipt support precedence; this is metadata ordering, not a new visual ranking or claim every listed support frame was personally viewed by root.",
+    "All 793 original PNG SHAs and dimensions verified; capture-source references and exact per-world continuity arrays match the root-signed final108 table.",
+    "All 108 world scopes, limitations and historical evidence entries remain unchanged. Empty grade slots show a boundary message.",
+    "Nearest-neighbor statements and design intent are copied from existing design cards with observed document SHA and line reference; this gallery does not invent a nearest-neighbor verdict."
+  ],
+  "missingDirectFrameSlots": [
+    {
+      "worldId": "ash-strata",
+      "grade": "low"
+    },
+    {
+      "worldId": "ash-strata",
+      "grade": "severe"
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grade": "low"
+    },
+    {
+      "worldId": "crystal-fibre",
+      "grade": "severe"
+    },
+    {
+      "worldId": "ivory-basin",
+      "grade": "low"
+    },
+    {
+      "worldId": "ivory-basin",
+      "grade": "severe"
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grade": "low"
+    },
+    {
+      "worldId": "cinder-ridge",
+      "grade": "severe"
+    },
+    {
+      "worldId": "pallid-membrane",
+      "grade": "low"
+    },
+    {
+      "worldId": "pallid-membrane",
+      "grade": "severe"
+    },
+    {
+      "worldId": "silt-gel",
+      "grade": "low"
+    },
+    {
+      "worldId": "silt-gel",
+      "grade": "severe"
+    },
+    {
+      "worldId": "schist-shear",
+      "grade": "low"
+    },
+    {
+      "worldId": "schist-shear",
+      "grade": "severe"
+    },
+    {
+      "worldId": "splayed-fibres",
+      "grade": "low"
+    },
+    {
+      "worldId": "splayed-fibres",
+      "grade": "severe"
+    },
+    {
+      "worldId": "shell-chain",
+      "grade": "low"
+    },
+    {
+      "worldId": "shell-chain",
+      "grade": "severe"
+    },
+    {
+      "worldId": "grain-laminate",
+      "grade": "low"
+    },
+    {
+      "worldId": "grain-laminate",
+      "grade": "severe"
+    },
+    {
+      "worldId": "tension-membrane",
+      "grade": "low"
+    },
+    {
+      "worldId": "tension-membrane",
+      "grade": "severe"
+    },
+    {
+      "worldId": "shell-gel-delta",
+      "grade": "low"
+    },
+    {
+      "worldId": "shell-gel-delta",
+      "grade": "severe"
+    },
+    {
+      "worldId": "pressed-dunes",
+      "grade": "low"
+    },
+    {
+      "worldId": "pressed-dunes",
+      "grade": "severe"
+    },
+    {
+      "worldId": "ruptured-film",
+      "grade": "low"
+    },
+    {
+      "worldId": "ruptured-film",
+      "grade": "severe"
+    },
+    {
+      "worldId": "reversed-flow",
+      "grade": "low"
+    },
+    {
+      "worldId": "reversed-flow",
+      "grade": "severe"
+    },
+    {
+      "worldId": "laminate-shell",
+      "grade": "low"
+    },
+    {
+      "worldId": "laminate-shell",
+      "grade": "severe"
+    },
+    {
+      "worldId": "fibre-silt",
+      "grade": "low"
+    },
+    {
+      "worldId": "fibre-silt",
+      "grade": "severe"
+    },
+    {
+      "worldId": "film-laminate",
+      "grade": "low"
+    },
+    {
+      "worldId": "film-laminate",
+      "grade": "severe"
+    },
+    {
+      "worldId": "gel-fibre",
+      "grade": "low"
+    },
+    {
+      "worldId": "gel-fibre",
+      "grade": "severe"
+    },
+    {
+      "worldId": "shell-grit",
+      "grade": "low"
+    },
+    {
+      "worldId": "shell-grit",
+      "grade": "severe"
+    },
+    {
+      "worldId": "rib-vault",
+      "grade": "low"
+    },
+    {
+      "worldId": "rib-vault",
+      "grade": "severe"
+    },
+    {
+      "worldId": "pleated-hide",
+      "grade": "low"
+    },
+    {
+      "worldId": "pleated-hide",
+      "grade": "severe"
+    },
+    {
+      "worldId": "blister-field",
+      "grade": "low"
+    },
+    {
+      "worldId": "blister-field",
+      "grade": "severe"
+    },
+    {
+      "worldId": "wax-tongues",
+      "grade": "low"
+    },
+    {
+      "worldId": "wax-tongues",
+      "grade": "severe"
+    },
+    {
+      "worldId": "stepped-bowl",
+      "grade": "low"
+    },
+    {
+      "worldId": "stepped-bowl",
+      "grade": "severe"
+    },
+    {
+      "worldId": "draped-bay",
+      "grade": "low"
+    },
+    {
+      "worldId": "draped-bay",
+      "grade": "severe"
+    },
+    {
+      "worldId": "ember-cushions",
+      "grade": "low"
+    },
+    {
+      "worldId": "ember-cushions",
+      "grade": "severe"
+    }
+  ],
+  "browserOpened": false,
+  "visualLayoutVerifiedInBrowser": false,
+  "interactionVerifiedInBrowser": false,
+  "newScreenshotsCaptured": false,
+  "newArtJudgment": false,
+  "humanApproval": false,
+  "errors": [],
+  "limitations": [
+    "No Chrome, browser rendering, new screenshot or live interaction test was performed by this v4 check. The earlier root browser report and screenshots are preserved as separate historical evidence. The new thumbnail bounds and appearance require a browser recheck by root; this receipt verifies the explicit CSS contract, exact change scope, static structure, syntax, local files, SHA, source binding and grade mapping only.",
+    "The 54 historical empty grade slots are an explicit direct-frame-index boundary, not a revocation of prior qualified configuration or an invented new approval.",
+    "User aesthetic approval, natural play, audio listening and final runtime qualification remain separate.",
+    "A static browser page has no authority to change signed art, sound or gameplay records."
+  ],
+  "artifactsOwned": [
+    "docs/qa/interactive/r100-i10-i12-worlds.html",
+    "docs/qa/interactive/r100-i10-i12-worlds.before-thumbnail-height-fix.html",
+    "docs/qa/interactive/r100-i10-i12-worlds.check-v4.json"
+  ]
+}

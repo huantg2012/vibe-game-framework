@@ -1,0 +1,743 @@
+{
+  "schemaVersion": 1,
+  "scope": "legacy-v2-generation-and-contract",
+  "dependencies": [
+    {
+      "path": "data/atmosphere-lines.csv",
+      "sha256": "cea17f64bd118b86748f753af6d9fdd2814788094e6391cb3cd978eaba0399e9"
+    },
+    {
+      "path": "data/build-lab-loadouts.csv",
+      "sha256": "d2772b7df28671434bd7518479c00a71f1f9a680cf2d61710f1cf1c1d8fd3264"
+    },
+    {
+      "path": "data/build-lab-placements.csv",
+      "sha256": "5ef9e33512349876e74ca396dc7e7489fd5525d1f277ec33ca65a693183ddf16"
+    },
+    {
+      "path": "data/build-lab-scenes.csv",
+      "sha256": "36e6a383f2762889b90c2cb1c1ea6fbdf3b36c076647af9edff5b99445569fe2"
+    },
+    {
+      "path": "data/contaminant-abilities.csv",
+      "sha256": "61f7c13f0fe5fd014b095e2fa828dd1ebd25cc8747bd6365aca97bd92fc2e4bc"
+    },
+    {
+      "path": "data/contaminant-appearances.csv",
+      "sha256": "d6bce7feb84693a8dd6797f040f201859f8a537969396391bf8bdea6ac93e9ed"
+    },
+    {
+      "path": "data/contaminant-items.csv",
+      "sha256": "d0d7daaf2005ae91b490cdc3986af47efe7c98d5cd0d07523e2eeed2257d2634"
+    },
+    {
+      "path": "data/contaminant-loot-profiles.csv",
+      "sha256": "b1fd217aadbc57f13b0959ebe0dfc7b802bcb49815f90406afbe1720a01c0644"
+    },
+    {
+      "path": "data/contaminant-loot.csv",
+      "sha256": "8dad1818308f21e1624a3c101767ee6f3f35e1c1b80ca83d919215bcd20a4ca8"
+    },
+    {
+      "path": "data/contaminant-migrations.csv",
+      "sha256": "8a386e1e8f3b9342bb08cb09aed75dd7e14b9e274ea7f64da78f2711418ff310"
+    },
+    {
+      "path": "data/contaminant-offerings.csv",
+      "sha256": "fd2a21cf3f0f8c1301c339c3afa49990f3ba433d94d7c941c7e8113ba31ad821"
+    },
+    {
+      "path": "data/contaminant-qualities.csv",
+      "sha256": "90eebfa5a5e72b22ecc4a3e83562c41cf6c6c6a9272c6f1918b20bca0fb127ab"
+    },
+    {
+      "path": "data/contaminant-source-affinities.csv",
+      "sha256": "799496ea2e22d8695e60bad5248b80bd7b8d14819fd7ad3cd9189b098079904b"
+    },
+    {
+      "path": "data/contaminant-sources.csv",
+      "sha256": "3d798b652a98bb31c48533c9c2b0a2b31adc7481ed91c703031fe35f00f004a8"
+    },
+    {
+      "path": "data/contaminants.csv",
+      "sha256": "d4b2a4a4c431b9a7faf126fe606af5e4deaeec170f539dbee4ab65ad62bef1ec"
+    },
+    {
+      "path": "data/contamination-behavior-profiles.csv",
+      "sha256": "910de75213772576172a26c6892fa4f648c4b7b4c0bd19ed2af2b8e376d3c9d6"
+    },
+    {
+      "path": "data/contamination-body-profiles.csv",
+      "sha256": "7fd588db89e1b0d54b807d6747f72913b6a2585bfd0c7e89369663f12717e925"
+    },
+    {
+      "path": "data/contamination-dialects.csv",
+      "sha256": "6bac290036ce72ec779d1eacecb1d06396f93fcf4767bcc7fa646321ab4e6943"
+    },
+    {
+      "path": "data/contamination-display-tokens.csv",
+      "sha256": "a9808eb24e1bb476dd855de560ab6c688246314e696228f401e36f8aa48b02ee"
+    },
+    {
+      "path": "data/contamination-encounters.csv",
+      "sha256": "c46510c813925295c1f1728d0aa78bddc2ac4f03e07aa25d01f77734bdca4d93"
+    },
+    {
+      "path": "data/contamination-families.csv",
+      "sha256": "ee441bd67895eaa92f80858c97d5fa247cad8b78189269330353d06bf14d5ee1"
+    },
+    {
+      "path": "data/contamination-lexemes.csv",
+      "sha256": "7a45d9b5b59f4fb7306e3ffaa4b2e955f7ed74d5503a2b9e6fc9608ab03b4b14"
+    },
+    {
+      "path": "data/contamination-observe-lines.csv",
+      "sha256": "ef7f4243b455c31d504a0b3d797366aaacd729c0a54d43ffce58bb7092038725"
+    },
+    {
+      "path": "data/contamination-portfolios.csv",
+      "sha256": "2c349c3d32a8f3ea4fea652c194f2abf004f8dbbf36b2e3a079f2a799490517c"
+    },
+    {
+      "path": "data/contamination-stop-loss.csv",
+      "sha256": "62e238ca921e2ac1ad63d124ab39de46c9de6469411e2970ba74f28030a57bbe"
+    },
+    {
+      "path": "data/contamination-substrates.csv",
+      "sha256": "516e710967929b578588732d4fde4146cfdfb78d80c33444d897556dad574a70"
+    },
+    {
+      "path": "data/contamination-utterances.csv",
+      "sha256": "226490e47fdcb91b05f40873f997682a41996323de8899c3ab439d77d1c5aec9"
+    },
+    {
+      "path": "data/contamination-volume-profiles.csv",
+      "sha256": "765e38527d54f1c595747aa922398a2c8918314c90678c1f8c9da61d16b77c67"
+    },
+    {
+      "path": "data/enemies.csv",
+      "sha256": "4a58baec1a46f889b5f3a7db74b0061399f63932b1879ba385330c77583bace5"
+    },
+    {
+      "path": "data/growth-route.csv",
+      "sha256": "0949ecc8a4c8578cbdbaf6d6b21de0708c71eefeed525d189b027cca829ed675"
+    },
+    {
+      "path": "data/inventory-rules.csv",
+      "sha256": "d01617d4d652bd895e1324862c65e3d2566f6e769cbb79fd9edbfd15f88219c3"
+    },
+    {
+      "path": "data/living-landmass-placements.csv",
+      "sha256": "6fa5c0f56fec8ea6193037f85d0407b8fb02c9a839e7ed8342be7c855841b184"
+    },
+    {
+      "path": "data/living-landmass-scenes.csv",
+      "sha256": "9773ada839d36aa269742d52ac55029fb040ea765b7502aec788f1d5d726e5d1"
+    },
+    {
+      "path": "data/living-landmass-supports.csv",
+      "sha256": "7243ac483ffdb3d6e0d2c024eb56c10b34f46753c12385451b02d4e9a7a0770a"
+    },
+    {
+      "path": "data/living-landmass-tension.csv",
+      "sha256": "48d07a03cb8926db3d0aed696d68af01a680858418e079c4769de6082753b25e"
+    },
+    {
+      "path": "data/living-landmass-vista-connectors.csv",
+      "sha256": "112be2760322ddff826ca5b1f74e7c4ac9c9c3663a8f6457071a8c587b2f39c1"
+    },
+    {
+      "path": "data/living-landmass-vista-holes.csv",
+      "sha256": "f74168e17494714b825485d0e21cf1da20a318ea67cc39b1479eb12b847d2ce9"
+    },
+    {
+      "path": "data/living-landmass-vista-outline.csv",
+      "sha256": "7fe18308f9a75ea9ee1a944062e6b1509888b8390aa8aba13024affe65d36cd6"
+    },
+    {
+      "path": "data/living-landmass-vista-painted-footprints.csv",
+      "sha256": "a85c64284b480f16d8bfa21ab51b60b7ce6ba0478325665e71f16095b63f145d"
+    },
+    {
+      "path": "data/living-landmass-vista-regions.csv",
+      "sha256": "0c19c9a6c5436339597d495feaab5765a7b5124ebd10ee308fca6a1ef6ff0625"
+    },
+    {
+      "path": "data/living-landmass-vista-rocks.csv",
+      "sha256": "540fd22f2b47ab417275190b23765b6d9555e643356bf1bb8b3d037b7c7eab5c"
+    },
+    {
+      "path": "data/living-landmass-vista-route-nodes.csv",
+      "sha256": "9ed8dad404ed676cdbc9d53ac044ccc8229b9a634e28608bd76882be69e70922"
+    },
+    {
+      "path": "data/living-landmass-vista-sections.csv",
+      "sha256": "92bd6d31d4d3b36120e121b1cac9f10705f4e2678fa15c42e921d88eb3867718"
+    },
+    {
+      "path": "data/living-landmass-vista-strata.csv",
+      "sha256": "5da9b259b646b972ab67f2ef4b64a64ffe6d4be6c409b97bda8a62d6b3736668"
+    },
+    {
+      "path": "data/rift-fragments.csv",
+      "sha256": "5f5852f89b9c529daae5cd2e168949030295e26b9fc71ec5c6c0ba4bd5262394"
+    },
+    {
+      "path": "data/rift-master-materials.csv",
+      "sha256": "5168963e24c0ff91a157441495e14df0303a6a9ee0f00e8b9888b13712bd849e"
+    },
+    {
+      "path": "data/rift-master-scenes.csv",
+      "sha256": "6bf6dbcd959875f08124d628c3c08807dd7d85faaa4e2465a7cd839d7c98cb57"
+    },
+    {
+      "path": "data/rift-pollution-grades.csv",
+      "sha256": "e6c639eacdae120f40007b666ba58d871a25966537f7afea1ddcaf6f061f8066"
+    },
+    {
+      "path": "data/rift-world-conditions.csv",
+      "sha256": "30b14f6d69d96a41afe6b1f42ccaf22aee43b0c6f4cb4df33f0506b33e32eb6d"
+    },
+    {
+      "path": "data/rift-world-packages.csv",
+      "sha256": "8a9f7c093b7eb7e9c113168426fd485e486259110fb3a5e2381c8d5ceefa924f"
+    },
+    {
+      "path": "data/rift-world-pool.csv",
+      "sha256": "987e6061fbda543ca52ec3e2107dd81a1f23ec17dc088013880748543932b70a"
+    },
+    {
+      "path": "data/rift-world-profiles.csv",
+      "sha256": "a3d96d95696fa33076efc98bdc816a733a5566f3852a956f82083da9489059cb"
+    },
+    {
+      "path": "data/rift-world-spaces.csv",
+      "sha256": "762b7747c21366c156e7e2181c775a711d2f14c6c47456e61b00a35556ed89a0"
+    },
+    {
+      "path": "data/spatial-slice-ground.csv",
+      "sha256": "3847f66cdc05e6962023c26aed10243e6cba259a06104578e2145c029ba0d382"
+    },
+    {
+      "path": "data/spatial-slice-openings.csv",
+      "sha256": "51c3f25e73552511da0d48dc71988a2a52de9dd28e76e413d21d6f2638a52eca"
+    },
+    {
+      "path": "data/spatial-slice-placements.csv",
+      "sha256": "9d01d774ceaa2b4ff4cac0045344387a1f95d3713e3d6ce828266bad7a3feb55"
+    },
+    {
+      "path": "data/spatial-slice-scenes.csv",
+      "sha256": "f35087083faf58309f83d34e5da0c288ae007a81f4135220eb13291c0e16564e"
+    },
+    {
+      "path": "data/spatial-slice-water.csv",
+      "sha256": "b266271a3f4933bf44bad5d3e4ed1bce7acc3aa7ee096aa2e28a6ffb61a28b72"
+    },
+    {
+      "path": "data/spatial-study-placements.csv",
+      "sha256": "59452445e975a0751e22e62fa8a2008d643d4ff414c98a6488ae33d28e58b8e1"
+    },
+    {
+      "path": "data/spatial-study-scenes.csv",
+      "sha256": "9ca67b9f4d1fc6feb2a751f84cdaab9858ba9c294ca520dee3b61101bc4cb652"
+    },
+    {
+      "path": "data/spatial-study-water.csv",
+      "sha256": "26d945ebb6548dd59632312d564e5a1237615d4dfac98fc0f25e52f85c20da59"
+    },
+    {
+      "path": "data/stage-gameplay-ground.csv",
+      "sha256": "8a1dbf8d4e84e39535a7876ccfa50d8a159c9292b251f45f13a881bd60fb6218"
+    },
+    {
+      "path": "data/stage-gameplay-openings.csv",
+      "sha256": "e81dc5db665aff228c17937f6ea1a38600cb45f86409ea722a0d9f7831015fd1"
+    },
+    {
+      "path": "data/stage-gameplay-placements.csv",
+      "sha256": "063c40f56328519e65a4b729a4a5a8d62c6f3fa2371776dc3d1cfee2a64152aa"
+    },
+    {
+      "path": "data/stage-gameplay-scenes.csv",
+      "sha256": "28b13f18ec525a372d0d074bf36728ed2de08fee0e8ea11459485a0ae7b37083"
+    },
+    {
+      "path": "data/stage-gameplay-water.csv",
+      "sha256": "3d5f5694b8f86a995f65c330c912c34abdea8badb88f06fc4ac29e39a4f35029"
+    },
+    {
+      "path": "data/survival-attributes.csv",
+      "sha256": "288a11f68def35f914c1bbcda0cf32254c46db7898b34c478f22cd543a7c3984"
+    },
+    {
+      "path": "data/suspended-sea-ground.csv",
+      "sha256": "5fcbba648c817e59f015a9664525e84505235e117245b93aa12e2236f57eaf12"
+    },
+    {
+      "path": "data/suspended-sea-openings.csv",
+      "sha256": "d0aedf8233ac1412315e464ffc40ed3ec33855679d3caf75e4aced18addf95ec"
+    },
+    {
+      "path": "data/suspended-sea-placements.csv",
+      "sha256": "1574b398006d2910ba6711f038e615f8f0ed236427e207e8dd76eee3e2597e06"
+    },
+    {
+      "path": "data/suspended-sea-scenes.csv",
+      "sha256": "72c7072f3bdd18c198f86e076000e73577f35a0c457f29ab5511a73e7a5c5dd7"
+    },
+    {
+      "path": "data/suspended-sea-water.csv",
+      "sha256": "e1499598233d5cff1bb3a9cd6454e81499488c5ec47face34b1c3e54677ac328"
+    },
+    {
+      "path": "data/upgrades.csv",
+      "sha256": "0ae58529f3f9f9db82b036f51e343ab2d075861768c64ef892ef2be2287a8854"
+    },
+    {
+      "path": "data/weapon-attack-profiles.csv",
+      "sha256": "4eb289e182ff878dff190e05699deebdfac700e5bd9f493a70123841dad4c75b"
+    },
+    {
+      "path": "data/weapon-first-discovery.csv",
+      "sha256": "390fa21006c0868f804ef22490a3b568a16321e5dc29e8168473dc10045e33a1"
+    },
+    {
+      "path": "data/weapon-loot.csv",
+      "sha256": "069cd08c9dcca81d4803f3f04bc1b499165f027d39fbe0f0d546838ed4e57fce"
+    },
+    {
+      "path": "data/weapon-qualities.csv",
+      "sha256": "e846f119f46c2814c601378da97a6079b7aa638d3f0754cd2a2bcfba8b4ef162"
+    },
+    {
+      "path": "data/weapons.csv",
+      "sha256": "3d4a197250e86164f123d97efb0051fef792e2a6bc5c24c5252791ce414133bd"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "path": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    {
+      "path": "src/core/event-bus.ts",
+      "sha256": "7a5add701fadcccf1362c98db50079f5eb862d541ae29fa3ed23cafd27224d3b"
+    },
+    {
+      "path": "src/entities/form-renderers/d/environment-pixels.ts",
+      "sha256": "b909b584735ec5e11c498568cc91258141750d9e5ccb30e07757ea0872ed2278"
+    },
+    {
+      "path": "src/entities/form-renderers/d/fragment-ramp.ts",
+      "sha256": "45d7383b0810c75ccfad0853eabc4555812b15eb8d430a5439aff26acaf7f1b6"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/bake.ts",
+      "sha256": "2213687adf44d61292c6f62ed8a58f20cd94fca39422c59120798478f50ad551"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/material.ts",
+      "sha256": "f2ff8ee2ac4a06fe90e091a010a5ba8a5ac252e40efe2d36bada20069eda635f"
+    },
+    {
+      "path": "src/entities/form-renderers/d/paint-genome/topology.ts",
+      "sha256": "54742eb047b7b7966b71ad81a9711fd2d51e7129ab3f6d164347cd485dc1453e"
+    },
+    {
+      "path": "src/entities/form-renderers/form-renderer.ts",
+      "sha256": "62546d8cd3f5def6a8497f40886c741e5fe5274e7522e303ac5da223f3e4441a"
+    },
+    {
+      "path": "src/entities/restraint-reaction.ts",
+      "sha256": "86fde8d096e306983f75f799186b7575068ab94074a1bc19bdbbecd1a56e1b21"
+    },
+    {
+      "path": "src/generated/contaminant-catalog-data.ts",
+      "sha256": "3e6751994c7c064dcfdc2178297b075db55ca06a35c0ae9f2a633a9abbc1b64d"
+    },
+    {
+      "path": "src/generated/contaminant-data.ts",
+      "sha256": "dd94fa026a863ad556c4e47ce2efc5ff15ec0a5d027042e3f125c0ce9748cba1"
+    },
+    {
+      "path": "src/generated/contaminant-economy-data.ts",
+      "sha256": "637cf397a504553139700bda4b2323640794a8f8add004d9fe295c83a8d9b0d2"
+    },
+    {
+      "path": "src/generated/contaminant-quality-data.ts",
+      "sha256": "767bab485f3d95fa687e02cce79e25771085f37145f7fe91d3053a8c4ccc1057"
+    },
+    {
+      "path": "src/generated/contaminant-sources-data.ts",
+      "sha256": "f9e01340b6b4f871de9be5c17bc32a23535cc47dcab33a3888da5fdbd8b53904"
+    },
+    {
+      "path": "src/generated/contamination-body-data.ts",
+      "sha256": "a8984167dfd2ee50397a5b8ff43827911d2f5d8203e2876ef7c47435d6acaa07"
+    },
+    {
+      "path": "src/generated/contamination-capability-data.ts",
+      "sha256": "9d2e8adfade83f546849fc6e024ae5b61b186c38faba33f657e0307c1d0e0d3b"
+    },
+    {
+      "path": "src/generated/contamination-family-data.ts",
+      "sha256": "db513e4a958343a6ee744995cf430414a30411d962fdbfc39a70e7d9807b4c92"
+    },
+    {
+      "path": "src/generated/contamination-lexicon-data.ts",
+      "sha256": "487ef81032388393b937119a2f98b066cacd5c372e1b19d7f105315ecc12ada4"
+    },
+    {
+      "path": "src/generated/enemy-data.ts",
+      "sha256": "06861b2caba24f6cac050d5110a184d251d1f7e50f051243ea22bc94989231e2"
+    },
+    {
+      "path": "src/generated/growth-route-data.ts",
+      "sha256": "5fb88c639971af249f8ebe5c03fb60a57d82340b75078940c0419bf1a8ef6799"
+    },
+    {
+      "path": "src/generated/rift-fragment-data.ts",
+      "sha256": "59c08d8ff70701065328fff7cbec26e4b971fefe0d0c2b0ed889209ecf725f2c"
+    },
+    {
+      "path": "src/generated/rift-world-conditions-data.ts",
+      "sha256": "257fb47e344dc4ed8b9c67e2fe69362207aa3a3aaeecee750ae8dbca10fd9be4"
+    },
+    {
+      "path": "src/generated/rift-world-pool-data.ts",
+      "sha256": "f181f51e8a332b357818ce17f97e2373aaee4ef3c7c8e39e611a9c07676e5514"
+    },
+    {
+      "path": "src/generated/rift-world-profile-data.ts",
+      "sha256": "9550a5faca9e262d2ccf7679d29fd4b0306e883785bf352b31f3007c13d39fe8"
+    },
+    {
+      "path": "src/generated/rift-world-space-data.ts",
+      "sha256": "310341f15599085f1130c14f3eec973cb3ad17575e1db82e715069f7dbd126b8"
+    },
+    {
+      "path": "src/generated/upgrade-data.ts",
+      "sha256": "092411f49b7eb5cacee1da29040c7289769139d68dfc487ccba15a05a6ea26e5"
+    },
+    {
+      "path": "src/generated/weapon-data.ts",
+      "sha256": "25d13904e55acfa346408853b75c5eadecaec4fe43145c94c69504be251deb61"
+    },
+    {
+      "path": "src/generation/atmosphere.ts",
+      "sha256": "5069e1f84f3565b33b8c6a96c61ac1ee2d1177b123633fa37aa1ab98235f05b3"
+    },
+    {
+      "path": "src/generation/connectivity.ts",
+      "sha256": "09ce50871f059aa2293d3011e52c6031b9f6712a952032374a5016b6ffa3a790"
+    },
+    {
+      "path": "src/generation/contamination-draw.ts",
+      "sha256": "780f7aa6f2d65d63e9ca71c9bde6aec05b5e4f8b39c66256c0207e583496231d"
+    },
+    {
+      "path": "src/generation/contamination-pins.ts",
+      "sha256": "c15713531378ae833b13cd6e45417fca25867ea19dc30f7a464534a9b1b69b1b"
+    },
+    {
+      "path": "src/generation/cover.ts",
+      "sha256": "1df3e511b090dd8d99d0374e7431fd2048ac805c458b758cafbb976d2d8ba7d9"
+    },
+    {
+      "path": "src/generation/draft-pipeline.ts",
+      "sha256": "bd84d233e3afc414e8f14810b64de9594608b4a35248b259b70c22149edfc575"
+    },
+    {
+      "path": "src/generation/dual-path.ts",
+      "sha256": "3df3c42227ffe0498f4e7555d8f75c5abe7d39e219418e2c0c2a6b4ad75dd699"
+    },
+    {
+      "path": "src/generation/fragment-roll.ts",
+      "sha256": "6e1d92654bd723600ab510b8759a847bf47b50d4fd076db7a4b22858c2392ac0"
+    },
+    {
+      "path": "src/generation/legacy-rift-generation.ts",
+      "sha256": "bc96608ee48a0fc211acd7da91136a3f6bdd629b56f956cf38ab4c0bb590b9cb"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/executor.d.ts",
+      "sha256": "5e75e0f0d56db8d63066aa3e17bd1a64854f03b6e73f8ec389c92eae2e847647"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/executor.js",
+      "sha256": "330379530a256ce7520cb92f1c4ba383a7ae5cf6382a25d25e56fcd4b67ec074"
+    },
+    {
+      "path": "src/generation/legacy-rift-v2/manifest.json",
+      "sha256": "0bb534243de40fad3ef4fbbe0663837cd0fc34cdb69a1d17d488f95c2e4ab1b2"
+    },
+    {
+      "path": "src/generation/masses.ts",
+      "sha256": "e1d8e88c574f04122d77490bdfeff5e70e540c4e7079e98688ab06e9384ce195"
+    },
+    {
+      "path": "src/generation/outline-mask.ts",
+      "sha256": "8b51f2038709b788580e92ae975717eb564f8bde51669978bd71c1f766d461a3"
+    },
+    {
+      "path": "src/generation/palette-quantize.ts",
+      "sha256": "bafca232fcabc5e4bb10fdaf3805636036605bc2af08f985bde3e63fefdcb04e"
+    },
+    {
+      "path": "src/generation/preview-paint.ts",
+      "sha256": "4339b007e1d9ca9cefa689fa9c2d1ada7012b351b5b8266216ce92f5410222df"
+    },
+    {
+      "path": "src/generation/recipes.ts",
+      "sha256": "4231c82c8dd3caec74b008705e55904b724609d08f8cf41f455a122b72c88f81"
+    },
+    {
+      "path": "src/generation/rift-layout.ts",
+      "sha256": "f251fb0e7f26f8f6f22d62b57d55acac98e24aa403de768c8e91f3f4be3abe4f"
+    },
+    {
+      "path": "src/generation/seed-fork.ts",
+      "sha256": "e167c7996f11c79b8fbe08874a2065b4887acd925206935aef95bbf48a9aff76"
+    },
+    {
+      "path": "src/generation/silhouette.ts",
+      "sha256": "56d62e0540e19e9c723e1b0efb33dd4498cc1262615358c9e82cae13bc4718f8"
+    },
+    {
+      "path": "src/generation/static-body-access.ts",
+      "sha256": "9e88f47f5ada1daf3a3cbb01af3b76427389fe0fa6450958902dcf9ab5c90bb7"
+    },
+    {
+      "path": "src/generation/stealth-density.ts",
+      "sha256": "5d289db0f7d848e438c9bb0a7aad603550c9ebda4d3e9cbdf9d339da9bb477f8"
+    },
+    {
+      "path": "src/generation/structure-grammars.ts",
+      "sha256": "23c52627de2378e4f53788f60a91c57bf41582ada2cd500e298e0558ac676858"
+    },
+    {
+      "path": "src/generation/terrain-safe-volume-seat.ts",
+      "sha256": "7c2fc5d75240a302a41b4d25e64cf1840939c944db7ae13fec7231148b7e78fa"
+    },
+    {
+      "path": "src/generation/types.ts",
+      "sha256": "c201e0ff3894de9a5eb93fa036a1d89305b56ff41bdda56b2156bdb122001d27"
+    },
+    {
+      "path": "src/generation/wall-edge-path.ts",
+      "sha256": "a0c1f2944b266640b643bc5fd4da54c9c71de2dc2a2e7cff37a0321416baa925"
+    },
+    {
+      "path": "src/generation/wall-host-placement.ts",
+      "sha256": "37883e816361daaeb478903ba71170867a1c25f4c4443ae5a1df884e948ac800"
+    },
+    {
+      "path": "src/generation/world-study/layout.ts",
+      "sha256": "0658f1317e4deb12aa2266ab48a87a5d2bc67290c09b0e8a11875bb9a33ee23c"
+    },
+    {
+      "path": "src/generation/world-study/material-field.ts",
+      "sha256": "f3971a905e6dcddc2d67a9393df604e412fd2c1c08686bf01e84fd19ef23bc10"
+    },
+    {
+      "path": "src/generation/world-study/material-noise.ts",
+      "sha256": "e401a0d6289738fb030344f6d6c00027e690d778fe1faf8f280cc8754f4292d5"
+    },
+    {
+      "path": "src/generation/world-study/open-space.ts",
+      "sha256": "19fa36a60c12e7303572d2c6526d2b00d9085169bb3d2c01d338cee7f2ffefe4"
+    },
+    {
+      "path": "src/generation/world-study/pollution-grade.ts",
+      "sha256": "21509fda38bf58b26df368736143eb3bbac3d60c6e2539147873a36c01cbe3bc"
+    },
+    {
+      "path": "src/generation/world-study/production-map.ts",
+      "sha256": "1f65c431b2c50e6d69f341d6f817653ea4c6e64f8e94de1d8b506a8d8ab1c932"
+    },
+    {
+      "path": "src/generation/world-study/production-recipe.ts",
+      "sha256": "49cfea26c7c77ba48af32fa93155907bee0065ffe792bdfd4b6d3e6e2f6c5c87"
+    },
+    {
+      "path": "src/generation/world-study/profiles.ts",
+      "sha256": "da474cd3abbe51fd628513f5bc626eb6a0e910da5472eb3bfc6088643f15815d"
+    },
+    {
+      "path": "src/generation/world-study/region-field.ts",
+      "sha256": "03e2256d3d0cf0d80e51d9f3af7f353884162445370e63aa27c63083f40ea4b7"
+    },
+    {
+      "path": "src/generation/world-study/semantic-deployment.ts",
+      "sha256": "4e339e6c006c7eaafe619e5d7c0494fc878a8e3b50bb912ad72e5ed58fc979bc"
+    },
+    {
+      "path": "src/generation/world-study/shape.ts",
+      "sha256": "498f846e415e8aeec8f3a08464e2120fa45702d04a3b4cdaeb73862a94f06364"
+    },
+    {
+      "path": "src/generation/world-study/space-profile.ts",
+      "sha256": "5cfbcb0036d5c5b7373a0c3bed3382a433b7af129447416759a47f08e59e4590"
+    },
+    {
+      "path": "src/generation/world-study/space-quality.ts",
+      "sha256": "1c69fb82a366e5f57c7f92500b959d293da1d5bcb5daf768a68c2bd477893724"
+    },
+    {
+      "path": "src/generation/world-study/support.ts",
+      "sha256": "21c380b643339d80ae304ad5f9490d7c41bc11654404ac1f721e83f5e9f0bcc9"
+    },
+    {
+      "path": "src/generation/world-study/surface-field.ts",
+      "sha256": "8bf31fe2fdbe9983573cea1030aa5bd7028bcf4bdda4e936b69a1ef2d19c77bb"
+    },
+    {
+      "path": "src/generation/world-study/types.ts",
+      "sha256": "1e55aa5581e38c357036fa0a5af0ee96f47f3c693b830bb6c5796b0ffc40cb0a"
+    },
+    {
+      "path": "src/generation/world-study/world-conditions.ts",
+      "sha256": "c3f83782511fafebafbf6d6da2dbb5dc4e02a3a8a1942109e591d256d50fcccd"
+    },
+    {
+      "path": "src/generation/world-study/world-package.ts",
+      "sha256": "746c4eaedef5fcb3fa049f71470ab1477aaecf1bc12ba5df1019daee90b7b331"
+    },
+    {
+      "path": "src/generation/world-study/world-scenery.ts",
+      "sha256": "171f1b193730d9cdd87ab42ecb349d9c2fe05594201ccfc08f3d269c0a396176"
+    },
+    {
+      "path": "src/managers/game-state.ts",
+      "sha256": "5b74229d7c694ee0c4af028ae480ec34438d10e7792d174c36e30cf5a718b000"
+    },
+    {
+      "path": "src/scenes/rift-map-data.ts",
+      "sha256": "2e473be1b6585cdf9bacdae4774d59ef75c889484bb0db1c02d7cd257b0c28c8"
+    },
+    {
+      "path": "src/systems/ai/physical-grid.ts",
+      "sha256": "ba8d8f61c942276364fe51003ddf0575a919b801f4dddb8be4775120da3968d1"
+    },
+    {
+      "path": "src/systems/contaminant-catalog.ts",
+      "sha256": "9ed208132afd99cc1e17eb8b9bc10a9bf1cbd59377f111f1e6776b0694e27a4f"
+    },
+    {
+      "path": "src/systems/contaminant-drop-plan.ts",
+      "sha256": "5fb13a9357f236556740914ed9b136a713e25ee341f0a4e8187129ebd4cda147"
+    },
+    {
+      "path": "src/systems/contaminant-migration.ts",
+      "sha256": "a7fdec1f562c92e6a69ff7d1f37136f42241ac98cdf6bf292658ad76a1d45415"
+    },
+    {
+      "path": "src/systems/contaminant-quality.ts",
+      "sha256": "0bcb58872bdce1edf52d126e3f3a35b34db5dd78054f9fb1952b045b6da86347"
+    },
+    {
+      "path": "src/systems/contaminant-system.ts",
+      "sha256": "d0b42b355052401b60c0ed954a55bb5d6cfc8b5bcaaa2a7f47c423ab3ca3f23c"
+    },
+    {
+      "path": "src/systems/contamination-host-live.ts",
+      "sha256": "0f5f31b67d8206568c6bb3e13fd4525a62bd4cbf969cffbe7b9eab642c6f2cd0"
+    },
+    {
+      "path": "src/systems/defense-engine.ts",
+      "sha256": "31006b129434b02e9ff6db85c643825be432af99140063c9cca6b76b4872c7de"
+    },
+    {
+      "path": "src/systems/equipment-lifecycle.ts",
+      "sha256": "a77cb965c0743b6fedd5167faf4dc61e05c2582b87b0d09525073d3048666a43"
+    },
+    {
+      "path": "src/systems/growth-system.ts",
+      "sha256": "e5768f33d994218f36dc098227c20bf14213e6389734dd9999909175ed712f07"
+    },
+    {
+      "path": "src/systems/impact-system.ts",
+      "sha256": "1f9ae2b615388fefea2df478ec19d5a0f9ab0fa77ff49c74fc3595fc1b4faa29"
+    },
+    {
+      "path": "src/systems/inventory-store.ts",
+      "sha256": "a3b582cc0e9bea19ccfd1945b45996108f8ab01fbe77ced6b48412ae35c411d4"
+    },
+    {
+      "path": "src/systems/kindling-yield.ts",
+      "sha256": "2213e7ee61b9954820a772835e10016bd583ff958262dc0fd25477fd0c3ade29"
+    },
+    {
+      "path": "src/systems/run-passive-receipt.ts",
+      "sha256": "635d36ff36dd11a915b01ec679f2b46cad1488d049626c26d505585db712676c"
+    },
+    {
+      "path": "src/systems/tile-grid.ts",
+      "sha256": "f5251b92add7fa0d0a1c4d19400e3a523a574ec2d1bd28c2769c512a2a637eb2"
+    },
+    {
+      "path": "src/types/events.ts",
+      "sha256": "f1898794aac8afe9f778f7788669f35a3273fb1d9c2c2065cecee0d9dd29111e"
+    },
+    {
+      "path": "src/types/game-types.ts",
+      "sha256": "611099b4d801a780eac59c405765ddc81a9f2d2f4aacf10ffea06ea42cc70f19"
+    },
+    {
+      "path": "src/types/inventory-types.ts",
+      "sha256": "88b74af54dabca25fd557abf99ee9e07e25ef596919a15cb132fe2510aa65039"
+    },
+    {
+      "path": "src/types/map-types.ts",
+      "sha256": "d9308149b3958f195749509b8e51065e671a59fdcf9c654b7575a18f07a3a00c"
+    },
+    {
+      "path": "src/types/rift-checkpoint.ts",
+      "sha256": "7b593928246c6bd4b4018672687d4a73cc585da1a18925c182db80634aca601f"
+    },
+    {
+      "path": "src/utils/grid-raycast.ts",
+      "sha256": "de5b5e6e47ba34e08146ff372f3a6cd733b0311979a8838d5c23954129f5bd4e"
+    },
+    {
+      "path": "src/utils/random.ts",
+      "sha256": "fed1e831489dd5764f8daea5aaebc42543b017b6c716612e0bb0f29f9d260c54"
+    },
+    {
+      "path": "tools/atmosphere-copy/generate.mjs",
+      "sha256": "a64dee4bc8e958fe358142d63e4361946cd7a5ded97e405b24f316f01c4cc654"
+    },
+    {
+      "path": "tools/csv-codegen/contaminant-catalog.mjs",
+      "sha256": "c50493b085066fadc68aa87fa64d0cf7b83943485aeb5784c2a56660b6b7bc09"
+    },
+    {
+      "path": "tools/csv-codegen/generate.mjs",
+      "sha256": "5f88c16f43e7c67447bab19472ac871fdded7112d8a5b38c11667e0e82d91bc9"
+    },
+    {
+      "path": "tools/map-preview/codegen-world-pool.mjs",
+      "sha256": "645625e28495f2c5148791a1a60910eada5883fa9a604309c0363dc35b485bad"
+    },
+    {
+      "path": "tools/map-preview/codegen-world-profiles.mjs",
+      "sha256": "35d64342754e2a3d2bde85a7e0044c4f383ab189a02b1474f6f1acfe23a2f603"
+    },
+    {
+      "path": "tools/map-preview/codegen-world-spaces.mjs",
+      "sha256": "e8e8d430fef68934f869fa9659e646d4a7416ed7c0fbdb4de77d0af53aeabe6c"
+    },
+    {
+      "path": "tools/world-study/codegen-world-conditions.mjs",
+      "sha256": "b50e675fb1e01321ae13467c2abde8a3f0fde03e92616c955ea474ade431ffbc"
+    },
+    {
+      "path": "tools/world-study/codegen-world-packages.ts",
+      "sha256": "2e2c5c60ac1b3f911e4e273c79e30b9badd19c25e9575c66d42211f8e3cea094"
+    }
+  ],
+  "hash": "637c7b60ad535eccafcf93f447304e4b592dfaa0c8b2892f23277e5dab5ddef6"
+}

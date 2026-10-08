@@ -1,0 +1,33 @@
+{
+  "status": "scheduler-only-correction",
+  "originalExecution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining84.json",
+    "sha256": "04f779bad03746f9dd010a9b21e530970e46517d123fc5c7bebdaa8f4e8d7514"
+  },
+  "originalPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining84-plan.json",
+    "sha256": "1c345c366be997286da448bed44533428e6ab4bbe2a0d817c5435ce27bd2154e"
+  },
+  "originalRunner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/run-current3120-remaining84.mjs",
+    "sha256": "3264bee4095b75edc6a4e850a1e76fab350ff2e5ae4241f0518be0aa96846ecd"
+  },
+  "existingGenerationLog": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/queue-launch.log",
+    "sha256": "9bcad6f7aa8d3b04e18a436b1ab9d2637d46a56936bbadbea97792f5f7531548"
+  },
+  "existingLogText": "full: 240/240 pass\nholdout: 48/48 pass\nB06 original288 complete\n",
+  "completedB08": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-summary.json",
+    "sha256": "6a82929ae1f157158d99fa0cfaf1df9cf69d26d241238f9e129b94a7ac33dafc"
+  },
+  "newPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining60-plan.json",
+    "sha256": "250452a463b67bf815c3ba4f9b6dec3ded23798c28d12765e254b6ed703120b8"
+  },
+  "newRunner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/run-current3120-remaining60.mjs",
+    "sha256": "c66f640976ce28af7bf9504a8df2d5bdfe12be72d5082542dc22fd1c0a20e486"
+  },
+  "scope": "The first stage completed successfully. Before launching the next child, exclusive log creation collided with an existing generation log. Keep all originals; continue only unstarted exact remaining60 with a play-specific log name. No runtime, input, seed, source, deadline, route or qualification change."
+}

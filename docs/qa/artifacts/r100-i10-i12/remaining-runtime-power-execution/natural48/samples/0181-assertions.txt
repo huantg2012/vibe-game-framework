@@ -1,0 +1,30 @@
+2026-10-08 12:26:46 +0800 
+Assertion status system-wide:
+   BackgroundTask                 0
+   ApplePushServiceTask           0
+   UserIsActive                   1
+   PreventUserIdleDisplaySleep    0
+   SoftwareUpdateTask             0
+   PreventSystemSleep             0
+   ExternalMedia                  0
+   InternalPreventDisplaySleep    1
+   PreventUserIdleSystemSleep     1
+   NetworkClientActive            0
+Listed by owning process:
+   pid 59696(caffeinate): [0x00237b5a00019648] 01:30:01 PreventUserIdleSystemSleep named: "caffeinate command-line tool"  
+	Details: caffeinate asserting on behalf of '/usr/local/bin/node' (pid 59694)
+	Localized=THE CAFFEINATE TOOL IS PREVENTING SLEEP.
+   pid 395(runningboardd): [0x002390730001a5b4] 00:00:00 PreventUserIdleSystemSleep named: "osservice<com.tencent.iOABus.Daemon>395-53242-2143547:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 53242. 
+   pid 401(WindowServer): [0x0023607f0009a483] 00:52:37 UserIsActive named: "com.apple.iohideventsystem.queue.tickle serviceID:1002818e3 service:AppleMultitouchDevice product:Apple Internal Keyboard / Trackpad eventType:11"  
+	Timeout will fire in 7643 secs Action=TimeoutActionRelease
+   pid 400(coreaudiod): [0x00238a540001a17c] 00:26:08 PreventUserIdleSystemSleep named: "com.apple.audio.BuiltInSpeakerDevice.context.preventuseridlesleep"  
+	Created for PID: 51385. 
+	Resources: audio-out BuiltInSpeakerDevice 
+   pid 330(powerd): [0x0023665a000185dd] 02:59:37 PreventUserIdleSystemSleep named: "Powerd - Prevent sleep while display is on"  
+   pid 330(powerd): [0x002363d90009a790] 02:59:37 UserIsActive named: "com.apple.powermanagement.lidopen"  
+	Timeout will fire in 23 secs Action=TimeoutActionRelease
+   pid 330(powerd): [0x00237b64001083fd] 00:00:13 InternalPreventDisplaySleep named: "com.apple.powermanagement.delayDisplayOff"  
+	Timeout will fire in 286 secs Action=TimeoutActionTurnOff
+Kernel Assertions: 0x100=MAGICWAKE
+   id=556  level=255 0x100=MAGICWAKE creat=2026/8/10 18:03  mod=2026/10/8 09:40 description=en0 owner=IOSkywalkNetworkBSDClient

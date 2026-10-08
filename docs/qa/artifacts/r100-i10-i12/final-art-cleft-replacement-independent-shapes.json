@@ -1,0 +1,235 @@
+{
+  "status": "bounded-source-and-replacement-evidence-confirmed",
+  "createdAt": "2026-10-07T09:15:25.735047+00:00",
+  "reviewer": "identity_shapes",
+  "scope": "Read-only source/data/receipt audit; no new image review, map execution or visual scope expansion.",
+  "worldId": "cleft-tableland",
+  "sourceComparisons": [
+    {
+      "source": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+        "sha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+      },
+      "edgeSha256": "1299a19f58c2634ec821525be6760edf7319c19ff4eeebce8c6fbe29ee9b258d",
+      "groundSha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60",
+      "masterSha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+    },
+    {
+      "source": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+        "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+      },
+      "edgeSha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc",
+      "groundSha256": "c102a64a883194c6327c50773198312890dde782c553e6ec5aa082b9603e5a60",
+      "masterSha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+    },
+    {
+      "source": {
+        "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+        "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+      },
+      "edgeSha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc",
+      "groundSha256": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24",
+      "masterSha256": "0d95fe0887e82fc928286988324a8df77744a1eb7a75538cb48748f5fc6d010e"
+    }
+  ],
+  "authoredRowExactAcrossThreeSources": true,
+  "authoredRowSha256": "5a62414b78e816d02d286f72ec0b23c41308e36e784e353d3bc2819c469efe7e",
+  "groundImplementation3103To3105Exact": true,
+  "masterImplementationAllThreeExact": true,
+  "edgeImplementation3105To3121Exact": true,
+  "currentRepairReceipts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-final-art-review.json",
+      "sha256": "b92fb88b13e4dfcb34246e164831bfa3874c8495ec026bb2a4299a0f8aadeee5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-independent-art-review.json",
+      "sha256": "84db0b3c950aa73341c63f2c7391f97a6eb3dd65d1b8c29db37b6fc8cde9364b"
+    }
+  ],
+  "verifiedOriginalImages": {
+    "author": [
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/02-upper-neck-west.png",
+          "sha256": "caabbe00a936c5e441517e9aed1375dbc14b9fb5f5205d37cd211d6f29db2d42"
+        },
+        "grade": "medium",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 709.4456104792494,
+          "y": 279.0492186469031
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/03-lower-neck-west.png",
+          "sha256": "f532acdb096ccfe9d582be0682fa69c76c2c0ebdc6eace8124c9bc80a4917320"
+        },
+        "grade": "medium",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 779.5024054047724,
+          "y": 555.3118388719521
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/02-upper-neck-west.png",
+          "sha256": "35811f91fabb8f4c8a2840a31853af8637f2eec78dea24411c12f73a6f04759d"
+        },
+        "grade": "low",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 699.5119364007274,
+          "y": 285.0528046910288
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/03-lower-neck-west.png",
+          "sha256": "3edb5312e1173301bca1d6b3e80d66c94ab46b6b4caea5de44deb1fb4377ca17"
+        },
+        "grade": "low",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 785.824069939697,
+          "y": 557.3994010107502
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/02-upper-neck-west.png",
+          "sha256": "a4642cea908b68686db99a7c012b978278441bfcb091f1121a207dee281ee439"
+        },
+        "grade": "severe",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 709.0562124708052,
+          "y": 283.11821934856187
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/03-lower-neck-west.png",
+          "sha256": "37260216461384fbce23aedafe73e0a82fb2280eb969d0dc6d9eb61ce4d0ae43"
+        },
+        "grade": "severe",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 792.0446219390955,
+          "y": 560.4643325041808
+        },
+        "facing": "west"
+      }
+    ],
+    "root": [
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/02-upper-neck-west.png",
+          "sha256": "caabbe00a936c5e441517e9aed1375dbc14b9fb5f5205d37cd211d6f29db2d42"
+        },
+        "grade": "medium",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 709.4456104792494,
+          "y": 279.0492186469031
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/03-lower-neck-west.png",
+          "sha256": "f532acdb096ccfe9d582be0682fa69c76c2c0ebdc6eace8124c9bc80a4917320"
+        },
+        "grade": "medium",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 779.5024054047724,
+          "y": 555.3118388719521
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-low/02-upper-neck-west.png",
+          "sha256": "35811f91fabb8f4c8a2840a31853af8637f2eec78dea24411c12f73a6f04759d"
+        },
+        "grade": "low",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 699.5119364007274,
+          "y": 285.0528046910288
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/02-upper-neck-west.png",
+          "sha256": "a4642cea908b68686db99a7c012b978278441bfcb091f1121a207dee281ee439"
+        },
+        "grade": "severe",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 709.0562124708052,
+          "y": 283.11821934856187
+        },
+        "facing": "west"
+      },
+      {
+        "image": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-grades/cleft-tableland-severe/03-lower-neck-west.png",
+          "sha256": "37260216461384fbce23aedafe73e0a82fb2280eb969d0dc6d9eb61ce4d0ae43"
+        },
+        "grade": "severe",
+        "requestedSeed": 20261005,
+        "actualPosition": {
+          "x": 792.0446219390955,
+          "y": 560.4643325041808
+        },
+        "facing": "west"
+      }
+    ]
+  },
+  "originalScope": {
+    "historicalReceipts": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-final-art-review.json",
+        "sha256": "900b2168abb106f53f3f8bcf369219e4417b5e8be7815dcee4fa1bd3a90a25cd"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b01-independent-art-review.json",
+        "sha256": "6c09736b3782a9f8a04032fa6cf6f06ec7a19a1a1cdf80fb31b070a2f6b44c28"
+      }
+    ],
+    "repairReceiptsScope": "3105 explicit edge-only recheck at the two necks: author six images, root five. Root did not review low03 in this receipt.",
+    "replacement": "The3103 receipts remain historical component evidence; they cannot claim whole-world rendering continuity across the deliberate edge Z/normal/raster/signature change. The3105 author/root receipts already cover the repaired edge in all three grades.",
+    "notGranted": [
+      "Whole-map or every bank/outer-wall coverage",
+      "Old3103 RGBA/signature exact",
+      "New review of an image not already listed by author/root",
+      "Final-source continuity after3121"
+    ]
+  },
+  "supportingScopeReceipts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-continuity/summary.json",
+      "sha256": "f8b6c97b05cbd763bb9f21bdf0ccc52f530023af84a218db5beeede6283c29df"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity/independent-review.json",
+      "sha256": "79deb8557f880ae9b1d0469f5efaec09372aad6740c5fdec7190a4da3a55f72f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity/report.json",
+      "sha256": "04dd4d576c7537e6ea19a25bfc82d0af04cf9ff1edb98bef3b20fdc09b3628e2"
+    }
+  ],
+  "recommendation": "Move3103 receipt-source combinations out of current whole-world continuity obligations into historical evidence; retain3105 scoped repair receipts, with exact later selected-code/source continuity still required. Update stale3103 limitation text to the actual3105 reviewed stations without enlarging scope."
+}

@@ -1,0 +1,95 @@
+{
+  "status": "failed-script-preserved-no-retry",
+  "stage": "production",
+  "startedAt": "2026-10-07T14:59:22.504395+00:00",
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/commands.json",
+    "sha256": "24a0e53e23461cbe5978ee5fa6c0e0b35d323d139c0b36b9e74f6cc790944361"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "selection": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-enable/selection-execution.json",
+    "sha256": "a4ba1cd6fed87f60ee82cfeeb9bb738bf72b771bb4bd24acedbc28679328dcb6"
+  },
+  "compatibility": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json",
+    "sha256": "0f6eee447bdc4faef6ed19598ca974035ec74bdbea1beeef65d7ee49118af198"
+  },
+  "command": [
+    "node",
+    "tools/qa/r100-i09-final-probe.mjs",
+    "--probe",
+    "production",
+    "--source",
+    "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/production-final108",
+    "--expected-worlds",
+    "108",
+    "--expected-revision",
+    "6",
+    "--stop-on-failure",
+    "--observe-workers"
+  ],
+  "env": {
+    "GAME_URL": "http://127.0.0.1:3122/",
+    "NODE_OPTIONS": "",
+    "DEBUG": ""
+  },
+  "tools": [
+    {
+      "path": "tools/world-study/r100-frozen-server.mjs",
+      "sha256": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/check-r100-production-browser.mjs",
+      "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+    },
+    {
+      "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+      "sha256": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "7680dd09c9d9a4989ecde5b0173efd72c6cd24fee33ecf272eb57330a4af2c60"
+    },
+    {
+      "path": "tools/qa/r100-revision6-journey.mjs",
+      "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+    },
+    {
+      "path": "tools/qa/r100-revision6-review-continuous.mjs",
+      "sha256": "28db9ca4224f48e06ea9fadf50521fbff80d58b45d01512c8a29a2fc5b0b57b5"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    }
+  ],
+  "frozenAndWorkingSourceFilesVerified": 1397,
+  "resourceWindow": "Sole QA Chrome. Root released preceding compatibility CPU work.",
+  "originalAttempt": true,
+  "noAutomaticRetries": true,
+  "pid": 85063,
+  "exitCode": 1,
+  "endedAt": "2026-10-07T15:55:19.490674+00:00",
+  "log": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/production-execution.log",
+    "sha256": "e4131e61dd2108f13c1c785f63d55f957c40f8a1b69226400f0c3f196b8c3f03"
+  }
+}

@@ -3,9 +3,9 @@
     "id": "COH-F044",
     "title": "正式存档与在途完整恢复",
     "domain": "persistence",
-    "summary": "正式出发冻结身份，继续同趟不重抽、不离线推进；库存schema4保存最近8次世界，旧1–3迁移为空历史。beginRun与访问记录同事务，拒写回滚。修订4生成/校验/表面独立封存，旧修订1–3及v1/v2保留。156正式进入/冷续、174跨运行时身份和48实际存档接续通过限定E161验证。",
+    "summary": "正式出发冻结身份，继续同趟不重抽、不离线推进；schema4记录最近8次世界并与beginRun同事务。修订6当前108世界的324进入/冷续、342浏览器等价、31恢复合同及48自然/192存档接续核账已通过；旧v1/v2及revision1–5保持原冻结恢复。跨设备/无限异常组合仍不外推。",
     "delivery": "production",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "标题继续；Rift 刷新/关闭后继续记录"
     ],
@@ -159,6 +159,36 @@
       {
         "path": "docs/art/rift-r100-i07-i09.md",
         "role": "art"
+      },
+      {
+        "path": "src/utils/worker-request.ts",
+        "role": "code",
+        "note": "有界首次Worker启动恢复；同请求、共享截止及销毁/取消边界，最终运行证据独立登记。"
+      },
+      {
+        "path": "tools/recovery/check-worker-startup-retry.ts",
+        "role": "test",
+        "note": "修订5投影或Worker启动恢复专项；历史版本和实际执行范围分别保留。"
+      },
+      {
+        "path": "tools/recovery/project-native-r100-revision5.mjs",
+        "role": "test",
+        "note": "修订5投影或Worker启动恢复专项；历史版本和实际执行范围分别保留。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/closure-application.json",
+        "role": "doc",
+        "note": "I10–I12实际内部结案与用户抽查范围；不是发布或人审通过。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+        "role": "doc",
+        "note": "I10–I12实际内部结案与用户抽查范围；不是发布或人审通过。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+        "role": "doc",
+        "note": "I10–I12实际内部结案与用户抽查范围；不是发布或人审通过。"
       }
     ],
     "dependsOn": [],
@@ -176,13 +206,17 @@
       "COH-E120",
       "COH-E129",
       "COH-E160",
-      "COH-E161"
+      "COH-E161",
+      "COH-E177",
+      "COH-E178",
+      "COH-E179",
+      "COH-E180"
     ],
     "unknowns": [
       "system-growth-tide 旧 P27 段仍说正式随机世界未适配，与其新版段和当前实现冲突；本条以实际适配及 field-inventory 当前合同为准。",
       "最终交互站位版本恢复20组通过，含4份不可变v1金样、3份v2冷JSON及生产套件5次随机新出击冷恢复；隔离浏览器一趟真实新建/出击/暂停/刷新同身份同位置/搜取/撤离/首归通过。开发中v2算法变化曾使测试entry签名失配，中间失败保留，不代表已发布v1迁移；未穷尽所有在途异常与长期恢复组合。",
       "生产烟测发现既有v2精确签名会受不同V8运行时的atan2末位差异影响（R100-P05）。当前浏览器DEV与dist等价不代表跨引擎/升级后的旧档恢复保证，冻结执行器与严格签名未放宽。",
-      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14及长期收益I13独立保留。"
+      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13长期收益与I14听感R100-R10/弱设备/用户终验仍待。"
     ]
   },
   {

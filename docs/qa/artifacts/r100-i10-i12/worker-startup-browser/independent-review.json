@@ -1,0 +1,40 @@
+{
+  "status": "pass-bounded-independent-transport-review",
+  "reviewer": "root; independent of browser probe author",
+  "reviewedAt": "2026-10-07T06:42:43.115574+00:00",
+  "scope": "Real default Worker clients in 3 isolated same-source controlled contexts, complete value/buffer comparison, bounded error and lifecycle observation.",
+  "evidence": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/summary.json",
+      "sha256": "3dafddc118a1e0d6bab175b32a69d381658cb6f18895866c7274634dca7ca50c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/report.json",
+      "sha256": "39da8da164c9003675c35b5d5dcd2cb15e0b5658f9f52d494203f09470e076a4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/events.jsonl",
+      "sha256": "dbd7120c8efe180d201cf50510ae3f103f98e4f1ffb891aaad8fec373f0d40f5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/strengthened-validator.json",
+      "sha256": "2a9f4b98dd48a0302df97ad7fc0a6abe674f0f92091ca121be92feb7d7f4eadc"
+    },
+    {
+      "path": "tools/qa/check-r100-worker-startup-browser.mjs",
+      "sha256": "edf6967e001baac2dc556a682b80a56099b73ddefd29f19131e88aabbae6ea7e"
+    }
+  ],
+  "findings": [
+    "Both initial-script aborts recovered to the same complete results; only generationMs telemetry excluded.",
+    "Input buffer identity/content retained; 5 exposed successful Workers closed before contexts. Failed unexposed Worker object lifecycle is supported only by separate pure contracts.",
+    "Unexpected page/console errors are now rejected for every context. Original 3 contexts have none. All 6 injected error negatives rejected by strengthened validation.",
+    "Original first attempt and original second-attempt tool remain preserved; no new browser run was required for validation strengthening."
+  ],
+  "notProven": [
+    "Natural ERR_NETWORK_CHANGED recurrence",
+    "P36 production closure",
+    "Final 324 entry/restore matrix",
+    "Natural expedition or performance qualification"
+  ]
+}

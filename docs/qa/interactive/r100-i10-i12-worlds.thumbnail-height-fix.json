@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "status": "thumbnail-height-css-corrected-static-check-pass-browser-recheck-pending",
+  "reviewer": "i12_art",
+  "at": "2026-10-08T02:44:29.662Z",
+  "features": [
+    "F052",
+    "F012"
+  ],
+  "reason": "The prior root browser screenshot shows catalog thumbnails occupying the source image height (758px) despite reduced width, leaving tall dark bands. The author CSS lacked height:auto, so the HTML height dimension remained definite and the preferred aspect ratio did not determine the box height.",
+  "changes": [
+    {
+      "kind": "catalog-image-css-only",
+      "selector": ".card-open img",
+      "addedDeclaration": "height:auto",
+      "retained": "display:block; width:100%; aspect-ratio:1.5; object-fit:contain; image-rendering:pixelated; background:#030405"
+    },
+    {
+      "kind": "static-evidence-link",
+      "before": "r100-i10-i12-worlds.check-v3.json",
+      "after": "r100-i10-i12-worlds.check-v4.json"
+    }
+  ],
+  "before": {
+    "htmlArchived": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.before-thumbnail-height-fix.html",
+      "sha256": "aee61f2798d098c9e30abbb8be6368d03ff6123e7c54063a057b7a5b4c877048"
+    },
+    "staticCheck": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.check-v3.json",
+      "sha256": "6779e4495ac1fb45e8d71953ae3bdb714f43606f7132dac4296e79d536b5bf16"
+    },
+    "data": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+      "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+    },
+    "rootBrowserReviewFiles": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review.mjs",
+        "sha256": "37a97a9e841e444a3e1ac163a7f00b7f94133e00fb817ed60d4fd215646e28dd",
+        "bytes": 7886
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/01-default.png",
+        "sha256": "831e7d52d234d1004940547cce144943db6f8e8358480320f2803b46d1a153c7",
+        "bytes": 194894
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/02-viewer.png",
+        "sha256": "a7bd98eecbfb0909c42704d9fae5f41c4ecfdd986d940b133224959b4fd11d4f",
+        "bytes": 274737
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/03-last-world-severe.png",
+        "sha256": "8e9d9e58f2764369c845a0a9c3eb7d8b305ffd86921cfefcbf6a228c58a79a66",
+        "bytes": 202953
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/04-filter.png",
+        "sha256": "d207e6e6fd8379e84039008184cdfc58edd1d9ec7d56bf0f6c73c2317fbb668a",
+        "bytes": 158173
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/05-explicit-historical-missing.png",
+        "sha256": "8eb817eada94c186420a3bfcdb3f261597fbd0d7f398730bde323faeb6d466e9",
+        "bytes": 154259
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/report.json",
+        "sha256": "a19b5e1105f99dc9d3a1e1426ddf68735be543915d7f0e4efe60bcabab4ee158",
+        "bytes": 4064
+      }
+    ]
+  },
+  "after": {
+    "html": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+      "sha256": "b68da40194dea28956b95b6361bd1b19cca2c7d21ea197242d347d569a53a534"
+    },
+    "staticCheck": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.check-v4.json",
+      "sha256": "b046b8755d92fd14efa8b31cc9bdc88aca452d9b75256430e95517d4c6acbb8f"
+    },
+    "data": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+      "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+    }
+  },
+  "limitedObservation": {
+    "actuallyViewedExistingScreenshot": {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/04-filter.png",
+      "sha256": "d207e6e6fd8379e84039008184cdfc58edd1d9ec7d56bf0f6c73c2317fbb668a",
+      "bytes": 158173
+    },
+    "observation": "Four narrow catalog images sit within excessively tall black image boxes; card labels extend below the viewport. This is the pre-fix screenshot only.",
+    "newScreenshotCaptured": false
+  },
+  "cssContract": {
+    "selector": ".card-open img",
+    "declarations": {
+      "display": "block",
+      "width": "100%",
+      "height": "auto",
+      "aspect-ratio": "1.5",
+      "object-fit": "contain",
+      "image-rendering": "pixelated",
+      "background": "#030405"
+    },
+    "explicitHeightAutoOverridesHtmlDimensionAttribute": true,
+    "stableBoxAspectRatio": 1.5,
+    "originalDimensionAttributesRetained": true,
+    "objectFitContainPreservesCompleteImage": true,
+    "oldCssRejectedForMissingHeightAuto": true,
+    "onlyDeclaredCssAndStaticCheckLinkChanged": true,
+    "allScriptAndEmbeddedDataBytesUnchanged": true,
+    "mathematicalExpectedImageBoxHeights": [
+      {
+        "width": 300,
+        "height": 200
+      },
+      {
+        "width": 325.5,
+        "height": 217
+      },
+      {
+        "width": 480,
+        "height": 320
+      }
+    ],
+    "mathematicalExamplesAreNotMeasuredBrowserBounds": true,
+    "originalBrowserReviewPreserved": {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/report.json",
+      "sha256": "a19b5e1105f99dc9d3a1e1426ddf68735be543915d7f0e4efe60bcabab4ee158"
+    },
+    "rootBrowserReviewAndScreenshotsPreserved": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review.mjs",
+        "sha256": "37a97a9e841e444a3e1ac163a7f00b7f94133e00fb817ed60d4fd215646e28dd",
+        "bytes": 7886
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/01-default.png",
+        "sha256": "831e7d52d234d1004940547cce144943db6f8e8358480320f2803b46d1a153c7",
+        "bytes": 194894
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/02-viewer.png",
+        "sha256": "a7bd98eecbfb0909c42704d9fae5f41c4ecfdd986d940b133224959b4fd11d4f",
+        "bytes": 274737
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/03-last-world-severe.png",
+        "sha256": "8e9d9e58f2764369c845a0a9c3eb7d8b305ffd86921cfefcbf6a228c58a79a66",
+        "bytes": 202953
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/04-filter.png",
+        "sha256": "d207e6e6fd8379e84039008184cdfc58edd1d9ec7d56bf0f6c73c2317fbb668a",
+        "bytes": 158173
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/05-explicit-historical-missing.png",
+        "sha256": "8eb817eada94c186420a3bfcdb3f261597fbd0d7f398730bde323faeb6d466e9",
+        "bytes": 154259
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/report.json",
+        "sha256": "a19b5e1105f99dc9d3a1e1426ddf68735be543915d7f0e4efe60bcabab4ee158",
+        "bytes": 4064
+      }
+    ],
+    "currentHtmlBrowserBoundsAndScreenshotRecheckPending": true
+  },
+  "verification": {
+    "exactlyTwoDeclaredReplacements": true,
+    "allOtherStyleBytesUnchanged": true,
+    "scriptBytesUnchanged": true,
+    "embeddedDataUnchanged": true,
+    "companionDataBytesUnchanged": true,
+    "sourceImageWidthAndHeightAttributesRetained": true,
+    "oldHtmlArchivedExactly": true,
+    "oldV3CheckUnchanged": true,
+    "originalRootBrowserReviewScriptReportAndScreenshotsUnchanged": true,
+    "normalImagesAndSignedRecordsUntouched": true,
+    "all793NormalPngShaAnd108World324GradeMappingsVerified": true,
+    "browserOpenedByThisReview": false,
+    "gameOrHeavyQaRerun": false
+  },
+  "limits": [
+    "The static contract ensures author CSS uses width:100%, height:auto and the existing 3:2 image box with object-fit:contain. It does not measure computed browser bounds.",
+    "Root must recheck actual catalog image bounds and a new screenshot in the next browser window; the prior report and screenshots remain historical records of the old HTML.",
+    "No world screenshot, art judgment, audio generation/listening or user approval is added."
+  ],
+  "errors": []
+}

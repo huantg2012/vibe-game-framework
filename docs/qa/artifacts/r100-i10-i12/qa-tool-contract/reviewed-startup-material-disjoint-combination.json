@@ -1,0 +1,89 @@
+{
+  "status": "pass",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-source/source-snapshot.json",
+    "sha256": "ac64f6bf0a0f0bda9992997a981e8df3f45dfec7164b1435bf09055f94487ed8"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "tool": {
+    "path": "tools/qa/r100-reviewed-startup-continuity.mjs",
+    "sha256": "5bd4586dd390de5b41b01fdcfa84d38889c3550ef48aba935daf18ffa6880cf9"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-reviewed-startup-continuity.mjs",
+    "sha256": "eee537c0f9099a2c0b5dd2e23fd62ab110f13b414cc19c3fdcf61ce84f5276ef"
+  },
+  "checks": [
+    "exact reviewed transport plus unchanged pure executors",
+    "old organization definitions and unselected appended material",
+    "prior client gains arbitrary branch",
+    "new client widens retry",
+    "helper changes deadline",
+    "pure generation hydration changes",
+    "surface execution changes",
+    "worker adds work after ack",
+    "worker ack moved out of first statement",
+    "review omits a source",
+    "selected new material cannot inherit",
+    "old material source changed",
+    "new generated table executes code",
+    "appearance validator changed",
+    "enum changes existing selection",
+    "public exact migration",
+    "public mode required",
+    "extra retry consumer",
+    "removed candidate still referenced",
+    "unreviewed gameplay mutation",
+    "unexpected new source",
+    "combined disjoint proof sets",
+    "combined selected new profile",
+    "combined unrelated runtime mutation",
+    "combined candidate cannot be added"
+  ],
+  "scope": "Real frozen repair text and negative source mutations, plus small public-gate metadata fixtures. No browser, map, RGBA or runtime performance execution.",
+  "transport": {
+    "status": "pass",
+    "changedFiles": [
+      "src/generation/rift-generation-client.ts",
+      "src/systems/r100-world/surface-preparation-client.ts",
+      "src/generation/rift-generation-protocol.ts",
+      "src/systems/r100-world/surface-preparation.ts",
+      "src/generation/rift-generation-worker.ts",
+      "src/systems/r100-world/surface-preparation-worker.ts"
+    ],
+    "addedFiles": [
+      "src/utils/worker-request.ts"
+    ],
+    "scope": "Only this exact reviewed pre-ack retry implementation is admitted. Pure execution after type erasure and Worker bodies without the single initial ACK are exact. Client code is not ignored: both old/new clients and the new helper must match the reviewed hashes.",
+    "excludedEvidence": [
+      "old entry/cold-resume qualification",
+      "old performance/load measurements",
+      "failed pre-entry attempts",
+      "P36 release closure"
+    ]
+  },
+  "materials": {
+    "status": "pass",
+    "changedFiles": [
+      "src/generated/r100-material-organizations.ts",
+      "data/rift-material-organizations.csv",
+      "src/generation/world-study/r100-world-appearance.ts"
+    ],
+    "addedFiles": [
+      "public/assets/r100-materials/short-fibre-loose-ground-source.png",
+      "public/assets/r100-materials/short-fibre-loose-solid-source.png"
+    ],
+    "scope": "A third material definition/assets and its enum are appended. Both previous definitions are exact and every inherited world excludes the new key; ordinary loader/sampler behavior remains subject to the whole-source comparison."
+  },
+  "combinedEarlierSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-source/source-snapshot.json",
+    "sha256": "dace95f2a592111ec52c17917739aaa6cded86a0817ade1d9b810e3a0da51dc0"
+  },
+  "bindingTool": {
+    "path": "tools/qa/r100-source-continuity.mjs",
+    "sha256": "d0a35f3ea564d56bd4b7a8af02e3e1ee002589d8432afb30474a6651f8806143"
+  }
+}

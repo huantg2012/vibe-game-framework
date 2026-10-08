@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-review-with-severe-qualification-gap",
+  "reviewer": "root",
+  "createdAt": "2026-10-07T12:34:44.897771+00:00",
+  "featureIds": [
+    "COH-F052",
+    "COH-F012",
+    "COH-F013"
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/002-white-scarfield-low-3075192741/low/1-far-exploration.png",
+      "sha256": "f30a4fe71275fba9b4a9faef61253c23ba7cd77143a64a20b7b424ca79c5f2fa",
+      "observation": "已亲看：灯下白灰粗砾床、上下不等厚蓝断体和实际角色分开，右上局部青绿不吞没材料本色；仅局部视野。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/medium/1-far-exploration.png",
+      "sha256": "d7d8f28047e7640730c150f10216294d7dd8b4c1380507a2e4a4ce2f1bb10a3b",
+      "observation": "已亲看：白床通道与蓝色厚侧面可分；此帧不证明碰撞、完整路线或连续动态。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/medium/1-search-1.png",
+      "sha256": "f17d42e290abb273f31dbbe6da053ba2713befcbf4541d982da2132db42a31ec",
+      "observation": "已亲看：145HP、6薪柴，白床和左下污染体能分；右侧偏直材料界继续作为局部弱项保留。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/medium/1-field-result.png",
+      "sha256": "6917df69c3e35155277fc54656a31fa99eb59ea8f33bbfb2235ed7ce2c736438",
+      "observation": "已亲看：31秒撤离、6薪柴、峰值混乱33、145HP。对应同趟结算报告；不能代表重档或自然经济。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/1-search-1.png",
+      "sha256": "108cd22dac0bd0d511913985b2bffd0350e22e572ef0afbf653492987e003361",
+      "observation": "已亲看：145HP、67混乱、0薪柴，场上交互提示与近旁对象可见；左侧假身8s提示和剩余3次只证实道具已用，不能据此推断AI被成功引开。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-field-result.png",
+      "sha256": "02d1cd9e27c78fbc6f80d686621a087f78e13985eb9275c96a04b66107ef518b",
+      "observation": "已亲看：55HP、136峰值混乱、96秒、0薪柴/残渣、3击杀；受压真空返，绝非有收获搜撤。"
+    }
+  ],
+  "reviewedReports": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/report.json",
+      "sha256": "cba853fdfa569e74aee7176ba1b5c15b749aa19d0526812cb7394ff5b62edb27"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+      "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+      "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+    }
+  ],
+  "diagnosis": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/white-scarfield-severe-diagnosis.json",
+    "sha256": "71e0cf7eb45e7415a10a31ac945c97ab4caaf0876b10fa7c37a573ed0b2ea53d"
+  },
+  "conclusion": "003同身份清洁补验成立，原网络失败保留。white-scarfield重档两原种子都没有非入口搜撤，当前不得启用或结案。未见足以支持降低敌压或修改地图的证据；下一步仅诊断实际可见窗口处理。",
+  "limitations": "亲看列出的6张原帧及对应记录；未观看连续影片、未亲自游玩、不签声音听感、人审、全种子安全或自然经济。"
+}

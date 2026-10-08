@@ -1,0 +1,80 @@
+{
+  "status": "existing-actual-path-near-joint-proposal",
+  "requestedSeed": 20261005,
+  "grade": "medium",
+  "recipeDefinitionMatchesActualReport": true,
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/body12/report.json",
+    "sha256": "a83aed464b5fb04aa6f3d3e2c187ae6475e823e6b79a9e78933f85e901ff3574"
+  },
+  "scope": "No map, raster or browser rerun. Joints rebuilt only from captured actual executor and matching recipe definition; body points are existing fully swept actual20 body path points. Closest is only among recorded paths, not a global shortest-distance claim. Art must record actual input/facing and light visibility.",
+  "options": [
+    {
+      "instanceId": 1,
+      "joint": {
+        "index": 0,
+        "x": 429.7346809883351,
+        "y": 261.8092646487364,
+        "z": 30.503425342492317
+      },
+      "nearestAlreadySweptBodyPoint": {
+        "p": {
+          "x": 428,
+          "y": 372
+        },
+        "evidence": {
+          "kind": "spawnRoute",
+          "routeIndex": 0,
+          "pointIndex": 56
+        },
+        "distance": 110.20438863939812
+      },
+      "angleRadians": -1.5550550967931336
+    },
+    {
+      "instanceId": 2,
+      "joint": {
+        "index": 0,
+        "x": 735.1463771815895,
+        "y": 270.49707022791245,
+        "z": 36.992175799132546
+      },
+      "nearestAlreadySweptBodyPoint": {
+        "p": {
+          "x": 628,
+          "y": 452
+        },
+        "evidence": {
+          "kind": "intentRoute",
+          "routeIndex": 0,
+          "segmentIndex": 1,
+          "pointIndex": 14
+        },
+        "distance": 210.7692094661618
+      },
+      "angleRadians": -1.037518473615726
+    },
+    {
+      "instanceId": 3,
+      "joint": {
+        "index": 0,
+        "x": 851.9053575133896,
+        "y": 601.2919960922009,
+        "z": 26.141478670770706
+      },
+      "nearestAlreadySweptBodyPoint": {
+        "p": {
+          "x": 804,
+          "y": 564
+        },
+        "evidence": {
+          "kind": "spawnRoute",
+          "routeIndex": 6,
+          "pointIndex": 87
+        },
+        "distance": 60.70927648248165
+      },
+      "angleRadians": 0.6614627953982213
+    }
+  ]
+}

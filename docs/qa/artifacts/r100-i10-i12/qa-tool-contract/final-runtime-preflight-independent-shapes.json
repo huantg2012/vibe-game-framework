@@ -1,0 +1,99 @@
+{
+  "status": "bounded-tool-review-with-authorized-validator-fix",
+  "reviewer": "identity_shapes",
+  "createdAt": "2026-10-07T07:28:09.331786+00:00",
+  "sources": [
+    {
+      "path": "tools/qa/check-r100-production-browser.mjs",
+      "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "5724fe2533502415da7bd02c9e78b27c5b4c51dc944c5ccac8d8f8fc1f1412d6"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "e5eba944112d64286a595e5b18579b9c46bf180c5cfffc293b71c6e688305e66"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "7977116bc77c5b4611adb92139ad4e2443c25a52daeb4cdcaa53e2d720a78d54"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "7680dd09c9d9a4989ecde5b0173efd72c6cd24fee33ecf272eb57330a4af2c60"
+    },
+    {
+      "path": "tools/qa/r100-revision6-review-continuous.mjs",
+      "sha256": "28db9ca4224f48e06ea9fadf50521fbff80d58b45d01512c8a29a2fc5b0b57b5"
+    },
+    {
+      "path": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+      "sha256": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-artifact-contract.json",
+      "sha256": "0bd1942bb61fad93bc94088943a235c1764aac2605288a58606b768cea4016e8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/contract.json",
+      "sha256": "45aed9b1f8f28bb0af0cc47dd36a58c87bb074a214d22acdcf7abd990cb1379b"
+    }
+  ],
+  "originalReadOnlyFindings": [
+    {
+      "id": "canonical-production-arguments",
+      "finding": "Canonical final-artifact command omitted Worker observer and stop flags which the binder requires.",
+      "disposition": "Pipeline synchronized canonical command; confirmed both flags are present now."
+    },
+    {
+      "id": "derived-runtime-booleans",
+      "finding": "Validator accepted existing actual52 cloned reports with P95=1000ms, wrong seed, empty retained samples or added active Shader count.",
+      "disposition": "Root-authorized repair in existing validateFinalReport only; original measurements/runtime strategy unchanged.",
+      "repair": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/repair-summary-v2.json",
+        "sha256": "f854db1595eef614872401f050b5424e0388e9813e8a91fa40caf49872e03db5"
+      }
+    },
+    {
+      "id": "shader-review-closure",
+      "finding": "Original lifecycle harness omits Shader in active resource assertion. New numeric validator checks live/active no growth, but separate independent review remains required.",
+      "disposition": "Current world binder intentionally consumes only production/equivalence. Final technical/closure must explicitly bind actual lifecycle+source-binding+independent Shader review; not automatically signed here."
+    }
+  ],
+  "boundedConclusions": {
+    "formal324": "Complete unique world/grade coverage, enabled-pool controlled seed, fresh history, pause-save/reload exact identity and body/history preservation. Not natural seed sampling or a full expedition. Current canonical flags additionally bind all external Worker/network failure observations.",
+    "equivalence342": "324 r6 Node-to-Chromium plus18 original r1 saved gold; exact identities and requestedSeed20261004. No approximate signature admission.",
+    "performance108": "Each severe world uses frozen seed20261004 and12 real held-key intervals; alive simulated runtime at least60s. Original thresholds rechecked numerically. Exclusive CPU+Chrome is operator scheduling, not established by the boolean alone.",
+    "lifecycle334": "Ten identical plus324 mixed reconstructions, then same-world return;12 double-GC retained samples. Exact catalog seed ownership, all resource domains/active baselines, Shader live baseline and measured heap/backing growth below10MiB are rechecked. Does not claim GPU driver bytes/RSS or unbounded stability.",
+    "natural48": "Four earned-save chains, exactly12 each/16 per grade; world recomputed from actual pre-departure history/requested seed; effective seed constrained to original bounded attempt schedule. Saved continuation, actual pickup<=3, nonentry>320, deathLost distinct from use, pressure streak diagnosis. Count completion remains experience-pending.",
+    "binding": "CPU and fixed play summaries recomputed from raw receipts;52 r5 inheritance separated from56 r6 executions and extra8seed cohorts. Exact source closure and per-world art/package hashes required. Natural48/budget/lifecycle independent closure gates intentionally outside world binder."
+  },
+  "retentionObservation": {
+    "scope": "No false success observed in the exception paths, but per-attempt metadata is sparse.",
+    "budget": "A timeout before sample completion occurs before cases.push, leaving no explicit failed world/grade/seed row; runner log/fixed-prefix order still retained.",
+    "lifecycle": "mixedCoverage appends only after successful select; failing rebuild similarly lacks its own predeclared failed row.",
+    "requestedFollowup": "Reported to root for existing harness owner to decide narrow metadata-only pre-registration; no new layer or strategy change implemented here."
+  },
+  "scheduleAdvice": [
+    "Freeze final108 source and canonical tool hashes once; run cheap schema/receipt checks before long runtime.",
+    "Non-performance single Chrome work may overlap at most one approved generation worker. Do not overlap a second browser or heavy worker.",
+    "Reserve uninterrupted exclusive CPU+Chrome for108x60s budget and retained-resource run; do not shorten60s, skipgrades, substitute natural48, or inherit startup/performance from source continuity.",
+    "Avoid rerunning already valid generation/play scopes when approved exact continuity applies; final324 entry/reload remains new current-revision evidence.",
+    "Keep failed originals and same-identity retries separate; do not silently restart failed natural chains or replace deaths."
+  ],
+  "execution": "No browser, game generation or full matrix. Only tiny in-memory report mutation checks, syntax/type checks and owned HTTP smoke for the authorized QA validator repair.",
+  "authorshipBoundary": "Initial tool review independent of pipeline tools; numeric helper is now authored here and received a narrow pipeline peer review. This is not final runtime, visual, listening or experience approval."
+}

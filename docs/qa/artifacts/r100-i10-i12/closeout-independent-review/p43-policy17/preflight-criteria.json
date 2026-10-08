@@ -1,0 +1,37 @@
+{
+  "schema": "coh.qa.policy17-independent-preflight-criteria.v1",
+  "status": "awaiting-candidate",
+  "featureIds": ["COH-F052", "COH-F013"],
+  "scope": "P43 ochre-folds severe original seeds 20261005 and 3075192741; preparation only until parent approval",
+  "authority": {
+    "inputProtocol": "Parent /root's current policy17 task: 3 x 60 ms direction segments, 180 ms total requested direction waits, angle <=25 degrees, original <=37/<40 px ranges, complete action game clock <=1000 ms, early stop750 ms, reserve100 ms. Runtime reports the parent's explicit clarification:180ms is the sum of actually issued direction-wait requests, not a claim that physical key-held game duration is <=180ms; asynchronous key-held time remains inside the1000ms whole-action bound.",
+    "productSpec": "docs/specs/system-player-weapons.md",
+    "taskSpec": "docs/qa/rift-r100-i10-i12.md",
+    "diagnosis": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-melee-input/review.json",
+    "diagnosisSha256": "4614d65e6cbd885556858c85167c195fa3168eecaf4255888cbdfc5d006d0ade"
+  },
+  "requiredChecks": [
+    "Only the original visible-pursuer and cornered eligible Space locations acquire bounded actual facing alignment; original policy15 and policy16 files remain unchanged",
+    "Select the original currently visible opponent once; do not switch targets during alignment or use remembered-only or hidden enemies",
+    "No more than3 direction segments, each requested wait <=60ms, total actually issued requested direction waits <=180ms; no claim that this also bounds measured key-held game time",
+    "A180degree static turn is reachable in a production-rate1080degree/second input model before Space, without injecting facing or game time",
+    "Space requires fresh same-target visibility, actual angle error <=25degrees and the caller's original37/40px range",
+    "Angle wrap at +/-pi and diagonal direction quantization behave correctly at the25degree boundary",
+    "Loss of visibility, changed range, enemy windup/strike, run end, pause, HP/chaos or original return reserve stop the action before subsequent dangerous input",
+    "Do not introduce extra enemy knowledge, weapons, resources, pickups, search retries or trip budgets",
+    "Preserve the original550ms pursuer opportunity cadence; alignment does not permit another Space opportunity",
+    "All awaited reads, direction input, Space delay and final key release are included in the measured real game clock window",
+    "The750ms early stop and100ms reserve are checked before dangerous input, and asynchronous advancement is checked again after awaits",
+    "A stalled read or input that causes elapsed >1000ms is retained as invalid evidence and cannot qualify; no wall-clock-only assertion substitutes for game time",
+    "Any exception, backward or nonfinite game clock, or failed release prevents a successful action receipt",
+    "Stop is latched if an inner caller catches an exception; no second dangerous input follows a failed deadline check",
+    "All pressed direction and Space keys are released in all success, early stop and exception paths",
+    "The end receipt reports actual start/end/max elapsed, reason, target, direction segments, pre-Space observation and released-key result accurately",
+    "Fresh wrapper output preserves all previous outputs including failed preflight directories",
+    "Original source snapshot, earned storage, full world/run identity and original before state are bound exactly for the two original seeds",
+    "Original failed reports remain in the main qualification accounting; no second policy17 batch for either fixed seed is accepted",
+    "Static and mock checks alone cannot close P43 or sign gameplay qualification"
+  ],
+  "executionLimits": {"chrome": false, "heavyCpu": false, "productEdits": false, "controllerEdits": false},
+  "supersedesEarlierRecommendations": "The earlier diagnostic's suggested durations/angle margin were preliminary; the parent's frozen numbers above are the only policy17 review authority."
+}

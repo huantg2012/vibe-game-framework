@@ -1,0 +1,254 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "violet-marrows",
+    "label": "紫髓横断",
+    "description": "紫髓横断的原生材料与完整搜撤地段",
+    "material": "granular",
+    "surface": {
+      "substrate": "granular",
+      "coating": "granular",
+      "organization": "clusters",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 2897218,
+      "floor": 6781323,
+      "floorLight": 10926023,
+      "materialDark": 4796499,
+      "materialMid": 9593244,
+      "materialLight": 12952013,
+      "faceLight": 14798813,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 6781323,
+      "groundLight": 10926023,
+      "groundDark": 2897218,
+      "wall": 9593244,
+      "wallLight": 12952013,
+      "wallDark": 4796499
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "violet-marrows",
+    "ground": {
+      "dark": 2897218,
+      "mid": 6781323,
+      "light": 10926023
+    },
+    "solid": {
+      "dark": 4796499,
+      "mid": 9593244,
+      "light": 12952013
+    },
+    "cleaved": {
+      "dark": 7757939,
+      "mid": 12427958,
+      "light": 14798813
+    },
+    "secondary": {
+      "dark": 4866378,
+      "mid": 9536911,
+      "light": 12432059
+    },
+    "groundPattern": "grains",
+    "patternScale": 232,
+    "patternStrength": 0.34,
+    "secondaryCoverage": 0.13,
+    "textureContrast": 1.15,
+    "quietCoverage": 0.62,
+    "materialOrganization": "porous-marrow"
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "violet-marrows-medium",
+    "family": "granular-ridge",
+    "grade": "medium",
+    "label": "紫髓横断",
+    "profile": "violet-marrows",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.42,
+    "light_radius": 132,
+    "emission": 0.55,
+    "motion_period": 16,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 382,
+        "y": 330,
+        "rotation": -0.35,
+        "length": 195,
+        "width": 185,
+        "height": 68,
+        "thickness": 15,
+        "fold": 0.73,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "porous-break"
+      },
+      {
+        "id": 2,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 704,
+        "y": 495,
+        "rotation": 2.7,
+        "length": 320,
+        "width": 135,
+        "height": 35,
+        "thickness": 10,
+        "fold": 0.5,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "porous-break"
+      },
+      {
+        "id": 3,
+        "family": "granular-ridge",
+        "role": "relief",
+        "x": 729,
+        "y": 244,
+        "rotation": -0.2,
+        "length": 250,
+        "width": 180,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.35,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "package": {
+    "id": "r100-violet-marrows",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "granular-ridge": {
+        "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+        "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+        "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+      },
+      "organization:porous-marrow": {
+        "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+        "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+        "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+      }
+    },
+    "dependencyHash": "898ca3d5",
+    "grade": "medium"
+  }
+}

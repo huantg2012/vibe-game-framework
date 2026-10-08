@@ -1,0 +1,147 @@
+{
+  "status": "FORMAL_DROP_AND_PAIRED_DIAGNOSTIC_CAPTURED",
+  "sourceFixture": "docs/qa/artifacts/iteration-28/browser/natural-current/03-carry.storage.json",
+  "sourceSha256": "11714a2bb7beaa6fadc646e9bc15fb003c5f670963ccb8e72172eafe03dcc238",
+  "copiedFixtureSha256": "11714a2bb7beaa6fadc646e9bc15fb003c5f670963ccb8e72172eafe03dcc238",
+  "currentURL": "http://127.0.0.1:3017/",
+  "currentBuildScripts": [
+    "/@vite/client",
+    "/src/main.ts"
+  ],
+  "obsoleteURL": "http://127.0.0.1:3016/",
+  "obsoleteBuildScript": "/assets/main--rkW9UpZ.js",
+  "captures": [
+    {
+      "name": "00-menu.png",
+      "sha256": "ff939837a49d42a7b10e840b28912075c1ae1067ce5c270f5c0b3c7363128515"
+    },
+    {
+      "name": "01-resumed.png",
+      "sha256": "1bcd72dcbeb9f668f1f6ad04cb772dbf63b9e609da5a3959099bc3b293ac29dc"
+    },
+    {
+      "name": "02-current-resumed.png",
+      "sha256": "f74817fd2d360f15718da32ec0eb68863532a1476fa3ad911bf1d60a12e084b3"
+    },
+    {
+      "name": "03-bag-before-drop.png",
+      "sha256": "9a492767790a9abc3a39c781df7442a8b8a51113fcd4db40f16f58a3ef267ddc"
+    },
+    {
+      "name": "04-bag-before-drop.png",
+      "sha256": "0fc07e38d91bd5e9528ecc1d7f41f465c2bcfff200e004e5911b302fb3dca476"
+    },
+    {
+      "name": "05-drop-committed-bag.png",
+      "sha256": "fd758da4fc8d04e2b7d5ffef5bc03711d835c6cd68529b4cbce7ebc09408d121"
+    },
+    {
+      "name": "06-drop-world.png",
+      "sha256": "51869d8c9ede1c037b93066d9f5d9e4f9b6336b6cf9e78ed70df20c33ee14004"
+    },
+    {
+      "name": "07-paused-drop.png",
+      "sha256": "8f85dd7c1294849066f935759e1efb5d94c25cc62e54692e21c3d21f4f227a72"
+    },
+    {
+      "name": "08-paused-world-only-diagnostic.png",
+      "sha256": "b0fc7bac57ca26afec2060fd244b33795b64b027954c85229ae003cd635c77e1"
+    },
+    {
+      "name": "09-paused-background-only-diagnostic.png",
+      "sha256": "d0b2ccb482385bb188e1f102f1765eab90c305e45dcb29bb601e0c9e126c2930"
+    }
+  ],
+  "method": "See README.md and diagnostic-pair.json; normal UI drop from isolated fixture, read-only geometry, explicit temporary render-only suppression for paired buffer.",
+  "measurement": {
+    "url": "http://127.0.0.1:3017/",
+    "paused": true,
+    "scripts": [
+      "http://127.0.0.1:3017/@vite/client",
+      "http://127.0.0.1:3017/src/main.ts"
+    ],
+    "canvas": {
+      "width": 960,
+      "height": 640,
+      "left": 0,
+      "top": 0,
+      "cssWidth": 1440,
+      "cssHeight": 960
+    },
+    "camera": {
+      "zoom": 1.5,
+      "scrollX": 1006,
+      "scrollY": 557,
+      "x": 0,
+      "y": 0,
+      "width": 960,
+      "height": 640,
+      "matrix": {
+        "a": 1.5,
+        "b": 0,
+        "c": 0,
+        "d": 1.5,
+        "e": -240,
+        "f": -160
+      }
+    },
+    "worldPixelScale": 2.25,
+    "player": {
+      "x": 1486.3384382304814,
+      "y": 877.9154415918343
+    },
+    "ground": [
+      {
+        "id": "CAT_8e981d14-cd94-4e94-801b-149ee5eabea1_CTM_NODE_02",
+        "world": {
+          "x": 1486,
+          "y": 915
+        },
+        "visible": true,
+        "alpha": 1,
+        "depth": 16,
+        "visibility": 1,
+        "logicalScreen": {
+          "x": 480,
+          "y": 377
+        },
+        "screen": {
+          "x": 720,
+          "y": 565.5
+        }
+      }
+    ],
+    "nearby": [
+      {
+        "id": "CAT_8e981d14-cd94-4e94-801b-149ee5eabea1_CTM_NODE_02",
+        "location": {
+          "kind": "ground",
+          "runId": "8e981d14-cd94-4e94-801b-149ee5eabea1",
+          "position": {
+            "x": 1486.3384382304814,
+            "y": 914.6923749251686
+          }
+        },
+        "catalog": {
+          "catalogVersion": "contaminant-v1",
+          "definitionId": "amber_beetle",
+          "appearanceId": "ceramic_seal",
+          "offeringProfileId": "resist_35",
+          "acquiredOrdinal": 1,
+          "identification": "unidentified"
+        }
+      }
+    ]
+  },
+  "difference": {
+    "changedPixels": 2020,
+    "outsideDrop80pxROI": 0,
+    "bbox": {
+      "minX": 693,
+      "minY": 542,
+      "maxX": 743,
+      "maxY": 590
+    },
+    "note": "Native unedited screenshot RGB difference; the hidden Graphics contains item and its authored ground shadow."
+  }
+}

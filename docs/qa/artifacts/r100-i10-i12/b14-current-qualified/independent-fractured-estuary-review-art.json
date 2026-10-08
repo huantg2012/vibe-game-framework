@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-fixed-process-and-frame-observation",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T12:55:24.954Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "world": "fractured-estuary",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "admission": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/commands.json",
+    "sha256": "703b4cf4f20e6936a9c0b9c2386b64290a9731264cddfbf5c06210f3ae3d5f14"
+  },
+  "cases": [
+    {
+      "originalIndex": 1,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/001-fractured-estuary-low-20261005/report.json",
+        "sha256": "9ff18a93ad4d31042baebf7b0f827c9e8ca101afaf4c0153ddf9fe1adb0c43bf"
+      },
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "cbce596e",
+      "dependencyHash": "7c62c4de",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 37381.859999999724,
+      "hp": 145,
+      "chaos": 30.53015278992282,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 554.5448584199479
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 2,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/002-fractured-estuary-low-3075192741/report.json",
+        "sha256": "be0789b8f85403282deedfc4fe44126b7585a7f8712ec1f94f2f749f42073f82"
+      },
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "ef2d9909",
+      "dependencyHash": "7c62c4de",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 46098.1399999999,
+      "hp": 145,
+      "chaos": 32.052780079195415,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 499.4076491204355
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 3,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/003-fractured-estuary-medium-20261005/report.json",
+        "sha256": "7f239e8859a2b7d4fc78cfc4c1c46bd53fbeecf59408cfc22759809d10c4d37d"
+      },
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "8c5a71c2",
+      "dependencyHash": "fa931b0e",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 47481.42000000001,
+      "hp": 145,
+      "chaos": 54.06760137312587,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.4862867611367
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 4,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/004-fractured-estuary-medium-3075192741/report.json",
+        "sha256": "6a11e1f835a01a6f917fcf14a3b8454095125c404c405e516e6ef25a2106013b"
+      },
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "f91b30cd",
+      "dependencyHash": "fa931b0e",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 30632.099999999737,
+      "hp": 145,
+      "chaos": 39.90130785172567,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 578.7158197250185
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 5,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/005-fractured-estuary-severe-20261005/report.json",
+        "sha256": "8a1bcc8bbfdce418004e28a6374807342a85dc79bb94d5f6132dd63b16908a4c"
+      },
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "60aeae6a",
+      "dependencyHash": "d80c8f21",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 80196.7499999998,
+      "hp": 145,
+      "chaos": 108.12428313504839,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 496.0645119336798
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 6,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/006-fractured-estuary-severe-3075192741/report.json",
+        "sha256": "fad73ec60a7003aa1094ae6913463705e663843a6544910a69771a594ffdbd6d"
+      },
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "12acb150",
+      "dependencyHash": "d80c8f21",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 46131.46000000001,
+      "hp": 145,
+      "chaos": 81.38649460192879,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 561.8825500048921
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "counts": {
+    "originalProcesses": 6,
+    "nonEntrySearchAndExtract": 6,
+    "trueEmptyReturns": 0,
+    "deaths": 0
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/001-fractured-estuary-low-20261005/low/1-far-exploration.png",
+      "sha256": "3a817be1dae41c2868dfc552d0d445ce11e3b6011e55b84ead764058002dcbe5",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "人物站在冷灰蓝宽地颈近侧，前方层状纹理/暗夹层与左上真黑缺地边可分；上方只照到赤肩边角，不证明双肩或完整汇合再分开。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/003-fractured-estuary-medium-20261005/medium/1-search-1.png",
+      "sha256": "6dae7e849535b61a9cfa3592c98effbc3b55824c1497854bdd095cf358b38247",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "6薪柴搜后人物、灰蓝层片残骸与黑绿宿主同框，冷色地床受绿侵蚀但仍有材质；上缘缺地与左侧赤体局部可分。底边仍有较直材料/侧面界线。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/005-fractured-estuary-severe-20261005/severe/1-search-2.png",
+      "sha256": "b9cd8eba4531efb35b3af143a5c180c6a021c70d4e482fd880ab26d8ac3ca335",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "145HP/97混乱时取得一件薄壳卵，宽床颈与右侧赤色断肩局部能区分，顶端黑绿宿主和地面保持不同层次；不把静态局部余量扩成完整撤路可读。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/005-fractured-estuary-severe-20261005/severe/1-field-result.png",
+      "sha256": "0127b8338543fe0482c33b00a5ffb62c77e3a57403edbc7da658daccb5bcd7b7",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "145HP、带1件残渣、80秒、峰值混乱108返回；近处赤材料与绿色临界覆盖同框，0薪柴不是空返，未实际听声音。"
+    }
+  ],
+  "findings": [
+    "六个原种子过程均有同趟非入口拾取并带回，全部145HP；两次薪柴和四次残渣分别记账。",
+    "两个重档分别80.20秒/108.12混乱与46.13秒/81.39混乱返回，不以共同满血掩去不同耗时和压力。",
+    "所看地床层纹、赤胶肩部与黑缺地局部可分；未完整照见两片床、两断肩与主颈后的全部分叉。"
+  ],
+  "retainedWeaknesses": [
+    "部分侧面/底床界线仍直；静帧不证明临界绿色覆盖时的动态读路、完整路线或重复疲劳。"
+  ],
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/001-fractured-estuary-low-20261005/low/1-far-exploration.png",
+      "sha256": "3a817be1dae41c2868dfc552d0d445ce11e3b6011e55b84ead764058002dcbe5",
+      "reason": "人物站在冷灰蓝宽地颈近侧，前方层状纹理/暗夹层与左上真黑缺地边可分；上方只照到赤肩边角，不证明双肩或完整汇合再分开。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/005-fractured-estuary-severe-20261005/severe/1-search-2.png",
+      "sha256": "b9cd8eba4531efb35b3af143a5c180c6a021c70d4e482fd880ab26d8ac3ca335",
+      "reason": "145HP/97混乱时取得一件薄壳卵，宽床颈与右侧赤色断肩局部能区分，顶端黑绿宿主和地面保持不同层次；不把静态局部余量扩成完整撤路可读。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/005-fractured-estuary-severe-20261005/severe/1-field-result.png",
+      "sha256": "0127b8338543fe0482c33b00a5ffb62c77e3a57403edbc7da658daccb5bcd7b7",
+      "reason": "145HP、带1件残渣、80秒、峰值混乱108返回；近处赤材料与绿色临界覆盖同框，0薪柴不是空返，未实际听声音。"
+    }
+  ],
+  "limits": [
+    "Original fixed fixtures and policy15, not natural48.",
+    "Four original normal PNGs personally viewed; no continuous video, hands-on play, audio, GPU/performance or human aesthetic approval.",
+    "Other B14 worlds and B13 qualification gaps remain separate."
+  ],
+  "pixelModelsScope": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+    "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+  }
+}

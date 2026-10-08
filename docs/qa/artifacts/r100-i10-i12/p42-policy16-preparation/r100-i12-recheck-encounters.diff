@@ -1,0 +1,28 @@
+diff --git a/tools/qa/r100-i09-costed-encounters.mjs b/tools/qa/r100-i12-recheck-encounters.mjs
+index aba402ab..a990402d 100644
+--- a/tools/qa/r100-i09-costed-encounters.mjs
++++ b/tools/qa/r100-i12-recheck-encounters.mjs
+@@ -1,3 +1,5 @@
++// Policy16 supplement: correct the two visible enemy attack phases to strike.
++// Every other encounter rule remains byte-for-byte policy15.
+ /** Local I09 slot adapter copied from tools/world-study/r100-p13-costed-encounters.mjs.
+  * Original SHA256: 8850a30414e72f0465304fc3c90e38a0e08406b9e442b9b8ea7bfaea80ae3715.
+  * Differences: runtime active slot enumeration and matching key dispatch;
+@@ -162,7 +164,7 @@ export function createVisibleEncounterPolicy(page,driver,ownedForPreparation,opt
+  async function allowObservedWindow(target,facts){
+   if(!observedWindows||target.id==='exit')return false;
+   const close=facts.enemies.filter(e=>distance(e.position,facts.position)<175);
+-  if(!close.length||close.some(e=>e.approaching||e.attack==='windup'||e.attack==='active'||distance(e.position,facts.position)<66))return false;
++  if(!close.length||close.some(e=>e.approaching||e.attack==='windup'||e.attack==='strike'||distance(e.position,facts.position)<66))return false;
+   const length=distance(facts.position,target.pos);if(length<1)return false;
+   const step=Math.min(28,length),end={x:facts.position.x+(target.pos.x-facts.position.x)/length*step,y:facts.position.y+(target.pos.y-facts.position.y)/length*step};
+   if(!clearSegment(await geometry(),facts.position,end))return false;
+@@ -183,7 +185,7 @@ export function createVisibleEncounterPolicy(page,driver,ownedForPreparation,opt
+   const close=facts.enemies.filter(e=>distance(e.position,facts.position)<175);
+   if(!close.length)return {reroute:false,facts};
+   if(lurePass&&lurePass.until>facts.elapsedMs&&lurePass.targetId===target.id){
+-   const dangerous=close.some(e=>e.attack==='windup'||e.attack==='active'||(distance(e.position,facts.position)<62&&facingPlayer(e,facts.position)));
++   const dangerous=close.some(e=>e.attack==='windup'||e.attack==='strike'||(distance(e.position,facts.position)<62&&facingPlayer(e,facts.position)));
+    if(!dangerous){for(const e of close)windowPermits.set(e.id,facts.elapsedMs+420);driver.log({event:'lure-move-during-decoy',remainingMs:lurePass.until-facts.elapsedMs,target:target.id});return{reroute:false,facts};}
+    lurePass=null;
+   }

@@ -1,0 +1,16 @@
+{
+  "world": "offset-basins",
+  "status": "medium-pure-geometry-candidate-pass",
+  "change": {
+    "objectId": 2,
+    "field": "y",
+    "before": 507,
+    "after": 539
+  },
+  "rationale": "Move the lower entire bank32px south to open the original short east-side connection. +16 restores a path but leaves original middle station16.1px off; +32 preserves it within2px and adds usable shoulder space. Both original routes, all requested stations and original bounds remain unchanged.",
+  "originalFailurePreserved": true,
+  "otherFieldsChanged": false,
+  "routeIntentChanged": false,
+  "reportSha256": "2d82f57af60dac74e8ee8874ad05ba354bfcd56239e200e8c17b53b09066836f",
+  "limitations": "Medium pure geometry only; integrate isolated CSV then verify all three original grade definitions; normal art and actual Master raster pending."
+}

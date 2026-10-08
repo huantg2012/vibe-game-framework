@@ -1,0 +1,125 @@
+{
+  "status": "pass-enabled-only-recipe-compatibility",
+  "startedAt": "2026-10-07T14:39:09.142264+00:00",
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "fixedPlay": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/summary.json",
+    "sha256": "ecc10117b880a364d2d75b8204d7f2287a839ab9c5f56587657845d6baa9f1ab"
+  },
+  "artReadiness": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-art-current3121-readiness.json",
+    "sha256": "ad09cbb80ab000fe455ccf2fdba543d6bdc55bc3292222c69ceedd56f09cb60a"
+  },
+  "p43Art": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/independent-art-process-review.json",
+    "sha256": "37c11d38df319b0014bba73004578ccdf41a84162580962e791a2dcb163ab8a1"
+  },
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-enable/before.json",
+    "sha256": "e846780aef477a5a958a4184d495830937ceab0bf85328e36813f2394a4925ab"
+  },
+  "changedWorlds": [
+    "cleft-tableland",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir",
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta",
+    "shard-switchback",
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments",
+    "fibre-choke",
+    "buried-lamellae",
+    "pressed-rim",
+    "wedged-hide",
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash",
+    "short-fibre-mat",
+    "marrow-break",
+    "felt-wedges",
+    "pore-bank",
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks",
+    "grain-weld",
+    "silk-catch",
+    "resin-sleeve",
+    "shell-threads",
+    "chalk-divide",
+    "red-vault-fragments",
+    "blue-fault",
+    "pale-pressure",
+    "notched-backwater",
+    "crossed-casings",
+    "fibre-stumpfield",
+    "sloughed-court",
+    "crushed-seam",
+    "husk-reef",
+    "fibre-scree",
+    "gel-rafts",
+    "double-return",
+    "offset-basins",
+    "pinched-fan",
+    "spliced-reaches",
+    "white-scarfield",
+    "black-lacuna",
+    "ochre-folds",
+    "violet-marrows",
+    "fractured-estuary",
+    "woven-quarters",
+    "shell-patchwork",
+    "last-shelf"
+  ],
+  "commands": [
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-worlds.mjs"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-enable/world-codegen.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-enable/package-codegen.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "docs/qa/artifacts/r100-i10-i12/final-enable/check-packages.mjs",
+        "after"
+      ],
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-enable/recipe-after.log",
+        "sha256": "b1fc60e37538f6138c00711a58fc8bc158ab74efe87f75684bb991bea1b4d9a6"
+      }
+    }
+  ],
+  "endedAt": "2026-10-07T14:39:09.988897+00:00",
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-enable/report.json",
+    "sha256": "c2e5dde9ed89a6b118702a1508ce05bcf2a5b99b93b0c8d3ab1c13dd8a8a9294"
+  }
+}

@@ -1,0 +1,1182 @@
+{
+  "scope": "One persistent Phaser Game; source-family warmups then configured identical and mixed native reconstructions. Two actual GC calls before each retained sample. Weak references never retain scene objects. No GPU driver byte/RSS claim; retained WebGL object/context ownership and main-isolate memory only.",
+  "samples": [
+    {
+      "label": "warmed-baseline",
+      "usage": {
+        "usedSize": 80211480,
+        "totalSize": 81346560,
+        "embedderHeapUsedSize": 3932616,
+        "backingStorageSize": 110835249
+      },
+      "objects": {
+        "Texture": {
+          "created": 761,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 83,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 39,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 78,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 18,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 8,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 0,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-1",
+      "usage": {
+        "usedSize": 80709428,
+        "totalSize": 81608704,
+        "embedderHeapUsedSize": 4087088,
+        "backingStorageSize": 110835249
+      },
+      "objects": {
+        "Texture": {
+          "created": 812,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 84,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 40,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 80,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 19,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 9,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 497948,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-2",
+      "usage": {
+        "usedSize": 80853528,
+        "totalSize": 82395136,
+        "embedderHeapUsedSize": 4015528,
+        "backingStorageSize": 110835249
+      },
+      "objects": {
+        "Texture": {
+          "created": 863,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 85,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 41,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 82,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 20,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 10,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 642048,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-3",
+      "usage": {
+        "usedSize": 80972604,
+        "totalSize": 82132992,
+        "embedderHeapUsedSize": 3902352,
+        "backingStorageSize": 110835249
+      },
+      "objects": {
+        "Texture": {
+          "created": 914,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 86,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 86,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 42,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 84,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 21,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 11,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 761124,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-4",
+      "usage": {
+        "usedSize": 81028852,
+        "totalSize": 82395136,
+        "embedderHeapUsedSize": 3997288,
+        "backingStorageSize": 110835249
+      },
+      "objects": {
+        "Texture": {
+          "created": 965,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 87,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 87,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 43,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 86,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 22,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 12,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 817372,
+      "backingGrowth": 0
+    },
+    {
+      "label": "identical-5",
+      "usage": {
+        "usedSize": 81028488,
+        "totalSize": 82395136,
+        "embedderHeapUsedSize": 3858480,
+        "backingStorageSize": 110835264
+      },
+      "objects": {
+        "Texture": {
+          "created": 1016,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 88,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 88,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 44,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 88,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 23,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 13,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 817008,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-6",
+      "usage": {
+        "usedSize": 81188764,
+        "totalSize": 82395136,
+        "embedderHeapUsedSize": 3953088,
+        "backingStorageSize": 110835264
+      },
+      "objects": {
+        "Texture": {
+          "created": 1067,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 89,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 89,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 45,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 90,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 24,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 14,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 977284,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-7",
+      "usage": {
+        "usedSize": 81153856,
+        "totalSize": 82395136,
+        "embedderHeapUsedSize": 3945224,
+        "backingStorageSize": 110835264
+      },
+      "objects": {
+        "Texture": {
+          "created": 1118,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 90,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 90,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 46,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 92,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 25,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 15,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 942376,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-8",
+      "usage": {
+        "usedSize": 81184428,
+        "totalSize": 82919424,
+        "embedderHeapUsedSize": 3862368,
+        "backingStorageSize": 110835264
+      },
+      "objects": {
+        "Texture": {
+          "created": 1169,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 91,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 91,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 47,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 94,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 26,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 16,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 972948,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-9",
+      "usage": {
+        "usedSize": 81431280,
+        "totalSize": 82657280,
+        "embedderHeapUsedSize": 3930936,
+        "backingStorageSize": 110835264
+      },
+      "objects": {
+        "Texture": {
+          "created": 1220,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 92,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 92,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 48,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 96,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 27,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 17,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1219800,
+      "backingGrowth": 15
+    },
+    {
+      "label": "identical-10",
+      "usage": {
+        "usedSize": 81561476,
+        "totalSize": 82919424,
+        "embedderHeapUsedSize": 3947176,
+        "backingStorageSize": 110835264
+      },
+      "objects": {
+        "Texture": {
+          "created": 1271,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 93,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 93,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 49,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 98,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 28,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 18,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1349996,
+      "backingGrowth": 15
+    },
+    {
+      "label": "after-mixed-18",
+      "usage": {
+        "usedSize": 81658368,
+        "totalSize": 82919424,
+        "embedderHeapUsedSize": 3882560,
+        "backingStorageSize": 110835379
+      },
+      "objects": {
+        "Texture": {
+          "created": 2025,
+          "live": 384,
+          "active": 384
+        },
+        "Framebuffer": {
+          "created": 113,
+          "live": 69,
+          "active": 69
+        },
+        "Renderbuffer": {
+          "created": 113,
+          "live": 69,
+          "active": 69
+        },
+        "Program": {
+          "created": 69,
+          "live": 32,
+          "active": 32
+        },
+        "Shader": {
+          "created": 138,
+          "live": 64,
+          "active": 62
+        },
+        "Buffer": {
+          "created": 48,
+          "live": 11,
+          "active": 11
+        },
+        "WebGL2": {
+          "created": 38,
+          "live": 1,
+          "active": 1
+        }
+      },
+      "usedHeapGrowth": 1446888,
+      "backingGrowth": 130
+    }
+  ],
+  "mixedCoverage": [
+    {
+      "world": "ash-strata",
+      "grade": "low",
+      "seed": 20261004
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "low",
+      "seed": 20261005
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "low",
+      "seed": 20261006
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "low",
+      "seed": 20261007
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "low",
+      "seed": 20261008
+    },
+    {
+      "world": "silt-gel",
+      "grade": "low",
+      "seed": 20261009
+    },
+    {
+      "world": "schist-shear",
+      "grade": "low",
+      "seed": 20261010
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "low",
+      "seed": 20261011
+    },
+    {
+      "world": "shell-chain",
+      "grade": "low",
+      "seed": 20261012
+    },
+    {
+      "world": "grain-laminate",
+      "grade": "low",
+      "seed": 20261013
+    },
+    {
+      "world": "tension-membrane",
+      "grade": "low",
+      "seed": 20261014
+    },
+    {
+      "world": "shell-gel-delta",
+      "grade": "low",
+      "seed": 20261015
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "low",
+      "seed": 20261016
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "low",
+      "seed": 20261017
+    },
+    {
+      "world": "reversed-flow",
+      "grade": "low",
+      "seed": 20261018
+    },
+    {
+      "world": "laminate-shell",
+      "grade": "low",
+      "seed": 20261019
+    },
+    {
+      "world": "fibre-silt",
+      "grade": "low",
+      "seed": 20261020
+    },
+    {
+      "world": "film-laminate",
+      "grade": "low",
+      "seed": 20261021
+    }
+  ],
+  "rebuildProgress": [
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "initial-load",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:30.869Z",
+      "finishedAt": "2026-10-08T06:57:34.194Z"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "warmup",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:34.195Z",
+      "finishedAt": "2026-10-08T06:57:36.613Z"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "warmup",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:36.614Z",
+      "finishedAt": "2026-10-08T06:57:38.930Z"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "warmup",
+      "index": 2,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:38.931Z",
+      "finishedAt": "2026-10-08T06:57:41.296Z"
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "warmup",
+      "index": 3,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:41.296Z",
+      "finishedAt": "2026-10-08T06:57:43.862Z"
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "warmup",
+      "index": 4,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:43.863Z",
+      "finishedAt": "2026-10-08T06:57:46.363Z"
+    },
+    {
+      "world": "silt-gel",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "warmup",
+      "index": 5,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:46.364Z",
+      "finishedAt": "2026-10-08T06:57:48.931Z"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "baseline",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:48.931Z",
+      "finishedAt": "2026-10-08T06:57:51.329Z",
+      "sample": "warmed-baseline"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:51.330Z",
+      "finishedAt": "2026-10-08T06:57:53.808Z",
+      "sample": "identical-1"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:53.808Z",
+      "finishedAt": "2026-10-08T06:57:56.257Z",
+      "sample": "identical-2"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 2,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:56.258Z",
+      "finishedAt": "2026-10-08T06:57:58.725Z",
+      "sample": "identical-3"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 3,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:57:58.725Z",
+      "finishedAt": "2026-10-08T06:58:01.190Z",
+      "sample": "identical-4"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 4,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:01.190Z",
+      "finishedAt": "2026-10-08T06:58:03.639Z",
+      "sample": "identical-5"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 5,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:03.639Z",
+      "finishedAt": "2026-10-08T06:58:06.091Z",
+      "sample": "identical-6"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 6,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:06.091Z",
+      "finishedAt": "2026-10-08T06:58:08.506Z",
+      "sample": "identical-7"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 7,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:08.506Z",
+      "finishedAt": "2026-10-08T06:58:10.989Z",
+      "sample": "identical-8"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 8,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:10.989Z",
+      "finishedAt": "2026-10-08T06:58:13.457Z",
+      "sample": "identical-9"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "identical",
+      "index": 9,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:13.457Z",
+      "finishedAt": "2026-10-08T06:58:15.908Z",
+      "sample": "identical-10"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "low",
+      "seed": 20261004,
+      "phase": "mixed",
+      "index": 0,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:15.910Z",
+      "finishedAt": "2026-10-08T06:58:18.094Z"
+    },
+    {
+      "world": "crystal-fibre",
+      "grade": "low",
+      "seed": 20261005,
+      "phase": "mixed",
+      "index": 1,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:18.094Z",
+      "finishedAt": "2026-10-08T06:58:20.227Z"
+    },
+    {
+      "world": "ivory-basin",
+      "grade": "low",
+      "seed": 20261006,
+      "phase": "mixed",
+      "index": 2,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:20.228Z",
+      "finishedAt": "2026-10-08T06:58:22.461Z"
+    },
+    {
+      "world": "cinder-ridge",
+      "grade": "low",
+      "seed": 20261007,
+      "phase": "mixed",
+      "index": 3,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:22.461Z",
+      "finishedAt": "2026-10-08T06:58:24.844Z"
+    },
+    {
+      "world": "pallid-membrane",
+      "grade": "low",
+      "seed": 20261008,
+      "phase": "mixed",
+      "index": 4,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:24.844Z",
+      "finishedAt": "2026-10-08T06:58:27.261Z"
+    },
+    {
+      "world": "silt-gel",
+      "grade": "low",
+      "seed": 20261009,
+      "phase": "mixed",
+      "index": 5,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:27.261Z",
+      "finishedAt": "2026-10-08T06:58:29.726Z"
+    },
+    {
+      "world": "schist-shear",
+      "grade": "low",
+      "seed": 20261010,
+      "phase": "mixed",
+      "index": 6,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:29.727Z",
+      "finishedAt": "2026-10-08T06:58:32.144Z"
+    },
+    {
+      "world": "splayed-fibres",
+      "grade": "low",
+      "seed": 20261011,
+      "phase": "mixed",
+      "index": 7,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:32.145Z",
+      "finishedAt": "2026-10-08T06:58:34.527Z"
+    },
+    {
+      "world": "shell-chain",
+      "grade": "low",
+      "seed": 20261012,
+      "phase": "mixed",
+      "index": 8,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:34.528Z",
+      "finishedAt": "2026-10-08T06:58:36.893Z"
+    },
+    {
+      "world": "grain-laminate",
+      "grade": "low",
+      "seed": 20261013,
+      "phase": "mixed",
+      "index": 9,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:36.894Z",
+      "finishedAt": "2026-10-08T06:58:39.327Z"
+    },
+    {
+      "world": "tension-membrane",
+      "grade": "low",
+      "seed": 20261014,
+      "phase": "mixed",
+      "index": 10,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:39.327Z",
+      "finishedAt": "2026-10-08T06:58:41.676Z"
+    },
+    {
+      "world": "shell-gel-delta",
+      "grade": "low",
+      "seed": 20261015,
+      "phase": "mixed",
+      "index": 11,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:41.677Z",
+      "finishedAt": "2026-10-08T06:58:44.093Z"
+    },
+    {
+      "world": "pressed-dunes",
+      "grade": "low",
+      "seed": 20261016,
+      "phase": "mixed",
+      "index": 12,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:44.093Z",
+      "finishedAt": "2026-10-08T06:58:46.476Z"
+    },
+    {
+      "world": "ruptured-film",
+      "grade": "low",
+      "seed": 20261017,
+      "phase": "mixed",
+      "index": 13,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:46.477Z",
+      "finishedAt": "2026-10-08T06:58:48.926Z"
+    },
+    {
+      "world": "reversed-flow",
+      "grade": "low",
+      "seed": 20261018,
+      "phase": "mixed",
+      "index": 14,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:48.927Z",
+      "finishedAt": "2026-10-08T06:58:51.359Z"
+    },
+    {
+      "world": "laminate-shell",
+      "grade": "low",
+      "seed": 20261019,
+      "phase": "mixed",
+      "index": 15,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:51.360Z",
+      "finishedAt": "2026-10-08T06:58:53.826Z"
+    },
+    {
+      "world": "fibre-silt",
+      "grade": "low",
+      "seed": 20261020,
+      "phase": "mixed",
+      "index": 16,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:53.826Z",
+      "finishedAt": "2026-10-08T06:58:56.210Z"
+    },
+    {
+      "world": "film-laminate",
+      "grade": "low",
+      "seed": 20261021,
+      "phase": "mixed",
+      "index": 17,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:56.210Z",
+      "finishedAt": "2026-10-08T06:58:58.676Z"
+    },
+    {
+      "world": "ash-strata",
+      "grade": "severe",
+      "seed": 20261004,
+      "phase": "after-mixed",
+      "index": 18,
+      "status": "completed",
+      "startedAt": "2026-10-08T06:58:58.677Z",
+      "finishedAt": "2026-10-08T06:59:02.757Z",
+      "sample": "after-mixed-18"
+    }
+  ],
+  "errors": [],
+  "status": "passed-bounded-lifecycle",
+  "currentStep": {
+    "world": "ash-strata",
+    "grade": "severe",
+    "seed": 20261004,
+    "phase": "after-mixed",
+    "index": 18,
+    "status": "completed",
+    "startedAt": "2026-10-08T06:58:58.677Z",
+    "finishedAt": "2026-10-08T06:59:02.757Z",
+    "sample": "after-mixed-18"
+  },
+  "catalogWorldIds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway",
+    "cleft-tableland",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir",
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta",
+    "shard-switchback",
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments",
+    "fibre-choke",
+    "buried-lamellae",
+    "pressed-rim",
+    "wedged-hide",
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash",
+    "short-fibre-mat",
+    "marrow-break",
+    "felt-wedges",
+    "pore-bank",
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks",
+    "grain-weld",
+    "silk-catch",
+    "resin-sleeve",
+    "shell-threads",
+    "chalk-divide",
+    "red-vault-fragments",
+    "blue-fault",
+    "pale-pressure",
+    "notched-backwater",
+    "crossed-casings",
+    "fibre-stumpfield",
+    "sloughed-court",
+    "crushed-seam",
+    "husk-reef",
+    "fibre-scree",
+    "gel-rafts",
+    "double-return",
+    "offset-basins",
+    "pinched-fan",
+    "spliced-reaches",
+    "white-scarfield",
+    "black-lacuna",
+    "ochre-folds",
+    "violet-marrows",
+    "fractured-estuary",
+    "woven-quarters",
+    "shell-patchwork",
+    "last-shelf"
+  ],
+  "repetitions": 10,
+  "mixedRebuilds": 18
+}

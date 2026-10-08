@@ -1,0 +1,95 @@
+{
+  "status": "pass",
+  "startedAt": "2026-10-07T05:45:03.658173+00:00",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/b14-package-readiness/check-1.log"
+    },
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/b14-package-readiness/check-2.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/b14-package-readiness/check-3.log"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "tools/qa/r100-i09-final-probe.mjs",
+        "tools/qa/r100-worker-observer.mjs",
+        "tools/qa/check-r100-worker-observer.mjs",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "tools/world-study/check-r100-revision6-contract.ts",
+        "src/generated/r100-package-manifest.ts"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/b14-package-readiness/check-4.log"
+    }
+  ],
+  "dev": {
+    "command": [
+      "npm",
+      "run",
+      "dev",
+      "--",
+      "--config",
+      "/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-dev-smoke-1a_x_r5o/vite.config.mjs",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "3198",
+      "--strictPort"
+    ],
+    "pid": 4142,
+    "cacheDirectory": "/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-dev-smoke-1a_x_r5o/cache",
+    "requests": [
+      {
+        "path": "/",
+        "status": 200
+      },
+      {
+        "path": "/src/generation/world-study/r100-package.ts",
+        "status": 200,
+        "sha256": "03fc7160fcd4b5640c9b25864051870f78fb4c66aaeba797421fbdfdc0c7c9f6"
+      },
+      {
+        "path": "/src/generation/world-study/native-volume-pleated-tear.ts",
+        "status": 200,
+        "sha256": "52ea54b62b16eeb632fe2d07a4b9b7e227ff9199a12fa8def3eaca7dc539e8f2"
+      },
+      {
+        "path": "/src/generation/world-study/native-volume-settled-sheet.ts",
+        "status": 200,
+        "sha256": "6989e7eb85615e5fdc63de1495ae6eec31098b63a78cd30a6dc6775f0adb9e60"
+      }
+    ],
+    "ownedProcessExited": true
+  },
+  "finishedAt": "2026-10-07T05:45:08.576649+00:00",
+  "sourceHashes": {
+    "data/rift-native-worlds.csv": "0559776364ef853473c2d74105df669e75d2a01119cb04bf190dea4fc5cfd756",
+    "data/rift-world-appearance.csv": "fdd9efacf7f4168a13e9b09bc40134527c9f050e3726f76477c5ccbd3f3932bc",
+    "data/rift-search-remains.csv": "bd5f8b3d2863ff4e1974d56922afeb8a477116e65755e8830d19a27e0b0401fa",
+    "src/generated/r100-package-manifest.ts": "3d230513b17bb65880cb9916e49bfd20a7ab851fe72d98af448d109b4e8d7a0c"
+  },
+  "scope": "108 candidate package/type/dev module checks, no browser/frame/qualification claim. Isolated optimizer cache; user3027 unchanged."
+}

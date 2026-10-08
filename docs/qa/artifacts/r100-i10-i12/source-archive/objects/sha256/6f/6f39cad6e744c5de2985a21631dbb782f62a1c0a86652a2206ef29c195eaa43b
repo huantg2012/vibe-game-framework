@@ -1,0 +1,2772 @@
+import { nativeRiftPlayerForRestore, NATIVE_BODY_GEOMETRY_VERSION } from '@/systems/native-rift-body-recovery';
+import { nativeBodyCollision, type NativeBodyCollision, type NativeBodyMotion } from '@/generation/world-study/native-body-collision';
+import { createR100WorldPresentation, getPreparedR100Presentation } from '@/systems/r100-world-presentation';
+import { createWorldPlaySurface, type WorldPlaySurface } from '@/systems/world-space-surface';
+import { createWorldSearchVisual } from '@/systems/world-search-presentation';
+import { createR100ExtractionVisual } from '@/systems/r100-extraction-presentation';
+import { createContaminantSourceRegions } from '@/generation/contaminant-source-regions';
+import { createContaminantDropPlan } from '@/systems/contaminant-drop-plan';
+import { projectItemForPlayer } from '@/systems/contaminant-catalog';
+import { projectRunPassiveReceipts } from '@/systems/run-passive-receipt';
+import { CATALOG_ITEMS } from '@/generated/contaminant-catalog-data';
+import { sweepGroundDash } from '@/systems/tool-targeting';
+import { proceduralRiftIdentity, installProceduralRiftRecovery, restoreProceduralLayout, restoreProceduralWorld, withPreparedProceduralRecovery } from '@/managers/rift-recovery';
+import type { RiftRecoveryConditions } from '@/systems/rift-recovery-state';
+import { RiftFrameCommit } from '@/systems/rift-frame-commit';
+import { RiftStagedEntry } from '@/systems/rift-staged-entry';
+import { RiftEntryFrameFence } from '@/systems/rift-entry-frame-fence';
+import { validateRiftRecoveryState, type RiftRecoveryState } from '@/systems/rift-recovery-state';
+import { afterStateCommit, commitEffects } from '@/core/commit-effects';
+import type { RiftCheckpoint } from '@/types/rift-checkpoint';
+import { hasLineOfSight } from '@/utils/grid-raycast';
+import { collectToolRevealSnapshot, findStitchPlacement, findSingleWallLanding, findSoundLureLanding } from '@/systems/tool-targeting';
+import { getSurvivalAttributes, sumPollutionResistance } from '@/systems/survival-attributes';
+import { inventoryStore } from '@/systems/inventory-store';
+import { FieldLootInventory, notifyFieldAcquisition } from '@/systems/field-loot-inventory';
+import { openInventory, projectInventoryItem } from '@/ui/inventory-presenter';
+import { inventoryPanel } from '@/ui/dom/inventory-panel';
+import { WEAPON_DATA } from '@/generated/weapon-data';
+import { getContaminantQuality } from '@/systems/contaminant-quality';
+import { GroundDepthSorter, GROUND_LIGHT_DEPTH, WORLD_READOUT_DEPTH, type GroundDepthTarget } from '@/systems/ground-depth';
+import { productionModelFor } from '@/entities/form-renderers/d/production-models';
+import type { CoverageId } from '@/generated/contamination-lexicon-data';
+import { createPresentationFrame } from '@/dev/spatial-study/stage/bridge';
+import type { RiftPresentationFrame, RiftPresentationView, RiftWorldProjector, RiftPresentationEvent } from '@/dev/spatial-study/stage/bridge';
+import type { MeleeTarget } from '@/systems/weapon-swing';
+/**
+ * Rift Scene - core gameplay.
+ *
+ * At this point it owns the generated layout, the player, the limited field of view,
+ * the enemies and combat. Chaos/loot/extraction plug in on top; the layout
+ * comes from the prepared, frozen generation identity for this sortie.
+ *
+ * The scene is the orchestration layer: it owns the system instances and does the wiring
+ * between them, which is what keeps the systems from calling each other directly
+ * (architecture DEC-ARCH-002). Combat and the AI are the clearest case - neither imports
+ * the other, and every effect one has on the other passes through the translations below.
+ */
+
+import Phaser from 'phaser';
+import { GAME_CONSTANTS } from '@/config/constants';
+import { generateRiftLayout } from '@/generation/rift-layout';
+import { eventBus } from '@/core/event-bus';
+import { isActorWalking } from '@/entities/actor-motion';
+import { Enemy } from '@/entities/enemy-factory';
+import { getFormRenderer, type FormVisual, type FormVisualSignal } from '@/entities/form-renderers/registry';
+import { Player } from '@/entities/player';
+import type { PlayerMovementInputReader } from '@/entities/player-movement-input';
+import type { FormAttackPose } from '@/entities/form-renderers/form-renderer';
+import type { GeneratedRiftLayout } from '@/generation/types';
+import type { WorldProductionMap } from '@/generation/world-study/production-map';
+import type { WorldProductionRecipeV3 } from '@/generation/world-study/production-recipe';
+
+/** Development encounters still use the complete production scene lifecycle. */
+export interface RiftDevFixture {
+  recovery?: { identity: RiftCheckpoint['identity']; externalTargetIds: readonly string[]; checkpoint?: RiftCheckpoint<RiftRecoveryState> };
+  createLayout(): GeneratedRiftLayout;
+  /** DEV-only QA intent, fed through the original Player motion path. */
+  readMovementInput?: PlayerMovementInputReader;
+  /** The same admitted world used by the DEV preview, including its 32px Host support. */
+  productionWorld?: WorldProductionMap;
+  /** Same frozen v3 recipe in the isolated gym; never an alternate visual layout. */
+  productionRecipe?: WorldProductionRecipeV3;
+  /** Native Host footprints use 32px cells even when the physical fixture is finer. */
+  hostTileMap?: import('@/types/map-types').TileMapData;
+  /** Explicitly graded fixtures; omission retains historical sortie rules. */
+  pollutionGrade?: 'low' | 'medium' | 'severe';
+  onCreateError?(reason: unknown): void;
+  /** Optical terrain only; physics and navigation always retain the source TileGrid. */
+  createSightGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid): OccluderGrid;
+  /** Optional DEV physical melee obstruction; default preserves the existing sight grid. */
+  createCombatGrid?(layout: GeneratedRiftLayout, physicalGrid: TileGrid, sightGrid: OccluderGrid): OccluderGrid;
+  onReturn(): void;
+  returnLabel?: '返回净化点' | '返回配置';
+  onPause?(): void;
+  configureCamera?(camera: Phaser.Cameras.Scene2D.Camera): void;
+  /** Display-only adjustment for the large legacy through-fog extraction marker. */
+  extractionGlowRadius?: number;
+  /** Opt-in preparation before the first simulation frame; old fixtures enter immediately. */
+  entryDurationMs?: number;
+  /** A completed native run keeps its result clock alive, but stops its world. */
+  freezeAfterEnd?: boolean;
+  /** Replaces this world's ambient bed, preserving the existing adaptive audio mixer. */
+  atmosphereKey?: string;
+  footstepMaterial?: 'soil' | 'wood' | 'metal' | 'tile' | 'plaster';
+  createSearchObjectVisual?: LootSearchCreateConfig['createVisual'];
+  /** Explicit alternative-renderer ownership; never substitute a legacy fragment's ground. */
+  worldSurface?: 'runtime';
+  /** DEV presentation only: unknown floor and absent support remain equally black. */
+  suppressVoidNoise?: boolean;
+  /** DEV material renderer receives the lamp directly. Avoid a second additive
+   * colour wash; finite FOV, LOS, chaos and target visibility are unchanged. */
+  materialLighting?: boolean;
+  createRuntime?(context: RiftDevRuntimeContext): RiftDevRuntime;
+}
+export interface RiftEntryView {
+  readonly active: boolean;
+  readonly elapsedMs: number;
+  readonly durationMs: number;
+  readonly progress: number;
+}
+export interface RiftDevActorVisuals {
+  readonly id: string;
+  readonly objects: readonly Phaser.GameObjects.GameObject[];
+  readonly getPosition: () => Readonly<{ x: number; y: number }>;
+  readonly getGroundY: () => number;
+}
+export interface RiftDevRuntimeContext {
+  readonly scene: RiftScene;
+  readonly layout: GeneratedRiftLayout;
+  readonly player: RiftDevActorVisuals;
+  readonly enemies: readonly RiftDevActorVisuals[];
+  readonly applyHazardHit: (source: string, damage: number) => boolean;
+  readonly isRunEnded: () => boolean;
+  /** Uses the same target budget, damage snapshot and durability transaction as bodies. */
+  readonly registerMeleeTargets: (provider: { collectMeleeTargets(out: MeleeTarget[]): void }) => () => void;
+  readonly readEntryView: () => RiftEntryView;
+  readonly visibilityAt: (position: Readonly<{ x: number; y: number }>) => number;
+  /** Partial range/facing only; DEV receiver surfaces must resolve geometry/VOID themselves. */
+  readonly unoccludedVisibilityAt: (position: Readonly<{ x: number; y: number }>) => number;
+  /** Changes when committed position/facing/range/occluders change. */
+  readonly getVisibilityRevision: () => number;
+  /** Live native pollution, only for local material reflection. It grants no
+   * visibility and never changes the host's contact shape or lifetime. */
+  readonly readPollutionSources?: () => readonly {
+    readonly id: string; readonly kind: 'paint' | 'volume';
+    readonly x: number; readonly y: number; readonly active: boolean;
+  }[];
+  readonly getFootprint: () => Readonly<{ x: number; y: number; width: number; height: number }>;
+  readonly getGroundVisualDepth: (groundY: number) => number;
+  readonly revealProjectedTerrain: (image: Phaser.GameObjects.Image, visibility: number) => void;
+  /** Read-only production frame for a complete alternative DEV renderer. */
+  readonly readPresentationFrame: () => RiftPresentationView;
+  /** Adapts the existing directional HUD to the renderer's camera; no input/rule changes. */
+  readonly setWorldProjector: (projector: RiftWorldProjector | null) => void;
+}
+export interface RiftDevRuntime {
+  beforeCombat?(elapsedMs: number, ended: boolean): void;
+  update(elapsedMs: number, ended: boolean): void;
+  afterUpdate(elapsedMs: number): void;
+  prepareCheckpoint?(elapsedMs: number): void;
+  exportRuntimeState?(): unknown;
+  validateRuntimeState?(state: unknown): boolean;
+  restoreRuntimeState?(state: unknown): void;
+  /** True only for an actual local contact whose material sound replaces this cue. */
+  handleCombatCue?(cue: CombatCueId, position: Readonly<Vector2>): boolean;
+  destroy(): void;
+}
+import { mix32 } from '@/generation/seed-fork';
+import { AISystem, ENEMY_DEPTH } from '@/systems/ai';
+import { ChaosSystem, getChaosModulators, type ChaosModulators } from '@/systems/chaos-system';
+import { gameState, type SortieModifiers } from '@/managers/game-state';
+import { audioManager } from '@/managers/audio-manager';
+import { CombatSystem, COMBAT_FX_DEPTH, type CombatCueId, type NoiseLevel } from '@/systems/combat-system';
+import { ContaminationHostSystem } from '@/systems/contamination-host-system';
+import { contaminantSystem } from '@/systems/contaminant-system';
+import { ExtractionSystem } from '@/systems/extraction-system';
+import { growthSystem } from '@/systems/growth-system';
+import { LootSearchSystem, type LootSearchCreateConfig } from '@/systems/loot-search-system';
+import { RunController } from '@/systems/run-controller';
+import { TileGrid } from '@/systems/tile-grid';
+import { TilemapRenderer } from '@/systems/tilemap-renderer';
+import { ToolSystem } from '@/systems/tool-system';
+import { TrailSystem } from '@/systems/trail-system';
+import { RiftSurfacePainter } from '@/systems/procedural-surface';
+import { createRiftVisionConfig, VisibilitySystem } from '@/systems/visibility-system';
+import { DetectionPulse } from '@/ui/dom/detection-pulse';
+import { EncounterNarration, RiftAtmosphereSchedule, type EncounterSubject } from '@/ui/dom/encounter-narration';
+import { pickAtmosphere, type AtmospherePool } from '@/narrative/atmosphere';
+import { RiftHud, type ActiveEffectInfo, type RiftEquipmentSlot } from '@/ui/dom/rift-hud';
+import { Minimap } from '@/ui/minimap';
+import { getDefenseName, getToolName } from '@/ui/contaminant-names';
+import { describeSideEffectBody, formatChaosMultDelta } from '@/ui/side-effect-labels';
+import { riftResultPanel } from '@/ui/dom/rift-result-panel';
+import { pauseMenu } from '@/ui/dom/pause-menu';
+import { getDomUiRoot, injectPanelStyles, showToastInline, clearToastInline } from '@/ui/dom/panel-styles';
+import type { PendingSideEffect } from '@/systems/defense-engine';
+import { CONTAMINANT_DATA } from '@/generated/contaminant-data';
+import { RIFT_FRAGMENT_DATA } from '@/generated/rift-fragment-data';
+import { AIState, TileType, type Contaminant, type ContaminantRarity, type ContaminantType, type Vector2 } from '@/types/game-types';
+import type { AICueId } from '@/types/ai-types';
+import type { LandmarkDef, OccluderGrid } from '@/types/map-types';
+import { GameEvent } from '@/types/events';
+import { clamp } from '@/utils/math';
+
+// Cosmetic budgets are scoped by a genuine run identity, never a gameplay seed
+// draw. Retain a few recent runs for in-process scene restoration only.
+const atmosphereSchedules = new Map<string, RiftAtmosphereSchedule>();
+const NARRATED_WORLDS = new Set(['ash-strata', 'crystal-fibre', 'ivory-basin', 'carmine-lacquer', 'cobalt-gold']);
+
+/** Render depths. The gaps leave room for decals, entities and the HUD. */
+const DEPTH = {
+  surface: 0,
+  /** 丙 visual ≤ surface+1; must stay under the player (30). */
+  bing: 1,
+  /** 乙 seam core. */
+  yi: 20,
+  /** Owned by the AI system, which creates the enemy sprites. 甲 ≈ 25. */
+  enemy: ENEMY_DEPTH,
+  player: 30,
+  /** 丁 cloud. Must stay below visionMask (~50). */
+  ding: GAME_CONSTANTS.CONTAMINATION.VOLUME_DEPTH,
+  /** Owned by the combat system: telegraphs and flashes, under the darkness mask. */
+  combatFx: COMBAT_FX_DEPTH,
+  visionMask: 50,
+} as const;
+
+const RIFT_SURFACE_KEY = 'rift-surface';
+
+export class RiftScene extends Phaser.Scene {
+  private frameCommit: RiftFrameCommit | null = null;
+  private recovery: RiftDevFixture['recovery'] | null = null;
+  private recoveryConditions: RiftRecoveryConditions = { modifiers: { chaosRateModifier: 1, kindlingValueModifier: 1, startingChaos: 0 }, cycle: 0 };
+  private readonly tilemapRenderer = new TilemapRenderer();
+  private readonly player = new Player();
+  private readonly visibility = new VisibilitySystem();
+  private readonly trail = new TrailSystem();
+  private readonly ai = new AISystem();
+  private readonly combat = new CombatSystem();
+  private readonly hosts = new ContaminationHostSystem();
+  private readonly search = new LootSearchSystem();
+  private readonly toolSystem = new ToolSystem();
+  private readonly extraction = new ExtractionSystem();
+  private toolInputAllowed = true;
+  private dashHazardElapsedMs = 0;
+  private unsubscribeInventory: (() => void) | null = null;
+  private readonly fieldInventory = new FieldLootInventory();
+  private devFixture: RiftDevFixture | null = null;
+  private devRuntime: RiftDevRuntime | null = null;
+  /** Production rendering owns only its surfaces; native Hosts remain scene-owned. */
+  private nativeWorldPresentation: ReturnType<typeof createR100WorldPresentation> | null = null;
+  private worldSurface: WorldPlaySurface | null = null;
+  private hostFloorGrid: TileGrid | null = null;
+  private readonly devEnemyVisuals: RiftDevActorVisuals[] = [];
+  private devElapsedMs = 0;
+  private devPresentation: RiftPresentationFrame | null = null;
+  private devWorldProjector: RiftWorldProjector | null = null;
+  private devEventSequence = 0;
+  private readonly devTargetDisposers = new Set<() => void>();
+  private readonly entryView = { active: false, elapsedMs: 0, durationMs: 0, progress: 1 };
+  private readonly entryHeldKeys = new Set<number>();
+  private entryOwnsPhysicsPause = false;
+  private nativeEntryFence: RiftEntryFrameFence | null = null;
+  private nativeEntryPauseRequested = false;
+  private entryFrameFrozen = false;
+  private inventoryClosedAt = -1000;
+  private readonly runController = new RunController();
+  private readonly hud = new RiftHud();
+  private readonly encounter = new EncounterNarration();
+  private thresholdUntilMs = 0;
+  private narrationMs = 0;
+  private lastNarrationHitMs = -Infinity;
+  private pendingNarrationThreshold: 0 | 1 | 2 | 3 = 0;
+  private thresholdOverlay: HTMLDivElement | null = null;
+  private thresholdLevel: 0 | 1 | 2 | 3 = 0;
+  private narrationWorld = 'generic';
+  private atmosphereSchedule = new RiftAtmosphereSchedule();
+  private readonly detectionPulse = new DetectionPulse();
+  private readonly minimap = new Minimap();
+  private readonly riftSurface = new RiftSurfacePainter();
+  private chaos!: ChaosSystem;
+  private chaosVisionScale = 1;
+
+  private landmarkGraphics: Phaser.GameObjects.Graphics | null = null;
+
+  private attackKey: Phaser.Input.Keyboard.Key | null = null;
+  private extractKey: Phaser.Input.Keyboard.Key | null = null;
+  private restartKey: Phaser.Input.Keyboard.Key | null = null;
+  /** One entry per active sortie slot (2 base, 3 with growth_sortie_slot), see `bindToolKeys`. */
+  private toolKeys: Phaser.Input.Keyboard.Key[] = [];
+
+  private debugPanel: HTMLDivElement | null = null;
+  /** V7 (ui-art-overhaul.md A1): dev overlay must not outshine the real HUD by
+   *  default. F1 opens it; DEV builds only (see `createDebugOverlay`). */
+  private debugVisible = false;
+  /** Seeded past the refresh interval so the panel has content on the first frame. */
+  private debugAccumulatorMs = Number.POSITIVE_INFINITY;
+  private layoutDebug = { seed: 0, fragmentTypeId: '', recipeId: '' };
+  private paintGeometryVersion: 1 | 2 = 1;
+  private lastStepAt = -1000;
+  private hitThisFrame = false;
+  private probeSearchHeld = false;
+  private wasSpotted = false;
+  private atmosphereHeldOff = false;
+  private atmosphereRestoreAt = 0;
+
+  // --- Sortie result tracking (feeds the DOM result panel on exit, C2) ---
+  private sortieKillCount = 0;
+  private sortieAcquired: { type: ContaminantType; rarity: ContaminantRarity; publicName?: string }[] = [];
+  private sortiePassiveTriggers = new Map<ContaminantType, number>();
+  /** Defense residue lines shown in the rift HUD; remainingMs ticked here, then
+   *  merged with tool-system remaining each frame so tool rows are not double-counted. */
+  private defenseHudEffects: ActiveEffectInfo[] = [];
+  private endOwnsPhysicsPause = false;
+  private endFrozen = false;
+  /** Reused each post-update so the minimap visibility scan does not allocate. */
+  private readonly minimapVisibilityQuery: Vector2 = { x: 0, y: 0 };
+  /** Reused for scheme D visibility samples (乙 seam is offset 1px into the floor). */
+  private readonly formVisQuery: Vector2 = { x: 0, y: 0 };
+  private groundDepthSorter: GroundDepthSorter | null = null;
+  private readonly formVisuals = new Map<string, FormVisual>();
+  private formFloorGrid: TileGrid | null = null;
+  private nativeBody: NativeBodyCollision | null = null;
+  private shutdownComplete = false;
+  private stagedEntry: RiftStagedEntry | null = null;
+  private constructionClockPaused: boolean | null = null;
+  private readonly nativeBodyOrigin: Vector2 = { x: 0, y: 0 };
+  private readonly nativeBodyMotion: NativeBodyMotion = { x: 0, y: 0, velocityX: 0, velocityY: 0, collided: false };
+
+  constructor() {
+    super({ key: 'RiftScene' });
+  }
+
+  create(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): void {
+    this.createRun(data);
+  }
+
+  private failEntry(reason: unknown, data?: { devFixture?: RiftDevFixture }): void {
+    console.error('Rift entry failed; saved record retained', reason);
+    this.onShutdown();
+    const fixture = import.meta.env.DEV ? data?.devFixture : undefined;
+    if (fixture) {
+      if (fixture.onCreateError) fixture.onCreateError(reason);
+      else { this.scene.stop(); fixture.onReturn(); }
+    } else this.scene.start('MainMenuScene', { recoveryError: '出行暂时无法恢复，原记录已保留。' });
+  }
+
+  private createRun(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): void {
+    this.stagedEntry?.destroy();
+    this.stagedEntry = new RiftStagedEntry(this.createRunSteps(data), () => {
+      this.nativeEntryFence?.finishConstruction();
+      if (this.constructionClockPaused !== null) { this.time.paused = this.constructionClockPaused; this.constructionClockPaused = null; }
+    }, reason => this.failEntry(reason, data));
+    this.stagedEntry.start();
+  }
+
+  private *createRunSteps(data?: { modifiers?: SortieModifiers; cycle?: number; loadout?: (Contaminant | null)[]; devFixture?: RiftDevFixture; recovery?: RiftDevFixture['recovery'] }): Generator<void, void> {
+    this.shutdownComplete = false;
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+    // SceneManager.remove/Game.destroy emit DESTROY directly, without SHUTDOWN.
+    this.events.once(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
+    this.devFixture = import.meta.env.DEV ? data?.devFixture ?? null : null;
+    this.frameCommit = null;
+    this.nativeWorldPresentation = null;
+    this.nativeEntryFence?.destroy(); this.nativeEntryFence = null;
+    this.nativeEntryPauseRequested = false;
+    this.recovery = this.devFixture?.recovery ?? data?.recovery ?? null;
+    this.devElapsedMs = 0;
+    this.devPresentation = this.devFixture ? createPresentationFrame() : null;
+    this.devWorldProjector = null;
+    this.devEventSequence = 0;
+    this.probeSearchHeld = false;
+    this.inventoryClosedAt = -1000;
+    this.thresholdUntilMs = 0;
+    this.narrationMs = 0; this.lastNarrationHitMs = -Infinity;
+    this.pendingNarrationThreshold = 0; this.thresholdLevel = 0;
+    this.thresholdOverlay?.remove(); this.thresholdOverlay = null;
+    this.toolInputAllowed = true;
+    const entryDurationMs = this.devFixture?.entryDurationMs ?? 0;
+    if (!Number.isFinite(entryDurationMs) || entryDurationMs < 0 || entryDurationMs > 1500) {
+      throw new Error('Rift entry duration must be finite and between 0 and 1500ms');
+    }
+    Object.assign(this.entryView, { active: entryDurationMs > 0, elapsedMs: 0, durationMs: entryDurationMs,
+      progress: entryDurationMs > 0 ? 0 : 1 });
+    this.entryHeldKeys.clear();
+    this.entryFrameFrozen = false;
+    this.entryOwnsPhysicsPause = false;
+    this.endOwnsPhysicsPause = false;
+    this.endFrozen = false;
+    const restoring = this.recovery?.checkpoint;
+    if (restoring && (!validateRiftRecoveryState(restoring.state, inventoryStore.getState(), restoring.elapsedMs) || restoring.state.phase !== 'active')) throw new Error('Cannot resume an incomplete or ended Rift');
+    const sortieModifiers = restoring?.state.conditions.modifiers ?? data?.modifiers;
+    this.recoveryConditions = { modifiers: { ...(sortieModifiers ?? gameState.getSortieModifiers()) }, cycle: data?.cycle ?? gameState.getCycle(), maxHealth: GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus, kindlingAffinity: growthSystem.getModifiers().kindlingAffinity };
+    const sortieLoadout = data?.loadout ?? contaminantSystem.getSortieLoadout();
+    // Formal entry must have completed its cancellable preparation. Scene.start
+    // runs on a later frame: recheck here as well as in the transaction so an
+    // evicted/invalid identity cannot fall back to synchronous generation.
+    const directDevEntry = import.meta.env.DEV && !this.devFixture && !this.recovery;
+    if (!this.devFixture && !this.recovery && !directDevEntry) throw new Error('Rift entry requires a prepared departure');
+    const admitted = !this.devFixture && this.recovery
+      ? withPreparedProceduralRecovery(this.recovery.identity, () => ({
+        layout: restoreProceduralLayout(this.recovery!.identity),
+        world: restoreProceduralWorld(this.recovery!.identity),
+      })) : null;
+    // Historical DEV deep links/actor review own no formal departure. Keep that
+    // explicit debug path; a formal recovery never uses it on a cache miss.
+    const generated = this.devFixture ? this.devFixture.createLayout() : directDevEntry
+      ? generateRiftLayout(readRiftSeed(), readRiftRecipeId() ? { recipeId: readRiftRecipeId()! } : undefined) : admitted!.layout;
+    if (directDevEntry) {
+      installProceduralRiftRecovery();
+      this.recovery = { identity: proceduralRiftIdentity(generated), externalTargetIds: [] };
+    }
+    const seed = generated.seed;
+    const productionWorld = this.devFixture?.productionWorld ?? admitted?.world ?? null;
+    if (this.devFixture?.productionWorld && generated !== productionWorld?.layout) {
+      throw new Error('A production-world fixture must use that exact admitted layout');
+    }
+    if (productionWorld && this.devFixture?.worldSurface === 'runtime') {
+      throw new Error('A production-world fixture already owns its native world surface');
+    }
+    const nativeRecipe = this.recovery?.identity.generation?.version === 3
+      ? this.recovery.identity.generation : this.devFixture?.productionRecipe;
+    if (productionWorld?.native) {
+      if (!nativeRecipe || nativeRecipe.package.dependencyHash !== productionWorld.native.packageHash)
+        throw new Error('Native production terrain requires its matching frozen v3 departure');
+      this.nativeWorldPresentation = createR100WorldPresentation(productionWorld.native, generated, getPreparedR100Presentation(nativeRecipe));
+      this.devPresentation = createPresentationFrame();
+      this.nativeBody = nativeBodyCollision(productionWorld.native, generated);
+      if (!this.entryView.active) this.nativeEntryFence = this.createNativeEntryFence();
+    }
+    const stagedNative = !!this.nativeEntryFence;
+    if (stagedNative) {
+      this.constructionClockPaused = this.time.paused; this.time.paused = true;
+      this.cameras.main.setVisible(false);
+      this.bindEntryInputLatch();
+      this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
+      yield;
+    }
+    const nativePresentation = this.nativeWorldPresentation;
+    const createRuntime = nativePresentation?.createRuntime ?? this.devFixture?.createRuntime;
+    const worldId = productionWorld?.sample.profile.id ?? this.recovery?.identity.generation?.profile.id;
+    this.narrationWorld = worldId && NARRATED_WORLDS.has(worldId) ? worldId : 'generic';
+    const narrationRunId = inventoryStore.getRun()?.id ?? `legacy:${generated.seed}:${this.recoveryConditions.cycle}`;
+    this.atmosphereSchedule = atmosphereSchedules.get(narrationRunId) ?? new RiftAtmosphereSchedule(!!restoring);
+    if (atmosphereSchedules.size >= 16 && !atmosphereSchedules.has(narrationRunId)) atmosphereSchedules.delete(atmosphereSchedules.keys().next().value!);
+    atmosphereSchedules.set(narrationRunId, this.atmosphereSchedule);
+    const suppressVoidNoise = !!productionWorld || !!this.devFixture?.suppressVoidNoise;
+    const tileMap = generated.tileMap;
+    const grid = new TileGrid(tileMap);
+    const sightGrid = nativePresentation?.world.sight ?? this.devFixture?.createSightGrid?.(generated, grid) ?? grid;
+    const combatGrid = nativePresentation?.world.combat ?? this.devFixture?.createCombatGrid?.(generated, grid, sightGrid) ?? sightGrid;
+    this.formFloorGrid = grid;
+    const hostTileMap = productionWorld?.hostTileMap ?? this.devFixture?.hostTileMap;
+    this.hostFloorGrid = hostTileMap ? new TileGrid(hostTileMap) : grid;
+    const layout = generated;
+    if (this.devPresentation) {
+      Object.assign(this.devPresentation.exit.position, layout.extractionPoint.position);
+      this.devPresentation.exit.radius = layout.extractionPoint.triggerRadius;
+    }
+    this.layoutDebug = {
+      seed: generated.seed,
+      fragmentTypeId: generated.fragmentTypeId,
+      recipeId: generated.recipeId,
+    };
+    this.paintGeometryVersion = generated.paintGeometryVersion ?? 1;
+
+    // The tilemap layer stays for physics/collision but is made invisible: the visible
+    // surface is a continuous procedural texture (DEC-018), not the flat placeholder tiles.
+    const layer = this.tilemapRenderer.create(this, tileMap, {
+      tilesetKey: 'placeholder-rift-tileset',
+      collidingIndices: [TileType.WALL, TileType.VOID],
+      depth: DEPTH.surface,
+    });
+    layer.setVisible(false);
+
+    if (this.devFixture?.worldSurface === 'runtime') {
+      if (!this.devFixture.createRuntime) throw new Error('A runtime-owned world surface requires a complete presentation factory');
+      if (!this.devFixture.footstepMaterial) throw new Error('A runtime-owned world must declare its footstep material');
+    } else if (!productionWorld) this.riftSurface.mount(this, generated.ruins, RIFT_SURFACE_KEY, DEPTH.surface);
+
+    this.physics.world.setBounds(0, 0, grid.widthPx, grid.heightPx);
+
+    // Zoom must be set before the visibility system sizes its mask to the view.
+    const camera = this.cameras.main;
+    camera.setBounds(0, 0, grid.widthPx, grid.heightPx);
+    camera.setZoom(GAME_CONSTANTS.CAMERA.ZOOM);
+    this.devFixture?.configureCamera?.(camera);
+    camera.setBackgroundColor(suppressVoidNoise ? 0x000000 : GAME_CONSTANTS.VISIBILITY.VOID_COLOR);
+
+    const beforePlayer = createRuntime ? new Set(this.children.list) : null;
+    this.player.create(this, { spawn: layout.spawnPoint, depth: DEPTH.player, facing: 'right', readMovementInput: this.devFixture?.readMovementInput });
+    const playerVisuals = beforePlayer ? this.children.list.filter(child => !beforePlayer.has(child)) : [];
+    if (this.nativeBody) {
+      if (!this.nativeBody.supports(layout.spawnPoint, GAME_CONSTANTS.PLAYER.BODY_SIZE / 2, GAME_CONSTANTS.PLAYER.BODY_SIZE / 2))
+        throw new Error('Native spawn cannot support the complete player body');
+      this.physics.world.on('worldstep', this.onNativeBodyStep, this);
+    } else this.physics.add.collider(this.player.getSprite(), layer);
+    camera.startFollow(this.player.getSprite(), true);
+
+    const visionConfig = createRiftVisionConfig(DEPTH.visionMask);
+    this.visibility.create(this, {
+      ...visionConfig,
+      ...(suppressVoidNoise ? {voidNoiseEnabled:false,voidColor:0x000000} : {}),
+      ...((nativePresentation || this.devFixture?.materialLighting) ? {playerLampEnabled:false,flashlightEnabled:false} : {}),
+    }, sightGrid);
+    this.visibility.clipLightsToIsland(tileMap);
+    this.visibility.setExtractionPosition(layout.extractionPoint.position);
+
+    this.trail.create(this, tileMap.cols, tileMap.tileSize, this.visibilityAt);
+    // Conditional worlds bake material landmarks into the same lit/occluded ground.
+    // Historical runs retain their exact original decal presentation.
+    if (!productionWorld?.sample.scenery) this.createLandmarkDecals(layout.landmarks, tileMap.tileSize);
+
+    // Sight and walkability are independent. Stage chasms are open air for perception;
+    // every movement, body clearance and path still uses the physical grid.
+    const hearingCount = layout.contaminationDraw.forms.filter(form => form.lexemes.sense === 'sense_hear').length;
+    if (hearingCount !== 1) throw new Error(`Rift hearing budget invalid: ${hearingCount}`);
+    const floorHearingCount = layout.enemySpawns.filter(spawn => spawn.form?.lexemes.sense === 'sense_hear').length;
+    if (stagedNative) yield;
+    this.ai.create(this, layout.enemySpawns, sightGrid, grid, { requireExactlyOneRewriter: floorHearingCount === 1,
+      recovery: this.recovery ? { runSeed: seed, signature: this.recovery.identity.signature } : undefined });
+    this.ai.setVisibilityProvider(this.visibilityAt);
+    this.ai.addWallCollider(layer);
+    this.ai.addStaticPlayerCollider(this.player.getSprite());
+
+    if (stagedNative) yield;
+    // Combat gets a read-only view of the AI (`getEnemies` / `getEnemyById`) plus one
+    // callback. Noise is the only cross-system output that does not go through the bus: a
+    // whiffed swing is audible yet emits nothing, so there is no event to carry it.
+    this.combat.create(this, combatGrid, this.player, this.ai, {
+      onNoise: this.reportNoise,
+      onCue: this.onCombatCue,
+      captureEnemyVisual: (id) => this.formVisuals.get(id)?.getFlashSource?.(),
+      consumeWeaponUse: () => {
+        const id = inventoryStore.getEquipment().weaponId;
+        if (!id) return false;
+        const result = inventoryStore.consumeEquipmentUse(id);
+        if (!result.ok && result.error === 'storage-failed') showToastInline('未能保存耐久度，本次命中没有生效。', {});
+        return result.ok;
+      },
+    }, GAME_CONSTANTS.PLAYER.MAX_HEALTH + growthSystem.getModifiers().vitalityBonus);
+    const weaponId = inventoryStore.getEquipment().weaponId;
+    const equippedWeapon = weaponId ? inventoryStore.getItem(weaponId) : undefined;
+    this.combat.configureWeapon(equippedWeapon?.kind === 'weapon'
+      ? equippedWeapon.weapon.definitionId
+      : import.meta.env.DEV && !inventoryStore.getRun() ? 'crowbar_plain' : null, seed);
+
+    // --- T9 systems: chaos, loot, extraction, run controller, HUD ---
+
+    // Apply growth modifiers on top of module modifiers
+    const growthMods = growthSystem.getModifiers();
+    const effectiveChaosRate = (sortieModifiers?.chaosRateModifier ?? 1.0) * (1 - growthMods.chaosResist);
+    // growthMods.kindlingAffinity (+N per pickup) applied through LootSearchSystem config below
+    // growthMods.vitalityBonus (+HP) applied through combat system max health
+
+    const startingChaos = sortieModifiers?.startingChaos ?? gameState.getStartingChaos();
+    let residueChaos = 0;
+    for (const effect of gameState.getPendingSideEffects()) {
+      if (effect.type === 'initial_chaos') residueChaos += effect.value;
+    }
+    const openingChaos = clamp(startingChaos + residueChaos, 0, GAME_CONSTANTS.CHAOS.HARD_CAP);
+
+    this.chaos = new ChaosSystem({
+      isEnemyTargetingLure: id => this.ai.getEnemyById(id)?.isTargetingLure?.() ?? false,
+      onModulate: this.applyChaosModulators,
+      chaosRateModifier: effectiveChaosRate,
+      startingValue: openingChaos,
+      pollutionGrade: nativePresentation?.world.definition.grade ?? this.devFixture?.pollutionGrade,
+      pollutionDefinition: nativeRecipe?.gradeDefinition,
+      getPollutionResistance: () => sumPollutionResistance([getSurvivalAttributes().resistancePercent, this.toolSystem.getPollutionResistanceBonus()]),
+    });
+    const hostLayout = hostTileMap ? { ...layout, tileMap: hostTileMap } : layout;
+    this.hosts.create(this, hostLayout, this.combat, this.chaos, this.visibilityAt, { liveMotion: true, occluders: this.hostFloorGrid, sightGrid,
+      hearingPolicy: {
+        getRangeMultiplier: () => this.ai.getHearingRangeMultiplier(),
+        suppressDiscovery: (id) => this.ai.trySuppressHearingDiscovery(id),
+      },
+    });
+
+    const run = inventoryStore.getRun();
+    const newCatalogRun = run?.catalogVersion === 'contaminant-v1';
+    const sourceRegions = run?.dropPlan?.sourceRegions ? new Map(Object.entries(run.dropPlan.sourceRegions)) : newCatalogRun ? nativePresentation?.sourceRegions ?? createContaminantSourceRegions({ grid, spawn: layout.spawnPoint,
+      nodes: [...layout.kindlingNodes, ...layout.contaminantNodes], seed }) : undefined;
+    if (newCatalogRun && !run.dropPlan) {
+      const tutorialNode = inventoryStore.isCatalogTutorialEligible() ? [...layout.contaminantNodes]
+        .sort((a, b) => Math.hypot(a.position.x - layout.spawnPoint.x, a.position.y - layout.spawnPoint.y)
+          - Math.hypot(b.position.x - layout.spawnPoint.x, b.position.y - layout.spawnPoint.y) || a.id.localeCompare(b.id))[0] : undefined;
+      const plan = createContaminantDropPlan({ runId: run.id, runSeed: seed, tutorialNodeId: tutorialNode?.id,
+        sourceRegions: sourceRegions ? Object.fromEntries(sourceRegions) : undefined,
+        nodes: layout.contaminantNodes.map(node => ({ id: node.id, tier: node.tier ?? 'safe', sourceTag: sourceRegions?.get(node.id)?.sourceTag })) });
+      const installed = inventoryStore.installDropPlan(plan);
+      if (!installed.ok) throw Error(`Cannot persist map drop plan: ${installed.error}`);
+    }
+    this.ai.setControlProtectionEnabled(run?.combatRulesVersion === 2);
+    this.hosts.setControlProtectionEnabled(run?.combatRulesVersion === 2);
+    this.search.create(this, layout.kindlingNodes, layout.contaminantNodes, {
+      dropPlan: inventoryStore.getRun()?.dropPlan, sourceRegions,
+      inventoryEnabled: true,
+      runSeed: seed,
+      onMessage: message => afterStateCommit(() => showToastInline(message, { channel: 'field-loot' })),
+      overlayRoot: getDomUiRoot(),
+      getVisibilityAt: this.visibilityAt,
+      fragmentTypeId: generated.fragmentTypeId,
+      // Visual source is the restored world profile, not the gameplay loot-table fragment.
+      createVisual: this.devFixture?.createSearchObjectVisual ?? (productionWorld
+        ? (scene, position, visualSeed, getPlayerPos) => createWorldSearchVisual(
+          scene, position, visualSeed, getPlayerPos, productionWorld.sample.profile, productionWorld.sample.seed,
+          nativeRecipe ? getPreparedR100Presentation(nativeRecipe) : undefined,
+        ) : undefined),
+      extraction: {
+        position: layout.extractionPoint.position,
+        radius: layout.extractionPoint.triggerRadius,
+      },
+      onNoise: this.reportNoise,
+      kindlingValueModifier: sortieModifiers?.kindlingValueModifier,
+      kindlingAffinity: growthSystem.getModifiers().kindlingAffinity,
+    });
+
+    if (stagedNative) yield;
+    this.fieldInventory.create(this, () => this.player.getPosition(), this.visibilityAt,
+      position => grid.isWalkableAt(position.x, position.y), () => this.openBag(),
+      message => afterStateCommit(() => showToastInline(message, { channel: 'field-loot' })));
+
+    // Tool system (Slice 4/5): sortie loadout with expanded options. The Slice 5 (T1/T2)
+    // entries route enemy-, combat- and chaos-facing tool effects into AISystem /
+    // CombatSystem / ChaosSystem the same way `setPlayerCollision` / `addKindling` above
+    // already route player- and loot-facing ones - the scene stays the only place two
+    // systems' effects on each other get translated (architecture DEC-ARCH-002).
+    this.toolSystem.create(
+      this,
+      sortieLoadout,
+      () => this.player.getPosition(),
+      () => this.ai.getEnemies(),
+      {
+        runId: run?.id ?? 'legacy-practice', combatRulesVersion: run?.combatRulesVersion ?? 1,
+        getFacingAngle: () => this.player.getFacingAngle(),
+        getBasePollutionResistance: () => getSurvivalAttributes().resistancePercent,
+        setPlayerActionSilenced: enabled => this.ai.setPlayerActionSilenced(enabled),
+        canApplyHardControl: id => this.ai.canApplyHardControl(id),
+        getDashDestination: distance => {
+          const pos = this.player.getPosition(), angle = this.player.getFacingAngle();
+          return this.sweepPlayerDash({ x: pos.x + Math.cos(angle) * distance, y: pos.y + Math.sin(angle) * distance });
+        },
+        advanceGroundDash: (target, dtMs) => this.advancePlayerDash(target, dtMs),
+        isGroundConnected: (from, to, range) => collectToolRevealSnapshot(from, range, grid, [to], [], undefined, this.nativeBody ?? undefined).enemyPositions.length > 0,
+        getPlayerSprite: () => this.player.getSprite(),
+        getPlayerGroundY: () => this.player.getGroundY(),
+        getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
+        captureEnemyVisual: id => this.formVisuals.get(id)?.getFlashSource?.(),
+        isTargetAlive: id => this.combat.isEnemyAlive(id),
+        isTargetVisible: position => this.visibilityAt(position) > 0,
+        hasTargetLineOfSight: (from, to) => hasLineOfSight(sightGrid, from, to),
+        setEnemyControl: (id, source, effect) => this.ai.setEnemyControl(id, source, effect),
+        clearEnemyControl: (id, source) => this.ai.clearEnemyControl(id, source),
+        hasEnemyControl: (id, source) => this.ai.hasEnemyControl(id, source),
+        setVisualDecoy: (source, position) => this.ai.setVisualDecoy(source, position),
+        reportSoundLure: (position, radius, pathBounded) => this.ai.reportSoundLure(position, radius, pathBounded),
+        getSoundLureDestination: maxDistance => {
+          const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body | null;
+          if (!body) return null;
+          const angle = this.player.getFacingAngle();
+          return findSoundLureLanding(body.center, { x: Math.cos(angle), y: Math.sin(angle) }, maxDistance,
+            grid, Math.max(body.halfWidth, body.halfHeight) * 2, this.nativeBody ?? undefined);
+        },
+        getStitchPlacement: (length, distance) => {
+          const angle = this.player.getFacingAngle();
+          return findStitchPlacement(this.player.getPosition(), { x: Math.cos(angle), y: Math.sin(angle) }, distance, length,
+            grid, (from, to) => hasLineOfSight(sightGrid, from, to));
+        },
+        getRevealSnapshot: range => collectToolRevealSnapshot(this.player.getPosition(), range, grid,
+          this.ai.getEnemies().filter(enemy => this.combat.isEnemyAlive(enemy.getId())).map(enemy => enemy.getPosition()),
+          this.search.getUncollectedSearchPositions(), this.hosts.getToolTargets().map(host => host.position), this.nativeBody ?? undefined),
+        delayEnvironmentHazard: (id, source, duration) => this.hosts.delayNextHazard(id, source, duration),
+        getEnvironmentTargets: () => this.hosts.getToolTargets(),
+        suppressEnvironmentHazard: (id, source, duration, includeWall) => this.hosts.suppressHazard(id, source, duration, includeWall),
+        clearEnvironmentControl: (id, source) => this.hosts.clearToolControl(id, source),
+        getPhaseDestination: () => {
+          const sprite = this.player.getSprite();
+          const body = sprite.body as Phaser.Physics.Arcade.Body | null;
+          if (!body) return null;
+          const angle = this.player.getFacingAngle();
+          const landing = findSingleWallLanding({
+            origin: body.center, direction: { x: Math.cos(angle), y: Math.sin(angle) },
+            maxDistance: CONTAMINANT_DATA.expand.toolRangePx,
+            bodyHalfWidth: body.halfWidth, bodyHalfHeight: body.halfHeight,
+            bodyQueries: this.nativeBody ?? undefined, grid, isPhaseableWall: (col, row) => grid.getTile(col, row) === TileType.WALL,
+          });
+          return landing ? { x: sprite.x + landing.x - body.center.x, y: sprite.y + landing.y - body.center.y } : null;
+        },
+        movePlayerTo: position => {
+          const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+          if (this.nativeBody && !this.nativeBody.supports(position, body.halfWidth, body.halfHeight))
+            throw new Error('Native ability landing must support the complete player body');
+          this.resetPlayerBody(body, position.x, position.y);
+          this.player.postUpdate();
+        },
+        setPlayerCollision: (enabled) => {
+          const sprite = this.player.getSprite();
+          const body = sprite.body as Phaser.Physics.Arcade.Body | null;
+          if (body) body.enable = enabled;
+        },
+        setPlayerInput: (enabled) => { this.toolInputAllowed = enabled; this.syncPlayerInput(); },
+        getCollectedNodes: () => this.search.getCollectedKindlingPositions(),
+        addKindling: (n) => this.search.addBonusKindling(n),
+        setEnemySpeedMultiplier: (id, mult) => this.ai.setEnemySpeedMultiplier(id, mult),
+        setEnemyMovementLocked: (id, locked) => this.ai.setEnemyMovementLocked(id, locked),
+        setEnemyPerceptionMultiplier: (id, mult) => this.ai.setEnemyPerceptionMultiplier(id, mult),
+        reverseEnemyPatrol: (id) => this.ai.reverseEnemyPatrol(id),
+        forceEnemyReturn: (id) => this.ai.forceEnemyReturn(id),
+        knockbackEnemy: (id, dx, dy) => this.ai.knockbackEnemy(id, dx, dy),
+        setDecoyPosition: (pos) => this.ai.setDecoyPosition(pos),
+        damageEnemy: (id, amount) => this.combat.applyToolDamage(id, amount),
+        showAbyssReveal: (enemies, nodes, durationMs, cores) => this.minimap.showAbyssReveal(enemies, nodes, durationMs, cores),
+        getKindlingPositions: () => this.search.getUncollectedSearchPositions(),
+        boostChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateMult(mult, durationMs),
+        reduceChaosRate: (mult, durationMs) => this.chaos.setTemporaryRateReduction(mult, durationMs),
+        // T7 rewire: the 8 Slice 4 tools' enemy-facing overrides, wired the same way.
+        setEnemyEscalationSuppressed: (id, suppressed) => this.ai.setEnemyEscalationSuppressed(id, suppressed),
+        forceEnemyAlert: (id) => this.ai.forceEnemyAlert(id),
+        demoteEnemyAlertLevel: (id) => this.ai.demoteEnemyAlertLevel(id),
+        setEnemyDetectionFillRateMult: (id, mult) => this.ai.setEnemyDetectionFillRateMult(id, mult),
+        setHearingSuppressed: (active) => this.ai.setHearingSuppressed(active),
+      },
+    );
+    // muffle (T7 rewire): the AI announces a swallowed hearing signal here; ToolSystem
+    // spends one of muffle's charges for it (same translation role as `reportNoise`).
+    this.ai.setHearingAvoidedListener(() => this.toolSystem.notifyProximityAvoid());
+
+    this.extraction.create(
+      this,
+      layout.extractionPoint,
+      () => this.player.getPosition(),
+      () => this.runController.isRunEnded(),
+      {
+        // Native return wounds are revealed by the same sight and map memory as
+        // their surroundings. The legacy through-fog disk would cover the art.
+        ...(!nativePresentation ? { registerGlowSource: (id: string, pos: Vector2, r: number) =>
+          this.visibility.registerGlowSource(id, pos, this.devFixture?.extractionGlowRadius ?? (productionWorld ? 8 : r)) } : {}),
+        ...(nativePresentation && productionWorld && nativeRecipe ? {
+          createVisual: (scene: Phaser.Scene, pos: Readonly<Vector2>) => createR100ExtractionVisual(scene, pos,
+            productionWorld.sample.profile, getPreparedR100Presentation(nativeRecipe)),
+        } : {}),
+      },
+    );
+
+    this.runController.create(this, {
+      pauseChaos: (paused) => this.chaos.setPaused(paused),
+      setPlayerInput: () => this.syncPlayerInput(),
+      getCarriedKindling: () => this.search.getCarriedKindling(),
+      onSettlementFailure: (message, retry) => this.showSettlementRetry(message, retry),
+      onReturn: this.devFixture?.onReturn,
+      getElapsedMs: entryDurationMs > 0 || this.recovery ? () => this.devElapsedMs : undefined,
+      onRuntimeStateChanged: () => this.frameCommit?.markChanged(),
+    });
+
+    if (stagedNative) yield;
+    this.attachSchemeD();
+    if (stagedNative) yield;
+    this.syncDevPresentation();
+    try {
+      this.devRuntime = createRuntime?.({ scene: this, layout,
+        player: { id: 'player', objects: playerVisuals, getPosition: () => this.player.getPosition(), getGroundY: () => this.player.getGroundY() },
+        enemies: this.devEnemyVisuals,
+        applyHazardHit: (source, damage) => !this.entryView.active && !this.nativeEntryFence?.isActive() && this.combat.applyHazardHit(source, damage),
+        isRunEnded: () => this.runController.isRunEnded(),
+        registerMeleeTargets: this.registerDevMeleeTargets,
+        readEntryView: () => this.entryView,
+        visibilityAt: this.visibilityAt,
+        unoccludedVisibilityAt: point => this.visibility.getUnoccludedVisibilityAt(point),
+        getVisibilityRevision: () => this.visibility.getQueryRevision(),
+        readPollutionSources: () => this.hosts.getSubjects().flatMap(host => {
+          if (host.form.portfolio !== 'bing' && host.form.portfolio !== 'ding') return [];
+          const pin = this.hosts.getVisualPin(host.id);
+          if (!pin) return [];
+          const volume = host.form.portfolio === 'ding';
+          return [{ id: host.id, kind: volume ? 'volume' as const : 'paint' as const,
+            x: pin.x + (volume ? (pin.width ?? 0) / 2 : 0),
+            y: pin.y + (volume ? (pin.height ?? 0) / 2 : 0),
+            active: !volume || this.hosts.getVolumePresenceFrame(host.id)?.hasPresence !== false }];
+        }),
+        getGroundVisualDepth: groundY => this.groundDepthSorter?.depthAt(groundY) ?? 29,
+        revealProjectedTerrain: (image, visibility) => this.visibility.revealProjectedTerrain(image, visibility),
+        readPresentationFrame: () => {
+          if (!this.devPresentation) throw new Error('Presentation bridge requires an active world renderer');
+          return this.devPresentation;
+        },
+        setWorldProjector: projector => { this.devWorldProjector = projector; },
+        getFootprint: () => {
+          const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+          return { x: body.x, y: body.y, width: body.width, height: body.height };
+        },
+      }) ?? null;
+    } catch (error) {
+      this.onShutdown();
+      this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+      throw error;
+    }
+
+    this.worldSurface = productionWorld && !nativePresentation ? createWorldPlaySurface({ scene: this,
+      player: { getPosition: () => this.player.getPosition() },
+      isRunEnded: () => this.runController.isRunEnded(), visibilityAt: this.visibilityAt,
+      getFootprint: () => {
+        const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+        return { x: body.x, y: body.y, width: body.width, height: body.height };
+      },
+    }, productionWorld.sample) : null;
+
+    if (stagedNative) yield;
+    this.hud.create({
+      canExtract: () => this.extraction.canExtract(),
+      isRunEnded: () => this.runController.isRunEnded(),
+      suppressExtractPrompt: true,
+      onInventory: () => this.openBag(),
+    });
+    this.encounter.create();
+    this.detectionPulse.create();
+
+    this.sortieKillCount = 0;
+    this.sortieAcquired = [];
+    this.sortiePassiveTriggers = new Map();
+
+    this.applyChaosModulators(getChaosModulators(this.chaos.getValue()));
+
+    // Consume pending side effects from defense engine (Slice 4).
+    // initial_chaos is already folded into openingChaos — do not add it again.
+    if (!restoring) this.applyPendingSideEffects();
+
+    this.minimap.create(
+      tileMap.tiles,
+      tileMap.cols,
+      tileMap.rows,
+      tileMap.tileSize,
+      layout.extractionPoint.position,
+    );
+
+    const updateBurden = (): void => {
+      const id = inventoryStore.getEquipment().weaponId;
+      const equipped = id ? inventoryStore.getItem(id) : undefined;
+      this.combat.configureWeapon(equipped?.kind === 'weapon' ? equipped.weapon.definitionId : null);
+      const attributes = getSurvivalAttributes();
+      this.player.setBurdenSpeedFactor(attributes.burdenSpeedFactor);
+      this.hud.setBurden(attributes.weight, attributes.capacity);
+      const equipment = inventoryStore.getEquipment();
+      const makeSlot = (slotId: string, itemId: string | null | undefined, label: string, isPassive = false): RiftEquipmentSlot => {
+        const item = itemId ? inventoryStore.getItem(itemId) : undefined;
+        const view = item ? projectInventoryItem(item, 'prepare') : undefined;
+        return { slotId, itemId: view?.id, label, name: view?.name ?? '未装配', icon: view?.icon, usesRemaining: view?.usesRemaining, maxDurability: view?.maxDurability, isPassive };
+      };
+      const passive = contaminantSystem.getSortiePassiveSlotIndex();
+      this.hud.setEquipment([makeSlot('weapon', equipment.weaponId, '武器'), ...Array.from({ length: contaminantSystem.getSortieSlotCount() }, (_, index) => makeSlot(String(index), equipment.toolIds[index], index === passive ? '被动' : GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS[index] ?? '?', index === passive))]);
+    };
+    updateBurden();
+    this.unsubscribeInventory = inventoryStore.subscribe(updateBurden);
+    this.bindAttackKey();
+    this.bindExtractionKeys();
+    this.bindToolKeys();
+    this.beginEntryGate();
+
+
+    // Visibility runs after the physics step so the mask and the sprite agree on where
+    // the player actually ended up this frame.
+    this.events.on(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
+    this.events.on(Phaser.Scenes.Events.PAUSE, this.onNarrationPause, this);
+    this.events.on(Phaser.Scenes.Events.RESUME, this.onNarrationResume, this);
+
+    this.bindAIStimuli();
+    this.ai.setCueListener(this.onAiCue);
+    if (!stagedNative) this.input.keyboard?.on('keydown-ESC', this.openPauseMenu, this);
+    this.input.keyboard?.on('keydown-TAB', this.openBag, this);
+
+    if (this.recovery) this.initializeRecovery(restoring);
+    this.hud.restoreReadouts({ health: this.combat.getHealth(), maxHealth: this.combat.getMaxHealth(), chaos: this.chaos.getValue(), kindling: this.search.getCarriedKindling() });
+    if (!this.nativeEntryFence?.isActive()) this.startRiftAudio(!restoring);
+    if (import.meta.env.DEV) this.createDebugOverlay();
+  }
+
+  update(_time: number, delta: number): void {
+    if (this.stagedEntry?.isActive() || this.frameCommit?.isBlocked()) return;
+    this.resetEntryHeldKeys();
+    if (this.nativeEntryFence?.isActive()) return;
+    this.frameCommit?.begin();
+    this.entryFrameFrozen = this.entryView.active;
+    if (this.entryView.active) {
+      this.entryView.elapsedMs = Math.min(this.entryView.durationMs, this.entryView.elapsedMs + Math.max(0, delta));
+      this.entryView.progress = this.entryView.elapsedMs / this.entryView.durationMs;
+      if (this.entryView.elapsedMs >= this.entryView.durationMs) this.finishEntryGate();
+      return;
+    }
+    if (this.devFixture?.freezeAfterEnd && this.runController.isRunEnded()) {
+      this.devRuntime?.update(this.devElapsedMs, true);
+      return;
+    }
+    if ((this.devFixture || this.recovery) && !this.runController.isRunEnded()) this.devElapsedMs += this.nativeWorldPresentation
+      ? Math.max(0, Math.min(delta, GAME_CONSTANTS.AI.DT_CLAMP_MS)) : delta;
+    this.devRuntime?.beforeCombat?.(this.devElapsedMs, this.runController.isRunEnded());
+    this.player.update(delta);
+    const dashing = this.toolSystem.isGroundDashing();
+    this.dashHazardElapsedMs = 0;
+    this.syncRiftAudio();
+    if (!dashing) this.ai.update(delta, this.player.getPosition(), this.player.isMoving());
+
+    // Edge-triggered: holding the key does not chain swings.
+    if (this.attackKey && Phaser.Input.Keyboard.JustDown(this.attackKey) && !inventoryPanel.isOpen() && !this.runController.isRunEnded()) {
+      this.combat.requestPlayerAttack();
+    }
+    // After the AI, always. Whether an enemy may swing is read from this frame's engaged
+    // state; one frame of lag on that at 30 px reads as "it is right there and doing
+    // nothing".
+    if (!dashing) {
+      this.combat.update(delta);
+      this.hosts.update(delta, this.player.getPosition(), this.player.isMoving(), this.player.getFacingAngle());
+    }
+    this.devRuntime?.update(this.devElapsedMs, this.runController.isRunEnded());
+    this.toolSystem.syncHostVisuals();
+
+
+    // T9 systems
+    this.chaos.update(delta);
+    const toolJustDown: boolean[] = [];
+    for (let i = 0; i < this.toolKeys.length; i++) {
+      toolJustDown[i] = Phaser.Input.Keyboard.JustDown(this.toolKeys[i]!);
+    }
+    const nearbyItem = this.fieldInventory.getNearby()[0];
+    const nearbyItemDistance = nearbyItem?.location.kind === 'ground'
+      ? Math.hypot(nearbyItem.location.position.x - this.player.getPosition().x,
+        nearbyItem.location.position.y - this.player.getPosition().y) : Infinity;
+    this.search.update(delta, {
+      playerPos: this.player.getPosition(),
+      searchHeld: this.probeSearchHeld || Boolean(this.extractKey?.isDown),
+      moving: this.player.isMoving() || dashing,
+      attacking: Boolean(this.attackKey?.isDown),
+      toolPressed: toolJustDown.some(Boolean),
+      hitThisFrame: this.hitThisFrame,
+      paused: false,
+      interactionBlocked: inventoryPanel.isOpen(),
+      nearbyItemDistance,
+      runEnded: this.runController.isRunEnded(),
+    });
+    this.fieldInventory.update(delta, {
+      interactHeld: Boolean(this.extractKey?.isDown), pickupPriority: this.search.getPrompt() === 'pickup',
+      blocked: inventoryPanel.isOpen() || this.runController.isRunEnded() || this.hitThisFrame || this.player.isMoving() || dashing || Boolean(this.attackKey?.isDown) || toolJustDown.some(Boolean),
+    });
+    this.hitThisFrame = false;
+    if (!this.runController.isRunEnded()) this.toolSystem.update(delta);
+    if (dashing && !this.runController.isRunEnded() && this.dashHazardElapsedMs < delta) {
+      const remainder = delta - this.dashHazardElapsedMs;
+      this.ai.update(remainder, this.player.getPosition(), false);
+      this.combat.update(remainder);
+      this.hosts.update(remainder, this.player.getPosition(), false, this.player.getFacingAngle());
+    }
+    this.tickDefenseHudEffects(delta);
+    this.syncHudActiveEffects();
+    this.extraction.update(delta);
+    this.hud.update(delta);
+    if (!this.worldSurface && !this.nativeWorldPresentation && this.devFixture?.worldSurface !== 'runtime') this.riftSurface.update(delta);
+
+    // Tool key input (edge-triggered), one entry per active sortie slot.
+    for (let i = 0; i < this.toolKeys.length; i++) {
+      if (toolJustDown[i] && !inventoryPanel.isOpen() && !this.runController.isRunEnded()) {
+        if (!this.toolSystem.useSlot(i)) {
+          const reason = this.toolSystem.getLastUseFailure();
+          if (reason) showToastInline(reason, {});
+        }
+      }
+    }
+
+    // Trail system: record player position and redraw visible trail marks.
+    const playerPos = this.player.getPosition();
+    const tile = this.formFloorGrid!.tileSize;
+    this.trail.update(
+      Math.floor(playerPos.x / tile),
+      Math.floor(playerPos.y / tile),
+      this.chaos.getValue(),
+      delta
+    );
+
+    // Extraction key (edge-triggered). Search holds E; extract wins on same-frame JustDown
+    // only when the shared prompt is extract (nearer / same-dist extraction).
+    if (
+      this.extractKey
+      && Phaser.Input.Keyboard.JustDown(this.extractKey)
+      && !inventoryPanel.isOpen()
+      && this.search.getPrompt() === 'extract'
+    ) {
+      this.extraction.requestExtract();
+    }
+    // Restart key handled via event listener (see bindExtractionKeys)
+  }
+
+  /** Arcade has resolved actors for this fixed substep, but has not yet applied
+   * the body displacement to the sprite. Keep prevFrame intact for postUpdate. */
+  private onNativeBodyStep(): void {
+    const collision = this.nativeBody, body = this.player.getSprite().body as Phaser.Physics.Arcade.Body | null;
+    if (!collision || !body?.enable) return;
+    const origin = this.nativeBodyOrigin;
+    origin.x = body.prev.x + body.halfWidth; origin.y = body.prev.y + body.halfHeight;
+    const motion = this.nativeBodyMotion;
+    collision.resolveMotion(origin, body.halfWidth, body.halfHeight,
+      body.position.x - body.prev.x, body.position.y - body.prev.y, body.velocity, motion);
+    if (!motion.collided) return;
+    body.position.set(motion.x - body.halfWidth, motion.y - body.halfHeight);
+    body.updateCenter();
+    body.velocity.set(motion.velocityX, motion.velocityY);
+    body.speed = Math.hypot(motion.velocityX, motion.velocityY);
+    if (body.speed > 0) body.angle = Math.atan2(motion.velocityY, motion.velocityX);
+  }
+
+  private onPostUpdate(_time: number, delta: number): void {
+    if (this.stagedEntry?.isActive() || this.frameCommit?.isBlocked()) return;
+    if (this.nativeEntryFence?.isActive()) {
+      if (!this.nativeEntryFence.needsPresentation()) return;
+      // This frame paints the restored/fresh instant without an AI, physics,
+      // combat, tool, pollution or animation clock tick.
+      this.visibility.setRadiusScale(this.chaosVisionScale * this.hosts.getVolumeSightMult());
+      this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
+      this.syncSchemeDPoses(0);
+      this.groundDepthSorter?.update();
+      this.toolSystem.syncBodyVisuals();
+      this.syncMinimapExploration();
+      this.minimap.update(this.player.getPosition(), this.player.getFacing4(), 0);
+      this.syncDetectionPulse(0);
+      this.syncDevPresentation();
+      this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.worldSurface?.afterUpdate(this.devElapsedMs);
+      if (!this.commitRuntimeFrame(true)) return;
+      this.cameras.main.setVisible(true);
+      this.nativeEntryFence.markPresented();
+      return;
+    }
+    if (this.devFixture?.freezeAfterEnd && this.runController.isRunEnded()) {
+      this.syncSchemeDPoses(0);
+      this.syncDevPresentation();
+      if (!this.commitRuntimeFrame()) return;
+      this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.worldSurface?.afterUpdate(this.devElapsedMs);
+      this.frameCommit?.begin();
+      return;
+    }
+    if (this.entryView.active || this.entryFrameFrozen) {
+      this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
+      this.syncDevPresentation();
+      if (!this.commitRuntimeFrame()) return;
+      this.devRuntime?.afterUpdate(this.devElapsedMs);
+      this.worldSurface?.afterUpdate(this.devElapsedMs);
+      this.frameCommit?.begin();
+      return;
+    }
+    this.player.postUpdate();
+    // Entering/leaving a volume must affect this frame's lamp. Chaos publishes
+    // only when its number changes enough; that cadence cannot own local fog.
+    this.visibility.setRadiusScale(this.chaosVisionScale * this.hosts.getVolumeSightMult());
+    this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), delta);
+    // Enemies are drawn last of the three: their visibility is looked up against the mask
+    // this frame produced, so an enemy is never drawn into darkness (rule R4).
+    this.ai.postUpdate(delta);
+    this.syncSchemeDPoses(delta);
+    this.groundDepthSorter?.update();
+    this.toolSystem.syncBodyVisuals();
+    // Minimap after visibility so explored tiles match this frame's cone + occlusion.
+    this.syncMinimapExploration();
+    this.minimap.update(this.player.getPosition(), this.player.getFacing4(), delta);
+    this.syncDetectionPulse(delta);
+    this.syncDevPresentation();
+    if (!this.commitRuntimeFrame()) return;
+    this.updateNarration(delta);
+    this.devRuntime?.afterUpdate(this.devElapsedMs);
+    this.worldSurface?.afterUpdate(this.devElapsedMs);
+    this.frameCommit?.begin();
+    if (this.debugPanel) this.updateDebugOverlay(delta);
+  }
+
+  /**
+   * Accumulates tiles currently visible by the same queries the main view uses.
+   * Writes into the minimap; does not expand VisibilitySystem.
+   *
+   * Wall cells are opaque, so a center sample never gets line of sight. If the
+   * center is dark, sample 1px outside each edge (in the adjacent cell). A
+   * visible wall face then lights the wall; a blocked neighbor does not.
+   */
+  private syncMinimapExploration(): void {
+    const tileSize = this.formFloorGrid!.tileSize;
+    const playerPos = this.player.getPosition();
+    const playerTileX = Math.floor(playerPos.x / tileSize);
+    const playerTileY = Math.floor(playerPos.y / tileSize);
+    const range = Math.ceil(Math.max(GAME_CONSTANTS.VISIBILITY.RADIUS_FORWARD, this.visibility.getEffectiveRadius(0)) / tileSize) + 1;
+
+    for (let dy = -range; dy <= range; dy++) {
+      for (let dx = -range; dx <= range; dx++) {
+        const tileX = playerTileX + dx;
+        const tileY = playerTileY + dy;
+        const left = tileX * tileSize;
+        const top = tileY * tileSize;
+        const midX = left + tileSize * 0.5;
+        const midY = top + tileSize * 0.5;
+        if (
+          this.isMinimapSampleVisible(midX, midY) ||
+          this.isMinimapSampleVisible(left - 1, midY) ||
+          this.isMinimapSampleVisible(left + tileSize, midY) ||
+          this.isMinimapSampleVisible(midX, top - 1) ||
+          this.isMinimapSampleVisible(midX, top + tileSize)
+        ) {
+          this.minimap.markExplored(tileX, tileY);
+        }
+      }
+    }
+  }
+
+  /**
+   * Scene-layer translation only: AI and the rim pulse never import each other.
+   * World positions become a 960×640 view box that tracks the camera, not Phaser HUD.
+   */
+  private syncDetectionPulse(deltaMs: number): void {
+    const cam = this.cameras.main;
+    const view = cam.worldView;
+    const player = this.player.getPosition();
+    const projectedPlayer = this.devWorldProjector ? { x: player.x, y: player.y } : player;
+    this.devWorldProjector?.(player, projectedPlayer);
+    this.detectionPulse.update(
+      deltaMs,
+      this.devWorldProjector ? { worldX: 0, worldY: 0, worldW: 960, worldH: 640 }
+        : { worldX: view.x, worldY: view.y, worldW: view.width, worldH: view.height },
+      projectedPlayer,
+      this.ai.getEnemies().filter(enemy => !enemy.isTargetingLure?.()).map((enemy) => {
+        const pos = enemy.getPosition();
+        const projected = this.devWorldProjector ? { x: pos.x, y: pos.y } : pos;
+        this.devWorldProjector?.(pos, projected);
+        return {
+          id: enemy.getId(),
+          detection: enemy.getDetection(),
+          state: enemy.getState(),
+          worldX: projected.x,
+          worldY: projected.y,
+        };
+      }),
+    );
+  }
+
+  private isMinimapSampleVisible(x: number, y: number): boolean {
+    const point = this.minimapVisibilityQuery;
+    point.x = x;
+    point.y = y;
+    return this.visibility.getVisibilityAt(point) > 0;
+  }
+
+  /**
+   * Forwards the events the AI reacts to. This indirection is the point: combat and the
+   * AI never call each other, the scene translates between them (architecture
+   * DEC-ARCH-002). Combat emits these; the AI only ever receives them.
+   */
+  private bindAIStimuli(): void {
+    eventBus.on(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
+    eventBus.on(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
+    eventBus.on(GameEvent.PLAYER_DIED, this.onRunEnded);
+    eventBus.on(GameEvent.PLAYER_DAMAGED, this.onPlayerDamaged);
+    eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
+    eventBus.on(GameEvent.RIFT_EXITED, this.onRunEnded);
+    eventBus.on(GameEvent.RIFT_EXITED, this.onRiftExitedShowResult);
+    eventBus.on(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
+    eventBus.on(GameEvent.CHAOS_CHANGED, this.onChaosChangedAudio);
+    eventBus.on(GameEvent.ITEM_COLLECTED, this.onPickupAudio);
+    eventBus.on(GameEvent.ITEM_USED, this.onUseAudio);
+    eventBus.on(GameEvent.TOOL_USED, this.onUseAudio);
+    eventBus.on(GameEvent.RIFT_EXIT_REACHED, this.onExitAudio);
+    eventBus.on(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
+    eventBus.on(GameEvent.TOOL_USED, this.onToolUsedForResult);
+  }
+
+  private bindAttackKey(): void {
+    const keyboard = this.input.keyboard;
+    if (!keyboard) return;
+    // Captured so the browser does not scroll the page on space.
+    const code = Phaser.Input.Keyboard.KeyCodes[GAME_CONSTANTS.COMBAT.ATTACK_KEY];
+    this.attackKey = keyboard.addKey(code, true, false);
+  }
+
+  private bindExtractionKeys(): void {
+    const keyboard = this.input.keyboard;
+    if (!keyboard) return;
+    const extractCode = Phaser.Input.Keyboard.KeyCodes[GAME_CONSTANTS.EXTRACTION.KEY];
+    this.extractKey = keyboard.addKey(extractCode, true, false);
+    const restartCode = Phaser.Input.Keyboard.KeyCodes[GAME_CONSTANTS.EXTRACTION.RESTART_KEY];
+    this.restartKey = keyboard.addKey(restartCode, true, false);
+    // Use event listener instead of polling in update() — works even when scene is paused
+    keyboard.on('keydown-R', () => {
+      this.requestRunReturn();
+    });
+  }
+
+  /**
+   * One key per active sortie slot (spec F29 for Q/F; the 3rd slot's G follows the same
+   * "single source of truth" constant so it can never drift from what the loadout panel
+   * displays). Bound dynamically off `getSortieActiveSlotCount()` rather than a fixed 2,
+   * so growth_sortie_slot's 3rd active slot (Slice 5 T5) is actually usable in the rift,
+   * not just equippable.
+   */
+  private bindToolKeys(): void {
+    const keyboard = this.input.keyboard;
+    if (!keyboard) return;
+    const activeCount = contaminantSystem.getSortieActiveSlotCount();
+    const keyNames = GAME_CONSTANTS.CONTAMINANT.SORTIE_ACTIVE_KEYS;
+    const codes = Phaser.Input.Keyboard.KeyCodes;
+    this.toolKeys = [];
+    for (let i = 0; i < activeCount; i++) {
+      const keyName = keyNames[i];
+      if (!keyName) break; // ran out of assigned keys; report as a gap rather than guess
+      this.toolKeys.push(keyboard.addKey(codes[keyName], true, false));
+    }
+  }
+
+  private readonly onPlayerDamaged = ({ amount, source }: { amount: number; source: string }): void => {
+    this.frameCommit?.markChanged();
+    this.hitThisFrame = true;
+    this.lastNarrationHitMs = this.narrationMs;
+    this.atmosphereSchedule.interrupt();
+    if (this.encounter.isAtmosphere()) this.encounter.clear();
+    inventoryPanel.close();
+    this.recordDevPresentationEvent('player-hit', 'player', source, amount, this.player.getPosition(),
+      this.ai.getEnemyById(source)?.getPosition());
+  };
+
+  private readonly onEnemyDamaged = ({ enemyId, amount, source }: { enemyId: string; amount: number; source?: string }): void => {
+    this.frameCommit?.markChanged();
+    const position = this.ai.getEnemyById(enemyId)?.getPosition();
+    if (position) this.recordDevPresentationEvent('enemy-hit', enemyId, source ?? 'player', amount, position, this.player.getPosition());
+    this.ai.reportDamage(enemyId, this.player.getPosition());
+  };
+
+  private readonly onEnemyKilled = ({ enemyId, position }: { enemyId: string; position: Vector2 }): void => {
+    this.frameCommit?.markChanged();
+    this.recordDevPresentationEvent('enemy-death', enemyId, 'player', 0, position, this.player.getPosition());
+    this.destroySchemeDVisual(enemyId);
+    this.ai.despawn(enemyId);
+    this.sortieKillCount++;
+  };
+
+  private readonly onContaminantAcquired = ({ contaminant }: { contaminant: Contaminant }): void => {
+    this.sortieAcquired.push({ type: contaminant.type, rarity: contaminant.rarity, publicName: projectItemForPlayer(contaminant).name });
+  };
+
+  /** Passive tools (碎影/消声步/寄生引流) have no button - this is the only place
+   *  their trigger count is captured for the result panel's "被动触发" line (S10). */
+  private readonly onToolUsedForResult = ({ toolType }: { toolType: ContaminantType }): void => {
+    if (toolType === 'catalog' || CONTAMINANT_DATA[toolType]?.toolType !== 'passive') return;
+    this.sortiePassiveTriggers.set(toolType, (this.sortiePassiveTriggers.get(toolType) ?? 0) + 1);
+  };
+
+  private readonly onRiftExitedShowResult = (payload: { kindlingGained: number; survived: boolean }): void => {
+    riftResultPanel.show({
+      survived: payload.survived,
+      returnLabel: this.devFixture?.returnLabel,
+      abandoned: inventoryStore.getRun()?.outcome === 'abandon',
+      kindlingGained: payload.kindlingGained,
+      killCount: this.sortieKillCount,
+      peakChaos: this.chaos.getPeak(),
+      elapsedMs: this.runController.getElapsedMs(),
+      acquired: (inventoryStore.getRun()?.returnedIds ?? []).flatMap(id => {
+        const item = inventoryStore.getItem(id);
+        return item?.kind === 'contaminant' ? [{ type: item.contaminant.type, rarity: item.contaminant.rarity, quality: item.contaminant.quality, publicName: projectItemForPlayer(item.contaminant).name }] : [];
+      }),
+      weapons: (inventoryStore.getRun()?.returnedIds ?? []).flatMap(id => {
+        const item = inventoryStore.getItem(id);
+        return item?.kind === 'weapon' ? [WEAPON_DATA[item.weapon.definitionId]?.name ?? '撬棍'] : [];
+      }),
+      passiveTriggers: this.sortiePassiveTriggers,
+      passiveCompanions: projectRunPassiveReceipts(inventoryStore.getRun()?.passiveReceipts),
+    }, () => this.requestRunReturn());
+  };
+
+  /**
+   * Death and extraction both end the run: everyone stands down and combat stops
+   * accepting input or dealing damage. Combat disables itself on death as well; the two
+   * are deliberately redundant, because a run that ends any other way still has to clear
+   * the enemies mid-windup and the player's swing slow.
+   */
+  private readonly onRunEnded = (): void => {
+    this.clearNarration();
+    const freeze = this.devFixture?.freezeAfterEnd === true;
+    if (freeze && this.endFrozen) return;
+    inventoryPanel.close();
+    this.ai.onPlayerLost();
+    this.combat.setEnabled(false);
+    if (freeze) {
+      this.endFrozen = true;
+      // An abandon during entry inherits its pause. Ending the entry must never
+      // resume an already terminal world, even when RIFT_EXITED arrives again.
+      if (this.entryOwnsPhysicsPause) {
+        this.entryOwnsPhysicsPause = false;
+        this.endOwnsPhysicsPause = true;
+      }
+      this.endEntryGate();
+      this.entryFrameFrozen = false;
+      for (const enemy of this.ai.getEnemies()) if (enemy instanceof Enemy) enemy.setVelocity(0, 0);
+      if (!this.physics.world.isPaused) {
+        this.endOwnsPhysicsPause = true;
+        this.physics.world.pause();
+      }
+    }
+  };
+
+  private readonly onChaosThreshold = ({ level }: { level: 1 | 2 | 3 }): void => {
+    if (commitEffects.defer(() => this.onChaosThreshold({ level }))) return;
+    // One committed frame may cross several levels. Publish only its highest
+    // level, after visibility and the frame transaction have both settled.
+    this.pendingNarrationThreshold = Math.max(this.pendingNarrationThreshold, level) as 1 | 2 | 3;
+  };
+
+  private clearNarration(): void {
+    this.encounter.clear(); this.pendingNarrationThreshold = 0;
+    this.thresholdOverlay?.remove(); this.thresholdOverlay = null;
+    this.thresholdUntilMs = 0; this.thresholdLevel = 0;
+  }
+
+  private readonly onNarrationPause = (): void => {
+    this.encounter.setHidden(true);
+    if (this.thresholdOverlay) this.thresholdOverlay.style.visibility = 'hidden';
+  };
+
+  private readonly onNarrationResume = (): void => {
+    this.encounter.setHidden(false);
+    if (this.thresholdOverlay) this.thresholdOverlay.style.visibility = '';
+  };
+
+  private updateNarration(deltaMs: number): void {
+    if (this.runController.isRunEnded()) { this.clearNarration(); return; }
+    const step = Number.isFinite(deltaMs) ? Math.max(0, deltaMs) : 0;
+    this.narrationMs += step; this.encounter.advance(step);
+    const panelBusy = inventoryPanel.isOpen() || riftResultPanel.isOpen() || pauseMenu.isOpen()
+      || !!document.getElementById('inventory-settlement-retry') || this.entryView.active;
+    if (panelBusy) this.clearNarration();
+    if (this.pendingNarrationThreshold && !panelBusy) {
+      const level = this.pendingNarrationThreshold; this.pendingNarrationThreshold = 0;
+      // A lower event cannot replace a higher warning still on screen.
+      if (level >= this.thresholdLevel) {
+        this.thresholdLevel = level; this.thresholdUntilMs = this.narrationMs + 3_000;
+        this.atmosphereSchedule.interrupt();
+        this.encounter.showThreshold(pickAtmosphere(`chaos.${level}` as AtmospherePool));
+        audioManager.playSFX('sfx-shared-chaos-threshold');
+        this.thresholdOverlay?.remove();
+        const overlay = document.createElement('div'); overlay.className = 'chaos-threshold-overlay';
+        overlay.style.cssText = 'position:absolute;inset:0;z-index:38;pointer-events:none';
+        overlay.style.background = level === 3 ? 'rgba(220,40,40,.15)' : `rgba(0,180,160,${level === 2 ? .12 : .08})`;
+        getDomUiRoot().appendChild(overlay); this.thresholdOverlay = overlay;
+      }
+    }
+    const thresholdActive = this.narrationMs < this.thresholdUntilMs;
+    if (this.thresholdOverlay) {
+      const remaining = this.thresholdUntilMs - this.narrationMs;
+      if (remaining <= 0) { this.thresholdOverlay.remove(); this.thresholdOverlay = null; this.thresholdLevel = 0; }
+      else this.thresholdOverlay.style.opacity = String(Math.max(0, Math.min(1, (3_000 - remaining) / 500, remaining / 500)));
+    }
+    const player = this.player.getPosition(), tileSize = this.hostFloorGrid!.tileSize;
+    const col = Math.floor(player.x / tileSize), row = Math.floor(player.y / tileSize);
+    const enemies = this.ai.getEnemies();
+    const subjects: EncounterSubject[] = [
+      ...enemies.map(enemy => ({ id: enemy.getId(), form: enemy.getForm(), identifiable: this.visibility.getVisibilityAt(enemy.getPosition()) > 0 })),
+      ...this.hosts.getSubjects().map(subject => ({ id: subject.id, form: subject.form, identifiable: this.hosts.isIdentifiable(subject.id, col, row) })),
+    ];
+    const identified = this.encounter.tick(subjects, panelBusy || thresholdActive);
+    if (identified) this.atmosphereSchedule.interrupt();
+    const threatened = subjects.some(subject => subject.identifiable) || enemies.some(enemy => enemy.getDetection() > 0
+      || [AIState.SUSPICIOUS, AIState.ALERT, AIState.CHASE].includes(enemy.getState()));
+    const quiet = !panelBusy && !thresholdActive && !threatened && this.narrationMs - this.lastNarrationHitMs >= 10_000
+      && this.search.getChannelProgress01() === null && !this.extraction.canExtract()
+      && !this.extractKey?.isDown && !this.attackKey?.isDown && !this.toolKeys.some(key => key.isDown);
+    if (!quiet && this.encounter.isAtmosphere()) this.encounter.clear();
+    const cue = this.atmosphereSchedule.tick(step, quiet, !this.encounter.isBusy());
+    if (cue) this.encounter.showAtmosphere(pickAtmosphere(`rift.${cue}.${this.narrationWorld}` as AtmospherePool));
+  }
+
+  /** The single line that turns combat's noise policy into an AI stimulus. */
+  private readonly reportNoise = (
+    pos: Readonly<Vector2>,
+    radius: number,
+    level: NoiseLevel
+  ): void => {
+    if (this.toolSystem.isActionSilenced()) return;
+    this.ai.reportNoise(pos, radius, level);
+    this.hosts.reportNoise(pos, radius);
+  };
+
+  /** Body.reset starts at the texture's top-left; it does not apply the collider
+   * offset until the next preUpdate. Native relocation must be valid this frame,
+   * including intermediate dash contacts and the immediate saved snapshot. */
+  private resetPlayerBody(body: Phaser.Physics.Arcade.Body, x: number, y: number): void {
+    body.reset(x, y);
+    if (!this.nativeBody) return;
+    body.updateFromGameObject();
+    body.prev.copy(body.position); body.prevFrame.copy(body.position);
+    body.updateCenter();
+  }
+
+  /** Work in body-centre space, convert back to the unchanged character's sprite origin. */
+  private sweepPlayerDash(target: Readonly<Vector2>): Vector2 {
+    const sprite = this.player.getSprite(), body = sprite.body as Phaser.Physics.Arcade.Body;
+    const grid = this.formFloorGrid!;
+    const offset = { x: body.center.x - sprite.x, y: body.center.y - sprite.y };
+    const landing = sweepGroundDash({ origin: body.center, destination: { x: target.x + offset.x, y: target.y + offset.y },
+      grid, bodyHalfWidth: body.halfWidth, bodyHalfHeight: body.halfHeight, bodyQueries: this.nativeBody ?? undefined,
+      isVisible: point => this.visibilityAt(point) > 0,
+      bodies: this.ai.getEnemies().flatMap(enemy => {
+        if (!(enemy instanceof Enemy) || !this.combat.isEnemyAlive(enemy.getId())) return [];
+        const enemyBody = enemy.getSprite().body as Phaser.Physics.Arcade.Body | null;
+        return enemyBody?.enable ? [{ position: enemyBody.center, halfWidth: enemyBody.halfWidth, halfHeight: enemyBody.halfHeight }] : [];
+      }),
+    });
+    return { x: landing.x - offset.x, y: landing.y - offset.y };
+  }
+
+  private advancePlayerDash(target: Readonly<Vector2>, dtMs: number): boolean {
+    const origin = { ...this.player.getPosition() }, landing = this.sweepPlayerDash(target);
+    const distance = Math.hypot(landing.x - origin.x, landing.y - origin.y);
+    const steps = Math.max(1, Math.ceil(distance / 4), Math.ceil(dtMs / 16));
+    const body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+    for (let step = 1; step <= steps; step++) {
+      if (this.runController.isRunEnded()) return false;
+      const fraction = step / steps;
+      this.resetPlayerBody(body, origin.x + (landing.x - origin.x) * fraction, origin.y + (landing.y - origin.y) * fraction);
+      this.player.postUpdate();
+      // Contact, attacks, acoustics and contamination observe every traversed segment.
+      this.ai.update(dtMs / steps, this.player.getPosition(), true);
+      this.combat.update(dtMs / steps);
+      this.hosts.update(dtMs / steps, this.player.getPosition(), true, this.player.getFacingAngle());
+      this.dashHazardElapsedMs += dtMs / steps;
+    }
+    return Math.hypot(landing.x - target.x, landing.y - target.y) < .01;
+  }
+
+  private startRiftAudio(enterCue = true): void {
+    audioManager.playBGM('bgm-rift-base-drone', 3.5);
+    audioManager.setLayerVolume('base', 0.4, 0);
+    if (enterCue) audioManager.playSFX('sfx-rift-enter');
+    if (this.chaos.getValue() <= 25) {
+      audioManager.playAmbient(this.devFixture?.atmosphereKey ?? 'amb-rift-alien-atmosphere');
+    }
+  }
+
+  private stepKey(): string {
+    const material = this.devFixture?.footstepMaterial ?? RIFT_FRAGMENT_DATA[this.layoutDebug.fragmentTypeId]?.surfaceMaterial ?? 'soil';
+    if (material === 'metal') return 'sfx-shared-player-step-metal';
+    if (material === 'soil' || material === 'wood') return 'sfx-shared-player-step-organic';
+    return 'sfx-shared-player-step-crystal';
+  }
+
+  private syncRiftAudio(): void {
+    const now = this.time.now;
+    const playerPos = this.player.getPosition();
+    if ((this.player.isMoving() || this.toolSystem.isGroundDashing()) && !this.toolSystem.isActionSilenced() && now - this.lastStepAt >= 400) {
+      this.lastStepAt = now;
+      audioManager.playSFX(this.stepKey(), { priority: 'low' });
+    }
+
+    const value = this.chaos.getValue();
+    const tension = value > 25 ? 0.4 * clamp((value - 25) / 75, 0, 1) : 0;
+    const enemies = this.ai.getEnemies();
+    const spotted = enemies.some((enemy) => {
+      const state = enemy.getState();
+      return !enemy.isTargetingLure?.() && (state === AIState.ALERT || state === AIState.CHASE);
+    });
+    const chaosThreat = value > 60 ? 0.5 * clamp((value - 60) / 40, 0, 1) : 0;
+    const threat = spotted ? Math.max(0.5, chaosThreat) : chaosThreat;
+
+    let prox = 0;
+    const nodes = this.search.getRemainingContaminantPositions();
+    if (nodes.length > 0) {
+      let best = Infinity;
+      for (const node of nodes) {
+        const d = Math.hypot(node.x - playerPos.x, node.y - playerPos.y) / GAME_CONSTANTS.TILE_SIZE;
+        if (d < best) best = d;
+      }
+      if (best <= 3) prox = 0.3;
+      else if (best < 6) prox = 0.3 * (1 - (best - 3) / 3);
+    }
+
+    audioManager.setLayerVolume('base', 0.4, 0);
+    audioManager.setLayerVolume('tension', tension, 1);
+    audioManager.setLayerVolume('threat', threat, spotted ? 0.5 : 1);
+    audioManager.setLayerVolume('proximity', prox, 1);
+
+    if (tension > 0.05) {
+      if (!this.atmosphereHeldOff) {
+        audioManager.stopAmbient(this.devFixture?.atmosphereKey ?? 'amb-rift-alien-atmosphere', 0.4);
+        this.atmosphereHeldOff = true;
+      }
+      this.atmosphereRestoreAt = 0;
+    } else if (this.atmosphereHeldOff) {
+      if (this.atmosphereRestoreAt === 0) this.atmosphereRestoreAt = now + 1000;
+      if (now >= this.atmosphereRestoreAt) {
+        audioManager.playAmbient(this.devFixture?.atmosphereKey ?? 'amb-rift-alien-atmosphere', 1);
+        this.atmosphereHeldOff = false;
+        this.atmosphereRestoreAt = 0;
+      }
+    }
+
+    if (spotted && !this.wasSpotted) audioManager.duckAmbientGroup();
+    this.wasSpotted = spotted;
+    this.syncEnemyLoops(playerPos);
+  }
+
+  private syncEnemyLoops(playerPos: Readonly<Vector2>): void {
+    const enemies = this.ai.getEnemies();
+    const rewriter = enemies.find((enemy) => enemy.getRole() === 'rewriter');
+    if (rewriter) {
+      const chasing = rewriter.getState() === AIState.CHASE;
+      audioManager.playSpatialSFX(
+        chasing ? 'sfx-rift-enemy-chase' : 'sfx-rift-enemy-overwriter-hum',
+        rewriter.getPosition(),
+        playerPos,
+        { loop: true, instanceId: 'slot-r' },
+      );
+    } else {
+      audioManager.stopLoop('slot-r');
+    }
+
+    const infiltrators = enemies.filter((enemy) => enemy.getRole() === 'infiltrator');
+    if (infiltrators.length === 0) {
+      audioManager.stopLoop('slot-i');
+      return;
+    }
+    const chasing = infiltrators.filter((enemy) => enemy.getState() === AIState.CHASE);
+    const pool = chasing.length > 0 ? chasing : infiltrators;
+    let nearest = pool[0]!;
+    let best = Infinity;
+    for (const enemy of pool) {
+      const pos = enemy.getPosition();
+      const d = Math.hypot(pos.x - playerPos.x, pos.y - playerPos.y);
+      if (d < best) {
+        best = d;
+        nearest = enemy;
+      }
+    }
+    audioManager.playSpatialSFX(
+      chasing.length > 0 ? 'sfx-rift-enemy-chase' : 'sfx-rift-enemy-idle',
+      nearest.getPosition(),
+      playerPos,
+      { loop: true, instanceId: 'slot-i' },
+    );
+  }
+
+  private readonly onAiCue = (enemyId: string, cue: AICueId): void => {
+    if (cue === 'ai.cue.suspicious') return;
+    const enemy = this.ai.getEnemyById(enemyId);
+    if (!enemy) return;
+    const playerPos = this.player.getPosition();
+    if (cue === 'ai.cue.alert') {
+      audioManager.playSpatialSFX('sfx-rift-enemy-alert', enemy.getPosition(), playerPos);
+    }
+    // chase / lost: looping slots are driven every frame by syncEnemyLoops
+  };
+
+  private readonly onCombatCue = (cue: CombatCueId, pos: Readonly<Vector2>): void => {
+    if (this.devRuntime?.handleCombatCue?.(cue, pos)) return;
+    const playerPos = this.player.getPosition();
+    if (cue === 'combat.cue.swing' && !this.toolSystem.isActionSilenced()) audioManager.playSFX('sfx-shared-player-attack');
+    else if (cue === 'combat.cue.hit') audioManager.playSpatialSFX('sfx-rift-enemy-hit', pos, playerPos);
+    else if (cue === 'combat.cue.enemyDeath') audioManager.playSpatialSFX('sfx-rift-enemy-die', pos, playerPos);
+    else if (cue === 'combat.cue.enemyWindup') audioManager.playSpatialSFX('sfx-rift-enemy-alert', pos, playerPos);
+    else if (cue === 'combat.cue.playerHurt') audioManager.playSFX('sfx-shared-player-hurt');
+  };
+
+  private readonly onChaosChangedAudio = ({ delta }: { delta: number }): void => {
+    if (delta > 0) audioManager.playSFX('sfx-shared-chaos-tick', { volume: 0.15, priority: 'low' });
+  };
+
+  private readonly onPickupAudio = (): void => {
+    audioManager.playSFX('sfx-shared-player-pickup');
+  };
+
+  private readonly onUseAudio = (): void => {
+    audioManager.playSFX('sfx-shared-player-use-item');
+  };
+
+  private readonly onExitAudio = (): void => {
+    audioManager.playSFX('sfx-rift-exit');
+  };
+
+  /** Bound once so injecting it into the AI system allocates nothing per frame. */
+  private readonly visibilityAt = (point: Readonly<Vector2>): number =>
+    this.visibility.getVisibilityAt(point);
+
+  /** Wired as the chaos system's onModulate callback. */
+  private readonly applyChaosModulators = (mods: ChaosModulators): void => {
+    this.chaosVisionScale = mods.radiusScale;
+    this.visibility.setRadiusScale(mods.radiusScale * this.hosts.getVolumeSightMult());
+    this.visibility.setAbilityRadiusMultiplier(this.toolSystem.getVisionRadiusMultiplier());
+    this.visibility.setEdgeCorruption(mods.edgeCorruption);
+    this.visibility.setScreenFlicker(mods.screenFlicker);
+    this.player.setSpeedModifier('chaos', mods.speedMult);
+  };
+
+  /**
+   * Consume and apply pending side effects from defense engine.
+   * These modify the sortie's starting conditions (chaos, speed, vision, etc.).
+   */
+  private applyPendingSideEffects(): void {
+    const effects = gameState.consumePendingSideEffects();
+    if (effects.length === 0) return;
+
+    for (const effect of effects) {
+      this.applySingleSideEffect(effect);
+    }
+
+    // Channel B: one toast per residue, queued (max 2 visible).
+    this.showSideEffectToasts(effects);
+    this.defenseHudEffects = this.buildActiveEffectLines(effects);
+    this.syncHudActiveEffects();
+  }
+
+  /** Turns sortie-duration side effects into HUD status lines. Instant/one-shot
+   *  effects (initial_chaos, module_swap, purification-phase-only effects) have
+   *  nothing ongoing to show and are intentionally omitted. */
+  private buildActiveEffectLines(effects: PendingSideEffect[]): ActiveEffectInfo[] {
+    const lines: ActiveEffectInfo[] = [];
+    for (const e of effects) {
+      switch (e.type) {
+        case 'chaos_rate_mult':
+          if (e.durationMs) {
+            lines.push({ label: `混乱增速 ${formatChaosMultDelta(e.value)}`, remainingMs: e.durationMs });
+          }
+          break;
+        case 'vision_reduction':
+          lines.push({ label: `视野 -${Math.round(e.value * 100)}%` });
+          break;
+        case 'speed_reduction':
+          lines.push({ label: `移速 -${Math.round(e.value * 100)}%` });
+          break;
+        case 'proximity_sense_boost':
+          lines.push({ label: `敌近距感知 +${Math.round(e.value * 100)}%` });
+          break;
+        default:
+          break; // initial_chaos / module_swap / purification-phase-only: no ongoing state
+      }
+    }
+    return lines;
+  }
+
+  private tickDefenseHudEffects(deltaMs: number): void {
+    if (this.defenseHudEffects.length === 0) return;
+    for (const e of this.defenseHudEffects) {
+      if (e.remainingMs === undefined) continue;
+      e.remainingMs -= deltaMs;
+    }
+    this.defenseHudEffects = this.defenseHudEffects.filter(
+      (e) => e.remainingMs === undefined || e.remainingMs > 0,
+    );
+  }
+
+  private lastToolResistanceBonus = 0;
+  private syncHudActiveEffects(): void {
+    const resistanceBonus = this.toolSystem.getPollutionResistanceBonus();
+    if (resistanceBonus !== this.lastToolResistanceBonus) {
+      this.lastToolResistanceBonus = resistanceBonus;
+      if (inventoryPanel.isOpen()) inventoryPanel.update();
+    }
+    const toolLines: ActiveEffectInfo[] = this.toolSystem.getActiveTimedEffects().map((e) => ({
+      label: e.type === 'siphon' ? `抗污 +${resistanceBonus}` : e.type === 'expand' ? '身体归位' : e.type === 'abyss' ? '附近旧影 · 非实时' : getToolName(e.type),
+      remainingMs: e.remainingMs,
+    }));
+    const baseResistance = getSurvivalAttributes().resistancePercent;
+    const catalogLines = this.toolSystem.getActiveCatalogEffects().map(effect => {
+      const otherSources = baseResistance + resistanceBonus - (effect.resistanceBonus ?? 0);
+      const effectiveGain = sumPollutionResistance([baseResistance, resistanceBonus]) - sumPollutionResistance([otherSources]);
+      return { label: CATALOG_ITEMS[effect.definitionId]!.name, remainingMs: effect.remainingMs,
+        ...(effect.resistanceBonus !== undefined ? { value: `抗污 +${effectiveGain}` } : {}) };
+    });
+    this.hud.setActiveEffects([...this.defenseHudEffects, ...toolLines, ...catalogLines]);
+  }
+
+  /** Show a Channel-B toast (ui-art-overhaul.md §A4, C6 shared primitive) disclosing
+   *  defense side effects carried into this sortie. */
+  private showSideEffectToasts(effects: PendingSideEffect[]): void {
+    // Shared with impact-result-panel.ts (Slice 5.5 D5/V8) so the two "what did
+    // this side effect do" mappings can never drift apart. This site keeps its own
+    // "防御残留: " prefix + parenthesized source (its own established toast style).
+    const describeEffect = (e: PendingSideEffect): string | null => {
+      const body = describeSideEffectBody(e);
+      if (!body) return null;
+      const sourceName = e.source ? getDefenseName(e.source as ContaminantType) : '未知';
+      return `防御残留: ${body} (${sourceName})`;
+    };
+
+    const messages = effects.map(describeEffect).filter((m): m is string => m !== null);
+    if (messages.length === 0) return;
+
+    const extraStyle = "background:rgba(15,17,20,0.92);border:1px solid #cc3333;padding:8px 16px;" +
+      "font:12px 'Courier New',monospace;text-align:left;line-height:1.6;";
+    for (const msg of messages) {
+      showToastInline(msg, {
+        color: '#cc3333',
+        extraStyle,
+      });
+    }
+  }
+
+  private applySingleSideEffect(effect: PendingSideEffect): void {
+    switch (effect.type) {
+      case 'initial_chaos':
+        // Already written into ChaosSystem.startingValue (rule 31a). Toast still fires.
+        break;
+      case 'chaos_rate_mult':
+        // Multiply chaos rate for a duration
+        if (effect.duration === 'timed' && effect.durationMs) {
+          this.chaos.setTemporaryRateMult(effect.value, effect.durationMs);
+        }
+        break;
+      case 'speed_reduction':
+        // Reduce player speed for the sortie
+        this.player.setSpeedModifier('defense_side_effect', 1.0 - effect.value);
+        break;
+      case 'vision_reduction':
+        // Reduce visibility radius slightly
+        this.visibility.setRadiusScale(1.0 - effect.value);
+        break;
+      case 'proximity_sense_boost':
+        // muffle's *defense*-slot side effect (next sortie's enemies hear better) -
+        // distinct from muffle's tool-slot passive (`AISystem.setHearingSuppressed()`,
+        // wired by the T7 rewire). `effect.value` is the fractional boost (0.15 = +15%),
+        // so the multiplier handed to AISystem is `1 + value`.
+        this.ai.setHearingRangeMultiplier(1.0 + effect.value);
+        break;
+      case 'repair_efficiency':
+      case 'upgrade_discount':
+      case 'storage_halved':
+        // These are purification-phase effects, not sortie effects. No-op here.
+        break;
+      case 'module_swap':
+        // Already applied directly to GameState at impact-resolution time (DEC-031,
+        // see impact-system.ts) so it takes effect before getSortieModifiers() is read
+        // at the purification→rift transition. This case exists only to drive the toast.
+        break;
+    }
+  }
+
+  /**
+   * Draws navigation landmarks as simple coloured geometric marks onto a single
+   * static Graphics object. Drawn once at create, never updated.
+   */
+  private createLandmarkDecals(landmarks: readonly LandmarkDef[], tileSize: number): void {
+    const g = this.add.graphics();
+    g.setDepth(2); // Above surface (0), below trail (5)
+    this.landmarkGraphics = g;
+
+    for (const lm of landmarks) {
+      const cx = lm.col * tileSize + tileSize * 0.5;
+      const cy = lm.row * tileSize + tileSize * 0.5;
+
+      switch (lm.style) {
+        case 'pool': {
+          // Deep purple ellipse spanning 2x1 tiles
+          g.fillStyle(0x2a0e3d, 0.55);
+          g.fillEllipse(cx + tileSize * 0.5, cy, tileSize * 1.8, tileSize * 0.7);
+          break;
+        }
+        case 'scratches': {
+          // Three parallel diagonal lines, dark red
+          g.lineStyle(1.5, 0x5c1a1a, 0.6);
+          for (let i = -1; i <= 1; i++) {
+            const offsetX = i * 6;
+            g.beginPath();
+            g.moveTo(cx + offsetX - 8, cy - 10);
+            g.lineTo(cx + offsetX + 8, cy + 10);
+            g.strokePath();
+          }
+          break;
+        }
+        case 'rubble': {
+          // Scattered small grey squares
+          g.fillStyle(0x4a4a4a, 0.5);
+          const offsets = [
+            [-8, -6], [4, -9], [10, -2], [-5, 5], [7, 8], [-10, 1], [2, -1],
+          ];
+          for (const [ox, oy] of offsets) {
+            const size = 3 + Math.abs((ox! + oy!) % 3);
+            g.fillRect(cx + ox! - size * 0.5, cy + oy! - size * 0.5, size, size);
+          }
+          break;
+        }
+        case 'crack': {
+          // A single glowing green crack line
+          g.lineStyle(1.5, 0x2dcc70, 0.65);
+          g.beginPath();
+          g.moveTo(cx - 12, cy - 2);
+          g.lineTo(cx - 4, cy + 5);
+          g.lineTo(cx + 3, cy - 3);
+          g.lineTo(cx + 11, cy + 1);
+          g.strokePath();
+          break;
+        }
+        case 'scorch': {
+          // Black radial burn mark
+          g.fillStyle(0x0a0a0a, 0.5);
+          g.fillCircle(cx, cy, 8);
+          g.lineStyle(1, 0x1a1a1a, 0.4);
+          for (let angle = 0; angle < Math.PI * 2; angle += Math.PI / 4) {
+            g.beginPath();
+            g.moveTo(cx + Math.cos(angle) * 5, cy + Math.sin(angle) * 5);
+            g.lineTo(cx + Math.cos(angle) * 13, cy + Math.sin(angle) * 13);
+            g.strokePath();
+          }
+          break;
+        }
+        case 'crystals': {
+          // Teal small triangle cluster
+          g.fillStyle(0x1aad96, 0.55);
+          const triangles = [
+            [0, -8, -4, -2, 4, -2],
+            [6, -4, 3, 3, 9, 3],
+            [-6, -1, -9, 6, -3, 6],
+            [1, 4, -2, 10, 4, 10],
+          ];
+          for (const t of triangles) {
+            g.beginPath();
+            g.moveTo(cx + t[0]!, cy + t[1]!);
+            g.lineTo(cx + t[2]!, cy + t[3]!);
+            g.lineTo(cx + t[4]!, cy + t[5]!);
+            g.closePath();
+            g.fillPath();
+          }
+          break;
+        }
+        case 'bloodtrail': {
+          // Dark red drag line
+          g.lineStyle(2.5, 0x4a1010, 0.55);
+          g.beginPath();
+          g.moveTo(cx - 14, cy - 1);
+          g.lineTo(cx - 6, cy + 3);
+          g.lineTo(cx + 2, cy - 1);
+          g.lineTo(cx + 10, cy + 2);
+          g.lineTo(cx + 14, cy);
+          g.strokePath();
+          // Small droplets
+          g.fillStyle(0x4a1010, 0.4);
+          g.fillCircle(cx - 10, cy + 6, 1.5);
+          g.fillCircle(cx + 5, cy + 5, 1.2);
+          break;
+        }
+        case 'rune': {
+          // Pale white geometric pattern
+          g.lineStyle(1, 0xcccccc, 0.4);
+          // Outer diamond
+          g.beginPath();
+          g.moveTo(cx, cy - 10);
+          g.lineTo(cx + 8, cy);
+          g.lineTo(cx, cy + 10);
+          g.lineTo(cx - 8, cy);
+          g.closePath();
+          g.strokePath();
+          // Inner cross
+          g.beginPath();
+          g.moveTo(cx - 4, cy);
+          g.lineTo(cx + 4, cy);
+          g.moveTo(cx, cy - 4);
+          g.lineTo(cx, cy + 4);
+          g.strokePath();
+          break;
+        }
+      }
+    }
+  }
+
+  private readonly registerDevMeleeTargets = (provider: { collectMeleeTargets(out: MeleeTarget[]): void }): (() => void) => {
+    this.combat.registerMeleeTargets(provider);
+    let registered = true;
+    const unregister = (): void => {
+      if (!registered) return;
+      registered = false;
+      this.combat.unregisterMeleeTargets(provider);
+      this.devTargetDisposers.delete(unregister);
+    };
+    this.devTargetDisposers.add(unregister);
+    return unregister;
+  };
+
+  private createNativeEntryFence(): RiftEntryFrameFence {
+    return new RiftEntryFrameFence({
+      frame: () => this.game.loop.frame,
+      canPresent: () => !this.stagedEntry?.isActive() && this.scene.isActive() && !this.scene.isPaused()
+        && !document.hidden && !this.frameCommit?.isBlocked(),
+      pausePhysics: () => {
+        const owned = !this.physics.world.isPaused;
+        if (owned) this.physics.world.pause();
+        return owned;
+      },
+      resumePhysics: () => { this.physics.world?.resume(); },
+      subscribeRendered: listener => {
+        this.game.events.on(Phaser.Core.Events.POST_RENDER, listener);
+        return () => this.game.events.off(Phaser.Core.Events.POST_RENDER, listener);
+      },
+      released: () => {
+        this.resetEntryHeldKeys();
+        this.startRiftAudio(!this.recovery?.checkpoint);
+        if (this.nativeEntryPauseRequested) {
+          this.nativeEntryPauseRequested = false;
+          this.openPauseMenu();
+        }
+      },
+    });
+  }
+
+  private bindEntryInputLatch(): void {
+    const keyboard = this.input.keyboard;
+    for (const key of keyboard?.keys ?? []) {
+      if (key?.isDown && key.keyCode !== Phaser.Input.Keyboard.KeyCodes.ESC) this.entryHeldKeys.add(key.keyCode);
+    }
+    keyboard?.on('keydown', this.onEntryKeyDown, this);
+    keyboard?.on('keyup', this.onEntryKeyUp, this);
+    // A paused Scene does not receive KeyboardPlugin events; a physical release
+    // in the pause menu must still release this preparation-only input latch.
+    if (typeof window !== 'undefined') window.addEventListener('keyup', this.onEntryKeyUp, true);
+  }
+
+  private beginEntryGate(): void {
+    if (!this.entryView.active) return;
+    this.bindEntryInputLatch();
+    this.entryOwnsPhysicsPause = !this.physics.world.isPaused;
+    if (this.entryOwnsPhysicsPause) this.physics.world.pause();
+    this.combat.clearAttackBuffer();
+    this.resetEntryHeldKeys();
+    this.syncPlayerInput();
+  }
+
+  private readonly onEntryKeyDown = (event: KeyboardEvent): void => {
+    // Escape remains the normal pause control. Held gameplay keys must be
+    // released even if browser key repeat continues after the reveal finishes.
+    if (event.keyCode === Phaser.Input.Keyboard.KeyCodes.ESC) return;
+    if (this.entryView.active || this.nativeEntryFence?.isActive()) this.entryHeldKeys.add(event.keyCode);
+    if (this.entryHeldKeys.has(event.keyCode)) this.input.keyboard?.keys[event.keyCode]?.reset();
+    if (this.entryView.active && event.keyCode === Phaser.Input.Keyboard.KeyCodes.ENTER) this.finishEntryGate();
+  };
+
+  private readonly onEntryKeyUp = (event: KeyboardEvent): void => {
+    this.entryHeldKeys.delete(event.keyCode);
+  };
+
+  private resetEntryHeldKeys(): void {
+    const keyboard = this.input.keyboard;
+    for (const code of this.entryHeldKeys) keyboard?.keys[code]?.reset();
+  }
+
+  private finishEntryGate(): void {
+    if (!this.entryView.active) return;
+    this.entryView.active = false;
+    this.entryView.elapsedMs = this.entryView.durationMs;
+    this.entryView.progress = 1;
+    this.combat.clearAttackBuffer();
+    this.input.keyboard?.resetKeys();
+    if (this.entryOwnsPhysicsPause) this.physics.world.resume();
+    this.entryOwnsPhysicsPause = false;
+    this.syncPlayerInput();
+  }
+
+  private endEntryGate(): void {
+    this.input.keyboard?.off('keydown', this.onEntryKeyDown, this);
+    this.input.keyboard?.off('keyup', this.onEntryKeyUp, this);
+    if (typeof window !== 'undefined') window.removeEventListener('keyup', this.onEntryKeyUp, true);
+    this.entryHeldKeys.clear();
+    // ArcadePhysics handles SHUTDOWN before this scene and may have cleared world.
+    if (this.entryOwnsPhysicsPause) this.physics.world?.resume();
+    this.entryOwnsPhysicsPause = false;
+    this.entryView.active = false;
+  }
+
+  private syncPlayerInput(): void {
+    this.player.setInputEnabled(!this.entryView.active && this.toolInputAllowed && !inventoryPanel.isOpen() && !this.runController.isRunEnded());
+  }
+
+  private openBag(): void {
+    if (this.frameCommit?.isBlocked() || this.entryView.active || this.nativeEntryFence?.isActive() || this.entryHeldKeys.has(Phaser.Input.Keyboard.KeyCodes.TAB)) return;
+    if (inventoryPanel.isOpen() || this.runController.isRunEnded() || pauseMenu.isOpen() || this.time.now - this.inventoryClosedAt < 150) return;
+    clearToastInline('field-loot');
+    this.combat.clearAttackBuffer();
+    this.attackKey?.reset();
+    this.extractKey?.reset();
+    for (const key of this.toolKeys) key.reset();
+    this.player.setInputEnabled(false);
+    openInventory({ mode: 'rift', getPollutionResistanceBonus: () => this.toolSystem.getPollutionResistanceBonus(), onClose: () => {
+      this.inventoryClosedAt = this.time.now;
+      this.syncPlayerInput();
+    }, getNearby: () => this.fieldInventory.getNearby(),
+      getDropPosition: () => ({ ...this.player.getPosition() }),
+      canTake: this.fieldInventory.canTake, canDrop: this.fieldInventory.canDrop,
+      onTaken: notifyFieldAcquisition,
+      afterMutation: () => this.frameCommit?.whenCommitted() ?? Promise.resolve(),
+    });
+  }
+
+  private showSettlementRetry(message: string, retry: () => void, actionLabel = '重试保存'): void {
+    if (document.getElementById('inventory-settlement-retry')) return;
+    injectPanelStyles();
+    // The overlay root passes input through. Use the same interactive carrier as
+    // the scene menus so this notice is both readable and reachable by pointer.
+    const notice = document.createElement('div');
+    notice.id = 'inventory-settlement-retry';
+    notice.className = 'game-panel scene-menu';
+    notice.style.cssText = 'left:288px;top:504px;width:432px;height:auto;gap:8px;align-items:flex-start;overflow:visible;z-index:3000';
+    const copy = document.createElement('div');
+    copy.className = 'readout-note';
+    copy.setAttribute('role', 'alert');
+    copy.textContent = message;
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'action-btn';
+    button.textContent = actionLabel;
+    button.onclick = () => { notice.remove(); retry(); };
+    notice.append(copy, button);
+    getDomUiRoot().append(notice);
+    button.focus({ preventScroll: true });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => notice.remove());
+  }
+
+  openRecoveredPauseMenu(): void { this.openPauseMenu(); }
+
+  private openPauseMenu(): void {
+    // Preserve an early Escape/cold-load pause request until the first complete
+    // checkpoint exists; the pause menu must not abandon a half-built run.
+    if (this.nativeEntryFence?.isActive()) { this.nativeEntryPauseRequested = true; return; }
+    if (inventoryPanel.isOpen() || this.time.now - this.inventoryClosedAt < 150 || riftResultPanel.isOpen()) return;
+    if (!this.flushRuntimeCheckpoint()) return;
+    if (this.recovery) pauseMenu.open(this, { onAbandon: () => this.abandonRecoveredRun() });
+    else if (this.devFixture?.onPause) this.devFixture.onPause();
+    else pauseMenu.open(this);
+  }
+
+  /**
+   * Scheme D production visuals (I3-E). Import is `src/entities/form-renderers/` only.
+   * Texture reuse: occupancy × substrate × coverage × seed × facing (jia bakes per facing
+   * at attach / facing change; bing/ding canvases are unique per seed and deform in place).
+   */
+  private attachSchemeD(): void {
+    this.destroySchemeDVisuals();
+    this.devEnemyVisuals.length = 0;
+    const renderer = getFormRenderer('d-mixed');
+    if (renderer?.ready !== true) return;
+    this.hosts.setSkipPaint(true);
+    const fragmentTypeId = this.layoutDebug.fragmentTypeId;
+    const seedRoot = this.layoutDebug.seed;
+    for (const view of this.ai.getEnemies()) {
+      if (!(view instanceof Enemy)) continue;
+      view.setVisualSuppressed(true);
+      if (productionModelFor(view.getForm().substrate)) {
+        view.setLocomotionMode('continuous');
+      }
+      const beforeVisual = (this.nativeWorldPresentation || this.devFixture?.createRuntime) ? new Set(this.children.list) : null;
+      const visual = renderer.attach({
+        scene: this,
+        form: view.getForm(),
+        seed: mix32(seedRoot, view.getId()),
+        depth: DEPTH.enemy,
+        fragmentTypeId,
+      });
+      this.formVisuals.set(view.getId(), visual);
+      if (beforeVisual) this.devEnemyVisuals.push({ id: view.getId(),
+        objects: this.children.list.filter(child => !beforeVisual.has(child)),
+        getPosition: () => view.getPosition(), getGroundY: () => view.getPosition().y });
+    }
+    for (const subject of this.hosts.getSubjects()) {
+      const pin = this.hosts.getVisualPin(subject.id) ?? undefined;
+      const visual = renderer.attach({
+        scene: this,
+        form: subject.form,
+        subjectId: subject.id,
+        isWalkableFloor: (col, row) => this.hostFloorGrid?.isWalkable(col, row) ?? false,
+        surfaceFloorAt: point => this.formFloorGrid?.isWalkableAt(point.x, point.y) ?? false,
+        surfaceFloorTileSize: this.formFloorGrid?.tileSize,
+        surfaceVisibilityAt: this.visibilityAt,
+        surfaceVisibilityRevision: () => this.visibility.getQueryRevision(),
+        surfaceIntersectsSight: bounds => this.visibility.maySeeBounds(bounds),
+        paintGeometryVersion: this.paintGeometryVersion,
+        preparedPaintGenome: this.nativeWorldPresentation && subject.form.portfolio === 'bing'
+          ? this.nativeWorldPresentation.takePaintGenome(subject.form, mix32(seedRoot, subject.id), fragmentTypeId) : undefined,
+        seed: mix32(seedRoot, subject.id),
+        depth: this.depthForHostPin(pin?.kind),
+        fragmentTypeId,
+        pin,
+      });
+      this.formVisuals.set(subject.id, visual);
+      this.hosts.setStepFloors(subject.id, visual.stepFloors ?? []);
+    }
+    this.rebuildGroundDepth();
+  }
+
+  private rebuildGroundDepth(): void {
+    const targets: GroundDepthTarget[] = [{ id: 'player', groundY: () => this.player.getGroundY(),
+      applyDepth: depth => this.player.setGroundDepth(depth, GROUND_LIGHT_DEPTH) }];
+    for (const view of this.ai.getEnemies()) {
+      const visual = this.formVisuals.get(view.getId());
+      if (!(view instanceof Enemy) || !visual?.setGroundDepth) continue;
+      view.setReadoutDepth(WORLD_READOUT_DEPTH);
+      targets.push({ id: `enemy:${view.getId()}`, groundY: () => view.getPosition().y,
+        applyDepth: depth => visual.setGroundDepth!(depth) });
+    }
+    this.groundDepthSorter = new GroundDepthSorter(targets);
+    this.groundDepthSorter.update();
+  }
+
+  private syncSchemeDPoses(deltaMs: number): void {
+    if (this.formVisuals.size === 0) return;
+    for (const [id, visual] of this.formVisuals) {
+      const view = this.ai.getEnemyById(id);
+      if (view) {
+        const pos = view.getPosition();
+        const vel = view instanceof Enemy ? view.getActualVelocity() : { x: 0, y: 0 };
+        const attack = this.combat.getEnemyAttackVisualState(id);
+        visual.update({
+          x: pos.x,
+          y: pos.y,
+          facing4: view.getFacing4(),
+          moving: isActorWalking(Math.hypot(vel.x, vel.y)),
+          movementSpeed: Math.hypot(vel.x, vel.y),
+          restraint: this.toolSystem.getEnemyRestraintPose(id),
+          visibility: this.visibility.getVisibilityAt(pos),
+          signal: this.jiaSchemeSignal(view, attack),
+          attack,
+          activity: view instanceof Enemy ? view.getActivityVisualState() : undefined,
+          deltaMs: this.ai.getEnemyControlState(id)?.attackSuppressed && this.ai.getEnemyControlState(id)?.movementMultiplier === 0 ? 0 : deltaMs,
+        });
+        continue;
+      }
+      const host = this.hosts.getSubjects().find((row) => row.id === id);
+      if (!host) continue;
+      const pin = this.hosts.getVisualPin(id);
+      visual.update({
+        x: pin?.attach ? pin.attach.seamX : pin?.kind === 'cluster' ? pin.x : host.position.x,
+        y: pin?.attach ? pin.attach.seamY : pin?.kind === 'cluster' ? pin.y : host.position.y,
+        facing4: this.hosts.getVisualFacing(id),
+        moving: this.hosts.getVisualMoving(id),
+        visibility: this.hostSchemeVisibility(id, host.position),
+        signal: this.hosts.getVisualSignal(id),
+        toolControl: this.hosts.getToolVisualControl(id),
+        attack: this.hosts.getAttackVisualState(id),
+        activity: this.hosts.getActivityVisualState(id),
+        deltaMs,
+      });
+    }
+  }
+
+  private jiaSchemeSignal(view: { getState(): AIState }, attack: FormAttackPose): FormVisualSignal {
+    if (attack.phase === 'windup') return 'inflated';
+    if (attack.phase === 'strike') return 'strike';
+    if (attack.phase === 'recover') return 'awake';
+    const state = view.getState();
+    if (state === AIState.CHASE) return 'awake';
+    if (state === AIState.ALERT || state === AIState.SUSPICIOUS) return 'inflated';
+    return 'idle';
+  }
+
+  private depthForHostPin(kind: 'wall' | 'cluster' | 'volume' | undefined): number {
+    if (kind === 'wall') return DEPTH.yi;
+    if (kind === 'cluster') return DEPTH.bing;
+    return DEPTH.ding;
+  }
+
+  private hostSchemeVisibility(hostId: string, fallback: Readonly<Vector2>): number {
+    const pin = this.hosts.getVisualPin(hostId);
+    const q = this.formVisQuery;
+    if (pin?.attach) {
+      q.x = pin.attach.seamX + pin.attach.nx;
+      q.y = pin.attach.seamY + pin.attach.ny;
+    } else {
+      q.x = fallback.x;
+      q.y = fallback.y;
+    }
+    return this.visibility.getVisibilityAt(q);
+  }
+
+  private destroySchemeDVisual(id: string): void {
+    const visual = this.formVisuals.get(id);
+    if (!visual) return;
+    visual.destroy();
+    this.formVisuals.delete(id);
+    this.rebuildGroundDepth();
+  }
+
+  private destroySchemeDVisuals(): void {
+    for (const visual of this.formVisuals.values()) visual.destroy();
+    this.formVisuals.clear();
+    this.groundDepthSorter = null;
+  }
+
+  private validateWorldRuntimeState(value: unknown): boolean {
+    if (this.nativeWorldPresentation) {
+      if (!value || typeof value !== 'object') return false;
+      const state = value as { version?: number; hosts?: unknown; nativePresentation?: unknown; bodyGeometryVersion?: unknown };
+      return state.version === 1 && (state.bodyGeometryVersion === undefined || state.bodyGeometryVersion === NATIVE_BODY_GEOMETRY_VERSION)
+        && this.hosts.validateRuntimeState(state.hosts)
+        && this.devRuntime?.validateRuntimeState?.(state.nativePresentation) === true;
+    }
+    return this.devRuntime ? this.devRuntime.validateRuntimeState?.(value) === true
+      : this.hosts.validateRuntimeState((value as { hosts?: unknown })?.hosts);
+  }
+
+  private initializeRecovery(restored?: RiftCheckpoint<RiftRecoveryState>): void {
+    const recovery = this.recovery!;
+    if (!restored) {
+      // Entry pauses Arcade before its first step. Apply authored body offsets
+      // now so the initial checkpoint already contains the real foot positions.
+      for (const sprite of [this.player.getSprite(), ...this.ai.getSprites()]) {
+        const body = sprite.body as Phaser.Physics.Arcade.Body;
+        body.updateFromGameObject();
+        body.prev.copy(body.position);
+        body.prevFrame.copy(body.position);
+      }
+    }
+    this.combat.enableRuntimeRecovery({ signature: recovery.identity.signature, runSeed: recovery.identity.seed,
+      externalTargetIds: this.devFixture ? recovery.externalTargetIds : this.hosts.getRecoveryTargetIds() });
+    if (restored) {
+      const state = restored.state;
+      if (state.phase !== 'active' || !this.ai.validateRuntimeState(state.ai) || !this.combat.validateRuntimeState(state.combat)
+        || !this.toolSystem.validateRuntimeState(state.tools) || !this.chaos.validateRuntimeState(state.chaos)
+        || !this.search.validateRuntimeState(state.search) || !this.fieldInventory.validateRuntimeState(state.field)
+        || !this.trail.validateRuntimeState(state.trail) || !this.minimap.validateRuntimeState(state.minimap)
+        || !this.runController.validateRuntimeState(state.run) || !this.validateWorldRuntimeState(state.world)) {
+        throw new Error('Saved Rift no longer matches this world; original record is retained');
+      }
+      const physics = this.physics.world;
+      if (physics.fixedStep !== state.physics.fixedStep || physics.fps !== state.physics.fps || physics.timeScale !== state.physics.timeScale) {
+        throw new Error('Saved physics configuration does not match the current world');
+      }
+      (physics as Phaser.Physics.Arcade.World & { _elapsed: number })._elapsed = state.physics.elapsedMs;
+      this.devElapsedMs = restored.elapsedMs;
+      if (!this.devRuntime || this.nativeWorldPresentation) this.hosts.restoreRuntimeState((state.world as { hosts: unknown }).hosts);
+      const restoredPlayer = this.nativeBody ? nativeRiftPlayerForRestore(state, this.nativeBody) : state.player;
+      if (!restoredPlayer) throw new Error('Saved native body does not match its movement state');
+      this.player.restoreRuntimeState(restoredPlayer);
+      this.ai.restoreRuntimeState(state.ai);
+      this.toolSystem.restoreRuntimeState(state.tools);
+      this.ai.finishRuntimeRestore();
+      this.combat.restoreRuntimeState(state.combat);
+      this.chaos.restoreRuntimeState(state.chaos);
+      this.search.restoreRuntimeState(state.search);
+      this.fieldInventory.restoreRuntimeState(state.field);
+      this.trail.restoreRuntimeState(state.trail);
+      this.minimap.restoreRuntimeState(state.minimap);
+      this.runController.restoreRuntimeState(state.run);
+      this.recoveryConditions = structuredClone(state.conditions);
+      this.sortieKillCount = state.result.killCount;
+      this.sortieAcquired = state.result.acquired.map(item => ({ ...item }));
+      this.sortiePassiveTriggers = new Map(state.result.passiveTriggers);
+      this.defenseHudEffects = state.defenseHudEffects.map(effect => ({ ...effect }));
+      this.devEventSequence = state.presentationSequence;
+      if (!this.nativeEntryFence?.isActive()) {
+        this.endEntryGate();
+        this.entryFrameFrozen = false;
+        this.entryView.elapsedMs = this.entryView.durationMs; this.entryView.progress = 1;
+        this.input.keyboard?.resetKeys();
+        this.syncPlayerInput();
+        this.visibility.update(this.player.getPosition(), this.player.getFacingAngle(), 0);
+        // AI.postUpdate(0) is not a visual refresh: it resets the stuck watchdog.
+        this.syncSchemeDPoses(0);
+        this.syncDevPresentation();
+      }
+      if (this.devRuntime) this.devRuntime.restoreRuntimeState!(this.nativeWorldPresentation
+        ? (state.world as { nativePresentation: unknown }).nativePresentation : state.world);
+
+      this.hud.restoreReadouts({ health: state.combat.health, maxHealth: this.combat.getMaxHealth(), chaos: this.chaos.getValue(), kindling: this.search.getCarriedKindling() });
+      this.syncHudActiveEffects();
+      this.runController.finishRuntimeRestore();
+      if (!this.nativeEntryFence?.isActive()) {
+        this.devRuntime?.afterUpdate(this.devElapsedMs);
+        this.worldSurface?.afterUpdate(this.devElapsedMs);
+      }
+    }
+    this.frameCommit = new RiftFrameCommit({ capture: sequence => this.captureRuntimeCheckpoint(sequence),
+      onFailure: retry => {
+        // Keep the completed candidate, RNG, velocities and attack phase intact.
+        this.scene.pause(); audioManager.pauseAll();
+        this.showSettlementRetry('这一刻尚未保存，行动已停住。', retry);
+      },
+      onRetried: () => {
+        document.getElementById('inventory-settlement-retry')?.remove();
+        if (!this.frameCommit) return;
+        this.input.keyboard?.resetKeys();
+        if (this.scene.isPaused()) this.scene.resume();
+        audioManager.resumeAll(); this.frameCommit.begin();
+      },
+    }, restored);
+    this.frameCommit.begin();
+    window.addEventListener('pagehide', this.onRecoveryPageHide);
+    document.addEventListener('visibilitychange', this.onRecoveryVisibility);
+  }
+
+  private capturePhysicsClock(): { fixedStep: true; fps: 60; timeScale: 1; elapsedMs: number } {
+    const physics = this.physics.world as Phaser.Physics.Arcade.World & { _elapsed: number };
+    if (!physics.fixedStep || physics.fps !== 60 || physics.timeScale !== 1 || !Number.isFinite(physics._elapsed) || physics._elapsed < 0) {
+      throw new Error('Unsupported fixed-step physics clock');
+    }
+    return { fixedStep: true, fps: 60, timeScale: 1, elapsedMs: physics._elapsed };
+  }
+
+  private requestRunReturn(): boolean {
+    if (!this.runController.isRunEnded() || this.frameCommit?.isBlocked() || this.scene.isPaused() || pauseMenu.isOpen()) return false;
+    this.runController.restart();
+    return this.flushRuntimeCheckpoint();
+  }
+
+  private captureRuntimeCheckpoint(sequence: number): RiftCheckpoint<RiftRecoveryState> {
+    const recovery = this.recovery!;
+    const ledger = inventoryStore.getRun();
+    if (!ledger) throw new Error('Recoverable world requires a run ledger');
+    const shared = { version: 1 as const, conditions: structuredClone(this.recoveryConditions),
+      run: this.runController.exportRuntimeState(), presentationSequence: this.devEventSequence,
+      result: { killCount: this.sortieKillCount, acquired: structuredClone(this.sortieAcquired),
+        passiveTriggers: [...this.sortiePassiveTriggers] } };
+    const state: RiftRecoveryState = this.runController.isRunEnded() ? { ...shared, phase: 'settled' } : {
+      ...shared, phase: 'active', physics: this.capturePhysicsClock(), player: this.player.exportRuntimeState(), combat: this.combat.exportRuntimeState(),
+      ai: this.ai.exportRuntimeState(), tools: this.toolSystem.exportRuntimeState(), chaos: this.chaos.exportRuntimeState(),
+      search: this.search.exportRuntimeState(), field: this.fieldInventory.exportRuntimeState(),
+      trail: this.trail.exportRuntimeState(), minimap: this.minimap.exportRuntimeState(),
+      world: this.nativeWorldPresentation
+        ? { version: 1, bodyGeometryVersion: NATIVE_BODY_GEOMETRY_VERSION, hosts: this.hosts.exportRuntimeState(), nativePresentation: this.devRuntime!.exportRuntimeState!() }
+        : this.devRuntime ? this.devRuntime.exportRuntimeState!() : { version: 1, hosts: this.hosts.exportRuntimeState() }, defenseHudEffects: structuredClone(this.defenseHudEffects),
+    };
+    return { version: 1, runId: ledger.id, sequence, identity: recovery.identity, elapsedMs: this.devElapsedMs, state };
+  }
+
+  private commitRuntimeFrame(force = false): boolean {
+    if (!this.frameCommit) return true;
+    this.frameCommit.begin();
+    // Final-use breakage must reach combat and movement before this frame is serialized.
+    const weaponId = inventoryStore.getEquipment().weaponId;
+    const item = weaponId ? inventoryStore.getItem(weaponId) : undefined;
+    this.combat.configureWeapon(item?.kind === 'weapon' ? item.weapon.definitionId : null);
+    this.player.setBurdenSpeedFactor(getSurvivalAttributes().burdenSpeedFactor);
+    this.devRuntime?.prepareCheckpoint?.(this.devElapsedMs);
+    try { return this.frameCommit.finish(this.devElapsedMs, force); }
+    catch (reason) {
+      // Unsupported state is not a new-game policy, and must never overwrite its predecessor.
+      console.error('Rift checkpoint validation failed; previous record retained', reason);
+      this.scene.pause(); audioManager.pauseAll();
+      this.showSettlementRetry('当前状态未通过检查，行动已停住。上一次完整记录仍在；返回标题可继续已保存的出行。', () => {
+        // Discard only the unsaved in-memory candidate. No inventory loss or
+        // world settlement occurs, and the last complete bytes stay untouched.
+        this.frameCommit?.destroy(); this.frameCommit = null;
+        audioManager.resumeAll();
+        this.scene.start('MainMenuScene');
+      }, '返回标题，保留已存记录');
+      return false;
+    }
+  }
+
+  /** Called between complete physics frames for normal pause, visibility loss and page exit. */
+  flushRuntimeCheckpoint(): boolean {
+    if (!this.frameCommit) return true;
+    if (this.frameCommit.isBlocked()) return false;
+    // Before the first complete picture, the atomic departure or previous cold
+    // checkpoint remains authoritative. Never serialize a partial initialization.
+    if (this.nativeEntryFence?.isActive()) return true;
+    this.syncDevPresentation();
+    const committed = this.commitRuntimeFrame(true);
+    if (committed) this.frameCommit?.begin();
+    return committed;
+  }
+  private readonly onRecoveryPageHide = (): void => { this.flushRuntimeCheckpoint(); };
+  private readonly onRecoveryVisibility = (): void => {
+    if (document.visibilityState === 'hidden') this.flushRuntimeCheckpoint();
+  };
+  /** Only the explicit, confirmed menu action calls this. Closing a page never does. */
+  private abandonRecoveredRun(): void {
+    if (!this.frameCommit || this.runController.isRunEnded() || this.frameCommit.isBlocked()) return;
+    this.frameCommit.begin();
+    this.runController.abandon();
+    this.onRunEnded();
+    this.frameCommit.markChanged();
+    this.flushRuntimeCheckpoint();
+  }
+
+  private onShutdown(): void {
+    if (this.shutdownComplete) return;
+    this.shutdownComplete = true;
+    this.stagedEntry?.destroy(); this.stagedEntry = null;
+    if (this.constructionClockPaused !== null) { this.time.paused = this.constructionClockPaused; this.constructionClockPaused = null; }
+    this.events.off(Phaser.Scenes.Events.SHUTDOWN, this.onShutdown, this);
+    this.events.off(Phaser.Scenes.Events.DESTROY, this.onShutdown, this);
+    this.nativeEntryFence?.destroy(); this.nativeEntryFence = null;
+    this.nativeEntryPauseRequested = false;
+    this.clearNarration();
+    if (this.endOwnsPhysicsPause) this.physics.world?.resume();
+    this.endOwnsPhysicsPause = false;
+    this.endFrozen = false;
+    window.removeEventListener('pagehide', this.onRecoveryPageHide);
+    document.removeEventListener('visibilitychange', this.onRecoveryVisibility);
+    this.frameCommit?.destroy(); this.frameCommit = null;
+    this.worldSurface?.destroy();
+    this.worldSurface = null;
+    this.devRuntime?.destroy(); this.devRuntime = null; this.devEnemyVisuals.length = 0;
+    this.nativeWorldPresentation?.disposeUnconsumed();
+    for (const unregister of this.devTargetDisposers) unregister();
+    this.endEntryGate();
+    this.devPresentation = null; this.nativeWorldPresentation = null; this.devWorldProjector = null;
+    this.events.off(Phaser.Scenes.Events.POST_UPDATE, this.onPostUpdate, this);
+    this.physics.world?.off('worldstep', this.onNativeBodyStep, this);
+    this.nativeBody = null;
+    this.events.off(Phaser.Scenes.Events.PAUSE, this.onNarrationPause, this);
+    this.events.off(Phaser.Scenes.Events.RESUME, this.onNarrationResume, this);
+    this.input.keyboard?.off('keydown-ESC', this.openPauseMenu, this);
+    this.input.keyboard?.off('keydown-TAB', this.openBag, this);
+    inventoryPanel.close();
+    this.fieldInventory.destroy();
+    this.unsubscribeInventory?.(); this.unsubscribeInventory = null;
+    this.input.keyboard?.off('keydown-F1');
+    eventBus.off(GameEvent.ENEMY_DAMAGED, this.onEnemyDamaged);
+    eventBus.off(GameEvent.ENEMY_KILLED, this.onEnemyKilled);
+    eventBus.off(GameEvent.PLAYER_DIED, this.onRunEnded);
+    eventBus.off(GameEvent.PLAYER_DAMAGED, this.onPlayerDamaged);
+    eventBus.off(GameEvent.RIFT_EXIT_REACHED, this.onRunEnded);
+    eventBus.off(GameEvent.RIFT_EXITED, this.onRunEnded);
+    eventBus.off(GameEvent.RIFT_EXITED, this.onRiftExitedShowResult);
+    eventBus.off(GameEvent.CHAOS_THRESHOLD_REACHED, this.onChaosThreshold);
+    eventBus.off(GameEvent.CHAOS_CHANGED, this.onChaosChangedAudio);
+    eventBus.off(GameEvent.ITEM_COLLECTED, this.onPickupAudio);
+    eventBus.off(GameEvent.ITEM_USED, this.onUseAudio);
+    eventBus.off(GameEvent.TOOL_USED, this.onUseAudio);
+    eventBus.off(GameEvent.RIFT_EXIT_REACHED, this.onExitAudio);
+    eventBus.off(GameEvent.CONTAMINANT_ACQUIRED, this.onContaminantAcquired);
+    eventBus.off(GameEvent.TOOL_USED, this.onToolUsedForResult);
+    this.ai.setCueListener(null);
+    audioManager.haltNonBgm();
+    riftResultPanel.destroy();
+    pauseMenu.discard();
+    if (this.attackKey) {
+      this.input.keyboard?.removeKey(this.attackKey, true);
+      this.attackKey = null;
+    }
+    if (this.extractKey) {
+      this.input.keyboard?.removeKey(this.extractKey, true);
+      this.extractKey = null;
+    }
+    if (this.restartKey) {
+      this.input.keyboard?.removeKey(this.restartKey, true);
+      this.restartKey = null;
+    }
+    for (const key of this.toolKeys) {
+      this.input.keyboard?.removeKey(key, true);
+    }
+    this.toolKeys = [];
+    // Before the player is destroyed: this is what releases the swing speed modifier.
+    this.destroySchemeDVisuals();
+    this.combat.destroy();
+    this.hosts.destroy();
+    this.formFloorGrid = null;
+    this.hostFloorGrid = null;
+    this.detectionPulse.destroy();
+    this.encounter.destroy();
+    this.hud.destroy();
+    this.runController.destroy();
+    this.extraction.destroy();
+    this.toolSystem.destroy();
+    this.search.destroy();
+    this.chaos?.destroy();
+    this.ai.destroy();
+    this.trail.destroy();
+    this.minimap.destroy();
+    this.riftSurface.destroy();
+    this.visibility.destroy();
+    this.player.destroy();
+    this.tilemapRenderer.destroy();
+    this.landmarkGraphics?.destroy();
+    this.landmarkGraphics = null;
+    this.debugPanel?.remove();
+    this.debugPanel = null;
+  }
+
+  // ------------------------------------------------------------ dev overlay
+
+  /**
+   * Reports the numbers this slice has to be verified against: framing in tiles, the
+   * raycasting cost against its 2 ms budget, and whether the static cache is holding.
+   *
+   * A DOM overlay rather than a Phaser Text: scroll-factor-0 game objects are still
+   * transformed by the camera zoom, so anything meant to be screen-space needs either a
+   * second camera or the DOM. The DOM is the cheaper answer for a dev panel.
+   * Dev builds only; F1 toggles it.
+   */
+  private createDebugOverlay(): void {
+    const panel = document.createElement('div');
+    // S11 (ux-information-architecture.md): default OFF, F1 toggles. Anchored
+    // top-center rather than top-left so it never sits on top of the real HUD's
+    // four corner readouts (HP top-left, kindling top-right, tool slots
+    // bottom-left, minimap bottom-right) - it now occupies the strip those four
+    // deliberately leave empty.
+    panel.style.cssText = [
+      'position:absolute',
+      'top:8px',
+      'left:50%',
+      'transform:translateX(-50%)',
+      'z-index:10',
+      'padding:4px 6px',
+      'font:11px/1.45 monospace',
+      'color:#8ad8cc',
+      'background:rgba(0,0,0,0.55)',
+      'white-space:pre',
+      'pointer-events:none',
+      'display:none',
+    ].join(';');
+    (document.getElementById('game-container') ?? document.body).appendChild(panel);
+    this.debugPanel = panel;
+
+    this.input.keyboard?.on('keydown-F1', () => {
+      this.debugVisible = !this.debugVisible;
+      if (this.debugPanel) this.debugPanel.style.display = this.debugVisible ? 'block' : 'none';
+    });
+  }
+
+  private updateDebugOverlay(delta: number): void {
+    if (!this.debugVisible) return;
+    this.debugAccumulatorMs += delta;
+    if (this.debugAccumulatorMs < 200) return;
+    this.debugAccumulatorMs = 0;
+
+    const camera = this.cameras.main;
+    const tile = this.formFloorGrid!.tileSize;
+    const stats = this.visibility.getStats();
+    const ai = this.ai.getStats();
+    const combat = this.combat.getStats();
+    const position = this.player.getPosition();
+    const view = camera.worldView;
+
+    if (!this.debugPanel) return;
+    const lines = [
+      `fps ${Math.round(this.game.loop.actualFps)}  zoom ${camera.zoom}`,
+      `layout seed ${this.layoutDebug.seed}  ${this.layoutDebug.fragmentTypeId}  ${this.layoutDebug.recipeId}`,
+      `viewport ${Math.round(view.width)}x${Math.round(view.height)}px = ` +
+        `${(view.width / tile).toFixed(1)}x${(view.height / tile).toFixed(1)} tiles`,
+      `rays ${stats.rayCount}  last ${stats.lastMs.toFixed(2)}ms  ` +
+        `avg ${stats.avgMs.toFixed(2)}ms  budget ${GAME_CONSTANTS.VISIBILITY.BUDGET_MS}ms`,
+      `degrade ${stats.degradeLevel}  ${stats.cached ? 'cached' : 'recast'}`,
+      `pos ${Math.round(position.x)},${Math.round(position.y)}  ` +
+        `tile ${Math.floor(position.x / tile)},${Math.floor(position.y / tile)}  ` +
+        `facing ${this.player.getFacing4()}`,
+      `ai ${ai.lastMs.toFixed(2)}ms avg ${ai.avgMs.toFixed(2)}ms  ` +
+        `rays/frame ${ai.raysThisFrame}  paths/frame ${ai.pathsThisFrame}  ` +
+        `unstick ${ai.unstickEvents}`,
+      `A* calls ${ai.pathCalls} fail ${ai.pathFailures}  last ${ai.lastPathMs.toFixed(2)}ms ` +
+        `(${ai.lastPathNodes}n) avg ${ai.avgPathMs.toFixed(2)}ms  queued ${ai.pendingPathRequests}`,
+      `cue ${ai.lastCue}`,
+      `hp ${combat.health}/${combat.maxHealth}  atk ${combat.phase.padEnd(8)} ` +
+        `cd ${Math.round(combat.cooldownRemainingMs)}  iframe ${Math.round(combat.invulnRemainingMs)}` +
+        `  tokens ${combat.attackTokensInUse}${combat.isDead ? '  DEAD' : ''}`,
+      `combat cue ${combat.lastCue}  noise ${combat.lastNoise}`,
+      `chaos ${this.chaos.getValue().toFixed(1)} [${this.chaos.getStage()}] ` +
+        `rate ${this.chaos.getRate().toFixed(2)}/s  peak ${this.chaos.getPeak().toFixed(0)}`,
+      `loot ${this.search.getCarriedKindling()} carried  ${this.search.getRemainingCount()} remaining`,
+    ];
+
+    // Per-enemy line: the fastest way to check a downgrade chain actually walks itself
+    // back down (chase -> alert -> suspicious -> return -> patrol).
+    for (const enemy of this.ai.getEnemies()) {
+      const enemyPos = enemy.getPosition();
+      lines.push(
+        `  ${enemy.getId()} ${enemy.getState().padEnd(10)} ` +
+          `hp ${this.combat.getEnemyHealth(enemy.getId()) ?? '-'} ` +
+          `det ${enemy.getDetection().toFixed(2)} ` +
+          `d ${Math.round(Math.hypot(enemyPos.x - position.x, enemyPos.y - position.y))}` +
+          (enemy.isEngaged() ? ' engaged' : '')
+      );
+    }
+
+    lines.push('F1 overlay   ESC menu');
+    this.debugPanel.textContent = lines.join('\n');
+  }
+
+  /** Development review only: exposes production state without a second simulation. */
+  private recordDevPresentationEvent(kind: RiftPresentationEvent['kind'], id: string, source: string, amount: number,
+    position: Readonly<Vector2>, from?: Readonly<Vector2>): void {
+    const frame = this.devPresentation;
+    if (!frame) return;
+    const dx = from ? position.x - from.x : 0, dy = from ? position.y - from.y : 0;
+    const length = Math.hypot(dx, dy) || 1;
+    frame.events.push({ sequence: ++this.devEventSequence, elapsedMs: this.devElapsedMs, kind, id, source, amount,
+      position: { x: position.x, y: position.y }, direction: { x: dx / length, y: dy / length } });
+    if (frame.events.length > 32) frame.events.shift();
+  }
+
+  /** Shared native rendering frame, after resolved physics and authoritative visibility. */
+  private syncDevPresentation(): void {
+    const frame = this.devPresentation;
+    if (!frame) return;
+    frame.sequence++;
+    frame.elapsedMs = this.devElapsedMs; frame.ended = this.runController.isRunEnded();
+    const player = frame.player, body = this.player.getSprite().body as Phaser.Physics.Arcade.Body;
+    Object.assign(player.position, this.player.getPosition()); Object.assign(player.velocity, body.velocity);
+    player.body.x = body.x; player.body.y = body.y; player.body.width = body.width; player.body.height = body.height;
+    player.facing = this.player.getFacingAngle(); player.moving = this.player.isMoving();
+    player.hp = this.combat.getHealth(); player.maxHp = this.combat.getMaxHealth(); player.invulnerable = this.combat.isInvulnerable();
+    Object.assign(player.attack, this.combat.getWeaponVisualState());
+    player.weaponId = inventoryStore.getEquipment().weaponId;
+    const weapon = player.weaponId ? inventoryStore.getItem(player.weaponId) : undefined;
+    player.weaponDefinitionId = this.combat.getWeaponVisualDefinitionId();
+    player.durability = weapon?.kind === 'weapon' ? weapon.weapon.usesRemaining : 0;
+    let index = 0;
+    for (const enemy of this.ai.getEnemies()) {
+      let target = frame.enemies[index];
+      if (!target) { target = { id: '', substrate: '', coverage: '', position: { x: 0, y: 0 }, velocity: { x: 0, y: 0 },
+        facing: 0, hp: 0, visibility: 0, state: '', activity: { phase: 'active', progress: 0 }, attack: { phase: 'idle', progress: 0 } };
+        frame.enemies.push(target); }
+      target.id = enemy.getId(); target.substrate = enemy.getForm().substrate; target.coverage = enemy.getForm().coverage;
+      Object.assign(target.position, enemy.getPosition());
+      if (enemy instanceof Enemy) {
+        Object.assign(target.velocity, enemy.getActualVelocity()); Object.assign(target.activity, enemy.getActivityVisualState());
+      } else { target.velocity.x = 0; target.velocity.y = 0; }
+      target.facing = enemy.getFacingAngle(); target.hp = this.combat.getEnemyHealth(target.id) ?? 0;
+      target.visibility = this.visibilityAt(target.position); target.state = enemy.getState();
+      target.restraint ??= { pressure: false, snared: false };
+      Object.assign(target.restraint, this.toolSystem.getEnemyRestraintPose(target.id));
+      const control = this.ai.getEnemyControlState(target.id);
+      target.motionSuppressed = !!control?.attackSuppressed && control.movementMultiplier === 0;
+      target.targetingLure = enemy.isTargetingLure?.() ?? enemy.isTargetingDecoy();
+      target.attack = this.combat.getEnemyAttackVisualState(target.id); index++;
+    }
+    frame.enemies.length = index;
+    frame.tools = this.toolSystem.getPresentationState();
+    const search = this.search.getPresentationTarget();
+    frame.search.targetId = search.targetId; frame.search.channelId = search.channelId;
+    frame.search.prompt = this.search.getPrompt(); frame.search.progress = this.search.getChannelProgress01();
+    index = 0;
+    for (const node of this.search.getPresentationNodes()) {
+      let target = frame.piles[index];
+      if (!target) { target = { id: '', position: { x: 0, y: 0 }, collected: false, visibility: 0, searching: false, targeted: false, progress: 0 }; frame.piles.push(target); }
+      target.id = node.id; target.position.x = node.x; target.position.y = node.y; target.collected = node.collected;
+      target.visibility = this.visibilityAt(target.position); target.searching = node.id === search.channelId;
+      target.targeted = node.id === search.targetId; target.progress = target.searching ? frame.search.progress ?? 0 : 0; index++;
+    }
+    frame.piles.length = index;
+    const runId = inventoryStore.getRun()?.id;
+    index = 0;
+    for (const item of inventoryStore.getItems()) {
+      if (item.location.kind !== 'ground' || item.location.runId !== runId) continue;
+      let target = frame.groundItems[index];
+      if (!target) { target = { id: '', kind: 'contaminant', definitionId: '', quality: 'ordinary', position: { x: 0, y: 0 }, visibility: 0 }; frame.groundItems.push(target); }
+      target.id = item.id; target.kind = item.kind;
+      target.definitionId = item.kind === 'weapon' ? item.weapon.definitionId : item.contaminant.type;
+      target.quality = item.kind === 'weapon' ? WEAPON_DATA[item.weapon.definitionId]!.quality : getContaminantQuality(item.contaminant);
+      Object.assign(target.position, item.location.position); target.visibility = this.visibilityAt(target.position); index++;
+    }
+    frame.groundItems.length = index;
+    frame.exit.inRange = this.extraction.canExtract();
+  }
+
+  probePresentationFrame(): RiftPresentationView | null {
+    return import.meta.env.DEV && this.devFixture ? this.devPresentation : null;
+  }
+
+  probeEnemyReview() {
+    if (!import.meta.env.DEV) return null;
+    return {
+      seed: this.layoutDebug.seed, hp: this.combat.getHealth(), chaos: this.chaos.getValue(),
+      fps: Math.round(this.game.loop.actualFps),
+      player: { ...this.player.getPosition() },
+      enemies: this.ai.getEnemies().map((view) => ({
+        id: view.getId(), substrate: view.getForm().substrate, coverage: view.getForm().coverage,
+        motion: view.getForm().lexemes.motion, state: view.getState(),
+        occupancy: view.getForm().occupancy, sense: view.getForm().lexemes.sense,
+        rhythm: view.getForm().lexemes.rhythm, activity: view instanceof Enemy ? view.getActivityVisualState() : undefined,
+        velocity: view instanceof Enemy ? { ...view.getActualVelocity() } : undefined,
+        position: { ...view.getPosition() }, facing: view.getFacing4(),
+        attack: this.combat.getEnemyAttackVisualState(view.getId()),
+        hp: this.combat.getEnemyHealth(view.getId()),
+        texture: this.formVisuals.get(view.getId())?.getFlashSource?.().textureKey,
+      })),
+      hosts: this.hosts.getSubjects().map((host) => ({
+        id: host.id, substrate: host.form.substrate, coverage: host.form.coverage,
+        occupancy: host.form.occupancy, motion: host.form.lexemes.motion,
+        sense: host.form.lexemes.sense, rhythm: host.form.lexemes.rhythm,
+        position: { ...host.position }, pin: this.hosts.getVisualPin(host.id),
+        attack: this.hosts.getAttackVisualState(host.id), activity: this.hosts.getActivityVisualState(host.id),
+        signal: this.hosts.getVisualSignal(host.id),
+        volume: (() => {
+          const f = this.hosts.getVolumePresenceFrame(host.id);
+          return f ? { phase: f.phase, progress: f.progress, elapsedMs: f.elapsedMs,
+            active: f.active, hazardActive: f.hazardActive, rect: { ...f.rect } } : undefined;
+        })(),
+      })),
+      textures: this.textures.getTextureKeys().filter((key) => /insect16|human17|beast18|worm18|relic18|growth18|remnant18/.test(key) || key.startsWith('combat-flash-')),
+    };
+  }
+
+  /** Read-only recorder sample. No teleport, invulnerability or timing overrides. */
+  probeBuildLabState() {
+    if (!import.meta.env.DEV || !this.devFixture || this.stagedEntry?.isActive() || this.nativeEntryFence?.isActive()) return null;
+    return {
+      elapsedMs: this.devElapsedMs, ended: this.runController.isRunEnded(),
+      player: { ...this.player.getPosition() }, hp: this.combat.getHealth(), chaos: this.chaos.getValue(),
+      chaosRate: this.chaos.getRate(), pollutionGrade: this.devFixture.pollutionGrade ?? null,
+      volumeSightMultiplier: this.hosts.getVolumeSightMult(),
+      attack: { ...this.combat.getAttackState() }, kindling: this.search.getCarriedKindling(),
+      search: { prompt: this.search.getPrompt(), progress: this.search.getChannelProgress01(), remaining: this.search.getRemainingCount() },
+      enemies: this.ai.getEnemies().map(enemy => ({ id: enemy.getId(), state: enemy.getState(),
+        position: { ...enemy.getPosition() }, hp: this.combat.getEnemyHealth(enemy.getId()),
+        detection: enemy.getDetection(), engaged: enemy.isEngaged(), visible: this.visibilityAt(enemy.getPosition()) > 0 })),
+      hosts: this.hosts.getToolTargets().map(host => ({ id: host.id, substrate: host.form.substrate,
+        position: { ...host.position }, hazardReleased: host.hazardReleased,
+        suppressionRemainingMs: host.suppressionRemainingMs, delayRemainingMs: host.delayRemainingMs,
+        recoveryWarning: host.recoveryWarning,
+        volume: (() => { const frame = this.hosts.getVolumePresenceFrame(host.id); return frame ? {
+          phase: frame.phase, elapsedMs: frame.elapsedMs, hazardActive: frame.hazardActive,
+        } : undefined; })() })),
+    };
+  }
+
+  probeInspectEnemy(id: string, distance: number): boolean {
+    if (!import.meta.env.DEV) return false;
+    const enemy = this.ai.getEnemyById(id);
+    const layer = this.tilemapRenderer.getLayer();
+    const host = this.hosts.getSubjects().find((subject) => subject.id === id);
+    if ((!enemy && !host) || !layer) return false;
+    const p = enemy?.getPosition() ?? host!.position;
+    for (const angle of [this.player.getFacingAngle() + Math.PI, Math.PI, 0, Math.PI / 2, -Math.PI / 2]) {
+      const x = p.x + Math.cos(angle) * distance;
+      const y = p.y + Math.sin(angle) * distance;
+      const clear = [-10, 10].every((dx) => [-10, 10].every((dy) => {
+        const tile = layer.getTileAtWorldXY(x + dx, y + dy);
+        return tile && !tile.collides;
+      }));
+      if (!clear) continue;
+      this.probePlacePlayer(x, y);
+      return true;
+    }
+    return false;
+  }
+
+  probeReviewCoverage(id: string, coverage: CoverageId | null): void {
+    if (import.meta.env.DEV) this.formVisuals.get(id)?.setReviewCoverage?.(coverage);
+  }
+
+  probeReviewProtection(enabled: boolean): void {
+    if (import.meta.env.DEV) this.combat.setGodMode(enabled);
+  }
+
+  probeReviewHit(id: string, lethal: boolean): void {
+    if (import.meta.env.DEV) this.combat.applyToolDamage(id, lethal ? 999 : 1);
+  }
+
+  probePlacePlayer(x: number, y: number): void {
+    const sprite = this.player.getSprite();
+    sprite.setPosition(x, y);
+    const body = sprite.body as Phaser.Physics.Arcade.Body | null;
+    body?.reset(x, y);
+    this.player.postUpdate();
+  }
+
+  probeSetSearchHeld(held: boolean): void {
+    this.probeSearchHeld = held;
+  }
+
+  probeGetSearchState(): {
+    prompt: string | null;
+    progress: number | null;
+    remaining: number;
+    kindling: number;
+    fragmentTypeId: string;
+    seed: number;
+    player: { x: number; y: number };
+    nodes: ReadonlyArray<{
+      id: string;
+      kind: 'kindling' | 'contaminant';
+      x: number;
+      y: number;
+      collected: boolean;
+    }>;
+  } {
+    const pos = this.player.getPosition();
+    return {
+      prompt: this.search.getPrompt(),
+      progress: this.search.getChannelProgress01(),
+      remaining: this.search.getRemainingCount(),
+      kindling: this.search.getCarriedKindling(),
+      fragmentTypeId: this.layoutDebug.fragmentTypeId,
+      seed: this.layoutDebug.seed,
+      player: { x: pos.x, y: pos.y },
+      nodes: this.search.getNodesProbe(),
+    };
+  }
+}
+
+function readRiftSeed(): number {
+  const query = new URLSearchParams(window.location.search).get('riftSeed');
+  if (query && Number.isFinite(Number(query))) return Number(query) >>> 0;
+  const tagged = /^#rift=(\d+)$/.exec(window.location.hash);
+  return tagged ? Number(tagged[1]) >>> 0 : Date.now() >>> 0;
+}
+
+function readRiftRecipeId(): string | undefined {
+  if (!import.meta.env.DEV) return undefined;
+  return new URLSearchParams(window.location.search).get('riftRecipe') || undefined;
+}

@@ -1,0 +1,913 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-07T09:51:20.507Z",
+  "status": "pass",
+  "algorithmRevisions": [
+    6
+  ],
+  "plan": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play-summary-plan.json",
+  "planSha256": "f5ba1726440c76c962fecb11b122bb3fc808e37076161ef2eac9cd29bfa85841",
+  "method": "Both originally fixed seeds must retain a completed real process; at least one must actually collect a non-entry remain and extract to a settled base. Late/adjacent pickups require entry-to-terminal node changes and matching settled loot receipts. Empty returns and deaths never count as successful searches. All attempts, including original environment errors, remain in the record.",
+  "limitations": "Controlled world/seed with copies of an actually earned save, geometry-assisted expert navigation. Does not establish novice usability, natural continuous economy, visual acceptance, performance, or source continuity to a later catalog; those need separate evidence.",
+  "expectedGradePairs": 12,
+  "qualifiedGradePairs": 12,
+  "expectedSeeds": 24,
+  "scheduledSeeds": 24,
+  "completedSeedProcesses": 24,
+  "actualAttempts": 24,
+  "searchAndExtractAttempts": 23,
+  "emptyReturns": 1,
+  "nearEntryOnlyReturns": 0,
+  "deaths": 0,
+  "invalidOrIncompleteProcesses": 0,
+  "sources": [
+    {
+      "folder": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play",
+      "policy": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/policy-freeze.json",
+      "policySha256": "b33b35032da4bb5c9add6527e1e028e719ccd32d6dc343770111c3108cb0e012",
+      "reportSha256": "63622a1607953382354a390d4603c715a90aefc4658566dbe78ffda336da2199",
+      "sourceManifest": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sourceManifestSha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c",
+      "harnessSha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+      "algorithmRevision": 6,
+      "controllerPolicyRevision": 15,
+      "status": "completed-fixed-attempts-pending-review",
+      "planned": 24,
+      "attempted": 24
+    }
+  ],
+  "pairs": [
+    {
+      "world": "double-return",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/001-double-return-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/002-double-return-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "double-return",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/003-double-return-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/004-double-return-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "double-return",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/005-double-return-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/006-double-return-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "offset-basins",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": false,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/007-offset-basins-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/008-offset-basins-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "offset-basins",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/009-offset-basins-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/010-offset-basins-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "offset-basins",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/011-offset-basins-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/012-offset-basins-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/013-pinched-fan-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/014-pinched-fan-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/015-pinched-fan-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/016-pinched-fan-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/017-pinched-fan-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/018-pinched-fan-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "low",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/019-spliced-reaches-low-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/020-spliced-reaches-low-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "medium",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/021-spliced-reaches-medium-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/022-spliced-reaches-medium-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "severe",
+      "seeds": [
+        {
+          "seed": 20261005,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/023-spliced-reaches-severe-20261005/report.json"
+          ]
+        },
+        {
+          "seed": 3075192741,
+          "scheduled": true,
+          "attempts": 1,
+          "processComplete": true,
+          "searchAndExtract": true,
+          "reports": [
+            "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/024-spliced-reaches-severe-3075192741/report.json"
+          ]
+        }
+      ],
+      "qualified": true
+    }
+  ],
+  "attempts": [
+    {
+      "key": "double-return/low/20261005",
+      "world": "double-return",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/001-double-return-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 526.1178575186362,
+          "elapsedMs": 18615.969999999936
+        }
+      ],
+      "problems": [],
+      "reportSha256": "06c00067a90937ce08fe4dfba42cfd08af563a4f9ce3ab6a1f3c776b108ea186",
+      "outcome": "extract",
+      "elapsedMs": 33948.6799999997,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "double-return/low/3075192741",
+      "world": "double-return",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/002-double-return-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 597.0058626177804,
+          "elapsedMs": 17665.939999999937
+        }
+      ],
+      "problems": [],
+      "reportSha256": "7058e5a763358bfd1dad631a619373f53b2df6fab37164ed16998c14e0ddb6c2",
+      "outcome": "extract",
+      "elapsedMs": 34465.269999999655,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "double-return/medium/20261005",
+      "world": "double-return",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/003-double-return-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 566.4203386178854,
+          "elapsedMs": 17999.279999999955
+        }
+      ],
+      "problems": [],
+      "reportSha256": "92e9906720de1d945682ce260028ad331a205f80db268a2431b0f607afd607e1",
+      "outcome": "extract",
+      "elapsedMs": 32598.669999999693,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "double-return/medium/3075192741",
+      "world": "double-return",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/004-double-return-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 579.378977871997,
+          "elapsedMs": 19182.589999999924
+        }
+      ],
+      "problems": [],
+      "reportSha256": "2eb03ba9bde8380b016dce826902d5cbe132a2e247a7745da590a60076bdcd34",
+      "outcome": "extract",
+      "elapsedMs": 36515.19999999972,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "double-return/severe/20261005",
+      "world": "double-return",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/005-double-return-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 526.1178575186362,
+          "elapsedMs": 19432.5699999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "da4eea2618a2bf9b843791ef043ccabb3563c0acd189279f27e4f81b107ef41b",
+      "outcome": "extract",
+      "elapsedMs": 33581.989999999685,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "double-return/severe/3075192741",
+      "world": "double-return",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/006-double-return-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-2",
+          "distanceFromEntry": 781.0966649525525,
+          "elapsedMs": 47614.77999999997
+        }
+      ],
+      "problems": [],
+      "reportSha256": "78dcbfa8269a54d2333274e3741a22437713ba34635eca867aadeae27c1cd80e",
+      "outcome": "extract",
+      "elapsedMs": 65664.03999999983,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "offset-basins/low/20261005",
+      "world": "offset-basins",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/007-offset-basins-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": false,
+      "collected": [],
+      "problems": [],
+      "reportSha256": "981fc4a606e4886f9feeb8d70a88227d24c873e28885f605b094b14f23894c69",
+      "outcome": "extract",
+      "elapsedMs": 77563.54000000004,
+      "actualPickups": 0,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "offset-basins/low/3075192741",
+      "world": "offset-basins",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/008-offset-basins-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 529.7546601965857,
+          "elapsedMs": 15866.079999999987
+        }
+      ],
+      "problems": [],
+      "reportSha256": "f31fb416566934f5727ff784abdd3f6b6399589addaedefe3c08c4234f665b66",
+      "outcome": "extract",
+      "elapsedMs": 30615.46999999968,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "offset-basins/medium/20261005",
+      "world": "offset-basins",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/009-offset-basins-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 487.2124793147237,
+          "elapsedMs": 23099.029999999835
+        }
+      ],
+      "problems": [],
+      "reportSha256": "52c27ce8b65f88660bc6a36fa47b20e804cc25c1bbbcc0b370ef4bbf1f3f3526",
+      "outcome": "extract",
+      "elapsedMs": 45198.1599999999,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "offset-basins/medium/3075192741",
+      "world": "offset-basins",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/010-offset-basins-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 825.3968742368728,
+          "elapsedMs": 43948.219999999805
+        }
+      ],
+      "problems": [],
+      "reportSha256": "f3b29d5c24560b38b8eb6be6f6938f520e56cf46d90a94d5f2081e96d11a7df3",
+      "outcome": "extract",
+      "elapsedMs": 67513.94999999976,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "offset-basins/severe/20261005",
+      "world": "offset-basins",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/011-offset-basins-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 479.5331062606627,
+          "elapsedMs": 25315.659999999756
+        }
+      ],
+      "problems": [],
+      "reportSha256": "b2a3c2f636081d5fab0e66b1353c7f954becaa53c819948978d390af4e7300af",
+      "outcome": "extract",
+      "elapsedMs": 46264.82999999989,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "offset-basins/severe/3075192741",
+      "world": "offset-basins",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/012-offset-basins-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 532.8864794681883,
+          "elapsedMs": 16216.019999999988
+        }
+      ],
+      "problems": [],
+      "reportSha256": "b1088e04bf18ac6a96791e66e03072ce172f842b6af3d0f61b75136ff4725cbd",
+      "outcome": "extract",
+      "elapsedMs": 31698.719999999652,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pinched-fan/low/20261005",
+      "world": "pinched-fan",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/013-pinched-fan-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 593.3498125052371,
+          "elapsedMs": 12849.45999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "443d94205db523d46bada65e0804d72e45fd2f4f403f67b5649161640e67e470",
+      "outcome": "extract",
+      "elapsedMs": 22965.7499999998,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pinched-fan/low/3075192741",
+      "world": "pinched-fan",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/014-pinched-fan-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 14082.759999999991
+        }
+      ],
+      "problems": [],
+      "reportSha256": "52d083b4927109173dc747d590954d70cc4d0076064449d309a6c99e2b6e99e3",
+      "outcome": "extract",
+      "elapsedMs": 24815.689999999777,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pinched-fan/medium/20261005",
+      "world": "pinched-fan",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/015-pinched-fan-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 604.0397337924054,
+          "elapsedMs": 14932.77999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "2f36ba32043fac5685d448031afa693f3bcc336ae6b7978d054eabfb53d62009",
+      "outcome": "extract",
+      "elapsedMs": 25299.019999999713,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pinched-fan/medium/3075192741",
+      "world": "pinched-fan",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/016-pinched-fan-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 609.3143687785476,
+          "elapsedMs": 13632.76999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "3202079d174a640bbc93f174bb7cc9c114a5ca59aefa88ccf2411b6bcd16ee27",
+      "outcome": "extract",
+      "elapsedMs": 24399.019999999793,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pinched-fan/severe/20261005",
+      "world": "pinched-fan",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/017-pinched-fan-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.4734998338055,
+          "elapsedMs": 13032.80999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "acd82d9befbbbe7b0768d0821b641892056afce0d9fb6549d05dfa5c41ded22f",
+      "outcome": "extract",
+      "elapsedMs": 24582.349999999773,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "pinched-fan/severe/3075192741",
+      "world": "pinched-fan",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/018-pinched-fan-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 593.3498125052371,
+          "elapsedMs": 13916.11999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "3eb6126069daf610903fe3f38330c18652844c9317611335a3e3e231286d9f8f",
+      "outcome": "extract",
+      "elapsedMs": 25182.32999999975,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "spliced-reaches/low/20261005",
+      "world": "spliced-reaches",
+      "grade": "low",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/019-spliced-reaches-low-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 561.8825500048921,
+          "elapsedMs": 17799.29999999996
+        }
+      ],
+      "problems": [],
+      "reportSha256": "aba39af21c02760eb7c14d7122d34933d11566f37108cee7f75c90ec6bc3e583",
+      "outcome": "extract",
+      "elapsedMs": 34298.639999999716,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "spliced-reaches/low/3075192741",
+      "world": "spliced-reaches",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/020-spliced-reaches-low-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 555.6977595779922,
+          "elapsedMs": 16299.35999999999
+        }
+      ],
+      "problems": [],
+      "reportSha256": "58b6412482408a5a9c08091e0c86f33b9675d239d66ad725494bc736e8f76b23",
+      "outcome": "extract",
+      "elapsedMs": 31315.419999999704,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "spliced-reaches/medium/20261005",
+      "world": "spliced-reaches",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/021-spliced-reaches-medium-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 562.1103094589175,
+          "elapsedMs": 31965.379999999674
+        }
+      ],
+      "problems": [],
+      "reportSha256": "f41db267ce32962e413834421e804b4a4052b75db4b1b567709401b1aae7afdf",
+      "outcome": "extract",
+      "elapsedMs": 48531.419999999925,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "spliced-reaches/medium/3075192741",
+      "world": "spliced-reaches",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/022-spliced-reaches-medium-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 640.4498419080139,
+          "elapsedMs": 65264.039999999695
+        }
+      ],
+      "problems": [],
+      "reportSha256": "cb461ac211a0273d83571c5260d423330ff3fa142bdcfa13a86e3052c22e317d",
+      "outcome": "extract",
+      "elapsedMs": 90963.04000000021,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "spliced-reaches/severe/20261005",
+      "world": "spliced-reaches",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/023-spliced-reaches-severe-20261005/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 562.1103094589175,
+          "elapsedMs": 17265.979999999974
+        }
+      ],
+      "problems": [],
+      "reportSha256": "97e09e2caa85df68cd4b50aa6e7247c96e717dcc42e62246a18a53ddb5a69557",
+      "outcome": "extract",
+      "elapsedMs": 32765.3599999997,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    },
+    {
+      "key": "spliced-reaches/severe/3075192741",
+      "world": "spliced-reaches",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/play/024-spliced-reaches-severe-3075192741/report.json",
+      "exitCode": 0,
+      "processComplete": true,
+      "searchAndExtract": true,
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 561.8825500048921,
+          "elapsedMs": 21315.819999999894
+        }
+      ],
+      "problems": [],
+      "reportSha256": "01090c7c8c0836df53705f632905ff37616b21a6975fc854abe5f523278d8037",
+      "outcome": "extract",
+      "elapsedMs": 37765.14999999976,
+      "actualPickups": 1,
+      "nearEntryPickups": 0
+    }
+  ]
+}

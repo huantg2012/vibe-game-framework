@@ -1,0 +1,30 @@
+{
+  "status": "code-reviewed-runtime-samples-pending",
+  "reviewer": "root",
+  "at": "2026-10-07T07:45:26.181231+00:00",
+  "sources": [
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "sha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd"
+    },
+    {
+      "path": "src/systems/r100-world-presentation.ts",
+      "sha256": "f19b862e9897b6f8f44162d8c726a833da25963cb71a106b101616fb22a19a96"
+    },
+    {
+      "path": "src/systems/r100-world/presentation.ts",
+      "sha256": "9cf946e3fcd26264dfd1d8d13e1c6a159084416ec052e82d13e25f57ebb91750"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    }
+  ],
+  "findings": [
+    "Each native renderer creates two shaders, links one program, and calls deleteShader on both after linking. A deleted attached shader may remain owned by its program until program deletion; cumulative created counts are not a leak metric.",
+    "Renderer.destroy is guarded and deletes textures, buffer and program, loses the WebGL2 context and reduces the canvas backing. Constructor failure loses the context before rethrow.",
+    "Prepared renderers are owned by a two-entry map before transfer. Replacement, abort and eviction destroy the unconsumed renderer; preparation tickets reject superseded completion. The runtime receives unique ownership and MasterPresentation.destroy removes the Phaser texture and destroys the renderer.",
+    "The lifecycle observer uses WeakRef plus create/delete/context-loss tracking. Shader active counts concern explicit deletion flags; live counts require real GC samples and comparison after identical-world return. Driver memory is outside the observation."
+  ],
+  "requiredActualReview": "Read all 12 final108 actual samples; compare Shader created/live/active progression with warm baseline and check final source/report/source binding before separate approval. No final pass is issued by this preparatory read."
+}

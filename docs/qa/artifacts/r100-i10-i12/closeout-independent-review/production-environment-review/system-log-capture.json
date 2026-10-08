@@ -1,0 +1,17 @@
+{
+  "status": "read-only-capture",
+  "capturedAt": "2026-10-07T16:08:48.309Z",
+  "command": [
+    "/usr/bin/pmset",
+    "-g",
+    "log"
+  ],
+  "filter": "2026-10-07 local23:34 and23:55; Sleep,Wake,WakeDetails,WakeTime,PM Client Acks rows only",
+  "exitCode": 0,
+  "lines": 7,
+  "output": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/production-environment-review/independent-system-sleep-excerpt.txt",
+    "sha256": "8080d28abaceba1589f0f553e9f814bd290da6f0abb0bf766e00464c93b0cccb"
+  },
+  "limitations": "Filtered system log; not a browser readiness observation or causal proof."
+}

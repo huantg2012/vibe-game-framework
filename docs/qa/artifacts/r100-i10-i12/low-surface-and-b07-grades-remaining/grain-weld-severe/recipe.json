@@ -1,0 +1,307 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "grain-weld",
+    "label": "砂挤断缝",
+    "description": "砂挤断缝的原生材料与完整搜撤地段",
+    "material": "granular",
+    "surface": {
+      "substrate": "granular",
+      "coating": "granular",
+      "organization": "bands",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 2306116,
+      "floor": 5401473,
+      "floorLight": 9545143,
+      "materialDark": 5591122,
+      "materialMid": 10920096,
+      "materialLight": 14143944,
+      "faceLight": 13285024,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 5401473,
+      "groundLight": 9545143,
+      "groundDark": 2306116,
+      "wall": 10920096,
+      "wallLight": 14143944,
+      "wallDark": 5591122
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "grain-weld",
+    "ground": {
+      "dark": 2306116,
+      "mid": 5401473,
+      "light": 9545143
+    },
+    "solid": {
+      "dark": 5591122,
+      "mid": 10920096,
+      "light": 14143944
+    },
+    "cleaved": {
+      "dark": 5391417,
+      "mid": 9994866,
+      "light": 13285024
+    },
+    "secondary": {
+      "dark": 4465456,
+      "mid": 8994386,
+      "light": 12682641
+    },
+    "groundPattern": "grains",
+    "patternScale": 224,
+    "patternStrength": 0.43,
+    "secondaryCoverage": 0.19,
+    "textureContrast": 1.16,
+    "quietCoverage": 0.59
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "grain-weld-severe",
+    "family": "granular-ridge",
+    "grade": "severe",
+    "label": "砂挤断缝",
+    "profile": "grain-weld",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": -0.28,
+    "light_radius": 154,
+    "emission": 0.72,
+    "motion_period": 14,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "folded-slab",
+        "role": "relief",
+        "x": 480,
+        "y": 315,
+        "rotation": 0.15,
+        "length": 440,
+        "width": 200,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.44000000000000006,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-fan"
+      },
+      {
+        "id": 2,
+        "family": "folded-slab",
+        "role": "relief",
+        "x": 629,
+        "y": 495,
+        "rotation": 0.12,
+        "length": 444,
+        "width": 215,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.385,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-fan"
+      },
+      {
+        "id": 3,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 485,
+        "y": 320,
+        "rotation": 0.1,
+        "length": 219,
+        "width": 112,
+        "height": 55,
+        "thickness": 12,
+        "fold": 0.7040000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 4,
+        "family": "granular-ridge",
+        "role": "relief",
+        "x": 630,
+        "y": 486,
+        "rotation": 0.12,
+        "length": 225,
+        "width": 98,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.49500000000000005,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 5,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 321,
+        "y": 280,
+        "rotation": 0.31,
+        "length": 163,
+        "width": 98,
+        "height": 33,
+        "thickness": 9,
+        "fold": 0.539,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 6,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 790,
+        "y": 522,
+        "rotation": -0.25,
+        "length": 155,
+        "width": 108,
+        "height": 40,
+        "thickness": 10,
+        "fold": 0.638,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "package": {
+    "id": "r100-grain-weld",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "folded-slab": {
+        "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+        "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+        "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+      },
+      "granular-ridge": {
+        "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+        "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+        "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+      }
+    },
+    "dependencyHash": "ca36c9da",
+    "grade": "severe"
+  }
+}

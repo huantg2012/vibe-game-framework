@@ -1,0 +1,44 @@
+{
+  "status": "pass-source-expression-contract",
+  "harness": {
+    "path": "tools/qa/check-r100-presentation-phases.ts",
+    "sha256": "2df8f623c0c73cbec4dd8b8c2e3d643bebcca9aa9bc9edbf7a92e672b29bce0b"
+  },
+  "extractedExpressionSha256": "8872faf031aadaf2188b74a697277204e2f4b927a6005011f0b520fa95fcf078",
+  "compiledFinalDefine": "process.env.QA_MATRIX_FINAL=1",
+  "tests": [
+    {
+      "name": "Current real108 catalog and original fixed plan",
+      "result": "accepted-final108-selection"
+    },
+    {
+      "name": "Runtime QA_MATRIX_FINAL=0 cannot disable compiled final gate",
+      "result": "accepted-final108-selection"
+    },
+    {
+      "name": "QA_WORLDS explicit one-world subset",
+      "result": "rejected-before-world-generation"
+    },
+    {
+      "name": "QA_WORLDS empty override",
+      "result": "rejected-before-world-generation"
+    },
+    {
+      "name": "Stale104 generated catalog",
+      "result": "rejected-before-world-generation"
+    },
+    {
+      "name": "Same count duplicate replaces a planned world",
+      "result": "rejected-before-world-generation"
+    },
+    {
+      "name": "Same count unknown replaces a planned world",
+      "result": "rejected-before-world-generation"
+    },
+    {
+      "name": "Modified plan bytes despite identical parsed data",
+      "result": "rejected-before-world-generation"
+    }
+  ],
+  "scope": "Runs the real harness selection-prefix expressions under the same esbuild final define, against the actual108 catalog and original plan. Six intentional invalid input variants reject before any runtime/map imports; no matrix, game, browser, rendered pixels or audio was executed."
+}

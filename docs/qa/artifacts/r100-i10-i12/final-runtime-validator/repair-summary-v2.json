@@ -1,0 +1,69 @@
+{
+  "status": "pass-bounded-qa-validator-repair",
+  "createdAt": "2026-10-07T07:26:58.833670+00:00",
+  "sources": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-report-contract.mjs",
+      "sha256": "5de91c51eb0fca83974b85f4a92d62e739d295d4c1a9f55fe93bd706adbac707"
+    }
+  ],
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/final-probe-before.mjs",
+    "sha256": "93bccf1021f8b1fd65631c1da9e358d3a2169e40592664c2d8ed213bd821c4f8"
+  },
+  "diff": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/numeric-validation-v2.diff",
+    "sha256": "12da12af337cf0e622f1f5598b68c24f65071467db627726c16ee77f9e80f212"
+  },
+  "scope": "Only validateFinalReport budget/lifecycle branches and their required pure helpers; original scenario/input/seed/duration/thresholds/browser launch are unchanged.",
+  "outsideValidatorAndHelpersExact": true,
+  "checks": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/contract-attempt2.json",
+      "sha256": "dcfe6e6f704aecb4ccd3f701e64598a277427fff52276184b0d9100954de54b6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/existing-self-check.log",
+      "sha256": "299bbe258bff8971a744c3d91ac33729a317565f092d29ed6e9c6944c1e7dba5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/typecheck.log",
+      "sha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/dev-smoke.json",
+      "sha256": "9d810d543dda9d810306d75bc05b85fcedd662578b9dc00043f47f4d1f12cd43"
+    }
+  ],
+  "syntax": "node --check on both files passed",
+  "lint": "No package lint script; scoped git diff --check passed",
+  "devCleanup": {
+    "ownedVitePid": 69457,
+    "terminated": true,
+    "matchingProcessesAfter": []
+  },
+  "remainingShaderGate": {
+    "numericStatus": "pass-measured-lifecycle-contract does not grant review",
+    "validatorReturn": "independentShaderReview=pending-separate-receipt",
+    "currentBinderConsumes": [
+      "production",
+      "equivalence"
+    ],
+    "requiredAtClosure": "Root must bind final actual lifecycle report/source-binding and independent shader review; no closure or shader review granted here"
+  },
+  "limitations": [
+    "Prior52 real report baselines only; not final108 runtime evidence.",
+    "Stored measured quantiles are checked for finite domains/order and original limits; frame arrays were not retained by the historical harness and are not invented.",
+    "QA_EXCLUSIVE_WINDOW is operator declaration; real final performance still requires exclusive CPU plus Chrome.",
+    "Typecheck and HTTP smoke are non-performance checks; no browser or map-generation run."
+  ],
+  "previous": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/repair-summary.json",
+    "sha256": "1f67bf3fcc6a06f12c49bfb4c7c39534dff723076652ff23b72117e4d2fcfd1f"
+  },
+  "peerNarrowFix": "Pipeline review found report-catalog permutation could change seed ownership; require exact compiled catalog order and reject consistent catalog/coverage reordering. Original 52 baselines still pass; negatives now35."
+}

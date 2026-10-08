@@ -1,0 +1,37 @@
+{
+  "predecessor": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play-execution.json",
+    "sha256": "57b0993b316f19753dea7a80334d355690a6fe1f507b9556b11c441e444c0a99"
+  },
+  "status": "failed",
+  "pid": 66820,
+  "startedAt": "2026-10-07T08:01:04.594Z",
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3120-remaining84-plan.json",
+    "sha256": "1c345c366be997286da448bed44533428e6ab4bbe2a0d817c5435ce27bd2154e"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/run-current3120-remaining84.mjs",
+    "sha256": "3264bee4095b75edc6a4e850a1e76fab350ff2e5ae4241f0518be0aa96846ecd"
+  },
+  "stages": [
+    {
+      "id": "B08-original24",
+      "cases": 24,
+      "code": 0,
+      "signal": null,
+      "elapsedSeconds": 996.637,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/queue-launch.log",
+        "sha256": "21c314fe086709933625d3a3e2d19e5ad701810e4203248e3615ed12ef8ff769"
+      },
+      "execution": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-execution.json",
+        "sha256": "751bbded253b38de53c4f99b3a56dd5fde98646f3c2e9218a481b302c39974fe"
+      }
+    }
+  ],
+  "current": "B08-original24",
+  "error": "Error: EEXIST: file already exists, open 'docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/queue-launch.log'\n    at Object.openSync (node:fs:562:18)\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/run-current3120-remaining84.mjs:30:57\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)",
+  "finishedAt": "2026-10-07T08:17:41.359Z"
+}

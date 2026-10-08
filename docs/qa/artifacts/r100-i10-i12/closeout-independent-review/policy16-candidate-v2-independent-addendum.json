@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "status": "pass-for-v2-preflight-only",
+  "createdAt": "2026-10-07T13:01:33.136Z",
+  "reviewer": "i12_qa",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/candidate-v2.json",
+    "sha256": "8a5460ad6999697a0533e9f3b54335ae0748679373e7f9757687139fbcd76983"
+  },
+  "priorReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/policy16-candidate-independent-review.json",
+    "sha256": "e4ce211946a7dc2dbf1c30f3df42818f7c2ce7533b16db69ae7bac84ff3af85a"
+  },
+  "change": "Exactly one new assertion rejects any existing output directory before source reads, network preflight or browser work; removing that exact line restores the reviewed v1 wrapper SHA.",
+  "checks": {
+    "allCandidateRefsMatch": true,
+    "soleWrapperDeltaVerified": true,
+    "syntaxExit": 0,
+    "existingOutputRejected": {
+      "exitCode": 1,
+      "stderr": "node:internal/modules/run_main:122\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Preserve every earlier output, including preflight failures; choose a fresh directory\n    at file:///Users/yilungao/coh/tools/qa/r100-i12-recheck-coverage.mjs:17:1 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '=='\n}\n\nNode.js v22.14.0\n"
+    },
+    "existingFilesUnchanged": true
+  },
+  "limitations": [
+    "All prior review limits remain, including real-clock overrun invalidation",
+    "No protocol approval or browser/gameplay execution",
+    "No qualification or P42/P43 closeout"
+  ]
+}

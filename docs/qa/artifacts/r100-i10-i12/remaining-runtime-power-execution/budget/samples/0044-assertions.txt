@@ -1,0 +1,30 @@
+2026-10-08 13:35:21 +0800 
+Assertion status system-wide:
+   BackgroundTask                 0
+   ApplePushServiceTask           0
+   UserIsActive                   1
+   PreventUserIdleDisplaySleep    0
+   SoftwareUpdateTask             0
+   PreventSystemSleep             0
+   ExternalMedia                  0
+   InternalPreventDisplaySleep    1
+   PreventUserIdleSystemSleep     1
+   NetworkClientActive            0
+Listed by owning process:
+   pid 395(runningboardd): [0x0023a08600018937] 00:00:00 PreventUserIdleSystemSleep named: "osservice<com.tencent.iOA.startup(501)>395-52970-2146405:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 52970. 
+   pid 395(runningboardd): [0x0023a08600018936] 00:00:01 PreventUserIdleSystemSleep named: "xpcservice<com.tencent.iOA.ticket([osservice<com.tencent.iOA.startup(501)>:52970])(501)>{vt hash: 0}:21110395-21110-2146404:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 21110. 
+   pid 94761(caffeinate): [0x00239baf000185e8] 00:20:39 PreventUserIdleSystemSleep named: "caffeinate command-line tool"  
+	Details: caffeinate asserting on behalf of '/usr/local/bin/node' (pid 94758)
+	Localized=THE CAFFEINATE TOOL IS PREVENTING SLEEP.
+   pid 401(WindowServer): [0x0023607f0009a483] 02:01:12 UserIsActive named: "com.apple.iohideventsystem.queue.tickle serviceID:1002818e3 service:AppleMultitouchDevice product:Apple Internal Keyboard / Trackpad eventType:11"  
+	Timeout will fire in 3528 secs Action=TimeoutActionRelease
+   pid 400(coreaudiod): [0x0023a04a000185f6] 00:01:00 PreventUserIdleSystemSleep named: "com.apple.audio.BuiltInSpeakerDevice.context.preventuseridlesleep"  
+	Created for PID: 94857. 
+	Resources: audio-out BuiltInSpeakerDevice 
+   pid 330(powerd): [0x0023665a000185dd] 04:08:12 PreventUserIdleSystemSleep named: "Powerd - Prevent sleep while display is on"  
+   pid 330(powerd): [0x00239bf2001083fd] 00:01:01 InternalPreventDisplaySleep named: "com.apple.powermanagement.delayDisplayOff"  
+	Timeout will fire in 238 secs Action=TimeoutActionTurnOff
+Kernel Assertions: 0x100=MAGICWAKE
+   id=556  level=255 0x100=MAGICWAKE creat=2026/8/10 18:03  mod=2026/10/8 09:40 description=en0 owner=IOSkywalkNetworkBSDClient

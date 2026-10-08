@@ -1,0 +1,251 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "ochre-folds",
+    "label": "赭皮折口",
+    "description": "赭皮折口的原生材料与完整搜撤地段",
+    "material": "membrane",
+    "surface": {
+      "substrate": "membrane",
+      "coating": "membrane",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 3488583,
+      "floor": 8227740,
+      "floorLight": 12240850,
+      "materialDark": 5653299,
+      "materialMid": 11042897,
+      "materialLight": 14005634,
+      "faceLight": 10202823,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 8227740,
+      "groundLight": 12240850,
+      "groundDark": 3488583,
+      "wall": 11042897,
+      "wallLight": 14005634,
+      "wallDark": 5653299
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "ochre-folds",
+    "ground": {
+      "dark": 3488583,
+      "mid": 8227740,
+      "light": 12240850
+    },
+    "solid": {
+      "dark": 5653299,
+      "mid": 11042897,
+      "light": 14005634
+    },
+    "cleaved": {
+      "dark": 2437448,
+      "mid": 5664147,
+      "light": 10202823
+    },
+    "secondary": {
+      "dark": 4535104,
+      "mid": 9726847,
+      "light": 13081261
+    },
+    "groundPattern": "tension",
+    "patternScale": 240,
+    "patternStrength": 0.36,
+    "secondaryCoverage": 0.12,
+    "textureContrast": 1.13,
+    "quietCoverage": 0.64
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "ochre-folds-low",
+    "family": "membrane-rim",
+    "grade": "low",
+    "label": "赭皮折口",
+    "profile": "ochre-folds",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 108,
+    "emission": 0.35,
+    "motion_period": 24,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 342,
+        "y": 254,
+        "rotation": 0.42,
+        "length": 235,
+        "width": 145,
+        "height": 56,
+        "thickness": 10,
+        "fold": 0.5896,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 3,
+        "shapeProfile": "pleated-tear"
+      },
+      {
+        "id": 2,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 658,
+        "y": 330,
+        "rotation": -0.33,
+        "length": 260,
+        "width": 160,
+        "height": 68,
+        "thickness": 12,
+        "fold": 0.6688000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 3,
+        "shapeProfile": "pleated-tear"
+      },
+      {
+        "id": 3,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 773,
+        "y": 578,
+        "rotation": 0.62,
+        "length": 218,
+        "width": 135,
+        "height": 45,
+        "thickness": 9,
+        "fold": 0.49280000000000007,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 3,
+        "shapeProfile": "pleated-tear"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 668,
+          "y": 424
+        },
+        {
+          "x": 704,
+          "y": 416
+        },
+        {
+          "x": 752,
+          "y": 440
+        },
+        {
+          "x": 744,
+          "y": 464
+        },
+        {
+          "x": 692,
+          "y": 454
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "package": {
+    "id": "r100-ochre-folds",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "membrane-rim": {
+        "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+        "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+        "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+      }
+    },
+    "dependencyHash": "e74991e7",
+    "grade": "low"
+  }
+}

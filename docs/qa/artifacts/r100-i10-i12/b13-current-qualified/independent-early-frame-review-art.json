@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "status": "limited-original-and-replay-frames-observed",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T12:27:25.805Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "originalCases": [
+    {
+      "case": "001",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/001-white-scarfield-low-20261005/report.json",
+        "sha256": "427cc75356a832f560af29d9b2a18b75fb289a9c31c420cbc352ba2f566c9288"
+      },
+      "grade": "low",
+      "identity": {
+        "world": "white-scarfield",
+        "requestedSeed": 20261005,
+        "effectiveSeed": 20261005,
+        "recipeId": "r100-native-v3:white-scarfield-low",
+        "signature": "8bde9e39",
+        "algorithmRevision": 6,
+        "dependencyHash": "e7c1f89a"
+      },
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "controlledFixture": "white-scarfield",
+      "noStateInjection": false,
+      "scope": "Fixed world/grade/seed and naturally earned starting save; actual keyboard play. This is not a natural continuous run.",
+      "outcome": "extract",
+      "elapsedMs": 28482.209999999668,
+      "hp": 145,
+      "chaos": 28.975493009033077,
+      "collectedNodes": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 544.0588203494177,
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "case": "002",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/002-white-scarfield-low-3075192741/report.json",
+        "sha256": "171196647ce3c40f216b4e84e16a1d7ffa6af6ac7eccf473f2705b094335ed9f"
+      },
+      "grade": "low",
+      "identity": {
+        "world": "white-scarfield",
+        "requestedSeed": 3075192741,
+        "effectiveSeed": 3075192741,
+        "recipeId": "r100-native-v3:white-scarfield-low",
+        "signature": "ae0e8ac6",
+        "algorithmRevision": 6,
+        "dependencyHash": "e7c1f89a"
+      },
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "controlledFixture": "white-scarfield",
+      "noStateInjection": false,
+      "scope": "Fixed world/grade/seed and naturally earned starting save; actual keyboard play. This is not a natural continuous run.",
+      "outcome": "extract",
+      "elapsedMs": 27665.54999999977,
+      "hp": 145,
+      "chaos": 28.83283251601804,
+      "collectedNodes": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 576.0555528766301,
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "case": "003",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/report.json",
+        "sha256": "96840a1f23f988940d7ff87e7307bf038ab179676fac9720ceed3ee629fef154"
+      },
+      "grade": "medium",
+      "identity": {
+        "world": "white-scarfield",
+        "requestedSeed": 20261005,
+        "effectiveSeed": 20261005,
+        "recipeId": "r100-native-v3:white-scarfield-medium",
+        "signature": "36535484",
+        "algorithmRevision": 6,
+        "dependencyHash": "84b60c68"
+      },
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "controlledFixture": "white-scarfield",
+      "noStateInjection": false,
+      "scope": "Fixed world/grade/seed and naturally earned starting save; actual keyboard play. This is not a natural continuous run.",
+      "outcome": "extract",
+      "elapsedMs": 29565.489999999783,
+      "hp": 145,
+      "chaos": 33.03827530962048,
+      "collectedNodes": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 592.4862867611367,
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": true
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "cleanRecheck": {
+    "case": "003-clean-recheck",
+    "report": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/report.json",
+      "sha256": "cba853fdfa569e74aee7176ba1b5c15b749aa19d0526812cb7394ff5b62edb27"
+    },
+    "grade": "medium",
+    "identity": {
+      "world": "white-scarfield",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "recipeId": "r100-native-v3:white-scarfield-medium",
+      "signature": "36535484",
+      "algorithmRevision": 6,
+      "dependencyHash": "84b60c68"
+    },
+    "policyRevision": 15,
+    "status": "completed-real-input",
+    "controlledFixture": "white-scarfield",
+    "noStateInjection": false,
+    "scope": "Fixed world/grade/seed and naturally earned starting save; actual keyboard play. This is not a natural continuous run.",
+    "outcome": "extract",
+    "elapsedMs": 30982.0599999997,
+    "hp": 145,
+    "chaos": 33.47132579027726,
+    "collectedNodes": [
+      {
+        "id": "r100-kindling-contested-1",
+        "distanceFromEntry": 592.4862867611367,
+        "kind": "kindling",
+        "tier": "contested",
+        "collected": true
+      }
+    ],
+    "kindlingGained": 6,
+    "returnedItemCount": 0,
+    "sameRunSettlementVerified": true,
+    "errors": [],
+    "consoleErrors": []
+  },
+  "comparison": {
+    "fullGenerationIdentityDeepEqual": true,
+    "beforeStateDeepEqual": true,
+    "originalSourceRetained": true,
+    "timingOrPixelEqualityClaimed": false
+  },
+  "originalFailure": {
+    "report": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-network-failure-shapes.json",
+      "sha256": "bde4352753ada12370af28e9ef4c6096a51e3544ec8b64f314a00f2031f132d3"
+    },
+    "failedTransportRequests": 3,
+    "error": "net::ERR_NETWORK_CHANGED",
+    "pendingAtContextClose": 12,
+    "interpretation": "Original003 completed search and same-run settlement, but is not clean runtime evidence. The clean replay is a new additional attempt and cannot erase the original failure or establish its root cause."
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/001-white-scarfield-low-20261005/low/1-far-exploration.png",
+      "sha256": "c81989192a2bafe8975f5dd6f499085f6d7e9f023976e65312b9ee702e5de8e1",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "白灰颗粒床保留大块不规则纹理与较静的边段，左侧低亮绿污染和右下蓝厚体分开；远面已在视野外，不能据此断言完整床形或所有边界。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/001-white-scarfield-low-20261005/low/1-search-1.png",
+      "sha256": "306862904e2bb2106afde93823bb8989afbd4d2bd0f76bc7d93103913d8a485b",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "角色旁蓝厚体的浅色切缘与白灰床分开，搜后青绿余晖集中在角色近处；顶部蓝体只露局部，未见其全形。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/002-white-scarfield-low-3075192741/low/1-search-1.png",
+      "sha256": "04f3e19371fcde888696994a92629d4d6d8ccba00e992715edfaaed19550d5ba",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "白床粗细纹理可辨，搜取后残渣位于人物近脚；右侧存在偏直的暗色界和斜尖分界，保留为原有低面弱项。静帧本身不能判定该界线的可走/碰撞语义。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/002-white-scarfield-low-3075192741/low/1-far-exploration.png",
+      "sha256": "f30a4fe71275fba9b4a9faef61253c23ba7cd77143a64a20b7b424ca79c5f2fa",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "上下两个蓝色断体露出不等厚度和受光面，中间白床走廊与角色分开；上体局部青绿有来源，不是全图绿滤镜。该帧不包含两大片母床全貌。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/1-search-1.png",
+      "sha256": "4864e4090fe764f87de32e55381a47baf1905d3c33c5847519b05c45893d52c0",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "中档白床、人物肩灯和左下暗绿污染体可以分辨；右侧偏直材料界仍可见。此次成功搜取画面不清除这趟启动网络失败。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/1-field-result.png",
+      "sha256": "4868bb669ff1865e1dc26fdf97511bf3b4ba80bd039f851d4b72fe6553234c9b",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "原003画面显示撤离、6薪柴、约30秒和33峰值混乱，与该趟报告相符；结算界面只作结果证据，不作为地形完整质量或UI审美签字。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/medium/1-far-exploration.png",
+      "sha256": "d7d8f28047e7640730c150f10216294d7dd8b4c1380507a2e4a4ce2f1bb10a3b",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "清洁补验的上下蓝厚体及中间白灰床关系可辨，近受光切面有体积；此时无受伤，不支持高压撤退或峰后间隙判断。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/medium/1-search-1.png",
+      "sha256": "f17d42e290abb273f31dbbe6da053ba2713befcbf4541d982da2132db42a31ec",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "清洁补验搜后局部材料与原003一致，左下污染与本色分开；右上斜直材料分界继续记录，未用补验把旧弱项删掉。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/medium/1-field-result.png",
+      "sha256": "6917df69c3e35155277fc54656a31fa99eb59ea8f33bbfb2235ed7ce2c736438",
+      "width": 1440,
+      "height": 960,
+      "viewedBy": "i12_art",
+      "method": "view_image of original PNG; no crop, relighting or geometry overlay",
+      "observation": "补验显示6薪柴、约31秒和33峰值混乱；与原003相近但并非逐像素/时钟相同，角色位置和一句氛围文案也不同。"
+    }
+  ],
+  "findings": {
+    "bounded": "No new definite world-art blocker identified in these nine viewed frames. This is a local observation only, not a whole-world visual approval.",
+    "retainedWeaknesses": [
+      "白砂断原的若干可走低面材料色界仍偏直；只能根据此处原帧描述其外观，不据静帧猜碰撞。",
+      "巨构及母床全貌、视野外边缘未覆盖；低档两种子与中档一种子不代表重档。"
+    ],
+    "notEstablished": [
+      "No continuous video viewed or game operated by this reviewer.",
+      "No dynamics, full route pressure, severe peak/recovery, natural48 economy, GPU/performance or listening conclusion.",
+      "Original and replay all end145HP and short28–31s runs; this does not prove difficult play or long-duration material fatigue."
+    ]
+  },
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/002-white-scarfield-low-3075192741/low/1-far-exploration.png",
+      "sha256": "f30a4fe71275fba9b4a9faef61253c23ba7cd77143a64a20b7b424ca79c5f2fa",
+      "reason": "上下两个蓝色断体露出不等厚度和受光面，中间白床走廊与角色分开；上体局部青绿有来源，不是全图绿滤镜。该帧不包含两大片母床全貌。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/medium/1-search-1.png",
+      "sha256": "f17d42e290abb273f31dbbe6da053ba2713befcbf4541d982da2132db42a31ec",
+      "reason": "清洁补验搜后局部材料与原003一致，左下污染与本色分开；右上斜直材料分界继续记录，未用补验把旧弱项删掉。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/medium/1-field-result.png",
+      "sha256": "6917df69c3e35155277fc54656a31fa99eb59ea8f33bbfb2235ed7ce2c736438",
+      "reason": "补验显示6薪柴、约31秒和33峰值混乱；与原003相近但并非逐像素/时钟相同，角色位置和一句氛围文案也不同。"
+    }
+  ],
+  "pixelModelsReviewApplicability": {
+    "causalChain": "Existing R100 granular beds and broken blue masses are material remains on the XY floor; this task does not propose a new essence, silhouette or world language.",
+    "carrierAndCamera": "Observed existing top-down Rift with original player scale; no camera or plane change.",
+    "nativeContext": "Only original1440x960 normal-FOV screenshots viewed; no fullbright/geometry image used for art claims.",
+    "edgeAndVolume": "Visible lit blue faces/cut ends are distinct from pale bed. No numerical perimeter measurement performed; unlit edges remain unknown.",
+    "flatColour": "Viewed pale bed has coarse and quiet regions, not one flat fill. This limited appearance statement does not replace material source tests.",
+    "animatedStructure": "Not reviewed in continuous time; not claimed.",
+    "palette": "No palette/material/asset altered. R100 source palette authority applies, not historic fixed purification palette. No RGB census performed.",
+    "rotation": "No sprite rotation changed or measured.",
+    "searchRemains": "Only post-search frames were viewed here; unsearched pile identity and no-content-leak remain in prior bounded receipts.",
+    "cardDraw": "Not applicable: no new visual options or human choice loop.",
+    "worldSpecificity": "Observed human shoulder light against material fragments and separate cold pollution; no new props or alien industrial skin introduced.",
+    "isolatedPixels": "No new asset authored and no isolated-pixel machine scan run.",
+    "greenShape": "Visible green areas belong to local pollution/loot aftermath; no dynamic or full perimeter conclusion."
+  },
+  "remaining": [
+    "Original B13 004–024 and B14 still executing; audit those actual reports and sample representative/failed normal frames after completion.",
+    "Final108 source and visual direct continuity remain separate pending binding.",
+    "Human aesthetic approval and R10 listening remain unclaimed."
+  ]
+}

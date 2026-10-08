@@ -1,0 +1,51 @@
+{
+  "status": "pass-strengthened-validator-over-original-browser-report",
+  "scope": "No new browser, generation, source or raw report mutation. Injected requestfailed remains separate; pageerror/console-error forbidden in every context.",
+  "originalReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-browser/attempt-2/report.json",
+    "sha256": "39da8da164c9003675c35b5d5dcd2cb15e0b5658f9f52d494203f09470e076a4",
+    "originalToolSha256": "8aa41a86b227aa4e208cb50f3b90dc9a1aa901ee21fe5af20acf78023f0268a4"
+  },
+  "validator": {
+    "path": "tools/qa/check-r100-worker-startup-browser.mjs",
+    "sha256": "edf6967e001baac2dc556a682b80a56099b73ddefd29f19131e88aabbae6ea7e"
+  },
+  "positiveContexts": [
+    "same-source-no-fault",
+    "generation-initial-script-once",
+    "surface-initial-script-once"
+  ],
+  "negativeCases": [
+    {
+      "context": "same-source-no-fault",
+      "event": "pageerror",
+      "rejected": true
+    },
+    {
+      "context": "same-source-no-fault",
+      "event": "console-error",
+      "rejected": true
+    },
+    {
+      "context": "generation-initial-script-once",
+      "event": "pageerror",
+      "rejected": true
+    },
+    {
+      "context": "generation-initial-script-once",
+      "event": "console-error",
+      "rejected": true
+    },
+    {
+      "context": "surface-initial-script-once",
+      "event": "pageerror",
+      "rejected": true
+    },
+    {
+      "context": "surface-initial-script-once",
+      "event": "console-error",
+      "rejected": true
+    }
+  ],
+  "originalReportUnchanged": true
+}

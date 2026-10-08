@@ -1,0 +1,790 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "plan": {
+    "status": "prepared-not-executed",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+    "scope": "Original woven-quarters short-fibre organization on original compressed-wedge, not new loose material. First actual normal medium review; no borrowed P34 pass. Body goals reference original successful B14 actual paths; live identity, input and facing must be recorded.",
+    "priorPlans": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/plan.json",
+        "sha256": "737eda9b205e9190754133cb764c4d384ffa1b794ddedd7d443089c9d1d95387",
+        "worlds": [
+          "short-fibre-mat",
+          "felt-wedges"
+        ]
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/plan.json",
+        "sha256": "e3fe3ed293d2ea20d09585c249313fc9fb7a7313939898def55802b7760415af",
+        "worlds": [
+          "blue-fault",
+          "pale-pressure"
+        ]
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/plan.json",
+        "sha256": "e1823efe350d1fda7572e54b439b7b09db3fd1926e88f4106ff8cb7f292f95dc",
+        "worlds": [
+          "sloughed-court"
+        ]
+      }
+    ],
+    "cases": [
+      {
+        "world": "woven-quarters",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-material-approach",
+            "x": 468,
+            "y": 372,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 468,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 400,
+              "y": 289
+            },
+            "purpose": "西北唯一厚毡"
+          },
+          {
+            "label": "02-material-approach",
+            "x": 652,
+            "y": 332,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 652,
+              "y": 332
+            },
+            "lookAtMaterialPoint": {
+              "x": 558,
+              "y": 282
+            },
+            "purpose": "北粗纤接两低片"
+          },
+          {
+            "label": "03-material-approach",
+            "x": 644,
+            "y": 636,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 644,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 573,
+              "y": 554
+            },
+            "purpose": "南粗纤与低层"
+          },
+          {
+            "label": "04-material-approach",
+            "x": 772,
+            "y": 452,
+            "faces": [
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 772,
+              "y": 452
+            },
+            "lookAtMaterialPoint": {
+              "x": 780,
+              "y": 560
+            },
+            "purpose": "东侧可踩静片"
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "woven-quarters",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-material-approach",
+            "x": 468,
+            "y": 372,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 468,
+              "y": 372
+            },
+            "lookAtMaterialPoint": {
+              "x": 400,
+              "y": 289
+            },
+            "purpose": "西北唯一厚毡"
+          },
+          "route": {
+            "requested": {
+              "label": "01-material-approach",
+              "x": 468,
+              "y": 372,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 468,
+                "y": 372
+              },
+              "lookAtMaterialPoint": {
+                "x": 400,
+                "y": 289
+              },
+              "purpose": "西北唯一厚毡"
+            },
+            "actual": {
+              "x": 468,
+              "y": 372
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 428,
+                "y": 588
+              },
+              {
+                "x": 428,
+                "y": 556
+              },
+              {
+                "x": 444,
+                "y": 556
+              },
+              {
+                "x": 444,
+                "y": 548
+              },
+              {
+                "x": 460,
+                "y": 548
+              },
+              {
+                "x": 460,
+                "y": 540
+              },
+              {
+                "x": 468,
+                "y": 540
+              },
+              {
+                "x": 468,
+                "y": 372
+              }
+            ],
+            "length": 488,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/01-material-approach-north.png",
+              "sha256": "a834a98ada6da645ce0060a36bb715bc5e1a0b32d114bbe0c4662f03e9867832",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 466.8410577486513,
+                  "y": 372.4782814036388
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.803590551999747,
+                "elapsedMs": 8532.9
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 466.8410577486513,
+                  "y": 372.4782814036388
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 17.836780505999744,
+                "elapsedMs": 8632.9
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "02-material-approach",
+            "x": 652,
+            "y": 332,
+            "faces": [
+              "west"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 652,
+              "y": 332
+            },
+            "lookAtMaterialPoint": {
+              "x": 558,
+              "y": 282
+            },
+            "purpose": "北粗纤接两低片"
+          },
+          "route": {
+            "requested": {
+              "label": "02-material-approach",
+              "x": 652,
+              "y": 332,
+              "faces": [
+                "west"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 652,
+                "y": 332
+              },
+              "lookAtMaterialPoint": {
+                "x": 558,
+                "y": 282
+              },
+              "purpose": "北粗纤接两低片"
+            },
+            "actual": {
+              "x": 652,
+              "y": 332
+            },
+            "points": [
+              {
+                "x": 468,
+                "y": 372
+              },
+              {
+                "x": 468,
+                "y": 436
+              },
+              {
+                "x": 484,
+                "y": 436
+              },
+              {
+                "x": 484,
+                "y": 444
+              },
+              {
+                "x": 524,
+                "y": 444
+              },
+              {
+                "x": 524,
+                "y": 452
+              },
+              {
+                "x": 564,
+                "y": 452
+              },
+              {
+                "x": 564,
+                "y": 460
+              },
+              {
+                "x": 700,
+                "y": 460
+              },
+              {
+                "x": 700,
+                "y": 388
+              },
+              {
+                "x": 684,
+                "y": 388
+              },
+              {
+                "x": 684,
+                "y": 380
+              },
+              {
+                "x": 676,
+                "y": 380
+              },
+              {
+                "x": 676,
+                "y": 348
+              },
+              {
+                "x": 668,
+                "y": 348
+              },
+              {
+                "x": 668,
+                "y": 340
+              },
+              {
+                "x": 660,
+                "y": 340
+              },
+              {
+                "x": 660,
+                "y": 332
+              },
+              {
+                "x": 652,
+                "y": 332
+              }
+            ],
+            "length": 496,
+            "originConnector": {
+              "origin": {
+                "x": 466.8410577486513,
+                "y": 372.4782814036388
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5946,
+                "x": 468,
+                "y": 372,
+                "distance": 1.2537544588267389
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/02-material-approach-west.png",
+              "sha256": "39e786861742c5f7121a25d6b7c04320e5683821e13ea43727dcf3755bcde656",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "west",
+              "actualAngle": 3.141592653589793,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 641.0187308187005,
+                  "y": 328.5676625231103
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.01176018199948,
+                "elapsedMs": 17532.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 641.0187308187005,
+                  "y": 328.5676625231103
+                },
+                "facingAngle": 3.141592653589793,
+                "facing4": "left",
+                "hp": 100,
+                "chaos": 25.078113545999475,
+                "elapsedMs": 17632.6
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "03-material-approach",
+            "x": 644,
+            "y": 636,
+            "faces": [
+              "north"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 644,
+              "y": 636
+            },
+            "lookAtMaterialPoint": {
+              "x": 573,
+              "y": 554
+            },
+            "purpose": "南粗纤与低层"
+          },
+          "route": {
+            "requested": {
+              "label": "03-material-approach",
+              "x": 644,
+              "y": 636,
+              "faces": [
+                "north"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 644,
+                "y": 636
+              },
+              "lookAtMaterialPoint": {
+                "x": 573,
+                "y": 554
+              },
+              "purpose": "南粗纤与低层"
+            },
+            "actual": {
+              "x": 644,
+              "y": 636
+            },
+            "points": [
+              {
+                "x": 644,
+                "y": 324
+              },
+              {
+                "x": 724,
+                "y": 324
+              },
+              {
+                "x": 724,
+                "y": 516
+              },
+              {
+                "x": 708,
+                "y": 516
+              },
+              {
+                "x": 708,
+                "y": 524
+              },
+              {
+                "x": 700,
+                "y": 524
+              },
+              {
+                "x": 700,
+                "y": 532
+              },
+              {
+                "x": 692,
+                "y": 532
+              },
+              {
+                "x": 692,
+                "y": 540
+              },
+              {
+                "x": 684,
+                "y": 540
+              },
+              {
+                "x": 684,
+                "y": 548
+              },
+              {
+                "x": 676,
+                "y": 548
+              },
+              {
+                "x": 676,
+                "y": 556
+              },
+              {
+                "x": 668,
+                "y": 556
+              },
+              {
+                "x": 668,
+                "y": 564
+              },
+              {
+                "x": 660,
+                "y": 564
+              },
+              {
+                "x": 660,
+                "y": 572
+              },
+              {
+                "x": 644,
+                "y": 572
+              },
+              {
+                "x": 644,
+                "y": 636
+              }
+            ],
+            "length": 472,
+            "originConnector": {
+              "origin": {
+                "x": 641.0187308187005,
+                "y": 328.5676625231103
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 5200,
+                "x": 644,
+                "y": 324,
+                "distance": 5.454494188867777
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/03-material-approach-north.png",
+              "sha256": "d69f87303d0b54741f2581384a84845e035fbb88698cec271d0feccd59231249",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "north",
+              "actualAngle": -1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 644.9123040261003,
+                  "y": 626.6698853216817
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 31.43737243799891,
+                "elapsedMs": 27215.6
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 644.9123040261003,
+                  "y": 626.6698853216817
+                },
+                "facingAngle": -1.5707963267948966,
+                "facing4": "up",
+                "hp": 100,
+                "chaos": 31.503719165998906,
+                "elapsedMs": 27315.6
+              }
+            }
+          ]
+        },
+        {
+          "goal": {
+            "label": "04-material-approach",
+            "x": 772,
+            "y": 452,
+            "faces": [
+              "south"
+            ],
+            "authorSupportedBodyPoint": {
+              "x": 772,
+              "y": 452
+            },
+            "lookAtMaterialPoint": {
+              "x": 780,
+              "y": 560
+            },
+            "purpose": "东侧可踩静片"
+          },
+          "route": {
+            "requested": {
+              "label": "04-material-approach",
+              "x": 772,
+              "y": 452,
+              "faces": [
+                "south"
+              ],
+              "authorSupportedBodyPoint": {
+                "x": 772,
+                "y": 452
+              },
+              "lookAtMaterialPoint": {
+                "x": 780,
+                "y": 560
+              },
+              "purpose": "东侧可踩静片"
+            },
+            "actual": {
+              "x": 772,
+              "y": 452
+            },
+            "points": [
+              {
+                "x": 644,
+                "y": 628
+              },
+              {
+                "x": 772,
+                "y": 628
+              },
+              {
+                "x": 772,
+                "y": 452
+              }
+            ],
+            "length": 304,
+            "originConnector": {
+              "origin": {
+                "x": 644.9123040261003,
+                "y": 626.6698853216817
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 10064,
+                "x": 644,
+                "y": 628,
+                "distance": 1.612917757827899
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/04-material-approach-south.png",
+              "sha256": "5f560a31f937c319d86dd0f1267e210a86eef32f93d3a8e39b835c70fbf45078",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707963267948966,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 771.1404281593631,
+                  "y": 456.8044402167389
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 34.66675529399893,
+                "elapsedMs": 32082
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 771.1404281593631,
+                  "y": 456.8044402167389
+                },
+                "facingAngle": 1.5707963267948966,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 34.74417750599894,
+                "elapsedMs": 32198.699999999997
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "woven-quarters",
+        "grade": "medium",
+        "package": {
+          "id": "r100-woven-quarters",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            },
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            },
+            "organization:short-fibre": {
+              "definition": "5136e92cd5d57693961e7e72797a4fa4c543d1ac0adb5008cc9e25b57957822e",
+              "surface": "39a3207c28c9c00ca4713e72cf44edddbd9e948cdd88959d553bb9db94f68b4c",
+              "solid": "488fa9b7cc8cd093c832aab4684cd229b76c582cbecce743d7db24a27b32ec2a"
+            }
+          },
+          "dependencyHash": "e8d7b4df",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=woven-quarters&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/recipe.json",
+        "sha256": "0ef2b184fe56d4a67ed101817e2021de47dc8e3cf7e866cfea21394e2e02f287"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 771.1404281593631,
+          "y": 456.8044402167389
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 34.74417750599894,
+        "elapsedMs": 32198.699999999997
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 771.1404281593631,
+          "y": 456.8044402167389
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 35.54045768999902,
+        "elapsedMs": 33398.6
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

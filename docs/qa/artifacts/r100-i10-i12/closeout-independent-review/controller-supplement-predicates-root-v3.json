@@ -1,0 +1,134 @@
+{
+  "status": "pass",
+  "scope": "Protocol and accounting predicates with synthetic policy16 metadata plus the actual preserved policy15 failures. No policy16 gameplay, root approval or world qualification.",
+  "validator": {
+    "path": "tools/qa/r100-i12-controller-supplement.mjs",
+    "sha256": "e1c9b33dcfd43e0f1714b339f10051fbf1861f07ad37abac11ac8ddd529c45a8"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-i12-controller-supplement.mjs",
+    "sha256": "dcf718b1712668352ab616ff5d81290959036513c410e8f05d74489524f366a4"
+  },
+  "checks": [
+    {
+      "name": "synthetic metadata with actual preserved two original failures",
+      "status": "pass"
+    },
+    {
+      "name": "author cannot approve own new input policy",
+      "status": "pass"
+    },
+    {
+      "name": "broader world scope rejected even with resealed metadata",
+      "status": "pass"
+    },
+    {
+      "name": "replacement seed rejected",
+      "status": "pass"
+    },
+    {
+      "name": "one favorable seed cannot replace the two-seed recheck",
+      "status": "pass"
+    },
+    {
+      "name": "second retry cannot be hidden inside batch",
+      "status": "pass"
+    },
+    {
+      "name": "old attempts cannot be excluded",
+      "status": "pass"
+    },
+    {
+      "name": "six-second input budget cannot be relaxed",
+      "status": "pass"
+    },
+    {
+      "name": "non-entry distance cannot be lowered",
+      "status": "pass"
+    },
+    {
+      "name": "original one-pickup process budget cannot increase",
+      "status": "pass"
+    },
+    {
+      "name": "same original game snapshot required",
+      "status": "pass"
+    },
+    {
+      "name": "same earned starting save required",
+      "status": "pass"
+    },
+    {
+      "name": "executor bytes cannot change after approval",
+      "status": "pass"
+    },
+    {
+      "name": "dependencies cannot be silently replaced",
+      "status": "pass"
+    },
+    {
+      "name": "supplement requires an explicit summary whitelist",
+      "status": "pass"
+    },
+    {
+      "name": "bounded action accounting with exact original identity/save",
+      "status": "pass"
+    },
+    {
+      "name": "changed full generation identity rejected",
+      "status": "pass"
+    },
+    {
+      "name": "added starting resource rejected",
+      "status": "pass"
+    },
+    {
+      "name": "missing explicit action accounting rejected",
+      "status": "pass"
+    },
+    {
+      "name": "multiple additional search actions rejected",
+      "status": "pass"
+    },
+    {
+      "name": "nonfinite game deadline rejected",
+      "status": "pass"
+    },
+    {
+      "name": "invented target rejected",
+      "status": "pass"
+    },
+    {
+      "name": "missing real refused search rejected",
+      "status": "pass"
+    },
+    {
+      "name": "extra action before observed refusal rejected",
+      "status": "pass"
+    },
+    {
+      "name": "missing supplemental action status rejected",
+      "status": "pass"
+    },
+    {
+      "name": "actual game-time overrun remains an invalid attempt, not dropped evidence",
+      "status": "pass"
+    },
+    {
+      "name": "unreleased key makes action invalid",
+      "status": "pass"
+    },
+    {
+      "name": "unproven time bound makes action invalid",
+      "status": "pass"
+    },
+    {
+      "name": "caught action error cannot become a successful process",
+      "status": "pass"
+    },
+    {
+      "name": "four actual pickups rejected independently of reported search target count",
+      "status": "pass"
+    }
+  ]
+}

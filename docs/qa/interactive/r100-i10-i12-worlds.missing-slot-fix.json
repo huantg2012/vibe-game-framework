@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "status": "missing-slot-grade-jump-verified-browser-unverified",
+  "reviewer": "i12_art",
+  "at": "2026-10-08T01:45:21.963Z",
+  "features": [
+    "F052",
+    "F012"
+  ],
+  "problem": "The missing-slot list formerly called ordinary neighborButton, so it preserved the currently selected grade instead of the clicked missing grade.",
+  "change": "Only missing-slot buttons now assign their own slot.grade and frame0 before chooseWorld(slot.worldId,true). Ordinary neighborButton and chooseWorld functions remain byte-identical. The current check link points to v2.",
+  "before": {
+    "htmlOriginalPath": "docs/qa/interactive/r100-i10-i12-worlds.html",
+    "htmlArchived": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.before-missing-slot-fix.html",
+      "sha256": "0c977f0263333c651d68d792894eba957a5e98387a5482dbd3ca7a775fc33da8"
+    },
+    "staticCheck": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.check.json",
+      "sha256": "245aaa2f3b6e7a195a0614cd2b968ec4bf9f4ba92c5e8a3da7cace4b77927b33"
+    },
+    "data": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+      "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+    }
+  },
+  "after": {
+    "html": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+      "sha256": "9ac9503887080489e80c31a4e3d4a0df5835e284eea45a19128c86cbda7fa620"
+    },
+    "staticCheck": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.check-v2.json",
+      "sha256": "dc3fded6dcbc06d40cd6884f0a403010eefe52b58019dde3d0e2d023c223b881"
+    },
+    "data": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+      "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+    }
+  },
+  "verification": {
+    "diffLimitedToMissingSlotCallbackAndCheckLink": true,
+    "ordinaryNeighborFunctionUnchanged": true,
+    "worldChoiceFunctionUnchanged": true,
+    "dataBytesUnchanged": true,
+    "oldStaticCheckBytesUnchanged": true,
+    "oldHtmlBytesArchivedExactly": true,
+    "nodeOnlyHandlerChecks": {
+      "missingSlots": 54,
+      "startingGrades": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "startingFrame": 7,
+      "missingSlotTransitionsPassed": 162,
+      "ordinaryNeighborGradePreservationPassed": 3,
+      "method": "Executed the exact new callback and unchanged chooseWorld/neighborButton function text in Node VM with minimal event/element stubs; asserted resulting world, grade, frame0 and preserved normal-neighbor grades. This is not browser or DOM rendering verification."
+    },
+    "fullStaticValidation": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.check-v2.json",
+      "sha256": "dc3fded6dcbc06d40cd6884f0a403010eefe52b58019dde3d0e2d023c223b881"
+    },
+    "browserOpened": false,
+    "newImagesOrDataOrSignedReceiptsModified": false
+  },
+  "limits": [
+    "No Chrome or actual browser interaction/layout check was performed. Root will independently review browser behavior after production finishes.",
+    "Original images, final art/sound signatures and gallery data remain unchanged."
+  ],
+  "errors": []
+}

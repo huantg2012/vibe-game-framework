@@ -1,0 +1,32 @@
+{
+  "status": "pass-plan-only",
+  "canonical": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-artifact-contract.json",
+    "sha256": "0bd1942bb61fad93bc94088943a235c1764aac2605288a58606b768cea4016e8"
+  },
+  "original": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/final-artifact-contract-before-command-unification.json",
+    "sha256": "89387d90508b2e67f002bb989abe913e6a4649e71b649af79510afee666bd07b"
+  },
+  "companion": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/plan.json",
+    "sha256": "204bc2ecedb0271149419a0fd09700e3e29795ad83346e1f15ca6f91a11974ff"
+  },
+  "productionArgumentsExact": true,
+  "sourceToolsUnchanged": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "93bccf1021f8b1fd65631c1da9e358d3a2169e40592664c2d8ed213bd821c4f8"
+    },
+    {
+      "path": "tools/qa/check-r100-production-browser.mjs",
+      "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    }
+  ],
+  "historicalReference": "Companion plan.json remains byte-identical. Its originalFinalContract hash resolves to the retained original byte snapshot in this receipt; revision2 is now the execution contract. No final runtime has started.",
+  "lifecycleShaderReview": "pending actual counts and ownership interpretation"
+}

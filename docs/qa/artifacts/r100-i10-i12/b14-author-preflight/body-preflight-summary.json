@@ -1,0 +1,452 @@
+{
+  "status": "actual-Master-body12-pass-not-normal-view-qualified",
+  "worlds": 4,
+  "grades": 3,
+  "cases": 12,
+  "seed": 20261005,
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-author-preflight/body12/report.json",
+    "sha256": "7e699129b342c5427cc70355b8ec220737792a1723b4f37ad462385d58388280"
+  },
+  "sourceSnapshot": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-author-preflight/body12/source-snapshot.json",
+    "sha256": "7559398acf98115d63c5ed810b6f76140a4ae908a5e762ff30070ae13841c64a"
+  },
+  "scope": "Actual Master terrain/raster/native20 body; all original intent routes and spawn links,24px station bound, per-solid visible cut>=16 and fracture>=4. No production play or normal-FOV art admission.",
+  "minimumVisibleCutPixels": 269,
+  "minimumVisibleFracturePixels": 5,
+  "durationMsSum": 10733.572335000003,
+  "timingLimit": "Diagnostic duration only; not an exclusive performance benchmark.",
+  "rows": [
+    {
+      "world": "fractured-estuary",
+      "grade": "low",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 4,
+          "cut": 661,
+          "joint": 12
+        },
+        {
+          "id": 5,
+          "cut": 745,
+          "joint": 10
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "medium",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 4,
+          "cut": 660,
+          "joint": 12
+        },
+        {
+          "id": 5,
+          "cut": 745,
+          "joint": 9
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "severe",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 4,
+          "cut": 660,
+          "joint": 13
+        },
+        {
+          "id": 5,
+          "cut": 745,
+          "joint": 12
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "low",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 1415,
+          "joint": 30
+        },
+        {
+          "id": 5,
+          "cut": 644,
+          "joint": 69
+        },
+        {
+          "id": 6,
+          "cut": 815,
+          "joint": 65
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 2,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 1952,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 5328,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 4768,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 3408,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "medium",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 1405,
+          "joint": 30
+        },
+        {
+          "id": 5,
+          "cut": 648,
+          "joint": 67
+        },
+        {
+          "id": 6,
+          "cut": 817,
+          "joint": 68
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 2,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 1968,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 5232,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 4768,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 3456,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "severe",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 1390,
+          "joint": 30
+        },
+        {
+          "id": 5,
+          "cut": 637,
+          "joint": 68
+        },
+        {
+          "id": 6,
+          "cut": 824,
+          "joint": 68
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 2,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 1984,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 5200,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 4752,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 3488,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "low",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 3,
+          "cut": 618,
+          "joint": 10
+        },
+        {
+          "id": 4,
+          "cut": 887,
+          "joint": 13
+        },
+        {
+          "id": 5,
+          "cut": 272,
+          "joint": 22
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 10064,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 4064,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 9696,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 5120,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "medium",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 3,
+          "cut": 618,
+          "joint": 11
+        },
+        {
+          "id": 4,
+          "cut": 888,
+          "joint": 14
+        },
+        {
+          "id": 5,
+          "cut": 272,
+          "joint": 22
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 10064,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 4064,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 9696,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 5120,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "severe",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 3,
+          "cut": 618,
+          "joint": 11
+        },
+        {
+          "id": 4,
+          "cut": 888,
+          "joint": 13
+        },
+        {
+          "id": 5,
+          "cut": 272,
+          "joint": 22
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 10064,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 4064,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 9696,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 5120,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "last-shelf",
+      "grade": "low",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 269,
+          "joint": 44
+        },
+        {
+          "id": 3,
+          "cut": 328,
+          "joint": 5
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "last-shelf",
+      "grade": "medium",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 269,
+          "joint": 44
+        },
+        {
+          "id": 3,
+          "cut": 328,
+          "joint": 5
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "last-shelf",
+      "grade": "severe",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 270,
+          "joint": 44
+        },
+        {
+          "id": 3,
+          "cut": 328,
+          "joint": 5
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    }
+  ],
+  "oldPrefix": {
+    "status": "author-catalog-ready-not-qualified",
+    "baseWorldCount": 104,
+    "newWorldCount": 108,
+    "appendedWorlds": [
+      "fractured-estuary",
+      "woven-quarters",
+      "shell-patchwork",
+      "last-shelf"
+    ],
+    "oldCsvSha256": "ffdd20cb2257ce6e89ab7bd00b070c8e2db1e3d5f46487e41fbb3b68768807b5",
+    "newCsvSha256": "0559776364ef853473c2d74105df669e75d2a01119cb04bf190dea4fc5cfd756",
+    "oldCsvPrefixByteExact": true,
+    "previousFreeze": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-and-low-surface-source/source-snapshot.json",
+      "sha256": "ca7c824799dcf428a691fda42c0b449fa7b34ae83ba95c2a847a4fbfadb57edd"
+    },
+    "qualification": "Actual12, visual and frozen production evidence pending; new4 remain disabled. Woven currently uses existing compressed-wedge and does not inherit pending P34 approval.",
+    "oldWorldObjectsDeepExact": 104,
+    "oldGradeDefinitionsDeepExact": 312,
+    "generatedSha256": "77ac2ede45244cae6f172c7c2766c3cfe68f30986c7a272fffde0c9f01526af2"
+  }
+}

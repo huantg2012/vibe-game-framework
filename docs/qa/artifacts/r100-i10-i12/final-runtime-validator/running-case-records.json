@@ -1,0 +1,20 @@
+{
+  "status": "source-and-syntax-checked-not-executed",
+  "createdAt": "2026-10-07T07:39:01.925Z",
+  "sources": [
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    }
+  ],
+  "method": "Append the requested identity and running phase to the existing report before each case/rebuild. Mark caught failures without discarding completed cases/samples. No retry, input, seed, timing, threshold or browser matrix changes.",
+  "checks": [
+    "node --check both harnesses",
+    "git diff --check"
+  ],
+  "runtime": "Not run: final108 exclusive window is still pending."
+}

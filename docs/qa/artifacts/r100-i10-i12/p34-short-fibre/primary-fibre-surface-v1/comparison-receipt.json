@@ -1,0 +1,193 @@
+{
+  "status": "isolated-source-window-diagnostic-complete-art-pending",
+  "createdAt": "2026-10-07T06:04:04.004Z",
+  "scope": "Exactly one prescribed candidate; only this isolation and its receipt are written. No world data, surface renderer, source PNG, or compressed-felt module changed.",
+  "method": {
+    "geometry": "original compressed-wedge",
+    "additionalBundles": 0,
+    "candidateSource": "unmodified source-v4/short-fibre-solid.png",
+    "skin": "copy existing solid loose region (.025,.55,.95,.42)",
+    "cutRegion": "original solid cleaved region unchanged",
+    "worldSize": 384,
+    "width": 360,
+    "height": 320,
+    "lighting": "same original 100,278,105 lamp/ambient .25/emission 0",
+    "note": "Compared with prior world900 output, worldSize changes for both skin and cut sampling as requested; cut region coordinates remain unchanged. This is not a claim that cut pixels are byte-identical to world900."
+  },
+  "sources": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/primary-fibre-surface-v1/report.json",
+      "sha256": "29d7e423a2b756a87f8301dec1f63a812dacf81189809d4b894dcbc3cf3d423b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-world900-diagnostics/report.json",
+      "sha256": "d5bb5a767d8021f0a5ffafae85976a29fc9a6ed414a4232de4205cdfec4f4e93"
+    },
+    {
+      "path": "tools/world-study/check-primary-fibre-surface.ts",
+      "sha256": "036d44cfa9e856f2f61754531c3656fe96eaca7cea8d86c2abcfcb34102ebd68"
+    },
+    {
+      "path": "tools/world-study/check-short-fibre-source-candidate.ts",
+      "sha256": "e1608a346cf304d5461231dd269ef1a5ee44b9f1096972088a778287b304fb8f"
+    }
+  ],
+  "cases": [
+    {
+      "worldId": "short-fibre-mat",
+      "rotation": 0,
+      "originalAfter": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-world900-diagnostics/short-fibre-mat-east-after.png",
+        "sha256": "d6344d04f6eac4ea9bdd24ae7bc8f636fa1e060bbecc74f59150b78874d5e919"
+      },
+      "currentAfter": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/primary-fibre-surface-v1/short-fibre-mat-east-after.png",
+        "sha256": "9a7a472e6b9113362a4e70ee1991847658cdc588d0715d7ff75b0dc2eebc2aff"
+      },
+      "meshPositionsExact": true,
+      "unchangedGeometryFields": {
+        "positions": "224e0433d879966ad69ee1ea44698c39fe8590fc9ad4ccc398b99ef5cc95fee8",
+        "normals": "dd15f52c614ad9ebdfd19d668140a0fb81c6804a01b224aba9c9e1a073541f05",
+        "uv": "d544c6a848fb7847247a721497af0877507a032cacfc3ed3aba3915e18fe1b79",
+        "indices": "20e8ad60a4770c3854800dd083f9dcef727b78eefaae8fe76726c0a663c6a199",
+        "materials": "a93e4835a97398b02c5ac586158fbf61829dbdd09c3c0311a55405d254ee6fcc",
+        "regions": "ba79c1710e5aed3980222743330cbbdbd624585c817d7b606fbd4f05e032be73"
+      },
+      "originalWorldSize": 900,
+      "currentWorldSize": 384,
+      "originalSkinWindow": {
+        "left": 13,
+        "top": 13,
+        "width": 486,
+        "height": 205,
+        "sourceWidth": 512,
+        "minU": -121.5,
+        "minV": -83.47577667236328,
+        "scale": 0.5688888888888889,
+        "offsetU": 176.85699652777777,
+        "offsetV": 101.85924678096066
+      },
+      "currentSkinWindow": {
+        "left": 13,
+        "top": 282,
+        "width": 486,
+        "height": 215,
+        "sourceWidth": 512,
+        "minU": -121.5,
+        "minV": -83.47577667236328,
+        "scale": 1.2862318366513519,
+        "offsetU": 93.45368524620739,
+        "offsetV": 1.0000000000000264
+      },
+      "screenRoles": {
+        "skin": {
+          "screenPixels": 29452,
+          "minSourceX": 107,
+          "maxSourceX": 404,
+          "minSourceY": 284,
+          "maxSourceY": 495,
+          "minU": -120.5,
+          "maxU": 110.5,
+          "minV": -82.5,
+          "maxV": 81.50000762939453
+        },
+        "cleaved": {
+          "screenPixels": 1443,
+          "minSourceX": 197,
+          "maxSourceX": 389,
+          "minSourceY": 340,
+          "maxSourceY": 448,
+          "minU": -50.5,
+          "maxU": 98.49998474121094,
+          "minV": -38.499996185302734,
+          "maxV": 45.500003814697266
+        }
+      }
+    },
+    {
+      "worldId": "felt-wedges",
+      "rotation": 1.5707963267948966,
+      "originalAfter": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-world900-diagnostics/felt-wedges-south-after.png",
+        "sha256": "108388df72cda540c35072154f5a512ab695ebbb1938ff7c9c6aadb84d5566ba"
+      },
+      "currentAfter": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/primary-fibre-surface-v1/felt-wedges-south-after.png",
+        "sha256": "37c9725385a0f4550871bdcbc8b980d5034e6a885a244f300f0f0b96fb7a6297"
+      },
+      "meshPositionsExact": true,
+      "unchangedGeometryFields": {
+        "positions": "02d09ca494d8e329fc7e3147854cb2b4a765325e948d5036eb9140bc55e015f6",
+        "normals": "1708fa7c5f72ca2d1c0bce37057d9667c61c5fb39a97de007b07081b7a3c1288",
+        "uv": "d544c6a848fb7847247a721497af0877507a032cacfc3ed3aba3915e18fe1b79",
+        "indices": "20e8ad60a4770c3854800dd083f9dcef727b78eefaae8fe76726c0a663c6a199",
+        "materials": "a93e4835a97398b02c5ac586158fbf61829dbdd09c3c0311a55405d254ee6fcc",
+        "regions": "ba79c1710e5aed3980222743330cbbdbd624585c817d7b606fbd4f05e032be73"
+      },
+      "originalWorldSize": 900,
+      "currentWorldSize": 384,
+      "originalSkinWindow": {
+        "left": 13,
+        "top": 13,
+        "width": 486,
+        "height": 205,
+        "sourceWidth": 512,
+        "minU": -121.5,
+        "minV": -83.47577667236328,
+        "scale": 0.5688888888888889,
+        "offsetU": 176.85699652777777,
+        "offsetV": 101.85924678096066
+      },
+      "currentSkinWindow": {
+        "left": 13,
+        "top": 282,
+        "width": 486,
+        "height": 215,
+        "sourceWidth": 512,
+        "minU": -121.5,
+        "minV": -83.47577667236328,
+        "scale": 1.2862318366513519,
+        "offsetU": 93.45368524620739,
+        "offsetV": 1.0000000000000264
+      },
+      "screenRoles": {
+        "skin": {
+          "screenPixels": 29452,
+          "minSourceX": 107,
+          "maxSourceX": 404,
+          "minSourceY": 284,
+          "maxSourceY": 495,
+          "minU": -120.5,
+          "maxU": 110.5,
+          "minV": -82.50000762939453,
+          "maxV": 81.5
+        },
+        "cleaved": {
+          "screenPixels": 1443,
+          "minSourceX": 197,
+          "maxSourceX": 389,
+          "minSourceY": 340,
+          "maxSourceY": 448,
+          "minU": -50.49999237060547,
+          "maxU": 98.49998474121094,
+          "minV": -38.500003814697266,
+          "maxV": 45.500003814697266
+        }
+      }
+    }
+  ],
+  "review": {
+    "reviewer": "identity_shapes",
+    "viewed": [
+      "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/primary-fibre-surface-v1/short-fibre-mat-east-after.png",
+      "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/primary-fibre-surface-v1/felt-wedges-south-after.png",
+      "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/primary-fibre-surface-v1/short-fibre-mat-east-source-on-mesh.png",
+      "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/primary-fibre-surface-v1/short-fibre-mat-east-pure-albedo.png",
+      "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-world900-diagnostics/short-fibre-mat-east-after.png"
+    ],
+    "observation": "原厚楔轮廓未变；下部源窗使连续纤维束团覆盖主面，较原900上部窗的细毛表面明显。母体外轮廓与局部照明明暗仍需在正常世界中审看。",
+    "interpretation": "表层已撕开压毡的材质读法；支持主面源窗是实质瓶颈之一，不代表仅改贴材已完成P34，也不把正式所有主面指定为断面。",
+    "normalWorldApproval": false,
+    "extraTuningPerformed": false
+  }
+}

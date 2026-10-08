@@ -1,0 +1,125 @@
+{
+  "schema": "coh.qa.policy17-candidate-independent-review.v1",
+  "status": "blocked-wrapper-adapter",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/candidate.json",
+    "sha256": "6d52b2546171d31367df7ff6eb817dc8c2b673284116dc9877362a4bdb0c5868"
+  },
+  "alignment": {
+    "status": "pass",
+    "evidence": {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/boundary-review.json",
+      "sha256": "001fc77f4b196b1dcee20cb40d58ccb382a5f8877dc7ebc4e67499b388eccd28"
+    },
+    "checks": 22
+  },
+  "archivalVerification": {
+    "status": "pass",
+    "exactSourceCopies": 14,
+    "metadataReferences": 9,
+    "verified": [
+      {
+        "path": "src/config/constants.ts",
+        "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/src/config/constants.ts"
+      },
+      {
+        "path": "src/systems/last-light-layout.ts",
+        "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/src/systems/last-light-layout.ts"
+      },
+      {
+        "path": "src/systems/last-light-locomotion.ts",
+        "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/src/systems/last-light-locomotion.ts"
+      },
+      {
+        "path": "src/utils/math.ts",
+        "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/src/utils/math.ts"
+      },
+      {
+        "path": "tools/qa/i27-journey-driver.mjs",
+        "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/i27-journey-driver.mjs"
+      },
+      {
+        "path": "tools/qa/r100-i07-i09-coverage.mjs",
+        "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i07-i09-coverage.mjs"
+      },
+      {
+        "path": "tools/qa/r100-i09-costed-encounters.mjs",
+        "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i09-costed-encounters.mjs"
+      },
+      {
+        "path": "tools/qa/r100-i09-tool-slots.mjs",
+        "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i09-tool-slots.mjs"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-align.mjs",
+        "sha256": "8e68e5aa7242ad6c07ba4c108b9f18e37dff589e5acc942f5e3f077569583150",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i12-turn-align.mjs"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-align.test.mjs",
+        "sha256": "fada6ada85ce54e1b288ba861537d92299c80dfb0bb48ca3ab3f1068c371b7c3",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i12-turn-align.test.mjs"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-coverage.mjs",
+        "sha256": "4d4d0945d305d6c205a67347b9b1f1109ced2b8b0a7c3b9d59b84247705daf08",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i12-turn-coverage.mjs"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-encounters.mjs",
+        "sha256": "1b1f703bb2f3785f3aa2117fa66c47012fc26f0ebe8334f26aa5253175730b51",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i12-turn-encounters.mjs"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-journey.mjs",
+        "sha256": "5a2b1d80111d075397810420f771e5c8c731b3f71cdfa0868f46ae95afcfd473",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i12-turn-journey.mjs"
+      },
+      {
+        "path": "tools/qa/r100-revision6-journey.mjs",
+        "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+        "copy": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-revision6-journey.mjs"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "P43-QA-WRAPPER-01",
+      "severity": "blocking",
+      "type": "confirmed-executor-integration-defect",
+      "file": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i12-turn-coverage.mjs",
+      "lines": [
+        11,
+        36,
+        106,
+        148,
+        174
+      ],
+      "actual": "Frozen wrapper imports and invokes policy16 validateControllerSupplement and validateSupplementJourney; wrapperDependencies also names the policy16 helper, and no original journey.jsonl is passed to a policy17 guard.",
+      "consequence": "A root-approved policy17 protocol is rejected at pre-launch policy16 status/issue/revision assertions. Post-journey evidence would also use the wrong rules.",
+      "required": "Retain v1. Produce a new wrapper and candidate version that binds validateFacingControllerSupplement and validateFacingSupplementJourney, passes the actual original JSONL and updates dependency/archived bytes/metadata SHA references.",
+      "originalFile": "tools/qa/r100-i12-turn-coverage.mjs"
+    }
+  ],
+  "qualificationGuard": {
+    "status": "gaps-found",
+    "evidence": {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/guard-review-v1.json",
+      "sha256": "545236652384090d99a6259369c5a0b9585fce12e42df85e8cc2580f9cfc0db6"
+    },
+    "note": "Separate root-owned guard review; this does not imply that the candidate alignment controller itself executes these synthetic invalid traces."
+  },
+  "limits": [
+    "No Chrome or game execution; no gameplay qualification.",
+    "The22 mock checks cannot prove successful attacks, a non-entry pickup, extraction or P43 closure.",
+    "Direction180ms is the issued wait-request sum; all asynchronous real elapsed time remains within the1000ms whole-action bound."
+  ]
+}

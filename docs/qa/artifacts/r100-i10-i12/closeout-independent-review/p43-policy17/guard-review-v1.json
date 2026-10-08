@@ -1,0 +1,154 @@
+{
+  "schema": "coh.qa.policy17-independent-guard-adversaries.v1",
+  "status": "gaps-found",
+  "scope": "Synthetic metadata and chronological log mutations against real preserved identity/before. No browser execution and no gameplay success claim.",
+  "implementation": {
+    "path": "tools/qa/r100-i12-facing-supplement.mjs",
+    "sha256": "c990ec0b212a54137e21830a8c32d08eda76855f85d1a49150ed83c828d2b0c0",
+    "frozen": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/facing-supplement-reviewed-c990ec0b212a.mjs"
+  },
+  "original": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+    "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+  },
+  "audit": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/audit-qualification-guards.mjs",
+    "sha256": "cce0acde50befff539c536a6ace0d58622b56932061f7e6b624176f8879811c6"
+  },
+  "counts": {
+    "passed": 8,
+    "gaps": 10
+  },
+  "results": [
+    {
+      "name": "one chronological visible Space is accepted",
+      "expected": "accepted",
+      "actual": "accepted",
+      "status": "pass",
+      "problems": []
+    },
+    {
+      "name": "changed complete original identity is rejected",
+      "expected": "rejected",
+      "actual": "rejected",
+      "status": "pass",
+      "error": "Facing supplement changed the full original identity\n+ actual - expected\n... Skipped lines\n\n  {\n    catalogVersion: 'contaminant-v1',\n    combatRulesVersion: 2,\n    generation: {\n      appearance: {\n...\n      },\n+     requestedSeed: 20261006,\n-     requestedSeed: 20261005,\n      space: {\n        clustering: 0.25,\n        crackFraction: 0.2,\n        directionality: 0.2,\n        holeScale: 1,\n"
+    },
+    {
+      "name": "changed original earned before save is rejected",
+      "expected": "rejected",
+      "actual": "rejected",
+      "status": "pass",
+      "error": "Facing supplement changed the earned starting save\n+ actual - expected\n... Skipped lines\n\n  {\n    sha256: '68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a',\n    state: {\n      contaminantRuntimeState: {},\n      cycle: 30,\n...\n      },\n+     kindlingReserve: 21,\n-     kindlingReserve: 20,\n      moduleMaxHpTier: 2,\n      moduleSwapActive: false,\n      modules: [\n        {\n          hp: 52,\n"
+    },
+    {
+      "name": "a Space before its facing permission is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "a Space after its recorded facing window is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "missing original facing Space start trace is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "Space starting after the750ms early-stop/reserve allowance is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "a second pursuer opportunity only400ms later is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "a pre-entry negative opportunity trigger is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "a real correctly directed segment followed by aligned Space is accepted",
+      "expected": "accepted",
+      "actual": "accepted",
+      "status": "pass",
+      "problems": []
+    },
+    {
+      "name": "opposite direction to currently visible bearing is rejected",
+      "expected": "rejected",
+      "actual": "rejected",
+      "status": "pass",
+      "error": "Turn inputs must follow the same currently visible bearing\n+ actual - expected\n\n  [\n+   'a'\n-   'd'\n  ]\n"
+    },
+    {
+      "name": "missing actual segment completion trace is rejected",
+      "expected": "rejected",
+      "actual": "rejected",
+      "status": "pass",
+      "error": "Turn segment completion traces differ from their actual input records\n+ actual - expected\n\n+ []\n- [\n-   {\n-     index: 0,\n-     segment: {\n-       before: {\n-         aligned: false,\n-         bearing: 0,\n-         chaos: 40,\n-         distance: 30,\n-         ended: false,\n-         enemy: {\n-           attack: 'idle',\n-           id: 'visible-opponent',\n-           pos: {\n-             x: 130,\n-             y: 100\n-           }\n-         },\n-         errorDegrees: 90,\n-         hp: 145,\n-         observedElapsedMs: 20010,\n-         phaseAllowed: true,\n-         player: {\n-           facing: 1.5707963267948966,\n-           pos: {\n-             x: 100,\n-             y: 100\n-           }\n-         },\n-         targetId: 'visible-opponent',\n-         visible: true,\n-         withinRange: true\n-       },\n-       endedElapsedMs: 20090,\n-       index: 0,\n-       keys: [\n-         'd'\n-       ],\n-       released: true,\n-       requestedMs: 60,\n-       startedElapsedMs: 20020,\n-       waitIssued: true\n-     }\n-   }\n- ]\n"
+    },
+    {
+      "name": "direction input while its recorded observation is below health reserve is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "direction input while its recorded observation is atchaos120 is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "direction input while its recorded observation says ended is rejected",
+      "expected": "rejected",
+      "actual": "accepted",
+      "status": "gap",
+      "problems": []
+    },
+    {
+      "name": "bounded early abandonment before issuing a direction wait is accepted",
+      "expected": "accepted",
+      "actual": "rejected",
+      "status": "gap",
+      "error": "Nonfailed turn segment must record its actual wait request"
+    },
+    {
+      "name": "actual whole-clock overrun is rejected despite a forged withinTimeBound flag",
+      "expected": "rejected",
+      "actual": "rejected",
+      "status": "pass",
+      "problems": [
+        "Facing correction exceeded its 1000ms actual game-time bound"
+      ]
+    },
+    {
+      "name": "release failure remains invalid despite completed gameplay",
+      "expected": "rejected",
+      "actual": "rejected",
+      "status": "pass",
+      "problems": [
+        "Facing correction did not release all tracked keys"
+      ]
+    }
+  ]
+}

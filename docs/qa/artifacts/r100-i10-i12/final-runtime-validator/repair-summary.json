@@ -1,0 +1,64 @@
+{
+  "status": "pass-bounded-qa-validator-repair",
+  "createdAt": "2026-10-07T07:23:53.654022+00:00",
+  "sources": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "9a148ca1087066ca17747e847d14687ccc1d1852c2c344bc0c1e0425f3f14c68"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-report-contract.mjs",
+      "sha256": "3f475d8e85598e40235f357b6bf1426af54e44f74ed4b19b640f9abb9a9b759f"
+    }
+  ],
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/final-probe-before.mjs",
+    "sha256": "93bccf1021f8b1fd65631c1da9e358d3a2169e40592664c2d8ed213bd821c4f8"
+  },
+  "diff": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/numeric-validation.diff",
+    "sha256": "be7a40c1cdacd0916ed6fb59f7c6e7ecc1b9911eb5994b282988e0385c22bf25"
+  },
+  "scope": "Only validateFinalReport budget/lifecycle branches and their required pure helpers; original scenario/input/seed/duration/thresholds/browser launch are unchanged.",
+  "outsideValidatorAndHelpersExact": true,
+  "checks": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/contract-attempt1.json",
+      "sha256": "516a052fdf460950e0d1e2d410b5db53b9f3ef2ccbab33908e0ef4350f69a6e1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/existing-self-check.log",
+      "sha256": "299bbe258bff8971a744c3d91ac33729a317565f092d29ed6e9c6944c1e7dba5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/typecheck.log",
+      "sha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/dev-smoke.json",
+      "sha256": "9d810d543dda9d810306d75bc05b85fcedd662578b9dc00043f47f4d1f12cd43"
+    }
+  ],
+  "syntax": "node --check on both files passed",
+  "lint": "No package lint script; scoped git diff --check passed",
+  "devCleanup": {
+    "ownedVitePid": 69457,
+    "terminated": true,
+    "matchingProcessesAfter": []
+  },
+  "remainingShaderGate": {
+    "numericStatus": "pass-measured-lifecycle-contract does not grant review",
+    "validatorReturn": "independentShaderReview=pending-separate-receipt",
+    "currentBinderConsumes": [
+      "production",
+      "equivalence"
+    ],
+    "requiredAtClosure": "Root must bind final actual lifecycle report/source-binding and independent shader review; no closure or shader review granted here"
+  },
+  "limitations": [
+    "Prior52 real report baselines only; not final108 runtime evidence.",
+    "Stored measured quantiles are checked for finite domains/order and original limits; frame arrays were not retained by the historical harness and are not invented.",
+    "QA_EXCLUSIVE_WINDOW is operator declaration; real final performance still requires exclusive CPU plus Chrome.",
+    "Typecheck and HTTP smoke are non-performance checks; no browser or map-generation run."
+  ]
+}

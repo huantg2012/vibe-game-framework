@@ -1,0 +1,284 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "red-vault-fragments",
+    "label": "赤壳断拱",
+    "description": "赤壳断拱的原生材料与完整搜撤地段",
+    "material": "glaze",
+    "surface": {
+      "substrate": "glaze",
+      "coating": "glaze",
+      "organization": "clusters",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 2438215,
+      "floor": 5927043,
+      "floorLight": 10268349,
+      "materialDark": 4791850,
+      "materialMid": 9518415,
+      "materialLight": 12943246,
+      "faceLight": 14604769,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 5927043,
+      "groundLight": 10268349,
+      "groundDark": 2438215,
+      "wall": 9518415,
+      "wallLight": 12943246,
+      "wallDark": 4791850
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "red-vault-fragments",
+    "ground": {
+      "dark": 2438215,
+      "mid": 5927043,
+      "light": 10268349
+    },
+    "solid": {
+      "dark": 4791850,
+      "mid": 9518415,
+      "light": 12943246
+    },
+    "cleaved": {
+      "dark": 6447211,
+      "mid": 11644089,
+      "light": 14604769
+    },
+    "secondary": {
+      "dark": 4472120,
+      "mid": 9141869,
+      "light": 12299413
+    },
+    "groundPattern": "plates",
+    "patternScale": 240,
+    "patternStrength": 0.41,
+    "secondaryCoverage": 0.14,
+    "textureContrast": 1.16,
+    "quietCoverage": 0.63
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "red-vault-fragments-severe",
+    "family": "broken-shell",
+    "grade": "severe",
+    "label": "赤壳断拱",
+    "profile": "red-vault-fragments",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.42,
+    "light_radius": 155,
+    "emission": 0.72,
+    "motion_period": 17,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 464,
+        "y": 280,
+        "rotation": -0.22,
+        "length": 356,
+        "width": 111,
+        "height": 62,
+        "thickness": 14,
+        "fold": 0.781,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 2,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 685,
+        "y": 329,
+        "rotation": 0.8,
+        "length": 247,
+        "width": 117,
+        "height": 54,
+        "thickness": 13,
+        "fold": 0.682,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 3,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 826,
+        "y": 550,
+        "rotation": 1.27,
+        "length": 131,
+        "width": 96,
+        "height": 31,
+        "thickness": 9,
+        "fold": 0.5060000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 4,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 666,
+        "y": 595,
+        "rotation": -0.36,
+        "length": 153,
+        "width": 109,
+        "height": 39,
+        "thickness": 10,
+        "fold": 0.6160000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 5,
+        "family": "broken-shell",
+        "role": "relief",
+        "x": 811,
+        "y": 614,
+        "rotation": 0.6,
+        "length": 178,
+        "width": 148,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.40700000000000003,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "package": {
+    "id": "r100-red-vault-fragments",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "broken-shell": {
+        "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+        "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+        "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+      }
+    },
+    "dependencyHash": "2794e5bb",
+    "grade": "severe"
+  }
+}

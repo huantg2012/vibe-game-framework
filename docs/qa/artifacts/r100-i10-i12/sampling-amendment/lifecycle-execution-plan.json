@@ -1,0 +1,337 @@
+{
+  "version": 1,
+  "status": "prepared-awaiting-root-stage-dispatch",
+  "createdAt": "2026-10-08T06:50:02.664933+00:00",
+  "samplingAmendment": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+    "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+  },
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+    "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+  },
+  "operator": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/execute-lifecycle-sampled.mjs",
+    "sha256": "6b88cbb884bd0d1e2d67dc1fecb8d9c5d7e7541a9880c1c616f770e43e8fcae1"
+  },
+  "dependencies": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    }
+  ],
+  "argv": [
+    "/usr/bin/caffeinate",
+    "-i",
+    "/usr/local/bin/node",
+    "tools/qa/check-r100-gym-lifecycle.mjs"
+  ],
+  "envOverrides": {
+    "GAME_URL": "http://127.0.0.1:3122/",
+    "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108",
+    "QA_REBUILDS": "10",
+    "QA_MIXED_REBUILDS": "18",
+    "QA_EXCLUSIVE_WINDOW": "1",
+    "NODE_OPTIONS": "",
+    "DEBUG": ""
+  },
+  "removedEnvironmentKeys": [
+    "PLAYWRIGHT_MODULE"
+  ],
+  "cwd": "/Users/yilungao/coh",
+  "actualOperatorCommand": [
+    "/usr/local/bin/node",
+    "docs/qa/artifacts/r100-i10-i12/sampling-amendment/execute-lifecycle-sampled.mjs",
+    "--root-dispatch-lifecycle-sampled",
+    "--exclusive-cpu-and-chrome"
+  ],
+  "outputMustBeAbsent": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108",
+  "auditMustBeAbsent": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/lifecycle-sampled",
+  "scope": {
+    "mode": "representative-existing-harness",
+    "harness": {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    "catalogWorldIds": [
+      "ash-strata",
+      "crystal-fibre",
+      "ivory-basin",
+      "cinder-ridge",
+      "pallid-membrane",
+      "silt-gel",
+      "schist-shear",
+      "splayed-fibres",
+      "shell-chain",
+      "grain-laminate",
+      "tension-membrane",
+      "shell-gel-delta",
+      "pressed-dunes",
+      "ruptured-film",
+      "reversed-flow",
+      "laminate-shell",
+      "fibre-silt",
+      "film-laminate",
+      "gel-fibre",
+      "shell-grit",
+      "rib-vault",
+      "pleated-hide",
+      "blister-field",
+      "wax-tongues",
+      "monolith-sill",
+      "bleached-court",
+      "split-rib-causeway",
+      "satin-fan",
+      "chalk-steps",
+      "porcelain-maw",
+      "amber-ribs",
+      "pale-sail",
+      "root-cistern",
+      "scab-islands",
+      "foam-trenches",
+      "resin-fall",
+      "tendon-shelves",
+      "felt-basin",
+      "cork-shelves",
+      "lacquer-court",
+      "ribbed-delta",
+      "bladder-weave",
+      "flake-thicket",
+      "resin-hollows",
+      "sentinel-mass",
+      "stepped-bowl",
+      "draped-bay",
+      "ember-cushions",
+      "splinter-rotunda",
+      "quilted-scars",
+      "silt-colonnade",
+      "shell-causeway",
+      "cleft-tableland",
+      "fallen-spines",
+      "clamped-shore",
+      "torn-reservoir",
+      "braided-seam",
+      "scalloped-reach",
+      "offset-pan",
+      "thin-delta",
+      "shard-switchback",
+      "hollow-wreckage",
+      "knotted-run",
+      "rolled-fragments",
+      "fibre-choke",
+      "buried-lamellae",
+      "pressed-rim",
+      "wedged-hide",
+      "quiet-spur",
+      "split-fall",
+      "three-shelves",
+      "frayed-outwash",
+      "short-fibre-mat",
+      "marrow-break",
+      "felt-wedges",
+      "pore-bank",
+      "staggered-cups",
+      "split-tows",
+      "curled-flats",
+      "pitch-forks",
+      "grain-weld",
+      "silk-catch",
+      "resin-sleeve",
+      "shell-threads",
+      "chalk-divide",
+      "red-vault-fragments",
+      "blue-fault",
+      "pale-pressure",
+      "notched-backwater",
+      "crossed-casings",
+      "fibre-stumpfield",
+      "sloughed-court",
+      "crushed-seam",
+      "husk-reef",
+      "fibre-scree",
+      "gel-rafts",
+      "double-return",
+      "offset-basins",
+      "pinched-fan",
+      "spliced-reaches",
+      "white-scarfield",
+      "black-lacuna",
+      "ochre-folds",
+      "violet-marrows",
+      "fractured-estuary",
+      "woven-quarters",
+      "shell-patchwork",
+      "last-shelf"
+    ],
+    "warmupWorldIds": [
+      "ash-strata",
+      "crystal-fibre",
+      "ivory-basin",
+      "cinder-ridge",
+      "pallid-membrane",
+      "silt-gel"
+    ],
+    "repetitions": 10,
+    "mixedRebuilds": 18,
+    "mixedCoverage": [
+      {
+        "world": "ash-strata",
+        "grade": "low",
+        "seed": 20261004
+      },
+      {
+        "world": "crystal-fibre",
+        "grade": "low",
+        "seed": 20261005
+      },
+      {
+        "world": "ivory-basin",
+        "grade": "low",
+        "seed": 20261006
+      },
+      {
+        "world": "cinder-ridge",
+        "grade": "low",
+        "seed": 20261007
+      },
+      {
+        "world": "pallid-membrane",
+        "grade": "low",
+        "seed": 20261008
+      },
+      {
+        "world": "silt-gel",
+        "grade": "low",
+        "seed": 20261009
+      },
+      {
+        "world": "schist-shear",
+        "grade": "low",
+        "seed": 20261010
+      },
+      {
+        "world": "splayed-fibres",
+        "grade": "low",
+        "seed": 20261011
+      },
+      {
+        "world": "shell-chain",
+        "grade": "low",
+        "seed": 20261012
+      },
+      {
+        "world": "grain-laminate",
+        "grade": "low",
+        "seed": 20261013
+      },
+      {
+        "world": "tension-membrane",
+        "grade": "low",
+        "seed": 20261014
+      },
+      {
+        "world": "shell-gel-delta",
+        "grade": "low",
+        "seed": 20261015
+      },
+      {
+        "world": "pressed-dunes",
+        "grade": "low",
+        "seed": 20261016
+      },
+      {
+        "world": "ruptured-film",
+        "grade": "low",
+        "seed": 20261017
+      },
+      {
+        "world": "reversed-flow",
+        "grade": "low",
+        "seed": 20261018
+      },
+      {
+        "world": "laminate-shell",
+        "grade": "low",
+        "seed": 20261019
+      },
+      {
+        "world": "fibre-silt",
+        "grade": "low",
+        "seed": 20261020
+      },
+      {
+        "world": "film-laminate",
+        "grade": "low",
+        "seed": 20261021
+      }
+    ],
+    "retainedSamples": 12,
+    "selectionReason": "The first six catalog worlds cover the six base material families. Retain their severe warmups, ten same-world returns and first18 mixed-world low reconstructions; no full324 mixed rebuilds. This samples shared lifecycle ownership, not every revision6 layout or medium-grade resource profile.",
+    "thresholdsUnchanged": true
+  },
+  "sourceBindingSchema": {
+    "version": 1,
+    "kind": "lifecycle",
+    "validationMode": "sampled",
+    "successfulStatus": "pass-sampled",
+    "failedStatus": "failed",
+    "expectedWorlds": 108,
+    "expectedRevision": 6,
+    "worldIds": "All 108 catalog IDs in original order",
+    "sampleScope": "repetitions10/mixedRebuilds18/warmupWorldIds+warmupCoverage6 severe seed20261004/mixedCoverage18 ordered low seeds20261004..20261021/retainedSamples12",
+    "references": [
+      "samplingAmendment",
+      "finalSource",
+      "harness",
+      "wrapper(new operator)",
+      "dependencies",
+      "executionPlan",
+      "report"
+    ],
+    "sourceAudit": [
+      "beforeFiles",
+      "afterFiles",
+      "beforeServedHashes",
+      "afterServedHashes",
+      "beforeRuntimeVerified",
+      "afterRuntimeVerified",
+      "servedSourceVerified"
+    ],
+    "independentResourceAndShaderReview": "pending-separate-QA-receipt"
+  },
+  "measurementRules": {
+    "fullyExclusiveCpuAndChrome": true,
+    "minimumOperatorWork": "During actual browser work, only own-process/pmset sampling and original harness execute. All 1397-source and 1393-served checks run before/after browser measurement.",
+    "originalHarnessBytesUnchanged": true,
+    "originalThresholdsUnchanged": true,
+    "automaticRetry": false,
+    "allOriginalReportsPreserved": true,
+    "full334Claim": false
+  },
+  "preparationValidation": {
+    "command": [
+      "/usr/local/bin/node",
+      "--check",
+      "docs/qa/artifacts/r100-i10-i12/sampling-amendment/execute-lifecycle-sampled.mjs"
+    ],
+    "exitCode": 0,
+    "browserLaunched": false,
+    "largeSelfTestsRun": false
+  },
+  "priorBudgetStop": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-directed-sampling-stop.json",
+    "sha256": "1133ec3c54335cadbd3a6933e419da8161627dd6402298dc0a4210654ff6da39"
+  }
+}

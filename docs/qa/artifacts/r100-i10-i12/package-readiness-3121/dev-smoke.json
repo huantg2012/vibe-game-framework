@@ -1,0 +1,37 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "dev",
+    "--",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "3198",
+    "--strictPort"
+  ],
+  "checks": [
+    {
+      "url": "http://127.0.0.1:3198/",
+      "status": 200,
+      "bytes": 1021,
+      "sha256": "ab6ea5f179eee364155690e3b1003032c4560a46b101fe5bb58194946457a19b"
+    },
+    {
+      "url": "http://127.0.0.1:3198/src/generated/r100-package-manifest.ts",
+      "status": 200,
+      "bytes": 30759,
+      "sha256": "ea46843fc3838e66536ffaedf3a8abb10785cfa262398bed8a54d80eff292cda"
+    },
+    {
+      "url": "http://127.0.0.1:3198/src/generation/world-study/native-volume-settled-projection.ts",
+      "status": 200,
+      "bytes": 18606,
+      "sha256": "c73fd02a2eb34567189e6742e7761b9e72f776bd2d7c61beb7667c2abfb75484"
+    }
+  ],
+  "pid": 57377,
+  "status": "pass-http-module-smoke-only",
+  "exitCode": 0,
+  "ownedProcessClosed": true
+}

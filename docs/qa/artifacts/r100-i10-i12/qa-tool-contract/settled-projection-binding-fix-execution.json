@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "args": [
+    "tools/qa/r100-source-continuity.mjs",
+    "--from",
+    "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "--to",
+    "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "--worlds",
+    "ash-strata,crystal-fibre,ivory-basin,cinder-ridge,pallid-membrane,silt-gel,schist-shear,splayed-fibres,shell-chain,grain-laminate,tension-membrane,shell-gel-delta,pressed-dunes,ruptured-film,reversed-flow,laminate-shell,fibre-silt,film-laminate,gel-fibre,shell-grit,rib-vault,pleated-hide,blister-field,wax-tongues,monolith-sill,bleached-court,split-rib-causeway,satin-fan,chalk-steps,porcelain-maw,amber-ribs,pale-sail,root-cistern,scab-islands,foam-trenches,resin-fall,tendon-shelves,felt-basin,cork-shelves,lacquer-court,ribbed-delta,bladder-weave,flake-thicket,resin-hollows,sentinel-mass,stepped-bowl,draped-bay,ember-cushions,splinter-rotunda,quilted-scars,silt-colonnade,shell-causeway,cleft-tableland,fallen-spines,clamped-shore,torn-reservoir,braided-seam,scalloped-reach,offset-pan,thin-delta,shard-switchback,hollow-wreckage,knotted-run,rolled-fragments,fibre-choke,buried-lamellae,pressed-rim,wedged-hide,quiet-spur,split-fall,three-shelves,frayed-outwash,short-fibre-mat,marrow-break,felt-wedges,pore-bank,staggered-cups,split-tows,curled-flats,pitch-forks,grain-weld,silk-catch,resin-sleeve,shell-threads,chalk-divide,red-vault-fragments,blue-fault,pale-pressure,notched-backwater,crossed-casings,fibre-stumpfield,sloughed-court,husk-reef,double-return,offset-basins,ochre-folds,last-shelf",
+    "--unused-settled-projection",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/current3120-to3121-unselected97-binding-fix.json"
+  ],
+  "exitCode": 0,
+  "stdout": "PASS source continuity: 97 world projections, 1389 identical files, 7 narrowly checked changes\n",
+  "stderr": "",
+  "priorReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/current3120-to3121-unselected97.json",
+    "sha256": "060761a543fd62bc2b4aff48d61cb354e2faf21ff028f2344d463836446bafe0"
+  },
+  "contract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-binding-fix.json",
+    "sha256": "47267579b5b48ba5bb8fbc54ba14a151b3c90b9af0306b235ccb54b3e96b393f"
+  },
+  "inertHelper": {
+    "path": "tools/qa/r100-organization-dispatch-continuity.mjs",
+    "sha256": "179a2a8a82f00fb7b51f6a5a8afadb107f61736cfd7062556ea7d781bb326d81"
+  },
+  "scope": "Plain identifier constants only; reject destructuring binding execution. Prior files retained; no game runtime or policy changed."
+}

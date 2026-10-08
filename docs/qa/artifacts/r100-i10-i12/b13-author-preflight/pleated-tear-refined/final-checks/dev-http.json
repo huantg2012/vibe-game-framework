@@ -1,0 +1,38 @@
+{
+  "status": "PASS-dev-http-modules",
+  "command": [
+    "npm",
+    "run",
+    "dev",
+    "--",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "58053",
+    "--strictPort"
+  ],
+  "browserOpened": false,
+  "requests": [
+    {
+      "route": "/",
+      "status": 200,
+      "bytes": 1021
+    },
+    {
+      "route": "/src/generation/world-study/native-volume-geometry.ts",
+      "status": 200,
+      "bytes": 159163
+    },
+    {
+      "route": "/src/generation/world-study/native-volume-pleated-tear.ts",
+      "status": 200,
+      "bytes": 15382
+    },
+    {
+      "route": "/src/generation/world-study/native-volume-settled-sheet.ts",
+      "status": 200,
+      "bytes": 14878
+    }
+  ],
+  "ownedProcessStopped": true
+}

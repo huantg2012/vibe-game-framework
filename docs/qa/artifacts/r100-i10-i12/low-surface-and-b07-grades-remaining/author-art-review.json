@@ -1,0 +1,724 @@
+{
+  "status": "bounded-author-visual-pass",
+  "at": "2026-10-07T06:00:34.853Z",
+  "reviewer": "art-author",
+  "scope": "24 original low/severe PNGs personally inspected across6 worlds, two informative actual WASD approaches each. All photos retain ordinary FOV/light/body/pressure. No full-world, audio, continuous experience or human approval claim.",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-and-low-surface-source/source-snapshot.json",
+    "sha256": "ca7c824799dcf428a691fda42c0b449fa7b34ae83ba95c2a847a4fbfadb57edd"
+  },
+  "rawReports": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/report.json",
+      "sha256": "ea42dacd63c54bd11e4630daa21af4775745f0b06257a5cf25bd405587c0c357",
+      "status": "failed",
+      "browserClosed": true
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/report.json",
+      "sha256": "c297df191f62f9ca303d63b76ce89bcc938384f37285cdf1c1fdfee13c1dab59",
+      "status": "captured-limited-art-routes",
+      "browserClosed": true
+    }
+  ],
+  "retainedFailure": {
+    "world": "curled-flats",
+    "grade": "severe",
+    "attempt": 1,
+    "error": "90s entry ready timeout; three failed module requests explicitly net::ERR_NETWORK_CHANGED",
+    "artifact": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/report.json",
+    "moduleRecheck": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/failed-module-recheck.json",
+    "disposition": "No gameplay started. Original failed report unchanged; same7 unfinished identities recaptured once in separate folder. Not a game fix or a cause finding forP36."
+  },
+  "limitations": [
+    "World/grade/requestedSeed checked at runtime; final body points and facing adjustment are actual per-frame records, not pixel-identical viewpoints.",
+    "Only illuminated observed surfaces passed. Dark sectors and unobserved sides are excluded.",
+    "Original failed network attempt remains failed, separately from completed visual cases."
+  ],
+  "cases": [
+    {
+      "worldId": "staggered-cups",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/staggered-cups-low/recipe.json",
+        "sha256": "6172d2d6e7c47433d1153cb871a3f3d72db8d543a17d7511a7f643e14e5e5d2d"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "低/重两口仍可区分粉内壁、蓝灰壳厚和褐床；重档侵蚀只局部加强，第二口外侧怪与下沿黑区未被签为安全。错口的两处内外转向在有限画面成立。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/staggered-cups-low/02-first-inner-wall-east.png",
+          "sha256": "b8b15041be6ad0c6aac757a0f9b9b109ea7bb197a5fba16b12c0430dd210ff8d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 360.5909521250878,
+              "y": 495.9778530670719
+            },
+            "facingAngle": -0.00025132741228561795,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.298705015999982,
+            "elapsedMs": 6933
+          },
+          "actualAngle": -0.00025132741228561795
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/staggered-cups-low/04-second-mouth-east.png",
+          "sha256": "000861a3ca4577286401cbb87792c3c95ca9c34c923b236e1ac441d3012a641d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 649.4247785546482,
+              "y": 262.80974982860715
+            },
+            "facingAngle": -0.00025132741228572897,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.08087675999995,
+            "elapsedMs": 16332.699999999999
+          },
+          "actualAngle": -0.00025132741228572897
+        }
+      ]
+    },
+    {
+      "worldId": "staggered-cups",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/staggered-cups-severe/recipe.json",
+        "sha256": "426696dce03dd2eca689ce4786dabe3814d86a1d9965732455eddd7d6f64c3f7"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "低/重两口仍可区分粉内壁、蓝灰壳厚和褐床；重档侵蚀只局部加强，第二口外侧怪与下沿黑区未被签为安全。错口的两处内外转向在有限画面成立。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/staggered-cups-severe/02-first-inner-wall-east.png",
+          "sha256": "ff4a4d40ca7a3e569194fa93bb33d8fe51f91f30bd4a2efe35620297b955ea6e",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 362.80965646986664,
+              "y": 494.2228860696908
+            },
+            "facingAngle": -0.0002513274122889486,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 21.210205589333082,
+            "elapsedMs": 12366.2
+          },
+          "actualAngle": -0.0002513274122889486
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/staggered-cups-severe/04-second-mouth-east.png",
+          "sha256": "0fbb8b51cb6f92fd59e476c4190789494c00c06ae5d1b12e596222e255b2441a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 652.0572554021386,
+              "y": 262.9452994003109
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 26.74630818133279,
+            "elapsedMs": 23315.8
+          },
+          "actualAngle": 0
+        }
+      ]
+    },
+    {
+      "worldId": "split-tows",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/split-tows-low/recipe.json",
+        "sha256": "3e3792dfc1fafd5f064527999b8a986bf665859ba5d58c855666dad2e1964614"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "低/重南部断束为纵纤厚端，中央露床和两端错位夹道仍可读。重档左下实体污染物只露部分，不能签完整遭遇或视野外通行。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/split-tows-low/01-south-alternating-bundles-west.png",
+          "sha256": "088ca0126ececf6b5ac3233b1cca8348914618ffed7c988b411844db3f5c179d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 551.9423155807146,
+              "y": 633.9536276987881
+            },
+            "facingAngle": -3.14152982173672,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 16.46617553599998,
+            "elapsedMs": 7816.299999999999
+          },
+          "actualAngle": -3.14152982173672
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/split-tows-low/03-low-middle-link-east.png",
+          "sha256": "4474cf4c230c009e6529fd89dc120285e288c12a59e22a97f31705f630686e61",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 571.7936728317438,
+              "y": 358.7239809773997
+            },
+            "facingAngle": -0.00006283185307298655,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 17.306706463999966,
+            "elapsedMs": 12249.5
+          },
+          "actualAngle": -0.00006283185307298655
+        }
+      ]
+    },
+    {
+      "worldId": "split-tows",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/split-tows-severe/recipe.json",
+        "sha256": "c9c3973c9280b5e86177868dc2084c2881490a435804189b9215fd29a9260b62"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "低/重南部断束为纵纤厚端，中央露床和两端错位夹道仍可读。重档左下实体污染物只露部分，不能签完整遭遇或视野外通行。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/split-tows-severe/01-south-alternating-bundles-west.png",
+          "sha256": "9ad2b77262e9418472da4ef096ac690246bd7cf8b34bfd381257d70aa56ea1f2",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 552.0097326894388,
+              "y": 634.5222267282462
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.421086783999847,
+            "elapsedMs": 6849.700000000001
+          },
+          "actualAngle": 3.141592653589793
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/split-tows-severe/03-low-middle-link-east.png",
+          "sha256": "d306b36f816d3ff90222e51f3dd6dca485a113844db23690d7f814f438b9c8fa",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 570.8845261046349,
+              "y": 358.6314942353872
+            },
+            "facingAngle": -0.00006283185306965589,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 30.746755775999766,
+            "elapsedMs": 11449.5
+          },
+          "actualAngle": -0.00006283185306965589
+        }
+      ]
+    },
+    {
+      "worldId": "curled-flats",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/curled-flats-low/recipe.json",
+        "sha256": "3f82852f525a4900de1f7dd96bf4a863dcfbc9b8fcb5ee10895ebce1d4511051"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "低/重的浅皮与裸床连接没有恢复原尖片/长硬黑边；低皮上源皱纹及近侧高卷唇可分。西向画面仅照到实体一端，未覆盖所有卷背。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/curled-flats-low/01-south-low-sheet-north.png",
+          "sha256": "57a88e1cf4d04afa6fdbac73152f7bc68aea47283f4cfa69e9d1a24419fd7e2d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 468.24669957074167,
+              "y": 627.7372701908873
+            },
+            "facingAngle": -1.5704821675295395,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.93848018399999,
+            "elapsedMs": 5033.1
+          },
+          "actualAngle": -1.5704821675295395
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades/curled-flats-low/02-west-rolled-edge-west.png",
+          "sha256": "8b9e58168695eb06b8f3cb449108a29b86fb8d6b9036759c9b5dc3951f8b9262",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 533.7224955046762,
+              "y": 448.5343212981254
+            },
+            "facingAngle": -3.141152830618295,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 16.696847951999978,
+            "elapsedMs": 9033
+          },
+          "actualAngle": -3.141152830618295
+        }
+      ]
+    },
+    {
+      "worldId": "curled-flats",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/curled-flats-severe/recipe.json",
+        "sha256": "13d21e8633b8a913616afc088bbb906de3772542a84ffd77e7e4019e55f4ce31"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "低/重的浅皮与裸床连接没有恢复原尖片/长硬黑边；低皮上源皱纹及近侧高卷唇可分。西向画面仅照到实体一端，未覆盖所有卷背。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/curled-flats-severe/01-south-low-sheet-north.png",
+          "sha256": "1373a56b769647204a2f9110ede5474519f934e71fafad1425fc793d2085072d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 469.7442958592552,
+              "y": 631.4672962118734
+            },
+            "facingAngle": -1.570670663088754,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.47731697066656,
+            "elapsedMs": 4983.1
+          },
+          "actualAngle": -1.570670663088754
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/curled-flats-severe/02-west-rolled-edge-west.png",
+          "sha256": "c7f81f30e578d3108f99e746aca1390f3deae0db37232e20969595c6c36a3796",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 532.6104665417023,
+              "y": 446.66081626998835
+            },
+            "facingAngle": -3.1415298217367233,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 22.786139370666493,
+            "elapsedMs": 9082.9
+          },
+          "actualAngle": -3.1415298217367233
+        }
+      ]
+    },
+    {
+      "worldId": "pitch-forks",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/pitch-forks-low/recipe.json",
+        "sha256": "0bbe03ce3c6d2685055dec24785b7406da40f653d0a3eb77fe8666730b57ff5f"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "两档内臂厚侧面、浅断沿和开口可辨；重档绿侵蚀从暗母面分开，近脚裸床仍清楚。俯看厚头背面不作为内部通路证明。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/pitch-forks-low/02-offset-inner-arms-west.png",
+          "sha256": "f4d942b0a317c151d3ba4188240f01e2885e832e55b891d451fe68fbfd3ec7b7",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 558.1635160172596,
+              "y": 442.677196431745
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 16.56727531199998,
+            "elapsedMs": 8349.6
+          },
+          "actualAngle": 3.141592653589793
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/pitch-forks-low/03-thick-head-north.png",
+          "sha256": "9ea8a5096d50da692c58f285b6fc21bdefbfe045b6abe0c2fb8f4f97c8339492",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 581.801912096201,
+              "y": 362.60761558389686
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.927503935999972,
+            "elapsedMs": 10249.6
+          },
+          "actualAngle": -1.5707963267948966
+        }
+      ]
+    },
+    {
+      "worldId": "pitch-forks",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/pitch-forks-severe/recipe.json",
+        "sha256": "804d555eb0bd904ea5372b5c777a278c366a22492429d91beace87494f69304c"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "两档内臂厚侧面、浅断沿和开口可辨；重档绿侵蚀从暗母面分开，近脚裸床仍清楚。俯看厚头背面不作为内部通路证明。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/pitch-forks-severe/02-offset-inner-arms-west.png",
+          "sha256": "7b173606514853fa774e24f7bab60ba3e8357d358b9c606dc83d95a5e11be15c",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 557.4669286333764,
+              "y": 438.3532059430482
+            },
+            "facingAngle": -3.1415298217367207,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.800261503999852,
+            "elapsedMs": 7599.7
+          },
+          "actualAngle": -3.1415298217367207
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/pitch-forks-severe/03-thick-head-north.png",
+          "sha256": "d4478bfb656b024a7a3a1a6fc6148e4a2d7374d7330d043e963772bc5b1d68d4",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 581.2000741536165,
+              "y": 360.4920595565453
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.878832703999812,
+            "elapsedMs": 9733
+          },
+          "actualAngle": -1.5707963267948966
+        }
+      ]
+    },
+    {
+      "worldId": "grain-weld",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/grain-weld-low/recipe.json",
+        "sha256": "f049ac1c28c9a382704b38c25cd1dbcc6056ee5c38238f869591ff06a92d6d25"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "两档露层保留粉灰/蓝灰材料带，但没有原巨大多边形的假高边；第二站低圆肩与右侧红厚端高度关系可读。第一站偏地床，只支持低层改善，非全部固体轮廓。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/grain-weld-low/01-south-layer-contact-north.png",
+          "sha256": "7c3b0da7a12b70f5c8b194498e3ed3bbef5be6929267d9e8a2bd088b9df95e99",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 390.85407616747904,
+              "y": 539.2044275035043
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 15.704655983999997,
+            "elapsedMs": 3799.9
+          },
+          "actualAngle": -1.5707963267948966
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/grain-weld-low/02-low-granular-contact-east.png",
+          "sha256": "7ac273a0f43d0c9c6884bf7b0c409ee181d346ee8da0b7e1c4f634e0cf0b71cc",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 596.0368773070538,
+              "y": 487.3288032625954
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.421945015999984,
+            "elapsedMs": 7583
+          },
+          "actualAngle": 0
+        }
+      ]
+    },
+    {
+      "worldId": "grain-weld",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/grain-weld-severe/recipe.json",
+        "sha256": "7f0ce468552395e3e90bf190b82da895c130186728de118d19c7708ede310c05"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "两档露层保留粉灰/蓝灰材料带，但没有原巨大多边形的假高边；第二站低圆肩与右侧红厚端高度关系可读。第一站偏地床，只支持低层改善，非全部固体轮廓。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/grain-weld-severe/01-south-layer-contact-north.png",
+          "sha256": "8d34644dfd1bbfda5f147e02345108340e9dbdbd4a8d68ed00a20d99d162f2cc",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 387.09986072209836,
+              "y": 536.8885054943647
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.92119910399992,
+            "elapsedMs": 3883.2
+          },
+          "actualAngle": -1.5707963267948966
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/grain-weld-severe/02-low-granular-contact-east.png",
+          "sha256": "96994041c1af9e51c38259a66e1538fc4987e202899789c36de017e12919e5bc",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 592.6835567715425,
+              "y": 493.1734973076149
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 22.651327871999882,
+            "elapsedMs": 8216.4
+          },
+          "actualAngle": 0
+        }
+      ]
+    },
+    {
+      "worldId": "silk-catch",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/silk-catch-low/recipe.json",
+        "sha256": "001313e701cf890addbddc879bcf428dd85f25af6a84d1219ad052a70fd1b5dd"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "两档低紫皮以皱层接褐床，高蓝折端与上方金纤继续分离；重档局部青绿未承包材料身份。第二站北侧大体只露局部，仍不签被遮顶面。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/silk-catch-low/01-low-caught-sheet-east.png",
+          "sha256": "594080e1b79991f500617cf2407c0d2318aa967fd21b0ec591248337d38842d3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 363.09070263220264,
+              "y": 554.9104058972188
+            },
+            "facingAngle": 0.00031415926535888206,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 15.657247135999992,
+            "elapsedMs": 3549.9
+          },
+          "actualAngle": 0.00031415926535888206
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/silk-catch-low/02-fold-fibre-contact-north.png",
+          "sha256": "50a215f8e74e991c29eea182d56361ef8c930da4ad924ce6ef93ff13ef32e8b2",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 476.2544387557274,
+              "y": 504.7854534445587
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.194427543999982,
+            "elapsedMs": 6383.1
+          },
+          "actualAngle": -1.5707963267948966
+        }
+      ]
+    },
+    {
+      "worldId": "silk-catch",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/silk-catch-severe/recipe.json",
+        "sha256": "932f134a823caff324fa55362d9470fa328c504bd995a10a8bf1fa8338030b42"
+      },
+      "status": "bounded-author-visual-pass",
+      "finding": "两档低紫皮以皱层接褐床，高蓝折端与上方金纤继续分离；重档局部青绿未承包材料身份。第二站北侧大体只露局部，仍不签被遮顶面。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/silk-catch-severe/01-low-caught-sheet-east.png",
+          "sha256": "24b0722879126795dd1dabc26cb8e71be2d100e5c2ac0eb036964c37bdd87878",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 366.5750183800911,
+              "y": 555.0110820118357
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.777977791999916,
+            "elapsedMs": 3599.7999999999997
+          },
+          "actualAngle": 0
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-and-b07-grades-remaining/silk-catch-severe/02-fold-fibre-contact-north.png",
+          "sha256": "3f333aa63e3274cd2275d452d36b4064c26d2bc38ceed29d5f2106d2ec82d724",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 475.3075206390025,
+              "y": 504.0865584966984
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.168312063999853,
+            "elapsedMs": 6349.800000000001
+          },
+          "actualAngle": -1.5707963267948966
+        }
+      ]
+    }
+  ]
+}

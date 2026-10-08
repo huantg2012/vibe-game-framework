@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-awaiting-repaired-normal-review",
+  "worlds": [
+    "fractured-estuary",
+    "woven-quarters",
+    "shell-patchwork",
+    "last-shelf"
+  ],
+  "wholeBatchReady": false,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+    "sha256": "4426f52bfb5e719735680ad97c436d44375eadb6ba04fe566e086bbd74c87a4d"
+  },
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/source-snapshot.json",
+    "sha256": "b21e226add3052a153c4a81079a9d2556503217b38e4be22087aa02ecc6bfd96"
+  },
+  "requiredAdmission": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/normal-admission.json",
+  "generation": [
+    {
+      "cases": 480,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+        "--worlds",
+        "fractured-estuary,woven-quarters,shell-patchwork,last-shelf",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b14-current-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 96,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+        "--worlds",
+        "fractured-estuary,woven-quarters,shell-patchwork,last-shelf",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b14-current-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "Original base48 only: 32 ordinary + 8 boundary + original8 holdout. Additional8 already executed separately. No current art or actual-play approval follows from this plan."
+}

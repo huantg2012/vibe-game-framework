@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>R100 · 世界巡览</title><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/src/dev/rift-gym.css"></head>
+<body>
+<aside id="configuration">
+  <div class="eyebrow">DEVELOPMENT GYM / V3</div><h1>世界巡览</h1>
+  <p class="muted">正式配方、投放与渲染。训练装备只在内存中，正式存档不受影响。</p>
+  <section><label>世界<select id="world"></select></label><label>污染程度<select id="grade"><option value="low">低污染</option><option value="medium">中污染</option><option value="severe">重度污染</option></select></label>
+  <label>种子<input id="seed" type="text" inputmode="numeric" value="20261004"></label><div class="pair"><button id="previous">← 上一世界</button><button id="next">下一世界 →</button></div><button class="wide" id="generate">重新生成 / 重开</button></section>
+  <section><label>训练装备<select id="loadout"></select></label><div class="pair"><button id="pause" disabled>暂停 / 继续</button><button id="overview">地形诊断</button></div><p class="muted">WASD 移动 · Space 攻击 · E 翻找 / 撤离<br>Q / F 工具 · Esc 暂停。保持正常视野、真实危险及消耗。</p></section>
+  <details open><summary>世界目录 <span id="catalog-count"></span></summary><div id="catalog"></div></details>
+  <section><button id="scan" class="wide">巡检全部世界 × 三级</button><p id="scan-status" class="muted">检查真实生成准入，不代替画面或游玩验收。</p><div class="pair"><button id="copy">复制同图链接</button><button id="export" disabled>导出配方与诊断</button></div><nav><a href="/rift-gym.html">旧版巡览</a><a href="/">主游戏</a></nav></section>
+</aside>
+<main><header><div><div class="eyebrow" id="mode">NORMAL PLAY / 正常游玩</div><h2 id="map-title">载入资源</h2></div><span id="qualification" class="tag"></span></header>
+<div id="viewport"><canvas id="map" aria-label="支撑与实体地形诊断，非美术画面"></canvas><div id="game-container" tabindex="0"></div><div id="waiting" role="status">载入世界…</div></div>
+<footer><div id="status" role="status"></div><div id="metrics"></div><pre id="error" role="alert" hidden></pre></footer>
+<details id="diagnostic"><summary>生成与运行诊断</summary><pre id="diagnostics"></pre></details></main>
+<script type="module" src="/src/dev/r100-gym.ts"></script></body></html>

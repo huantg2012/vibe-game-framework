@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "status": "approved-user-authorized-sampled-method-binding",
+  "reviewer": "root",
+  "date": "2026-10-08",
+  "samplingAmendment": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+    "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+  },
+  "finalPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/plan.json",
+    "sha256": "c122e4e972f2f572f126aded1ef132dd203f87d32e9e33458fdced9b2cc5eae2"
+  },
+  "previousAddendum": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-tool-method-binding-addendum.json",
+    "sha256": "6a5e0e561f45dad6b75e9e7cff2b50e436ccb45024f7e052d285c056a1e82782"
+  },
+  "preparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/sampling-adaptation-preparation.json",
+    "sha256": "916d834804e77824f459d1b21ed25483b7602268242c79f45865020d23f6ad60"
+  },
+  "tools": [
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "48507ab4f117159dea563b6c32594939408464aa253dcf558a41e51504859ad1"
+    },
+    {
+      "path": "tools/qa/r100-sampled-acceptance.mjs",
+      "sha256": "7fd7cf4e04f7e394ac55e7c4df4075058b533dc871b0aaf125bcb45900fcaf11"
+    },
+    {
+      "path": "tools/qa/check-r100-i10-i12-sampled-binding.mjs",
+      "sha256": "527bd69ea324e357edd0ed5ae786d7d35a9078205dbf82d2d3460eb2fef3bdf0"
+    },
+    {
+      "path": "tools/qa/check-r100-i10-i12-final-binding.mjs",
+      "sha256": "bf7732ce152012ccc5451ab0381bd04e86d88eb3edb5526d29007c2695d54ab5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/proposal-builder.mjs",
+      "sha256": "d3996919407d836887254656ff68a682e6f7bb213512584e1a25637db1a706b7"
+    }
+  ],
+  "review": "root实阅采样helper、binder差异、8项实际语义负例执行及closure输入/提案合同。仅精确用户授权SHA启用抽查分支；原full分支不缩减。74原行重算原阈值并保留failed、stop请求与源/清理边界；生命周期仍原工具，固定6/10/18/12且逐样本检查原内存/资源门槛。四kind仍绑定具名harness和实际wrapper。旧52仅在当前生成/连续性/三档生产证据全通过后恢复已知r5过渡失效，并追加完整历史。",
+  "scope": "批准封存prebind、执行实际dry及独立8项负例后按exact proposedLedgerSha256绑定；只准备并审查I10→I11→I12三个提案后由root顺序应用。",
+  "limitations": "此为方法代码审阅，尚不声称实际dry/8成功、世界台账已写或迭代已关闭；不扩展用户审美、听感或发布资格。"
+}

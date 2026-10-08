@@ -1,0 +1,37 @@
+{
+  "status": "failed",
+  "expectedContexts": 324,
+  "counts": {
+    "preload-ready": 1,
+    "launch": 1,
+    "browser-ready": 1,
+    "context-created": 152,
+    "process-snapshot": 607,
+    "Target.targetCreated": 1062,
+    "Target.targetInfoChanged": 2428,
+    "page-created": 152,
+    "network-url": 4402,
+    "page-navigation": 304,
+    "worker-created": 606,
+    "worker-closed": 606,
+    "Target.targetDestroyed": 1062,
+    "page-closed": 152,
+    "network-summary": 152,
+    "context-closed": 152,
+    "browser-disconnected": 1
+  },
+  "issues": [
+    {
+      "issue": "Incomplete observed context coverage",
+      "expectedContexts": 324,
+      "actual": 152
+    }
+  ],
+  "limitation": "External observed events only. Absence of an event cannot establish a browser-internal cause or eliminate the earlier intermittent failure.",
+  "files": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108/worker-observations/observer-85087.jsonl",
+      "sha256": "336169a74595533e634f72d4c2dc3d3c851288a5e3185dd7249700879f6deae4"
+    }
+  ]
+}

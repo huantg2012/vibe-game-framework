@@ -1,0 +1,102 @@
+{
+  "status": "pass",
+  "scope": "Protocol and accounting predicates with synthetic policy16 metadata plus the actual preserved policy15 failures. No policy16 gameplay, root approval or world qualification.",
+  "validator": {
+    "path": "tools/qa/r100-i12-controller-supplement.mjs",
+    "sha256": "c7f0754ed2a8c2887043c35d8c0bba8a2e9e25e0f773fbff83cf622ab8db7dc0"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-i12-controller-supplement.mjs",
+    "sha256": "3aae24400ca0ed53c08a3d1c7430720c2518801a138ffa5e33ae3f2a14e66bae"
+  },
+  "checks": [
+    {
+      "name": "synthetic metadata with actual preserved two original failures",
+      "status": "pass"
+    },
+    {
+      "name": "author cannot approve own new input policy",
+      "status": "pass"
+    },
+    {
+      "name": "broader world scope rejected even with resealed metadata",
+      "status": "pass"
+    },
+    {
+      "name": "replacement seed rejected",
+      "status": "pass"
+    },
+    {
+      "name": "one favorable seed cannot replace the two-seed recheck",
+      "status": "pass"
+    },
+    {
+      "name": "second retry cannot be hidden inside batch",
+      "status": "pass"
+    },
+    {
+      "name": "old attempts cannot be excluded",
+      "status": "pass"
+    },
+    {
+      "name": "six-second input budget cannot be relaxed",
+      "status": "pass"
+    },
+    {
+      "name": "non-entry distance cannot be lowered",
+      "status": "pass"
+    },
+    {
+      "name": "same original game snapshot required",
+      "status": "pass"
+    },
+    {
+      "name": "same earned starting save required",
+      "status": "pass"
+    },
+    {
+      "name": "executor bytes cannot change after approval",
+      "status": "pass"
+    },
+    {
+      "name": "dependencies cannot be silently replaced",
+      "status": "pass"
+    },
+    {
+      "name": "supplement requires an explicit summary whitelist",
+      "status": "pass"
+    },
+    {
+      "name": "bounded action accounting with exact original identity/save",
+      "status": "pass"
+    },
+    {
+      "name": "changed full generation identity rejected",
+      "status": "pass"
+    },
+    {
+      "name": "added starting resource rejected",
+      "status": "pass"
+    },
+    {
+      "name": "missing explicit action accounting rejected",
+      "status": "pass"
+    },
+    {
+      "name": "multiple additional search actions rejected",
+      "status": "pass"
+    },
+    {
+      "name": "nonfinite game deadline rejected",
+      "status": "pass"
+    },
+    {
+      "name": "actual game-time overrun remains an invalid attempt, not dropped evidence",
+      "status": "pass"
+    },
+    {
+      "name": "four actual pickups rejected independently of reported search target count",
+      "status": "pass"
+    }
+  ]
+}

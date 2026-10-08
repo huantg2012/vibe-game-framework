@@ -1,0 +1,61 @@
+{
+  "status": "sampled-lifecycle-complete-pending-independent-resource-review",
+  "createdAt": "2026-10-08T07:01:32.157628+00:00",
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/report.json",
+    "sha256": "8f4c573d859c323ac51445efcc7cfbb0ff48ac18e6992980b1018362f4fe19eb"
+  },
+  "sourceBinding": {
+    "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/source-binding.json",
+    "sha256": "1b223c82d366bf6fd2e2eb91f7a9bfad17876e927f78ae44f77d163cd2540b5b"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/lifecycle-sampled/execution.json",
+    "sha256": "3ff6f5c5192d623d1479d596b724cfedd72a5bbcb4b405d660416924200eea4f"
+  },
+  "resourceSampleTable": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/lifecycle-sampled/resource-samples.csv",
+    "sha256": "b7b6b7b70455f897d7a2f94d4883e8683a6587520f748a4cdeb063b7a9e7f512"
+  },
+  "samplingAmendment": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+    "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+  },
+  "actualCounts": {
+    "catalogWorlds": 108,
+    "warmupWorlds": 6,
+    "identicalRebuilds": 10,
+    "mixedRebuilds": 18,
+    "retainedSamples": 12,
+    "reportSteps": 37
+  },
+  "activeCountsAtAllSamples": {
+    "WebGL2": 1,
+    "Texture": 384,
+    "Buffer": 11,
+    "Program": 32,
+    "Shader": 62,
+    "Framebuffer": 69,
+    "Renderbuffer": 69
+  },
+  "shader": {
+    "liveAtAllSamples": 64,
+    "createdFirst": 78,
+    "createdLast": 138,
+    "independentReview": "Root provides a separate Shader review; this table only derives numeric observations."
+  },
+  "maximumCombinedRetainedGrowthBytes": 1447018,
+  "originalRetainedGrowthLimitBytes": 10485760,
+  "sourceAudit": {
+    "workingAndFrozenFilesBeforeAfter": 1397,
+    "servedHashesBeforeAfter": 1393,
+    "beforeAfterServedHashesEqual": true
+  },
+  "ownedProcessesClosed": true,
+  "ownedAssertionsReleased": true,
+  "systemSleepEvents": 0,
+  "automaticRetry": false,
+  "full334Claimed": false,
+  "limitations": "This samples six severe warmup material families, ten identical rebuilds and the first eighteen low-grade catalog worlds. It does not measure every layout/grade, GPU driver bytes or RSS, unbounded lifetime, weak devices or human acceptance.",
+  "nextAction": "Root/QA review the original report and separate Shader receipt. No further runtime gate has been started."
+}

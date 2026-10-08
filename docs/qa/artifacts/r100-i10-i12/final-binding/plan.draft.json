@@ -1,0 +1,440 @@
+{
+  "version": 1,
+  "status": "draft-missing-final-runtime-and-fixed-play",
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": null
+  },
+  "packages": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+    "sha256": null
+  },
+  "generation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+    "sha256": "a708aba0ac42d652871931ebc357a6f830835c060b8a463587a774a4c132ea3f"
+  },
+  "historicalGeneration": {
+    "path": "docs/qa/artifacts/r100-i07-i09/qualification-policy/final52-summary.json",
+    "sha256": "1d66b70fa3e6ec73f812b3d8e3eb48551480be033591df6b3ffc022798692159"
+  },
+  "expandedHoldoutI11": {
+    "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary.json",
+    "sha256": "1c8d7255b5da05d5aa87d052856f2d3f9127da30b10e2ac4e615f6914bb29539"
+  },
+  "expandedHoldoutI12": {
+    "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary.json",
+    "sha256": "a31cb4ea7c73dc705df86d7355e640c76232411bfb6ca8b733d0c6bd543ea5e7"
+  },
+  "play": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/summary.json",
+    "sha256": null
+  },
+  "historicalPlay": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json",
+    "sha256": "d29784aba32287105f99b1c55be076017ddd857de10b16f7ed6f4c0972034a52"
+  },
+  "inheritance": {
+    "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/independent-review.json",
+    "sha256": "2168637d4bc9fb70f3652ead770a74a0acf0dbe21fca4fa4d8758b1d34987da7"
+  },
+  "historicalBinding": {
+    "path": "docs/qa/artifacts/r100-i07-i09/final-binding/plan.json",
+    "sha256": "1f6eac57f9b6ac14568d82c4e372b867c80036a75dd10a9d4052d53fa8df0784"
+  },
+  "art": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.json",
+    "sha256": null
+  },
+  "technicalReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json",
+    "sha256": null
+  },
+  "shaderReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/shader-review.json",
+    "sha256": null
+  },
+  "generationSources": [
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B01-original-three-and-retained-superseded-cleft",
+      "path": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+      "sha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/preparation-recheck/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B01-cleft-ground-edge-current144",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+      "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B02-revision6",
+      "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+      "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B03-original-three",
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-source/source-snapshot.json",
+      "sha256": "8161b87497c223b903b07d6fbd68c3afcbf46995487f7c2cd35cb2058af3b4e8",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B03-repaired-shard",
+      "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-refined-source/source-snapshot.json",
+      "sha256": "a51ff38a4aae9fca26e3ab1b7c83246c9fd990778a3095925d5038eaf0d79bc8",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b03-refined-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B04-original-three",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-source/source-snapshot.json",
+      "sha256": "dd74172596cdc18c581c86a0ba42904ade4e32e22b04418083ede98a744ca22d",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b04-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B04-raised-buried",
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+      "sha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b04-raised-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B05-refined-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+      "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B06-original3111-porous-two",
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+      "sha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B06-current3120-short-fibre-two",
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B07-current3120-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B08-current3120-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B09-current3120-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B10-current3120-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B11-current3121-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B12-current3121-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B13-current3121-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "groupId": "B14-current3121-all-four",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary.json",
+      "groupId": "I11-additional-eight",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    },
+    {
+      "summary": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary.json",
+      "groupId": "I12-additional-eight",
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c",
+      "harnessSources": [
+        {
+          "dependencyPath": "tools/world-study/check-r100-library.ts",
+          "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/sources/tools/world-study/check-r100-library.ts",
+          "sha256": "f7e9b8f93da9babc70b5df5861e8dc37d33dec14abebf6ab9d677eabd796bdd4"
+        }
+      ]
+    }
+  ],
+  "continuity": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b03-shard-refined-source-to-b12-exact-selection.json",
+      "sha256": "b7f1b46be1a0b43d46db957a260ed357e5726a05506745b15353f6c719fda143"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b04-buried-raised-source-to-b12-exact-selection.json",
+      "sha256": "6e9ab79cc7299cefd878d90f172d97a3bb6e1e550903910b2f5221c94d72bed7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b04-three-to-buried-raised-source.json",
+      "sha256": "e824d9657d2c7df2da5255dca7db891e61fa773cb9e755b04a3099e7aca535c4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b05-three-to-split-refined-source.json",
+      "sha256": "b8b3c0952fad1fcffffa806f853167a82f988b71fc9fd71d77f52530621fdd28"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b07-source-to-b12-exact-selection.json",
+      "sha256": "d5f31f27750a933c83ba6823dd4947ebc221fd6e690552c18ae408e4139c579a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b08-source-to-b12-exact-selection.json",
+      "sha256": "b126a508c632b2d601e4c4babf8b5a8f7390ebb2dc7daeb0758400778682fdc9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b09-source-to-b12-exact-selection.json",
+      "sha256": "2c1a5ce055cc69f5d3c889b979f196c3ca60846399ff2baba5044105b6b4175d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/b10-source-to-b12-exact-selection.json",
+      "sha256": "375facd4fecade607e6f8f96827bb08f0b36969ed287f8fc5f941af63f95126f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/current3120-to3121-unselected97-binding-fix.json",
+      "sha256": "060761a543fd62bc2b4aff48d61cb354e2faf21ff028f2344d463836446bafe0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/explicit-and-reviewed-transport-92.json",
+      "sha256": "f0c80ffe26fa51683b4bb9ea6130fa37e4c7eecd909f72bdad94e2ee5d826a5c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/old52-shard-source-to-b12.json",
+      "sha256": "9de096259c9e1fd6beee6a23f600332c8ec9b4fedf37fb50c74c9ec4d65a2a49"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/porous-b06-to-b12.json",
+      "sha256": "2f6dca65876c719ca360c128c163e570321380e2f15a0476c1305a054247c408"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/reviewed-transport-material-99.json",
+      "sha256": "7b1f98122803ca9009c44fd41de96937cb9637060bc0c0f57f81dcea1809323f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b02-old56.json",
+      "sha256": "726531805d459109879b15103085bdc6440375c9549e26e95c6e6b72f1cdccdd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b02-refined-unaffected55-v2.json",
+      "sha256": "e726b2c424c4cd5f93d2378f0d15bd1359e76ea303d388cca09a188c32a613ee"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b03-unselected60-v2.json",
+      "sha256": "2d8d52de972748ea0cdc7c51b92aabf0e251d0a862e1a2a3424be3c028643727"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b04-old64.json",
+      "sha256": "dbc4dc4e571d3b3ea64f2f7fc00f5c39f0fdfa4e8906a6c4792a2d7a2b6120db"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-b05-unaffected66.json",
+      "sha256": "5214ebe0efe57923bc3a67e369bd5e2f1d3424386501b24977409f3889a1f11e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/to-shard-refined-unaffected66.json",
+      "sha256": "73159e0797b9735dfc07be26e56c690de92e2243236d2b75b211dfc147e00be1"
+    }
+  ],
+  "boundedPlayContinuity": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity/independent-review.json",
+      "sha256": "79deb8557f880ae9b1d0469f5efaec09372aad6740c5fdec7190a4da3a55f72f"
+    }
+  ],
+  "runtimeBindings": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108/source-binding.json",
+      "sha256": null
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/source-binding.json",
+      "sha256": null
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/source-binding.json",
+      "sha256": null
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/source-binding.json",
+      "sha256": null
+    }
+  ],
+  "production": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/report.json",
+    "sha256": null
+  },
+  "equivalence": {
+    "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/browser-equivalence.json",
+    "sha256": null
+  },
+  "budget": {
+    "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/report.json",
+    "sha256": null
+  },
+  "lifecycle": {
+    "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/report.json",
+    "sha256": null
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "scope": "Pure candidate geometry at original medium seed. Original declared intent-route points/segments and all original stations checked (spawn BFS paths may reroute) against candidate solids only; original terrain is unchanged, but this is not the actual3/12 admission. Marker ownership uses the same XY pixel-centre/highest-Z rule; official raster remains decisive.",
+  "results": [
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "bounded-length128",
+        "updates": {
+          "4": {
+            "length": 128
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 3,
+          "visible": 3,
+          "owners": {
+            "4": 3
+          },
+          "bounds": {
+            "minX": 446.39453700711914,
+            "minY": 503.32622891882016,
+            "maxX": 582.226235532956,
+            "maxY": 577.9176779051361,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalStationPointsSupported": true,
+      "allOriginalActualMediumRoutePointsSupported": false,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": {
+        "x": 588,
+        "y": 556
+      },
+      "gapY": 32.65469815765948
+    },
+    {
+      "id": "pinched-fan",
+      "candidate": {
+        "label": "south32-48",
+        "updates": {
+          "5": {
+            "y": 356
+          },
+          "6": {
+            "y": 405
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 5,
+          "projected": 30,
+          "visible": 24,
+          "owners": {
+            "3": 6,
+            "5": 24
+          },
+          "bounds": {
+            "minX": 327.1015863553686,
+            "minY": 268.9421656991191,
+            "maxX": 495.04016820220653,
+            "maxY": 423.7455571758162,
+            "maxZ": 35
+          }
+        },
+        {
+          "id": 6,
+          "projected": 30,
+          "visible": 24,
+          "owners": {
+            "4": 6,
+            "6": 24
+          },
+          "bounds": {
+            "minX": 650.5965749725619,
+            "minY": 339.67729434951684,
+            "maxX": 815.0680146706503,
+            "maxY": 477.3395278828507,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "projectedAreaEstimate": 12144
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "projectedAreaEstimate": 4688
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "projectedAreaEstimate": 13664
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "projectedAreaEstimate": 2352
+        }
+      ],
+      "allOriginalStationPointsSupported": true,
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": null
+    }
+  ]
+}

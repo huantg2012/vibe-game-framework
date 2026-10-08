@@ -1,0 +1,1339 @@
+{
+  "version": 1,
+  "status": "prepared",
+  "at": "2026-10-08T02:05:21.075Z",
+  "reviewer": "i12_qa",
+  "featureIds": [
+    "F052",
+    "F044",
+    "F005"
+  ],
+  "scope": "Read-only machine-contract and evidence-readiness preparation for sequential I10→I11→I12 closeout. No ledger proposal, new achievement hash, approval, browser, full binder baseline or heavy CPU test is produced.",
+  "authority": {
+    "ledger": {
+      "path": "docs/progress/rift-r100.json",
+      "sha256": "2e0d66c2d6e18a19b93fa0248869c2508711aadd1060b3dcac928a409fa829a4"
+    },
+    "validator": {
+      "path": "tools/world-study/r100-progress.mjs",
+      "sha256": "7f141e9378911b5a34279030caf573db09c151423aa0b52c8ca5ab7fd1c7b1ed"
+    },
+    "qualificationPlan": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    "finalDraft": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/plan.enabled108.draft.json",
+      "sha256": "23fb64b27eca6e85a5b5262e3ba96601bbe71857693f33b67ea76865719491af"
+    },
+    "finalSource": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    "sourceLocations": {
+      "achievementHash": [
+        28,
+        36
+      ],
+      "evidenceShapeAndReferences": [
+        90,
+        114
+      ],
+      "currentWorldQualification": [
+        143,
+        219
+      ],
+      "executionProgress": [
+        244,
+        252
+      ],
+      "gatesAndDependencies": [
+        253,
+        276
+      ],
+      "verifiedAndClosed": [
+        277,
+        297
+      ],
+      "releaseGateAndIssueProof": [
+        300,
+        316
+      ],
+      "finalRelease": [
+        325,
+        334
+      ]
+    }
+  },
+  "currentLedgerOnlyCheck": {
+    "ok": true,
+    "counts": {
+      "candidates": 108,
+      "qualified": 0,
+      "production": 0,
+      "humanApproved": 0,
+      "qualifiedGradeCases": 0,
+      "productionGradeCases": 0
+    },
+    "warnings": [
+      "R100-I03 保留历史达成 3 世界 / 9 格；当前有效仅 0 世界 / 0 格，资格缺口须补回，不能据历史结单发布。",
+      "R100-I04 保留历史达成 6 世界 / 18 格；当前有效仅 0 世界 / 0 格，资格缺口须补回，不能据历史结单发布。",
+      "R100-I05 保留历史达成 12 世界 / 36 格；当前有效仅 0 世界 / 0 格，资格缺口须补回，不能据历史结单发布。",
+      "R100-I06 保留历史达成 20 世界 / 60 格；当前有效仅 0 世界 / 0 格，资格缺口须补回，不能据历史结单发布。",
+      "R100-I07 保留历史达成 36 世界 / 108 格；当前有效仅 0 世界 / 0 格，资格缺口须补回，不能据历史结单发布。",
+      "R100-I08 保留历史达成 52 世界 / 156 格；当前有效仅 0 世界 / 0 格，资格缺口须补回，不能据历史结单发布。",
+      "R100-I09 保留历史达成 52 世界 / 156 格；当前有效仅 0 世界 / 0 格，资格缺口须补回，不能据历史结单发布。"
+    ],
+    "meaning": "Structural/current-ledger evidence validation only, not a runtime acceptance result. Final108 activation alone does not update these qualified counts."
+  },
+  "existingHistoricalHashSanityCheck": {
+    "iterationId": "R100-I09",
+    "evidenceId": "R100-R5-CLOSED-R100-I09",
+    "hash": "5e76609628d0441379d01de1f5e0ed1b8f364645cd49c19e9c18501e8482eae0",
+    "matchesExistingLedgerEvidence": true,
+    "boundary": "Recomputed existing closed I09 only; no new I10-I12 completion hash was generated."
+  },
+  "plannedScopes": [
+    {
+      "iterationId": "R100-I10",
+      "currentState": "active",
+      "currentStage": "implementation",
+      "declaredLedgerAcceptance": {
+        "goal": "补充被长期游玩证明缺少的情境和表现。",
+        "technical": "根据I09缺口扩充共享能力与兼容配方；持续审核罕见组合、困难几何、装备与Host适配。",
+        "visual": "新增20份，明确尺度、形体组织、色光、运动和安静片段的组合；陌生感和规则可学习性共同成立。",
+        "batches": [
+          "缺口优先级与新世界设计包",
+          "5批各最多4份：成品制作与三审",
+          "旧世界依赖回归与最相似包裁决",
+          "72库正常视野巡检和真实出击抽检"
+        ],
+        "review": [
+          "新世界学习能够迁移，不能靠误导制造陌生感",
+          "补的是新情境，不以新名字或花纹抵数",
+          "新增能力成本与全库影响可控",
+          "逐世界核对低/中/重三档：身份连续、局势有差异、证据不跨级冒用；重度峰值下真实搜撤可读。"
+        ],
+        "exit": "七十二份合格包。"
+      },
+      "currentActualRevision": null,
+      "currentGateResults": [],
+      "currentAchievementPresent": false,
+      "executionState": "in-progress",
+      "dependency": "R100-I09",
+      "dependencyCurrentState": "closed",
+      "targetWorlds": 72,
+      "targetGradeCases": 216,
+      "plannedWorldIds": [
+        "amber-ribs",
+        "ash-strata",
+        "bladder-weave",
+        "bleached-court",
+        "blister-field",
+        "braided-seam",
+        "buried-lamellae",
+        "chalk-steps",
+        "cinder-ridge",
+        "clamped-shore",
+        "cleft-tableland",
+        "cork-shelves",
+        "crystal-fibre",
+        "draped-bay",
+        "ember-cushions",
+        "fallen-spines",
+        "felt-basin",
+        "fibre-choke",
+        "fibre-silt",
+        "film-laminate",
+        "flake-thicket",
+        "foam-trenches",
+        "frayed-outwash",
+        "gel-fibre",
+        "grain-laminate",
+        "hollow-wreckage",
+        "ivory-basin",
+        "knotted-run",
+        "lacquer-court",
+        "laminate-shell",
+        "monolith-sill",
+        "offset-pan",
+        "pale-sail",
+        "pallid-membrane",
+        "pleated-hide",
+        "porcelain-maw",
+        "pressed-dunes",
+        "pressed-rim",
+        "quiet-spur",
+        "quilted-scars",
+        "resin-fall",
+        "resin-hollows",
+        "reversed-flow",
+        "rib-vault",
+        "ribbed-delta",
+        "rolled-fragments",
+        "root-cistern",
+        "ruptured-film",
+        "satin-fan",
+        "scab-islands",
+        "scalloped-reach",
+        "schist-shear",
+        "sentinel-mass",
+        "shard-switchback",
+        "shell-causeway",
+        "shell-chain",
+        "shell-gel-delta",
+        "shell-grit",
+        "silt-colonnade",
+        "silt-gel",
+        "splayed-fibres",
+        "splinter-rotunda",
+        "split-fall",
+        "split-rib-causeway",
+        "stepped-bowl",
+        "tendon-shelves",
+        "tension-membrane",
+        "thin-delta",
+        "three-shelves",
+        "torn-reservoir",
+        "wax-tongues",
+        "wedged-hide"
+      ],
+      "scopeOnlyHash": "fd6b0b725e412901b20e1a86039771926ea6aa5e004c9930e3d31106b341f606",
+      "requiredGradesForEveryWorld": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "includedBatchIds": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05"
+      ],
+      "newBatchIds": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05"
+      ],
+      "newWorldIds": [
+        "cleft-tableland",
+        "fallen-spines",
+        "clamped-shore",
+        "torn-reservoir",
+        "braided-seam",
+        "scalloped-reach",
+        "offset-pan",
+        "thin-delta",
+        "shard-switchback",
+        "hollow-wreckage",
+        "knotted-run",
+        "rolled-fragments",
+        "fibre-choke",
+        "buried-lamellae",
+        "pressed-rim",
+        "wedged-hide",
+        "quiet-spur",
+        "split-fall",
+        "three-shelves",
+        "frayed-outwash"
+      ],
+      "scopeConstruction": "Frozen baseline52 plus B01,B02,B03,B04,B05; use exact IDs, not a slice of current ledger/package ordering.",
+      "expectedAccounting": {
+        "historicalBaseExecutedRevision5": 7488,
+        "cumulativeCurrentRevision6Base": 2880,
+        "cumulativeBaseUniqueCases": 10368,
+        "cumulativeFixedUniqueProcesses": 432,
+        "newIterationFixedUniqueProcesses": 120,
+        "observedNewIterationAttemptRecords": 123,
+        "additionalHoldoutRequiredAtThisStage": "Base48 is the I10 content minimum; the later final108 binding also proves all additional8."
+      },
+      "assignmentOnly": "These are required prospective scope IDs, not a qualified achievement or approval. Do not compute/sign a new achievement hash before actual gates are complete."
+    },
+    {
+      "iterationId": "R100-I11",
+      "currentState": "planned",
+      "currentStage": "not-started",
+      "declaredLedgerAcceptance": {
+        "goal": "在接近目标规模时主动清理重复与质量下限。",
+        "technical": "新增20份；扩大保留种子、混合边界、动效相位及合法装备情境；发现共享缺陷后按依赖撤销资格并重验。",
+        "visual": "反向检查全库最弱项，审查轮廓、空间、材料和声音近似簇；旧包必要时重做，不只精磨新增。",
+        "batches": [
+          "5批各最多4份制作与审核",
+          "新旧库全量近邻对照",
+          "最弱族/边界组合专项返工",
+          "92库版本和资产来源清点"
+        ],
+        "review": [
+          "同质项合并后数量仍需补足",
+          "每包独立质量成立，不能靠总平均通过",
+          "危险/交互读法跨风格一致，边界不会卡住",
+          "逐世界核对低/中/重三档：身份连续、局势有差异、证据不跨级冒用；重度峰值下真实搜撤可读。"
+        ],
+        "exit": "九十二份合格包。"
+      },
+      "currentActualRevision": null,
+      "currentGateResults": [],
+      "currentAchievementPresent": false,
+      "executionState": "in-progress",
+      "dependency": "R100-I10",
+      "dependencyCurrentState": "active",
+      "targetWorlds": 92,
+      "targetGradeCases": 276,
+      "plannedWorldIds": [
+        "amber-ribs",
+        "ash-strata",
+        "bladder-weave",
+        "bleached-court",
+        "blister-field",
+        "blue-fault",
+        "braided-seam",
+        "buried-lamellae",
+        "chalk-divide",
+        "chalk-steps",
+        "cinder-ridge",
+        "clamped-shore",
+        "cleft-tableland",
+        "cork-shelves",
+        "crossed-casings",
+        "crystal-fibre",
+        "curled-flats",
+        "draped-bay",
+        "ember-cushions",
+        "fallen-spines",
+        "felt-basin",
+        "felt-wedges",
+        "fibre-choke",
+        "fibre-silt",
+        "fibre-stumpfield",
+        "film-laminate",
+        "flake-thicket",
+        "foam-trenches",
+        "frayed-outwash",
+        "gel-fibre",
+        "grain-laminate",
+        "grain-weld",
+        "hollow-wreckage",
+        "ivory-basin",
+        "knotted-run",
+        "lacquer-court",
+        "laminate-shell",
+        "marrow-break",
+        "monolith-sill",
+        "notched-backwater",
+        "offset-pan",
+        "pale-pressure",
+        "pale-sail",
+        "pallid-membrane",
+        "pitch-forks",
+        "pleated-hide",
+        "porcelain-maw",
+        "pore-bank",
+        "pressed-dunes",
+        "pressed-rim",
+        "quiet-spur",
+        "quilted-scars",
+        "red-vault-fragments",
+        "resin-fall",
+        "resin-hollows",
+        "resin-sleeve",
+        "reversed-flow",
+        "rib-vault",
+        "ribbed-delta",
+        "rolled-fragments",
+        "root-cistern",
+        "ruptured-film",
+        "satin-fan",
+        "scab-islands",
+        "scalloped-reach",
+        "schist-shear",
+        "sentinel-mass",
+        "shard-switchback",
+        "shell-causeway",
+        "shell-chain",
+        "shell-gel-delta",
+        "shell-grit",
+        "shell-threads",
+        "short-fibre-mat",
+        "silk-catch",
+        "silt-colonnade",
+        "silt-gel",
+        "sloughed-court",
+        "splayed-fibres",
+        "splinter-rotunda",
+        "split-fall",
+        "split-rib-causeway",
+        "split-tows",
+        "staggered-cups",
+        "stepped-bowl",
+        "tendon-shelves",
+        "tension-membrane",
+        "thin-delta",
+        "three-shelves",
+        "torn-reservoir",
+        "wax-tongues",
+        "wedged-hide"
+      ],
+      "scopeOnlyHash": "96f8624d9f362e9ff4ccbe4bdbafa8c98eaceab22fe4889c0ffebc26c0a4d231",
+      "requiredGradesForEveryWorld": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "includedBatchIds": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10"
+      ],
+      "newBatchIds": [
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10"
+      ],
+      "newWorldIds": [
+        "short-fibre-mat",
+        "marrow-break",
+        "felt-wedges",
+        "pore-bank",
+        "staggered-cups",
+        "split-tows",
+        "curled-flats",
+        "pitch-forks",
+        "grain-weld",
+        "silk-catch",
+        "resin-sleeve",
+        "shell-threads",
+        "chalk-divide",
+        "red-vault-fragments",
+        "blue-fault",
+        "pale-pressure",
+        "notched-backwater",
+        "crossed-casings",
+        "fibre-stumpfield",
+        "sloughed-court"
+      ],
+      "scopeConstruction": "Frozen baseline52 plus B01,B02,B03,B04,B05,B06,B07,B08,B09,B10; use exact IDs, not a slice of current ledger/package ordering.",
+      "expectedAccounting": {
+        "historicalBaseExecutedRevision5": 7488,
+        "cumulativeCurrentRevision6Base": 5760,
+        "cumulativeBaseUniqueCases": 13248,
+        "cumulativeFixedUniqueProcesses": 552,
+        "newIterationFixedUniqueProcesses": 120,
+        "observedNewIterationAttemptRecords": 122,
+        "additionalHoldoutRequiredAtThisStage": "I11 exact92 × 3 × 8 = 2208, separate from base48."
+      },
+      "assignmentOnly": "These are required prospective scope IDs, not a qualified achievement or approval. Do not compute/sign a new achievement hash before actual gates are complete."
+    },
+    {
+      "iterationId": "R100-I12",
+      "currentState": "planned",
+      "currentStage": "not-started",
+      "declaredLedgerAcceptance": {
+        "goal": "交齐全部世界内容，并使每份都有当前有效证据。",
+        "technical": "新增16份或补齐被淘汰内容；冻结包与算子候选版本、依赖、代表及保留种子；完整资格工厂跑完。 108×3资格矩阵完整，不以缺重度世界或各级总和凑108。",
+        "visual": "逐包检查内容完整度、资产来源、成品尺度视听证据与最近邻差异；形成全库可浏览候选版。",
+        "batches": [
+          "4批各最多4份及必要替换包",
+          "108份资格/视听/体验记录逐项清点",
+          "全库联合审查，缺件和重复返工",
+          "冻结RC清单与交付入口"
+        ],
+        "review": [
+          "108是有效包数，不是待审核候选数",
+          "没有占位材质、未审声音或关键阅读缺口混入",
+          "当前资格失效的包从有效数扣除并补验",
+          "逐世界核对低/中/重三档：身份连续、局势有差异、证据不跨级冒用；重度峰值下真实搜撤可读。"
+        ],
+        "exit": "至少108份完整三级内部合格包、324格有效证据及RC；仍需I13等级深度和I14正式终验。"
+      },
+      "currentActualRevision": null,
+      "currentGateResults": [],
+      "currentAchievementPresent": false,
+      "executionState": "in-progress",
+      "dependency": "R100-I11",
+      "dependencyCurrentState": "planned",
+      "targetWorlds": 108,
+      "targetGradeCases": 324,
+      "plannedWorldIds": [
+        "amber-ribs",
+        "ash-strata",
+        "black-lacuna",
+        "bladder-weave",
+        "bleached-court",
+        "blister-field",
+        "blue-fault",
+        "braided-seam",
+        "buried-lamellae",
+        "chalk-divide",
+        "chalk-steps",
+        "cinder-ridge",
+        "clamped-shore",
+        "cleft-tableland",
+        "cork-shelves",
+        "crossed-casings",
+        "crushed-seam",
+        "crystal-fibre",
+        "curled-flats",
+        "double-return",
+        "draped-bay",
+        "ember-cushions",
+        "fallen-spines",
+        "felt-basin",
+        "felt-wedges",
+        "fibre-choke",
+        "fibre-scree",
+        "fibre-silt",
+        "fibre-stumpfield",
+        "film-laminate",
+        "flake-thicket",
+        "foam-trenches",
+        "fractured-estuary",
+        "frayed-outwash",
+        "gel-fibre",
+        "gel-rafts",
+        "grain-laminate",
+        "grain-weld",
+        "hollow-wreckage",
+        "husk-reef",
+        "ivory-basin",
+        "knotted-run",
+        "lacquer-court",
+        "laminate-shell",
+        "last-shelf",
+        "marrow-break",
+        "monolith-sill",
+        "notched-backwater",
+        "ochre-folds",
+        "offset-basins",
+        "offset-pan",
+        "pale-pressure",
+        "pale-sail",
+        "pallid-membrane",
+        "pinched-fan",
+        "pitch-forks",
+        "pleated-hide",
+        "porcelain-maw",
+        "pore-bank",
+        "pressed-dunes",
+        "pressed-rim",
+        "quiet-spur",
+        "quilted-scars",
+        "red-vault-fragments",
+        "resin-fall",
+        "resin-hollows",
+        "resin-sleeve",
+        "reversed-flow",
+        "rib-vault",
+        "ribbed-delta",
+        "rolled-fragments",
+        "root-cistern",
+        "ruptured-film",
+        "satin-fan",
+        "scab-islands",
+        "scalloped-reach",
+        "schist-shear",
+        "sentinel-mass",
+        "shard-switchback",
+        "shell-causeway",
+        "shell-chain",
+        "shell-gel-delta",
+        "shell-grit",
+        "shell-patchwork",
+        "shell-threads",
+        "short-fibre-mat",
+        "silk-catch",
+        "silt-colonnade",
+        "silt-gel",
+        "sloughed-court",
+        "splayed-fibres",
+        "spliced-reaches",
+        "splinter-rotunda",
+        "split-fall",
+        "split-rib-causeway",
+        "split-tows",
+        "staggered-cups",
+        "stepped-bowl",
+        "tendon-shelves",
+        "tension-membrane",
+        "thin-delta",
+        "three-shelves",
+        "torn-reservoir",
+        "violet-marrows",
+        "wax-tongues",
+        "wedged-hide",
+        "white-scarfield",
+        "woven-quarters"
+      ],
+      "scopeOnlyHash": "9120e8447ed99195e3e0d4dd076945994765947f38262a46f0f866c8c98c3700",
+      "requiredGradesForEveryWorld": [
+        "low",
+        "medium",
+        "severe"
+      ],
+      "includedBatchIds": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "B14"
+      ],
+      "newBatchIds": [
+        "B11",
+        "B12",
+        "B13",
+        "B14"
+      ],
+      "newWorldIds": [
+        "crushed-seam",
+        "husk-reef",
+        "fibre-scree",
+        "gel-rafts",
+        "double-return",
+        "offset-basins",
+        "pinched-fan",
+        "spliced-reaches",
+        "white-scarfield",
+        "black-lacuna",
+        "ochre-folds",
+        "violet-marrows",
+        "fractured-estuary",
+        "woven-quarters",
+        "shell-patchwork",
+        "last-shelf"
+      ],
+      "scopeConstruction": "Frozen baseline52 plus B01,B02,B03,B04,B05,B06,B07,B08,B09,B10,B11,B12,B13,B14; use exact IDs, not a slice of current ledger/package ordering.",
+      "expectedAccounting": {
+        "historicalBaseExecutedRevision5": 7488,
+        "cumulativeCurrentRevision6Base": 8064,
+        "cumulativeBaseUniqueCases": 15552,
+        "cumulativeFixedUniqueProcesses": 648,
+        "newIterationFixedUniqueProcesses": 96,
+        "observedNewIterationAttemptRecords": 101,
+        "additionalHoldoutRequiredAtThisStage": "I11 2208 plus last16 × 3 × 8 = 384; final total2592."
+      },
+      "assignmentOnly": "These are required prospective scope IDs, not a qualified achievement or approval. Do not compute/sign a new achievement hash before actual gates are complete."
+    }
+  ],
+  "machineContract": {
+    "sequentialState": [
+      "I10 depends on I09; I11 depends on I10; I12 depends on I11. Each non-planned iteration requires its predecessor state=closed.",
+      "I11/I12 planned + stage=not-started may coexist with execution.state=in-progress/implemented and revision-bound implementation evidence. This never closes an upstream gate.",
+      "The sole dependency exception is two previously executed changes-required iterations with open rework and actualRevision; it is not a path to start/close a new downstream iteration.",
+      "Every proposed intermediate ledger after closing I10, then I11, then I12 must independently satisfy checkPlan. checkPlan does not enforce transition history if all states are changed at once."
+    ],
+    "iterationCompletionFields": {
+      "actualRevision": "Nonempty current revision with evidence; use r100-native-v3-revision-6 for this final source scope.",
+      "evidenceIds": "Array of unique registered IDs; at least one evidence row must have revision=actualRevision.",
+      "achievement": {
+        "revision": "Must exactly equal iteration.actualRevision.",
+        "qualifiedWorldIds": "Unique implemented ledger IDs; machine minimum is >= targetWorlds.",
+        "gradeCases": "Unique {worldId,grade} for implemented IDs and low/medium/severe; all3 required for each achievement world; machine minimum >= targetGradeCases.",
+        "evidenceIds": "Registered unique IDs, each also present in iteration.evidenceIds. At least one is the exact iteration/revision/hash-bound achievement evidence."
+      },
+      "achievementEvidence": {
+        "id": "Unique registered evidence ID, chosen only when issuing the actual closeout.",
+        "kind": "One of automated/runtime/source/human; an agent/root technical decision must not impersonate human approval.",
+        "purpose": "iteration-achievement",
+        "iterationId": "Exact R100-I10, R100-I11 or R100-I12",
+        "revision": "Same as achievement.revision",
+        "achievementHash": "hashAchievement(iteration.id, iteration.achievement)",
+        "path": "Existing regular repository file, no escaping symlink",
+        "scope": "Nonempty truthful actual scope",
+        "limitations": "Required string retaining inherited/finite-sample/human/audio limits"
+      },
+      "gateResults": "Each item needs nonempty id and pending/pass/changes-required; pass requires registered evidence at gate.revision or iteration.actualRevision. The machine does not declare which gates must exist or pass.",
+      "execution": "If retained, state is only in-progress or implemented, with nonempty summary and current-revision evidence. Do not set execution.state=closed.",
+      "stage": "Workflow ID or not-started; for honest closeout use close. The validator does not itself couple state=closed to stage=close.",
+      "completedDate": "Record the actual completion date by project practice; checkPlan does not validate this field."
+    },
+    "hashAchievement": {
+      "algorithm": "SHA-256 of UTF-8 JSON.stringify(payload) with insertion order iterationId, revision, qualifiedWorldIds, gradeCases.",
+      "payload": "iterationId; achievement.revision; qualifiedWorldIds copied and lexically sorted; gradeCases reduced to {worldId,grade}, then sorted by comparison of each JSON.stringify(row). No whitespace or trailing newline.",
+      "excluded": [
+        "evidenceIds",
+        "completedDate",
+        "reviewer",
+        "source/package bytes",
+        "gateResults",
+        "issue states",
+        "current eligibility",
+        "extra achievement fields"
+      ],
+      "consequence": "The hash seals membership+revision only. Its matching ledger row and file existence do not validate the semantic truth or body of the closeout document."
+    },
+    "currentWorldContract": "Before new achievements, final actual binder must prove each named world and all3 grades: implemented/non-retired/non-invalidated, current revision+package-hash matching technical/visual/experience pass evidence; grade-specific evidence; formal runtime coverage includes both production-entry and recovery. Exact manifest file SHA is required."
+  },
+  "rootAcceptanceContractBeyondCheckPlan": {
+    "minimumAllIterations": [
+      "All final actual evidence and reviews must precede signing. Use the completed reviewed final plan and dry buildProposal plus all89 real semantic negatives before any ledger binding.",
+      "Check the exact frozen plannedWorldIds for each iteration are in current qualifiedIds and productionIds and have all216/276/324 corresponding grade cases; do not rely on count thresholds, implementation status or a historical warning-only achievement.",
+      "Resolve this iteration’s blocking issues with current evidence and explicit scope. Current P36 and P44 cannot be silently accepted or removed because checkPlan permits historical closure.",
+      "Record distinct root technical, bounded art and actual experience conclusions with their source/report references and explicit limitations. Preserve original failed, empty, death and superseded records.",
+      "Choose and enumerate actual closure gates once; require unique IDs and every blocking gate pass, even though checkPlan has no completeness/duplicate/blocking rule for iteration.gateResults."
+    ],
+    "I10": [
+      "Exact baseline52 + B01–B05 =72/216 current qualified production cases.",
+      "Current20 base2880 + historical52 base7488 with explicit r5→r6 inheritance;120 new original fixed seed processes and312 inherited unique processes.",
+      "Normal-view/nearest-world and original geometry/behavior constraints, final compatibility/selection/production with Worker audit; root bounded art/play and P36 closure."
+    ],
+    "I11": [
+      "Exact baseline52 + B01–B10 =92/276 current cases.",
+      "Current40 base5760 remains separate from old7488 and I11 additional2208.",
+      "New20 original120 fixed processes; nearest/weakest-world review; capability1536 and actual presentation15552 final-source record-renderer matrix supply complete92 subset, while retaining no actual GPU/audio claim."
+    ],
+    "I12": [
+      "All108/324 current cases; current56 base8064 + old7488 + additional2592 =18144 unique generation identities,648 unique fixed processes. Actual failure/recheck reports are a different counter.",
+      "All324 formal entry/recovery,342 browser equivalence, natural48+root experience review,108 severe ≥60s exclusive performance,10 identical+324 mixed lifecycle and12 Shader samples with independent root ownership review.",
+      "Final packages/source/full dependency continuity/archive/restore, source-specific build/codegen and compatibility, root full technical decision, exact audio-engineering disposition and RC manifest before closing."
+    ],
+    "rootSignedArtifacts": {
+      "technical": {
+        "requiredStatus": "independent-technical-pass",
+        "requiredSourceField": "finalSourceSha256",
+        "evidenceKeys": [
+          "generation",
+          "historicalGeneration",
+          "expandedHoldoutI11",
+          "expandedHoldoutI12",
+          "play",
+          "historicalPlay",
+          "inheritance",
+          "production",
+          "equivalence",
+          "budget",
+          "lifecycle",
+          "shaderReview"
+        ],
+        "boundary": "Current binder requires these exact refs/status; root authorship and actual independent assessment still require review, not just that status string."
+      },
+      "art": {
+        "requiredStatus": "bounded-internal-pass",
+        "sourceField": "finalSourceSha256",
+        "perWorld": [
+          "worldId",
+          "status=bounded-internal-pass",
+          "dependencyHash",
+          "nonempty scope",
+          "nonempty limitations",
+          "independentReviewer=root",
+          "nonempty hash-bound evidence with source continuity"
+        ]
+      },
+      "shader": {
+        "requiredStatus": "bounded-independent-shader-pass",
+        "requiredReviewer": "root",
+        "requiredFields": [
+          "finalSource",
+          "report",
+          "sourceBinding",
+          "reviewedShaderSamples exactly all12 observed label/created/live/active values",
+          "nonempty scope",
+          "nonempty ownershipConclusion",
+          "nonempty limitations"
+        ]
+      },
+      "inheritance": {
+        "requiredStatus": "bounded-pass",
+        "requiredReviewer": "root",
+        "boundary": "Old52 actual executed revision5 remains explicit in both candidate and review; shared source/RGBA/current proofs and continued source path must match."
+      },
+      "naturalExperience": {
+        "requiredPathByContract": "docs/qa/artifacts/r100-i10-i12/continuous-final108/independent-experience-review.json",
+        "requiredAssessment": "Root actual bounded review of 4×12 original continuous histories, equipment/cost/use/loss/settlement and repeated-neighbor/failed-process diagnosis;48 completed rows alone cannot sign experience.",
+        "boundary": "The generic binder does not consume natural48. It remains a separate closure gate and must not be omitted."
+      },
+      "sound": {
+        "existingDecision": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-audio-root-disposition.json",
+          "sha256": "d5c33c68f41b2c783020a7f2bdaa0de0008df130334c95cc7acfd45142951534"
+        },
+        "decisionStatus": "bounded-engineering-reuse-final-binding-pass-listening-pending",
+        "requiredRetainedFields": [
+          "listeningPass=false",
+          "humanApproval=false",
+          "R100-R10 pending-actual-listening, target I14, waived=false"
+        ],
+        "boundary": "Engineering reuse is now root-bound to final source, satisfying the explicit I12 scope decision only. Actual listening, new geometry audibility, masking/fatigue and final human approval remain unverified."
+      }
+    },
+    "rcAndRelease": {
+      "taskRequirement": "I12 requires an actual frozen RC manifest; checkPlan’s iteration-closure block does not enforce that task requirement.",
+      "ledgerShape": {
+        "versionReleaseManifest": "{revision: nonempty RC revision, path: existing repository file, hash: exact file SHA256}"
+      },
+      "optionalCoverageReleaseResult": "If R100-G-COVERAGE is signed now, releaseGateResults needs {id,status:pass,revision,evidenceIds}; a cited evidence row must have purpose=release-gate, gateId=R100-G-COVERAGE and the same RC revision/releaseManifestHash. Other release gates stay independently pending.",
+      "preserve": [
+        "version.status must not become released",
+        "version.finalAcceptance remains null",
+        "I13 and I14 remain unfinished",
+        "human review remains pending for currentr6",
+        "R100-R10 actual-listening requirement remains a release blocker"
+      ]
+    }
+  },
+  "actualReadinessAtObservation": {
+    "availableBoundedEvidence": [
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+          "sha256": "a708aba0ac42d652871931ebc357a6f830835c060b8a463587a774a4c132ea3f"
+        },
+        "recordedStatus": "pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary.json",
+          "sha256": "1c8d7255b5da05d5aa87d052856f2d3f9127da30b10e2ac4e615f6914bb29539"
+        },
+        "recordedStatus": "pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary.json",
+          "sha256": "a31cb4ea7c73dc705df86d7355e640c76232411bfb6ca8b733d0c6bd543ea5e7"
+        },
+        "recordedStatus": "pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/summary.json",
+          "sha256": "ecc10117b880a364d2d75b8204d7f2287a839ab9c5f56587657845d6baa9f1ab"
+        },
+        "recordedStatus": "pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/independent-review.json",
+          "sha256": "2168637d4bc9fb70f3652ead770a74a0acf0dbe21fca4fa4d8758b1d34987da7"
+        },
+        "recordedStatus": "bounded-pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.json",
+          "sha256": "f22a0bcda8d3c2812520260df5331f8c316657c209698b1efa279aab833b9e83"
+        },
+        "recordedStatus": "bounded-internal-pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-art-root-review.json",
+          "sha256": "c0b765ab2c9ee7e41216a5148d65cb67643faf04054ae86bf09ed244ecd8694b"
+        },
+        "recordedStatus": "bounded-internal-pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+          "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+        },
+        "recordedStatus": null,
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json",
+          "sha256": "0f6eee447bdc4faef6ed19598ca974035ec74bdbea1beeef65d7ee49118af198"
+        },
+        "recordedStatus": "pass-five-original-commands-on-final108",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-static-readiness-review.json",
+          "sha256": "1ea362f34f8e8406718acfa5f201d69362c9fa2ef961ad4f204d06154137ae79"
+        },
+        "recordedStatus": "pass-static-readiness-not-runtime-or-binder-acceptance",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-static-readiness-supplement.json",
+          "sha256": "06427d5db6be14b8da6c2be921aa5a1d3d1246e1c8611b7ee49a512185d62c8e"
+        },
+        "recordedStatus": "pass-completed-controlled-matrices-build-and-bounded-art-binding",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/selection-final108/selection.json",
+          "sha256": "fbd411e96765a59dacce8c601f6860cc2f7a2a3aab6c89afdadb48c953d49f60"
+        },
+        "recordedStatus": null,
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-controlled-execution/execution.json",
+          "sha256": "0797dda549775996b971a27c13422e5051c1fa2f000cc483657be52a5a6d37cc"
+        },
+        "recordedStatus": "pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-build/execution.json",
+          "sha256": "5aa16d4960c33d0981667cec3086553f793db9d7c526cb071a320fd1f9f6c686"
+        },
+        "recordedStatus": "pass",
+        "boundary": "Existing bounded evidence; retain the limitations of the referenced receipt and its independent reviews."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-audio-engineering-binding.json",
+          "sha256": "c9773b8ae5cb64af03b78bda3b2d9971653926b54bf240bbcc72989b534ccccc"
+        },
+        "recordedStatus": "final-engineering-binding-verified-listening-pending-root-disposition",
+        "boundary": "Existing engineering reuse only; listening and human approval remain pending."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-audio-root-disposition.json",
+          "sha256": "d5c33c68f41b2c783020a7f2bdaa0de0008df130334c95cc7acfd45142951534"
+        },
+        "recordedStatus": "bounded-engineering-reuse-final-binding-pass-listening-pending",
+        "boundary": "Existing engineering reuse only; listening and human approval remain pending."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/preparation-review.json",
+          "sha256": "6d6fddebcff6a27ba8987caabfda77380b366641e9f88e8eafcf166663f157d6"
+        },
+        "recordedStatus": "prepared-only",
+        "boundary": "Prepared checker only; genuine baseline and negatives not run."
+      },
+      {
+        "reference": {
+          "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/root-approved-protocol.json",
+          "sha256": "a1e2c7d8bce4d63897b74b1c028c60a6f07b368072978c8f7d6e0b3aabbe8e14"
+        },
+        "recordedStatus": "approved-single-full-recheck-after-external-sleep",
+        "boundary": "One actual full recheck is authorized; its completion is not supplied by this protocol."
+      }
+    ],
+    "pendingArtifacts": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-binding/plan.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/browser-equivalence.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/source-binding.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/summary.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/independent-experience-review.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/report.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/source-binding.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/report.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/source-binding.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/shader-review.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json",
+        "existsAtObservation": false,
+        "meaning": "Existence alone is not an acceptance result; the complete referenced report/source audit and required independent review are mandatory."
+      }
+    ],
+    "ongoingProduction": {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep/report.json",
+      "existsAtObservation": true,
+      "mutableObservation": true,
+      "observedAt": "2026-10-08T02:05:21.074Z",
+      "sha256AtRead": "970bbb3e6509a67108630a4289f532f096581e0be58bdbd86d048dd453f5cc46",
+      "recordedStatusAtRead": "running",
+      "caseCountAtRead": 148,
+      "requiredCompleteCases": 324,
+      "boundary": "An in-progress observation only. This file may continue changing and is not claimed as an immutable final reference."
+    },
+    "ledgerOpenIssues": [
+      {
+        "id": "R100-P36",
+        "title": "三次原定出击在入场前发生Worker错误",
+        "severity": "P1",
+        "iteration": "R100-I10",
+        "status": "open",
+        "remainingRequirement": "原B04三次入场前Worker失败、B06原002明确ERR_NETWORK_CHANGED均保留；同请求一次启动恢复已通过14生命周期、旧恢复/像素回归及三组真实浏览器受控验证。最终324进入/冷续与生产观察未完，不据受控实验解释所有历史间歇原因。"
+      },
+      {
+        "id": "R100-P44",
+        "title": "最终正式矩阵第152项与系统自动休眠重叠而中断",
+        "severity": "P1",
+        "iteration": "R100-I12",
+        "status": "open",
+        "remainingRequirement": "独立核对休眠证据后，以原冻结harness、原30s gate、相同108×3种子计划在新目录完整复验一次；限定测试进程防Idle Sleep，任意失败立即停。新324全部通过且原152身份精确比对后才能关闭。"
+      }
+    ],
+    "qualifiedLedgerStillNotFinal108": true,
+    "finalDraftIncompleteReferences": [
+      {
+        "field": "art",
+        "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.json"
+      },
+      {
+        "field": "technicalReview",
+        "path": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json"
+      },
+      {
+        "field": "shaderReview",
+        "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/shader-review.json"
+      },
+      {
+        "field": "production",
+        "path": "docs/qa/artifacts/r100-i10-i12/production-final108/report.json"
+      },
+      {
+        "field": "equivalence",
+        "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/browser-equivalence.json"
+      },
+      {
+        "field": "budget",
+        "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/report.json"
+      },
+      {
+        "field": "lifecycle",
+        "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/report.json"
+      },
+      {
+        "field": "runtimeBindings",
+        "path": "docs/qa/artifacts/r100-i10-i12/production-final108/source-binding.json"
+      },
+      {
+        "field": "runtimeBindings",
+        "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/source-binding.json"
+      },
+      {
+        "field": "runtimeBindings",
+        "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/source-binding.json"
+      },
+      {
+        "field": "runtimeBindings",
+        "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/source-binding.json"
+      }
+    ],
+    "draftBoundary": "Preserve this historical draft; art now exists separately. Final plan must supply actual SHA refs, all four distinct runtime bindings and the reviewed new production canonical path after full recheck. Do not reuse the original failed production report merely because its draft path is populated.",
+    "noActualIterationCloseout": [
+      {
+        "id": "R100-I10",
+        "actualRevision": null,
+        "gateCount": 0,
+        "hasAchievement": false
+      },
+      {
+        "id": "R100-I11",
+        "actualRevision": null,
+        "gateCount": 0,
+        "hasAchievement": false
+      },
+      {
+        "id": "R100-I12",
+        "actualRevision": null,
+        "gateCount": 0,
+        "hasAchievement": false
+      }
+    ],
+    "rcPresentInLedger": false,
+    "fixedPlayCounters": {
+      "uniqueHistoricalProcesses": 312,
+      "historicalActualReports": 315,
+      "uniqueAddedProcesses": 336,
+      "addedActualReports": 346,
+      "uniqueTotal": 648,
+      "actualRecordedTotal": 661,
+      "boundary": "648 unique fixed seed processes and661 actual reports are distinct;346 new includes10 extra attempts. Production recheck attempts and natural48 are separate axes."
+    }
+  },
+  "misSigningRisks": [
+    "checkPlan keeps historical completion even if current eligibility falls below target: it emits warnings rather than refusing old closed iterations. Do not use that intentionally historical contract to mint a new unsupported achievement.",
+    "Machine achievement checks >=target and implemented members, permits extra grade cases outside the world list, and does not bind a frozen batch subset. Root must insist on exact72/216,92/276,108/324 sets for these closeouts.",
+    "Iteration gate results may be absent, duplicated, pending or changes-required without blocking closed; P0/P1 unresolved rejection is only in final version=released. The actual task contract is stricter.",
+    "A matching achievement hash does not hash the evidence file content, approvals or gate decisions. Receipt SHA/source scope and independent review must be bound by the actual closeout artifact.",
+    "Old final-binding/contract.json describes two runtime bindings; the current reviewed binder/final-runtime contract requires four plus Shader review. The old prepared document must not weaken final closure.",
+    "A dry binder proposal intentionally preserves iteration/issue/release/audio state and omits natural48 as a generic ledger binding input. A green binder alone does not close I10–I12.",
+    "Original production case152 remains failed; clean full324 recheck requires its separate approved single-run protocol,476 maximum actual attempts, complete original152 identity comparison and power/worker cleanup evidence.",
+    "Package enabled flags, author count108, historical52 approval, controlled matrices and finite normal frames are separate from current complete qualifications, real GPU performance, full appearance coverage and user/audio approval."
+  ],
+  "suggestedRootExecutionOrder": [
+    "Complete and independently review production/P44/P36, equivalence, natural48, exclusive budget, lifecycle+Shader.",
+    "Produce root final technical report and complete hash-bound final plan with all current addenda; run actual dry binder and all89 true-data semantic negatives.",
+    "Bind current world/grade evidence only after those gates pass; re-run read-only checkPlan and assert exact current subsets.",
+    "Create actual root closeout+achievement evidence for I10 and validate proposed ledger; repeat for I11 after I10 closed, then I12 after I11 closed with RC and preserved audio decision.",
+    "Keep I13/I14/release/human/audio pending, update task/checkpoint/game-state/read-only presentation from actual state and complete the authorized local commit."
+  ],
+  "checkerPathInterface": {
+    "checker": {
+      "path": "tools/qa/check-r100-i10-i12-final-binding.mjs",
+      "sha256": "bf7732ce152012ccc5451ab0381bd04e86d88eb3edb5526d29007c2695d54ab5"
+    },
+    "syntax": [
+      "node",
+      "tools/qa/check-r100-i10-i12-final-binding.mjs",
+      "--plan",
+      "<explicit-complete-plan-path>",
+      "--output",
+      "<explicit-new-report-path>"
+    ],
+    "pathRules": "Both paths resolve inside the repository; input realpath must remain inside; output must not already exist. No default final plan path is assumed.",
+    "behavior": "Actual baseline first, then89 separately resealed real-evidence variants; unexpected/stale/setup/wrong-predicate outcomes fail. No --write or ledger mutation.",
+    "notExecutedHere": true
+  },
+  "minimalReadOnlyCommandsAfterActualRootProposal": [
+    [
+      "node",
+      "tools/qa/r100-bind-i10-i12.mjs",
+      "--plan",
+      "<finished-final-plan.json>"
+    ],
+    [
+      "node",
+      "tools/qa/check-r100-i10-i12-final-binding.mjs",
+      "--plan",
+      "<finished-final-plan.json>",
+      "--output",
+      "<new-negative-check.json>"
+    ],
+    [
+      "node",
+      "tools/world-study/r100-progress.mjs",
+      "check",
+      "--input",
+      "<root-proposed-ledger-after-each-close.json>"
+    ]
+  ],
+  "inspectedInputs": [
+    {
+      "path": "docs/progress/rift-r100.json",
+      "sha256": "2e0d66c2d6e18a19b93fa0248869c2508711aadd1060b3dcac928a409fa829a4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/plan.enabled108.draft.json",
+      "sha256": "23fb64b27eca6e85a5b5262e3ba96601bbe71857693f33b67ea76865719491af"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/summary.json",
+      "sha256": "ecc10117b880a364d2d75b8204d7f2287a839ab9c5f56587657845d6baa9f1ab"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json",
+      "sha256": "d29784aba32287105f99b1c55be076017ddd857de10b16f7ed6f4c0972034a52"
+    },
+    {
+      "path": "tools/world-study/r100-progress.mjs",
+      "sha256": "7f141e9378911b5a34279030caf573db09c151423aa0b52c8ca5ab7fd1c7b1ed"
+    },
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "f2139f859ea10a5d8a06a0004d14937936d60e64886e9dfd3b43fc0ef485ed07"
+    },
+    {
+      "path": "tools/qa/check-r100-i10-i12-final-binding.mjs",
+      "sha256": "bf7732ce152012ccc5451ab0381bd04e86d88eb3edb5526d29007c2695d54ab5"
+    },
+    {
+      "path": "docs/tasks/rift-r100-i10.md",
+      "sha256": "2d93f9beb0efdebce4cd6f77cb22d4d586687831d174808b478955a65fe158fe"
+    },
+    {
+      "path": "docs/tasks/rift-r100-i11.md",
+      "sha256": "a0f5b091625658f7ba74ca56b3312fdeb26554a3bdf076a01fbaacd11063eaff"
+    },
+    {
+      "path": "docs/tasks/rift-r100-i12.md",
+      "sha256": "3b4f82c63cb423272f12602f1c5e6db66ffa62150802a81008925687499b00e0"
+    },
+    {
+      "path": "docs/qa/rift-r100-i10-i12.md",
+      "sha256": "42081257f6edd39c5aea90a3de3775cb90d22813a185cb50480183351e5f6a71"
+    },
+    {
+      "path": "docs/progress/r100-i10-i12-checkpoint.md",
+      "sha256": "310a350157c1d89d24a73a11c8987ca9778992372d5a367d68dd679788e7b48d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-artifact-contract.json",
+      "sha256": "74a2dd6c7ae289dbb0a839db004313d1bc15714a45cfe8ed63855c1149e6bf53"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-execution-order.json",
+      "sha256": "ae80adfacf5241c3d5e65d86b7592a7f7bb686f518f9817c26891ec3f8779517"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/contract.json",
+      "sha256": "45aed9b1f8f28bb0af0cc47dd36a58c87bb074a214d22acdcf7abd990cb1379b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-tool-change-addendum.json",
+      "sha256": "315731509cc4f46bae6c940b9182b9bb7b6ebd294d21603b67e1fafcd296c950"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-tool-method-binding-addendum.json",
+      "sha256": "6a5e0e561f45dad6b75e9e7cff2b50e436ccb45024f7e052d285c056a1e82782"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source-archive-plan.json",
+      "sha256": "c1f10a601e44d7f949ad7509ff73f05976765c48684ef6641c4b1abcb3b2b39c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/source-archive/index.json",
+      "sha256": "fe91926a0ab0cc2af4a091c7b18288353a73b16fc5b695ed1fe9a2ac11d88174"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/source-archive/final-source-restore-verification.json",
+      "sha256": "f000e57da0f5e4764cf134a3ebdb822fb89575bb05bdc56c62e77318397ab6ae"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/audio-i12-root-disposition.json",
+      "sha256": "5cb5fa689c97752de3838a50ed1d308d2060d90c8244714425841500b0985ad4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/iteration-closure-preparation-development.json",
+      "sha256": "b33fa14134552471d1998486f59a1700fd28013118547cd4fd2a54de5386b213"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/prepare-iteration-closure.mjs",
+      "sha256": "58e562f2f1591253a6c028b27b6dc1b4b98ee3a8b5f33c21dff09a4dc23d4c0d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "sha256": "a708aba0ac42d652871931ebc357a6f830835c060b8a463587a774a4c132ea3f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary.json",
+      "sha256": "1c8d7255b5da05d5aa87d052856f2d3f9127da30b10e2ac4e615f6914bb29539"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary.json",
+      "sha256": "a31cb4ea7c73dc705df86d7355e640c76232411bfb6ca8b733d0c6bd543ea5e7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/independent-review.json",
+      "sha256": "2168637d4bc9fb70f3652ead770a74a0acf0dbe21fca4fa4d8758b1d34987da7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.json",
+      "sha256": "f22a0bcda8d3c2812520260df5331f8c316657c209698b1efa279aab833b9e83"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-art-root-review.json",
+      "sha256": "c0b765ab2c9ee7e41216a5148d65cb67643faf04054ae86bf09ed244ecd8694b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+      "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json",
+      "sha256": "0f6eee447bdc4faef6ed19598ca974035ec74bdbea1beeef65d7ee49118af198"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-static-readiness-review.json",
+      "sha256": "1ea362f34f8e8406718acfa5f201d69362c9fa2ef961ad4f204d06154137ae79"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-static-readiness-supplement.json",
+      "sha256": "06427d5db6be14b8da6c2be921aa5a1d3d1246e1c8611b7ee49a512185d62c8e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/selection-final108/selection.json",
+      "sha256": "fbd411e96765a59dacce8c601f6860cc2f7a2a3aab6c89afdadb48c953d49f60"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-controlled-execution/execution.json",
+      "sha256": "0797dda549775996b971a27c13422e5051c1fa2f000cc483657be52a5a6d37cc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-build/execution.json",
+      "sha256": "5aa16d4960c33d0981667cec3086553f793db9d7c526cb071a320fd1f9f6c686"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-audio-engineering-binding.json",
+      "sha256": "c9773b8ae5cb64af03b78bda3b2d9971653926b54bf240bbcc72989b534ccccc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-audio-root-disposition.json",
+      "sha256": "d5c33c68f41b2c783020a7f2bdaa0de0008df130334c95cc7acfd45142951534"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/preparation-review.json",
+      "sha256": "6d6fddebcff6a27ba8987caabfda77380b366641e9f88e8eafcf166663f157d6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/root-approved-protocol.json",
+      "sha256": "a1e2c7d8bce4d63897b74b1c028c60a6f07b368072978c8f7d6e0b3aabbe8e14"
+    }
+  ],
+  "inspectedInputsUnchanged": true
+}

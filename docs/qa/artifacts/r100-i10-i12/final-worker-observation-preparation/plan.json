@@ -1,0 +1,77 @@
+{
+  "status": "prepared-not-executed",
+  "createdAt": "2026-10-07T05:48:29.586987+00:00",
+  "originalFinalContract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-artifact-contract.json",
+    "sha256": "89387d90508b2e67f002bb989abe913e6a4649e71b649af79510afee666bd07b"
+  },
+  "source": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+  "scope": "Final108 enabled pool; 324 formal world/grade departures and same isolated-context page reload recovery. No game/input/seed changes; original comparison contract unchanged.",
+  "productionArguments": [
+    "--probe",
+    "production",
+    "--source",
+    "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/production-final108",
+    "--expected-worlds",
+    "108",
+    "--expected-revision",
+    "6",
+    "--stop-on-failure",
+    "--observe-workers"
+  ],
+  "inputs": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "93bccf1021f8b1fd65631c1da9e358d3a2169e40592664c2d8ed213bd821c4f8"
+    },
+    {
+      "path": "tools/qa/check-r100-production-browser.mjs",
+      "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    }
+  ],
+  "offlineCheck": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/final-check.json",
+    "sha256": "b4f10fc0bb8ee5c91ec1f1053735d635ff698c2122b3912794e17cac1411f49f"
+  },
+  "observerContract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/observer-final-contract.json",
+    "sha256": "f1ca5d40ad2603ec926c9bf346a78c7db4088214908bdf8ec152ba25c5adf7d5"
+  },
+  "observation": {
+    "folder": "worker-observations",
+    "summary": "worker-observation-summary.json",
+    "firstError": "worker-observation-first-error.json",
+    "successfulNetwork": "Exact URL catalogue written once; per-context counts retain observed HTTP coverage and pending imports.",
+    "errors": "All failed requests, HTTP errors, page/console errors, Worker and CDP target lifecycle events retain individual original records.",
+    "caseBoundary": "Original case and its context close before the first-error marker stops subsequent contexts. Ordinary warnings remain records but do not trigger the marker.",
+    "staleProtection": "Output directory must be new; wrapper and recorder reject a pre-existing marker and never erase its failure bytes.",
+    "sourceBinding": "Tracked observer is copied beside the harness, hash checked before/after, and passed by explicit node --import; untracked NODE_OPTIONS rejected.",
+    "resultGate": "All324 contexts, nonempty network observation, Worker lifecycle pairing and absence of observed error events are required alongside the existing exact production assertions."
+  },
+  "P36": {
+    "status": "open-intermittent-preentry",
+    "originalFailures": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/original-three-failures.json",
+      "sha256": "41bbba1753fd3619bb2cdaed8f03490d2c43771667919c9b786fe48ca2beac55"
+    },
+    "diagnosis": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b04-worker-failure-diagnosis/observed-diagnosis.json",
+      "sha256": "eb62833f4f5f6212e8b47ff92fa20f87eb593253fb6209eaaa28db7727be97df"
+    },
+    "laterBatchObservation": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/worker-observation-summary.json",
+      "sha256": "364077b03feb20085bf425dbc4d7ccb9906d7a75dcec43872ccde64081edaed3"
+    },
+    "boundary": "Same-input rechecks and B05 no-error observations do not establish a cause or independently close P36. Final observations require root disposition."
+  },
+  "limits": [
+    "No actual final108 runtime has run yet.",
+    "No evidence of absent browser-internal events, weak-device performance, sound listening or human approval is assigned."
+  ]
+}

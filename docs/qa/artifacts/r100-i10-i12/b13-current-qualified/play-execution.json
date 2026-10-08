@@ -1,0 +1,33 @@
+{
+  "status": "failed",
+  "pid": 92909,
+  "startedAt": "2026-10-07T09:50:55.942Z",
+  "cases": 24,
+  "worlds": [
+    "white-scarfield",
+    "black-lacuna",
+    "ochre-folds",
+    "violet-marrows"
+  ],
+  "wholeBatchReady": true,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play-commands.json",
+    "sha256": "421691b5f4730efb3f02961a3a89dd63f751ae59b3a6c91f713306b4dfc7cc51"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/run-play.mjs",
+    "sha256": "ebc1fad1d789f01b7a577db1dff89ef332d52b52a1cad270ac65f90ecf934f4b"
+  },
+  "log": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play-execution.log",
+  "method": "Original earned save, policy15 revision6 guard-only adapter, all three grades and two original seeds. Current3121; Worker/network errors remain observable and stop future cases only after the active child closes. Does not grant gameplay/entry/performance/P36 approval.",
+  "exitCode": 1,
+  "signal": null,
+  "elapsedSeconds": 122.429,
+  "logSha256": "e9c555885bf0220214c0dffb5f7b43bb5d03fc8aeb76c7c749a7589ee319fe80",
+  "finishedAt": "2026-10-07T09:52:58.372Z",
+  "error": "AssertionError [ERR_ASSERTION]: Original failure retained; no automatic seed retry\n\n1 !== 0\n\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-current-qualified/run-play.mjs:41:20\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"
+}

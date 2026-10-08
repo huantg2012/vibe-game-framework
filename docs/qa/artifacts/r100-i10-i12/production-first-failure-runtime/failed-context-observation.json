@@ -1,0 +1,334 @@
+{
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/worker-observations/observer-85087.jsonl",
+    "sha256": "336169a74595533e634f72d4c2dc3d3c851288a5e3185dd7249700879f6deae4"
+  },
+  "contextId": 152,
+  "events": [
+    {
+      "at": "2026-10-07T15:34:47.603Z",
+      "pid": 85087,
+      "event": "context-created",
+      "browserId": 1,
+      "contextId": 152,
+      "args": [
+        {
+          "viewport": {
+            "width": 1440,
+            "height": 960
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-10-07T15:34:47.687Z",
+      "pid": 85087,
+      "event": "page-created",
+      "browserId": 1,
+      "contextId": 152,
+      "pageId": 152
+    },
+    {
+      "at": "2026-10-07T15:34:47.694Z",
+      "pid": 85087,
+      "event": "page-navigation",
+      "browserId": 1,
+      "contextId": 152,
+      "pageId": 152,
+      "url": "http://127.0.0.1:3122/"
+    },
+    {
+      "at": "2026-10-07T15:34:48.646Z",
+      "pid": 85087,
+      "event": "page-navigation",
+      "browserId": 1,
+      "contextId": 152,
+      "pageId": 152,
+      "url": "http://127.0.0.1:3122/"
+    },
+    {
+      "at": "2026-10-07T15:34:52.833Z",
+      "pid": 85087,
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 152,
+      "pageId": 152,
+      "workerId": 605,
+      "url": "http://127.0.0.1:3122/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T15:34:53.865Z",
+      "pid": 85087,
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 152,
+      "pageId": 152,
+      "workerId": 605,
+      "url": "http://127.0.0.1:3122/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T15:34:53.947Z",
+      "pid": 85087,
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 152,
+      "pageId": 152,
+      "workerId": 606,
+      "url": "http://127.0.0.1:3122/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T15:34:55.257Z",
+      "pid": 85087,
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 152,
+      "pageId": 152,
+      "workerId": 606,
+      "url": "http://127.0.0.1:3122/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T15:55:10.869Z",
+      "pid": 85087,
+      "event": "page-closed",
+      "browserId": 1,
+      "contextId": 152,
+      "pageId": 152
+    },
+    {
+      "at": "2026-10-07T15:55:10.871Z",
+      "pid": 85087,
+      "event": "context-closed",
+      "browserId": 1,
+      "contextId": 152
+    }
+  ],
+  "network": {
+    "at": "2026-10-07T15:55:10.871Z",
+    "pid": 85087,
+    "event": "network-summary",
+    "reason": "context-closed",
+    "browserId": 1,
+    "contextId": 152,
+    "requests": 999,
+    "responses": 978,
+    "failed": 0,
+    "requestMethods": {
+      "GET": 999
+    },
+    "resourceTypes": {
+      "document": 2,
+      "fetch": 1,
+      "image": 17,
+      "other": 2,
+      "script": 831,
+      "xhr": 146
+    },
+    "statuses": {
+      "200": 922,
+      "204": 1,
+      "304": 55
+    },
+    "pending": [
+      {
+        "urlId": 357,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/last-light/occluders.json"
+      },
+      {
+        "urlId": 379,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/last-light/exterior-fields.png"
+      },
+      {
+        "urlId": 382,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/last-light/actor-normal.png"
+      },
+      {
+        "urlId": 385,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/art/menu-refuge-f.png"
+      },
+      {
+        "urlId": 387,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/bgm/bgm-pp-isolation-drone.ogg"
+      },
+      {
+        "urlId": 1,
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:3122/"
+      },
+      {
+        "urlId": 388,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/bgm/bgm-rift-base-drone.ogg"
+      },
+      {
+        "urlId": 389,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/bgm/bgm-rift-high-chaos.ogg"
+      },
+      {
+        "urlId": 392,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/bgm/bgm-rift-threat.ogg"
+      },
+      {
+        "urlId": 393,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/ambient/amb-rift-proximity.ogg"
+      },
+      {
+        "urlId": 394,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/ambient/amb-pp-mechanical-hum.ogg"
+      },
+      {
+        "urlId": 395,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/ambient/amb-rift-alien-atmosphere.ogg"
+      },
+      {
+        "urlId": 391,
+        "method": "GET",
+        "resourceType": "other",
+        "url": "http://127.0.0.1:3122/favicon.svg"
+      },
+      {
+        "urlId": 396,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/ui/sfx-ui-click.ogg"
+      },
+      {
+        "urlId": 397,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/ui/sfx-ui-hover.ogg"
+      },
+      {
+        "urlId": 398,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/ui/sfx-ui-open.ogg"
+      },
+      {
+        "urlId": 399,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/ui/sfx-ui-close.ogg"
+      },
+      {
+        "urlId": 400,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/ui/sfx-ui-allocate.ogg"
+      },
+      {
+        "urlId": 401,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/ui/sfx-ui-warning.ogg"
+      },
+      {
+        "urlId": 402,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/ui/sfx-ui-error.ogg"
+      },
+      {
+        "urlId": 403,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-step-metal.ogg"
+      },
+      {
+        "urlId": 404,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-step-organic.ogg"
+      },
+      {
+        "urlId": 405,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-step-crystal.ogg"
+      },
+      {
+        "urlId": 406,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-hurt.ogg"
+      },
+      {
+        "urlId": 407,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-attack.ogg"
+      },
+      {
+        "urlId": 408,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-pickup.ogg"
+      },
+      {
+        "urlId": 409,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-use-item.ogg"
+      },
+      {
+        "urlId": 410,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-search-loop.ogg"
+      },
+      {
+        "urlId": 411,
+        "method": "GET",
+        "resourceType": "xhr",
+        "url": "http://127.0.0.1:3122/assets/audio/sfx/player/sfx-shared-player-search-interrupt.ogg"
+      }
+    ]
+  },
+  "previousContextClose": {
+    "at": "2026-10-07T15:34:47.576Z",
+    "pid": 85087,
+    "event": "network-summary",
+    "reason": "context-closed",
+    "browserId": 1,
+    "contextId": 151,
+    "requests": 1176,
+    "responses": 1176,
+    "failed": 0,
+    "requestMethods": {
+      "GET": 1176
+    },
+    "resourceTypes": {
+      "document": 2,
+      "image": 34,
+      "other": 4,
+      "script": 954,
+      "xhr": 182
+    },
+    "statuses": {
+      "200": 1175,
+      "304": 1
+    },
+    "pending": []
+  }
+}

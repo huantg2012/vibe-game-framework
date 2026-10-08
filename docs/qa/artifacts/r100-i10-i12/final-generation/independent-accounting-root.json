@@ -1,0 +1,601 @@
+{
+  "status": "bounded-independent-accounting-pass",
+  "reviewer": "root",
+  "at": "2026-10-07T08:30:36.607701+00:00",
+  "scope": "Independent reread of original frozen executors, per-run planned cases and raw JSONL; exact counts, world/grade/seed identities, cohort, original superseded retention, and success state. No gameplay or final-source inference.",
+  "results": [
+    {
+      "summary": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+        "sha256": "a708aba0ac42d652871931ebc357a6f830835c060b8a463587a774a4c132ea3f"
+      },
+      "worlds": 56,
+      "activeCases": 8064,
+      "supersededCasesRetained": 144,
+      "rawAttempts": 8208,
+      "cohorts": {
+        "ordinary": 5376,
+        "boundary": 1344,
+        "independent-holdout": 1344
+      },
+      "internalRejectedGenerationAttempts": 88,
+      "maxRejectedBeforeAcceptedMap": 5,
+      "validatedInputs": [
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/generation-full/source-snapshot.json",
+            "sha256": "3df15627d9a4e3077c2c87309321dabce56c5a0388a00261bc9e04c3450a887c"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/generation-full/planned-cases.json",
+            "sha256": "30baa6051d14740482779e6504d355347820146a70e80a7116a1bec925631a3e"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/generation-full/cases.jsonl",
+            "sha256": "1f3ec57ec4a045270a1c60b69a33a99f3522a78362a0cb3529ff80e0fe6e7b78"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "9595fde8eb602e9d8520368cc52bbc2710d4a9009f706dcc7fac811c31aa31e5"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/generation-holdout/planned-cases.json",
+            "sha256": "3b96b102a4f558056b2e346bb8132694f21b62f362d727d24ebd2981d040f389"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/generation-holdout/cases.jsonl",
+            "sha256": "7cc1fe4cb786bede7027d79307dfdc99b4db227a49e04aaade46467e5e29e31c"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-full/source-snapshot.json",
+            "sha256": "c9eb5816545cafb256c5087691b3ce613b2579d7c1b90b12ccd9802f0d7b8ce5"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-full/planned-cases.json",
+            "sha256": "55f07119a5c215b3d6c958a2d399c7a88ed4d270f0c785879c130d2f0b418c89"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-full/cases.jsonl",
+            "sha256": "24cc56c283046cde579180deb3452f6cdb33959fbe1872be123f80b7b0fe8cf7"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-holdout/source-snapshot.json",
+            "sha256": "1067f453e063016c3755af86128642bcb347f3eeff8eb07551400fea344ae529"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-holdout/planned-cases.json",
+            "sha256": "fdf2745d5531fce6afa6edfb92d93ed6e4d89395721a6a1b1f2a0e564917a621"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/cleft-ground-edge-requalification/generation-holdout/cases.jsonl",
+            "sha256": "8dca7b4f645b770d84638bc26f969f495ef80049108590055a826150e6e47db0"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-full/source-snapshot.json",
+            "sha256": "f50caed7c242bb5dbe484b9608e2a208e4fded964b82ad7975e8ab1fd892e093"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-full/planned-cases.json",
+            "sha256": "2e807de420e7def02e08c67cbe5ae96793a96a836053d41ba147c54f7ab20ed7"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-full/cases.jsonl",
+            "sha256": "4b7a5f159c6d32e8354b66cd249e1279220f40b5c1deb2acb7e39c24b7d33a6c"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "29e5dee6b5a121fee905cafbddd5d7599338a952fa8f22b406bd9f69bccbbed7"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-holdout/planned-cases.json",
+            "sha256": "dcc5ed0a860cf23a98c2e50d3d5c8d8fc326e424ac8702a2a287b5c4ade6b042"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-qualified/generation-holdout/cases.jsonl",
+            "sha256": "414c236ea5b7bbce47defefc4cbed2f9830d098928ba3fc8194e1f93cdad8b0f"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-full/source-snapshot.json",
+            "sha256": "03f9ff265990b5ee02ab9ea24ff72b20f68e7ec24784a8fd72bfd831030eeef9"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-full/planned-cases.json",
+            "sha256": "3268a1e83892e59dbda2ae7622c502fd8e402323b7365dd6d1f6e06fa6571277"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-full/cases.jsonl",
+            "sha256": "91ce589fe460dca99969fd0fe604cc89a3dbe2f8cb93bbc0e632686e9ca9b405"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "5dc9f2d85190be3af91a59bec632b66adaa7a8c5f9acf88c0a0716a07ded6e3d"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-holdout/planned-cases.json",
+            "sha256": "c7d2c5acb7fefa345df3bdcb187de81b4a072266804b14da90027ea84bf42755"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-three-qualified/generation-holdout/cases.jsonl",
+            "sha256": "08d24cd177eb742465b161826f4e14b6ca35a210394898107b74d7eb94d26c79"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-full/source-snapshot.json",
+            "sha256": "282fd9c056a9811af548d4d38ecc5a9c95d77b1caa274177955cccaa23a429d0"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-full/planned-cases.json",
+            "sha256": "1ddb670c70702d556db15731756f4562d10ba973ff1f7f8534850319bbf3939f"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-full/cases.jsonl",
+            "sha256": "a70dcc155691d243e82d61e6f48198f4a1e27d6876164fbe3efa8e0b4d88eae4"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "925484ad3bf26b41654359a856b905fd927362465cb3ca7f7d53af6bfeacb522"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-holdout/planned-cases.json",
+            "sha256": "67deed35e3531200c5e38f68e7e241ba9cb6b49b85ead834b467dd403d06f4d1"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b03-shard-qualified/generation-holdout/cases.jsonl",
+            "sha256": "d849c98e60808ef5243a68002a0c86812a7b420baa2549d0aa21a7d5b81bb98f"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-full/source-snapshot.json",
+            "sha256": "72d7cb842857c43a4f2ba786c0264426de0f2f5650bf50633fe0733d4b1c17f5"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-full/planned-cases.json",
+            "sha256": "c86bbf4b39e57ffd0f19e122b27979c9e570eb3a3fb58d2c3a1d090df98e563f"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-full/cases.jsonl",
+            "sha256": "65f45ffb9ae0b54da141de873422d9e4c43a9e71006a9e5cafe88b6af0d65428"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "76b994bd177cb0e406433cfc6b40214eda86612e7bcd90b95bf45fc55b9c3d42"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-holdout/planned-cases.json",
+            "sha256": "ae1992bfdbeb60b0652db5b07b9a700ec57f37f99e826097d42ebfa876a6ad08"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-three-qualified/generation-holdout/cases.jsonl",
+            "sha256": "3766ded266e85950c4064245c17046db467918827392de17d182047573b434d4"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-qualified/generation-full/source-snapshot.json",
+            "sha256": "dff3318c46b801c859a9724b781680b00af51bbea306b92f63766ccb5c550181"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-qualified/generation-full/planned-cases.json",
+            "sha256": "733f26e273fe28e5fd62da8409a27b6e0a00a4c62cedf836238aaed51b67bf81"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-qualified/generation-full/cases.jsonl",
+            "sha256": "924e49fa039e302eabb4cfae3beeb141e73a33444ebef6ac377c81a5b2d7a62c"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "635a940ebd5a15b737fb8d20aa0397446916af4fc6c0de8e071200add28275b0"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-qualified/generation-holdout/planned-cases.json",
+            "sha256": "44c0ae4d353fecbecf78a569635ea3fe3d8920b99863e22f2640678ff2169599"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b04-buried-qualified/generation-holdout/cases.jsonl",
+            "sha256": "c32d83d456bf5ad9fd9799ce9df4e8600997e2b4d1597afd112ee599f9b16eec"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/generation-full/source-snapshot.json",
+            "sha256": "268d044194214f53694c85ea5f1c77b5f66fabed342e3bbf8a39b7a1d42188a9"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/generation-full/planned-cases.json",
+            "sha256": "55499b8d88e7e690ee4bc1bfe94907ee171adb3e09f58978485a68b940879978"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/generation-full/cases.jsonl",
+            "sha256": "30cac3447ac423a2a373cda7a6c3be035f4b60e377e2de04c18a477e377a4882"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "e7ff983f62ccbab709c40e75ea90cb60bb96c95bb9547eca1739ca98df6288fa"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/generation-holdout/planned-cases.json",
+            "sha256": "fe9465a52c8cbae4a197a358b3f4c44deac2831a8d00cd02168cf3e5e605d576"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b05-refined-qualified/generation-holdout/cases.jsonl",
+            "sha256": "60ccbfc9c80228c913987a0b63bc5ad3f80d52cb68b5c82a8cf4a7b30cd60caa"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-full/source-snapshot.json",
+            "sha256": "aedb5e2cbd67b89a49817b27f34fe733aa917a6053a576283b29aa91581dd5d4"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-full/planned-cases.json",
+            "sha256": "8960bf56649c2efcb21383b3fec61b9f6a6bfd5dc572fbdd8d5ef83972bd9d5b"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-full/cases.jsonl",
+            "sha256": "45d03a10f5d5e1624c3585323837cdc0f1047cfa80205930e1ab789016a10ebd"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "51f9f2b72fc8feffbf192a3cf012a7953f1008296faf1360b45c31e99d17aecf"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-holdout/planned-cases.json",
+            "sha256": "4363bf7ad6d797ab8185bfbaa9e8cf48d5918c98613d9d3ba588c9b400792042"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-porous-qualified/generation-holdout/cases.jsonl",
+            "sha256": "3052216e01850a523484ee338c2de0fa7336b79adabb22c8c733662408aa6534"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-full/source-snapshot.json",
+            "sha256": "8fd46d0f5116b44055d793b8b36a5a451bdbd26e3d6478cb365d6c35834128ef"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-full/planned-cases.json",
+            "sha256": "bcbf761b6145c6667e6a9b9ac6c0f8db1cf6722fa9827411de965615989c70ab"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-full/cases.jsonl",
+            "sha256": "2d4dd78fabf3c3076b94c041744eb99112f257b523a374de1e01e9cca1968f51"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "195b2d96c02b194f68219de8177b6dc63aa487c28ce87b89a7ec858b87d61f70"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-holdout/planned-cases.json",
+            "sha256": "51a2c1e26f408a27e18ab6ae2e3842391c2b4dda3334c9f9bd8659d747eb961f"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/generation-holdout/cases.jsonl",
+            "sha256": "afbfc57ff4dee4c619628ff433374fefe34e10f77b45743f278b068bcf1e7f0c"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-full/source-snapshot.json",
+            "sha256": "bf25b7a340beab9ac22aee8e23945752c1d26294621e8c02cb5107a9f51b3a17"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-full/planned-cases.json",
+            "sha256": "23a21a5dbc456ab6a11ef4ac51c91048b44e16b2838fcf088a7f87818ab5900a"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-full/cases.jsonl",
+            "sha256": "b0ae1b5fbd07d35e6236a808316999d191ce8ba7fdadff7c44d51b69c5c528a7"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "5b4ab5d6111aa8d914b240a3075b3ca06c8e7a20f5c92c3b35b0729d40f18878"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-holdout/planned-cases.json",
+            "sha256": "d803f212e58b7cedb279b79bf2cf7571fa504589ddb5ef07fdaa3767f76379fa"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/generation-holdout/cases.jsonl",
+            "sha256": "12673d4c69cbb79e6bcd40ba7bcac009bd9ad8a023efd2aa894ab49b94e27941"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/generation-full/source-snapshot.json",
+            "sha256": "ff440aeaf185cd1afadddaf3cc8e7a76e7008728af90b278e0977a16f09b28c5"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/generation-full/planned-cases.json",
+            "sha256": "3ee4c56bc7403ea7441f0e1a68c1fdf525beff62e6e5277a3bc648ccdeb2e99b"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/generation-full/cases.jsonl",
+            "sha256": "bbb6ed740a56bc2337e7071b3283319501fb04970f612735dd4d0fbd43b60bf5"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "72a342e26545991a1bea2efa178f9c5bbb612ea45ffe4fa2155856f46b1c9a85"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/generation-holdout/planned-cases.json",
+            "sha256": "177c19c9df2e1228153e6c17b4ed40abd6e6ce2af45c754ea7269f2fe524ac49"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/generation-holdout/cases.jsonl",
+            "sha256": "17f4aeb986e1a15c6ce8e78e276622090dd9d93a2f42db7b56843aaec8bfed69"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/generation-full/source-snapshot.json",
+            "sha256": "4c8322d5f03a836e4ed629961b39c9b4c9534a40b493bd35bc4b831a9aafc979"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/generation-full/planned-cases.json",
+            "sha256": "9c309db4c51ade7a7a89d435e98b20744693b2dff66418f678d323e96fd8b97d"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/generation-full/cases.jsonl",
+            "sha256": "a79092576bbcafc904a0e6aac0ccf2328ef92e02762fa001bc815cac468f9d86"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "eb34d5fed57d2bf0722e7ff5e0b7b85722fbc0395eac6df01407876200cf0a7f"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/generation-holdout/planned-cases.json",
+            "sha256": "bc65bc774f3c0886fdd241efb1faf3c69da0e2ad6e3d1d9910a4fb64afcd49f9"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/generation-holdout/cases.jsonl",
+            "sha256": "008e693ab96cbf986b2f8fb6d7dd9eb0ac7e2ad9fccfde5ef25523c1b015b4f2"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/generation-full/source-snapshot.json",
+            "sha256": "a6cce3ca60f7494f82df517fb6fbad0692127f79f1edd9dd2ac60464917990aa"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/generation-full/planned-cases.json",
+            "sha256": "b556f8e9448f0e08c80c9c725da140d25df1eac21c7857cc15ea1821a7f1b316"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/generation-full/cases.jsonl",
+            "sha256": "d432481086cb8cc837be4080e41b0ca2436c7a262a6ad4f4242ee42262f9011b"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "ea732ee3c51975a63247f5eb23b448d80797dd683731c10c42f6a89d2fd21c9b"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/generation-holdout/planned-cases.json",
+            "sha256": "2329a944a652b357fae4a8d681718501894621e9efc14e2c928574330a09e0ea"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b10-current-qualified/generation-holdout/cases.jsonl",
+            "sha256": "3f8261071efb4fca96fb48baf8efdaf8bb6028fa36d1cad02d51b2ffa6594ae6"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/generation-full/source-snapshot.json",
+            "sha256": "84ee39206b90bb5840e165875bbb1304f62708f06f2c958d9c04edb43b716351"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/generation-full/planned-cases.json",
+            "sha256": "ccda99c9015d8ffc15e3b3eb6962703cf9cd1e04ffe15debc1b7d450cd876fb9"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/generation-full/cases.jsonl",
+            "sha256": "01672bb3bce1fb86a318cd615b6e13700ceb18e8222ff1aadf6d1354c6192aaf"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "5aa798542e8b933eca08191a9266b64f4e602065ce8b089b0ab6860281d05ab5"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/generation-holdout/planned-cases.json",
+            "sha256": "21282cb6995c4b4c986e2121b4201b65761dd813f48da4b64c4a22a352acc4fa"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/generation-holdout/cases.jsonl",
+            "sha256": "b605189e161720c7de2a60f5263c0090c6c870349b96c2ee52f2fc0d496cd915"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/generation-full/source-snapshot.json",
+            "sha256": "ee9823a86e5d2e4a001fb783fb54971ae8c51d3ee2b6318c17607e6af9e6d222"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/generation-full/planned-cases.json",
+            "sha256": "6fad0448606240297048e68bb02d37ce9ebf8da002997893efc83304b58b913c"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/generation-full/cases.jsonl",
+            "sha256": "0d5fe4d342cc0512db00eed83955b292f0131249ff3317d17818252e938bd373"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "f400880b2c3a4fad52a70dfaf171aaee52dc635325408935fcce2de8abeb735c"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/generation-holdout/planned-cases.json",
+            "sha256": "2bd6c79b03a92edd4529b83538fb143015f60e5382a415aaa289154be92f2ac6"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/generation-holdout/cases.jsonl",
+            "sha256": "935f8c98bb76345d2a7d66709a73590fd38810515a4659c2aa8a469e70125159"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/generation-full/source-snapshot.json",
+            "sha256": "a99686cef3b259b9e22a025103de13f1b7f23cd7a9be3afbb75a0584b73718a5"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/generation-full/planned-cases.json",
+            "sha256": "81223f3feab9eb481dea73999a66aae1ab61140f564ee1a59613fdc3231cd436"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/generation-full/cases.jsonl",
+            "sha256": "627fc8f06b0395175e37f2a3db92ed9f0370a345a1ae3b9219d4e0c1c570f2b7"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "9a0b61c4662239a574a6e4841a2eaf88c5862a09e935a0b1deb006c26d6f2f64"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/generation-holdout/planned-cases.json",
+            "sha256": "5d28767a86e9c60d166adf1bfb5c732487d1223f834e821f6b129ea7155a947d"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/generation-holdout/cases.jsonl",
+            "sha256": "3762f82dbf104d67c42dc386f6f2239807db5cd24e0298fbcdc8914ad0ba6855"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/generation-full/source-snapshot.json",
+            "sha256": "d0fd8a171b517585ca04085ac479e05507ae449cfd838101d0f65ed253136ebb"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/generation-full/planned-cases.json",
+            "sha256": "1c4503db524a1aa4d5a398c5d82951d2d80546beca941c98061a307cfb848480"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/generation-full/cases.jsonl",
+            "sha256": "e5b0ecd0c5f71b803bb4ceef443f0d1ffc02a7a298c9eb2fb3345e9bd63b4bea"
+          }
+        },
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/generation-holdout/source-snapshot.json",
+            "sha256": "b2a35c0d30cd8d45be47c9e3fa81497d9b8529de00800699c5670c6b2830c676"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/generation-holdout/planned-cases.json",
+            "sha256": "c229a7c2af4770e063b35f9a05ebdfd2365a19ba34a540531eee8e59ba1d57c5"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/generation-holdout/cases.jsonl",
+            "sha256": "6f14801705ad4a2cd23060865c6cba1d17cbdbc7cd088505255ba8eda2c12550"
+          }
+        }
+      ]
+    },
+    {
+      "summary": {
+        "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary.json",
+        "sha256": "1c8d7255b5da05d5aa87d052856f2d3f9127da30b10e2ac4e615f6914bb29539"
+      },
+      "worlds": 92,
+      "activeCases": 2208,
+      "supersededCasesRetained": 0,
+      "rawAttempts": 2208,
+      "cohorts": {
+        "independent-holdout": 2208
+      },
+      "internalRejectedGenerationAttempts": 55,
+      "maxRejectedBeforeAcceptedMap": 4,
+      "validatedInputs": [
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/generation/source-snapshot.json",
+            "sha256": "6ecd8c3b1980d22bf2aef1833229e903e6ea2c27bc5db81a113430d7d072c276"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/generation/planned-cases.json",
+            "sha256": "e124f6d59d4a72767dbf78b475e54645e18c98a5bd29d8a84af4cc245369db8a"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/generation/cases.jsonl",
+            "sha256": "0f7d306056073509e1c83b4e019a123f22590cf04a22a15bb9581b7dcf6f77c3"
+          }
+        }
+      ]
+    },
+    {
+      "summary": {
+        "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary.json",
+        "sha256": "a31cb4ea7c73dc705df86d7355e640c76232411bfb6ca8b733d0c6bd543ea5e7"
+      },
+      "worlds": 16,
+      "activeCases": 384,
+      "supersededCasesRetained": 0,
+      "rawAttempts": 384,
+      "cohorts": {
+        "independent-holdout": 384
+      },
+      "internalRejectedGenerationAttempts": 2,
+      "maxRejectedBeforeAcceptedMap": 1,
+      "validatedInputs": [
+        {
+          "source": {
+            "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/generation/source-snapshot.json",
+            "sha256": "6a8800e6b1903b9b90b14fd6b630a4dc53e320f8f8ab0dab07cb1790b60d4afd"
+          },
+          "plan": {
+            "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/generation/planned-cases.json",
+            "sha256": "4f59dc46cd712c635b0fedfc48876304c8a120d5a1e9bd7eb45b59361bce9c60"
+          },
+          "raw": {
+            "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/generation/cases.jsonl",
+            "sha256": "73263ec28d3304a5bc8cc62d1e5968091977ed6cdf0a1355c6e2b204e38ec0b5"
+          }
+        }
+      ]
+    }
+  ],
+  "newBaseCases": 8064,
+  "extraHoldoutCases": 2592,
+  "historicalBaseCasesNotRerunHere": 7488,
+  "limitations": [
+    "Original52 base7488 remains separately proven historical inheritance; this receipt neither reruns nor relabels it.",
+    "Raw successful maps passed their original generation contracts; this accounting is not independent physical simulation, art, gameplay, performance, final package or human approval.",
+    "Per-stage source compatibility with final enabled catalog remains separately required."
+  ]
+}

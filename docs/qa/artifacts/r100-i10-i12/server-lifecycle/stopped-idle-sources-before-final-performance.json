@@ -1,0 +1,824 @@
+{
+  "startedAt": "2026-10-07T08:42:03.165409+00:00",
+  "owner": "/root/world_loot_pixels",
+  "authorization": "Root-authorized idle own service cleanup relayed by /root/identity_pipeline; exact allowlist3101/3102/3108/3110-3119 only.",
+  "method": "Verify manifest PID+port+snapshot, process command/cwd/start time and actual TCP listener. SIGTERM exact PID only; no pkill, no directory/source deletion, no browser action.",
+  "protectedBefore": {
+    "3027": {
+      "listenerPids": [
+        21875
+      ],
+      "processes": [
+        {
+          "pid": 21875,
+          "command": "node /Users/yilungao/coh/node_modules/.bin/vite --host 127.0.0.1 --port 3027 --strictPort",
+          "startedAtLocal": "Fri Oct  2 22:54:50 2026",
+          "cwd": [
+            "/Users/yilungao/coh"
+          ]
+        }
+      ]
+    },
+    "3120": {
+      "listenerPids": [
+        92971
+      ],
+      "processes": [
+        {
+          "pid": 92971,
+          "command": "node tools/world-study/r100-frozen-server.mjs",
+          "startedAtLocal": "Wed Oct  7 14:22:47 2026",
+          "cwd": [
+            "/Users/yilungao/coh"
+          ]
+        }
+      ]
+    },
+    "3121": {
+      "listenerPids": [
+        58479
+      ],
+      "processes": [
+        {
+          "pid": 58479,
+          "command": "node tools/world-study/r100-frozen-server.mjs",
+          "startedAtLocal": "Wed Oct  7 15:12:36 2026",
+          "cwd": [
+            "/Users/yilungao/coh"
+          ]
+        }
+      ]
+    }
+  },
+  "services": [
+    {
+      "port": 3101,
+      "pid": 56799,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b01-source/source-snapshot.json",
+      "manifestSha256": "7a54d7fcac183cc7c14cffa1f217331ce6b879881a8e1dc786953957bfa178ca",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-WVfiJO",
+      "before": {
+        "pid": 56799,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Tue Oct  6 22:41:03 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "523bbe50df5735c309d4766dd357127e89c725a677e055f0613f3f45dff7e8b4",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "5ceae20a89297bb9ef035a57258c6dc197ea1c5708c8ed0336d20e77d82eb885",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:03.296576+00:00",
+      "after": {
+        "pid": 56799,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3102,
+      "pid": 75466,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b01-refined-source/source-snapshot.json",
+      "manifestSha256": "46640b22f7144949248ef056204fb085d99db6c13fecbc7d2154a14703a3a213",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-NW8fCZ",
+      "before": {
+        "pid": 75466,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Tue Oct  6 23:59:59 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "523bbe50df5735c309d4766dd357127e89c725a677e055f0613f3f45dff7e8b4",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "5ceae20a89297bb9ef035a57258c6dc197ea1c5708c8ed0336d20e77d82eb885",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:03.713703+00:00",
+      "after": {
+        "pid": 75466,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3108,
+      "pid": 56259,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+      "manifestSha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-0WnixP",
+      "before": {
+        "pid": 56259,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 09:37:38 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "2a776913899f32eb5f447ec366c3f6690abc2b2263a3ac9cc7780091cf0c683f",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "4975728ead41969c21194980128f3a2d3bb9c718b6aff73d4ff85b977375fae5",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:04.120960+00:00",
+      "after": {
+        "pid": 56259,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3110,
+      "pid": 8248,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b04-buried-raised-source/source-snapshot.json",
+      "manifestSha256": "f7c0302cba8c86b82dd972731205e1db1e193380f6c98fd9727202127f69e94d",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-WaWxfq",
+      "before": {
+        "pid": 8248,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 09:56:44 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "11510ed10b36a8147be03b2b83c85a397bd5cf922c661c49326c676f9eee7328",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "7f001cf71a968412dc9b071036eb8bac24f61fcb881fbb1193b9b5814ff669b7",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:04.530084+00:00",
+      "after": {
+        "pid": 8248,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3111,
+      "pid": 15024,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b06-source/source-snapshot.json",
+      "manifestSha256": "ed5ebfbad5f8b58788f2b83184dcfaff209b8870f057cc837bf35f82f09bf117",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-cNDxkb",
+      "before": {
+        "pid": 15024,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 12:02:30 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "b39b00cf5befb55b130c4272598bd9c4115c26356d93ddcea5cc7482f9729ea7",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "e162430040f8edf447f81381ae25294968d344a6713f4cd1f6178e80ee89ecb7",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:04.969236+00:00",
+      "after": {
+        "pid": 15024,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3112,
+      "pid": 77578,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+      "manifestSha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-fuUdrQ",
+      "before": {
+        "pid": 77578,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 12:12:00 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "455b8cb3c1096bc6c043ed95bd73e9391be7f199210460a0dd04a97d495f1e7d",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "5f49f2e1e0762a6da67f3140e45860caa166d6b3b446d20be101973c633e611e",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:05.380817+00:00",
+      "after": {
+        "pid": 77578,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3113,
+      "pid": 86281,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b08-source/source-snapshot.json",
+      "manifestSha256": "a4ce388a6eb12ce9031f942b384ecc41ba6876bfd31dd938f6e0e8d9892ba3dc",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-cj1XEB",
+      "before": {
+        "pid": 86281,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 12:19:43 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "e89b82c20f7cceb336e3d37848bf9c1ca01924e2220d4e8c46bf5ed1db7d182c",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "40629c68fa4d9e60cb6fcb9377fa605883abe82f2d26ec9f99bb4ae2da3cb48e",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:05.783731+00:00",
+      "after": {
+        "pid": 86281,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3114,
+      "pid": 92651,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b09-source/source-snapshot.json",
+      "manifestSha256": "f42e7db4b6b0d4ef3b6ee6943a2a5ee84603c357aea27e150acc4845ca2904e3",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-JL7XqD",
+      "before": {
+        "pid": 92651,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 12:27:48 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "442e18722b8b6100ee26b8a121dc84c220badc6790dfdf4aab83071bdf827fe5",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "488aad2fd5b47949ca6d5af6a58815efc44daa683f6183d3d1c81cd4c149d7b7",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:06.213995+00:00",
+      "after": {
+        "pid": 92651,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3115,
+      "pid": 99238,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b10-source/source-snapshot.json",
+      "manifestSha256": "6b139ecc99d89d814f904faee219b97fd6001bca60c8b88e2bce4529772d9c71",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-XsTCNA",
+      "before": {
+        "pid": 99238,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 12:36:05 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "6ee6b6012245c954d4221a6af7c9bac8dcff44cef6a74c9012dd96611e7ca08c",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "0f50aff51981747aba56e86888776017e103616c13522d857d04eef6e755f06d",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:06.623927+00:00",
+      "after": {
+        "pid": 99238,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3116,
+      "pid": 45427,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b11-source/source-snapshot.json",
+      "manifestSha256": "62d24106bf6f02b12ff775aec6b66f1c77035a1b04e38a1a88d9e3a5d3a68381",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-je47T4",
+      "before": {
+        "pid": 45427,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 12:43:27 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "7525e2cfa5f20bd673ef7226a8c91a0d0e1f8f83ef0d1ace6ac9075683f67d4c",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "91706746ef40d8d237ae038453851b26f9c93cdd6b5cf3fa5b39381174f7d54b",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:07.069251+00:00",
+      "after": {
+        "pid": 45427,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3117,
+      "pid": 64872,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b12-source/source-snapshot.json",
+      "manifestSha256": "dace95f2a592111ec52c17917739aaa6cded86a0817ade1d9b810e3a0da51dc0",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-ovMeNy",
+      "before": {
+        "pid": 64872,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 13:01:56 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "e8beeb74c0ad3d4d49465475ffe4bb4bd165d5d818d40de67a944eb8afe59625",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "095c037921c388df90d7c26c93f85f0111494ad087f90054a48274efaa05928d",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:07.478462+00:00",
+      "after": {
+        "pid": 64872,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3118,
+      "pid": 97899,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b13-and-low-surface-source/source-snapshot.json",
+      "manifestSha256": "ca7c824799dcf428a691fda42c0b449fa7b34ae83ba95c2a847a4fbfadb57edd",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-qHw6rS",
+      "before": {
+        "pid": 97899,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 13:37:54 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "ffdd20cb2257ce6e89ab7bd00b070c8e2db1e3d5f46487e41fbb3b68768807b5",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "a3d9da5acc86b7960335ae8792f7ed3f092d13aa10de1994da48d934b53c205c",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:07.900835+00:00",
+      "after": {
+        "pid": 97899,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    },
+    {
+      "port": 3119,
+      "pid": 67250,
+      "manifest": "docs/qa/artifacts/r100-i10-i12/b14-source/source-snapshot.json",
+      "manifestSha256": "ac64f6bf0a0f0bda9992997a981e8df3f45dfec7164b1435bf09055f94487ed8",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-ZtGpkS",
+      "before": {
+        "pid": 67250,
+        "command": "node tools/world-study/r100-frozen-server.mjs",
+        "startedAtLocal": "Wed Oct  7 13:49:28 2026",
+        "cwd": [
+          "/Users/yilungao/coh"
+        ]
+      },
+      "preflight": {
+        "manifestPort": true,
+        "listeningPid": true,
+        "exactCommand": true,
+        "cwd": true,
+        "project": true,
+        "snapshotExists": true,
+        "originalCopyVerified": true,
+        "anchorHashes": true
+      },
+      "snapshotAnchors": [
+        {
+          "path": "data/rift-native-worlds.csv",
+          "sha256": "0559776364ef853473c2d74105df669e75d2a01119cb04bf190dea4fc5cfd756",
+          "matchesManifest": true
+        },
+        {
+          "path": "src/generated/r100-native-worlds.ts",
+          "sha256": "77ac2ede45244cae6f172c7c2766c3cfe68f30986c7a272fffde0c9f01526af2",
+          "matchesManifest": true
+        },
+        {
+          "path": "package.json",
+          "sha256": "6c66d92d4b991264e521a6f8827a50bc7582e894cb515e5ed3c62c6b17c77f44",
+          "matchesManifest": true
+        }
+      ],
+      "status": "stopped-and-preserved",
+      "signal": "SIGTERM",
+      "signalAt": "2026-10-07T08:42:08.304593+00:00",
+      "after": {
+        "pid": 67250,
+        "command": "",
+        "startedAtLocal": "",
+        "cwd": []
+      },
+      "listenerPidsAfter": [],
+      "snapshotDirectoryRetained": true,
+      "manifestUnchanged": true,
+      "anchorHashesUnchanged": true
+    }
+  ],
+  "completedAt": "2026-10-07T08:42:09.212803+00:00",
+  "protectedAfter": {
+    "3027": {
+      "listenerPids": [
+        21875
+      ],
+      "processes": [
+        {
+          "pid": 21875,
+          "command": "node /Users/yilungao/coh/node_modules/.bin/vite --host 127.0.0.1 --port 3027 --strictPort",
+          "startedAtLocal": "Fri Oct  2 22:54:50 2026",
+          "cwd": [
+            "/Users/yilungao/coh"
+          ]
+        }
+      ]
+    },
+    "3120": {
+      "listenerPids": [
+        92971
+      ],
+      "processes": [
+        {
+          "pid": 92971,
+          "command": "node tools/world-study/r100-frozen-server.mjs",
+          "startedAtLocal": "Wed Oct  7 14:22:47 2026",
+          "cwd": [
+            "/Users/yilungao/coh"
+          ]
+        }
+      ]
+    },
+    "3121": {
+      "listenerPids": [
+        58479
+      ],
+      "processes": [
+        {
+          "pid": 58479,
+          "command": "node tools/world-study/r100-frozen-server.mjs",
+          "startedAtLocal": "Wed Oct  7 15:12:36 2026",
+          "cwd": [
+            "/Users/yilungao/coh"
+          ]
+        }
+      ]
+    }
+  },
+  "protectedUnchanged": true,
+  "status": "completed",
+  "limitations": [
+    "Source directories, manifests and sampled anchors verified retained; no full source-tree rehash was needed or claimed.",
+    "All processes outside the explicit allowlist were left untouched, including unknown historicalQA services."
+  ]
+}

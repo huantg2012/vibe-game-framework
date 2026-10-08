@@ -1,0 +1,72 @@
+{
+  "status": "pass-additional2592",
+  "pid": 61138,
+  "startedAt": "2026-10-07T07:14:47.954Z",
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/expanded-plan.json",
+    "sha256": "a48f9babb4722a6dcc4291b1b33d31a2337d4e7491d6664c0ec76a9c56c7db7c"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/run-expanded.mjs",
+    "sha256": "78be990ca119270ef780016a827df92193e11c8b33d29976afb92aaa77a3aefe"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+    "sha256": "4426f52bfb5e719735680ad97c436d44375eadb6ba04fe566e086bbd74c87a4d"
+  },
+  "stages": [
+    {
+      "stage": "I11",
+      "cases": 2208,
+      "code": 0,
+      "signal": null,
+      "elapsedSeconds": 1295.657,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/i11.log",
+        "sha256": "5a4af29aab70c4461d606b11e1381eceb3d6640347ebeb70f5bc364dd59e76a5"
+      },
+      "aggregation": {
+        "code": 0,
+        "signal": null,
+        "elapsedSeconds": 0.06,
+        "log": {
+          "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/i11-summary.log",
+          "sha256": "a7694ca9156d40aba6e9ddf414af35851076c95da592ff086eb79693aaee3ab2"
+        }
+      },
+      "summary": {
+        "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary.json",
+        "sha256": "1c8d7255b5da05d5aa87d052856f2d3f9127da30b10e2ac4e615f6914bb29539"
+      }
+    },
+    {
+      "stage": "I12",
+      "cases": 384,
+      "code": 0,
+      "signal": null,
+      "elapsedSeconds": 245.726,
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/i12.log",
+        "sha256": "578db5aa49066850115f0ea48210afd08dd5463ca43dbd7bedab6ec582fa9a0e"
+      },
+      "aggregation": {
+        "code": 0,
+        "signal": null,
+        "elapsedSeconds": 0.036,
+        "log": {
+          "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/i12-summary.log",
+          "sha256": "82da12f0973da674a1d3e07308490037f85ca03efa0d4881f6808919b6b3bfc2"
+        }
+      },
+      "summary": {
+        "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary.json",
+        "sha256": "a31cb4ea7c73dc705df86d7355e640c76232411bfb6ca8b733d0c6bd543ea5e7"
+      }
+    }
+  ],
+  "finishedAt": "2026-10-07T07:40:30.154Z"
+}

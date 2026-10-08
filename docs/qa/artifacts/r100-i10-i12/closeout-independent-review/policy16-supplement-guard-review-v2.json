@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "status": "pass-for-helper-predicate-scope-only",
+  "createdAt": "2026-10-07T12:54:23.584Z",
+  "reviewer": "i12_qa",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/controller-supplement-reviewed-e1c9b33dcfd4.mjs",
+    "sha256": "e1c9b33dcfd43e0f1714b339f10051fbf1861f07ad37abac11ac8ddd529c45a8",
+    "originalPath": "tools/qa/r100-i12-controller-supplement.mjs"
+  },
+  "originalReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+    "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+  },
+  "supersedes": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/policy16-supplement-guard-review-v1.json",
+    "sha256": "0b831de1371ff575f6a09dec30f592ba69974913d38a8d84f4783cdf4fefda10",
+    "findingDisposition": "QA-P16-01a/b/c and QA-P16-02 rejected by fresh source"
+  },
+  "checks": [
+    {
+      "name": "Same original identity/save and actual refusal before one bounded action",
+      "status": "accepted",
+      "result": {
+        "accepted": true,
+        "problems": []
+      }
+    },
+    {
+      "name": "No supplemental action when the controller did not use its allowance",
+      "status": "accepted",
+      "result": {
+        "accepted": true,
+        "problems": []
+      }
+    },
+    {
+      "name": "Exact 6000ms with released keys is within the explicit bound",
+      "status": "accepted",
+      "result": {
+        "accepted": true,
+        "problems": []
+      }
+    },
+    {
+      "name": "QA-P16-01a nonexistent/unobserved target",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement must follow a real refusal at the same observed target"
+      }
+    },
+    {
+      "name": "QA-P16-01b no refusal in current journey",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement must follow a real refusal at the same observed target"
+      }
+    },
+    {
+      "name": "QA-P16-01c action before triggering refusal",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement cannot precede its triggering refusal"
+      }
+    },
+    {
+      "name": "QA-P16-02 missing status",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Unknown supplemental action outcome"
+      }
+    },
+    {
+      "name": "Unknown status",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Unknown supplemental action outcome"
+      }
+    },
+    {
+      "name": "Trigger index outside actual search rows",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement must follow a real refusal at the same observed target"
+      }
+    },
+    {
+      "name": "Trigger timestamp altered",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 46163.82999999987\n- 46164.82999999987\n      ^\n"
+      }
+    },
+    {
+      "name": "Later refusal cannot stand in for the first",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement must follow the first eligible refusal\n\n1 !== 0\n"
+      }
+    },
+    {
+      "name": "Exactly320px remains ineligible",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement target must be an original uncollected non-entry node"
+      }
+    },
+    {
+      "name": "Already collected entry target",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement target must be an original uncollected non-entry node"
+      }
+    },
+    {
+      "name": "Action beyond terminal time",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Bounded input action lies outside the actual journey"
+      }
+    },
+    {
+      "name": "Changed full generation identity",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement changed original full generation identity\n+ actual - expected\n... Skipped lines\n\n  {\n    catalogVersion: 'contaminant-v1',\n    combatRulesVersion: 2,\n    generation: {\n      appearance: {\n...\n        algorithmRevision: 6,\n+       dependencyHash: 'changed',\n-       dependencyHash: 'b219f1bd',\n        grade: 'severe',\n        id: 'r100-white-scarfield',\n        materials: {\n          'granular-ridge': {\n            definition: 'dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030',\n"
+      }
+    },
+    {
+      "name": "Changed earned starting save",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement changed the earned starting save\n+ actual - expected\n... Skipped lines\n\n  {\n    sha256: '68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a',\n    state: {\n      contaminantRuntimeState: {},\n      cycle: 30,\n...\n      },\n+     kindlingReserve: 21,\n-     kindlingReserve: 20,\n      moduleMaxHpTier: 2,\n      moduleSwapActive: false,\n      modules: [\n        {\n          hp: 52,\n"
+      }
+    },
+    {
+      "name": "Second supplemental action",
+      "status": "rejected",
+      "result": {
+        "accepted": false,
+        "error": "Too many additional search attempts"
+      }
+    },
+    {
+      "name": "6000.001ms overrun remains invalid",
+      "status": "invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement exceeded its 6000ms game-time budget",
+          "Supplement observed game duration exceeded 6000ms"
+        ]
+      }
+    },
+    {
+      "name": "Observed maximum overrides shorter claimed end",
+      "status": "invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement observed game duration exceeded 6000ms"
+        ]
+      }
+    },
+    {
+      "name": "Tracked keys remain held",
+      "status": "invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement action did not release every tracked key"
+        ]
+      }
+    },
+    {
+      "name": "Runtime caught an action error",
+      "status": "invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement action: probe"
+        ]
+      }
+    },
+    {
+      "name": "Failed action status",
+      "status": "invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement action failed"
+        ]
+      }
+    },
+    {
+      "name": "Unproven time bound",
+      "status": "invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement action did not prove its time bound"
+        ]
+      }
+    },
+    {
+      "name": "Two actual pickups exceed original limit1 despite general cap3",
+      "status": "rejected"
+    }
+  ],
+  "limitations": [
+    "Synthetic evidence-contract tests only; no policy16 gameplay or approval",
+    "Actual deadline enforcement inside all nested controller inputs still requires candidate review",
+    "Whole supplemental scheduler/summary linkage is separate from this leaf-helper receipt",
+    "Original failures and the first failed helper review remain untouched"
+  ],
+  "harness": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/audit-policy16-supplement-guards-v2.mjs",
+    "sha256": "7a59e9d556ead96849296557b3370e8631de5f38c71ddb1a2a3a158c229b66a7"
+  }
+}

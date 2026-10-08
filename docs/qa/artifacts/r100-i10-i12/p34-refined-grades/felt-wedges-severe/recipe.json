@@ -1,0 +1,254 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "felt-wedges",
+    "label": "毡层挤片",
+    "description": "毡层挤片的原生材料与完整搜撤地段",
+    "material": "membrane",
+    "surface": {
+      "substrate": "membrane",
+      "coating": "membrane",
+      "organization": "clusters",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 3682365,
+      "floor": 8351872,
+      "floorLight": 12036796,
+      "materialDark": 3098977,
+      "materialMid": 7443376,
+      "materialLight": 11913948,
+      "faceLight": 14197173,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 8351872,
+      "groundLight": 12036796,
+      "groundDark": 3682365,
+      "wall": 7443376,
+      "wallLight": 11913948,
+      "wallDark": 3098977
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "felt-wedges",
+    "ground": {
+      "dark": 3682365,
+      "mid": 8351872,
+      "light": 12036796
+    },
+    "solid": {
+      "dark": 3098977,
+      "mid": 7443376,
+      "light": 11913948
+    },
+    "cleaved": {
+      "dark": 6501186,
+      "mid": 11232126,
+      "light": 14197173
+    },
+    "secondary": {
+      "dark": 4932695,
+      "mid": 9734827,
+      "light": 12827348
+    },
+    "groundPattern": "tension",
+    "patternScale": 224,
+    "patternStrength": 0.37,
+    "secondaryCoverage": 0.12,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.58,
+    "materialOrganization": "short-fibre-loose"
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "felt-wedges-severe",
+    "family": "membrane-rim",
+    "grade": "severe",
+    "label": "毡层挤片",
+    "profile": "felt-wedges",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.42,
+    "light_radius": 155,
+    "emission": 0.72,
+    "motion_period": 17,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 610,
+        "y": 420,
+        "rotation": 0.5,
+        "length": 240,
+        "width": 150,
+        "height": 48,
+        "thickness": 12,
+        "fold": 0.781,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      },
+      {
+        "id": 2,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 525,
+        "y": 461,
+        "rotation": 1.8,
+        "length": 190,
+        "width": 120,
+        "height": 37,
+        "thickness": 10,
+        "fold": 0.6050000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      },
+      {
+        "id": 3,
+        "family": "membrane-rim",
+        "role": "solid",
+        "x": 505,
+        "y": 362,
+        "rotation": 3.8,
+        "length": 160,
+        "width": 110,
+        "height": 29,
+        "thickness": 8,
+        "fold": 0.462,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "package": {
+    "id": "r100-felt-wedges",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "membrane-rim": {
+        "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+        "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+        "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+      },
+      "organization:short-fibre-loose": {
+        "definition": "06b98bb318c7f8440c6c576a6f0472aac78c13a198f65fe8ffcc1b1a266dd328",
+        "surface": "c7bd9b26d16d9dd374d4d61e2b42eb13cee3a5e0980cee07e292b5db8d4112dd",
+        "solid": "cf673c46a193dd9f50bf1c26a0218bced7c335af8b52e9adb5b3f6c0f50246dd"
+      }
+    },
+    "dependencyHash": "2f18cecb",
+    "grade": "severe"
+  }
+}

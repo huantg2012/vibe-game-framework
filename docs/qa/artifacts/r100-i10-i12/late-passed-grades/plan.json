@@ -1,0 +1,519 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+  "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+  "authorCamera": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-author-preflight/camera-supported.json",
+    "sha256": "ec8b4851a3dee3ae8c3da569e82087682311a86557ad476188e1917a5e6d26d4"
+  },
+  "scope": "Limited low/severe follow-up of four medium-reviewed worlds, same original supported goals and requested seed20261005. All actual body/facing/source identity checked live. Rejected low surfaces in other worlds excluded; no human or complete-world/gameplay pass.",
+  "omitted": [],
+  "cases": [
+    {
+      "world": "husk-reef",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 484,
+          "y": 324,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 484,
+            "y": 324
+          },
+          "lookAtMaterialPoint": {
+            "x": 375,
+            "y": 325
+          },
+          "purpose": "高低三背残段"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 740,
+          "y": 540,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 740,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 765,
+            "y": 435
+          },
+          "purpose": "东侧倒伏低皮"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 236,
+          "y": 492,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 236,
+            "y": 492
+          },
+          "lookAtMaterialPoint": {
+            "x": 335,
+            "y": 535
+          },
+          "purpose": "下侧独立残背"
+        }
+      ]
+    },
+    {
+      "world": "husk-reef",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 484,
+          "y": 324,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 484,
+            "y": 324
+          },
+          "lookAtMaterialPoint": {
+            "x": 375,
+            "y": 325
+          },
+          "purpose": "高低三背残段"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 740,
+          "y": 540,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 740,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 765,
+            "y": 435
+          },
+          "purpose": "东侧倒伏低皮"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 236,
+          "y": 492,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 236,
+            "y": 492
+          },
+          "lookAtMaterialPoint": {
+            "x": 335,
+            "y": 535
+          },
+          "purpose": "下侧独立残背"
+        }
+      ]
+    },
+    {
+      "world": "double-return",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 580,
+          "y": 628,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 628
+          },
+          "lookAtMaterialPoint": {
+            "x": 515,
+            "y": 542
+          },
+          "purpose": "南侧地颈与下钝端"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 604,
+          "y": 404,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 604,
+            "y": 404
+          },
+          "lookAtMaterialPoint": {
+            "x": 525,
+            "y": 331
+          },
+          "purpose": "上裂肩与内返路"
+        },
+        {
+          "label": "05-original-route-boundary",
+          "x": 548,
+          "y": 156,
+          "faces": [
+            "east",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 548,
+            "y": 156
+          },
+          "lookAtMaterialPoint": null,
+          "purpose": "补北颈及两条原返路共同终点；朝实际缺地边，不用南颈图代替。",
+          "existingSweptPathEvidence": {
+            "low": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            },
+            "medium": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            },
+            "severe": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            }
+          },
+          "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+        }
+      ]
+    },
+    {
+      "world": "double-return",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 580,
+          "y": 628,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 628
+          },
+          "lookAtMaterialPoint": {
+            "x": 515,
+            "y": 542
+          },
+          "purpose": "南侧地颈与下钝端"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 604,
+          "y": 404,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 604,
+            "y": 404
+          },
+          "lookAtMaterialPoint": {
+            "x": 525,
+            "y": 331
+          },
+          "purpose": "上裂肩与内返路"
+        },
+        {
+          "label": "05-original-route-boundary",
+          "x": 548,
+          "y": 156,
+          "faces": [
+            "east",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 548,
+            "y": 156
+          },
+          "lookAtMaterialPoint": null,
+          "purpose": "补北颈及两条原返路共同终点；朝实际缺地边，不用南颈图代替。",
+          "existingSweptPathEvidence": {
+            "low": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            },
+            "medium": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            },
+            "severe": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            }
+          },
+          "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+        }
+      ]
+    },
+    {
+      "world": "offset-basins",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 516,
+          "y": 412,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 516,
+            "y": 412
+          },
+          "lookAtMaterialPoint": {
+            "x": 475,
+            "y": 311
+          },
+          "purpose": "上岸厚唇"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 628,
+          "y": 644,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 628,
+            "y": 644
+          },
+          "lookAtMaterialPoint": {
+            "x": 694,
+            "y": 559
+          },
+          "purpose": "下岸不等厚端"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 484,
+          "y": 500,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 484,
+            "y": 500
+          },
+          "lookAtMaterialPoint": {
+            "x": 392,
+            "y": 444
+          },
+          "purpose": "西侧共同外返床"
+        }
+      ]
+    },
+    {
+      "world": "offset-basins",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 516,
+          "y": 412,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 516,
+            "y": 412
+          },
+          "lookAtMaterialPoint": {
+            "x": 475,
+            "y": 311
+          },
+          "purpose": "上岸厚唇"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 628,
+          "y": 644,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 628,
+            "y": 644
+          },
+          "lookAtMaterialPoint": {
+            "x": 694,
+            "y": 559
+          },
+          "purpose": "下岸不等厚端"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 484,
+          "y": 500,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 484,
+            "y": 500
+          },
+          "lookAtMaterialPoint": {
+            "x": 392,
+            "y": 444
+          },
+          "purpose": "西侧共同外返床"
+        }
+      ]
+    },
+    {
+      "world": "last-shelf",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 764,
+          "y": 348,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 764,
+            "y": 348
+          },
+          "lookAtMaterialPoint": {
+            "x": 786,
+            "y": 242
+          },
+          "purpose": "上台短裂肩"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 724,
+          "y": 532,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 724,
+            "y": 532
+          },
+          "lookAtMaterialPoint": {
+            "x": 817,
+            "y": 476
+          },
+          "purpose": "下台高完整断端"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 820,
+          "y": 564,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 820,
+            "y": 564
+          },
+          "lookAtMaterialPoint": {
+            "x": 922,
+            "y": 532
+          },
+          "purpose": "下探台真实终止边"
+        }
+      ]
+    },
+    {
+      "world": "last-shelf",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 764,
+          "y": 348,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 764,
+            "y": 348
+          },
+          "lookAtMaterialPoint": {
+            "x": 786,
+            "y": 242
+          },
+          "purpose": "上台短裂肩"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 724,
+          "y": 532,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 724,
+            "y": 532
+          },
+          "lookAtMaterialPoint": {
+            "x": 817,
+            "y": 476
+          },
+          "purpose": "下台高完整断端"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 820,
+          "y": 564,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 820,
+            "y": 564
+          },
+          "lookAtMaterialPoint": {
+            "x": 922,
+            "y": 532
+          },
+          "purpose": "下探台真实终止边"
+        }
+      ]
+    }
+  ],
+  "reviewChecklist": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/checklist.json",
+    "sha256": "f2e82e38ba8230ff447aad1b31d20e1aacca22fbc948bddffbaddd7c84f1943c"
+  },
+  "supplementSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/supplement-existing-route-points.json",
+    "sha256": "1feb0c3b63a848c18c7673660fbb3f893a4a1c42005dc9927bf3affc02925f9d"
+  },
+  "originalPreparedPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-medium-prepared/plan.json",
+    "sha256": "25feb67a8b27a472d3dec96cdc018453840243d3ec00c298f7934dffea63dc20"
+  },
+  "sourcePurpose": "New actual images on3120, not relabelled historical images or inherited art approval. Selected definitions/profile choices and material SHAs match original successful body evidence. Runtime WASD/facing/identity remains mandatory."
+}

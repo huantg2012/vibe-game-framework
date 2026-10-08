@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-08T05:14:41.404392+00:00",
+  "sequence": 1,
+  "launchPid": 94758,
+  "processes": [
+    {
+      "pid": 94758,
+      "ppid": 94733,
+      "command": "/usr/local/bin/node tools/qa/r100-i09-final-probe.mjs --probe budget --source docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json --output docs/qa/artifacts/r100-i10-i12/runtime-budget-final108 --expected-worlds 108 --expected-revision 6"
+    },
+    {
+      "pid": 94761,
+      "ppid": 94758,
+      "command": "/usr/bin/caffeinate -i /usr/local/bin/node tools/qa/r100-i09-final-probe.mjs --probe budget --source docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json --output docs/qa/artifacts/r100-i10-i12/runtime-budget-final108 --expected-worlds 108 --expected-revision 6"
+    }
+  ],
+  "ownedIdleSleepAssertionPids": [
+    94761
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "executedAt": "2026-10-07T14:24:42.321785+00:00",
+  "scope": "Offline syntax and exported API integration only; no source fetch, child spawn or browser execution.",
+  "wrapper": {
+    "path": "tools/qa/r100-i12-turn-coverage.mjs",
+    "sha256": "093959b8c34ca8295d250b65daf9b2ce418ecc7b7ef2ef92ab85c4c0ec6766c5"
+  },
+  "checks": [
+    {
+      "command": "node --check tools/qa/r100-i12-turn-coverage.mjs",
+      "exitCode": 0
+    },
+    {
+      "check": "Dynamic import tools/qa/r100-i12-facing-supplement.mjs resolves both validateFacingControllerSupplement and validateFacingSupplementJourney",
+      "result": "pass"
+    },
+    {
+      "check": "Other four candidate files retain V1 SHA",
+      "result": "pass"
+    }
+  ]
+}

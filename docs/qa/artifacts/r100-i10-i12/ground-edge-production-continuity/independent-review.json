@@ -1,0 +1,83 @@
+{
+  "status": "approved-bounded",
+  "reviewer": "root",
+  "date": "2026-10-07",
+  "decision": "Inherit only the six prior cleft-tableland actual-play results by exact behavior projection; separately review repaired ground-edge visuals. Rerun all 144 original cleft generation cases on the repaired frozen source.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "sha256": "89375f72da53802c278127549db275da46653107f9b46aadb0c95b5594a64659"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "sha256": "748df9d6f035000522c35e7cf17f0c7a8f730ad9ad785acacf6cbc5cf493dd60"
+  },
+  "behaviorReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity/report.json",
+    "sha256": "04dd4d576c7537e6ea19a25bfc82d0af04cf9ff1edb98bef3b20fdc09b3628e2"
+  },
+  "normalArtReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b02-independent-art-review.json",
+    "sha256": "84db0b3c950aa73341c63f2c7391f97a6eb3dd65d1b8c29db37b6fc8cde9364b"
+  },
+  "originalPlayReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b01-qualified/independent-gameplay-review.json",
+    "sha256": "aae91945717c4d5755f3153f852ea6e5f1ce6cd67b8bda6c0a897d40f109b09f"
+  },
+  "reviewedImplementation": {
+    "path": "tools/qa/check-r100-ground-edge-behavior.mjs",
+    "sha256": "315d9a333046dd2485ae1cd704de309c5cec4896a2d518621a2bba0423fb0db2"
+  },
+  "identities": [
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "seed": 20261005
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "low",
+      "seed": 3075192741
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "seed": 20261005
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "seed": 3075192741
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "seed": 20261005
+    },
+    {
+      "world": "cleft-tableland",
+      "grade": "severe",
+      "seed": 3075192741
+    }
+  ],
+  "reason": [
+    "All six fixed actual-play recipes, deployed content, support/Host/pollution, blocking meshes and non-edge meshes are identical after the two explicit identity-marker exclusions.",
+    "The shallow edge holder remains nonblocking; its ground-height/normal and material raster changes are deliberate visual repairs, reviewed in the specified normal low/medium/severe original frames.",
+    "No prior render, generation signature, complete-source equality or all-seed behavior is claimed. Six play identities do not stand in for the original 144 generation cases."
+  ],
+  "excludedRasterFields": [
+    "cellHeight",
+    "objectId",
+    "material",
+    "region",
+    "heightField",
+    "normals",
+    "uv",
+    "ambientOcclusion"
+  ],
+  "generation144Status": "queued-original-seeds",
+  "limits": [
+    "Historical actual journeys are reused, not reported as six new live journeys.",
+    "Only the recorded source pair and exact world/grade/seed identities are covered.",
+    "Final-source integration, restore, performance and full-library gates remain independent."
+  ]
+}

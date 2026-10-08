@@ -1,0 +1,404 @@
+{
+  "status": "mixed-bounded-review",
+  "at": "2026-10-07T06:59:12.837Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/report.json",
+    "sha256": "2c203e5f9d9aba2e0edf9ba49eb9c2196eab48f9f95b88f50576b0088b997986"
+  },
+  "scope": "All 12 original PNGs personally viewed. Normal FOV/light, fixed requested seed20261005, real WASD with active pressure. Static floor planning; not visible-only natural play.",
+  "limitations": [
+    "Only illuminated local faces/relationships shown; no complete-map, full search-return, economic, audio, dynamic fatigue or human approval.",
+    "Different actual poses and pressure; not pixel-aligned comparisons.",
+    "Rejected local surfaces do not imply collision or runtime failure; unchanged readable areas retain only their observed scope."
+  ],
+  "worlds": [
+    {
+      "worldId": "white-scarfield",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "white-scarfield",
+        "grade": "medium",
+        "package": {
+          "id": "r100-white-scarfield",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "dfb7cfba",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=white-scarfield&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "01/02/04浅色大母面有长直硬黑边、完整尖角和明显片状覆盖；02/03深蓝粗颗粒短体及亮脚沿清楚，不能替低面通过。",
+      "limitations": [
+        "拒绝限两可走大低面，不改高实体材质/轮廓的已见局部结论。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/white-scarfield-medium/01-material-approach-north.png",
+          "sha256": "ecf7704d400f602ace3ead57303d9c8304a85faa9c886dff3a1f8448be835b6a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 405.85803415754896,
+              "y": 479.87451878346127
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.55386585199986,
+            "elapsedMs": 4766.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/white-scarfield-medium/02-material-approach-east.png",
+          "sha256": "977c5fbd5bb98e81a97a521c91e7aa969f55b6bef03efa370e0676edd4a67caf",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 442.3853862939994,
+              "y": 311.3625977584965
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 17.814662717999706,
+            "elapsedMs": 8566.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/white-scarfield-medium/03-material-approach-east.png",
+          "sha256": "9e85634cecac1dfbf9e1a9f922ae014bfd0dc952a1ec273eba05c44c82333d72",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 517.6453466809727,
+              "y": 453.8960945638441
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.27452962999954,
+            "elapsedMs": 12966.2
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/white-scarfield-medium/04-material-approach-north.png",
+          "sha256": "6503eb9db79be22048de3b821400284e10518294c82a0a732a4ea2f647f9abc5",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887508,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 787.3511953362212,
+              "y": 539.4584970977243
+            },
+            "facingAngle": -1.5706706630887508,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 21.652324559999364,
+            "elapsedMs": 20132.6
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "black-lacuna",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "black-lacuna",
+        "grade": "medium",
+        "package": {
+          "id": "r100-black-lacuna",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "1214255c",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=black-lacuna&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "04大低面出现完整黑色折线框，01/02斜直拼面可见；02紫色厚胶头、01真实缺地及其侵蚀沿本身可辨。",
+      "limitations": [
+        "03有敌人遮挡且未把整个大母床照见，不能用该帧的局部薄唇替大母面通过。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/black-lacuna-medium/01-material-approach-east.png",
+          "sha256": "f1da6a9d30cd3c85d8b6000a2485d48945bcc28c4d27c2811aa0237e36c8f11f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 365.2496980649823,
+              "y": 507.6598949372204
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.454335805999882,
+            "elapsedMs": 4466.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/black-lacuna-medium/02-material-approach-south.png",
+          "sha256": "dd94f206b195ee695cd0caf81f73d2bed99a03c8cfed32f70b49370f2a81c84a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 700.25405353702,
+              "y": 166.07906186898728
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 20.690144375999353,
+            "elapsedMs": 17232.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/black-lacuna-medium/03-material-approach-south.png",
+          "sha256": "f7ecd6e08e34ec6f02f4fd55073d2f5f563d9208fea3fa027aa7d68af5b3c9c9",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 851.288167606217,
+              "y": 248.8161765753067
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 29.007103775999166,
+            "elapsedMs": 21065.8
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/black-lacuna-medium/04-material-approach-east.png",
+          "sha256": "5b6236cd565081ec07d4da9d80774ae52095a18cc5944987d3484592923d9d51",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 628.2669810189474,
+              "y": 585.3934684029674
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 36.85942285199906,
+            "elapsedMs": 32898.7
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "violet-marrows",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "violet-marrows",
+        "grade": "medium",
+        "package": {
+          "id": "r100-violet-marrows",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            },
+            "organization:porous-marrow": {
+              "definition": "9cc9c897e22fafc2aed2c9a097b2638f07199a95ed7c4fcda48e1162e134b2e6",
+              "surface": "9496b48569ae9abb48c96e45413595d081b49e7d8f772326bb791ba1160c5c55",
+              "solid": "3b5c7d9af2a4faeb8c577b2be94009b2f9571c0187055de66456de93130c0c58"
+            }
+          },
+          "dependencyHash": "898ca3d5",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=violet-marrows&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "04无孔低外皮呈完整紫色分叉箭头贴片，02/03也见其尖边；01/02两个孔髓高岸的外皮/浅孔断面、封底小孔与蓝灰床可分。",
+      "limitations": [
+        "拒绝限第三低外皮；孔髓孔径和高体可读不代表可走洞或VOID。04敌人遮住近端一角，不扩签该遮挡处。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/violet-marrows-medium/01-material-approach-north.png",
+          "sha256": "42a4b475bfb89060d93ea190e949cbc90c97c56ce48e2e08d3ce52327c5d4149",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 469.12130691323927,
+              "y": 468.3659504123399
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.819308063999827,
+            "elapsedMs": 5566.500000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/violet-marrows-medium/02-material-approach-south.png",
+          "sha256": "50e9e7ce9cf73560a684614361a3cf00698f7e000ca52ba8830b84a11d7a9338",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5706706630887575,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 677.1426303678887,
+              "y": 357.0005108991814
+            },
+            "facingAngle": 1.5706706630887575,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 22.33535078199961,
+            "elapsedMs": 12449.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/violet-marrows-medium/03-material-approach-west.png",
+          "sha256": "51b54ab75de830eb7d4f1580e7b1d6a6fc1a28cd7649ff2d28fdacbce95c9bb5",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.14152982173672,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 637.5283283361601,
+              "y": 345.4250423237927
+            },
+            "facingAngle": -3.14152982173672,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 23.10951981399962,
+            "elapsedMs": 13616.099999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-current-medium/violet-marrows-medium/04-material-approach-north.png",
+          "sha256": "b0dc30e387296e75939addde1fe8efe694e7be181b70a5051ed8252823885730",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5705449993826108,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 699.8171053359158,
+              "y": 340.45796812586485
+            },
+            "facingAngle": -1.5705449993826108,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 24.060651057999593,
+            "elapsedMs": 15049.399999999998
+          }
+        }
+      ]
+    }
+  ]
+}

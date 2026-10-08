@@ -1,0 +1,116 @@
+{
+  "status": "pass-equivalence342",
+  "startedAt": "2026-10-08T02:46:40.296458+00:00",
+  "endedAt": "2026-10-08T02:48:07.669365+00:00",
+  "wallSeconds": 87.372907,
+  "operatorSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-equivalence.py",
+    "sha256": "6ab3cf3f4b283abb8abf48dc4bcb17625bed00851eca5eb69bf82829746af923"
+  },
+  "operatorCommand": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/equivalence-operator-command.json",
+    "sha256": "8675be1a250c70f9c4e2cae29f039e56333d2da796ecef93a76f1bf6a932b93d"
+  },
+  "rootReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/root-review.json",
+    "sha256": "5f410fb6451db5467a6d20667bec3a83715101d39f8a38afe0714c2297807463"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "sourceFilesBeforeAndAfter": 1397,
+  "exitCode": 0,
+  "launchPid": 54555,
+  "knownProcessTree": [
+    {
+      "pid": 54555,
+      "ppid": 54522,
+      "command": "/usr/local/bin/node tools/qa/r100-i09-final-probe.mjs --probe equivalence --source docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json --output docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108 --expected-worlds 108 --expected-revision 6"
+    },
+    {
+      "pid": 54557,
+      "ppid": 54555,
+      "command": "/usr/bin/caffeinate -i /usr/local/bin/node tools/qa/r100-i09-final-probe.mjs --probe equivalence --source docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json --output docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108 --expected-worlds 108 --expected-revision 6"
+    },
+    {
+      "pid": 54597,
+      "ppid": 54555,
+      "command": "/usr/local/bin/node tools/world-study/check-r100-browser-equivalence.mjs"
+    },
+    {
+      "pid": 54598,
+      "ppid": 54597,
+      "command": "/usr/local/bin/node --import tsx --input-type=module -e import {R100_NATIVE_WORLDS} from './src/generated/r100-native-worlds.ts';\\012import {createR100ProductionRecipe} from './src/generation/world-study/r100-package.ts';\\012import {createR100ProductionMap} from './src/generation/world-study/r100-production-map.ts';\\012import {generatedRiftIdentity} from './src/generation/rift-generation-identity.ts';\\012const rows=[];for(const world of R100_NATIVE_WORLDS)for(const grade of ['low','medium','severe']){\\012const recipe=createR100ProductionRecipe(world.id,20261004,grade),map=createR100ProductionMap(recipe);\\012rows.push(generatedRiftIdentity(map.layout,recipe,map));}console.log(JSON.stringify(rows));"
+    },
+    {
+      "pid": 54599,
+      "ppid": 54598,
+      "command": "/Users/yilungao/coh/node_modules/tsx/node_modules/@esbuild/darwin-arm64/bin/esbuild --service=0.28.1 --ping"
+    },
+    {
+      "pid": 55127,
+      "ppid": 54597,
+      "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --remote-debugging-pipe --no-startup-window"
+    },
+    {
+      "pid": 55141,
+      "ppid": 55127,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.98/Helpers/Google Chrome Helper (GPU).app/Contents/MacOS/Google Chrome Helper (GPU) --type=gpu-process --gpu-recent-crash-count=0 --no-sandbox --disable-breakpad --headless --enable-unsafe-swiftshader --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --gpu-preferences=WAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAAQAAAAAAAAAADAAAAAAAAADgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAoAAAAAAAAAAgAAAAAAAAADAAAAAEAAAAAAAAAAAAAAAgAAAAAAAAACAAAAAAAAAA= --shared-files --field-trial-handle=1718379636,r,4114752541858853268,1288302244088881494,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2589193137623263362,17121886216910997091,4 --trace-process-track-uuid=3190708988185955192"
+    },
+    {
+      "pid": 55143,
+      "ppid": 55127,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.98/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper --type=utility --utility-sub-type=network.mojom.NetworkService --lang=zh-CN --service-sandbox-type=network --no-sandbox --mute-audio --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --shared-files --field-trial-handle=1718379636,r,4114752541858853268,1288302244088881494,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2589193137623263362,17121886216910997091,4 --trace-process-track-uuid=3190708989122997041"
+    },
+    {
+      "pid": 55147,
+      "ppid": 55127,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.98/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper --type=utility --utility-sub-type=storage.mojom.StorageService --lang=zh-CN --service-sandbox-type=service --no-sandbox --mute-audio --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --shared-files --field-trial-handle=1718379636,r,4114752541858853268,1288302244088881494,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2589193137623263362,17121886216910997091,4 --trace-process-track-uuid=3190708990060038890"
+    },
+    {
+      "pid": 55148,
+      "ppid": 55127,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.98/Helpers/Google Chrome Helper (Alerts).app/Contents/MacOS/Google Chrome Helper (Alerts) --type=utility --utility-sub-type=mac_notifications.mojom.MacNotificationProvider --lang=zh-CN --service-sandbox-type=none --no-sandbox --mute-audio --message-loop-type-ui --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --shared-files --field-trial-handle=1718379636,r,4114752541858853268,1288302244088881494,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2589193137623263362,17121886216910997091,4 --trace-process-track-uuid=3190708990997080739"
+    },
+    {
+      "pid": 55159,
+      "ppid": 55127,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.98/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --top-chrome-webui --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=zh-CN --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=2324773946180 --shared-files --field-trial-handle=1718379636,r,4114752541858853268,1288302244088881494,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2589193137623263362,17121886216910997091,4 --trace-process-track-uuid=3190708991934122588"
+    },
+    {
+      "pid": 55161,
+      "ppid": 55127,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.98/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=zh-CN --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=8 --launch-time-ticks=2324773970188 --shared-files --field-trial-handle=1718379636,r,4114752541858853268,1288302244088881494,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2589193137623263362,17121886216910997091,4 --trace-process-track-uuid=3190708993808206286"
+    },
+    {
+      "pid": 55162,
+      "ppid": 55127,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.98/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --no-sandbox --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --lang=zh-CN --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=7 --launch-time-ticks=2324773970579 --shared-files --field-trial-handle=1718379636,r,4114752541858853268,1288302244088881494,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2589193137623263362,17121886216910997091,4 --trace-process-track-uuid=3190708992871164437"
+    },
+    {
+      "pid": 55211,
+      "ppid": 55127,
+      "command": "/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/154.0.8037.98/Helpers/Google Chrome Helper.app/Contents/MacOS/Google Chrome Helper --type=utility --utility-sub-type=audio.mojom.AudioService --lang=zh-CN --service-sandbox-type=audio --no-sandbox --mute-audio --message-loop-type-ui --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-IwDG3b --shared-files --field-trial-handle=1718379636,r,4114752541858853268,1288302244088881494,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,2589193137623263362,17121886216910997091,4 --trace-process-track-uuid=3190708994745248135"
+    }
+  ],
+  "ownedIdleAssertionPids": [
+    54557
+  ],
+  "powerSamples": 38,
+  "noSystemSleep": true,
+  "ownedProcessesClosed": true,
+  "ownedAssertionsReleased": true,
+  "sourceBinding": {
+    "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/source-binding.json",
+    "sha256": "28c90454d6e1c1cc7bfaf89837bcc4eac19b80eb88b34aa03e9f17f737dab481"
+  },
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/browser-equivalence.json",
+    "sha256": "fccd157245e7ec536dfb7592bf8cd0b52e5c189863fd6b7bd89a1dcfcbd3074a"
+  },
+  "actualIdentities": 342,
+  "problems": [],
+  "nextStage": "Stop here; root reviews and dispatches the next stage separately.",
+  "automaticRetry": false
+}

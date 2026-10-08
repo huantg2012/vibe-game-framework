@@ -1,0 +1,138 @@
+import hashlib,json,os,pathlib,re,signal,subprocess,time,traceback
+from datetime import datetime,timezone
+root=pathlib.Path.cwd();base=pathlib.Path('docs/qa/artifacts/r100-i10-i12')
+approved=base/'production-full-recheck-preparation/root-approved-protocol.json'
+expected_sha='a1e2c7d8bce4d63897b74b1c028c60a6f07b368072978c8f7d6e0b3aabbe8e14'
+def now():return datetime.now(timezone.utc)
+def stamp():return now().isoformat()
+def sha(p):return hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
+def read(p):return json.loads(pathlib.Path(p).read_text())
+def write(p,value):
+ with pathlib.Path(p).open('x') as f:json.dump(value,f,ensure_ascii=False,indent=2);f.write('\n')
+def ref(p):return {'path':str(p),'sha256':sha(p)}
+def run(argv):return subprocess.run(argv,capture_output=True,text=True,check=True,timeout=30).stdout
+assert sha(approved)==expected_sha
+protocol=read(approved);assert protocol['status']=='approved-single-full-recheck-after-external-sleep'
+for r in protocol['reviewedInputs']:assert sha(r['path'])==r['sha256'],r['path']
+plan=read(protocol['candidate']['path']);cmd=protocol['authorizedCommand'];assert cmd==plan['command']
+source=read(protocol['finalSource']['path'])
+for p,h in source['sources'].items():
+ assert sha(root/p)==h,p
+ assert sha(pathlib.Path(source['temporaryRoot'])/p)==h,p
+assert len(source['sources'])==1397
+listener=run(['lsof','-nP','-iTCP:3122','-sTCP:LISTEN']);assert re.search(r'^node\s+76518\s',listener,re.M),listener
+out=pathlib.Path(cmd['outputMustBeAbsent']);audit=pathlib.Path(cmd['operationalAuditDirectoryMustBeAbsent'])
+assert not out.exists() and not audit.exists()
+def psrows():
+ rows={}
+ for line in run(['ps','-Ao','pid=,ppid=,command=']).splitlines():
+  parts=line.strip().split(None,2)
+  if len(parts)==3:rows[int(parts[0])]={'pid':int(parts[0]),'ppid':int(parts[1]),'command':parts[2]}
+ return rows
+def qa_process(row):
+ c=row['command']
+ if c.startswith(('/bin/zsh -c','python3 -u -')):return False
+ return ('tools/qa/r100-i09-final-probe.mjs' in c or 'tools/qa/check-r100-production-browser.mjs' in c or 'playwright_chromiumdev_profile-' in c or c.startswith(('/usr/bin/caffeinate','caffeinate ')))
+initial=psrows();assert not [r for r in initial.values() if qa_process(r)]
+audit.mkdir();(audit/'samples').mkdir()
+(audit/'listener-before.txt').write_text(listener)
+write(audit/'processes-before.json',{'at':stamp(),'operatorPid':os.getpid(),'operatorPpid':os.getppid(),'relevant':[r for r in initial.values() if r['pid'] in [os.getpid(),os.getppid(),76518] or qa_process(r)]})
+(audit/'assertions-before.txt').write_text(run(['/usr/bin/pmset','-g','assertions']))
+(audit/'power-log-before.txt').write_text(run(['/usr/bin/pmset','-g','log']))
+started=now();argv=[cmd['executable'],*cmd['argv']];env={**os.environ,**cmd['envOverrides']}
+write(audit/'dispatch.json',{'status':'approved-dispatch-once','startedAt':started.isoformat(),'startedLocal':started.astimezone().isoformat(),'operatorPid':os.getpid(),'operatorPpid':os.getppid(),'protocol':ref(approved),'candidate':protocol['candidate'],'argv':argv,'cwd':str(root),'envOverrides':cmd['envOverrides'],'source':protocol['finalSource'],'verifiedSourceFiles':1397,'restoredServer':False,'serverPid':76518,'originalEvidenceUntouched':True,'automaticRetry':False})
+log=(audit/'operator-command.log').open('x');proc=None;known={};owners=set();samples=[];problems=[];exit_code=None
+try:
+ proc=subprocess.Popen(argv,cwd=root,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+ write(audit/'launch.json',{'at':stamp(),'launchPid':proc.pid,'operatorPid':os.getpid(),'operatorPpid':os.getppid(),'newProcessGroup':proc.pid,'argv':argv})
+ print(json.dumps({'status':'launched-once','pid':proc.pid,'output':str(out),'audit':str(audit),'at':stamp()}),flush=True)
+ first_deadline=time.monotonic()+5;next_sample=time.monotonic();seq=0;last_progress=0
+ while proc.poll() is None:
+  if time.monotonic()>=next_sample:
+   rows=psrows();owned={proc.pid}
+   for _ in range(20):
+    added={p for p,r in rows.items() if r['ppid'] in owned}
+    if added<=owned:break
+    owned|=added
+   related=[r for p,r in rows.items() if p in owned]
+   for r in related:known[r['pid']]=r
+   assertions=run(['/usr/bin/pmset','-g','assertions'])
+   matched=[]
+   for match in re.finditer(r'^\s*pid (\d+)\(([^)]+)\):.*\bPreventUserIdleSystemSleep\b.*$',assertions,re.M):
+    pid=int(match[1]);name=match[2]
+    if pid in owned and name=='caffeinate':matched.append(pid)
+   owners.update(matched);seq+=1
+   sample={'at':stamp(),'sequence':seq,'launchPid':proc.pid,'processes':related,'ownedIdleSleepAssertionPids':matched}
+   write(audit/'samples'/f'{seq:04d}.json',sample)
+   (audit/'samples'/f'{seq:04d}-assertions.txt').write_text(assertions)
+   samples.append({'path':str(audit/'samples'/f'{seq:04d}.json'),'ownedIdleSleepAssertionPids':matched})
+   if not matched and proc.poll() is None and (owners or time.monotonic()>=first_deadline):raise RuntimeError('Missing utility-scoped caffeinate idle-sleep assertion during live probe')
+   next_sample=time.monotonic()+(30 if owners else 0.3)
+   if time.monotonic()-last_progress>=300:
+    report=out/'report.json';value=read(report) if report.exists() else {'cases':[],'status':'source-preflight'}
+    counts={'cases':len(value['cases']),'passed':sum(x.get('status')=='passed' for x in value['cases']),'failed':sum(x.get('status')=='failed' for x in value['cases'])}
+    print(json.dumps({'status':'running','at':stamp(),'counts':counts,'assertionPids':sorted(owners),'last':{k:value['cases'][-1].get(k) for k in ['world','grade','status']} if value['cases'] else None}),flush=True);last_progress=time.monotonic()
+  time.sleep(0.2)
+ exit_code=proc.wait()
+except BaseException as error:
+ problems.append({'type':type(error).__name__,'message':str(error),'traceback':traceback.format_exc()})
+ if proc and proc.poll() is None:
+  os.killpg(proc.pid,signal.SIGTERM)
+  try:exit_code=proc.wait(timeout=15)
+  except subprocess.TimeoutExpired:
+   os.killpg(proc.pid,signal.SIGKILL);exit_code=proc.wait(timeout=15)
+finally:
+ log.close();ended=now()
+ # Allow the utility-scoped assertion helper to observe utility exit and release.
+ cleanup_deadline=time.monotonic()+10
+ while True:
+  finalrows=psrows();alive=[r for p,r in finalrows.items() if p in known and r['command']==known[p]['command']]
+  final_assertions=run(['/usr/bin/pmset','-g','assertions'])
+  remaining_owners=[p for p in owners if re.search(r'^\s*pid '+str(p)+r'\(caffeinate\):.*\bPreventUserIdleSystemSleep\b',final_assertions,re.M)]
+  if not alive and not remaining_owners or time.monotonic()>=cleanup_deadline:break
+  time.sleep(0.2)
+ (audit/'assertions-after.txt').write_text(final_assertions)
+ write(audit/'processes-after.json',{'at':stamp(),'ownedAlive':alive,'remainingOwnedAssertions':remaining_owners,'server':finalrows.get(76518)})
+ if alive or remaining_owners:problems.append({'type':'UnclosedOwnedProcesses','alive':alive,'remainingAssertions':remaining_owners})
+ if not owners:problems.append({'type':'AssertionNeverObserved'})
+ power=run(['/usr/bin/pmset','-g','log']);(audit/'power-log-after.txt').write_text(power)
+ selected=[];sleep=[]
+ for line in power.splitlines():
+  match=re.match(r'^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d [+-]\d{4})\s+(\S+)',line)
+  if not match:continue
+  at=datetime.strptime(match[1],'%Y-%m-%d %H:%M:%S %z')
+  if started.replace(microsecond=0)<=at<=ended:
+   selected.append(line)
+   if match[2]=='Sleep':sleep.append(line)
+ (audit/'power-log-execution-window.txt').write_text('\n'.join(selected)+'\n')
+ if sleep:problems.append({'type':'SystemSleepInExecutionWindow','events':sleep})
+ for r in protocol['reviewedInputs']:
+  if sha(r['path'])!=r['sha256']:problems.append({'type':'FrozenInputChanged','path':r['path']})
+ for p,h in source['sources'].items():
+  if sha(root/p)!=h or sha(pathlib.Path(source['temporaryRoot'])/p)!=h:problems.append({'type':'SourceChanged','path':p})
+ binding=read(out/'source-binding.json') if (out/'source-binding.json').exists() else None
+ report=read(out/'report.json') if (out/'report.json').exists() else None
+ reconciliation={'complete':False,'originalScheduleCompared':0,'originalFullIdentitiesCompared':0,'failed152FullIdentityEqual':False}
+ if exit_code!=0:problems.append({'type':'ProbeExit','exitCode':exit_code})
+ if not binding or binding['status']!='pass':problems.append({'type':'BindingNotPassed','status':binding.get('status') if binding else None})
+ if report:
+  try:
+   expected=read(protocol['expectedCases']['path'])['cases']
+   actual=[{'ordinal':i+1,**{k:c[k] for k in ['world','grade','controlledSeed']}} for i,c in enumerate(report['cases'])]
+   assert actual==expected,'Full ordered324 schedule differs'
+   original=read(protocol['originalFailure']['path'])['cases']
+   details=[]
+   for i,old in enumerate(original):
+    new=report['cases'][i]
+    assert all(new[k]==old[k] for k in ['world','grade','controlledSeed']),f'Schedule mismatch case{i+1}'
+    identity=old.get('identity') or json.loads(old['diagnostic']['saved'])['riftCheckpoint']['identity']
+    assert new['identity']==identity,f'Complete identity mismatch case{i+1}'
+    details.append({'ordinal':i+1,'world':old['world'],'grade':old['grade'],'controlledSeed':old['controlledSeed'],'completeIdentityEqual':True,'originalIdentityLocation':'identity' if old.get('identity') else 'diagnostic.saved.riftCheckpoint.identity'})
+   write(audit/'original152-identity-comparison.json',{'status':'exact-all-original-identities','original':protocol['originalFailure'],'new':ref(out/'report.json'),'comparisons':details})
+   reconciliation={'complete':True,'all324OrderedScheduleEqual':True,'originalScheduleCompared':152,'originalFullIdentitiesCompared':152,'failed152FullIdentityEqual':True,'comparison':ref(audit/'original152-identity-comparison.json')}
+  except Exception as error:problems.append({'type':'PostRunReconciliation','message':str(error)})
+ else:problems.append({'type':'NoReport'})
+ receipt={'status':'pass-single-full-recheck' if not problems else 'failed-preserved-no-retry','startedAt':started.isoformat(),'endedAt':ended.isoformat(),'wallSeconds':(ended-started).total_seconds(),'protocol':ref(approved),'command':cmd,'operatorPid':os.getpid(),'launchPid':proc.pid if proc else None,'exitCode':exit_code,'assertionOwners':sorted(owners),'powerSampleCount':len(samples),'noSystemSleepDuringExecution':not sleep,'ownedProcessesClosed':not alive,'ownedAssertionsReleased':not remaining_owners,'knownProcessTree':list(known.values()),'sourceFilesVerifiedBeforeAndAfter':1397,'frozenRefsUnchanged':not any(p['type']=='FrozenInputChanged' for p in problems),'newBinding':ref(out/'source-binding.json') if binding else None,'newReport':ref(out/'report.json') if report else None,'actualNewCases':len(report['cases']) if report else 0,'actualTotalAttempts':152+(len(report['cases']) if report else 0),'reconciliation':reconciliation,'problems':problems,'automaticRetry':False,'nextStage':'Stopped here for root review; no equivalence/natural/performance dispatch.'}
+ write(audit/'execution.json',receipt)
+ print(json.dumps({'status':receipt['status'],'receipt':ref(audit/'execution.json'),'actualNewCases':receipt['actualNewCases'],'actualTotalAttempts':receipt['actualTotalAttempts'],'problems':problems}),flush=True)
+ if problems:raise SystemExit(1)

@@ -1,6 +1,8 @@
 ---
-status: ACTIVE
+status: COMPLETE
 created: 2026-10-06
+completed: 2026-10-08
+acceptance: bounded-internal-pass / user-authorized-sampling
 features: [COH-F052, COH-F011, COH-F012, COH-F013, COH-F049, COH-F044, COH-F006, COH-F007]
 ---
 
@@ -36,3 +38,11 @@ features: [COH-F052, COH-F011, COH-F012, COH-F013, COH-F049, COH-F044, COH-F006,
 - 2026-10-06：任务已排产；revision5从精确提交封存，首批能力与材料设计并行。尚无新世界合格或正式启用结论。
 
 - 2026-10-07：B01四世界正常视野、576生成、24固定实际过程限定通过（21非入口搜撤/1近入口/2空返）。B02另四世界完成作者身体路线、冻结3104后开始正常图审；累计60候选，尚不关闭I10。
+
+## 2026-10-08 结案
+
+累计72世界／216等级内部资格及正式接入通过，已在台账按I10→I11→I12顺序关闭。既有324项正式进入／冷续、342项浏览器等价、48趟自然流程与原生成／固定过程验证已完成。按用户“不用做全量测试，抽查即可”，性能保留74个完整通过样本、1项中断、33项未开始；资源抽查10次同图＋18次混合、12个GC样本通过，8项真实语义反例通过。原失败、未测范围及各自限制完整保留。
+
+I13的等级选择、自然准备与长期净收益，以及I14的真实弱设备、实际听感R100-R10和用户终验仍为已规划、未启动；R100保持active，不代签发布或新增美术人审。
+
+[实际结案回执](../qa/artifacts/r100-i10-i12/closure-application.json) · [抽查授权与范围](../qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json) · [本轮QA](../qa/rift-r100-i10-i12.md)。架构登记已更新，地图规则原spec保持单一正文；本轮收口未改变in-game UI样式或交互，无新增UI闸门范围。

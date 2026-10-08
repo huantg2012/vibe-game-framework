@@ -1,0 +1,45 @@
+{
+  "status": "completed-fixed-attempts-pending-review",
+  "startedAt": "2026-10-07T12:24:48.457Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "white-scarfield",
+      "grade": "medium",
+      "seed": 3075192741,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-white-scarfield-medium-3075192741",
+      "status": "completed-script",
+      "startedAt": "2026-10-07T12:24:48.458Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-07T12:25:35.473Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "white-scarfield",
+          "grade": "medium",
+          "revision": 6,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 31998.74999999965,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 178.01735980141598,
+            "y": 644.058838355157
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    }
+  ],
+  "endedAt": "2026-10-07T12:25:35.476Z"
+}

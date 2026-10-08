@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "scope": "Guard17 integration preserves existing historical and policy16 raw accounting; no additional game execution.",
+  "results": [
+    {
+      "summary": {
+        "path": "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json",
+        "sha256": "d29784aba32287105f99b1c55be076017ddd857de10b16f7ed6f4c0972034a52"
+      },
+      "historical": true,
+      "status": "raw-recomputed-exact",
+      "gradePairs": 156,
+      "expected": 156,
+      "attempts": 315
+    },
+    {
+      "summary": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/supplement16-summary.json",
+        "sha256": "5a016d1191b5a94e67e0dcdf88666ceccca6148fa0fad08a36dca55b501be193"
+      },
+      "historical": false,
+      "status": "raw-recomputed-exact",
+      "gradePairs": 167,
+      "expected": 168,
+      "attempts": 344
+    }
+  ],
+  "tools": [
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "1da437d9385d4e306eb6cd8e143809a7b0191293ac7dee3608da529909b5b70e"
+    },
+    {
+      "path": "tools/qa/r100-play-qualification.mjs",
+      "sha256": "d66ad0ee09bcb7b026af01d448db5c697ab056738fb32e837d0d511f15f5afc2"
+    },
+    {
+      "path": "tools/qa/r100-i12-controller-supplement.mjs",
+      "sha256": "e1c9b33dcfd43e0f1714b339f10051fbf1861f07ad37abac11ac8ddd529c45a8"
+    },
+    {
+      "path": "tools/qa/r100-i12-facing-supplement.mjs",
+      "sha256": "b21c89be8dc1e6d86a1d2d0337afaf1b641aed2891effc9d0834ec06c8f31672"
+    }
+  ]
+}

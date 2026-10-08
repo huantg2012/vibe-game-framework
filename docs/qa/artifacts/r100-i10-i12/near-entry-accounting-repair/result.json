@@ -1,0 +1,69 @@
+{
+  "status": "pass",
+  "method": "Aggregation only; collected is eligible-non-entry while actualPickups includes near-entry. No original reports, frozen policies, thresholds, seeds, game source or previous summaries modified.",
+  "tools": [
+    {
+      "path": "tools/qa/r100-play-qualification.mjs",
+      "sha256": "80b3d618b0d54bbd8f39fc4c77aa301690e1cc8f6109e5b55f1089be3139ac46"
+    },
+    {
+      "path": "tools/qa/check-r100-play-qualification.mjs",
+      "sha256": "2164fed77c9ec331b941d480f83a5b2bb286319ccfe22f1049ee65b5c4e79225"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/summarize-current-fixed-play.mjs",
+      "sha256": "f5b0dfcb8b660b08ac1ab9a589faa9a5ac092ab75c8e90c5b3fb1b616bdda134"
+    }
+  ],
+  "original": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/play-summary.json",
+    "sha256": "0d0a31f02378359a6540862e48b72db57524309758a1f85c8d96c61f42e50fd9"
+  },
+  "corrected": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/play-summary-v2.json",
+    "sha256": "68caa21babfc2bf0e872180e7ac9e40800da287087c5779e25a6ebc655073e5d"
+  },
+  "outcomes": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/outcomes-v2.json",
+    "sha256": "4c0b0d191abb1a30b2246b7f71c9e5fa773f11687e696246bd2cca860dab23df"
+  },
+  "observations": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b09-current-qualified/worker-observation-summary-v2.json",
+    "sha256": "04bf4e857af472e5152e41db2c1e4b1d8c2b5236974a561dff87486155e2cea4"
+  },
+  "qualificationAndAttemptsExact": true,
+  "historicalPolicy13": {
+    "summary": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json",
+      "sha256": "d29784aba32287105f99b1c55be076017ddd857de10b16f7ed6f4c0972034a52"
+    },
+    "recomputedOriginalSchemaExact": true
+  },
+  "b01": {
+    "summary": {
+      "path": "docs/qa/artifacts/r100-i10-i12/near-entry-accounting-repair/b01-summary-current-accounting.json",
+      "sha256": "78d330541797be7d0ccfc852a6b2d05982b27ff3a5d920ebd3595f061e8dab20"
+    },
+    "nonEntryExtract": 21,
+    "nearEntryOnlyReturns": 1,
+    "emptyReturns": 2
+  },
+  "contracts": {
+    "path": "docs/qa/artifacts/r100-i10-i12/near-entry-accounting-repair/contract-attempt2.log",
+    "sha256": "ee1f6f150593eb5e9f0e1b723e51f2860f836da768b81104a8ab90e90fae781d"
+  },
+  "binderContracts": {
+    "path": "docs/qa/artifacts/r100-i10-i12/near-entry-accounting-repair/binder-contract.json",
+    "sha256": "543b841bca58813d9ddbd47a1315fe413d97f7940eb15ee68b88bf55731470c8"
+  },
+  "retainedFailures": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/near-entry-accounting-repair/attempt1-failure.json",
+      "reason": "Incorrect new synthetic fixture expectation omitted one preexisting true empty return."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/near-entry-accounting-repair/binder-contract.log",
+      "reason": "Original command omitted required fresh output argument; corrected command retained in attempt2 log."
+    }
+  ]
+}

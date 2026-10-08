@@ -1,0 +1,114 @@
+{
+  "status": "prepared-not-executed-awaiting-normal-review",
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+    "sha256": "4426f52bfb5e719735680ad97c436d44375eadb6ba04fe566e086bbd74c87a4d"
+  },
+  "stages": [
+    {
+      "batch": "B11",
+      "worlds": [
+        "crushed-seam",
+        "husk-reef",
+        "fibre-scree",
+        "gel-rafts"
+      ],
+      "expectedGeneration": 576,
+      "expectedActual": 24,
+      "template": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/commands-template.json",
+        "sha256": "2a85d52a3317f25af5f8bd8a2deb5fff7240d9d8e6d4f874677b34eede993e86"
+      },
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/run-generation.mjs",
+        "sha256": "fa3d7272d8ed222c193160b7aeeb4c8313a95ba3b26600afa769a1e40ebcb48e"
+      },
+      "requiredAdmission": "docs/qa/artifacts/r100-i10-i12/b11-current-qualified/normal-admission.json",
+      "expectedPlaySource": {
+        "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+        "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+      }
+    },
+    {
+      "batch": "B12",
+      "worlds": [
+        "double-return",
+        "offset-basins",
+        "pinched-fan",
+        "spliced-reaches"
+      ],
+      "expectedGeneration": 576,
+      "expectedActual": 24,
+      "template": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/commands-template.json",
+        "sha256": "d3135964fabf2e20914606f84a5485107d0682803c582b5a6f86e3f619d76043"
+      },
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/run-generation.mjs",
+        "sha256": "6e7c431f6f1ddc871dca42b0faa3228ae84f2665c5c89cc45e3e49d0a1391ab9"
+      },
+      "requiredAdmission": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/normal-admission.json",
+      "expectedPlaySource": {
+        "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+        "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+      }
+    },
+    {
+      "batch": "B13",
+      "worlds": [
+        "white-scarfield",
+        "black-lacuna",
+        "ochre-folds",
+        "violet-marrows"
+      ],
+      "expectedGeneration": 576,
+      "expectedActual": 24,
+      "template": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/commands-template.json",
+        "sha256": "165eb8ec16b27006456869cd3156c315f6da242c2eefcb0ff1ded91c1eeb7ae5"
+      },
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/run-generation.mjs",
+        "sha256": "696383eda62d533d43440b3f8bf92dbc1c5c81d1d329d2915d7dae1c34844538"
+      },
+      "requiredAdmission": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/normal-admission.json",
+      "expectedPlaySource": {
+        "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+        "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+      }
+    },
+    {
+      "batch": "B14",
+      "worlds": [
+        "fractured-estuary",
+        "woven-quarters",
+        "shell-patchwork",
+        "last-shelf"
+      ],
+      "expectedGeneration": 576,
+      "expectedActual": 24,
+      "template": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/commands-template.json",
+        "sha256": "cc0783169d20453e60192484374752406196b10344bd3335dc17295d847d9c43"
+      },
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/run-generation.mjs",
+        "sha256": "8d569bf5601c0f48bbdccbcc13a6b0f382d6ae4ee7c3199260bc66c6daf2855f"
+      },
+      "requiredAdmission": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/normal-admission.json",
+      "expectedPlaySource": {
+        "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+        "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+      }
+    }
+  ],
+  "order": "B11→B12→B13→B14, one heavy worker; stop and retain original report on failure. Actual24 per batch is a separate sole-Chrome stage after the earlier original processes. Never enable the pool from this plan."
+}

@@ -1,0 +1,111 @@
+/** Compressed short fibres have grouped surface volume as well as painted
+ * detail. This construction is deliberately separate from the approved wedge.
+ * Its bundles stay inside that wedge's original XY support and maximum height. */
+import type { Builder, Point, UV } from './native-volume-expansion';
+import { buildCompressedWedge } from './native-volume-organization';
+
+interface SurfaceTriangle { readonly a: Point; readonly b: Point; readonly c: Point }
+interface Bundle {
+  readonly x: number; readonly y: number; readonly length: number; readonly width: number;
+  readonly angle: number; readonly bend: number; readonly rise: number;
+}
+
+// Construction proportions, not world data: three unequal, overlapping groups
+// turn against one another rather than forming a full-width parallel comb.
+const BUNDLES: readonly Bundle[] = [
+  { x: -.29, y: -.015, length: .23, width: .13, angle: -.34, bend: .035, rise: 3.6 },
+  { x: -.26, y: .18, length: .25, width: .15, angle: .28, bend: -.045, rise: 3.1 },
+  { x: -.065, y: .25, length: .27, width: .12, angle: -.19, bend: .032, rise: 3.8 },
+  { x: .15, y: .19, length: .24, width: .16, angle: -.58, bend: -.040, rise: 3.0 },
+  { x: .25, y: .035, length: .19, width: .12, angle: .40, bend: .030, rise: 3.5 },
+  { x: .20, y: -.18, length: .24, width: .14, angle: -.18, bend: -.034, rise: 3.1 },
+  { x: -.025, y: -.24, length: .23, width: .13, angle: .48, bend: .040, rise: 3.9 },
+  { x: -.27, y: -.27, length: .19, width: .11, angle: -.26, bend: -.035, rise: 2.9 },
+  { x: .055, y: -.035, length: .28, width: .14, angle: .20, bend: -.050, rise: 3.4 },
+  { x: -.075, y: .085, length: .20, width: .13, angle: -.55, bend: .038, rise: 3.7 },
+];
+const uv = (p: Point): UV => [p[0], p[1]];
+
+function heightAt(triangles: readonly SurfaceTriangle[], x: number, y: number): number | undefined {
+  let highest: number | undefined;
+  for (const { a, b, c } of triangles) {
+    const dx = b[0] - a[0], dy = b[1] - a[1], ex = c[0] - a[0], ey = c[1] - a[1];
+    const determinant = dx * ey - dy * ex;
+    if (Math.abs(determinant) < 1e-9) continue;
+    const px = x - a[0], py = y - a[1];
+    const u = (px * ey - py * ex) / determinant, v = (dx * py - dy * px) / determinant;
+    if (u < -1e-8 || v < -1e-8 || u + v > 1 + 1e-8) continue;
+    const z = a[2] + u * (b[2] - a[2]) + v * (c[2] - a[2]);
+    if (highest === undefined || z > highest) highest = z;
+  }
+  return highest;
+}
+
+/** Build-time only. The existing base, feet, material fracture and source joint
+ * are forwarded without mutation. Added curved bundles merge into its skin;
+ * their uneven last sections expose a short actual wall, not a painted line. */
+export function buildCompressedFelt(b: Builder): void {
+  const skin: SurfaceTriangle[] = [], protectedFaces: SurfaceTriangle[] = [];
+  let ceiling = 0;
+  buildCompressedWedge({
+    spec: b.spec,
+    quad(a, c, d, e, material, coordinates, wanted, region) {
+      b.quad(a, c, d, e, material, coordinates, wanted, region);
+      ceiling = Math.max(ceiling, a[2], c[2], d[2], e[2]);
+      const destination = material === 3 ? protectedFaces : skin;
+      destination.push({ a, b: c, c: d }, { a, b: d, c: e });
+    },
+    joint: point => b.joint(point),
+  });
+  const s = b.spec;
+  for (let index = 0; index < BUNDLES.length; index++) {
+    const bundle = BUNDLES[index]!;
+    const cosine = Math.cos(bundle.angle), sine = Math.sin(bundle.angle);
+    const rows: Point[][] = [], bases: Point[][] = [];
+    let supported = true;
+    for (let step = 0; step < 6; step++) {
+      const t = step / 5, bow = Math.sin(t * Math.PI) * bundle.bend * s.width;
+      const centreX = bundle.x * s.length + (t - .5) * bundle.length * s.length * cosine - bow * sine;
+      const centreY = bundle.y * s.width + (t - .5) * bundle.length * s.length * sine + bow * cosine;
+      const halfWidth = bundle.width * s.width * .5 * (.72 + .28 * Math.sin(t * Math.PI));
+      const row: Point[] = [], base: Point[] = [];
+      for (let across = 0; across < 3; across++) {
+        const side = across - 1;
+        // The cut ends are unequal across a bundle, never repeated saw teeth.
+        const endShift = step === 5 ? [index % 2 ? -.028 : .012, .023, -.019][across]! * s.length : 0;
+        const x = centreX - side * halfWidth * sine + endShift * cosine;
+        const y = centreY + side * halfWidth * cosine + endShift * sine;
+        // A vertical end has zero XY area in the native camera. Recess the
+        // upper torn line into the bundle to expose a narrow physical slope;
+        // the lower edge still lands on the unchanged original body.
+        const retreat = step === 5 ? Math.min(2, s.length * .012) : 0;
+        const topX = x - retreat * cosine, topY = y - retreat * sine;
+        const height = heightAt(skin, x, y), topHeight = heightAt(skin, topX, topY);
+        if (height === undefined || topHeight === undefined || heightAt(protectedFaces, x, y) !== undefined
+          || heightAt(protectedFaces, topX, topY) !== undefined) { supported = false; break; }
+        const taper = step === 0 ? 0 : step === 5 ? .68 : .72 + .28 * Math.sin(t * Math.PI);
+        const rise = side === 0 ? Math.min(bundle.rise, s.height * .09) * taper : 0;
+        base.push([x, y, height]);
+        row.push([topX, topY, Math.min(ceiling, topHeight + rise)]);
+      }
+      if (!supported) break;
+      rows.push(row); bases.push(base);
+    }
+    if (!supported) continue;
+    // Each whole bundle must also avoid spanning an existing material fracture.
+    // This conservative local box protects its visible area and source light.
+    const minX = Math.min(...rows.flat().map(p => p[0])), maxX = Math.max(...rows.flat().map(p => p[0]));
+    const minY = Math.min(...rows.flat().map(p => p[1])), maxY = Math.max(...rows.flat().map(p => p[1]));
+    if (protectedFaces.some(({ a, b: c, c: d }) => Math.max(a[0], c[0], d[0]) >= minX && Math.min(a[0], c[0], d[0]) <= maxX
+      && Math.max(a[1], c[1], d[1]) >= minY && Math.min(a[1], c[1], d[1]) <= maxY)) continue;
+    for (let step = 0; step < rows.length - 1; step++) for (let across = 0; across < 2; across++) {
+      const a = rows[step]![across]!, c = rows[step + 1]![across]!, d = rows[step + 1]![across + 1]!, e = rows[step]![across + 1]!;
+      b.quad(a, c, d, e, 0, [uv(a), uv(c), uv(d), uv(e)], [0, 0, 1], 1);
+    }
+    const end = rows[5]!, bottom = bases[5]!;
+    for (let across = 0; across < 2; across++) {
+      const a = end[across]!, c = end[across + 1]!, d = bottom[across + 1]!, e = bottom[across]!;
+      b.quad(a, c, d, e, 1, [uv(a), uv(c), uv(d), uv(e)], [cosine, sine, 0], 3);
+    }
+  }
+}

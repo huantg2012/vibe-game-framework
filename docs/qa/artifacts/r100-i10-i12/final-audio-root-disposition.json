@@ -1,0 +1,70 @@
+{
+  "status": "bounded-engineering-reuse-final-binding-pass-listening-pending",
+  "reviewer": "root",
+  "at": "2026-10-07T15:15:05.916386+00:00",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-audio-engineering-binding.json",
+    "sha256": "c9773b8ae5cb64af03b78bda3b2d9971653926b54bf240bbcc72989b534ccccc"
+  },
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "packages": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+    "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+  },
+  "previousDisposition": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/audio-i12-root-disposition.json",
+    "sha256": "5cb5fa689c97752de3838a50ed1d308d2060d90c8244714425841500b0985ad4"
+  },
+  "scope": "Existing audio engineering reuse is admitted for this final108 I12 candidate under the previously explicit disposition. This signs source/resource/family-pressure mapping continuity only.",
+  "verification": {
+    "allCandidateReferencesVerified": true,
+    "audioOwnersExactAcrossThreeSnapshots": 5,
+    "currentResourcesExactToReviewedSource": 98,
+    "originalByteIdenticalResources": 92,
+    "originalContainerEquivalentResources": 6,
+    "historicalContainerReceipt": {
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/container-equivalence.json",
+      "sha256": "531b54f62510f18b80707017278402ee67767bfc95be8b179d304e3c8f3ec7c6"
+    },
+    "families": 6,
+    "materialSourceSounds": 5,
+    "originalMixes": 18,
+    "worlds": 108,
+    "gradeMappings": 324,
+    "uniqueConsumedFiles": 573,
+    "inputsUnchanged": true
+  },
+  "method": "Root independently hashed all candidate references, checked five actual owner files in the three frozen sources, checked current/prior audio resources and historical source byte identities, and reconciled every package family/period to the original recording metadata. The six known OGG packet/timing equivalences retain the previously reviewed evidence; no new decode or listening occurred.",
+  "limitations": [
+    "受控近距离混音台，四个关键提示显式注入；不是自然游戏过程。",
+    "当前108按主材选6配方，混材不逐副材发声；新短纤/孔髓视觉组织没有新增专用音源。",
+    "新几何改变声源所在位置/接近路线，即使配方与周期相同也不能推断空间听感或物性适配已通过。",
+    "不证明108世界具有108套声音身份、疲劳/掩蔽/循环接缝听感、弱设备或长期体验。",
+    "历史原播放页面误报及其他失败记录不改；没有提高用户或世界资格。",
+    "Not approved: Subjective material fit",
+    "Not approved: Spatial audibility under all108 geometries",
+    "Not approved: Listening fatigue",
+    "Not approved: Natural combat cue masking",
+    "Not approved: Human approval",
+    "Byte continuity admits only existing engineering behavior. New geometry changes source positions and approach routes; this does not establish spatial audibility or physical material fit for all108 worlds.",
+    "Six known historical OGG container differences are explicitly retained; they are not described as original recording byte identity.",
+    "18 historical phase/cue/voice/clipping metadata records are preserved as controlled-bench evidence; no natural-process, final runtime or subjective listening claim is derived from them.",
+    "This file supplies the exact final binding requested by the earlier root disposition. Root must independently accept this receipt; the art reviewer does not sign on behalf of root or the human."
+  ],
+  "listeningPass": false,
+  "humanApproval": false,
+  "releaseGate": {
+    "riskId": "R100-R10",
+    "target": "I14",
+    "status": "pending-actual-listening",
+    "waived": false,
+    "required": "Actual listening to five source sounds, six families × three grades, important game cues and repeated transitions; assess material fit, spatial audibility, cue masking and fatigue."
+  },
+  "reviewEntry": {
+    "path": "docs/qa/interactive/r100-material-listening.html",
+    "sha256": "476dfc90d7dda63e87f61e2497b7a93a47cd9d1d051c515fdeed490e28debb58"
+  }
+}

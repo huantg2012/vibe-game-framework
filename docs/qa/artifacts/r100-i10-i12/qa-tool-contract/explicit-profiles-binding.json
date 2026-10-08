@@ -1,0 +1,108 @@
+{
+  "status": "pass",
+  "scope": "Actual frozen source default-path proof plus negative code mutations; no new-shape acceptance, RGBA run or game execution.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-source/source-snapshot.json",
+    "sha256": "dace95f2a592111ec52c17917739aaa6cded86a0817ade1d9b810e3a0da51dc0"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-source/source-snapshot.json",
+    "sha256": "ac64f6bf0a0f0bda9992997a981e8df3f45dfec7164b1435bf09055f94487ed8"
+  },
+  "tool": {
+    "path": "tools/qa/r100-explicit-profile-continuity.mjs",
+    "sha256": "b443660d1a11be4b4d776b6b277b74c4ae2914591082b8f1ca8d37f718371cda"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-explicit-profile-continuity.mjs",
+    "sha256": "fdcfcfff29bdc9685956dde38e58ff570e279db2d42fb098022983e07e4b20e0"
+  },
+  "checks": [
+    {
+      "name": "actual frozen default pleated path and old dispatch",
+      "status": "pass"
+    },
+    {
+      "name": "selected new tear",
+      "status": "pass"
+    },
+    {
+      "name": "selected new settled sheet",
+      "status": "pass"
+    },
+    {
+      "name": "selected new settled fan",
+      "status": "pass"
+    },
+    {
+      "name": "new branch defaults on",
+      "status": "pass"
+    },
+    {
+      "name": "old quad pigment changed",
+      "status": "pass"
+    },
+    {
+      "name": "old dispatch enters new variant",
+      "status": "pass"
+    },
+    {
+      "name": "unguarded tear creation",
+      "status": "pass"
+    },
+    {
+      "name": "extra module top-level work",
+      "status": "pass"
+    },
+    {
+      "name": "runtime import in inert module",
+      "status": "pass"
+    },
+    {
+      "name": "new unaudited export",
+      "status": "pass"
+    },
+    {
+      "name": "old ground dispatch changed",
+      "status": "pass"
+    },
+    {
+      "name": "shared validator changes",
+      "status": "pass"
+    },
+    {
+      "name": "widened settled validation scope",
+      "status": "pass"
+    },
+    {
+      "name": "public gate explicit mode",
+      "status": "pass"
+    },
+    {
+      "name": "public gate requires explicit mode",
+      "status": "pass"
+    },
+    {
+      "name": "extra consumer rejected",
+      "status": "pass"
+    },
+    {
+      "name": "unregistered draft file remains unreviewed",
+      "status": "pass"
+    }
+  ],
+  "proof": {
+    "status": "pass",
+    "newProfiles": [
+      "pleated-tear",
+      "settled-sheet",
+      "settled-fan"
+    ],
+    "selectedInstances": 1,
+    "scope": "Unselected explicit profile additions only. Old Builder, shapes, routing and validator are AST-exact after removing the three unreachable branches; the old pleated function is exact under its false default. Imported modules have no top-level execution. No new-profile art/body approval or current runtime execution is inferred."
+  },
+  "bindingTool": {
+    "path": "tools/qa/r100-source-continuity.mjs",
+    "sha256": "ea4367310e2c9684482f572c21c4c8a11df6d402f4a9dce177c09c830680e8a5"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "failed-preserved",
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "tools/qa/r100-i12-turn-align.test.mjs"
+  ],
+  "error": "Assertion false !== true at r100-i12-turn-align.test.mjs:42 for inclusive25 degree boundary",
+  "diagnosis": "atan2 sin/cos conversion produced25.000000000000004 degrees at the mathematical25 boundary.",
+  "correction": "Report normalized degree error to10 decimal places, then retain inclusive<=25 predicate. No input/player state or gameplay threshold changed."
+}

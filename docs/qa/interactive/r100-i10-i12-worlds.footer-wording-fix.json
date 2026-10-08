@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "status": "footer-wording-corrected-static-check-pass",
+  "reviewer": "i12_art",
+  "at": "2026-10-08T02:19:12.441Z",
+  "features": [
+    "F052",
+    "F012"
+  ],
+  "reason": "A current-tense browser-not-started sentence could become misleading after a separate root browser review. The footer now states a lasting evidence boundary.",
+  "changes": [
+    {
+      "kind": "footer-only-text",
+      "before": "仅文档元界面。静态引用、SHA 与档位映射已核对；本次未启动浏览器，未新增图审、录音、试听或用户批准。",
+      "after": "仅文档元界面。本页汇总既有有限图审与声音工程证据；浏览器交互检查另行记录，不新增世界图审、录音、试听或用户批准。"
+    },
+    {
+      "kind": "static-evidence-link",
+      "before": "r100-i10-i12-worlds.check-v2.json",
+      "after": "r100-i10-i12-worlds.check-v3.json"
+    }
+  ],
+  "before": {
+    "htmlArchived": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.before-footer-wording-fix.html",
+      "sha256": "9ac9503887080489e80c31a4e3d4a0df5835e284eea45a19128c86cbda7fa620"
+    },
+    "staticCheck": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.check-v2.json",
+      "sha256": "dc3fded6dcbc06d40cd6884f0a403010eefe52b58019dde3d0e2d023c223b881"
+    },
+    "data": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+      "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+    }
+  },
+  "after": {
+    "html": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+      "sha256": "aee61f2798d098c9e30abbb8be6368d03ff6123e7c54063a057b7a5b4c877048"
+    },
+    "staticCheck": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.check-v3.json",
+      "sha256": "6779e4495ac1fb45e8d71953ae3bdb714f43606f7132dac4296e79d536b5bf16"
+    },
+    "data": {
+      "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+      "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+    }
+  },
+  "verification": {
+    "exactlyTwoDeclaredTextReplacements": true,
+    "styleBytesUnchanged": true,
+    "scriptBytesUnchanged": true,
+    "embeddedDataUnchanged": true,
+    "companionDataBytesUnchanged": true,
+    "oldHtmlArchivedExactly": true,
+    "oldV2CheckUnchanged": true,
+    "normalImagesAndSignedRecordsUntouched": true,
+    "browserOpenedByThisReview": false,
+    "gameOrHeavyQaRerun": false,
+    "rootBrowserReviewFileTouched": false
+  },
+  "limits": [
+    "This wording update and static receipt do not record or override a separate actual browser review.",
+    "No world art review, audio generation/listening or user approval is added."
+  ],
+  "errors": []
+}

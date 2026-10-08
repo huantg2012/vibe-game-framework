@@ -1,0 +1,127 @@
+{
+  "status": "PASS",
+  "sourceInputs": [
+    {
+      "path": "src/generation/world-study/native-volume-pleated-tear.ts",
+      "sha256": "a542f83a5da9b9d7b70ce35c37cfb0a09984bed56a6cec152af84c425e32eae1"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-cellular.ts",
+      "sha256": "8e968f91d2ba247e9323ab5b81a5cba29d6f24cafad13d03be4ad948864105c5"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground-edge.ts",
+      "sha256": "b9f88867f833bcca352e4f6103d22b9371ca4a834affca147215a051b20443dc"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "dd4e4619f2635516f20704dda011a5fccc2805c7389278e97200a835db7067c3"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-raster.ts",
+      "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-erosion.ts",
+      "sha256": "899683e6a750b1a951b576b87a3f82f385cd03273beca99585858882be10d992"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "c4707a3f3354301798ee91487868f14566f4e46554a30b536ab303b087ae8ef6"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-expansion.ts",
+      "sha256": "508b6dfaf744a63671035838c86ad36906b57be341ee26f1f1e55ed68e10d0b4"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-organization.ts",
+      "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-settled-sheet.ts",
+      "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-compressed-felt.ts",
+      "sha256": "13b819a9cbfd226ee3b15ae2098cef5b662318d8a05458a53f4650558df19496"
+    },
+    {
+      "path": "data/rift-native-worlds.csv",
+      "sha256": "ffdd20cb2257ce6e89ab7bd00b070c8e2db1e3d5f46487e41fbb3b68768807b5"
+    },
+    {
+      "path": "src/generated/r100-native-worlds.ts",
+      "sha256": "a3d9da5acc86b7960335ae8792f7ed3f092d13aa10de1994da48d934b53c205c"
+    }
+  ],
+  "results": [
+    {
+      "label": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 3.8644349575042725,
+      "log": "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/final-checks/typecheck.log"
+    },
+    {
+      "label": "expansion",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-native-world-expansion.ts"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.6110901832580566,
+      "log": "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/final-checks/expansion.log"
+    },
+    {
+      "label": "ground-contract",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-native-ground-contract.ts",
+        "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/final-checks/ground-contract.json"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 4.22457480430603,
+      "log": "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/final-checks/ground-contract.log"
+    },
+    {
+      "label": "codegen",
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-worlds.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.1057441234588623,
+      "log": "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/final-checks/codegen.log"
+    },
+    {
+      "label": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "src/generation/world-study/native-volume-expansion.ts",
+        "src/generation/world-study/native-volume-ground.ts",
+        "src/generation/world-study/native-volume-geometry.ts",
+        "src/generation/world-study/native-volume-pleated-tear.ts",
+        "data/rift-native-worlds.csv",
+        "src/generated/r100-native-worlds.ts",
+        "tools/world-study/check-native-world-expansion.ts",
+        "tools/world-study/check-native-ground-contract.ts"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.026998043060302734,
+      "log": "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/final-checks/diff.log"
+    }
+  ],
+  "lint": "package.json has no lint command; owned-file diff whitespace check recorded separately."
+}

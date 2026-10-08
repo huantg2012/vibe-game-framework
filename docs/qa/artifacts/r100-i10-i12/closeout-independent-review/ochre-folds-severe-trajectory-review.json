@@ -1,0 +1,1963 @@
+{
+  "schemaVersion": 1,
+  "status": "read-only-p43-trajectory-diagnosis",
+  "createdAt": "2026-10-07T13:04:04.514Z",
+  "reviewer": "i12_qa",
+  "featureIds": [
+    "COH-F052",
+    "COH-F013"
+  ],
+  "issueId": "R100-P43",
+  "world": "ochre-folds",
+  "grade": "severe",
+  "attempts": [
+    {
+      "seed": 20261005,
+      "identitySignature": "7e4ac85a",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+        "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+      },
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/severe/journey.jsonl",
+        "sha256": "e6238f2d05b9a3deb9217284e6565263b52399325f340b7b096a4136a396946b"
+      },
+      "lineCount": 366,
+      "outcome": "death",
+      "final": {
+        "elapsedMs": 43248.27999999988,
+        "hp": 0,
+        "chaos": 61.00260932644061,
+        "position": {
+          "x": 353.1254425211604,
+          "y": 100.23978538545587
+        },
+        "carried": 0
+      },
+      "explorationGoal": {
+        "id": "geometry-exploration",
+        "pos": {
+          "x": 932,
+          "y": 124
+        }
+      },
+      "targetRouteChanges": [
+        {
+          "line": 8,
+          "id": "geometry-exploration",
+          "pos": {
+            "x": 932,
+            "y": 124
+          },
+          "clock": {
+            "before": {
+              "line": 7,
+              "elapsedMs": 849.9800000000002
+            },
+            "after": {
+              "line": 9,
+              "elapsedMs": 949.9400000000003
+            }
+          }
+        },
+        {
+          "line": 156,
+          "id": "r100-contaminant-contested-1",
+          "pos": {
+            "x": 612,
+            "y": 180
+          },
+          "clock": {
+            "before": {
+              "line": 155,
+              "elapsedMs": 13066.12999999999
+            },
+            "after": {
+              "line": 157,
+              "elapsedMs": 13166.14999999999
+            }
+          }
+        }
+      ],
+      "firstVisibleNear": {
+        "strictlyBelow175px": {
+          "line": 143,
+          "elapsedMs": 12316.169999999991,
+          "hp": 145,
+          "chaos": 29.737290538720774,
+          "position": {
+            "x": 467.56050026607755,
+            "y": 387.30334362234396
+          },
+          "enemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 153.33111855791196,
+              "attack": "idle",
+              "position": {
+                "x": 505.0878766046482,
+                "y": 238.63549927339358
+              },
+              "facing": 2.3297354792665295
+            }
+          ]
+        },
+        "strictlyBelow110px": {
+          "line": 175,
+          "elapsedMs": 14849.399999999989,
+          "hp": 145,
+          "chaos": 34.53278648876988,
+          "position": {
+            "x": 434.471110507757,
+            "y": 404.6637651337673
+          },
+          "enemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 105.74913643842328,
+              "attack": "idle",
+              "position": {
+                "x": 480.27617994873435,
+                "y": 309.3496766107189
+              },
+              "facing": 2.0187792747093516
+            }
+          ]
+        },
+        "strictlyBelow75px": {
+          "line": 208,
+          "elapsedMs": 16916.00999999997,
+          "hp": 145,
+          "chaos": 36.45818082811818,
+          "position": {
+            "x": 359.2309200547473,
+            "y": 407.98734425344384
+          },
+          "enemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 68.94797009759148,
+              "attack": "idle",
+              "position": {
+                "x": 419.5032270156105,
+                "y": 374.50493701928804
+              },
+              "facing": 2.6345221400951684
+            }
+          ]
+        },
+        "strictlyBelow52px": {
+          "line": 217,
+          "elapsedMs": 17999.289999999943,
+          "hp": 145,
+          "chaos": 37.467438104493134,
+          "position": {
+            "x": 333.252284180003,
+            "y": 426.96877679485476
+          },
+          "enemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 51.84444887414477,
+              "attack": "idle",
+              "position": {
+                "x": 376.3288519457109,
+                "y": 398.1199260622833
+              },
+              "facing": 2.5514738637796337
+            }
+          ]
+        }
+      },
+      "observedPlayerHpDrops": [
+        {
+          "fromLine": 229,
+          "toLine": 232,
+          "fromElapsedMs": 19265.909999999916,
+          "toElapsedMs": 20399.17999999991,
+          "fromHp": 145,
+          "toHp": 130,
+          "position": {
+            "x": 304.37390792092367,
+            "y": 398.6665318370555
+          },
+          "chaos": 39.70333874421647,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 40.95517955000652,
+              "attack": "idle",
+              "position": {
+                "x": 345.2089013774089,
+                "y": 401.8018215177838
+              },
+              "facing": -3.0657573957177497
+            }
+          ]
+        },
+        {
+          "fromLine": 274,
+          "toLine": 277,
+          "fromElapsedMs": 23832.379999999834,
+          "toElapsedMs": 24515.67999999983,
+          "fromHp": 130,
+          "toHp": 115,
+          "position": {
+            "x": 308.6610690734896,
+            "y": 307.786935305254
+          },
+          "chaos": 43.53854993448815,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 38.185561131854406,
+              "attack": "idle",
+              "position": {
+                "x": 312.14470066037825,
+                "y": 345.8132602647005
+              },
+              "facing": -1.6610944501593714
+            }
+          ]
+        },
+        {
+          "fromLine": 298,
+          "toLine": 301,
+          "fromElapsedMs": 26248.93999999981,
+          "toElapsedMs": 27048.90999999978,
+          "fromHp": 115,
+          "toHp": 100,
+          "position": {
+            "x": 354.00009989999995,
+            "y": 242.13061240466033
+          },
+          "chaos": 45.89867918106459,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 35.4992013882112,
+              "attack": "idle",
+              "position": {
+                "x": 333.2331039472243,
+                "y": 270.9216731405585
+              },
+              "facing": -0.952392280892359
+            }
+          ]
+        },
+        {
+          "fromLine": 316,
+          "toLine": 319,
+          "fromElapsedMs": 28598.87999999978,
+          "toElapsedMs": 28665.53999999978,
+          "fromHp": 100,
+          "toHp": 85,
+          "position": {
+            "x": 364.6880378544938,
+            "y": 212.23206205212304
+          },
+          "chaos": 47.40484156817231,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 31.99673039960046,
+              "attack": "strike",
+              "position": {
+                "x": 352.95515131297884,
+                "y": 242
+              },
+              "facing": -1.344421902805222
+            }
+          ]
+        },
+        {
+          "fromLine": 323,
+          "toLine": 326,
+          "fromElapsedMs": 29012.19999999978,
+          "toElapsedMs": 32260.369999999744,
+          "fromHp": 85,
+          "toHp": 70,
+          "position": {
+            "x": 364.6880378544938,
+            "y": 179.41633738545625
+          },
+          "chaos": 50.75402952957767,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 42.516635691590345,
+              "attack": "idle",
+              "position": {
+                "x": 362.5463276185847,
+                "y": 221.8789961316631
+              },
+              "facing": -1.521792185616314
+            }
+          ]
+        },
+        {
+          "fromLine": 331,
+          "toLine": 337,
+          "fromElapsedMs": 33215.32999999974,
+          "toElapsedMs": 35398.59999999977,
+          "fromHp": 70,
+          "toHp": 55,
+          "position": {
+            "x": 364.6880378544938,
+            "y": 150.3850460521227
+          },
+          "chaos": 53.67781789679422,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 28.92043144896334,
+              "attack": "idle",
+              "position": {
+                "x": 363.8200685609305,
+                "y": 179.2924496799067
+              },
+              "facing": -1.5407794976786247
+            }
+          ]
+        },
+        {
+          "fromLine": 341,
+          "toLine": 344,
+          "fromElapsedMs": 35881.89999999979,
+          "toElapsedMs": 37685.149999999834,
+          "fromHp": 55,
+          "toHp": 40,
+          "position": {
+            "x": 364.6880378544938,
+            "y": 123.21565671878925
+          },
+          "chaos": 55.808123289024586,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 27.167213885062974,
+              "attack": "idle",
+              "position": {
+                "x": 364.2287348460445,
+                "y": 150.37898771892964
+              },
+              "facing": -2.3023830111298524
+            }
+          ]
+        },
+        {
+          "fromLine": 345,
+          "toLine": 350,
+          "fromElapsedMs": 37881.81999999983,
+          "toElapsedMs": 39598.41999999985,
+          "fromHp": 40,
+          "toHp": 25,
+          "position": {
+            "x": 364.6880378544938,
+            "y": 123.21565671878925
+          },
+          "chaos": 57.59065566215993,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 27.167213885062974,
+              "attack": "idle",
+              "position": {
+                "x": 364.2287348460445,
+                "y": 150.37898771892964
+              },
+              "facing": -1.5538890026332883
+            }
+          ]
+        },
+        {
+          "fromLine": 354,
+          "toLine": 356,
+          "fromElapsedMs": 40300.04999999986,
+          "toElapsedMs": 42229.98999999986,
+          "fromHp": 25,
+          "toHp": 10,
+          "position": {
+            "x": 354.3649791878271,
+            "y": 123.21565671878925
+          },
+          "chaos": 60.05527472028127,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 28.898792824410574,
+              "attack": "idle",
+              "position": {
+                "x": 364.2287348460445,
+                "y": 150.37898771892964
+              },
+              "facing": -1.9191179260852582
+            }
+          ]
+        },
+        {
+          "fromLine": 360,
+          "to": "report.fieldResult",
+          "fromElapsedMs": 43098.25999999989,
+          "toElapsedMs": 43248.27999999988,
+          "fromHp": 10,
+          "toHp": 0,
+          "position": {
+            "x": 353.1254425211604,
+            "y": 100.23978538545587
+          },
+          "chaos": 61.00260932644061,
+          "visibleEnemies": null
+        }
+      ],
+      "abandoned": [
+        {
+          "line": 349,
+          "targetId": "r100-contaminant-contested-1",
+          "reason": "approach-kept-dangerous",
+          "clock": {
+            "before": {
+              "line": 347,
+              "elapsedMs": 38131.80999999983
+            },
+            "after": {
+              "line": 350,
+              "elapsedMs": 39598.41999999985
+            }
+          },
+          "deferredByOriginalController": true,
+          "subsequentPlannedUseOfSameTarget": []
+        }
+      ],
+      "searches": [],
+      "inputs": {
+        "spacePressCount": 4,
+        "defensiveSwings": [
+          {
+            "line": 266,
+            "clock": {
+              "before": {
+                "line": 263,
+                "elapsedMs": 22815.75999999985
+              },
+              "after": {
+                "line": 267,
+                "elapsedMs": 23115.719999999845
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 287,
+            "clock": {
+              "before": {
+                "line": 284,
+                "elapsedMs": 24982.309999999834
+              },
+              "after": {
+                "line": 288,
+                "elapsedMs": 25282.30999999983
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 311,
+            "clock": {
+              "before": {
+                "line": 308,
+                "elapsedMs": 27548.889999999778
+              },
+              "after": {
+                "line": 312,
+                "elapsedMs": 27848.879999999775
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 322,
+            "clock": {
+              "before": {
+                "line": 319,
+                "elapsedMs": 28665.53999999978
+              },
+              "after": {
+                "line": 323,
+                "elapsedMs": 29012.19999999978
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          }
+        ],
+        "actualEKeyInputs": 0,
+        "contextualToolEvents": [
+          {
+            "line": 206,
+            "clock": {
+              "before": {
+                "line": 203,
+                "elapsedMs": 16649.349999999973
+              },
+              "after": {
+                "line": 208,
+                "elapsedMs": 16916.00999999997
+              }
+            },
+            "label": "imminent-visible-green-crossing",
+            "key": "Q",
+            "slot": 0,
+            "item": {
+              "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+              "name": "灰釉齿",
+              "description": "压住一处污染源1秒",
+              "uses": 2
+            },
+            "remaining": 1,
+            "used": 1,
+            "facePoint": {
+              "x": 342.1625200000001,
+              "y": 432
+            }
+          },
+          {
+            "line": 213,
+            "clock": {
+              "before": {
+                "line": 210,
+                "elapsedMs": 17049.329999999965
+              },
+              "after": {
+                "line": 216,
+                "elapsedMs": 17982.619999999944
+              }
+            },
+            "label": "break-visible-pursuit",
+            "key": "G",
+            "slot": 2,
+            "item": {
+              "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+              "name": "空白相框",
+              "description": "原地留下假身8秒",
+              "uses": 4
+            },
+            "remaining": 3,
+            "used": 1,
+            "facePoint": {
+              "x": 414.17641512133923,
+              "y": 377.40771460136193
+            }
+          },
+          {
+            "line": 243,
+            "clock": {
+              "before": {
+                "line": 240,
+                "elapsedMs": 20765.839999999902
+              },
+              "after": {
+                "line": 245,
+                "elapsedMs": 21065.82999999989
+              }
+            },
+            "label": "imminent-visible-green-crossing",
+            "key": "Q",
+            "slot": 0,
+            "item": {
+              "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+              "name": "灰釉齿",
+              "description": "压住一处污染源1秒",
+              "uses": 1
+            },
+            "remaining": 0,
+            "used": 1,
+            "facePoint": {
+              "x": 344.61858953846195,
+              "y": 432
+            }
+          },
+          {
+            "line": 291,
+            "clock": {
+              "before": {
+                "line": 288,
+                "elapsedMs": 25282.30999999983
+              },
+              "after": {
+                "line": 294,
+                "elapsedMs": 26165.609999999815
+              }
+            },
+            "label": "break-visible-pursuit",
+            "key": "G",
+            "slot": 2,
+            "item": {
+              "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+              "name": "空白相框",
+              "description": "原地留下假身8秒",
+              "uses": 3
+            },
+            "remaining": 2,
+            "used": 1,
+            "facePoint": {
+              "x": 310.0050846677358,
+              "y": 314.8008720801549
+            }
+          },
+          {
+            "line": 334,
+            "clock": {
+              "before": {
+                "line": 331,
+                "elapsedMs": 33215.32999999974
+              },
+              "after": {
+                "line": 337,
+                "elapsedMs": 35398.59999999977
+              }
+            },
+            "label": "break-visible-pursuit",
+            "key": "G",
+            "slot": 2,
+            "item": {
+              "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+              "name": "空白相框",
+              "description": "原地留下假身8秒",
+              "uses": 2
+            },
+            "remaining": 1,
+            "used": 1,
+            "facePoint": {
+              "x": 363.2327232854801,
+              "y": 208.24626575543954
+            }
+          }
+        ],
+        "successfulUseDeductions": 5,
+        "zeroUseInputs": []
+      },
+      "return": {
+        "hasActualReturnEvasion": true,
+        "events": [
+          {
+            "line": 358,
+            "clock": {
+              "before": {
+                "line": 356,
+                "elapsedMs": 42229.98999999986
+              },
+              "after": {
+                "line": 359,
+                "elapsedMs": 43081.589999999895
+              }
+            },
+            "from": {
+              "x": 354.3649791878271,
+              "y": 123.21565671878925
+            },
+            "toward": {
+              "x": 354.3649791878271,
+              "y": 99.21565671878925
+            },
+            "keys": [
+              "w"
+            ],
+            "count": 1,
+            "inputMs": 280,
+            "cumulativeEvasionWallWorkMs": 389.90937499999563,
+            "threatIds": [
+              "ENM_RWR_01"
+            ]
+          }
+        ],
+        "phaseTransitionInference": {
+          "afterFinalAbandonLine": 349,
+          "firstExitRouteLine": 351,
+          "clock": {
+            "before": {
+              "line": 350,
+              "elapsedMs": 39598.41999999985
+            },
+            "after": {
+              "line": 353,
+              "elapsedMs": 40203.39999999986
+            }
+          },
+          "basis": "After the final abandonment only exit routes occur, followed by actual exit-only evasion. Earlier exit-planning rows are reserve calculations, not proof that returning already started."
+        },
+        "stoppedReserveRows": [],
+        "endedDuringReturn": true
+      },
+      "navigation": {
+        "reportedWarning": null,
+        "errors": [],
+        "consoleErrors": [],
+        "planningWallMs": {
+          "count": 59,
+          "minimum": 28.85570799999914,
+          "median": 35.63816599999882,
+          "p95NearestRank": 340.2664169999989,
+          "maximum": 798.5551250000062,
+          "sum": 4879.7964180000035
+        },
+        "slowest": [
+          {
+            "line": 346,
+            "targetId": "exit",
+            "planningMs": 798.5551250000062,
+            "geometryReadMs": 713.382500000007,
+            "nodePlanningMs": 85.17341699999815
+          },
+          {
+            "line": 355,
+            "targetId": "exit",
+            "planningMs": 584.3055830000012,
+            "geometryReadMs": 222.30504199999996,
+            "nodePlanningMs": 362.0015829999975
+          },
+          {
+            "line": 328,
+            "targetId": "exit",
+            "planningMs": 340.2664169999989,
+            "geometryReadMs": 317.00883299999987,
+            "nodePlanningMs": 23.258208999999624
+          }
+        ],
+        "interpretation": "Approach-kept-dangerous is the controller25s approach cap, not a demonstrated navigation/path failure. No navigationWarning or browser exception was reported. Planning timings are wall work, not CPU profiling or proof of failure causality."
+      },
+      "relationToP42": "Different immediate failure path: no tactical.search refusal occurred. The observed-target approach hit its cap under ongoing visible pressure; after HP crossed the search threshold it entered return and died. Policy16 reapproach trigger would not apply to this original trace."
+    },
+    {
+      "seed": 3075192741,
+      "identitySignature": "995e3743",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+        "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+      },
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/severe/journey.jsonl",
+        "sha256": "3a2a7efdc39f7a1e4f760c135857e51e3c111695d081341d9c7bccf980350730"
+      },
+      "lineCount": 1261,
+      "outcome": "death",
+      "final": {
+        "elapsedMs": 114562.0400000005,
+        "hp": 0,
+        "chaos": 150,
+        "position": {
+          "x": 202.15456629717468,
+          "y": 717.9320849938679
+        },
+        "carried": 0
+      },
+      "explorationGoal": {
+        "id": "geometry-exploration",
+        "pos": {
+          "x": 932,
+          "y": 124
+        }
+      },
+      "targetRouteChanges": [
+        {
+          "line": 8,
+          "id": "geometry-exploration",
+          "pos": {
+            "x": 932,
+            "y": 124
+          },
+          "clock": {
+            "before": {
+              "line": 7,
+              "elapsedMs": 849.9399999999999
+            },
+            "after": {
+              "line": 9,
+              "elapsedMs": 949.92
+            }
+          }
+        },
+        {
+          "line": 160,
+          "id": "r100-kindling-contested-1",
+          "pos": {
+            "x": 564,
+            "y": 148
+          },
+          "clock": {
+            "before": {
+              "line": 159,
+              "elapsedMs": 12916.11999999999
+            },
+            "after": {
+              "line": 161,
+              "elapsedMs": 12999.45999999999
+            }
+          }
+        },
+        {
+          "line": 464,
+          "id": "r100-kindling-contested-2",
+          "pos": {
+            "x": 388,
+            "y": 68
+          },
+          "clock": {
+            "before": {
+              "line": 463,
+              "elapsedMs": 38998.409999999756
+            },
+            "after": {
+              "line": 465,
+              "elapsedMs": 39081.75999999975
+            }
+          }
+        },
+        {
+          "line": 499,
+          "id": "geometry-exploration",
+          "pos": {
+            "x": 932,
+            "y": 124
+          },
+          "clock": {
+            "before": {
+              "line": 498,
+              "elapsedMs": 42498.26999999983
+            },
+            "after": {
+              "line": 500,
+              "elapsedMs": 42564.93999999983
+            }
+          }
+        },
+        {
+          "line": 630,
+          "id": "r100-contaminant-deep-1",
+          "pos": {
+            "x": 868,
+            "y": 260
+          },
+          "clock": {
+            "before": {
+              "line": 629,
+              "elapsedMs": 54447.779999999926
+            },
+            "after": {
+              "line": 631,
+              "elapsedMs": 54531.09999999993
+            }
+          }
+        },
+        {
+          "line": 873,
+          "id": "r100-kindling-deep-2",
+          "pos": {
+            "x": 868,
+            "y": 164
+          },
+          "clock": {
+            "before": {
+              "line": 872,
+              "elapsedMs": 75530.27999999972
+            },
+            "after": {
+              "line": 875,
+              "elapsedMs": 75763.60999999972
+            }
+          }
+        },
+        {
+          "line": 881,
+          "id": "r100-contaminant-deep-1",
+          "pos": {
+            "x": 868,
+            "y": 260
+          },
+          "clock": {
+            "before": {
+              "line": 880,
+              "elapsedMs": 76013.59999999973
+            },
+            "after": {
+              "line": 883,
+              "elapsedMs": 76280.26999999973
+            }
+          }
+        },
+        {
+          "line": 927,
+          "id": "r100-contaminant-deep-2",
+          "pos": {
+            "x": 868,
+            "y": 356
+          },
+          "clock": {
+            "before": {
+              "line": 926,
+              "elapsedMs": 80230.07999999983
+            },
+            "after": {
+              "line": 929,
+              "elapsedMs": 80263.42999999982
+            }
+          }
+        }
+      ],
+      "firstVisibleNear": {
+        "strictlyBelow175px": {
+          "line": 170,
+          "elapsedMs": 13799.41999999999,
+          "hp": 145,
+          "chaos": 30.428238795488692,
+          "position": {
+            "x": 468.66416095237537,
+            "y": 309.59425381553774
+          },
+          "enemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 174.65655647189467,
+              "attack": "idle",
+              "position": {
+                "x": 615.3536816066907,
+                "y": 214.79395187072672
+              },
+              "facing": -2.3641736311762016
+            }
+          ]
+        },
+        "strictlyBelow110px": {
+          "line": 330,
+          "elapsedMs": 27415.53999999972,
+          "hp": 145,
+          "chaos": 36.77109022171099,
+          "position": {
+            "x": 475.23380915373957,
+            "y": 162.33719604908734
+          },
+          "enemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 107.58536566373805,
+              "attack": "idle",
+              "position": {
+                "x": 564.2127888094709,
+                "y": 101.86115050686317
+              },
+              "facing": 1.5858451287612065
+            }
+          ]
+        },
+        "strictlyBelow75px": {
+          "line": 345,
+          "elapsedMs": 28465.489999999714,
+          "hp": 145,
+          "chaos": 37.260192613211814,
+          "position": {
+            "x": 521.4507264870731,
+            "y": 162.33719604908734
+          },
+          "enemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 68.68311120134842,
+              "attack": "idle",
+              "position": {
+                "x": 564.112718053606,
+                "y": 108.51039752015879
+              },
+              "facing": 2.21416365947917
+            }
+          ]
+        },
+        "strictlyBelow52px": {
+          "line": 470,
+          "elapsedMs": 39465.039999999775,
+          "hp": 145,
+          "chaos": 46.58184335196123,
+          "position": {
+            "x": 423.23296069657226,
+            "y": 57.47950819461082
+          },
+          "enemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 26.512651544124267,
+              "attack": "idle",
+              "position": {
+                "x": 449.11779542438114,
+                "y": 63.215013666160324
+              },
+              "facing": -2.8986468859442334
+            }
+          ]
+        }
+      },
+      "observedPlayerHpDrops": [
+        {
+          "fromLine": 540,
+          "toLine": 546,
+          "fromElapsedMs": 46348.10999999984,
+          "toElapsedMs": 47331.42999999985,
+          "fromHp": 145,
+          "toHp": 130,
+          "position": {
+            "x": 360.9890971508736,
+            "y": 170.97554293324274
+          },
+          "chaos": 58.94980979512347,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 36.476283833448164,
+              "attack": "idle",
+              "position": {
+                "x": 341.0161474981708,
+                "y": 140.45341056230782
+              },
+              "facing": 0.9901386216121353
+            }
+          ]
+        },
+        {
+          "fromLine": 561,
+          "toLine": 564,
+          "fromElapsedMs": 48831.34999999986,
+          "toElapsedMs": 48914.67999999986,
+          "fromHp": 130,
+          "toHp": 115,
+          "position": {
+            "x": 396.9037200510657,
+            "y": 170.1259041667679
+          },
+          "chaos": 60.49143988545028,
+          "visibleEnemies": [
+            {
+              "id": "ENM_RWR_01",
+              "distance": 29.145808543351585,
+              "attack": "windup",
+              "position": {
+                "x": 369.6570670641314,
+                "y": 159.7770850720455
+              },
+              "facing": 0.36298956396924137
+            }
+          ]
+        },
+        {
+          "fromLine": 803,
+          "toLine": 806,
+          "fromElapsedMs": 69430.52999999959,
+          "toElapsedMs": 70130.49999999962,
+          "fromHp": 115,
+          "toHp": 100,
+          "position": {
+            "x": 915.6855433829032,
+            "y": 437.57390462918545
+          },
+          "chaos": 82.3250450713523,
+          "visibleEnemies": [
+            {
+              "id": "ENM_INF_02",
+              "distance": 42.38290851609187,
+              "attack": "idle",
+              "position": {
+                "x": 886.4118446436966,
+                "y": 406.92489980994895
+              },
+              "facing": 0.8083454445906815
+            }
+          ]
+        },
+        {
+          "fromLine": 829,
+          "toLine": 832,
+          "fromElapsedMs": 71813.74999999968,
+          "toElapsedMs": 72163.73999999969,
+          "fromHp": 100,
+          "toHp": 85,
+          "position": {
+            "x": 954.7675440318882,
+            "y": 409.55631411182736
+          },
+          "chaos": 89.44713927309012,
+          "visibleEnemies": [
+            {
+              "id": "ENM_INF_02",
+              "distance": 32.69672528788639,
+              "attack": "recover",
+              "position": {
+                "x": 925.7474000447685,
+                "y": 424.61974956056713
+              },
+              "facing": -0.45623341625458724
+            }
+          ]
+        },
+        {
+          "fromLine": 951,
+          "toLine": 954,
+          "fromElapsedMs": 82296.67999999986,
+          "toElapsedMs": 82979.98999999985,
+          "fromHp": 85,
+          "toHp": 70,
+          "position": {
+            "x": 957.853454745056,
+            "y": 363.3251148762148
+          },
+          "chaos": 110.08426144954734,
+          "visibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "distance": 33.33563489800498,
+              "attack": "recover",
+              "position": {
+                "x": 948.0782349049439,
+                "y": 331.45491514150075
+              },
+              "facing": 1.2950173773633469
+            },
+            {
+              "id": "ENM_INF_03",
+              "distance": 52.51713767918317,
+              "attack": "idle",
+              "position": {
+                "x": 949.3744933755413,
+                "y": 311.49696649998435
+              },
+              "facing": 1.3948123023961305
+            }
+          ]
+        },
+        {
+          "fromLine": 987,
+          "toLine": 991,
+          "fromElapsedMs": 86163.18999999987,
+          "toElapsedMs": 86196.51999999987,
+          "fromHp": 70,
+          "toHp": 55,
+          "position": {
+            "x": 939.7858818367558,
+            "y": 427.99274571209696
+          },
+          "chaos": 118.7233289560745,
+          "visibleEnemies": [
+            {
+              "id": "ENM_INF_03",
+              "distance": 30.686945418948298,
+              "attack": "strike",
+              "position": {
+                "x": 952.8702084542796,
+                "y": 400.23506180094415
+              },
+              "facing": 1.9463141986906405
+            },
+            {
+              "id": "ENM_INF_01",
+              "distance": 32.31873317380594,
+              "attack": "idle",
+              "position": {
+                "x": 933.252926300914,
+                "y": 396.34118957458014
+              },
+              "facing": 1.4291793554014562
+            }
+          ]
+        },
+        {
+          "fromLine": 1040,
+          "toLine": 1045,
+          "fromElapsedMs": 91946.29999999999,
+          "toElapsedMs": 92462.95999999998,
+          "fromHp": 55,
+          "toHp": 40,
+          "position": {
+            "x": 915.0759960040584,
+            "y": 679.8251662841507
+          },
+          "chaos": 126.16156444066063,
+          "visibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "distance": 31.74678656151532,
+              "attack": "idle",
+              "position": {
+                "x": 915.67924501826,
+                "y": 648.0841116764462
+              },
+              "facing": 1.6582531727477423
+            },
+            {
+              "id": "ENM_INF_03",
+              "distance": 34.56787960990121,
+              "attack": "recover",
+              "position": {
+                "x": 935.3288252976344,
+                "y": 651.8115766118167
+              },
+              "facing": 2.3742379850801334
+            }
+          ]
+        },
+        {
+          "fromLine": 1061,
+          "toLine": 1064,
+          "fromElapsedMs": 94462.84000000004,
+          "toElapsedMs": 94829.50000000004,
+          "fromHp": 40,
+          "toHp": 25,
+          "position": {
+            "x": 866.596428749143,
+            "y": 725.9999001
+          },
+          "chaos": 129.02350946012183,
+          "visibleEnemies": [
+            {
+              "id": "ENM_INF_01",
+              "distance": 29.71704341051454,
+              "attack": "recover",
+              "position": {
+                "x": 894.5117587326504,
+                "y": 715.8098549099972
+              },
+              "facing": 2.780350390317096
+            },
+            {
+              "id": "ENM_INF_03",
+              "distance": 43.05674027141696,
+              "attack": "idle",
+              "position": {
+                "x": 897.5174102085573,
+                "y": 696.0369932252187
+              },
+              "facing": 2.401189317650836
+            }
+          ]
+        },
+        {
+          "fromLine": 1217,
+          "toLine": 1220,
+          "fromElapsedMs": 110162.21000000044,
+          "toElapsedMs": 110545.56000000045,
+          "fromHp": 25,
+          "toHp": 10,
+          "position": {
+            "x": 338.87227819028135,
+            "y": 725.9999001
+          },
+          "chaos": 150,
+          "visibleEnemies": [
+            {
+              "id": "ENM_INF_03",
+              "distance": 33.16950591919666,
+              "attack": "recover",
+              "position": {
+                "x": 366.3389074973492,
+                "y": 707.4041909865582
+              },
+              "facing": 2.544390688422637
+            },
+            {
+              "id": "ENM_INF_01",
+              "distance": 34.64617145188616,
+              "attack": "idle",
+              "position": {
+                "x": 373.5184496420235,
+                "y": 726
+              },
+              "facing": 3.085728636808044
+            }
+          ]
+        },
+        {
+          "fromLine": 1254,
+          "toLine": 1257,
+          "fromElapsedMs": 114462.04000000049,
+          "toElapsedMs": 114562.0400000005,
+          "fromHp": 10,
+          "toHp": 0,
+          "position": {
+            "x": 202.15456629717468,
+            "y": 717.9320849938679
+          },
+          "chaos": 150,
+          "visibleEnemies": [
+            {
+              "id": "ENM_INF_03",
+              "distance": 37.090739866831555,
+              "attack": "idle",
+              "position": {
+                "x": 236.62418344097932,
+                "y": 704.2365208277411
+              },
+              "facing": 2.7633963518344227
+            },
+            {
+              "id": "ENM_INF_01",
+              "distance": 37.535098690605516,
+              "attack": "idle",
+              "position": {
+                "x": 239.12968969392003,
+                "y": 724.391487714627
+              },
+              "facing": -2.968642059181519
+            }
+          ]
+        }
+      ],
+      "abandoned": [
+        {
+          "line": 450,
+          "targetId": "r100-kindling-contested-1",
+          "reason": "approach-kept-dangerous",
+          "clock": {
+            "before": {
+              "line": 447,
+              "elapsedMs": 37681.809999999736
+            },
+            "after": {
+              "line": 452,
+              "elapsedMs": 38015.09999999975
+            }
+          },
+          "deferredByOriginalController": true,
+          "subsequentPlannedUseOfSameTarget": []
+        },
+        {
+          "line": 918,
+          "targetId": "r100-contaminant-deep-1",
+          "reason": "approach-kept-dangerous",
+          "clock": {
+            "before": {
+              "line": 917,
+              "elapsedMs": 79463.4399999998
+            },
+            "after": {
+              "line": 920,
+              "elapsedMs": 79496.7799999998
+            }
+          },
+          "deferredByOriginalController": true,
+          "subsequentPlannedUseOfSameTarget": []
+        },
+        {
+          "line": 990,
+          "targetId": "r100-contaminant-deep-2",
+          "reason": "return-reserve-threshold",
+          "clock": {
+            "before": {
+              "line": 989,
+              "elapsedMs": 86163.18999999987
+            },
+            "after": {
+              "line": 991,
+              "elapsedMs": 86196.51999999987
+            }
+          },
+          "deferredByOriginalController": true,
+          "subsequentPlannedUseOfSameTarget": []
+        }
+      ],
+      "searches": [
+        {
+          "id": "r100-kindling-contested-2",
+          "elapsedMs": 41464.97999999981,
+          "hp": 145,
+          "chaos": 48.45067759479775,
+          "decision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "actualCollectedNodeIds": [],
+          "snapshotLine": 488,
+          "deferredByOriginalController": true,
+          "subsequentPlannedUseOfSameTarget": []
+        }
+      ],
+      "inputs": {
+        "spacePressCount": 11,
+        "defensiveSwings": [
+          {
+            "line": 506,
+            "clock": {
+              "before": {
+                "line": 503,
+                "elapsedMs": 42881.57999999983
+              },
+              "after": {
+                "line": 507,
+                "elapsedMs": 43198.229999999836
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 517,
+            "clock": {
+              "before": {
+                "line": 514,
+                "elapsedMs": 43931.54999999983
+              },
+              "after": {
+                "line": 518,
+                "elapsedMs": 44264.83999999982
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 532,
+            "clock": {
+              "before": {
+                "line": 529,
+                "elapsedMs": 45331.50999999982
+              },
+              "after": {
+                "line": 533,
+                "elapsedMs": 45648.139999999825
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 556,
+            "clock": {
+              "before": {
+                "line": 553,
+                "elapsedMs": 47764.72999999985
+              },
+              "after": {
+                "line": 557,
+                "elapsedMs": 48114.72999999985
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 581,
+            "clock": {
+              "before": {
+                "line": 578,
+                "elapsedMs": 50414.62999999988
+              },
+              "after": {
+                "line": 582,
+                "elapsedMs": 50747.92999999989
+              }
+            },
+            "opponent": "ENM_RWR_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 795,
+            "clock": {
+              "before": {
+                "line": 792,
+                "elapsedMs": 68430.56999999956
+              },
+              "after": {
+                "line": 796,
+                "elapsedMs": 68730.55999999956
+              }
+            },
+            "opponent": "ENM_INF_02",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 820,
+            "clock": {
+              "before": {
+                "line": 817,
+                "elapsedMs": 70813.79999999964
+              },
+              "after": {
+                "line": 821,
+                "elapsedMs": 71113.78999999964
+              }
+            },
+            "opponent": "ENM_INF_02",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 835,
+            "clock": {
+              "before": {
+                "line": 832,
+                "elapsedMs": 72163.73999999969
+              },
+              "after": {
+                "line": 836,
+                "elapsedMs": 72463.74999999968
+              }
+            },
+            "opponent": "ENM_INF_02",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 846,
+            "clock": {
+              "before": {
+                "line": 843,
+                "elapsedMs": 73163.7099999997
+              },
+              "after": {
+                "line": 847,
+                "elapsedMs": 73463.6999999997
+              }
+            },
+            "opponent": "ENM_INF_02",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 959,
+            "clock": {
+              "before": {
+                "line": 956,
+                "elapsedMs": 82979.98999999985
+              },
+              "after": {
+                "line": 960,
+                "elapsedMs": 83296.64999999985
+              }
+            },
+            "opponent": "ENM_INF_01",
+            "weapon": "精良撬棍"
+          },
+          {
+            "line": 982,
+            "clock": {
+              "before": {
+                "line": 979,
+                "elapsedMs": 85229.88999999987
+              },
+              "after": {
+                "line": 983,
+                "elapsedMs": 85529.87999999987
+              }
+            },
+            "opponent": "ENM_INF_03",
+            "weapon": "精良撬棍"
+          }
+        ],
+        "actualEKeyInputs": 0,
+        "contextualToolEvents": [
+          {
+            "line": 348,
+            "clock": {
+              "before": {
+                "line": 345,
+                "elapsedMs": 28465.489999999714
+              },
+              "after": {
+                "line": 351,
+                "elapsedMs": 29398.809999999696
+              }
+            },
+            "label": "break-visible-pursuit",
+            "key": "G",
+            "slot": 2,
+            "item": {
+              "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+              "name": "空白相框",
+              "description": "原地留下假身8秒",
+              "uses": 4
+            },
+            "remaining": 3,
+            "used": 1,
+            "facePoint": {
+              "x": 564.112718053606,
+              "y": 108.51039752015879
+            }
+          },
+          {
+            "line": 415,
+            "clock": {
+              "before": {
+                "line": 412,
+                "elapsedMs": 34515.26999999967
+              },
+              "after": {
+                "line": 417,
+                "elapsedMs": 34748.589999999684
+              }
+            },
+            "label": "imminent-visible-green-crossing",
+            "key": "Q",
+            "slot": 0,
+            "item": {
+              "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+              "name": "灰釉齿",
+              "description": "压住一处污染源1秒",
+              "uses": 2
+            },
+            "remaining": 1,
+            "used": 1,
+            "facePoint": {
+              "x": 464,
+              "y": 80
+            }
+          },
+          {
+            "line": 457,
+            "clock": {
+              "before": {
+                "line": 454,
+                "elapsedMs": 38065.099999999744
+              },
+              "after": {
+                "line": 460,
+                "elapsedMs": 38981.73999999976
+              }
+            },
+            "label": "break-visible-pursuit",
+            "key": "G",
+            "slot": 2,
+            "item": {
+              "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+              "name": "空白相框",
+              "description": "原地留下假身8秒",
+              "uses": 3
+            },
+            "remaining": 2,
+            "used": 1,
+            "facePoint": {
+              "x": 503.5385100858101,
+              "y": 93.45035563246707
+            }
+          },
+          {
+            "line": 468,
+            "clock": {
+              "before": {
+                "line": 465,
+                "elapsedMs": 39081.75999999975
+              },
+              "after": {
+                "line": 470,
+                "elapsedMs": 39465.039999999775
+              }
+            },
+            "label": "imminent-visible-green-crossing",
+            "key": "Q",
+            "slot": 0,
+            "item": {
+              "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+              "name": "灰釉齿",
+              "description": "压住一处污染源1秒",
+              "uses": 1
+            },
+            "remaining": 1,
+            "used": 0,
+            "facePoint": {
+              "x": 464,
+              "y": 80
+            }
+          },
+          {
+            "line": 543,
+            "clock": {
+              "before": {
+                "line": 540,
+                "elapsedMs": 46348.10999999984
+              },
+              "after": {
+                "line": 546,
+                "elapsedMs": 47331.42999999985
+              }
+            },
+            "label": "break-visible-pursuit",
+            "key": "G",
+            "slot": 2,
+            "item": {
+              "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+              "name": "空白相框",
+              "description": "原地留下假身8秒",
+              "uses": 2
+            },
+            "remaining": 1,
+            "used": 1,
+            "facePoint": {
+              "x": 331.647163409296,
+              "y": 125.63005712207672
+            }
+          },
+          {
+            "line": 774,
+            "clock": {
+              "before": {
+                "line": 771,
+                "elapsedMs": 66297.30999999952
+              },
+              "after": {
+                "line": 777,
+                "elapsedMs": 67230.60999999953
+              }
+            },
+            "label": "break-visible-pursuit",
+            "key": "G",
+            "slot": 2,
+            "item": {
+              "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+              "name": "空白相框",
+              "description": "原地留下假身8秒",
+              "uses": 1
+            },
+            "remaining": 0,
+            "used": 1,
+            "facePoint": {
+              "x": 851.2739681276014,
+              "y": 280.01107841657773
+            }
+          },
+          {
+            "line": 862,
+            "clock": {
+              "before": {
+                "line": 861,
+                "elapsedMs": 74730.28999999972
+              },
+              "after": {
+                "line": 863,
+                "elapsedMs": 74813.63999999971
+              }
+            },
+            "label": "unknown-corner-before-search",
+            "key": "F",
+            "slot": 1,
+            "item": {
+              "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+              "name": "盲针罗盘",
+              "description": "探查4格内目标位置",
+              "uses": 1
+            },
+            "remaining": 0,
+            "used": 1,
+            "facePoint": null
+          }
+        ],
+        "successfulUseDeductions": 6,
+        "zeroUseInputs": [
+          468
+        ]
+      },
+      "return": {
+        "hasActualReturnEvasion": true,
+        "events": [
+          {
+            "line": 1038,
+            "clock": {
+              "before": {
+                "line": 1036,
+                "elapsedMs": 91612.99999999999
+              },
+              "after": {
+                "line": 1039,
+                "elapsedMs": 91946.29999999999
+              }
+            },
+            "from": {
+              "x": 926.1262980384809,
+              "y": 652.8067142436754
+            },
+            "toward": {
+              "x": 909.1557352900037,
+              "y": 669.7772769921526
+            },
+            "keys": [
+              "a",
+              "s"
+            ],
+            "count": 1,
+            "inputMs": 280,
+            "cumulativeEvasionWallWorkMs": 320.8674170000013,
+            "threatIds": [
+              "ENM_INF_03"
+            ]
+          },
+          {
+            "line": 1247,
+            "clock": {
+              "before": {
+                "line": 1245,
+                "elapsedMs": 113612.08000000047
+              },
+              "after": {
+                "line": 1248,
+                "elapsedMs": 113945.38000000048
+              }
+            },
+            "from": {
+              "x": 234.59519471051453,
+              "y": 719.2595880779825
+            },
+            "toward": {
+              "x": 210.59519471051453,
+              "y": 719.2595880779825
+            },
+            "keys": [
+              "a"
+            ],
+            "count": 2,
+            "inputMs": 560,
+            "cumulativeEvasionWallWorkMs": 645.2654999999941,
+            "threatIds": [
+              "ENM_INF_01",
+              "ENM_INF_03"
+            ]
+          },
+          {
+            "line": 1256,
+            "clock": {
+              "before": {
+                "line": 1254,
+                "elapsedMs": 114462.04000000049
+              },
+              "after": {
+                "line": 1257,
+                "elapsedMs": 114562.0400000005
+              }
+            },
+            "from": {
+              "x": 208.182499630508,
+              "y": 717.9320849938679
+            },
+            "toward": {
+              "x": 184.182499630508,
+              "y": 717.9320849938679
+            },
+            "keys": [
+              "a"
+            ],
+            "count": 3,
+            "inputMs": 840,
+            "cumulativeEvasionWallWorkMs": 964.1617089999927,
+            "threatIds": [
+              "ENM_INF_01",
+              "ENM_INF_03"
+            ]
+          }
+        ],
+        "phaseTransitionInference": {
+          "afterFinalAbandonLine": 990,
+          "firstExitRouteLine": 992,
+          "clock": {
+            "before": {
+              "line": 991,
+              "elapsedMs": 86196.51999999987
+            },
+            "after": {
+              "line": 996,
+              "elapsedMs": 86679.82999999989
+            }
+          },
+          "basis": "After the final abandonment only exit routes occur, followed by actual exit-only evasion. Earlier exit-planning rows are reserve calculations, not proof that returning already started."
+        },
+        "stoppedReserveRows": [
+          {
+            "line": 989,
+            "elapsedMs": 86163.18999999987,
+            "chaos": 118.68430979802676,
+            "reservedChaos": 34.77316621832121,
+            "sum": 153.45747601634798,
+            "routeLength": 975.7858852162499,
+            "budgetSpeed": 52.901240077792124
+          }
+        ],
+        "endedDuringReturn": true
+      },
+      "navigation": {
+        "reportedWarning": null,
+        "errors": [],
+        "consoleErrors": [],
+        "planningWallMs": {
+          "count": 155,
+          "minimum": 28.02404099999694,
+          "median": 33.35016699999687,
+          "p95NearestRank": 49.69520799999009,
+          "maximum": 218.3654170000009,
+          "sum": 5586.823629999984
+        },
+        "slowest": [
+          {
+            "line": 307,
+            "targetId": "exit",
+            "planningMs": 218.3654170000009,
+            "geometryReadMs": 200.40025000000605,
+            "nodePlanningMs": 17.966999999996915
+          },
+          {
+            "line": 160,
+            "targetId": "r100-kindling-contested-1",
+            "planningMs": 66.13850000000093,
+            "geometryReadMs": 59.17787500000122,
+            "nodePlanningMs": 6.961082999998325
+          },
+          {
+            "line": 548,
+            "targetId": "exit",
+            "planningMs": 60.64087499999732,
+            "geometryReadMs": 53.887917000000016,
+            "nodePlanningMs": 6.753415999999561
+          }
+        ],
+        "interpretation": "Approach-kept-dangerous is the controller25s approach cap, not a demonstrated navigation/path failure. No navigationWarning or browser exception was reported. Planning timings are wall work, not CPU profiling or proof of failure causality."
+      },
+      "relationToP42": "One local overlap: a real visible-opponent-too-close refusal with HP145 and no pickup led to permanent deferral of that target. The same trip also had earlier/later approach caps, further exploration, repeated visible combat inputs and a failed return. That does not establish a shared complete root cause or authorize automatic P42 scope extension."
+    }
+  ],
+  "conclusion": "The pair is not equivalent to the two P42 first-refusal cases. Seed20261005 never entered guarded search; seed3075192741 has one matching refusal/defer event but subsequently encountered additional targets and failed its return. Both original deaths/zero pickups remain qualification failures.",
+  "originalController": {
+    "path": "tools/qa/r100-revision6-journey.mjs",
+    "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+    "references": {
+      "approachCaps": [
+        286,
+        294
+      ],
+      "deferredTargetsLifetime": 476,
+      "abandonedApproachDeferral": 497,
+      "failedSearchDeferral": 502
+    }
+  },
+  "priorRuleAssessment": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/ochre-folds-severe-rule-assessment.json",
+    "sha256": "1022aab1923c3ce89fea953379d8344638d25a59b61e35023ae6b2139ba8b75d"
+  },
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+      "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/severe/journey.jsonl",
+      "sha256": "e6238f2d05b9a3deb9217284e6565263b52399325f340b7b096a4136a396946b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+      "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/severe/journey.jsonl",
+      "sha256": "3a2a7efdc39f7a1e4f760c135857e51e3c111695d081341d9c7bccf980350730"
+    }
+  ],
+  "limitations": [
+    "All enemy facts come from the original currently-visible encounter observations; no hidden AI state, future route, unseen loot or unlogged enemy HP was queried.",
+    "Space inputs and defensive-swing logs establish attempted attacks; they do not establish landed damage or kills. The logs contain no sufficient enemy-health damage proof.",
+    "Player HP decreases establish actual health loss within logged time brackets. Their exact cause is not assigned from proximity alone.",
+    "Input/log events without a game clock are bounded by adjacent real game-clock observations. Evasion elapsedMs is cumulative wall work and is not treated as a run clock.",
+    "No Chrome, replay, extra attempt, product edit or policy16 scope extension. No claim that a controller change would solve either original seed."
+  ],
+  "harness": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/audit-ochre-folds-trajectories.mjs",
+    "sha256": "be2a06f39a416c627ca6e5cfbab7c9d0c3378155ca45beb0eefbaa5f5970ff42"
+  }
+}

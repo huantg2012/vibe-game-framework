@@ -1,0 +1,108 @@
+{
+  "status": "actual-Master-body12-pass-not-normal-view-qualified",
+  "worlds": 4,
+  "grades": 3,
+  "cases": 12,
+  "seed": 20261005,
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-author-preflight/body12/report.json",
+    "sha256": "1cca7eff2a710ac864347145b03c196e3088e6d7a2939c8e0d587af39e43a7a2"
+  },
+  "sourceSnapshot": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-author-preflight/body12/source-snapshot.json",
+    "sha256": "44ceb99829dd5d7fd41b2c388200bcf25d5509038cdb8f0eca10a695dbdd4ae0"
+  },
+  "scope": "Actual Master terrain/raster/native20 body; all original intent routes and spawn links,24px station bound, per-solid visible cut>=16 and fracture>=4. No production play or normal-FOV art admission.",
+  "minimumVisibleCutPixels": 241,
+  "minimumVisibleFracturePixels": 4,
+  "durationMsSum": 13625.944584000003,
+  "crushedContacts": [
+    {
+      "grade": "low",
+      "pairs": [
+        {
+          "a": 2,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 2560,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 3424,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 3264,
+          "samplingStep": 4
+        }
+      ]
+    },
+    {
+      "grade": "medium",
+      "pairs": [
+        {
+          "a": 2,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 2560,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 3408,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 3232,
+          "samplingStep": 4
+        }
+      ]
+    },
+    {
+      "grade": "severe",
+      "pairs": [
+        {
+          "a": 2,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 2544,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 3424,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 3232,
+          "samplingStep": 4
+        }
+      ]
+    }
+  ],
+  "oldPrefix": {
+    "status": "author-catalog-ready-not-qualified",
+    "baseWorldCount": 92,
+    "newWorldCount": 96,
+    "appendedWorlds": [
+      "crushed-seam",
+      "husk-reef",
+      "fibre-scree",
+      "gel-rafts"
+    ],
+    "oldCsvSha256": "6ee6b6012245c954d4221a6af7c9bac8dcff44cef6a74c9012dd96611e7ca08c",
+    "newCsvSha256": "7525e2cfa5f20bd673ef7226a8c91a0d0e1f8f83ef0d1ace6ac9075683f67d4c",
+    "oldCsvPrefixByteExact": true,
+    "oldWorldObjectsDeepExact": 92,
+    "oldGradeDefinitionsDeepExact": 276,
+    "generatedSha256": "91706746ef40d8d237ae038453851b26f9c93cdd6b5cf3fa5b39381174f7d54b",
+    "qualification": "Actual12, visual and frozen production evidence pending; new4 remain disabled."
+  }
+}

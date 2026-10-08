@@ -1,0 +1,31 @@
+2026-10-08 13:27:48 +0800 
+Assertion status system-wide:
+   BackgroundTask                 0
+   ApplePushServiceTask           0
+   UserIsActive                   1
+   PreventUserIdleDisplaySleep    0
+   SoftwareUpdateTask             0
+   PreventSystemSleep             0
+   ExternalMedia                  0
+   InternalPreventDisplaySleep    1
+   PreventUserIdleSystemSleep     1
+   NetworkClientActive            0
+Listed by owning process:
+   pid 395(runningboardd): [0x00239ec10001880e] 00:00:00 PreventUserIdleSystemSleep named: "xpcservice<com.tencent.iOA.ticket([osservice<com.tencent.iOA.startup(501)>:52970])(501)>{vt hash: 0}:21110395-21110-2146107:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 21110. 
+   pid 395(runningboardd): [0x00239ec10001880d] 00:00:01 PreventUserIdleSystemSleep named: "osservice<com.tencent.iOACore.Daemon>395-71573-2146106:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 71573. 
+   pid 395(runningboardd): [0x00239ec10001880b] 00:00:01 PreventUserIdleSystemSleep named: "osservice<com.tencent.iOABus.Daemon>395-53242-2146104:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 53242. 
+   pid 636(cloudd): [0x00239ec00001880a] 00:00:02 PreventUserIdleSystemSleep named: "NSURLSessionTask DAAAF9A7-BFE8-499A-BB5B-6D91BDFE4F19"  
+	Timeout will fire in 10798 secs Action=TimeoutActionTurnOff
+   pid 94761(caffeinate): [0x00239baf000185e8] 00:13:07 PreventUserIdleSystemSleep named: "caffeinate command-line tool"  
+	Details: caffeinate asserting on behalf of '/usr/local/bin/node' (pid 94758)
+	Localized=THE CAFFEINATE TOOL IS PREVENTING SLEEP.
+   pid 401(WindowServer): [0x0023607f0009a483] 01:53:39 UserIsActive named: "com.apple.iohideventsystem.queue.tickle serviceID:1002818e3 service:AppleMultitouchDevice product:Apple Internal Keyboard / Trackpad eventType:11"  
+	Timeout will fire in 3981 secs Action=TimeoutActionRelease
+   pid 330(powerd): [0x0023665a000185dd] 04:00:39 PreventUserIdleSystemSleep named: "Powerd - Prevent sleep while display is on"  
+   pid 330(powerd): [0x00239bf2001083fd] 00:00:01 InternalPreventDisplaySleep named: "com.apple.powermanagement.delayDisplayOff"  
+	Timeout will fire in 299 secs Action=TimeoutActionTurnOff
+Kernel Assertions: 0x100=MAGICWAKE
+   id=556  level=255 0x100=MAGICWAKE creat=2026/8/10 18:03  mod=2026/10/8 09:40 description=en0 owner=IOSkywalkNetworkBSDClient

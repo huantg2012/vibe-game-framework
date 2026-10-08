@@ -1,0 +1,284 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "split-tows",
+    "label": "断束两道",
+    "description": "断束两道的原生材料与完整搜撤地段",
+    "material": "crystal",
+    "surface": {
+      "substrate": "crystal",
+      "coating": "crystal",
+      "organization": "bands",
+      "coverage": 0.66,
+      "wear": 0.43,
+      "deposits": 0.42,
+      "scale": 0.95,
+      "relief": 0.58,
+      "contrast": 0.85,
+      "regionScale": 1.1,
+      "quietness": 0.5,
+      "formScale": 1.5,
+      "fragmentation": 0.32,
+      "accentCoverage": 0.18
+    },
+    "palette": {
+      "void": 856090,
+      "shadow": 1449000,
+      "floorDeep": 2370362,
+      "floor": 5595763,
+      "floorLight": 9674931,
+      "materialDark": 4337474,
+      "materialMid": 9197944,
+      "materialLight": 12818348,
+      "faceLight": 14278887,
+      "accentDim": 5326174,
+      "accent": 7956100,
+      "accentLight": 11444401,
+      "peak": 14476773,
+      "actorDark": 2433318,
+      "actorMid": 11702376,
+      "actorLight": 15584925,
+      "ground": 5595763,
+      "groundLight": 9674931,
+      "groundDark": 2370362,
+      "wall": 9197944,
+      "wallLight": 12818348,
+      "wallDark": 4337474
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "split-tows",
+    "ground": {
+      "dark": 2370362,
+      "mid": 5595763,
+      "light": 9674931
+    },
+    "solid": {
+      "dark": 4337474,
+      "mid": 9197944,
+      "light": 12818348
+    },
+    "cleaved": {
+      "dark": 6184554,
+      "mid": 11449024,
+      "light": 14278887
+    },
+    "secondary": {
+      "dark": 4273976,
+      "mid": 8548464,
+      "light": 11640986
+    },
+    "groundPattern": "veins",
+    "patternScale": 232,
+    "patternStrength": 0.42,
+    "secondaryCoverage": 0.15,
+    "textureContrast": 1.14,
+    "quietCoverage": 0.61
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "split-tows-severe",
+    "family": "fibre-knot",
+    "grade": "severe",
+    "label": "断束两道",
+    "profile": "split-tows",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": -0.28,
+    "light_radius": 154,
+    "emission": 0.72,
+    "motion_period": 16,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 410,
+        "y": 514,
+        "rotation": 1.3,
+        "length": 184,
+        "width": 125,
+        "height": 55,
+        "thickness": 13,
+        "fold": 0.682,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 2,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 424,
+        "y": 266,
+        "rotation": 1.48,
+        "length": 162,
+        "width": 114,
+        "height": 48,
+        "thickness": 12,
+        "fold": 0.5940000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 3,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 705,
+        "y": 522,
+        "rotation": 1.6,
+        "length": 240,
+        "width": 82,
+        "height": 37,
+        "thickness": 10,
+        "fold": 0.55,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 4,
+        "family": "fibre-knot",
+        "role": "solid",
+        "x": 733,
+        "y": 198,
+        "rotation": 1.78,
+        "length": 214,
+        "width": 79,
+        "height": 43,
+        "thickness": 11,
+        "fold": 0.649,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 5,
+        "family": "fibre-knot",
+        "role": "relief",
+        "x": 585,
+        "y": 370,
+        "rotation": 0.08,
+        "length": 329,
+        "width": 91,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.35200000000000004,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "package": {
+    "id": "r100-split-tows",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "fibre-knot": {
+        "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+        "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+        "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+      }
+    },
+    "dependencyHash": "f3a7a5ab",
+    "grade": "severe"
+  }
+}

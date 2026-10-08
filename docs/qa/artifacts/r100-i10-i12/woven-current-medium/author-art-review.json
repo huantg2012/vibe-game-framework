@@ -1,0 +1,148 @@
+{
+  "status": "author-rejected",
+  "at": "2026-10-07T06:43:27.288Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/report.json",
+    "sha256": "654bc3d1f0b13cdd280de363a15d1d5f3c7ddb36e1d01a7fb5c1d9f15eeaebdc"
+  },
+  "scope": "Personally viewed all4 original medium normal frames. Old short-fibre organization, original geometry, actual WASD and seed/world/facing/viewport checks. This is its own observed rejection, not inherited P34 failure.",
+  "worldId": "woven-quarters",
+  "requestedSeed": 20261005,
+  "identity": {
+    "requestedSeed": 20261005,
+    "worldId": "woven-quarters",
+    "grade": "medium",
+    "package": {
+      "id": "r100-woven-quarters",
+      "algorithm": "r100-native",
+      "version": 3,
+      "algorithmRevision": 6,
+      "materials": {
+        "fibre-knot": {
+          "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+          "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+          "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+        },
+        "membrane-rim": {
+          "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+          "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+          "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+        },
+        "organization:short-fibre": {
+          "definition": "5136e92cd5d57693961e7e72797a4fa4c543d1ac0adb5008cc9e25b57957822e",
+          "surface": "39a3207c28c9c00ca4713e72cf44edddbd9e948cdd88959d553bb9db94f68b4c",
+          "solid": "488fa9b7cc8cd093c832aab4684cd229b76c582cbecce743d7db24a27b32ec2a"
+        }
+      },
+      "dependencyHash": "e8d7b4df",
+      "grade": "medium"
+    },
+    "runtimeGrade": "medium",
+    "url": "http://127.0.0.1:3120/r100-gym.html?world=woven-quarters&grade=medium&seed=20261005&loadout=bare",
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    }
+  },
+  "finding": "01西北蓝厚毡仍是均匀细颗粒/云斑，短纤压结语义未读出。02/03褐色长纤段、蓝毡与裸缝空间关系可见，但不能替蓝毡材料通过。",
+  "limitations": [
+    "03/04敌人遮住局部，04主要照裸床，不以未见的面下判。",
+    "不称碰撞/路径失败；拒绝范围是蓝厚毡主面材料，现有几何/配色/次材未改。",
+    "未以未拍的旧材料直接拒绝，此处有实际4原图。尚未改为新loose材料，需root裁决。"
+  ],
+  "images": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/01-material-approach-north.png",
+      "sha256": "a834a98ada6da645ce0060a36bb715bc5e1a0b32d114bbe0c4662f03e9867832",
+      "png": {
+        "width": 1136,
+        "height": 758
+      },
+      "actualAngle": -1.5707963267948966,
+      "before": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 466.8410577486513,
+          "y": 372.4782814036388
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 17.803590551999747,
+        "elapsedMs": 8532.9
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/02-material-approach-west.png",
+      "sha256": "39e786861742c5f7121a25d6b7c04320e5683821e13ea43727dcf3755bcde656",
+      "png": {
+        "width": 1136,
+        "height": 758
+      },
+      "actualAngle": 3.141592653589793,
+      "before": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 641.0187308187005,
+          "y": 328.5676625231103
+        },
+        "facingAngle": 3.141592653589793,
+        "facing4": "left",
+        "hp": 100,
+        "chaos": 25.01176018199948,
+        "elapsedMs": 17532.6
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/03-material-approach-north.png",
+      "sha256": "d69f87303d0b54741f2581384a84845e035fbb88698cec271d0feccd59231249",
+      "png": {
+        "width": 1136,
+        "height": 758
+      },
+      "actualAngle": -1.5707963267948966,
+      "before": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 644.9123040261003,
+          "y": 626.6698853216817
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 31.43737243799891,
+        "elapsedMs": 27215.6
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/woven-current-medium/woven-quarters-medium/04-material-approach-south.png",
+      "sha256": "5f560a31f937c319d86dd0f1267e210a86eef32f93d3a8e39b835c70fbf45078",
+      "png": {
+        "width": 1136,
+        "height": 758
+      },
+      "actualAngle": 1.5707963267948966,
+      "before": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 771.1404281593631,
+          "y": 456.8044402167389
+        },
+        "facingAngle": 1.5707963267948966,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 34.66675529399893,
+        "elapsedMs": 32082
+      }
+    }
+  ]
+}

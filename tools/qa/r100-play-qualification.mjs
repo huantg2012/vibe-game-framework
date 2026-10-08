@@ -6,6 +6,8 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {reconcileTerminalPickups} from './r100-observed-searches.mjs';
 import {collectI09SearchReceipts} from './r100-i09-search-receipts.mjs';
+import {validateControllerSupplement, validateSupplementJourney} from './r100-i12-controller-supplement.mjs';
+import {validateFacingControllerSupplement, validateFacingSupplementJourney} from './r100-i12-facing-supplement.mjs';
 
 export function buildPlaySummary(planPath, bytes = file => fs.readFileSync(file), exists = file => fs.existsSync(file)) {
 const read = file => JSON.parse(bytes(file));
@@ -20,6 +22,7 @@ assert(plan.batches?.length && new Set(plan.batches).size === plan.batches.lengt
 const key = row => `${row.world}/${row.grade}/${row.seed}`;
 const wanted = new Set(plan.worlds.flatMap(world => grades.flatMap(grade => seeds.map(seed => key({world, grade, seed})))));
 const attempts = [], sources = [], scheduled = new Set();
+const supplements = [], supplementedCases = new Set();
 
 for (const folder of plan.batches) {
   const policyPath = path.join(folder, 'policy-freeze.json'), batchPath = path.join(folder, 'batch-report.json');
@@ -27,17 +30,30 @@ for (const folder of plan.batches) {
   const algorithmRevision = policy.algorithmRevision ?? 5;
   assert(algorithmRevisions.includes(algorithmRevision), 'Batch revision is outside the summary plan');
   const controllerPolicyRevision = policy.controllerPolicyRevision ?? 13;
-  assert([13, 15].includes(controllerPolicyRevision));
+  assert([13, 15, 16, 17].includes(controllerPolicyRevision));
+  const supplement = controllerPolicyRevision === 16
+    ? validateControllerSupplement(policy.controllerSupplement, policy, batch, plan, bytes)
+    : controllerPolicyRevision === 17
+      ? validateFacingControllerSupplement(policy.controllerSupplement, policy, batch, plan, bytes) : null;
+  if (supplement) {
+    for (const row of supplement.protocol.cases) {
+      assert(!supplementedCases.has(key(row)), 'Only one bounded supplemental attempt per original case');
+      supplementedCases.add(key(row));
+    }
+    supplements.push(supplement);
+  }
   if (algorithmRevision === 6) {
-    assert.equal(controllerPolicyRevision, 15, 'Expansion batches require the actual-pickup controller');
-    const reference = policy.controllerDerivation; assert(reference, 'Revision6 input adapter receipt is required');
-    assert.equal(sha(reference.path), reference.sha256);
-    const derived = read(reference.path);
-    assert.equal(derived.inputPolicyRevision, 15); assert.equal(derived.algorithmRevision, 6);
-    assert.equal(derived.executor.sha256, policy.harnessSha256);
-    assert.equal(sha(derived.original.path), derived.original.sha256);
-    assert.equal(derived.transformation.kind, 'result-version-assertion-only');
-    assert.equal(derived.transformation.allOtherSourceBytesExact, true);
+    assert([15, 16, 17].includes(controllerPolicyRevision), 'Expansion batches require an explicitly frozen actual-pickup controller');
+    if (!supplement) {
+      const reference = policy.controllerDerivation; assert(reference, 'Revision6 input adapter receipt is required');
+      assert.equal(sha(reference.path), reference.sha256);
+      const derived = read(reference.path);
+      assert.equal(derived.inputPolicyRevision, 15); assert.equal(derived.algorithmRevision, 6);
+      assert.equal(derived.executor.sha256, policy.harnessSha256);
+      assert.equal(sha(derived.original.path), derived.original.sha256);
+      assert.equal(derived.transformation.kind, 'result-version-assertion-only');
+      assert.equal(derived.transformation.allOtherSourceBytesExact, true);
+    }
   }
   assert.equal(sha(policy.manifest), policy.manifestSha256, 'Source receipt changed');
   assert.equal(sha(policy.storageSource), policy.storageSourceSha256, 'Earned save source changed');
@@ -57,6 +73,7 @@ for (const folder of plan.batches) {
   sources.push({folder, policy: policyPath, policySha256: sha(policyPath), reportSha256: sha(batchPath),
     sourceManifest: policy.manifest, sourceManifestSha256: policy.manifestSha256, harnessSha256: policy.harnessSha256,
     algorithmRevision, controllerPolicyRevision,
+    ...(supplement ? {controllerSupplement: policy.controllerSupplement} : {}),
     status: batch.status, planned: policy.cases.length, attempted: batch.attempts.length});
   for (const attempt of batch.attempts) {
     const expected = rows.get(attempt.dir); assert(expected && key(expected) === key(attempt));
@@ -97,7 +114,14 @@ for (const folder of plan.batches) {
     if (!settled) receipt.problems.push('No matching, settled base transaction');
     if (!['extract', 'death'].includes(journey.outcome)) receipt.problems.push('No actual extract/death outcome');
     if (!(receipt.elapsedMs >= 10000)) receipt.problems.push('Insufficient actual field process');
-    const actualPickups = controllerPolicyRevision === 15 ? collectI09SearchReceipts(journey) : null;
+    const actualPickups = controllerPolicyRevision >= 15 ? collectI09SearchReceipts(journey) : null;
+    if (controllerPolicyRevision === 16)
+      receipt.problems.push(...validateSupplementJourney(supplement, attempt, journey, actualPickups));
+    if (controllerPolicyRevision === 17) {
+      const events = bytes(path.join(folder, attempt.dir, attempt.grade, 'journey.jsonl')).toString().trim()
+        .split('\n').filter(Boolean).map(line => JSON.parse(line));
+      receipt.problems.push(...validateFacingSupplementJourney(supplement, attempt, journey, actualPickups, events));
+    }
     if (actualPickups) {
       receipt.actualPickups = actualPickups.length;
       receipt.nearEntryPickups = actualPickups.filter(row => !row.eligibleNonEntry).length;
@@ -122,6 +146,14 @@ for (const folder of plan.batches) {
   }
 }
 
+for (const supplement of supplements) for (const row of supplement.protocol.cases) {
+  const original = attempts.find(value => value.report === row.originalReport.path);
+  assert(original && original.reportSha256 === row.originalReport.sha256 && key(original) === key(row),
+    'The original unsuccessful report must be accounted for as an actual attempt');
+  assert(original.processComplete && !original.searchAndExtract,
+    'The supplemental protocol concerns completed original processes without successful search/extraction');
+}
+
 const pairs = plan.worlds.flatMap(world => grades.map(grade => {
   const perSeed = seeds.map(seed => {
     const records = attempts.filter(row => row.key === key({world, grade, seed}));
@@ -143,7 +175,7 @@ const summary = {version: 1, createdAt: new Date().toISOString(), status: qualif
   // actual near-entry pickups is neither an eligible search nor an empty run.
   emptyReturns: attempts.filter(row => row.processComplete && row.outcome === 'extract'
     && !row.collected.length && !(row.actualPickups > 0)).length,
-  ...(sources.some(row => row.controllerPolicyRevision === 15) ? {
+  ...(sources.some(row => row.controllerPolicyRevision >= 15) ? {
     nearEntryOnlyReturns: attempts.filter(row => row.processComplete && row.outcome === 'extract'
       && !row.collected.length && row.actualPickups > 0).length,
   } : {}),

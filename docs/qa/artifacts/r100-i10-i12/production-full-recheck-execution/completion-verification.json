@@ -1,0 +1,97 @@
+{
+  "status": "pass-strict-completion-verification",
+  "at": "2026-10-08T02:39:49.142Z",
+  "verifier": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/verify-completion.mjs",
+    "sha256": "bf047f843e4e1d144116257dee418ed37950b31cf66cae6809ca5863d930e295"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/execution.json",
+    "sha256": "4213b98e952a2063718fe9770eab0dfc5606337349dc0969f248f3cea2cad54b"
+  },
+  "approvedProtocol": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/root-approved-protocol.json",
+    "sha256": "a1e2c7d8bce4d63897b74b1c028c60a6f07b368072978c8f7d6e0b3aabbe8e14"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "operatorSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/operator-source.py",
+    "sha256": "e6ca96cf4b592fd5a6acd1b9a54bb56bebb9f9df727a1b4063746ebe5241c52f"
+  },
+  "exactOperatorCommand": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/operator-command.txt",
+    "sha256": "dbe80d412c6b1ed1a4ac41bbba390761b3e7c6e89bc6af86c29bd801f2aa5a7c"
+  },
+  "operatorSourceProvenance": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/operator-source-receipt.json",
+    "sha256": "787a9e424444f1149760fdc20649e7fe0cf8a1c4228f30edc0d54210622d5fbf"
+  },
+  "sourceBinding": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep/source-binding.json",
+    "sha256": "0a29932b9304224eb2c6cc1f3ce2f115c55e884d5b726401e706fca8416ed6f0"
+  },
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep/report.json",
+    "sha256": "c2a0bebb5d2a003d00760ceb5e35ad264de8b4facd97f653c45c5362bc15ea1a"
+  },
+  "sourceFilesVerifiedBeforeAndAfter": 1397,
+  "servedFileCount": 1393,
+  "all324OrderedScheduleEqual": true,
+  "original152StrictCompleteIdentityAndScheduleEqual": true,
+  "comparisonSemantics": "node:assert/strict deepEqual, including the entire generation and every identity field",
+  "failed152NewPass": true,
+  "originalFailedReportUnchanged": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/report.json",
+    "sha256": "cffeffdd4ec738243ab6017b9b0cf83011dae2e9b47f6ea9a2553b865ad91096"
+  },
+  "workerObservation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep/worker-observation-summary.json",
+    "sha256": "02099f31993ce4ae030683418ef6409c526174baf9752e731999df62627d8912"
+  },
+  "observedCounts": {
+    "preload-ready": 1,
+    "launch": 1,
+    "browser-ready": 1,
+    "context-created": 324,
+    "process-snapshot": 1297,
+    "Target.targetCreated": 2268,
+    "Target.targetInfoChanged": 5184,
+    "page-created": 324,
+    "network-url": 8891,
+    "page-navigation": 648,
+    "worker-created": 1296,
+    "worker-closed": 1296,
+    "Target.targetDestroyed": 2268,
+    "page-closed": 324,
+    "network-summary": 324,
+    "context-closed": 324,
+    "browser-disconnected": 1
+  },
+  "observedErrors": [],
+  "observerLimitation": "External observed events only. Absence of an event cannot establish a browser-internal cause or eliminate the earlier intermittent failure.",
+  "powerWindow": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/power-log-execution-window.txt",
+    "sha256": "a94027f480ee66dc8ed123ee97753cc6713fcece0ea986a5b833503605749b85"
+  },
+  "powerLog": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/power-log-after.txt",
+    "sha256": "9dac393e240ad8bce8444686e37370081b5373011702fe9b30360dd98dc46ef1"
+  },
+  "noSystemSleepInExecutionWindow": true,
+  "ownedProcessesAndAssertionsClosed": true,
+  "publicationInventory": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/processes-before.for-publication.json",
+    "sha256": "39e4dbe44d87f50acd0ace427a348b1a578c3cb5b732598e07c181b3089ed8a8"
+  },
+  "publicationDelta": "Only the unrelated shared Codex execution-service parent argv is omitted. Its PID/PPID/comm remain. All probe node/caffeinate/Chrome child-tree argv evidence is preserved. Original local inventory bytes are unchanged and excluded from git.",
+  "originalLocalInventorySha256": "f5f0d6d27e1f37fc7579480b105dc1b31d32103ac05653fbe5bb3367a6538d28",
+  "attemptedCaseAccounting": {
+    "original": 152,
+    "completeRecheck": 324,
+    "total": 476
+  },
+  "scope": "Formal entry/cold reload integration and limited observed power/process evidence. No natural expedition, performance or lifecycle qualification."
+}

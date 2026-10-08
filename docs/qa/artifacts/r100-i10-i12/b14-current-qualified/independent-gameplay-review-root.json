@@ -1,0 +1,638 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-process-pass",
+  "reviewer": "root",
+  "createdAt": "2026-10-07T13:15:25.884Z",
+  "features": [
+    "COH-F052",
+    "COH-F012",
+    "COH-F013"
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "summary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play-summary.json",
+    "sha256": "b001314e6286a7e1094141eb4b8b426174f59726414b849630c61b79bfaa47e6"
+  },
+  "summaryRecomputedExactly": true,
+  "artIndependentReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/independent-process-art-review.json",
+    "sha256": "29f5e83d03cc3fb9e84fd1f19cb0d3813ddcb5dea92f9cf66e8dcb2b6de2f293"
+  },
+  "workerObservation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/worker-observation-summary.json",
+    "sha256": "7cf20d3c4c5a4d8c0e6e052a247d6b6b9ab3b1b7491cafa92e40198669bb8c61"
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/001-fractured-estuary-low-20261005/low/1-far-exploration.png",
+      "sha256": "3a817be1dae41c2868dfc552d0d445ce11e3b6011e55b84ead764058002dcbe5",
+      "observation": "冷灰宽床及真黑缺地边可分，上缘仅露红断肩局部；没有全世界路线判断。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/005-fractured-estuary-severe-20261005/severe/1-search-2.png",
+      "sha256": "b9cd8eba4531efb35b3af143a5c180c6a021c70d4e482fd880ab26d8ac3ca335",
+      "observation": "145HP/97混乱取得薄壳卵；红断肩厚侧、灰床及黑绿宿主层次清楚。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/007-woven-quarters-low-20261005/low/1-far-exploration.png",
+      "sha256": "ae0c91f974334d9861a59a55e73099e18595e9f8799a52f11a38480793a22909",
+      "observation": "紫床、铜色多股长束厚侧、灰蓝压面可分；长直材料切界和大块面感保留。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/013-shell-patchwork-low-20261005/low/1-far-exploration.png",
+      "sha256": "237999b47f3cab754a30053241a7fe191b785cc1bb46c3eac1e5844567e2f979",
+      "observation": "白灰厚端与粉红接膜、蓝灰床可分；宽平切面有明显棱块感，膜独立折边弱。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/015-shell-patchwork-medium-20261005/medium/1-field-result.png",
+      "sha256": "3b60f6303c907093206145c522977b024be4774d7f8aff4598025195ba9ae27f",
+      "observation": "115HP带6薪柴，63秒、峰值混乱66及一击杀的真实结算；不是无伤过程。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/017-shell-patchwork-severe-20261005/severe/1-far-exploration.png",
+      "sha256": "16587ebb0a71a3f302dd0bfd69231fc8459a8613c23ac379fdee8a06aed9add8",
+      "observation": "重档近处厚端有青侵蚀线；残骸及宿主独立，整齐宽切面弱项仍在。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/023-last-shelf-severe-20261005/severe/1-far-exploration.png",
+      "sha256": "85321426f57b3311a019105da8a163d0bbbe242dd79c4225a3886684b6fa7360",
+      "observation": "赭金颗粒床在灯下连续，黑缺地及边线可辨；只覆盖局部。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/023-last-shelf-severe-20261005/severe/1-field-result.png",
+      "sha256": "aac1711fb3517a757f9cb7808bc2086cd224b3a5c4fa3588e30da9ea18eaf2d0",
+      "observation": "145HP带6薪柴，44秒及峰值混乱44撤回；此趟压力有限，不称深搜。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/023-last-shelf-severe-20261005/severe/1-search-1.png",
+      "sha256": "b00c43ba7a2fedd5fba58c9605fe06bf6bc239149e4feffad582a8200edd26fa",
+      "observation": "蓝色厚肩、赭金粒床、上下黑缺地同框，薪柴实际+6；材料关系可辨。"
+    }
+  ],
+  "reviewedReports": [
+    {
+      "world": "fractured-estuary",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/001-fractured-estuary-low-20261005/report.json",
+        "sha256": "9ff18a93ad4d31042baebf7b0f827c9e8ca101afaf4c0153ddf9fe1adb0c43bf"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 554.5448584199479,
+          "elapsedMs": 21532.479999999807
+        }
+      ],
+      "hp": 145,
+      "chaos": 30.53015278992282,
+      "elapsedMs": 37381.859999999724,
+      "problems": []
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/002-fractured-estuary-low-3075192741/report.json",
+        "sha256": "be0789b8f85403282deedfc4fe44126b7585a7f8712ec1f94f2f749f42073f82"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 499.4076491204355,
+          "elapsedMs": 30315.469999999736
+        }
+      ],
+      "hp": 145,
+      "chaos": 32.052780079195415,
+      "elapsedMs": 46098.1399999999,
+      "problems": []
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/003-fractured-estuary-medium-20261005/report.json",
+        "sha256": "7f239e8859a2b7d4fc78cfc4c1c46bd53fbeecf59408cfc22759809d10c4d37d"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 592.4862867611367,
+          "elapsedMs": 34581.94999999981
+        }
+      ],
+      "hp": 145,
+      "chaos": 54.06760137312587,
+      "elapsedMs": 47481.42000000001,
+      "problems": []
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/004-fractured-estuary-medium-3075192741/report.json",
+        "sha256": "6a11e1f835a01a6f917fcf14a3b8454095125c404c405e516e6ef25a2106013b"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 578.7158197250185,
+          "elapsedMs": 17032.669999999966
+        }
+      ],
+      "hp": 145,
+      "chaos": 39.90130785172567,
+      "elapsedMs": 30632.099999999737,
+      "problems": []
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/005-fractured-estuary-severe-20261005/report.json",
+        "sha256": "8a1bcc8bbfdce418004e28a6374807342a85dc79bb94d5f6132dd63b16908a4c"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 496.0645119336798,
+          "elapsedMs": 61647.51999999964
+        }
+      ],
+      "hp": 145,
+      "chaos": 108.12428313504839,
+      "elapsedMs": 80196.7499999998,
+      "problems": []
+    },
+    {
+      "world": "fractured-estuary",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/006-fractured-estuary-severe-3075192741/report.json",
+        "sha256": "fad73ec60a7003aa1094ae6913463705e663843a6544910a69771a594ffdbd6d"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 561.8825500048921,
+          "elapsedMs": 26165.579999999827
+        }
+      ],
+      "hp": 145,
+      "chaos": 81.38649460192879,
+      "elapsedMs": 46131.46000000001,
+      "problems": []
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/007-woven-quarters-low-20261005/report.json",
+        "sha256": "c18f452491dbdcd16d56830acf6657c478b6bb65507881bc2cda51f8ff259336"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 588.3672322623006,
+          "elapsedMs": 21865.779999999846
+        }
+      ],
+      "hp": 145,
+      "chaos": 30.495211747367904,
+      "elapsedMs": 37181.83999999978,
+      "problems": []
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/008-woven-quarters-low-3075192741/report.json",
+        "sha256": "4168b3030470d9252f6b65588cacd32cf295cedf448bff7b87930960329595af"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 619.728973019658,
+          "elapsedMs": 45048.16999999994
+        }
+      ],
+      "hp": 145,
+      "chaos": 47.8031093370824,
+      "elapsedMs": 55714.40999999996,
+      "problems": []
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/009-woven-quarters-medium-20261005/report.json",
+        "sha256": "60eec369a255f88a7fbb236e2487f96b178b154e3a85baf81f4c750beb098141"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 39298.42999999979
+        }
+      ],
+      "hp": 145,
+      "chaos": 40.46656591966958,
+      "elapsedMs": 53864.49000000003,
+      "problems": []
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/010-woven-quarters-medium-3075192741/report.json",
+        "sha256": "9100762bb11fd68e50f7a1a6a9b966011c7be1e8bf9e78d4bac535ec4d7b948c"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 28682.179999999767
+        }
+      ],
+      "hp": 145,
+      "chaos": 38.668087466969226,
+      "elapsedMs": 47981.40999999996,
+      "problems": []
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/011-woven-quarters-severe-20261005/report.json",
+        "sha256": "164f057ef61868f602f9576ce143ab8e7b92ac5d7a96d6662cd8fe9142ffc59b"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 24799.01999999981
+        }
+      ],
+      "hp": 145,
+      "chaos": 45.49801577844862,
+      "elapsedMs": 41931.649999999834,
+      "problems": []
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/012-woven-quarters-severe-3075192741/report.json",
+        "sha256": "f006898e77e47823c1776e94bfeac1cc7b3ebf58217eb3d371e60b683c412f72"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 40915.05999999993
+        }
+      ],
+      "hp": 145,
+      "chaos": 59.489012955255426,
+      "elapsedMs": 56664.43000000014,
+      "problems": []
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/013-shell-patchwork-low-20261005/report.json",
+        "sha256": "8b95dffdb0422567b8dafa4a59f3702dd539b7222f23654646e835ff3d09f0c4"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 593.3498125052371,
+          "elapsedMs": 20165.839999999887
+        }
+      ],
+      "hp": 145,
+      "chaos": 29.630544098993987,
+      "elapsedMs": 32232.04999999966,
+      "problems": []
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/014-shell-patchwork-low-3075192741/report.json",
+        "sha256": "00f62182f0e1ba846fa36ae979e193acca2567df77bd6e71bc91c238a53f860e"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.0526293011156,
+          "elapsedMs": 36915.209999999744
+        }
+      ],
+      "hp": 100,
+      "chaos": 48.72019728367509,
+      "elapsedMs": 52881.259999999944,
+      "problems": []
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/015-shell-patchwork-medium-20261005/report.json",
+        "sha256": "4974adb31b25b451e1730133396431a25d1855dc9a49bed63c7978bb88023400"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 604.0397337924054,
+          "elapsedMs": 48398.06999999982
+        }
+      ],
+      "hp": 115,
+      "chaos": 65.81105352152197,
+      "elapsedMs": 62830.80999999964,
+      "problems": []
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/016-shell-patchwork-medium-3075192741/report.json",
+        "sha256": "66c13ba3d0da797af4dad4dfa03b0066d7cb83b3bd13cdd81e0ae709ddadcb6a"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 610.5735008989499,
+          "elapsedMs": 17815.92999999993
+        }
+      ],
+      "hp": 145,
+      "chaos": 33.073932571925866,
+      "elapsedMs": 29682.129999999765,
+      "problems": []
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/017-shell-patchwork-severe-20261005/report.json",
+        "sha256": "06226bd93fa932ee6b9552176f443fe822b7d560912b436f42bf798a44211297"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 608.4734998338055,
+          "elapsedMs": 19765.849999999955
+        }
+      ],
+      "hp": 145,
+      "chaos": 40.03955847036936,
+      "elapsedMs": 34431.91999999985,
+      "problems": []
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/018-shell-patchwork-severe-3075192741/report.json",
+        "sha256": "5cb34975b8bce22bf7cf0eb5f19cdb01f8c0cdbae070aa32b11771dec7809288"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 610.5735008989499,
+          "elapsedMs": 24965.669999999915
+        }
+      ],
+      "hp": 145,
+      "chaos": 41.41374077313037,
+      "elapsedMs": 37381.85999999997,
+      "problems": []
+    },
+    {
+      "world": "last-shelf",
+      "grade": "low",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/019-last-shelf-low-20261005/report.json",
+        "sha256": "a4689b2336a9fd8d5c442d4a8d8bd694356165232238af697570ad7278e9ad42"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 578.7158197250185,
+          "elapsedMs": 15566.029999999988
+        }
+      ],
+      "hp": 145,
+      "chaos": 28.966749887445896,
+      "elapsedMs": 28432.159999999683,
+      "problems": []
+    },
+    {
+      "world": "last-shelf",
+      "grade": "low",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/020-last-shelf-low-3075192741/report.json",
+        "sha256": "ccb7d426a0a65ae178ee7690157a70661d315477dad029783ab9e68cb0c8e293"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 592.0540515865085,
+          "elapsedMs": 15182.739999999989
+        }
+      ],
+      "hp": 145,
+      "chaos": 28.794986416280544,
+      "elapsedMs": 27448.899999999736,
+      "problems": []
+    },
+    {
+      "world": "last-shelf",
+      "grade": "medium",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/021-last-shelf-medium-20261005/report.json",
+        "sha256": "bbe6c6beef0c453db51e4bd24276d01b73e47d83f6bf33180ab1895536293b39"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "distanceFromEntry": 592.4862867611367,
+          "elapsedMs": 17399.27999999997
+        }
+      ],
+      "hp": 145,
+      "chaos": 33.87892339319434,
+      "elapsedMs": 32315.369999999788,
+      "problems": []
+    },
+    {
+      "world": "last-shelf",
+      "grade": "medium",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/022-last-shelf-medium-3075192741/report.json",
+        "sha256": "69d5298d5f0033079bf7c6a88dae2c508d1271d17ca5f8ea5960d76d790e7044"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 592.0540515865085,
+          "elapsedMs": 16732.679999999986
+        }
+      ],
+      "hp": 145,
+      "chaos": 32.87524360533886,
+      "elapsedMs": 29032.18999999978,
+      "problems": []
+    },
+    {
+      "world": "last-shelf",
+      "grade": "severe",
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/023-last-shelf-severe-20261005/report.json",
+        "sha256": "1438f5c82adefb07dbc9472238148f4b6772c3465ee4fab7678dd58405ebee59"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 592.4862867611367,
+          "elapsedMs": 27332.239999999958
+        }
+      ],
+      "hp": 145,
+      "chaos": 44.35006075782022,
+      "elapsedMs": 43648.25000000006,
+      "problems": []
+    },
+    {
+      "world": "last-shelf",
+      "grade": "severe",
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/024-last-shelf-severe-3075192741/report.json",
+        "sha256": "e8433aeb21ea5ef05496d0d923b71dd0767407484625101ad181cf08726b6b57"
+      },
+      "processComplete": true,
+      "searchAndExtract": true,
+      "outcome": "extract",
+      "collected": [
+        {
+          "id": "r100-kindling-contested-1",
+          "distanceFromEntry": 592.0540515865085,
+          "elapsedMs": 21265.829999999947
+        }
+      ],
+      "hp": 145,
+      "chaos": 40.994494845869966,
+      "elapsedMs": 36481.86999999995,
+      "problems": []
+    }
+  ],
+  "originalProcesses": 24,
+  "actualAttempts": 24,
+  "qualifiedGradePairs": 12,
+  "nonEntrySearchExtract": 24,
+  "emptyReturns": 0,
+  "deaths": 0,
+  "conclusion": "四世界三级原定双种子均完成实际非入口搜取与同趟结算，达到本批固定过程条件。材料与实体在本次9帧局部可辨，保留直切界、厚壳棱块和弱膜折边；最终源、性能、自然链与整体人审另核。",
+  "scope": "逐例复核24原报告身份、搜取和结算；重算原汇总，亲看9张原PNG。",
+  "limitations": "控世界/种子及几何辅助熟练导航，不是整段视频/新手/深搜压力或声音听感证明。既有静态美术范围与最终源绑定独立。"
+}

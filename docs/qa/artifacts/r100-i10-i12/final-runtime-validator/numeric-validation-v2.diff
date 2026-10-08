@@ -1,0 +1,114 @@
+--- final-probe-before.mjs
++++ tools/qa/r100-i09-final-probe.mjs
+@@ -80,6 +80,92 @@
+     limitation: 'External observed events only. Absence of an event cannot establish a browser-internal cause or eliminate the earlier intermittent failure.' };
+ }
+ 
++function finiteNonnegative(value, label) {
++  assert(Number.isFinite(value) && value >= 0, `Finite nonnegative ${label} required`);
++}
++
++function validateMeasurementStats(stats, label) {
++  assert(Number.isSafeInteger(stats?.count) && stats.count > 0, `${label}: nonempty measurements required`);
++  for (const key of ['p50', 'p95', 'p99', 'max', 'over50']) finiteNonnegative(stats[key], `${label}/${key}`);
++  assert(stats.p50 <= stats.p95 && stats.p95 <= stats.p99 && stats.p99 <= stats.max,
++    `${label}: ordered measured quantiles required`);
++  assert(stats.over50 <= 1, `${label}: over50 is a fraction`);
++}
++
++function validateBudgetMeasurements(report) {
++  for (const row of report.cases) {
++    assert.equal(row.seed, 20261004, 'The declared severe budget seed cannot change');
++    assert.equal(row.grade, 'severe');
++    for (const key of ['frames', 'cpu', 'materialSubmit']) validateMeasurementStats(row[key], `${row.world}/${key}`);
++    // These are the original measurement harness thresholds, not new budgets.
++    assert(row.frames.p95 <= 20, `${row.world}: frame P95 exceeds 20ms`);
++    assert(row.frames.p99 <= 33.4, `${row.world}: frame P99 exceeds 33.4ms`);
++    assert(row.frames.over50 <= .005, `${row.world}: frames over 50ms exceed 0.5%`);
++    assert(row.cpu.p95 <= 12, `${row.world}: CPU P95 exceeds 12ms`);
++    assert(row.materialSubmit.p95 <= 3, `${row.world}: material submission P95 exceeds 3ms`);
++    assert.equal(row.positions?.length, 12, 'Preserve the twelve actual held-key interval observations');
++    let elapsed = row.start?.elapsedMs;
++    finiteNonnegative(elapsed, `${row.world}/start time`);
++    for (const sample of [row.start, ...row.positions, row.end]) {
++      finiteNonnegative(sample.elapsedMs, `${row.world}/sample time`);
++      assert(sample.elapsedMs >= elapsed, `${row.world}: sample clock moved backward`); elapsed = sample.elapsedMs;
++      assert.equal(sample.pollutionGrade, 'severe', 'Measure the actual severe runtime');
++      assert.equal(sample.ended, false, 'All observations must remain alive');
++      assert(Number.isFinite(sample.hp) && sample.hp > 0, 'Actual positive health required');
++    }
++    assert.equal(row.duration, row.end.elapsedMs - row.start.elapsedMs, 'Duration differs from the actual runtime clock');
++    assert(row.duration >= 60000, 'At least 60 seconds of alive runtime required');
++    assert.equal(row.fullAliveDuration, true); assert.equal(row.budgetPass, true);
++  }
++  return { status: 'pass-measured-budget-contract', thresholds: {
++    frameP95Ms: 20, frameP99Ms: 33.4, framesOver50Fraction: .005, cpuP95Ms: 12, materialP95Ms: 3,
++    minimumAliveMs: 60000, seed: 20261004,
++  }, exclusivity: 'operator-declared; resource scheduling must also be independently checked' };
++}
++
++function validateLifecycleMeasurements(report) {
++  const mixed = report.catalogWorldIds.flatMap((world, index) => grades.map((grade, gradeIndex) => ({
++    world, grade, seed: 20261004 + gradeIndex * report.catalogWorldIds.length + index,
++  })));
++  // The harness visits each full catalog in grade order, with this exact seed schedule.
++  mixed.sort((a, b) => a.seed - b.seed);
++  assert.deepEqual(report.mixedCoverage, mixed, 'Mixed reconstruction identities/order/seeds differ from the fixed schedule');
++  assert.deepEqual(report.samples?.map(row => row.label), ['warmed-baseline',
++    ...Array.from({ length: 10 }, (_, n) => `identical-${n + 1}`), `after-mixed-${report.mixedRebuilds}`],
++  'All twelve double-GC retained samples are required');
++  const baseline = report.samples[0], kinds = ['WebGL2', 'Texture', 'Buffer', 'Program', 'Shader', 'Framebuffer', 'Renderbuffer'];
++  const shaders = [];
++  let maxCombinedGrowth = 0;
++  for (const [index, row] of report.samples.entries()) {
++    for (const key of ['usedSize', 'totalSize']) finiteNonnegative(row.usage?.[key], `${row.label}/${key}`);
++    assert(row.usage.usedSize <= row.usage.totalSize, 'Used heap cannot exceed total heap');
++    finiteNonnegative(row.usage.backingStorageSize ?? 0, `${row.label}/backingStorageSize`);
++    for (const kind of kinds) {
++      const counts = row.objects?.[kind];
++      for (const key of ['created', 'live', 'active'])
++        assert(Number.isSafeInteger(counts?.[key]) && counts[key] >= 0, `${row.label}/${kind}/${key}: resource count required`);
++      assert(counts.active <= counts.live && counts.live <= counts.created, `${row.label}/${kind}: impossible resource counts`);
++      if (index) assert(counts.created >= report.samples[index - 1].objects[kind].created, 'Cumulative creates cannot decrease');
++      assert.equal(counts.active, baseline.objects[kind].active, `${row.label}/${kind}: active resources did not return to baseline`);
++    }
++    assert(baseline.objects.WebGL2.active > 0, 'A real warmed WebGL context is required');
++    // The earlier independent Shader review required bounded live/active counts,
++    // not a flat cumulative create count. This numeric check does not sign that review.
++    assert.equal(row.objects.Shader.live, baseline.objects.Shader.live, `${row.label}: live Shader wrappers grew`);
++    const used = row.usage.usedSize - baseline.usage.usedSize;
++    const backing = (row.usage.backingStorageSize ?? 0) - (baseline.usage.backingStorageSize ?? 0);
++    assert.equal(row.usedHeapGrowth, used, 'Reported retained heap delta differs from measured bytes');
++    assert.equal(row.backingGrowth, backing, 'Reported backing delta differs from measured bytes');
++    const combined = used + Math.max(0, backing);
++    assert(combined < 10 * 1024 * 1024, `${row.label}: retained growth reaches the original 10MiB limit`);
++    maxCombinedGrowth = Math.max(maxCombinedGrowth, combined);
++    shaders.push({ label: row.label, ...row.objects.Shader });
++  }
++  return { status: 'pass-measured-lifecycle-contract', retainedBytesLimit: 10 * 1024 * 1024,
++    maxCombinedGrowth, shaderSamples: shaders, independentShaderReview: 'pending-separate-receipt',
++    limitation: 'Numeric resource checks only. Final technical/closure binding must separately consume the independent Shader review; no GPU driver bytes/RSS or unbounded lifetime claim.' };
++}
++
+ export function validateFinalReport(kind, report, ids, gold, revision = 5) {
+   assert([5, 6].includes(revision), 'Unsupported expected revision');
+   const expected = sorted(ids.flatMap(world => grades.map(grade => `${world}/${grade}`)));
+@@ -111,15 +197,13 @@
+     assert.equal(report.status, 'passed-reference-samples'); assert.equal(report.exclusiveWindow, true);
+     assert.deepEqual(sorted(report.worlds), sorted(ids)); assert.deepEqual(sorted(report.cases.map(row => row.world)), sorted(ids));
+     assert.deepEqual(report.errors, []);
+-    for (const row of report.cases) {
+-      assert.equal(row.grade, 'severe'); assert.equal(row.fullAliveDuration, true);
+-      assert(row.duration >= 60000); assert.equal(row.budgetPass, true);
+-    }
++    return validateBudgetMeasurements(report);
+   } else if (kind === 'lifecycle') {
+     assert.equal(report.status, 'passed-bounded-lifecycle'); assert.deepEqual(report.errors, []);
+-    assert.deepEqual(sorted(report.catalogWorldIds), sorted(ids)); assert.equal(report.repetitions, 10);
++    assert.deepEqual(report.catalogWorldIds, ids, 'Lifecycle seeds follow the frozen catalog order'); assert.equal(report.repetitions, 10);
+     assert.equal(report.mixedRebuilds, ids.length * 3);
+     assert.deepEqual(sorted(report.mixedCoverage.map(row => `${row.world}/${row.grade}`)), expected);
++    return validateLifecycleMeasurements(report);
+   } else assert.fail(`Unknown probe ${kind}`);
+   if (kind === 'production' || kind === 'equivalence')
+     assert(Object.keys(report.loadedSourceHashes ?? {}).length > 0, 'Probe must record actual served module URLs');

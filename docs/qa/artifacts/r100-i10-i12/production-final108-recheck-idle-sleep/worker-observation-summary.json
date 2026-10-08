@@ -1,0 +1,31 @@
+{
+  "status": "pass-observed-events",
+  "expectedContexts": 324,
+  "counts": {
+    "preload-ready": 1,
+    "launch": 1,
+    "browser-ready": 1,
+    "context-created": 324,
+    "process-snapshot": 1297,
+    "Target.targetCreated": 2268,
+    "Target.targetInfoChanged": 5184,
+    "page-created": 324,
+    "network-url": 8891,
+    "page-navigation": 648,
+    "worker-created": 1296,
+    "worker-closed": 1296,
+    "Target.targetDestroyed": 2268,
+    "page-closed": 324,
+    "network-summary": 324,
+    "context-closed": 324,
+    "browser-disconnected": 1
+  },
+  "issues": [],
+  "limitation": "External observed events only. Absence of an event cannot establish a browser-internal cause or eliminate the earlier intermittent failure.",
+  "files": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep/worker-observations/observer-10404.jsonl",
+      "sha256": "cea4b734100130b0fc305f24f1f31a9d1beae68b663d1300be4f0fc2e2ceac54"
+    }
+  ]
+}

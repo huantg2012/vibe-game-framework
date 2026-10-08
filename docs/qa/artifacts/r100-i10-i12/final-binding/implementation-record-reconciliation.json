@@ -1,0 +1,104 @@
+{
+  "status": "root-implementation-record-reconciled",
+  "reviewer": "root",
+  "date": "2026-10-08",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.before-bind.json",
+    "sha256": "0817d25d392550878166652d779ef6865a81254b699830ce46dc98baa10e3030"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.before-bind.after-implementation-record.json",
+    "sha256": "ebdd3a627dbeb4069407270b28c9a601ac5bf8a5a3d45452915e096144750132"
+  },
+  "changedWorldIds": [
+    "cleft-tableland",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir",
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta",
+    "shard-switchback",
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments",
+    "fibre-choke",
+    "buried-lamellae",
+    "pressed-rim",
+    "wedged-hide",
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash",
+    "short-fibre-mat",
+    "marrow-break",
+    "felt-wedges",
+    "pore-bank",
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks",
+    "grain-weld",
+    "silk-catch",
+    "resin-sleeve",
+    "shell-threads",
+    "chalk-divide",
+    "red-vault-fragments",
+    "blue-fault",
+    "pale-pressure",
+    "notched-backwater",
+    "crossed-casings",
+    "fibre-stumpfield",
+    "sloughed-court",
+    "crushed-seam",
+    "husk-reef",
+    "fibre-scree",
+    "gel-rafts",
+    "double-return",
+    "offset-basins",
+    "pinched-fan",
+    "spliced-reaches",
+    "white-scarfield",
+    "black-lacuna",
+    "ochre-folds",
+    "violet-marrows",
+    "fractured-estuary",
+    "woven-quarters",
+    "shell-patchwork",
+    "last-shelf"
+  ],
+  "changedField": "implementation",
+  "oldValue": "planned",
+  "newValue": "implemented",
+  "evidence": {
+    "finalSource": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    "packages": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+      "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+    },
+    "production": {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep/report.json",
+      "sha256": "c2a0bebb5d2a003d00760ceb5e35ad264de8b4facd97f653c45c5362bc15ea1a"
+    },
+    "play": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/summary.json",
+      "sha256": "ecc10117b880a364d2d75b8204d7f2287a839ab9c5f56587657845d6baa9f1ab"
+    }
+  },
+  "initialDry": {
+    "stdout": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/dry.stdout.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-binding/dry.stderr.log",
+      "sha256": "f01bbad58a2b27af0c51f045f5bfe6765c5e2ca5a988eb48ca109a9ff12f0916"
+    },
+    "exitCode": 1
+  },
+  "scope": "只补登记已有实现事实；世界review、接入资格、历史invalidated与迭代状态不变。binder原门槛保持。"
+}

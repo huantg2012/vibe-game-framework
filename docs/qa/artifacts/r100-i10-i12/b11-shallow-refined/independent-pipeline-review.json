@@ -1,0 +1,51 @@
+{
+  "status": "bounded-code-review-pass",
+  "reviewer": "identity_pipeline",
+  "at": "2026-10-07T07:15:25.472691+00:00",
+  "sources": [
+    {
+      "path": "src/generation/world-study/native-volume-settled-projection.ts",
+      "sha256": "c3758e2dbf0639158c17ad3d9b4998fe8d9f341129ccf000f723e0b81e84ddb6"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-ground.ts",
+      "sha256": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "b9d56c768a33fc855661d37912bc28df76dfecd66fe75414a21cfc57b489e2a8"
+    }
+  ],
+  "reviewedBehavior": [
+    "Only explicit construction4 settled-bundle and settled-clamp call the new helper; old profile bodies remain outside this path. Public validator requires blocking0 and height<=6.",
+    "Nondegenerate source XY triangles define the domain. Internal shared edges cancel; candidate edges split at crossings and collinear endpoints, then union membership on both sides identifies the exterior.",
+    "Vertices use one XY cache and maximum original covered height; the union-boundary distance settles height to zero. Shared local XY coordinates provide continuous material UV, while Builder derives triangle normals.",
+    "No transport, save, pollution joint, world selection or old algorithm dispatch is changed by this helper."
+  ],
+  "limits": [
+    "This is not a proof of exact upper-envelope retriangulation for arbitrary overlapping meshes. It samples maximum source height at emitted vertices; statements remain limited to the two audited input constructions and measured fixtures.",
+    "No independent browser, normal-view approval or new full-world performance result is supplied by this review."
+  ],
+  "authorEvidence": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/protection.json",
+      "sha256": "ed4e16ebfb9e6e4c3054bbac78140864631f636c1a3faf62fb802f3b0b6857dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/contracts-attempt1.json",
+      "sha256": "cfb47b01809e25194c8a114dcbddf21bea932847303c4814269d243d506d6f2e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/summary.json",
+      "sha256": "fa68dd7c0fc7434c4b207f66d80c4366558a18260c028c842aa676630240cd1b"
+    }
+  ],
+  "packageContract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/package-readiness-3121/report.json",
+    "sha256": "cf198dc14c00baf5c529584d79976fc4193278845c80c66143d6527ce8351bfb"
+  },
+  "devSmoke": {
+    "path": "docs/qa/artifacts/r100-i10-i12/package-readiness-3121/dev-smoke.json",
+    "sha256": "841bea821b8211ebe493c18abef6d023074c9c10ea9bb145c471345649a1f4f4"
+  }
+}

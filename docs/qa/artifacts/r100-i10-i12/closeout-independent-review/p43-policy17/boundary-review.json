@@ -1,0 +1,141 @@
+{
+  "schema": "coh.qa.policy17-facing-boundaries-independent.v1",
+  "status": "pass",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/candidate.json",
+    "sha256": "6d52b2546171d31367df7ff6eb817dc8c2b673284116dc9877362a4bdb0c5868"
+  },
+  "executor": {
+    "path": "tools/qa/r100-i12-turn-align.mjs",
+    "sha256": "8e68e5aa7242ad6c07ba4c108b9f18e37dff589e5acc942f5e3f077569583150"
+  },
+  "policy": {
+    "maxSegments": 3,
+    "maxSegmentInputMs": 60,
+    "maxTurnInputMs": 180,
+    "maxElapsedMs": 1000,
+    "earlyStopMs": 750,
+    "actionReserveMs": 100,
+    "maxErrorDegrees": 25,
+    "spaceInputMs": 60
+  },
+  "semantics": "turnInputMs sums the direction-key wait requests actually issued (each<=60ms,total<=180ms). Segment elapsed clocks include input dispatch/read/release latency and are not claimed<=180ms. The whole alignment, Space and cleanup must be<=1000ms actual game time.",
+  "productionModel": {
+    "turnRate": 1080,
+    "math": {
+      "path": "src/utils/math.ts",
+      "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+    },
+    "constants": {
+      "path": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    },
+    "driver": {
+      "path": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    "limitation": "Mock keyboard and public observation fixture; position held at a blocked point while actual production angle stepping responds to held directional input. This is executor verification, not a browser run or gameplay qualification."
+  },
+  "counts": {
+    "passed": 22,
+    "failed": 0
+  },
+  "results": [
+    {
+      "name": "180degree turn reaches the real production turning rate in three60ms requested segments",
+      "status": "pass",
+      "segments": 3,
+      "requestedTurnMs": 180,
+      "elapsedMs": 240,
+      "finalErrorDegrees": 0
+    },
+    {
+      "name": "angle wrap across +/-pi keeps a4degree aligned target and creates no turn segment",
+      "status": "pass"
+    },
+    {
+      "name": "25degree threshold separates24.9999 from25.0001 degrees",
+      "status": "pass"
+    },
+    {
+      "name": "pursuer includes37px and excludes37.0001px; cornered excludes40px",
+      "status": "pass"
+    },
+    {
+      "name": "a remembered or absent target never switches to a different visible enemy",
+      "status": "pass"
+    },
+    {
+      "name": "both real enemy windup and strike phases forbid direction and Space input",
+      "status": "pass"
+    },
+    {
+      "name": "same target becomeshidden after a turn: release and omit Space",
+      "status": "pass"
+    },
+    {
+      "name": "same target becomesrange after a turn: release and omit Space",
+      "status": "pass"
+    },
+    {
+      "name": "same target becomesstrike after a turn: release and omit Space",
+      "status": "pass"
+    },
+    {
+      "name": "locked facing exhausts exactly three requested segments then abandons without Space",
+      "status": "pass"
+    },
+    {
+      "name": "asynchronous held-key reads may exceed180actual ms but are honestly bounded by the whole1000ms clock",
+      "status": "pass",
+      "requestedTurnMs": 120,
+      "measuredSegmentElapsedMs": 200,
+      "wholeActionElapsedMs": 260,
+      "semantics": "turnInputMs sums the direction-key wait requests actually issued (each<=60ms,total<=180ms). Segment elapsed clocks include input dispatch/read/release latency and are not claimed<=180ms. The whole alignment, Space and cleanup must be<=1000ms actual game time."
+    },
+    {
+      "name": "a key-down stall stops before issuing its wait; no phantom requested duration is counted",
+      "status": "pass"
+    },
+    {
+      "name": "a diagonal first-key stall stops the second key and always releases the first",
+      "status": "pass"
+    },
+    {
+      "name": "an input await beyond1000ms is failed evidence with no subsequent Space",
+      "status": "pass"
+    },
+    {
+      "name": "a return-route read beyond1000ms is failed before any keyboard input",
+      "status": "pass"
+    },
+    {
+      "name": "a return reserve stop after the first turn forbids Space",
+      "status": "pass"
+    },
+    {
+      "name": "Space cleanup is included: exactly1000ms passes,1000.001ms is failed",
+      "status": "pass"
+    },
+    {
+      "name": "permanent release failure retains a failed receipt and cannot claim all keys released",
+      "status": "pass"
+    },
+    {
+      "name": "real HP45 boundary, HP30 floor and chaos120 ceiling are preserved",
+      "status": "pass"
+    },
+    {
+      "name": "ended, inactive and paused scenes never receive input",
+      "status": "pass"
+    },
+    {
+      "name": "590ms elapsed plus60ms Space and100ms reserve stops before Space",
+      "status": "pass"
+    },
+    {
+      "name": "nonfinite final clock and backward final clock are failed even after Space input",
+      "status": "pass"
+    }
+  ]
+}

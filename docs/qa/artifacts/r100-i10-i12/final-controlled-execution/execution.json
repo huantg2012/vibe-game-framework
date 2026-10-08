@@ -1,0 +1,123 @@
+{
+  "status": "pass",
+  "startedAt": "2026-10-07T15:03:56.188075+00:00",
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "preparer": {
+    "path": "tools/qa/prepare-r100-controlled-matrices.mjs",
+    "sha256": "652a68a425c08eff106faf973c48df886e7e874bca6641814c14312eb8885829"
+  },
+  "resourceWindow": "Root sole heavy CPU while runtime owns non-performance production Chrome; equivalence waits until this window is released.",
+  "stages": [
+    {
+      "id": "prepare",
+      "command": [
+        "node",
+        "tools/qa/prepare-r100-controlled-matrices.mjs",
+        "--source",
+        "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+        "--output",
+        "docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108"
+      ],
+      "cwd": "/Users/yilungao/coh",
+      "startedAt": "2026-10-07T15:03:56.188335+00:00",
+      "before": {
+        "sourceFiles": 1397,
+        "workingTreeAndFrozenExact": true,
+        "sourceAndPlanExact": true,
+        "at": "2026-10-07T15:03:56.918549+00:00"
+      },
+      "exitCode": 0,
+      "durationSeconds": 1.08275,
+      "finishedAt": "2026-10-07T15:03:58.001665+00:00",
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-controlled-execution/prepare.log",
+        "sha256": "b1d32e9ae654099e7010bc1d5c0138b32a0a77d04d83730ffcb354d0067e3b08"
+      },
+      "after": {
+        "sourceFiles": 1397,
+        "workingTreeAndFrozenExact": true,
+        "sourceAndPlanExact": true,
+        "at": "2026-10-07T15:03:58.397328+00:00"
+      }
+    },
+    {
+      "id": "capability",
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/capability-a7977f5881a4.mjs",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/capability-report.json"
+      ],
+      "cwd": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/sources",
+      "startedAt": "2026-10-07T15:03:58.398252+00:00",
+      "before": {
+        "sourceFiles": 1397,
+        "workingTreeAndFrozenExact": true,
+        "sourceAndPlanExact": true,
+        "at": "2026-10-07T15:03:58.884830+00:00"
+      },
+      "exitCode": 0,
+      "durationSeconds": 0.948066,
+      "finishedAt": "2026-10-07T15:03:59.833321+00:00",
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-controlled-execution/capability.log",
+        "sha256": "15fa04809332d907a59bff1a9134fa574222564dde35c1ac6a3c2d252695117d"
+      },
+      "after": {
+        "sourceFiles": 1397,
+        "workingTreeAndFrozenExact": true,
+        "sourceAndPlanExact": true,
+        "at": "2026-10-07T15:04:00.306936+00:00"
+      }
+    },
+    {
+      "id": "presentation",
+      "command": [
+        "/usr/local/bin/node",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/presentation-032cd185eb28.mjs",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/presentation-report.json"
+      ],
+      "cwd": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/sources",
+      "startedAt": "2026-10-07T15:04:00.309645+00:00",
+      "before": {
+        "sourceFiles": 1397,
+        "workingTreeAndFrozenExact": true,
+        "sourceAndPlanExact": true,
+        "at": "2026-10-07T15:04:00.704879+00:00"
+      },
+      "exitCode": 0,
+      "durationSeconds": 91.826035,
+      "finishedAt": "2026-10-07T15:05:32.531365+00:00",
+      "log": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-controlled-execution/presentation.log",
+        "sha256": "f8d3e8adbaf322cef8510d67dcc2234692e30c42be954045904260e2278d9347"
+      },
+      "after": {
+        "sourceFiles": 1397,
+        "workingTreeAndFrozenExact": true,
+        "sourceAndPlanExact": true,
+        "at": "2026-10-07T15:05:33.261003+00:00"
+      }
+    }
+  ],
+  "limits": "Controlled ability and recorded-renderer contracts only; no actual GPU, natural play, audio or human visual approval.",
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/commands.json",
+    "sha256": "115bb292478bd0d40587b1a4860c6384c47e0a5743ce0132e10146e3bf4e3d3b"
+  },
+  "capability": {
+    "path": "docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/capability-report.json",
+    "sha256": "8f6206fe4c443b74c4585cfd8cca3131285debb60f3ae1d3093bd2a45565cf88"
+  },
+  "presentation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/controlled-matrices-final108/presentation-report.json",
+    "sha256": "f89350599a06f3b6d8d7bde961013a05f09a82370ebd6b2254d3a61b04c733d8"
+  },
+  "finishedAt": "2026-10-07T15:05:33.267581+00:00"
+}

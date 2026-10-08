@@ -1,0 +1,235 @@
+{
+  "version": 1,
+  "status": "bounded-branch-observations-pending-full48-review",
+  "reviewer": "root",
+  "reviewedAt": "2026-10-08T03:28:38.753Z",
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/report.json",
+    "sha256": "c1ccabf3979884cd40e46d62af8eeb2fbbf42b9cb2feaf187564cb2423184958"
+  },
+  "accountingHelper": {
+    "path": "tools/qa/r100-i09-search-receipts.mjs",
+    "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "checks": {
+    "completedTrips": 12,
+    "uniqueRunIds": 12,
+    "exactAdjacentSaveStates": true,
+    "oneExactHistoryAppendPerDeparture": true,
+    "sameRunSettlement": true
+  },
+  "rows": [
+    {
+      "ordinal": 1,
+      "world": "shell-threads",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 2,
+      "nonEntryPickups": 2,
+      "elapsedMs": 131794.73000000147,
+      "finalHp": 40,
+      "finalChaos": 86.88523778504447,
+      "explorationStop": "approach-kept-dangerous",
+      "beforeReserve": 20,
+      "afterPreparationReserve": 21
+    },
+    {
+      "ordinal": 2,
+      "world": "shell-chain",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 3,
+      "nonEntryPickups": 3,
+      "elapsedMs": 74213.70999999854,
+      "finalHp": 130,
+      "finalChaos": 57.971985152966944,
+      "beforeReserve": 21,
+      "afterPreparationReserve": 14
+    },
+    {
+      "ordinal": 3,
+      "world": "reversed-flow",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 2,
+      "nonEntryPickups": 2,
+      "elapsedMs": 74597.02999999787,
+      "finalHp": 145,
+      "finalChaos": 57.218048497378206,
+      "explorationStop": "approach-kept-dangerous",
+      "beforeReserve": 14,
+      "afterPreparationReserve": 17
+    },
+    {
+      "ordinal": 4,
+      "world": "gel-rafts",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 1,
+      "nonEntryPickups": 1,
+      "elapsedMs": 67797.30999999952,
+      "finalHp": 145,
+      "finalChaos": 47.82186533887976,
+      "explorationStop": "far-region-reached-with-no-new-observed-remains",
+      "beforeReserve": 17,
+      "afterPreparationReserve": 19
+    },
+    {
+      "ordinal": 5,
+      "world": "flake-thicket",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 3,
+      "nonEntryPickups": 3,
+      "elapsedMs": 47731.37999999941,
+      "finalHp": 130,
+      "finalChaos": 39.298752980851454,
+      "beforeReserve": 19,
+      "afterPreparationReserve": 6
+    },
+    {
+      "ordinal": 6,
+      "world": "fibre-choke",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 3,
+      "nonEntryPickups": 3,
+      "elapsedMs": 63997.429999999826,
+      "finalHp": 145,
+      "finalChaos": 56.0026814347523,
+      "beforeReserve": 6,
+      "afterPreparationReserve": 25
+    },
+    {
+      "ordinal": 7,
+      "world": "laminate-shell",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 0,
+      "nonEntryPickups": 0,
+      "elapsedMs": 82030.0200000033,
+      "finalHp": 130,
+      "finalChaos": 65.32070730767036,
+      "explorationStop": "far-region-reached-with-no-new-observed-remains",
+      "beforeReserve": 25,
+      "afterPreparationReserve": 19
+    },
+    {
+      "ordinal": 8,
+      "world": "three-shelves",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 2,
+      "nonEntryPickups": 2,
+      "elapsedMs": 67547.32000000181,
+      "finalHp": 85,
+      "finalChaos": 58.97198689984551,
+      "explorationStop": "far-region-reached-with-no-new-observed-remains",
+      "beforeReserve": 19,
+      "afterPreparationReserve": 18
+    },
+    {
+      "ordinal": 9,
+      "world": "silt-gel",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 3,
+      "nonEntryPickups": 3,
+      "elapsedMs": 78613.54000000423,
+      "finalHp": 100,
+      "finalChaos": 76.37268072995045,
+      "beforeReserve": 18,
+      "afterPreparationReserve": 28
+    },
+    {
+      "ordinal": 10,
+      "world": "rolled-fragments",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 1,
+      "nonEntryPickups": 1,
+      "elapsedMs": 72597.11000000428,
+      "finalHp": 115,
+      "finalChaos": 68.12119070037242,
+      "explorationStop": "far-region-reached-with-no-new-observed-remains",
+      "beforeReserve": 28,
+      "afterPreparationReserve": 31
+    },
+    {
+      "ordinal": 11,
+      "world": "pleated-hide",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 1,
+      "nonEntryPickups": 1,
+      "elapsedMs": 107662.3600000034,
+      "finalHp": 115,
+      "finalChaos": 79.29655834825674,
+      "explorationStop": "far-region-reached-with-no-new-observed-remains",
+      "beforeReserve": 31,
+      "afterPreparationReserve": 31
+    },
+    {
+      "ordinal": 12,
+      "world": "gel-rafts",
+      "grade": "low",
+      "outcome": "extract",
+      "actualPickups": 3,
+      "nonEntryPickups": 3,
+      "elapsedMs": 77346.92000000415,
+      "finalHp": 130,
+      "finalChaos": 70.36076998049133,
+      "beforeReserve": 31,
+      "afterPreparationReserve": 11
+    }
+  ],
+  "totals": {
+    "nonEntrySearchAndExtract": 11,
+    "emptyExtractions": 1,
+    "actualPickups": 24,
+    "nonEntryPickups": 24,
+    "startingKindlingReserve": 20,
+    "endingKindlingReserve": 11,
+    "distinctWorlds": 11
+  },
+  "viewedImages": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/1-entry.png",
+      "sha256": "7e43e97028ba64aff9e50c726aebc2c2263ae671705d873f44aabf80193aa558"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/1-search-4.png",
+      "sha256": "13d5cd6e3217484f3e4fc82c46ef3d6a3533a07215fc2a321e8352ce59a0f6ea"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/1-field-result.png",
+      "sha256": "ad2ca30738f877f569aec7acf1601e9217c86680088a7033f2d7b0aca681469d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/7-far-exploration.png",
+      "sha256": "6d6983425a0236bfcfa6d02cd832979539e0642f833b892c4a1755d7cef5a93a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/7-continued-exploration-2.png",
+      "sha256": "bcb06d845761eae63d4245f26f6e4c92f6f0a46fc15238fcabc23987ee00db08"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/7-field-result.png",
+      "sha256": "9267a91df75a056bd45062d2b14270ed62dd1d64b6a1d344779a581fcd9970eb"
+    }
+  ],
+  "observations": [
+    "All12 exact completed save transitions retain their actual cost and preparation state. Starting reserve20 and ending reserve11 are observed stock values, not a full economy or value-equivalence result.",
+    "Trip7 is an actual empty extraction after a far-region/no-new-observed-remains route stop; all6raw nodes remain uncollected. Its three viewed frames support the empty outcome, not a conclusion that loot is missing or unreachable.",
+    "Eleven other trips have at least one original terminal pickup more than320px from entry. No result or seed was replaced."
+  ],
+  "limitations": [
+    "Whole48 source/tool verification, original automatic full accounting and root overall experience disposition remain pending.",
+    "Mature earned save and diagnostic route controller; no novice, long-run economy, audio, performance or all-world-appearance approval."
+  ],
+  "experienceApproval": "pending"
+}

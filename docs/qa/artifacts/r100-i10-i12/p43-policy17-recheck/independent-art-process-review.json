@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "status": "additional-policy17-search-and-extract-observed",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T14:37:06.708Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "issue": "R100-P43",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "approvedProtocol": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/approved-protocol.json",
+    "sha256": "d88c904ce2c95d2c0be396016fda6f7db1ed82788781a90b6ab98792feb72ce6"
+  },
+  "rootInputProtocolReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/root-protocol-review.json",
+    "sha256": "96961cf0089f4d9ff2203bca288d4e2222fe5e7da657d5e26a2afb9b36bd5201"
+  },
+  "runtimeReconciliation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/reconciliation.json",
+    "sha256": "8078f229d6b1be1f092f4de669d3afda4acb95959b5809c367658d3ff77ac8b7"
+  },
+  "originalPairAndArtReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/independent-ochre-folds-review-art.json",
+    "sha256": "596580146b8db3490a9a1a089a95ee4dd9525a844bbb43f49677207be4834390"
+  },
+  "cases": [
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/report.json",
+        "sha256": "fb8b62b51d0ca351a6343d4cced68ce4361598b05d2181a9d4acb4e8cd2ea9ab"
+      },
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+        "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+      },
+      "attemptKind": "additional-policy17-original-seed",
+      "world": "ochre-folds",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "7e4ac85a",
+      "dependencyHash": "ddf2e336",
+      "policyRevision": 17,
+      "fullIdentityExactToOriginal": true,
+      "beforeStateExactToOriginal": true,
+      "outcome": "extract",
+      "elapsedMs": 63164.13999999964,
+      "hp": 115,
+      "chaos": 93.4949341723231,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 551.5360369005818
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "facingInputObservation": {
+        "recordCount": 4,
+        "recordedStatuses": [
+          "allowed",
+          "allowed",
+          "allowed",
+          "allowed"
+        ],
+        "limitation": "Input record statuses only; allowed or abandoned is not evidence of hit or miss. This art/process review does not certify the chronological technical guard."
+      },
+      "sameRunSettlementVerified": true,
+      "originalOutcome": "death",
+      "originalHp": 0,
+      "originalChaos": 61.00260932644061,
+      "originalKindling": 0,
+      "originalReturnedItemCount": 0,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/report.json",
+        "sha256": "9cc5a9adc59ddc3d4ca21813b43acfed105ed1e43bb2089b611d9420e6a88cf6"
+      },
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+        "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+      },
+      "attemptKind": "additional-policy17-original-seed",
+      "world": "ochre-folds",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "995e3743",
+      "dependencyHash": "ddf2e336",
+      "policyRevision": 17,
+      "fullIdentityExactToOriginal": true,
+      "beforeStateExactToOriginal": true,
+      "outcome": "extract",
+      "elapsedMs": 67730.62999999963,
+      "hp": 130,
+      "chaos": 75.05043600652155,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 554.3139904422402
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "facingInputObservation": {
+        "recordCount": 3,
+        "recordedStatuses": [
+          "abandoned",
+          "allowed",
+          "allowed"
+        ],
+        "limitation": "Input record statuses only; allowed or abandoned is not evidence of hit or miss. This art/process review does not certify the chronological technical guard."
+      },
+      "sameRunSettlementVerified": true,
+      "originalOutcome": "death",
+      "originalHp": 0,
+      "originalChaos": 150,
+      "originalKindling": 0,
+      "originalReturnedItemCount": 0,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "counts": {
+    "additionalAttempts": 2,
+    "additionalNonEntrySearchAndExtract": 2,
+    "additionalEmptyReturns": 0,
+    "additionalDeaths": 0,
+    "retainedOriginalDeaths": 2,
+    "personallyViewedOriginalNormalFrames": 4
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/1-search-2.png",
+      "sha256": "6ba6a52ff3017d9b198cf2e3057d96e1523838c6955279645e04180f24b37afd",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "115HP/86混乱、6薪柴搜后，冷灰底床裂纹/方向纹和右侧黑绿宿主局部分开，绿色侵蚀包围视野；上方/两侧仍有较直切界，赭折主体不在完整视野内。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/1-field-result.png",
+      "sha256": "61ca287ea2aa65134f6eade4c60a8204c32ca3ae5fba35efa202d03c950ec119",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "115HP、6薪柴、63秒、峰值混乱93、两击杀返回，受伤与实际带回可见；结算击杀数不能用作朝向输入的命中率或因果证明。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/1-search-2.png",
+      "sha256": "e37dfad82e01796ba8f4ad902ba0393d6418b8897276dd400466fa8fca22ee7c",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "130HP/63混乱、6薪柴搜后，灰床、左侧赭粉材料局部与右侧黑绿宿主可区分；大面积边缘未照见，未把可见搜索结果扩大为三折全形或完整撤路可读。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/1-field-result.png",
+      "sha256": "22e4e718c4c468d7c9af51e4ec4eddd674f310a269a78256ef13b82f0de1b3ce",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "130HP、6薪柴、68秒、峰值混乱75、一击杀返回；左上即时混乱74与最终峰值75分别可见，原第二seed死亡记录不因新返回而改写。"
+    }
+  ],
+  "findings": [
+    "两新增policy17过程的完整identity与各自原过程、before.state逐项深比较相等，两个原seed各取得一次非入口争夺点薪柴并同趟extract返回。",
+    "新增第一seed63.16秒/115HP/93.49混乱、第二seed67.73秒/130HP/75.05混乱，各6薪柴，受伤与消耗未剔除。",
+    "报告中有4条与3条facingChecks输入记录，但这些状态不是接触帧命中证据；不声称命中率提高或把新成功归因于单一朝向改动。",
+    "所看灰冷地床与黑绿污染体局部可辨，直切界与未照见的赭折主体限制保留，没有新共享画法或UI审美判定。"
+  ],
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/1-search-2.png",
+      "sha256": "6ba6a52ff3017d9b198cf2e3057d96e1523838c6955279645e04180f24b37afd",
+      "reason": "115HP/86混乱、6薪柴搜后，冷灰底床裂纹/方向纹和右侧黑绿宿主局部分开，绿色侵蚀包围视野；上方/两侧仍有较直切界，赭折主体不在完整视野内。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/1-field-result.png",
+      "sha256": "22e4e718c4c468d7c9af51e4ec4eddd674f310a269a78256ef13b82f0de1b3ce",
+      "reason": "130HP、6薪柴、68秒、峰值混乱75、一击杀返回；左上即时混乱74与最终峰值75分别可见，原第二seed死亡记录不因新返回而改写。"
+    }
+  ],
+  "limits": [
+    "Four original normal PNGs personally viewed plus two completed reports; no Chrome session, live gameplay, video, audio, GPU/performance or human aesthetic approval.",
+    "Additional fixed policy17 attempts; original policy15 deaths and prior static/frame reviews remain immutable. Not natural48.",
+    "No hit-rate, comparative combat effectiveness, causal attribution, full-route or whole-world visual claim.",
+    "Technical facing-input chronology/qualification belongs to root/QA and is not certified by these PNGs or recorded allowed statuses.",
+    "This record does not enable final108 or change candidate/final art dependency bindings."
+  ],
+  "pixelModelsScope": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+    "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+  }
+}

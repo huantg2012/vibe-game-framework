@@ -1,0 +1,342 @@
+{
+  "status": "pass",
+  "method": "Pure validation of original real52 baselines and in-memory corrupted clones; no runtime or final108 claim.",
+  "sources": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-report-contract.mjs",
+      "sha256": "5de91c51eb0fca83974b85f4a92d62e739d295d4c1a9f55fe93bd706adbac707"
+    }
+  ],
+  "inputs": [
+    {
+      "kind": "budget",
+      "path": "docs/qa/artifacts/r100-i09/runtime-budget-final52/report.json",
+      "sha256": "a3b0f5a09966d3fb30759417b53a40be561376ab4df12089e76403ad63d0e5bd"
+    },
+    {
+      "kind": "lifecycle",
+      "path": "docs/qa/artifacts/r100-i09/lifecycle-final52/report.json",
+      "sha256": "7ec895bc5da391c81632c4a27f7e1020a41ccc474a1a7f727ab3d8979c295438"
+    }
+  ],
+  "positives": [
+    {
+      "kind": "budget",
+      "result": {
+        "status": "pass-measured-budget-contract",
+        "thresholds": {
+          "frameP95Ms": 20,
+          "frameP99Ms": 33.4,
+          "framesOver50Fraction": 0.005,
+          "cpuP95Ms": 12,
+          "materialP95Ms": 3,
+          "minimumAliveMs": 60000,
+          "seed": 20261004
+        },
+        "exclusivity": "operator-declared; resource scheduling must also be independently checked"
+      }
+    },
+    {
+      "kind": "lifecycle",
+      "result": {
+        "status": "pass-measured-lifecycle-contract",
+        "retainedBytesLimit": 10485760,
+        "maxCombinedGrowth": 1863736,
+        "shaderSamples": [
+          {
+            "label": "warmed-baseline",
+            "created": 78,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-1",
+            "created": 80,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-2",
+            "created": 82,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-3",
+            "created": 84,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-4",
+            "created": 86,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-5",
+            "created": 88,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-6",
+            "created": 90,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-7",
+            "created": 92,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-8",
+            "created": 94,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-9",
+            "created": 96,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-10",
+            "created": 98,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "after-mixed-156",
+            "created": 416,
+            "live": 64,
+            "active": 62
+          }
+        ],
+        "independentShaderReview": "pending-separate-receipt",
+        "limitation": "Numeric resource checks only. Final technical/closure binding must separately consume the independent Shader review; no GPU driver bytes/RSS or unbounded lifetime claim."
+      }
+    }
+  ],
+  "negatives": [
+    {
+      "kind": "budget",
+      "name": "frame P95 exceeds original threshold",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: ash-strata: frame P95 exceeds 20ms"
+    },
+    {
+      "kind": "budget",
+      "name": "frame P99 exceeds original threshold",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: ash-strata: frame P99 exceeds 33.4ms"
+    },
+    {
+      "kind": "budget",
+      "name": "long-frame fraction exceeds original threshold",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: ash-strata: frames over 50ms exceed 0.5%"
+    },
+    {
+      "kind": "budget",
+      "name": "CPU P95 exceeds original threshold",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: ash-strata: CPU P95 exceeds 12ms"
+    },
+    {
+      "kind": "budget",
+      "name": "material P95 exceeds original threshold",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: ash-strata: material submission P95 exceeds 3ms"
+    },
+    {
+      "kind": "budget",
+      "name": "wrong frozen seed",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: The declared severe budget seed cannot change\n\n1 !== 20261004\n"
+    },
+    {
+      "kind": "budget",
+      "name": "empty frame sample",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: ash-strata/frames: nonempty measurements required"
+    },
+    {
+      "kind": "budget",
+      "name": "nonfinite measured value",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Finite nonnegative ash-strata/cpu/p95 required"
+    },
+    {
+      "kind": "budget",
+      "name": "reversed quantiles",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: ash-strata/frames: ordered measured quantiles required"
+    },
+    {
+      "kind": "budget",
+      "name": "forged duration boolean",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Duration differs from the actual runtime clock\n+ actual - expected\n\n+ 60000\n- 61264.220000000016\n"
+    },
+    {
+      "kind": "budget",
+      "name": "short alive clock with coherent duration",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: At least 60 seconds of alive runtime required"
+    },
+    {
+      "kind": "budget",
+      "name": "terminal death despite passed flag",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: All observations must remain alive\n\ntrue !== false\n"
+    },
+    {
+      "kind": "budget",
+      "name": "wrong actual runtime grade",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Measure the actual severe runtime\n\n'low' !== 'severe'\n"
+    },
+    {
+      "kind": "budget",
+      "name": "missing held-key observation",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Preserve the twelve actual held-key interval observations\n\n11 !== 12\n"
+    },
+    {
+      "kind": "budget",
+      "name": "missing exclusive declaration",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "empty GC samples",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: All twelve double-GC retained samples are required\n+ actual - expected\n\n+ []\n- [\n-   'warmed-baseline',\n-   'identical-1',\n-   'identical-2',\n-   'identical-3',\n-   'identical-4',\n-   'identical-5',\n-   'identical-6',\n-   'identical-7',\n-   'identical-8',\n-   'identical-9',\n-   'identical-10',\n-   'after-mixed-156'\n- ]\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "missing GC sample",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: All twelve double-GC retained samples are required\n+ actual - expected\n\n  [\n    'warmed-baseline',\n    'identical-1',\n-   'identical-2',\n    'identical-3',\n    'identical-4',\n    'identical-5',\n    'identical-6',\n    'identical-7',\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "duplicate GC label",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: All twelve double-GC retained samples are required\n+ actual - expected\n\n  [\n    'warmed-baseline',\n    'identical-1',\n+   'identical-1',\n-   'identical-2',\n    'identical-3',\n    'identical-4',\n    'identical-5',\n    'identical-6',\n    'identical-7',\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "wrong mixed requested seed",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Mixed reconstruction identities/order/seeds differ from the fixed schedule\n+ actual - expected\n\n  [\n    {\n      grade: 'low',\n+     seed: 20261005,\n-     seed: 20261004,\n      world: 'ash-strata'\n    },\n    {\n      grade: 'low',\n      seed: 20261005,\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "coherently reordered catalog changes fixed seed ownership",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Lifecycle seeds follow the frozen catalog order\n+ actual - expected\n\n  [\n+   'crystal-fibre',\n    'ash-strata',\n-   'crystal-fibre',\n    'ivory-basin',\n    'cinder-ridge',\n    'pallid-membrane',\n    'silt-gel',\n    'schist-shear',\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "duplicate mixed identity",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'amber-ribs/low',\n    'amber-ribs/medium',\n    'amber-ribs/severe',\n    'ash-strata/low',\n+   'ash-strata/low',\n    'ash-strata/medium',\n    'ash-strata/severe',\n    'bladder-weave/low',\n    'bladder-weave/medium',\n    'bladder-weave/severe',\n...\n    'cork-shelves/severe',\n-   'crystal-fibre/low',\n    'crystal-fibre/medium',\n    'crystal-fibre/severe',\n    'draped-bay/low',\n    'draped-bay/medium',\n    'draped-bay/severe',\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "nonfinite memory",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Finite nonnegative identical-1/usedSize required"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "forged reported heap delta",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Reported retained heap delta differs from measured bytes\n\n0 !== 1863736\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "retained heap grows to original limit",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156: retained growth reaches the original 10MiB limit"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "retained backing grows to original limit",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156: retained growth reaches the original 10MiB limit"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "Shader active and live growth",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156/Shader: active resources did not return to baseline\n\n63 !== 62\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "deleted Shader wrapper retention",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156: live Shader wrappers grew\n\n65 !== 64\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "cumulative counter decreases",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Cumulative creates cannot decrease"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "impossible count domain",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156/Buffer/active: resource count required"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "WebGL2 active growth",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156/WebGL2: active resources did not return to baseline\n\n2 !== 1\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "Texture active growth",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156/Texture: active resources did not return to baseline\n\n385 !== 384\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "Buffer active growth",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156/Buffer: active resources did not return to baseline\n\n12 !== 11\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "Program active growth",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156/Program: active resources did not return to baseline\n\n33 !== 32\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "Framebuffer active growth",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156/Framebuffer: active resources did not return to baseline\n\n70 !== 69\n"
+    },
+    {
+      "kind": "lifecycle",
+      "name": "Renderbuffer active growth",
+      "rejected": true,
+      "failure": "AssertionError [ERR_ASSERTION]: after-mixed-156/Renderbuffer: active resources did not return to baseline\n\n70 !== 69\n"
+    }
+  ],
+  "originalReportsUnchanged": true,
+  "limitation": "The independent Shader receipt remains required by final technical/closure. Numeric data validation does not grant that review or prove resource exclusivity."
+}

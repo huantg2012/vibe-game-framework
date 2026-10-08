@@ -1,0 +1,32 @@
+{
+  "status": "pass",
+  "startedAt": "2026-10-07T14:52:32.432835+00:00",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "compatibility": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility/execution.json",
+    "sha256": "a78156db7d58858892edaf143ac70861acb78ad718d721efdb7d725101a35d16"
+  },
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "tools/world-study/check-r100-world-selection.ts",
+    "--out",
+    "docs/qa/artifacts/r100-i10-i12/selection-final108"
+  ],
+  "harness": {
+    "path": "tools/world-study/check-r100-world-selection.ts",
+    "sha256": "25307a382cf90f658b0ec7029513af76c15b652662a8816876e8d3e3b78fb0da"
+  },
+  "beforeAllSourceExact": true,
+  "exitCode": 0,
+  "log": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-enable/selection-execution.log",
+    "sha256": "29e346ffb737d1c54d8a7217b3732afe9423df214281234026cf97f3b792e77d"
+  },
+  "endedAt": "2026-10-07T14:52:44.011503+00:00",
+  "afterAllSourceExact": true
+}

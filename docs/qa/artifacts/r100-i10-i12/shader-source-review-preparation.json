@@ -1,0 +1,51 @@
+{
+  "status": "source-reviewed-awaiting-final-lifecycle-observations",
+  "reviewer": "root",
+  "at": "2026-10-08T01:45:04.520901+00:00",
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "renderer": {
+    "path": "src/systems/r100-world/surface-renderer.ts",
+    "sha256": "978caaa8e1447d50485d6c5bb89c4970cabd3481a26cad83ce64450590d0e9dd"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+    "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+  },
+  "observations": [
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "line": 100,
+      "finding": "Compile failure deletes its shader; successful linking marks both shaders for deletion, while the program owns attached execution resources."
+    },
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "line": 119,
+      "finding": "Construction failure loses the owned context and collapses the canvas. This is static error-path inspection, not an injected failure runtime test."
+    },
+    {
+      "path": "src/systems/r100-world/surface-renderer.ts",
+      "line": 126,
+      "finding": "Idempotent destroy deletes textures, buffer and program and loses its owned WebGL2 context."
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "line": 14,
+      "finding": "Instrumentation stores weak references, tracks cumulative creation separately from live wrappers, and labels active only when no explicit delete/lost mark exists."
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "line": 39,
+      "finding": "Each retained sample follows two real HeapProfiler.collectGarbage calls. Current intended schedule is six-family warmup, ten identical returns and324 mixed rebuilds before returning to the same baseline."
+    }
+  ],
+  "requiredActualReview": "After final-source execution, independently inspect all12 actual Shader created/live/active rows, related program/context counts and retained JS/backing bytes. Bind the exact report and source-binding in the final root Shader receipt.",
+  "limitations": [
+    "No final108 lifecycle run or actual final12 counts exist yet. No pass for resource release is granted.",
+    "The active marker is an observed delete/lost flag, not proof that GPU driver bytes are freed immediately.",
+    "Cumulative creates are expected to grow with reconstructions; retained wrapper growth, return-to-baseline ownership and sampled memory must be assessed independently.",
+    "No claim about GPU driver/RSS bytes, unbounded duration, weak hardware or all error paths."
+  ]
+}

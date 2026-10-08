@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "observedAt": "2026-10-07T13:38:58.045462+00:00",
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "tools/qa/r100-i12-turn-align.test.mjs"
+  ],
+  "env": {
+    "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+  },
+  "exitCode": 0,
+  "passedChecks": 16,
+  "test": {
+    "path": "tools/qa/r100-i12-turn-align.test.mjs",
+    "sha256": "fada6ada85ce54e1b288ba861537d92299c80dfb0bb48ca3ab3f1068c371b7c3"
+  },
+  "helper": {
+    "path": "tools/qa/r100-i12-turn-align.mjs",
+    "sha256": "8e68e5aa7242ad6c07ba4c108b9f18e37dff589e5acc942f5e3f077569583150"
+  },
+  "productionRotation": [
+    {
+      "path": "src/utils/math.ts",
+      "sha256": "24f31531bd83174c96e9c41fc84b66c965aec3b016014779589f8c4e30936dad"
+    },
+    {
+      "path": "src/config/constants.ts",
+      "sha256": "44e4e5aead966e8f7d6103a7f0c08b721cb258c9b534b65a4f95e77029c67c91"
+    }
+  ],
+  "previousFailure": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/boundary-attempt1.json",
+    "sha256": "62a2b4f6fc865702cefc29f3ee73ce321d21e7f51a6e0b935576de96360fb6ce"
+  },
+  "outputSummary": "PASS all16 finite boundary checks: real production180 degree rotation;25 degree inclusive/wrap/8-way direction;original37inclusive/40exclusive;current same visible target;windup/strike;HP/chaos/ended/return;locked facing;early/margin/hard1000ms and async lag;request-vs-actual timing and release failures.",
+  "limitation": "Pure production math plus finite async input/clock fixtures, no browser execution or gameplay/hit assertion."
+}

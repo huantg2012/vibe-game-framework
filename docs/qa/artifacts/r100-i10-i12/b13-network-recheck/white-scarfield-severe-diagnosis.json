@@ -1,0 +1,1018 @@
+{
+  "status": "read-only-qualified-pair-deficit-diagnosis",
+  "at": "2026-10-07T12:31:46.559Z",
+  "scope": "Two original policy15 fixed source3121 severe processes; no replay, source mutation, strategy change or qualification assigned.",
+  "cases": [
+    {
+      "directory": "001-white-scarfield-severe-20261005",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+      },
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/journey.jsonl",
+        "sha256": "741af3285c8cfabfb8526ab0c846443dd690666b0f024bf4019a299132c38a1c"
+      },
+      "policyRevision": 15,
+      "identityHash": "21470cab4652ab3eb0a43b4dcd0ec97cf297913948a9528e2e460b59fd54ace4",
+      "generation": {
+        "world": "r100-white-scarfield",
+        "grade": "severe",
+        "requestedSeed": 20261005,
+        "signature": "7864d455"
+      },
+      "outcome": "death",
+      "status": "completed-real-input",
+      "entry": {
+        "hp": 145,
+        "chaos": 24.310529592074232,
+        "elapsedMs": 666.6100000000001,
+        "position": {
+          "x": 196,
+          "y": 588
+        }
+      },
+      "terminal": {
+        "hp": 0,
+        "chaos": 150,
+        "elapsedMs": 93329.60000000008,
+        "position": {
+          "x": 524.385927515105,
+          "y": 659.4403724120783
+        },
+        "carried": 0
+      },
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "tier": "deep",
+          "collected": false,
+          "actualCollectedNodeIds": [],
+          "hp": 145,
+          "chaos": 68.22265994013546,
+          "carried": 0,
+          "elapsedMs": 46164.82999999987
+        }
+      ],
+      "fieldNodeCount": 9,
+      "collectedNodes": [],
+      "navigationWarning": null,
+      "errors": [],
+      "consoleErrors": [],
+      "settled": true,
+      "chronology": [
+        {
+          "at": "2026-10-07T12:25:48.447Z",
+          "event": "precommitted-far-geometry-goal",
+          "start": {
+            "x": 196,
+            "y": 588
+          },
+          "goal": {
+            "id": "geometry-exploration",
+            "pos": {
+              "x": 916,
+              "y": 108
+            }
+          },
+          "pathDistance": 1200,
+          "disclosure": "Pure full terrain support; no node list, hidden reward, guard or Host query.",
+          "line": 4,
+          "lastObservation": null
+        },
+        {
+          "at": "2026-10-07T12:26:07.940Z",
+          "event": "stop-exploration-at-observed-remains",
+          "position": {
+            "x": 653.0680756625698,
+            "y": 301.17948588163597
+          },
+          "observed": [
+            {
+              "id": "r100-kindling-deep-2",
+              "pos": {
+                "x": 868,
+                "y": 164
+              }
+            },
+            {
+              "id": "r100-contaminant-deep-1",
+              "pos": {
+                "x": 900,
+                "y": 212
+              }
+            }
+          ],
+          "line": 228,
+          "lastObservation": {
+            "line": 226,
+            "elapsedMs": 20132.54999999988,
+            "position": {
+              "x": 650.3375011287549,
+              "y": 307.1928005228633
+            },
+            "hp": 145,
+            "chaos": 33.37842597457859,
+            "visibleEnemies": [
+              {
+                "id": "ENM_INF_01",
+                "position": {
+                  "x": 803.5804869025518,
+                  "y": 212.52640906722604
+                },
+                "attack": "idle",
+                "distance": 180.12534069391813
+              },
+              {
+                "id": "ENM_RWR_01",
+                "position": {
+                  "x": 783.3943606890434,
+                  "y": 504.0610354686916
+                },
+                "attack": "idle",
+                "distance": 237.61571877031244
+              }
+            ]
+          }
+        },
+        {
+          "at": "2026-10-07T12:26:50.821Z",
+          "event": "abandoned-observed-approach",
+          "reason": "return-reserve-threshold",
+          "target": {
+            "id": "r100-contaminant-deep-1",
+            "kind": "contaminant",
+            "pos": {
+              "x": 900,
+              "y": 212
+            },
+            "tier": "deep",
+            "value": 0,
+            "collected": false
+          },
+          "line": 605,
+          "lastObservation": {
+            "line": 599,
+            "elapsedMs": 62664.16999999973,
+            "position": {
+              "x": 942.8050948925941,
+              "y": 147.98884804479715
+            },
+            "hp": 100,
+            "chaos": 101.48239400638617,
+            "visibleEnemies": [
+              {
+                "id": "ENM_INF_02",
+                "position": {
+                  "x": 875.3553048975216,
+                  "y": 298.89440743984267
+                },
+                "attack": "idle",
+                "distance": 165.29356317386043
+              },
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 888.9869184243336,
+                  "y": 87.77193829802478
+                },
+                "attack": "idle",
+                "distance": 80.7618247553865
+              }
+            ]
+          }
+        },
+        {
+          "at": "2026-10-07T12:26:53.976Z",
+          "event": "bounded-visible-return-evasion",
+          "target": "exit",
+          "from": {
+            "x": 980.9074289285319,
+            "y": 271.68872349294884
+          },
+          "toward": {
+            "x": 980.9074289285319,
+            "y": 247.68872349294884
+          },
+          "keys": [
+            "w"
+          ],
+          "count": 1,
+          "inputMs": 280,
+          "elapsedMs": 320.2935839999991,
+          "threatIds": [
+            "ENM_INF_02"
+          ],
+          "policy": {
+            "maxCount": 4,
+            "stepMs": 280,
+            "totalInputMs": 1120,
+            "maxElapsedMs": 4000
+          },
+          "line": 632,
+          "lastObservation": {
+            "line": 630,
+            "elapsedMs": 66014.03999999953,
+            "position": {
+              "x": 980.9074289285319,
+              "y": 271.68872349294884
+            },
+            "hp": 100,
+            "chaos": 110.75667776813403,
+            "visibleEnemies": [
+              {
+                "id": "ENM_INF_02",
+                "position": {
+                  "x": 936.1300015358283,
+                  "y": 293.61890312621745
+                },
+                "attack": "idle",
+                "distance": 49.85930988949072
+              }
+            ]
+          }
+        },
+        {
+          "at": "2026-10-07T12:26:54.812Z",
+          "event": "bounded-visible-return-evasion",
+          "target": "exit",
+          "from": {
+            "x": 980.9074289285319,
+            "y": 278.2600882162367
+          },
+          "toward": {
+            "x": 980.9074289285319,
+            "y": 302.2600882162367
+          },
+          "keys": [
+            "s"
+          ],
+          "count": 2,
+          "inputMs": 560,
+          "elapsedMs": 641.8916250000038,
+          "threatIds": [
+            "ENM_INF_02"
+          ],
+          "policy": {
+            "maxCount": 4,
+            "stepMs": 280,
+            "totalInputMs": 1120,
+            "maxElapsedMs": 4000
+          },
+          "line": 641,
+          "lastObservation": {
+            "line": 639,
+            "elapsedMs": 66847.31999999956,
+            "position": {
+              "x": 980.9074289285319,
+              "y": 278.2600882162367
+            },
+            "hp": 100,
+            "chaos": 111.64701361710593,
+            "visibleEnemies": [
+              {
+                "id": "ENM_INF_02",
+                "position": {
+                  "x": 954.8146021443234,
+                  "y": 280.3068848777721
+                },
+                "attack": "idle",
+                "distance": 26.172981988386013
+              },
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 966.5194277613806,
+                  "y": 243.03693613511754
+                },
+                "attack": "idle",
+                "distance": 38.048456211988345
+              }
+            ]
+          }
+        },
+        {
+          "at": "2026-10-07T12:26:56.239Z",
+          "event": "bounded-visible-return-evasion",
+          "target": "exit",
+          "from": {
+            "x": 980.9074289285319,
+            "y": 315.03872796556664
+          },
+          "toward": {
+            "x": 980.9074289285319,
+            "y": 339.03872796556664
+          },
+          "keys": [
+            "s"
+          ],
+          "count": 3,
+          "inputMs": 840,
+          "elapsedMs": 1039.1998329999915,
+          "threatIds": [
+            "ENM_INF_03"
+          ],
+          "policy": {
+            "maxCount": 4,
+            "stepMs": 280,
+            "totalInputMs": 1120,
+            "maxElapsedMs": 4000
+          },
+          "line": 650,
+          "lastObservation": {
+            "line": 648,
+            "elapsedMs": 68197.23999999958,
+            "position": {
+              "x": 980.9074289285319,
+              "y": 315.03872796556664
+            },
+            "hp": 85,
+            "chaos": 113.09699164430742,
+            "visibleEnemies": [
+              {
+                "id": "ENM_INF_02",
+                "position": {
+                  "x": 961.9642463180685,
+                  "y": 291.7144228071925
+                },
+                "attack": "idle",
+                "distance": 30.047751638588906
+              },
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 978.5910475324287,
+                  "y": 280.5991413722423
+                },
+                "attack": "windup",
+                "distance": 34.51739775086325
+              }
+            ]
+          }
+        },
+        {
+          "at": "2026-10-07T12:27:01.659Z",
+          "event": "bounded-visible-return-evasion",
+          "target": "exit",
+          "from": {
+            "x": 980.9074289285319,
+            "y": 525.4094471368117
+          },
+          "toward": {
+            "x": 980.9074289285319,
+            "y": 549.4094471368117
+          },
+          "keys": [
+            "s"
+          ],
+          "count": 4,
+          "inputMs": 1120,
+          "elapsedMs": 1391.1619159999827,
+          "threatIds": [
+            "ENM_INF_03"
+          ],
+          "policy": {
+            "maxCount": 4,
+            "stepMs": 280,
+            "totalInputMs": 1120,
+            "maxElapsedMs": 4000
+          },
+          "line": 697,
+          "lastObservation": {
+            "line": 695,
+            "elapsedMs": 73630.38999999972,
+            "position": {
+              "x": 980.9074289285319,
+              "y": 525.4094471368117
+            },
+            "hp": 85,
+            "chaos": 119.0282300606687,
+            "visibleEnemies": [
+              {
+                "id": "ENM_INF_02",
+                "position": {
+                  "x": 963.1342985477224,
+                  "y": 501.9014798604194
+                },
+                "attack": "idle",
+                "distance": 29.47047147571924
+              },
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 982,
+                  "y": 495.4619754916518
+                },
+                "attack": "windup",
+                "distance": 29.96739510674664
+              }
+            ]
+          }
+        }
+      ],
+      "firstStopBudget": {
+        "at": "2026-10-07T12:26:50.821Z",
+        "event": "known-return-budget",
+        "elapsedMs": 63147.45999999972,
+        "chaos": 104.78126684999397,
+        "routeLength": 1240.3488408295657,
+        "actualSpeed": 67.12417563909756,
+        "budgetSpeed": 60,
+        "observedRate": 1.2879264167808233,
+        "reservedChaos": 41.77633963592113,
+        "stop": true,
+        "line": 604
+      },
+      "routeStatistics": {
+        "count": 114,
+        "totalPlanningMs": 8829.992971999945,
+        "maximumPlanningMs": 822.7246250000026,
+        "supportedTargets": [
+          "exit",
+          "geometry-exploration",
+          "r100-kindling-deep-1",
+          "r100-kindling-deep-2",
+          "r100-contaminant-deep-1"
+        ]
+      },
+      "knownToolInputs": [
+        {
+          "at": "2026-10-07T12:26:18.461Z",
+          "event": "known-tool-context-input",
+          "label": "imminent-visible-green-crossing",
+          "slot": 0,
+          "key": "Q",
+          "item": {
+            "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+            "name": "灰釉齿",
+            "description": "压住一处污染源1秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 464,
+            "y": 112
+          },
+          "line": 368
+        },
+        {
+          "at": "2026-10-07T12:26:22.290Z",
+          "event": "known-tool-context-input",
+          "label": "imminent-visible-green-crossing",
+          "slot": 0,
+          "key": "Q",
+          "item": {
+            "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+            "name": "灰釉齿",
+            "description": "压住一处污染源1秒",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": {
+            "x": 464,
+            "y": 112
+          },
+          "line": 413
+        },
+        {
+          "at": "2026-10-07T12:26:33.177Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 4
+          },
+          "remaining": 3,
+          "used": 1,
+          "facePoint": {
+            "x": 764.5994418798995,
+            "y": 109.50075673328789
+          },
+          "line": 494
+        },
+        {
+          "at": "2026-10-07T12:26:43.146Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 3
+          },
+          "remaining": 2,
+          "used": 1,
+          "facePoint": {
+            "x": 865.1373209776193,
+            "y": 59.619159279133
+          },
+          "line": 533
+        },
+        {
+          "at": "2026-10-07T12:26:48.186Z",
+          "event": "known-tool-context-input",
+          "label": "unknown-corner-before-search",
+          "slot": 1,
+          "key": "F",
+          "item": {
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+            "name": "盲针罗盘",
+            "description": "探查4格内目标位置",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": null,
+          "line": 575
+        }
+      ],
+      "ownedUseChanges": [
+        {
+          "id": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+          "kind": "weapon",
+          "beforeUses": 40,
+          "afterUses": null,
+          "retained": false
+        },
+        {
+          "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "beforeUses": 4,
+          "afterUses": null,
+          "retained": false
+        },
+        {
+          "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "beforeUses": 1,
+          "afterUses": null,
+          "retained": false
+        },
+        {
+          "id": "CAT_01f753b0-56e8-4336-933a-6ed35452096a_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "beforeUses": 2,
+          "afterUses": null,
+          "retained": false
+        },
+        {
+          "id": "CAT_53f7d5c9-fbe2-42cd-a263-d71c567511f6_r100-contaminant-contested-1",
+          "kind": "contaminant",
+          "beforeUses": 1,
+          "afterUses": null,
+          "retained": false
+        }
+      ]
+    },
+    {
+      "directory": "002-white-scarfield-severe-3075192741",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+      },
+      "inputs": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/journey.jsonl",
+        "sha256": "9fcd02909195d357e0e93c604b9a0fa6297902e60cd8b261086732e9b0cd9c89"
+      },
+      "policyRevision": 15,
+      "identityHash": "9f8c02cce29943a6df912733ce436aa9f010f75cac3b261ef19419119f675c09",
+      "generation": {
+        "world": "r100-white-scarfield",
+        "grade": "severe",
+        "requestedSeed": 3075192741,
+        "signature": "6ff3dd6f"
+      },
+      "outcome": "extract",
+      "status": "completed-real-input",
+      "entry": {
+        "hp": 145,
+        "chaos": 24.310562200453113,
+        "elapsedMs": 666.6800000000001,
+        "position": {
+          "x": 196,
+          "y": 588
+        }
+      },
+      "terminal": {
+        "hp": 55,
+        "chaos": 136.32462434351268,
+        "elapsedMs": 96046.18000000042,
+        "position": {
+          "x": 178.94450484464423,
+          "y": 643.7792386229534
+        },
+        "carried": 0
+      },
+      "searches": [
+        {
+          "searchDecision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          },
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "tier": "contested",
+          "collected": false,
+          "actualCollectedNodeIds": [],
+          "hp": 145,
+          "chaos": 36.79200677773233,
+          "carried": 0,
+          "elapsedMs": 19799.22999999989
+        }
+      ],
+      "fieldNodeCount": 9,
+      "collectedNodes": [],
+      "navigationWarning": null,
+      "errors": [],
+      "consoleErrors": [],
+      "settled": true,
+      "chronology": [
+        {
+          "at": "2026-10-07T12:27:37.038Z",
+          "event": "precommitted-far-geometry-goal",
+          "start": {
+            "x": 196,
+            "y": 588
+          },
+          "goal": {
+            "id": "geometry-exploration",
+            "pos": {
+              "x": 916,
+              "y": 108
+            }
+          },
+          "pathDistance": 1200,
+          "disclosure": "Pure full terrain support; no node list, hidden reward, guard or Host query.",
+          "line": 4,
+          "lastObservation": null
+        },
+        {
+          "at": "2026-10-07T12:27:47.794Z",
+          "event": "stop-exploration-at-observed-remains",
+          "position": {
+            "x": 536.3881484392615,
+            "y": 482.2487479359123
+          },
+          "observed": [
+            {
+              "id": "r100-kindling-contested-2",
+              "pos": {
+                "x": 772,
+                "y": 596
+              }
+            }
+          ],
+          "line": 148,
+          "lastObservation": {
+            "line": 146,
+            "elapsedMs": 11499.56999999999,
+            "position": {
+              "x": 536.1793431059282,
+              "y": 482.2487479359123
+            },
+            "hp": 145,
+            "chaos": 29.356890507386403,
+            "visibleEnemies": []
+          }
+        },
+        {
+          "at": "2026-10-07T12:27:59.303Z",
+          "event": "stop-exploration-at-observed-remains",
+          "position": {
+            "x": 775.950541424784,
+            "y": 462.19442357682345
+          },
+          "observed": [
+            {
+              "id": "r100-contaminant-deep-1",
+              "pos": {
+                "x": 932,
+                "y": 260
+              }
+            }
+          ],
+          "line": 287,
+          "lastObservation": {
+            "line": 283,
+            "elapsedMs": 22982.419999999845,
+            "position": {
+              "x": 775.950541424784,
+              "y": 461.9853049101568
+            },
+            "hp": 145,
+            "chaos": 44.65768293679002,
+            "visibleEnemies": [
+              {
+                "id": "ENM_INF_03",
+                "position": {
+                  "x": 803.5980211835775,
+                  "y": 317.7002172395267
+                },
+                "attack": "idle",
+                "distance": 146.91007338210105
+              },
+              {
+                "id": "ENM_RWR_01",
+                "position": {
+                  "x": 772.0140145786759,
+                  "y": 498.07540750546997
+                },
+                "attack": "strike",
+                "distance": 36.30415608370976
+              }
+            ]
+          }
+        },
+        {
+          "at": "2026-10-07T12:28:24.502Z",
+          "event": "abandoned-observed-approach",
+          "reason": "approach-kept-dangerous",
+          "target": {
+            "id": "r100-contaminant-deep-1",
+            "kind": "contaminant",
+            "pos": {
+              "x": 932,
+              "y": 260
+            },
+            "tier": "deep",
+            "value": 0,
+            "collected": false
+          },
+          "line": 573,
+          "lastObservation": {
+            "line": 570,
+            "elapsedMs": 47914.73999999994,
+            "position": {
+              "x": 749.2449811644677,
+              "y": 449.8754327966808
+            },
+            "hp": 85,
+            "chaos": 80.09524698603713,
+            "visibleEnemies": []
+          }
+        },
+        {
+          "at": "2026-10-07T12:28:47.060Z",
+          "event": "abandoned-observed-approach",
+          "reason": "return-reserve-threshold",
+          "target": {
+            "id": "r100-kindling-deep-1",
+            "kind": "kindling",
+            "pos": {
+              "x": 900,
+              "y": 212
+            },
+            "tier": "deep",
+            "value": 6,
+            "collected": false
+          },
+          "line": 822,
+          "lastObservation": {
+            "line": 819,
+            "elapsedMs": 70780.50999999973,
+            "position": {
+              "x": 694.9024649203416,
+              "y": 258.77191280251634
+            },
+            "hp": 55,
+            "chaos": 113.16524814649374,
+            "visibleEnemies": []
+          }
+        },
+        {
+          "at": "2026-10-07T12:28:49.999Z",
+          "event": "bounded-visible-return-evasion",
+          "target": "exit",
+          "from": {
+            "x": 624.7518324480028,
+            "y": 299.46799870955385
+          },
+          "toward": {
+            "x": 600.7518324480028,
+            "y": 299.46799870955385
+          },
+          "keys": [
+            "a"
+          ],
+          "count": 1,
+          "inputMs": 280,
+          "elapsedMs": 319.73191699999734,
+          "threatIds": [
+            "ENM_INF_02"
+          ],
+          "policy": {
+            "maxCount": 4,
+            "stepMs": 280,
+            "totalInputMs": 1120,
+            "maxElapsedMs": 4000
+          },
+          "line": 848,
+          "lastObservation": {
+            "line": 846,
+            "elapsedMs": 73447.04999999978,
+            "position": {
+              "x": 624.7518324480028,
+              "y": 299.46799870955385
+            },
+            "hp": 55,
+            "chaos": 116.09280707191176,
+            "visibleEnemies": [
+              {
+                "id": "ENM_INF_02",
+                "position": {
+                  "x": 680.7739109682426,
+                  "y": 278.427224758541
+                },
+                "attack": "idle",
+                "distance": 59.84302340444986
+              }
+            ]
+          }
+        }
+      ],
+      "firstStopBudget": {
+        "at": "2026-10-07T12:28:47.059Z",
+        "event": "known-return-budget",
+        "elapsedMs": 70797.17999999973,
+        "chaos": 113.18343559945124,
+        "routeLength": 898.9714146537218,
+        "actualSpeed": 58.789641146619516,
+        "budgetSpeed": 58.789641146619516,
+        "observedRate": 1.2672499611295864,
+        "reservedChaos": 34.44692881393246,
+        "stop": true,
+        "line": 821
+      },
+      "routeStatistics": {
+        "count": 145,
+        "totalPlanningMs": 6841.557924000055,
+        "maximumPlanningMs": 124.64637499999662,
+        "supportedTargets": [
+          "exit",
+          "geometry-exploration",
+          "r100-kindling-contested-2",
+          "r100-contaminant-deep-1",
+          "r100-kindling-deep-1"
+        ]
+      },
+      "knownToolInputs": [
+        {
+          "at": "2026-10-07T12:27:55.419Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 4
+          },
+          "remaining": 3,
+          "used": 1,
+          "facePoint": {
+            "x": 790.1263993498378,
+            "y": 644.8466891113118
+          },
+          "line": 249
+        },
+        {
+          "at": "2026-10-07T12:28:03.517Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 3
+          },
+          "remaining": 2,
+          "used": 1,
+          "facePoint": {
+            "x": 720.7127622766354,
+            "y": 450.604128475561
+          },
+          "line": 339
+        },
+        {
+          "at": "2026-10-07T12:28:12.799Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 2
+          },
+          "remaining": 1,
+          "used": 1,
+          "facePoint": {
+            "x": 565.252801337839,
+            "y": 480.24667486998504
+          },
+          "line": 438
+        },
+        {
+          "at": "2026-10-07T12:28:37.250Z",
+          "event": "known-tool-context-input",
+          "label": "break-visible-pursuit",
+          "slot": 2,
+          "key": "G",
+          "item": {
+            "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+            "name": "空白相框",
+            "description": "原地留下假身8秒",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": {
+            "x": 927.9937771446171,
+            "y": 214.9843548035042
+          },
+          "line": 727
+        },
+        {
+          "at": "2026-10-07T12:28:40.778Z",
+          "event": "known-tool-context-input",
+          "label": "unknown-corner-before-search",
+          "slot": 1,
+          "key": "F",
+          "item": {
+            "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+            "name": "盲针罗盘",
+            "description": "探查4格内目标位置",
+            "uses": 1
+          },
+          "remaining": 0,
+          "used": 1,
+          "facePoint": null,
+          "line": 759
+        }
+      ],
+      "ownedUseChanges": [
+        {
+          "id": "WPN_69f17106-ce11-4558-ac28-e7eb5c3407c1",
+          "kind": "weapon",
+          "beforeUses": 40,
+          "afterUses": 34,
+          "retained": true
+        },
+        {
+          "id": "CAT_40c0b289-37f7-4905-80e5-a4d838360b0c_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "beforeUses": 4,
+          "afterUses": null,
+          "retained": false
+        },
+        {
+          "id": "CAT_fa3c944a-fd24-4f87-9c66-dca8d26ba574_r100-contaminant-safe-1",
+          "kind": "contaminant",
+          "beforeUses": 1,
+          "afterUses": null,
+          "retained": false
+        }
+      ]
+    }
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "code": [
+    {
+      "path": "tools/qa/r100-revision6-journey.mjs",
+      "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+    },
+    {
+      "path": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    }
+  ],
+  "facts": [
+    "Both entered and completed a real process with the original generation; both collected zero nodes and settled exactly their own run.",
+    "Both explicit search calls returned attempted:false / visible-opponent-too-close. No E search channel started in these runs.",
+    "No body-route exception, stuck movement assertion or navigationWarning was recorded; complete return succeeded for seed3075192741. This does not establish all possible routes are safe.",
+    "The frozen policy excludes near-entry nodes <=320px, follows one far terrain direction, defers unsafe observed targets, then returns on health/chaos/distance thresholds. These are limitations of the test driver, not additional game rules.",
+    "Seed20261005 died on the retreat with actual nearby pursuing enemies; seed3075192741 returned alive with55HP. Both misses are gameplay/controller outcomes rather than network failures."
+  ],
+  "inference": "Evidence demonstrates failure of these two exact controller processes, not impossibility of the authored world. A route/policy limitation is plausible because both refuse to start search after threat observation, but alternative safe player inputs are untested. No product fix or changed control policy is justified solely by this diagnosis.",
+  "qualification": "white-scarfield severe remains unqualified: original two seeds contain no non-entry search-and-extract. Preserve loss/empty-return and request root decision before any additional probe."
+}

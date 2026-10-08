@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "reviewer": "root",
+  "reviewedAt": "2026-10-08T02:42:26.119Z",
+  "status": "interaction-pass-catalog-image-height-fix-required",
+  "html": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+    "sha256": "aee61f2798d098c9e30abbb8be6368d03ff6123e7c54063a057b7a5b4c877048"
+  },
+  "data": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+    "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+  },
+  "browserReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/report.json",
+    "sha256": "a19b5e1105f99dc9d3a1e1426ddf68735be543915d7f0e4efe60bcabab4ee158"
+  },
+  "viewedScreenshots": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/01-default.png",
+      "sha256": "831e7d52d234d1004940547cce144943db6f8e8358480320f2803b46d1a153c7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/02-viewer.png",
+      "sha256": "a7bd98eecbfb0909c42704d9fae5f41c4ecfdd986d940b133224959b4fd11d4f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/03-last-world-severe.png",
+      "sha256": "8e9d9e58f2764369c845a0a9c3eb7d8b305ffd86921cfefcbf6a228c58a79a66"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/04-filter.png",
+      "sha256": "d207e6e6fd8379e84039008184cdfc58edd1d9ec7d56bf0f6c73c2317fbb668a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review/05-explicit-historical-missing.png",
+      "sha256": "8eb817eada94c186420a3bfcdb3f261597fbd0d7f398730bde323faeb6d466e9"
+    }
+  ],
+  "observations": [
+    {
+      "screenshots": [
+        "01-default.png",
+        "02-viewer.png",
+        "03-last-world-severe.png"
+      ],
+      "finding": "Main heading, 108-world navigation, selected grade, original image, neighbor links and evidence limitations are readable and do not overlap at 1440×1000. The original image retains its dark/unseen regions."
+    },
+    {
+      "screenshots": [
+        "04-filter.png"
+      ],
+      "finding": "Filtered catalog shows the expected world and its three incoming neighbors, but each thumbnail element retains source height 758px despite a card width about 326px. This adds large vertical empty regions and pushes card descriptions below the viewport.",
+      "requiredFix": "Override the img height attribute with height:auto in the catalog image rule; preserve image content, data and evidence. Recheck actual image bounds in a fresh root browser review."
+    },
+    {
+      "screenshots": [
+        "05-explicit-historical-missing.png"
+      ],
+      "finding": "Missing-slot link switches from severe to the requested ash-strata low slot, shows an explicit missing-original-frame message, disables frame navigation, and retains the historical evidence scope. No image from another grade is substituted."
+    }
+  ],
+  "limitations": [
+    "This is a bounded offline-gallery layout and interaction review, not new approval of the 108 game worlds or human art acceptance.",
+    "The original automated review and all five viewed screenshots are retained unchanged. A fresh review is required after the one CSS repair."
+  ],
+  "browserClosed": true
+}

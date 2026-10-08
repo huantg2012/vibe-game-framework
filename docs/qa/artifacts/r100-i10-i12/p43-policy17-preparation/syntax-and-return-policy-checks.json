@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "files": [
+    {
+      "path": "tools/qa/r100-i12-turn-align.mjs",
+      "sha256": "8e68e5aa7242ad6c07ba4c108b9f18e37dff589e5acc942f5e3f077569583150"
+    },
+    {
+      "path": "tools/qa/r100-i12-turn-encounters.mjs",
+      "sha256": "1b1f703bb2f3785f3aa2117fa66c47012fc26f0ebe8334f26aa5253175730b51"
+    },
+    {
+      "path": "tools/qa/r100-i12-turn-journey.mjs",
+      "sha256": "5a2b1d80111d075397810420f771e5c8c731b3f71cdfa0868f46ae95afcfd473"
+    },
+    {
+      "path": "tools/qa/r100-i12-turn-coverage.mjs",
+      "sha256": "4d4d0945d305d6c205a67347b9b1f1109ced2b8b0a7c3b9d59b84247705daf08"
+    },
+    {
+      "path": "tools/qa/r100-i12-turn-align.test.mjs",
+      "sha256": "fada6ada85ce54e1b288ba861537d92299c80dfb0bb48ca3ab3f1068c371b7c3"
+    }
+  ],
+  "syntaxCommandTemplate": [
+    "node",
+    "--check",
+    "<file>"
+  ],
+  "returnPolicyCommand": [
+    "node",
+    "--import",
+    "tsx",
+    "tools/qa/r100-i12-turn-journey.mjs",
+    "--check-return-policy"
+  ],
+  "returnPolicyStdout": "PASS return policy: current short-leg threats only, no voluntary pursuit, bounded evasion",
+  "note": "No policy16 strike substitutions were copied into the original policy15 return strategy."
+}

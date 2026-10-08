@@ -1,0 +1,302 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "crushed-seam",
+    "label": "压碎层缝",
+    "description": "压碎层缝的原生材料与完整搜撤地段",
+    "material": "strata",
+    "surface": {
+      "substrate": "strata",
+      "coating": "strata",
+      "organization": "bands",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 2240579,
+      "floor": 5467270,
+      "floorLight": 9940157,
+      "materialDark": 4533036,
+      "materialMid": 9986897,
+      "materialLight": 13279627,
+      "faceLight": 14735842,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 5467270,
+      "groundLight": 9940157,
+      "groundDark": 2240579,
+      "wall": 9986897,
+      "wallLight": 13279627,
+      "wallDark": 4533036
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "crushed-seam",
+    "ground": {
+      "dark": 2240579,
+      "mid": 5467270,
+      "light": 9940157
+    },
+    "solid": {
+      "dark": 4533036,
+      "mid": 9986897,
+      "light": 13279627
+    },
+    "cleaved": {
+      "dark": 6709355,
+      "mid": 12104640,
+      "light": 14735842
+    },
+    "secondary": {
+      "dark": 4142403,
+      "mid": 8876680,
+      "light": 12101051
+    },
+    "groundPattern": "strata",
+    "patternScale": 244,
+    "patternStrength": 0.37,
+    "secondaryCoverage": 0.13,
+    "textureContrast": 1.15,
+    "quietCoverage": 0.62
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "crushed-seam-low",
+    "family": "folded-slab",
+    "grade": "low",
+    "label": "压碎层缝",
+    "profile": "crushed-seam",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": -0.28,
+    "light_radius": 112,
+    "emission": 0.35,
+    "motion_period": 19,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "folded-slab",
+        "role": "relief",
+        "x": 385,
+        "y": 390,
+        "rotation": 0.35,
+        "length": 410,
+        "width": 220,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.2992,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-bundle"
+      },
+      {
+        "id": 2,
+        "family": "folded-slab",
+        "role": "relief",
+        "x": 730,
+        "y": 400,
+        "rotation": -0.25,
+        "length": 390,
+        "width": 205,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.3696,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-bundle"
+      },
+      {
+        "id": 3,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 531,
+        "y": 215,
+        "rotation": 0.15,
+        "length": 150,
+        "width": 94,
+        "height": 38,
+        "thickness": 10,
+        "fold": 0.5015999999999999,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fracture-fan"
+      },
+      {
+        "id": 4,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 566,
+        "y": 329,
+        "rotation": -0.35,
+        "length": 110,
+        "width": 92,
+        "height": 46,
+        "thickness": 12,
+        "fold": 0.616,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      },
+      {
+        "id": 5,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 585,
+        "y": 498,
+        "rotation": 0.23,
+        "length": 135,
+        "width": 98,
+        "height": 35,
+        "thickness": 9,
+        "fold": 0.44,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 6,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 542,
+        "y": 608,
+        "rotation": -0.36,
+        "length": 142,
+        "width": 105,
+        "height": 30,
+        "thickness": 8,
+        "fold": 0.4048,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 850,
+          "y": 32
+        },
+        {
+          "x": 935,
+          "y": 48
+        },
+        {
+          "x": 946,
+          "y": 96
+        },
+        {
+          "x": 881,
+          "y": 112
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "low",
+    "version": 1,
+    "label": "低污染",
+    "status": "dev-masters",
+    "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+    "paintCount": 2,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "infiltrate",
+    "volumeCount": 1,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "infiltrate",
+    "volumeCols": 3,
+    "volumeRows": 3,
+    "chaosStartRate": 0.24,
+    "chaosEndRate": 0.34,
+    "chaosRampStartSeconds": 90,
+    "chaosRampEndSeconds": 210
+  },
+  "contentDefinition": {
+    "grade_id": "low",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "低污染",
+    "public_risk": "污染较少，混乱增长较慢",
+    "public_preparation": "观察路线，补充行装",
+    "public_reward": "深入仍需承担路程",
+    "enemy_count": 2,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 1,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 0
+  },
+  "package": {
+    "id": "r100-crushed-seam",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "folded-slab": {
+        "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+        "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+        "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+      }
+    },
+    "dependencyHash": "e7c043a0",
+    "grade": "low"
+  }
+}

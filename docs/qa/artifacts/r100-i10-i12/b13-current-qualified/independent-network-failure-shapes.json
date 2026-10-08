@@ -1,0 +1,329 @@
+{
+  "status": "bounded-original-network-failure-attribution-cause-undetermined",
+  "reviewer": "identity_shapes",
+  "createdAt": "2026-10-07T10:00:33.729661+00:00",
+  "scope": "Independent read-only audit of original B13 case003. No browser/network manipulation, game rerun, OS/network-state diagnosis or original-data modification. Clean replay and remaining processes are separate pending evidence.",
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/report.json",
+      "sha256": "96840a1f23f988940d7ff87e7307bf038ab179676fac9720ceed3ee629fef154"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/runner.log",
+      "sha256": "524462ecfbdb8cf4323ce37a65809a38d8025176caf386585ec37ff4571bb93b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/journey.jsonl",
+      "sha256": "c566b6f22ca030e39877ed33f09ca45584c3c683512f0d6918b945db35a45058"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/1-entry.save.json",
+      "sha256": "300e9ab07027422db036215ec58ad6a63b1dc939a199160aeb759d41b135fcb8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/1-returned.save.json",
+      "sha256": "b826381139c9609a76839ec1392bf4372c4543220dc3959ee5bd5ea99fa16043"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/worker-observations/observer-94063.jsonl",
+      "sha256": "e6ef9c32fdfee04273dc93024bff9e2152e7c606a4463dd4917c2afdca24a396"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/worker-observation-first-error.json",
+      "sha256": "67579974c0ee7b547dc65cddcc26f3eb171a84664962154db91042d9c94b5a77"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/policy-freeze.json",
+      "sha256": "a971cfbecf497c4a46ebb152c5641813d33254d1461ea354b8a0a41670cbf026"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/batch-report.json",
+      "sha256": "9dba0dd1466a54478eba546cb394da2a429a45a638823271731cae6f062d8b34"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play-commands.json",
+      "sha256": "421691b5f4730efb3f02961a3a89dd63f751ae59b3a6c91f713306b4dfc7cc51"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play-execution.json",
+      "sha256": "2e64442fbac93d4d19b890604d48f10576a272a0d92aa5ee0f04df13256b78ef"
+    }
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "frozenRetryImplementation": [
+    {
+      "relativeSourcePath": "src/utils/worker-request.ts",
+      "sha256": "daffb6b048af03e206c50756dbfe5ecc66763e5a222a44081de66e4ef8395e87"
+    },
+    {
+      "relativeSourcePath": "src/systems/r100-world/surface-preparation-client.ts",
+      "sha256": "864d605301d0323257cf455bd9710e9245517dd1691bdd7616cae91eba488ce0"
+    },
+    {
+      "relativeSourcePath": "src/systems/r100-world/surface-preparation-worker.ts",
+      "sha256": "6082f9ff20ab38d5db9a877a368c5fa4cc1ebc1569f8090931296a99d65be00a"
+    }
+  ],
+  "fixedIdentity": {
+    "world": "white-scarfield",
+    "grade": "medium",
+    "requestedSeed": 20261005,
+    "effectiveSeed": 20261005,
+    "algorithmRevision": 6,
+    "signature": "36535484",
+    "dependencyHash": "84b60c68",
+    "runId": "8d32ec15-1eb0-41a5-8feb-21448b8d37bd"
+  },
+  "observedRequestFailures": [
+    {
+      "at": "2026-10-07T09:52:23.436Z",
+      "pid": 94063,
+      "event": "requestfailed",
+      "browserId": 1,
+      "contextId": 1,
+      "urlId": 266,
+      "url": "http://127.0.0.1:3121/src/entities/form-renderers/d/fragment-ramp.ts",
+      "failure": {
+        "errorText": "net::ERR_NETWORK_CHANGED"
+      },
+      "resourceType": "script"
+    },
+    {
+      "at": "2026-10-07T09:52:23.436Z",
+      "pid": 94063,
+      "event": "requestfailed",
+      "browserId": 1,
+      "contextId": 1,
+      "urlId": 250,
+      "url": "http://127.0.0.1:3121/src/generation/world-study/native-volume-geometry.ts",
+      "failure": {
+        "errorText": "net::ERR_NETWORK_CHANGED"
+      },
+      "resourceType": "script"
+    },
+    {
+      "at": "2026-10-07T09:52:23.436Z",
+      "pid": 94063,
+      "event": "requestfailed",
+      "browserId": 1,
+      "contextId": 1,
+      "urlId": 318,
+      "url": "http://127.0.0.1:3121/src/systems/r100-world/ground.ts",
+      "failure": {
+        "errorText": "net::ERR_NETWORK_CHANGED"
+      },
+      "resourceType": "script"
+    }
+  ],
+  "workerTimeline": [
+    {
+      "at": "2026-10-07T09:52:21.540Z",
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 1,
+      "url": "http://127.0.0.1:3121/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T09:52:22.351Z",
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 1,
+      "url": "http://127.0.0.1:3121/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T09:52:22.359Z",
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 2,
+      "url": "http://127.0.0.1:3121/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T09:52:23.151Z",
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 2,
+      "url": "http://127.0.0.1:3121/src/generation/rift-generation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T09:52:23.215Z",
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 3,
+      "url": "http://127.0.0.1:3121/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T09:52:23.437Z",
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 3,
+      "url": "http://127.0.0.1:3121/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T09:52:23.562Z",
+      "event": "worker-created",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 4,
+      "url": "http://127.0.0.1:3121/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+    },
+    {
+      "at": "2026-10-07T09:52:24.640Z",
+      "event": "worker-closed",
+      "browserId": 1,
+      "contextId": 1,
+      "pageId": 1,
+      "workerId": 4,
+      "url": "http://127.0.0.1:3121/src/systems/r100-world/surface-preparation-worker.ts?worker_file&type=module"
+    }
+  ],
+  "networkAccounting": {
+    "requests": 700,
+    "responses": 685,
+    "failed": 3,
+    "unpairedAtContextClose": [
+      {
+        "urlId": 243,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/generation/legacy-r100-v5/executor-recovery.js"
+      },
+      {
+        "urlId": 244,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/generation/legacy-r100-v4/executor.js"
+      },
+      {
+        "urlId": 242,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/generation/legacy-r100-v3/executor.js"
+      },
+      {
+        "urlId": 282,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/generation/world-study/world-material-pigment.ts"
+      },
+      {
+        "urlId": 267,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/generation/world-study/native-volume-raster.ts"
+      },
+      {
+        "urlId": 317,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/systems/r100-world/surface-fields.ts"
+      },
+      {
+        "urlId": 319,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/systems/r100-world/organization-sampling.ts"
+      },
+      {
+        "urlId": 69,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/types/game-types.ts"
+      },
+      {
+        "urlId": 304,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/entities/form-renderers/d/paint-genome/material.ts"
+      },
+      {
+        "urlId": 39,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/utils/random.ts"
+      },
+      {
+        "urlId": 218,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/generation/wall-edge-path.ts"
+      },
+      {
+        "urlId": 294,
+        "method": "GET",
+        "resourceType": "script",
+        "url": "http://127.0.0.1:3121/src/generated/contamination-lexicon-data.ts"
+      }
+    ],
+    "boundary": "Twelve requests lack matching terminal events in this observer summary; preserve them. This does not prove live leaked requests after worker/context destruction."
+  },
+  "originalGameplay": {
+    "status": "completed-real-input",
+    "outcome": "extract",
+    "fieldElapsedMs": 29565.489999999783,
+    "fieldHp": 145,
+    "fieldChaos": 33.03827530962048,
+    "actualCollectedNode": "r100-kindling-contested-1",
+    "distanceFromEntry": 592.4862867611367,
+    "settledKindling": 6,
+    "returnedItemCount": 0,
+    "baseSettled": true,
+    "errors": [],
+    "consoleErrors": [],
+    "entryAndReturnSameRunVerified": true,
+    "checkpointIdentityExact": true,
+    "savedFilesEqualReport": true
+  },
+  "interpretation": [
+    "The failure is on three real3121 module requests in the sole browser context/page, not an unrelated3188 extra page and not a supplied script exception.",
+    "The3 failures occur at09:52:23.436Z; first surfaceWorker closes1ms later. The replacement same-URL surfaceWorker appears125ms after prior close, consistent with the frozen120ms startup retry helper, then closes before the recorded entry.",
+    "Real play proceeds to a29.57s extract with one contested pickup and same-run6-kindling base settlement. Original observer failure remains disqualifying for a clean-environment result despite journey exit0.",
+    "The observer does not log Worker request/ACK/postMessage payloads. Timing and frozen source support bounded startup recovery; they do not directly prove every protocol transition or establish external root cause.",
+    "ERR_NETWORK_CHANGED is the reported transport error. There is no evidence here of the OS/network configuration change, a human action, server code defect, or common cause with earlier P36 empty worker.onerror incidents."
+  ],
+  "imagesForRoot": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/1-search-1.png",
+      "sha256": "4864e4090fe764f87de32e55381a47baf1905d3c33c5847519b05c45893d52c0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/1-field-result.png",
+      "sha256": "4868bb669ff1865e1dc26fdf97511bf3b4ba80bd039f851d4b72fe6553234c9b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/medium/1-return.png",
+      "sha256": "bdf11f9bd981d560838f3b0c54aedf75cb6f973da745c8a5f42c262fab8961d1"
+    }
+  ],
+  "visuallyReviewedByThisAudit": false,
+  "replayRequirements": [
+    "Only root-authorized sameworld/grade/requestedseed and same source/policy/earned-storage; retain original failures and raw gameplay",
+    "Compare fullgeneration identity/dependencyHash and originalbefore/equipment; new runId and new timing need not be identical",
+    "Record all original3failure+12pending observations separately from any clean replay. Successful replay does not rewrite the original or establish a cause",
+    "Resume only originalunexecuted004–024 thenB14; no alternate seed selection"
+  ],
+  "limits": [
+    "Original003 observed transport failure retained; not a zero-error qualification",
+    "No controlled fault was injected in this original process",
+    "No final108 entry/performance/GC or natural48 conclusion"
+  ]
+}

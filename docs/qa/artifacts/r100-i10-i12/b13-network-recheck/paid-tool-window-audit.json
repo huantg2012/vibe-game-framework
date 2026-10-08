@@ -1,0 +1,83 @@
+{
+  "status": "read-only-audit-no-strategy-change",
+  "at": "2026-10-07T12:35:43.633Z",
+  "sources": [
+    {
+      "path": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "path": "tools/qa/r100-revision6-journey.mjs",
+      "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+    },
+    {
+      "path": "src/entities/form-renderers/form-renderer.ts",
+      "sha256": "72bad9b45011398720c488001737233b8756539ce43cc8af3f81f22bb9b5b8a1"
+    },
+    {
+      "path": "src/systems/combat-system.ts",
+      "sha256": "12a31b2644ac2eb22e56d5207744e29164d9b404e523d45032fa27493cecf529"
+    },
+    {
+      "path": "src/systems/catalog-ability-runtime.ts",
+      "sha256": "2b2a7a2695529df0b636f4c7c3b451832906382fd65bedefe9671c9068bde42b"
+    },
+    {
+      "path": "src/systems/ai/ai-system.ts",
+      "sha256": "136fad657c34711e00e5a5084b1fac0d0496388bf85c40d0a3debe48230d5435"
+    },
+    {
+      "path": "src/systems/ai/state-machine.ts",
+      "sha256": "41961f2c370726757f59cbe694f7fd756bec385775ceff9f2bc650c5b7c39a67"
+    },
+    {
+      "path": "data/contaminant-items.csv",
+      "sha256": "d0d7daaf2005ae91b490cdc3986af47efe7c98d5cd0d07523e2eeed2257d2634"
+    }
+  ],
+  "actualEquipment": {
+    "active": [
+      "ash_tooth",
+      "blind_needle_compass",
+      "empty_photo_frame"
+    ],
+    "passive": "milky_fish_eye",
+    "solidifyEquipped": false,
+    "tripwireEquipped": false,
+    "soundLureEquipped": false,
+    "paidMirrorUsesBySeed": {
+      "20261005": 2,
+      "3075192741": 4
+    }
+  },
+  "findings": [
+    {
+      "id": "enemy-visual-phase-enum",
+      "kind": "proven-harness-contract-mismatch",
+      "source": "CombatSystem.getEnemyAttackVisualState emits FormAttackPose: idle|windup|strike|recover. Enemy state internally idle|windup|cooldown; active is a player-weapon phase.",
+      "consumer": "costed-encounters allowObservedWindow line166 and caution lure-pass line186 compare enemy attack to active. That branch can never match.",
+      "runtime": "Two original severe observer logs contain17 strike observations and0 active. All8 accepted observed-back-facing-window events contain only idle, so no accepted-strike window is proven in this pair.",
+      "minimumCorrection": "In a newly versioned supplementary controller, compare the actual strike enum instead of active at both predicates; add a focused real-contract negative case. Keep original policy15 and its SHA unchanged.",
+      "causalLimit": "The correction is conservative and has no demonstrated path to solve the two failed searches. It cannot justify replaying unchanged originals or claiming a player bug."
+    },
+    {
+      "id": "paid-image-lure",
+      "kind": "strategy-limitation-not-proven-product-defect",
+      "source": "catalog image_lure creates a visible body at cast position for its paid duration; it never adds enemy movement suppression. AI visibleDecoyFor and sightTargetPos explicitly decline to override confirmed CHASE toward the real player. Sound lure also does not erase CHASE.",
+      "consumer": "evade() spends an image_lure under break-visible-pursuit and moves54px candidates; its paid-use boolean is ignored. Only sound_lure receives lurePass; image_lure does not. Generic visible back-facing observations can still grant short movement windows.",
+      "runtime": "The two original branches spent2/4 mirrors; mere uses spent does not prove any enemy saw or targeted a decoy. The logs deliberately do not read hidden AI targets. Both search calls rejected currently close visible enemies.",
+      "minimumCorrection": "Do not treat paid mirror activation as a safe search window, freeze, or successful aggro reset. If root authorizes a new generic policy, record own paid effect position/lifetime and require actual rendered enemy motion/facing away before approaching; retain strike/windup rejection. This is a separate changed policy, not a guard-only correction.",
+      "causalLimit": "Cannot prove the mirror produced a usable search window in these originals without observed movement context; no automatic safe-enemy filtering is warranted."
+    },
+    {
+      "id": "paid-solidify-and-tripwire",
+      "kind": "out-of-case-harness-risk",
+      "source": "solidify can stop perception/movement/attack and breaks on damage; weak wax_sealed_button lasts1000ms, normal versions2500/4000/5500ms. Tripwire only sets movementMultiplier0 on an actual crossing; it does not suppressAttack.",
+      "consumer": "search/caution assume2500ms stoppedUntil for a selected enemy after any matching paid solidify use, without binding actual target, duration or damage break. Tripwire is only used via evade; it is not added to stoppedUntil.",
+      "runtime": "Neither solidify nor tripwire is equipped in these two original processes; this cannot explain their loss/empty return.",
+      "minimumCorrection": "A future independent controller should bind its own paid solidify receipt and actual visible target/duration/break before granting an attack-safe channel. Never promote tripwire movement stop to attack suppression.",
+      "causalLimit": "Not part of the current white-scarfield fix; do not expand scope without separate root decision."
+    }
+  ],
+  "recommendation": "Retain the two failed original outcomes and all policy15 inputs. No product/CSV change is supported by this audit. The enum bug is a real but noncausal narrow controller contract issue. Any exploration/paid-effect strategy improvement requires a separately frozen supplementary protocol and actual same-world/seed evidence; it cannot be labelled original policy15."
+}

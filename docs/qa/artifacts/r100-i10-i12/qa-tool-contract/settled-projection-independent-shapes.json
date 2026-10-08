@@ -1,0 +1,214 @@
+{
+  "status": "bounded-independent-code-pass",
+  "reviewer": "identity_shapes",
+  "createdAt": "2026-10-07T08:03:25.679168+00:00",
+  "scope": "Independent read-only review of the explicit unused settled-projection source bridge. One authorized in-memory AST mutation confirmed an inert-binding loophole; pipeline repaired it and reran the same-source proof. No game/browser/matrix run or product edit by this reviewer.",
+  "sources": [
+    {
+      "path": "tools/qa/r100-source-continuity.mjs",
+      "sha256": "bd97eaadeedd411259b81a8441ca5772b3d6aff5cf9245d202bd3da941b8dd21"
+    },
+    {
+      "path": "tools/qa/r100-settled-projection-continuity.mjs",
+      "sha256": "a360233a4ed2b86730dc28f9ce7841d6b8db8cc79669e984a35990a25e330615"
+    },
+    {
+      "path": "tools/qa/check-r100-settled-projection-continuity.mjs",
+      "sha256": "83035403ef7a4f721256664a8faa4a8e3c0dd968d04caa2d504308c9b5a9a6ed"
+    },
+    {
+      "path": "tools/qa/r100-organization-dispatch-continuity.mjs",
+      "sha256": "179a2a8a82f00fb7b51f6a5a8afadb107f61736cfd7062556ea7d781bb326d81"
+    }
+  ],
+  "evidence": {
+    "originalPrintingFailure": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-continuity-attempt1.json",
+      "sha256": "9957f3c3393ec4454abb4c9ef68a2939bb4918e141bb6d27e38e7b0e85a10562"
+    },
+    "original11Contracts": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-continuity-attempt2.json",
+      "sha256": "fec8a65b7b7d3bf2846016904adf638b25abe983ada1cc6b37918512914b6745"
+    },
+    "independentConfirmedGap": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-destructuring-gap.json",
+      "sha256": "5af6861e3c147b7820efe3c4d453568c200caaf7ce13960c20f81fc2627267f9"
+    },
+    "fixed14Contracts": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-binding-fix.json",
+      "sha256": "47267579b5b48ba5bb8fbc54ba14a151b3c90b9af0306b235ccb54b3e96b393f"
+    },
+    "fixedSame97Execution": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-binding-fix-execution.json",
+      "sha256": "0e408357b02607b248567151dd5379626fa2c3a60ace78142455c0ef4a1ced94"
+    },
+    "fixedSame97Edge": {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/current3120-to3121-unselected97-binding-fix.json",
+      "sha256": "060761a543fd62bc2b4aff48d61cb354e2faf21ff028f2344d463836446bafe0"
+    },
+    "original97Edge": {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/current3120-to3121-unselected97.json",
+      "sha256": "060761a543fd62bc2b4aff48d61cb354e2faf21ff028f2344d463836446bafe0"
+    }
+  },
+  "blockers": [],
+  "resolvedFinding": {
+    "id": "inert-destructuring-default-execution",
+    "before": "The inert predicate only inspected the const initializer. An empty-array initializer passed while an array/object binding default or computed property could execute at module load. The actual product module did not contain such a statement.",
+    "independentReproduction": "Original frozen baseline and the added destructuring mutation both returned pass in an AST-only helper call; the side-effect expression itself was never run.",
+    "repair": "Each top-level const declaration must now have an Identifier name before the unchanged inert initializer check. Pipeline added array-default, object-default and computed-object-key negative cases; all14 cases pass.",
+    "assessment": "The confirmed binding-initializer hole is closed without changing accepted actual runtime code or broadening any source exception."
+  },
+  "checks": [
+    {
+      "topic": "Explicit unselected scope",
+      "detail": "The public flag is mutually exclusive with every other shape/material/transport/remains exception. Both snapshots have equal selected native definitions (enabled alone excluded), appearance/remains projections and used material dependency values. All1083 selected instances exclude both new profiles."
+    },
+    {
+      "topic": "Old runtime paths remain exact",
+      "detail": "Helper recognizes one exact old/new shallow guard, restores only that matched AST range, and requires all remaining geometry AST equal. In ground it recognizes the exact import, full expected profile arrays and two exact calls; removing only those matched nodes must recover every old constructor/dispatcher statement. No arbitrary function body omission is allowed."
+    },
+    {
+      "topic": "Safe source rewrite",
+      "detail": "Matched source ranges are spliced using the originating node text, then reparsed/canonically printed. This avoids the original cross-SourceFile literal-offset printing defect while retaining exact surrounding code checks. Original failed receipt is preserved."
+    },
+    {
+      "topic": "New module and unknown source changes",
+      "detail": "New module must be absent before, have only type imports/inert declarations and exactly one exported buildSettledProjection function. Shared inert declaration check now also rejects binding-pattern execution. Main permits exactly this one source addition, one consumer (ground), and two reviewed changed source files; all other nonprojected files must match bytes or fail."
+    },
+    {
+      "topic": "Actual scope and exclusions",
+      "detail": "New receipt contains97 unique world projections,1389 unchanged source files,7 narrow changes and one admitted inert module. It excludes the10 modified shallow-profile worlds and woven material selection exactly; the presence of their new data is not inherited."
+    },
+    {
+      "topic": "Evidence boundary",
+      "detail": "This proof supports unchanged content/selected geometry/material paths across3120→3121 only. It creates no approval for the10 repaired appearances, woven material, final pool selection, ordinary entry/cold recovery, load/performance, Worker/P36 behavior, or human audio/experience."
+    }
+  ],
+  "worlds": [
+    "ash-strata",
+    "crystal-fibre",
+    "ivory-basin",
+    "cinder-ridge",
+    "pallid-membrane",
+    "silt-gel",
+    "schist-shear",
+    "splayed-fibres",
+    "shell-chain",
+    "grain-laminate",
+    "tension-membrane",
+    "shell-gel-delta",
+    "pressed-dunes",
+    "ruptured-film",
+    "reversed-flow",
+    "laminate-shell",
+    "fibre-silt",
+    "film-laminate",
+    "gel-fibre",
+    "shell-grit",
+    "rib-vault",
+    "pleated-hide",
+    "blister-field",
+    "wax-tongues",
+    "monolith-sill",
+    "bleached-court",
+    "split-rib-causeway",
+    "satin-fan",
+    "chalk-steps",
+    "porcelain-maw",
+    "amber-ribs",
+    "pale-sail",
+    "root-cistern",
+    "scab-islands",
+    "foam-trenches",
+    "resin-fall",
+    "tendon-shelves",
+    "felt-basin",
+    "cork-shelves",
+    "lacquer-court",
+    "ribbed-delta",
+    "bladder-weave",
+    "flake-thicket",
+    "resin-hollows",
+    "sentinel-mass",
+    "stepped-bowl",
+    "draped-bay",
+    "ember-cushions",
+    "splinter-rotunda",
+    "quilted-scars",
+    "silt-colonnade",
+    "shell-causeway",
+    "cleft-tableland",
+    "fallen-spines",
+    "clamped-shore",
+    "torn-reservoir",
+    "braided-seam",
+    "scalloped-reach",
+    "offset-pan",
+    "thin-delta",
+    "shard-switchback",
+    "hollow-wreckage",
+    "knotted-run",
+    "rolled-fragments",
+    "fibre-choke",
+    "buried-lamellae",
+    "pressed-rim",
+    "wedged-hide",
+    "quiet-spur",
+    "split-fall",
+    "three-shelves",
+    "frayed-outwash",
+    "short-fibre-mat",
+    "marrow-break",
+    "felt-wedges",
+    "pore-bank",
+    "staggered-cups",
+    "split-tows",
+    "curled-flats",
+    "pitch-forks",
+    "grain-weld",
+    "silk-catch",
+    "resin-sleeve",
+    "shell-threads",
+    "chalk-divide",
+    "red-vault-fragments",
+    "blue-fault",
+    "pale-pressure",
+    "notched-backwater",
+    "crossed-casings",
+    "fibre-stumpfield",
+    "sloughed-court",
+    "husk-reef",
+    "double-return",
+    "offset-basins",
+    "ochre-folds",
+    "last-shelf"
+  ],
+  "excludedWorlds": [
+    "black-lacuna",
+    "crushed-seam",
+    "fibre-scree",
+    "fractured-estuary",
+    "gel-rafts",
+    "pinched-fan",
+    "shell-patchwork",
+    "spliced-reaches",
+    "violet-marrows",
+    "white-scarfield",
+    "woven-quarters"
+  ],
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "limits": [
+    "The implementation of the actual settled-projection geometry was authored by this reviewer; this receipt reviews pipeline proof/exception logic, not the geometry appearance or mathematical quality of that implementation.",
+    "The14 existing contracts are AST/helper checks, not a full game run. This review read their source and verified current hashes; it did not duplicate those tests after pipeline execution.",
+    "Public CLI unknown-source/addition/consumer/flag checks were source-reviewed and the real97 invocation is recorded. No claim is made that every possible TS program/import spelling has been exhaustively tested.",
+    "Catalog codegen consistency remains a separate gate. Original snapshots, original11/97 reports, original AST-print failure and the independent accepted-mutation proof remain retained."
+  ]
+}

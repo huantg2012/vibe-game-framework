@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "tools/qa/check-r100-ground-edge-behavior.mjs",
+    "--before",
+    "docs/qa/artifacts/r100-i10-i12/b01-final-source/source-snapshot.json",
+    "--after",
+    "docs/qa/artifacts/r100-i10-i12/b02-refined-source/source-snapshot.json",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 9.833,
+  "log": "docs/qa/artifacts/r100-i10-i12/ground-edge-production-continuity.log",
+  "logSha256": "aaa5e3f33f4d3ad7823d9a12cf2d334d3c6d7ec29e9b40fdb1c08fbdf62a783e"
+}

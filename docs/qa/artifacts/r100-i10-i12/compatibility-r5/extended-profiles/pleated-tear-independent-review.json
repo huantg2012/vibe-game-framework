@@ -1,0 +1,31 @@
+{
+  "status": "pass-bounded-code-review",
+  "reviewer": "identity_pipeline",
+  "createdAt": "2026-10-07T05:38:17.542575+00:00",
+  "sources": [
+    {
+      "path": "src/generation/world-study/native-volume-pleated-tear.ts",
+      "sha256": "a542f83a5da9b9d7b70ce35c37cfb0a09984bed56a6cec152af84c425e32eae1"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-expansion.ts",
+      "sha256": "508b6dfaf744a63671035838c86ad36906b57be341ee26f1f1e55ed68e10d0b4"
+    },
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "c4707a3f3354301798ee91487868f14566f4e46554a30b536ab303b087ae8ef6"
+    }
+  ],
+  "findings": [
+    "The four clipping planes partition the old triangle before drawing the recess; intact skin is not left across the opening.",
+    "Every floor vertex uses the same affine XY contraction and constant Z subtraction. Adjacent clipped triangles therefore retain coincident shared floor edges.",
+    "Only edges lying on the four actual opening planes receive walls; interior original triangle edges receive no extra walls.",
+    "The luminous patch lies above the closed floor by .04 local units; its joint is the average of a convex polygon on that exact plane, not an instance-centre estimate.",
+    "Nonblocking relief never adds luminous faces/joints. The new profile is explicit; the old pleated-sheet path keeps its quad and original marker branch."
+  ],
+  "evidence": "Separate geometry checks supplied by the owner cover 1194 old meshes, 9 local variants and 4647 body points. This record is an independent source review; it does not repeat those runs.",
+  "limitations": [
+    "No world visual or gameplay approval is assigned.",
+    "No new full-map generation, rendering or browser execution performed for this review."
+  ]
+}

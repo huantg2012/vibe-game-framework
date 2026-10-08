@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "status": "severe-fixed-pair-not-qualified",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T12:32:09.926Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "cases": [
+    {
+      "originalIndex": 5,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+      },
+      "world": "white-scarfield",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "7864d455",
+      "dependencyHash": "b219f1bd",
+      "policyRevision": 15,
+      "actualInputStatus": "completed-real-input",
+      "outcome": "death",
+      "elapsedMs": 93329.60000000008,
+      "entryHp": 145,
+      "fieldHp": 0,
+      "fieldChaos": 150,
+      "actualCollectedNodeIds": [],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "attempted": false,
+          "reason": "visible-opponent-too-close",
+          "hp": 145,
+          "chaos": 68.22265994013546,
+          "elapsedMs": 46164.82999999987
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedIds": [],
+      "baseSettled": true,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 6,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+      },
+      "world": "white-scarfield",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "6ff3dd6f",
+      "dependencyHash": "b219f1bd",
+      "policyRevision": 15,
+      "actualInputStatus": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 96046.18000000042,
+      "entryHp": 145,
+      "fieldHp": 55,
+      "fieldChaos": 136.32462434351268,
+      "actualCollectedNodeIds": [],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "attempted": false,
+          "reason": "visible-opponent-too-close",
+          "hp": 145,
+          "chaos": 36.79200677773233,
+          "elapsedMs": 19799.22999999989
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedIds": [],
+      "baseSettled": true,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "qualificationGap": {
+    "world": "white-scarfield",
+    "grade": "severe",
+    "required": "At least one real non-entry pickup and extraction to same-run settlement across the two predeclared seeds.",
+    "actualNonEntryPickupAndExtraction": 0,
+    "deathAttempts": 1,
+    "emptyExtractionAttempts": 1,
+    "disposition": "Retain both complete original attempts as failures against this qualification condition. No alternate seed, rerun, new policy or acceptance threshold is authorized by this review."
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/1-search-1.png",
+      "sha256": "108cd22dac0bd0d511913985b2bffd0350e22e572ef0afbf653492987e003361",
+      "viewedBy": "i12_art",
+      "originalIndex": 5,
+      "method": "view_image original normal-play PNG",
+      "observation": "原005在深部翻找物旁已有近敌；角色与残骸、暗绿污染面可分，场上交互提示不能等同实际搜取。报告明确因visible-opponent-too-close未开始搜取。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/survey-60381.png",
+      "sha256": "465b8c02a2aceee62f20b1d1d0d5e8c6295abbf244f59dfc6ee50cdff1080481",
+      "viewedBy": "i12_art",
+      "originalIndex": 5,
+      "method": "view_image original normal-play PNG",
+      "observation": "原005后段角色在右上视口附近，数个污染体/近敌与黑绿覆盖挤压可见白床；此帧100HP、93混乱，较先前满血搜点继续承压。未见连续输入，不能单凭静帧断言回路被几何封死。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/1-field-result.png",
+      "sha256": "fa5f7d028b58d3d243f2b4fe8e4e4b2f49ba6efa34df16d30631a649529ed80a",
+      "viewedBy": "i12_art",
+      "originalIndex": 5,
+      "method": "view_image original normal-play PNG",
+      "observation": "原005结果时0/145HP、150混乱、0薪柴，临界青绿覆盖明显；这是死亡结果的受压帧，不是假空返，也不是卡在启动。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-search-1.png",
+      "sha256": "58241156166a34fd9e43d5489102a30da02a8a622c122a44af62a176cbc1e8d4",
+      "viewedBy": "i12_art",
+      "originalIndex": 6,
+      "method": "view_image original normal-play PNG",
+      "observation": "原006近敌在角色下侧贴近，白床边缘与右侧黑空洞分开；翻找位置紧邻当前敌压，报告未实际开始搜取。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-continued-exploration-2.png",
+      "sha256": "8d5d2f27b2180598c1e28a044721339815c411028e73e9237b84d86f5f026c1f",
+      "viewedBy": "i12_art",
+      "originalIndex": 6,
+      "method": "view_image original normal-play PNG",
+      "observation": "原006人物与追敌在右侧真实缺地岸边，局部可见床与黑区仍有材料界线，视野很窄；本帧不能证明全通路安全或世界全貌。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-field-result.png",
+      "sha256": "02d1cd9e27c78fbc6f80d686621a087f78e13985eb9275c96a04b66107ef518b",
+      "viewedBy": "i12_art",
+      "originalIndex": 6,
+      "method": "view_image original normal-play PNG",
+      "observation": "原006显示55/145HP、136峰值混乱、96秒、0薪柴/0残渣、3击杀；确认为受压空返，不能按撤离成功标题归为有收获搜撤。"
+    }
+  ],
+  "artObservation": {
+    "observed": "Near enemies, material floor and local dark/green pollution boundaries remain distinguishable in the named frames. The six frames do not establish a newly unreadable collision boundary as the cause.",
+    "knownWeakness": "The previously noted straight local material boundary remains an art limitation; these failed runs do not themselves prove it caused the route/pressure failure.",
+    "causeNotEstablished": [
+      "No continuous video or hands-on play by this reviewer.",
+      "A blocked search decision and later pressure do not identify whether the root cause is policy persistence, retreat route, enemy arrangement or world balance.",
+      "Do not lower pollution/HP/chaos, alter graphics, or replace seeds merely to obtain a successful receipt."
+    ],
+    "unchangedScope": "Prior three-grade normal visual receipts remain narrow static observations; they cannot override this gameplay qualification failure."
+  },
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/1-search-1.png",
+      "sha256": "108cd22dac0bd0d511913985b2bffd0350e22e572ef0afbf653492987e003361",
+      "reason": "原005在深部翻找物旁已有近敌；角色与残骸、暗绿污染面可分，场上交互提示不能等同实际搜取。报告明确因visible-opponent-too-close未开始搜取。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/survey-60381.png",
+      "sha256": "465b8c02a2aceee62f20b1d1d0d5e8c6295abbf244f59dfc6ee50cdff1080481",
+      "reason": "原005后段角色在右上视口附近，数个污染体/近敌与黑绿覆盖挤压可见白床；此帧100HP、93混乱，较先前满血搜点继续承压。未见连续输入，不能单凭静帧断言回路被几何封死。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/1-field-result.png",
+      "sha256": "fa5f7d028b58d3d243f2b4fe8e4e4b2f49ba6efa34df16d30631a649529ed80a",
+      "reason": "原005结果时0/145HP、150混乱、0薪柴，临界青绿覆盖明显；这是死亡结果的受压帧，不是假空返，也不是卡在启动。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-continued-exploration-2.png",
+      "sha256": "8d5d2f27b2180598c1e28a044721339815c411028e73e9237b84d86f5f026c1f",
+      "reason": "原006人物与追敌在右侧真实缺地岸边，局部可见床与黑区仍有材料界线，视野很窄；本帧不能证明全通路安全或世界全貌。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-field-result.png",
+      "sha256": "02d1cd9e27c78fbc6f80d686621a087f78e13985eb9275c96a04b66107ef518b",
+      "reason": "原006显示55/145HP、136峰值混乱、96秒、0薪柴/0残渣、3击杀；确认为受压空返，不能按撤离成功标题归为有收获搜撤。"
+    }
+  ],
+  "limits": [
+    "This is a world-art and visible-outcome sample review, not a new UI design/review, full route audit, listening review, performance test or natural48 conclusion.",
+    "The low/medium short full-health returns remain separate and cannot compensate for the severe pair.",
+    "B13 other original worlds and B14 may continue independent recording; this pair remains open until a separately reasoned, authorized remedy is verified."
+  ],
+  "pixelModelsScope": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+    "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+  }
+}

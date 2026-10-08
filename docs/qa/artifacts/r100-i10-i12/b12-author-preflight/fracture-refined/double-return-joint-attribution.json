@@ -1,0 +1,528 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-07T08:17:02.402691+00:00",
+  "status": "bounded-coordinate-attribution-confirmed",
+  "scope": "P35 double-return 物4真实关节和原正常三档机位归属；不改产品、不重跑地图/烘焙/浏览器、不代替视觉验收。",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "method": "动态载入3120不可变原生geometry，按三份原recipe的物4调用真实buildNativeVolume（3×330三角、0.033秒），读取joint及material3顶点。仅为几何归属计算；compressed-wedge本身不读取seed/fold/distortion，因此该关节不受生成seed或等级参数变化影响。",
+  "sourceFiles": [
+    {
+      "path": "src/generation/world-study/native-volume-geometry.ts",
+      "sha256": "c4707a3f3354301798ee91487868f14566f4e46554a30b536ab303b087ae8ef6",
+      "matchesFrozenManifest": true
+    },
+    {
+      "path": "src/generation/world-study/native-volume-organization.ts",
+      "sha256": "356cc0de08ac2b2a38dbacf975aa0451da6793a20c5146db31b2db37013f126a",
+      "matchesFrozenManifest": true
+    },
+    {
+      "path": "src/generation/world-study/native-volume-raster.ts",
+      "sha256": "c8af43c816ab0e5ce0168fd430e57cf36e9ff94b3417129c972724fdbf8381a0",
+      "matchesFrozenManifest": true
+    }
+  ],
+  "inputReportsAndRecipes": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/report.json",
+      "sha256": "bb0a59d5d0d7a46b2085a0cb7022cd9f6e2b9f125bcace33b62a384feed56338"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/recipe.json",
+      "sha256": "86e4488a76972f3c957ae6ead5f56b79271994c7d9d26bdf6a6dbeeb0cc7e9c3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/report.json",
+      "sha256": "0b8230f65592845ef22fc68cc06b7e1803b844bd625ba491241a99c69f9ce86b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-low/recipe.json",
+      "sha256": "744dab17b018db92912a7fd6ae966cb2a2e7fb495b9750359c3948a32f2d6efe"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-severe/recipe.json",
+      "sha256": "8ce685d8f6b42104f633bfdd78cf81fce98cbb99342ca00ce8224e2937c7ca99"
+    }
+  ],
+  "objectId": 4,
+  "profile": "compressed-wedge",
+  "jointWorldXYZ": {
+    "index": 0,
+    "x": 497.6473095691965,
+    "y": 530.5850665322678,
+    "z": 30.138090612244895
+  },
+  "jointRelativeToAuthoredCenter": {
+    "x": -17.352690430803477,
+    "y": -11.414933467732226
+  },
+  "material3XYBounds": {
+    "minX": 493.5061340332031,
+    "maxX": 502.03802490234375,
+    "minY": 530.1495971679688,
+    "maxY": 531.1543579101562
+  },
+  "gradeGeometry": [
+    {
+      "grade": "low",
+      "instance": {
+        "id": 4,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 515,
+        "y": 542,
+        "rotation": 0,
+        "length": 150,
+        "width": 70,
+        "height": 32,
+        "thickness": 9,
+        "fold": 0.41359999999999997,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.22,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      },
+      "joints": [
+        {
+          "index": 0,
+          "x": 497.6473095691965,
+          "y": 530.5850665322678,
+          "z": 30.138090612244895
+        }
+      ],
+      "fracture": [
+        [
+          [
+            493.5061340332031,
+            530.1495971679688,
+            29.924760818481445
+          ],
+          [
+            500.5406494140625,
+            530.3515014648438,
+            30.187347412109375
+          ],
+          [
+            502.03802490234375,
+            531.1543579101562,
+            30.384235382080078
+          ]
+        ],
+        [
+          [
+            493.5061340332031,
+            530.1495971679688,
+            29.924760818481445
+          ],
+          [
+            502.03802490234375,
+            531.1543579101562,
+            30.384235382080078
+          ],
+          [
+            496.4589538574219,
+            530.9942016601562,
+            30.17597770690918
+          ]
+        ]
+      ],
+      "triangleCount": 330
+    },
+    {
+      "grade": "medium",
+      "instance": {
+        "id": 4,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 515,
+        "y": 542,
+        "rotation": 0,
+        "length": 150,
+        "width": 70,
+        "height": 32,
+        "thickness": 9,
+        "fold": 0.47,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      },
+      "joints": [
+        {
+          "index": 0,
+          "x": 497.6473095691965,
+          "y": 530.5850665322678,
+          "z": 30.138090612244895
+        }
+      ],
+      "fracture": [
+        [
+          [
+            493.5061340332031,
+            530.1495971679688,
+            29.924760818481445
+          ],
+          [
+            500.5406494140625,
+            530.3515014648438,
+            30.187347412109375
+          ],
+          [
+            502.03802490234375,
+            531.1543579101562,
+            30.384235382080078
+          ]
+        ],
+        [
+          [
+            493.5061340332031,
+            530.1495971679688,
+            29.924760818481445
+          ],
+          [
+            502.03802490234375,
+            531.1543579101562,
+            30.384235382080078
+          ],
+          [
+            496.4589538574219,
+            530.9942016601562,
+            30.17597770690918
+          ]
+        ]
+      ],
+      "triangleCount": 330
+    },
+    {
+      "grade": "severe",
+      "instance": {
+        "id": 4,
+        "family": "folded-slab",
+        "role": "solid",
+        "x": 515,
+        "y": 542,
+        "rotation": 0,
+        "length": 150,
+        "width": 70,
+        "height": 32,
+        "thickness": 9,
+        "fold": 0.517,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "compressed-wedge"
+      },
+      "joints": [
+        {
+          "index": 0,
+          "x": 497.6473095691965,
+          "y": 530.5850665322678,
+          "z": 30.138090612244895
+        }
+      ],
+      "fracture": [
+        [
+          [
+            493.5061340332031,
+            530.1495971679688,
+            29.924760818481445
+          ],
+          [
+            500.5406494140625,
+            530.3515014648438,
+            30.187347412109375
+          ],
+          [
+            502.03802490234375,
+            531.1543579101562,
+            30.384235382080078
+          ]
+        ],
+        [
+          [
+            493.5061340332031,
+            530.1495971679688,
+            29.924760818481445
+          ],
+          [
+            502.03802490234375,
+            531.1543579101562,
+            30.384235382080078
+          ],
+          [
+            496.4589538574219,
+            530.9942016601562,
+            30.17597770690918
+          ]
+        ]
+      ],
+      "triangleCount": 330
+    }
+  ],
+  "frames": [
+    {
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "goal": {
+        "label": "01-material-approach",
+        "x": 580,
+        "y": 628,
+        "faces": [
+          "north"
+        ],
+        "authorSupportedBodyPoint": {
+          "x": 580,
+          "y": 628
+        },
+        "lookAtMaterialPoint": {
+          "x": 515,
+          "y": 542
+        },
+        "purpose": "南侧地颈与下钝端"
+      },
+      "capture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/01-material-approach-north.png",
+        "sha256": "562a73e802e64afb919f6ce2300837931c8dec69667073bdf8a6cb6499513677",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 579.9525032783887,
+            "y": 618.2794923614251
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.289333731999797,
+          "elapsedMs": 6983.000000000001
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 579.9525032783887,
+            "y": 618.2794923614251
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.322500459999794,
+          "elapsedMs": 7083.000000000001
+        }
+      },
+      "jointRelativeToPlayerXY": {
+        "x": -82.30519370919217,
+        "y": -87.69442582915735,
+        "distance": 120.26827192993682
+      },
+      "interpretation": "物4自身顶面左中短裂纹；不是更北面的物2/物3。世界XY顶视，Z不作为屏幕Y减项。具体灯下可读由art/root原帧复核，此收据不代签。"
+    },
+    {
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "goal": {
+        "label": "02-material-approach",
+        "x": 556,
+        "y": 596,
+        "faces": [
+          "north"
+        ],
+        "authorSupportedBodyPoint": {
+          "x": 556,
+          "y": 596
+        },
+        "lookAtMaterialPoint": {
+          "x": 553,
+          "y": 487
+        },
+        "purpose": "中段34.63px真实横口"
+      },
+      "capture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/02-material-approach-north.png",
+        "sha256": "91afe85c2275ecdaaedf15d2a0ff6b76cb3e1fb4673502b60df696da477962ba",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 556.9020294096098,
+            "y": 587.3010237902108
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.75382718799978,
+          "elapsedMs": 8383
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 556.9020294096098,
+            "y": 587.3010237902108
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 17.78700386999978,
+          "elapsedMs": 8482.900000000001
+        }
+      },
+      "jointRelativeToPlayerXY": {
+        "x": -59.25471984041326,
+        "y": -56.715957257943046,
+        "distance": 82.02329931824669
+      },
+      "interpretation": "物4自身顶面左中短裂纹；不是更北面的物2/物3。世界XY顶视，Z不作为屏幕Y减项。具体灯下可读由art/root原帧复核，此收据不代签。"
+    },
+    {
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "goal": {
+        "label": "01-material-approach",
+        "x": 580,
+        "y": 628,
+        "faces": [
+          "north"
+        ],
+        "authorSupportedBodyPoint": {
+          "x": 580,
+          "y": 628
+        },
+        "lookAtMaterialPoint": {
+          "x": 515,
+          "y": 542
+        },
+        "purpose": "南侧地颈与下钝端"
+      },
+      "capture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-low/01-material-approach-north.png",
+        "sha256": "be72feb1674c4ab731be0efdcaeb453a41b6ce5c94c021e8f29e754b4e89c311",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5707963267948966,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 582.6969632024188,
+            "y": 617.7141255937447
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 16.276588175999983,
+          "elapsedMs": 6816.3
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 582.6969632024188,
+            "y": 617.7141255937447
+          },
+          "facingAngle": -1.5707963267948966,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 16.29238375199998,
+          "elapsedMs": 6899.7
+        }
+      },
+      "jointRelativeToPlayerXY": {
+        "x": -85.0496536332223,
+        "y": -87.12905906147694,
+        "distance": 121.75761379096348
+      },
+      "interpretation": "物4自身顶面左中短裂纹；不是更北面的物2/物3。世界XY顶视，Z不作为屏幕Y减项。具体灯下可读由art/root原帧复核，此收据不代签。"
+    },
+    {
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "goal": {
+        "label": "01-material-approach",
+        "x": 580,
+        "y": 628,
+        "faces": [
+          "north"
+        ],
+        "authorSupportedBodyPoint": {
+          "x": 580,
+          "y": 628
+        },
+        "lookAtMaterialPoint": {
+          "x": 515,
+          "y": 542
+        },
+        "purpose": "南侧地颈与下钝端"
+      },
+      "capture": {
+        "file": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-severe/01-material-approach-north.png",
+        "sha256": "9c8f24f03f884e8e09b54dd90fca77c6e5f6ef4d99b234d1f134d951984c365e",
+        "png": {
+          "width": 1136,
+          "height": 758
+        },
+        "facing": "north",
+        "actualAngle": -1.5708591586479694,
+        "before": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 578.3439982090933,
+            "y": 623.6455524556919
+          },
+          "facingAngle": -1.5708591586479694,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 18.286268543999867,
+          "elapsedMs": 6583
+        },
+        "after": {
+          "active": true,
+          "ended": false,
+          "pos": {
+            "x": 578.3439982090933,
+            "y": 623.6455524556919
+          },
+          "facingAngle": -1.5708591586479694,
+          "facing4": "up",
+          "hp": 100,
+          "chaos": 18.345241727999866,
+          "elapsedMs": 6699.700000000001
+        }
+      },
+      "jointRelativeToPlayerXY": {
+        "x": -80.69668863989682,
+        "y": -93.06048592342415,
+        "distance": 123.17552353348565
+      },
+      "interpretation": "物4自身顶面左中短裂纹；不是更北面的物2/物3。世界XY顶视，Z不作为屏幕Y减项。具体灯下可读由art/root原帧复核，此收据不代签。"
+    }
+  ],
+  "bounds": [
+    "未重新采图或计算全图遮挡。",
+    "原body12三档物4cut322/joint6只是既有机器像素证据，不用它代替可读性。",
+    "未声称其它远站或上方绿色点为物4断纹。",
+    "原PNG已逐文件SHA核对；本任务未打开PNG，art/root分别负责原帧肉眼判断。"
+  ]
+}

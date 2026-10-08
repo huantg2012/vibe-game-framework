@@ -1,0 +1,82 @@
+{
+  "status": "completed-fixed-attempts-pending-review",
+  "startedAt": "2026-10-07T13:13:31.286Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-white-scarfield-severe-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-07T13:13:31.286Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-07T13:15:24.302Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "white-scarfield",
+          "grade": "severe",
+          "revision": 6,
+          "requestedSeed": 20261005,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 96029.49000000037,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 170.87394517610355,
+            "y": 639.0345305383357
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 2,
+      "dir": "002-white-scarfield-severe-3075192741",
+      "status": "completed-script",
+      "startedAt": "2026-10-07T13:15:24.306Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-07T13:16:43.026Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "white-scarfield",
+          "grade": "severe",
+          "revision": 6,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 60397.589999999815,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 173.5292341603071,
+            "y": 635.8939899063197
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    }
+  ],
+  "endedAt": "2026-10-07T13:16:43.031Z"
+}

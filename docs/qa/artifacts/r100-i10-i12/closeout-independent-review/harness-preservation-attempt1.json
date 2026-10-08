@@ -1,0 +1,13 @@
+{
+  "status": "tool-preparation-failed-before-copy",
+  "time": "2026-10-07T12:28:05.848Z",
+  "command": [
+    "node",
+    "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/preserve-historical-harnesses.mjs"
+  ],
+  "exitCode": 1,
+  "observation": "The unfiltered rg child returned status=null; the status===0 assertion stopped before any harness copy or supplement publication.",
+  "cause": "Not diagnosed from truncated child result; bounded filename glob will avoid the unnecessary all-file inventory.",
+  "originalScript": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/preserve-historical-harnesses-before-bounded-scan.mjs",
+  "gameFailure": false
+}

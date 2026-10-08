@@ -1,0 +1,52 @@
+import type { PaintedMaterial, PaintedSurface } from './painted-material';
+
+/** Worker-only reconstruction of the actual painted short bundles. No new
+ * strokes, repeating motif, height, normal or emission are introduced. */
+export function prepareShortFibreSurface<T extends PaintedSurface>(surface: T): T {
+  const { width, height, pixels } = surface;
+  const result = new Uint8ClampedArray(pixels);
+  const source = new Float32Array(width * height);
+  for (let i = 0; i < source.length; i++) source[i] = pixels[i * 4]! * .2126 + pixels[i * 4 + 1]! * .7152 + pixels[i * 4 + 2]! * .0722;
+  // Regions are clamped separately: the intact mat must never blur across the
+  // atlas boundary into the lower torn-section photograph.
+  for (const region of Object.values(surface.regions ?? { whole: { x: 0, y: 0, width: 1, height: 1 } })) {
+    const left = Math.round(region.x * width), top = Math.round(region.y * height);
+    const right = Math.min(width, left + Math.round(region.width * width));
+    const bottom = Math.min(height, top + Math.round(region.height * height));
+    const blur = (radius: number): Float32Array => {
+      const horizontal = new Float32Array(width * height), out = new Float32Array(width * height);
+      const sigma = radius * .6, weights = new Float32Array(radius * 2 + 1);
+      let total = 0;
+      for (let d = -radius; d <= radius; d++) { const value = Math.exp(-d * d / (2 * sigma * sigma)); weights[d + radius] = value; total += value; }
+      for (let y = top; y < bottom; y++) for (let x = left; x < right; x++) {
+        let value = 0;
+        for (let d = -radius; d <= radius; d++) value += source[y * width + Math.max(left, Math.min(right - 1, x + d))]! * weights[d + radius]!;
+        horizontal[y * width + x] = value / total;
+      }
+      for (let y = top; y < bottom; y++) for (let x = left; x < right; x++) {
+        let value = 0;
+        for (let d = -radius; d <= radius; d++) value += horizontal[Math.max(top, Math.min(bottom - 1, y + d)) * width + x]! * weights[d + radius]!;
+        out[y * width + x] = value / total;
+      }
+      return out;
+    };
+    const fine = blur(1), broad = blur(7);
+    for (let y = top; y < bottom; y++) for (let x = left; x < right; x++) {
+      const i = y * width + x, q = i * 4;
+      // Retain the painted load-bearing clumps and their broken ends. The
+      // sub-pixel grain is attenuated; the source's existing bundle band gains
+      // contrast before the world's material ramp and normal lighting.
+      const value = broad[i]! + (fine[i]! - broad[i]!) * 2.1 + (source[i]! - fine[i]!) * .12;
+      const offset = value - source[i]!;
+      for (let channel = 0; channel < 3; channel++) result[q + channel] = pixels[q + channel]! + offset;
+    }
+  }
+  // A wider world-space window exposes fewer, larger connected source tufts.
+  // Sampling remains contiguous, with no reflection or independently stamped tiles.
+  return { ...surface, pixels: result, worldSize: surface.worldSize * 1.75 };
+}
+
+export function prepareShortFibreMaterial(painting: PaintedMaterial): PaintedMaterial {
+  const surface = prepareShortFibreSurface(painting);
+  return { ...surface, ...(painting.solid ? { solid: prepareShortFibreSurface(painting.solid) } : {}) };
+}

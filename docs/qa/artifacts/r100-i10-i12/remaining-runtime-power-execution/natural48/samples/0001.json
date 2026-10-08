@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-08T02:56:44.632003+00:00",
+  "sequence": 1,
+  "launchPid": 59694,
+  "processes": [
+    {
+      "pid": 59694,
+      "ppid": 59669,
+      "command": "/usr/local/bin/node tools/qa/r100-i09-continuous.mjs"
+    },
+    {
+      "pid": 59696,
+      "ppid": 59694,
+      "command": "/usr/bin/caffeinate -i /usr/local/bin/node tools/qa/r100-i09-continuous.mjs"
+    }
+  ],
+  "ownedIdleSleepAssertionPids": [
+    59696
+  ]
+}

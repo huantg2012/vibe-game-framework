@@ -1,0 +1,51 @@
+{
+  "status": "pass",
+  "scope": "Synthetic metadata/trace guard tests only; no browser, game execution or qualification.",
+  "checks": 36,
+  "passed": [
+    "zero actual melee opportunities are valid and disclosed",
+    "one real-log-bound aligned input is accepted",
+    "changed full identity",
+    "changed earned save",
+    "extra search retry field",
+    "missing original Space",
+    "unrecorded extra Space",
+    "Space duration changed",
+    "raw final action differs",
+    "raw Space completion differs",
+    "context cannot enlarge original range",
+    "context cannot weaken health requirement",
+    "fake angle despite false actual facing",
+    "fake distance",
+    "unknown or hidden target",
+    "Space against enemy windup",
+    "Space against enemy strike",
+    "Space after death",
+    "Space below original health floor",
+    "Space above original chaos floor",
+    "observation outside the action window",
+    "time summary cannot understate actual elapsed",
+    "abandonment cannot hide a Space",
+    "actual overrun invalidates qualification",
+    "recorded error invalidates qualification",
+    "unreleased keys invalidate qualification",
+    "actual pickup limit stays one",
+    "explicit synthetic protocol validates preserved source and cases",
+    "unsigned status",
+    "other issue",
+    "different policy revision",
+    "extra seed",
+    "other world",
+    "larger window",
+    "extra turn",
+    "weaker angle"
+  ],
+  "harness": {
+    "path": "tools/qa/check-r100-i12-facing-supplement.mjs",
+    "sha256": "23e2fb9f5d34f496ef8da4afa9f6e83f70dc3399bda40d3fc784e02f947105dc"
+  },
+  "implementation": {
+    "path": "tools/qa/r100-i12-facing-supplement.mjs",
+    "sha256": "edab1ee93b790acc6117e40a1e7ec8fd3e9d84826ee06b603ceae6f35e2ecde6"
+  }
+}

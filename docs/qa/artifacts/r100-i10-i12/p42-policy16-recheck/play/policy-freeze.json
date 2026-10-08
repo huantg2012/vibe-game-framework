@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "frozenAt": "2026-10-07T13:13:31.279Z",
+  "cases": [
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-white-scarfield-severe-20261005"
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 2,
+      "dir": "002-white-scarfield-severe-3075192741"
+    }
+  ],
+  "gameUrl": "http://127.0.0.1:3121/",
+  "algorithmRevision": 6,
+  "controllerPolicyRevision": 16,
+  "controllerDerivation": null,
+  "controllerSupplement": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/approved-protocol.json",
+    "sha256": "878da1c64b23902119f0e822f9502f688d7abf7bde098f60d34e295979d58171"
+  },
+  "expansion": {
+    "plan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/qualification-plan.json",
+    "sha256": "933ba58a8e2db0977d271ba71c227d736c740688ea5e7fbc20b978cbbc31e032",
+    "originalPlan": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-current-qualified/execution-plan.json",
+    "batch": "B13"
+  },
+  "servedCatalog": {
+    "sha256": "f8d64f1c96a7ef494552118f762ce675b0a1ad9f12cb1e02f1d9a63f61b6397b",
+    "encoding": "direct-raw"
+  },
+  "actualPickupLimit": 1,
+  "manifest": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+  "manifestSha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c",
+  "storageSource": "docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+  "storageSourceSha256": "965a98687e87690f71115472384fba50578ff9618aed328793c3a3bd1cf33b6e",
+  "storage": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/earned-storage.json",
+  "storageSha256": "7ccb13aa029ce0776556d48ef00fca9b196e7d71ec38507557e9abf7975c26e8",
+  "harness": "tools/qa/r100-i12-recheck-journey.mjs",
+  "harnessSha256": "747ed743b89fb26aee9a3185ca9f57eae8cbdaf0d8e0e36e77c4f2a314e9127d",
+  "wrapperSha256": "7a581e0af91150056cb12b78f6ea66b153f420d7a68ceed3cf452e136d4a4800",
+  "dependencies": [
+    {
+      "file": "tools/qa/r100-i12-recheck-encounters.mjs",
+      "sha256": "c86d641469950f61905e1beb7e7d9ddba4074b611c609fd78349d1e3c1a0cbd5"
+    },
+    {
+      "file": "tools/qa/r100-i12-recheck-budget.mjs",
+      "sha256": "5795b280b50339a67e52aa323a52eb50db7fb6a38df10a904db7764ae912f528"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "wrapperDependencies": [
+    {
+      "file": "tools/qa/r100-i12-controller-supplement.mjs",
+      "sha256": "e1c9b33dcfd43e0f1714b339f10051fbf1861f07ad37abac11ac8ddd529c45a8"
+    },
+    {
+      "file": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "46f93fbee706a09ca9a35a0df52ca6053ac8d59904fcb602917137906a3b482c"
+    },
+    {
+      "file": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "file": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "file": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    }
+  ],
+  "parallelism": 1,
+  "resourcePauseFile": "/tmp/coh-r100-i10-i12.pause",
+  "stopOnFailure": true,
+  "observationFailureFile": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/worker-observation-first-error.json",
+  "method": "Explicit policy16 supplement: one bounded reapproach/search per trip and three strike enum corrections. One fixed attempt per original world/grade/seed. Actual WASD/E/R with earned equipment. Static terrain assists macro routing; enemies/Hosts only currently observed or 5s memory. No field reward, HP, clock or position injection. One non-entry collected remain (>320px from entry), then actual return. A failed or empty process remains a failure for the primary search-and-extract requirement; no pass is assigned by this runner.",
+  "limitations": "Controlled world and seed on identical earned save branches; not natural continuous economy, novice play, success-rate inference, or exclusive performance measurement."
+}

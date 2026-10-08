@@ -1,0 +1,276 @@
+{
+  "status": "PASS-local-contract-and-original-body-pending-normal-review",
+  "createdAt": "2026-10-07T07:09:42.190281+00:00",
+  "changes": {
+    "profileOnly": true,
+    "worldCount": 10,
+    "changes": [
+      {
+        "world": "crushed-seam",
+        "instance": 1,
+        "before": "fallen-bundle",
+        "after": "settled-bundle"
+      },
+      {
+        "world": "crushed-seam",
+        "instance": 2,
+        "before": "fallen-bundle",
+        "after": "settled-bundle"
+      },
+      {
+        "world": "fibre-scree",
+        "instance": 7,
+        "before": "fallen-bundle",
+        "after": "settled-bundle"
+      },
+      {
+        "world": "fibre-scree",
+        "instance": 8,
+        "before": "fallen-bundle",
+        "after": "settled-bundle"
+      },
+      {
+        "world": "gel-rafts",
+        "instance": 1,
+        "before": "clamp-bank",
+        "after": "settled-clamp"
+      },
+      {
+        "world": "gel-rafts",
+        "instance": 2,
+        "before": "clamp-bank",
+        "after": "settled-clamp"
+      },
+      {
+        "world": "gel-rafts",
+        "instance": 4,
+        "before": "clamp-bank",
+        "after": "settled-clamp"
+      },
+      {
+        "world": "gel-rafts",
+        "instance": 5,
+        "before": "clamp-bank",
+        "after": "settled-clamp"
+      },
+      {
+        "world": "pinched-fan",
+        "instance": 1,
+        "before": "torn-sheet",
+        "after": "settled-sheet"
+      },
+      {
+        "world": "pinched-fan",
+        "instance": 2,
+        "before": "torn-sheet",
+        "after": "settled-sheet"
+      },
+      {
+        "world": "spliced-reaches",
+        "instance": 1,
+        "before": "fallen-bundle",
+        "after": "settled-bundle"
+      },
+      {
+        "world": "spliced-reaches",
+        "instance": 2,
+        "before": "fallen-bundle",
+        "after": "settled-bundle"
+      },
+      {
+        "world": "spliced-reaches",
+        "instance": 3,
+        "before": "fallen-bundle",
+        "after": "settled-bundle"
+      },
+      {
+        "world": "white-scarfield",
+        "instance": 1,
+        "before": "fracture-fan",
+        "after": "settled-fan"
+      },
+      {
+        "world": "white-scarfield",
+        "instance": 2,
+        "before": "fracture-fan",
+        "after": "settled-fan"
+      },
+      {
+        "world": "black-lacuna",
+        "instance": 1,
+        "before": "fracture-fan",
+        "after": "settled-fan"
+      },
+      {
+        "world": "violet-marrows",
+        "instance": 3,
+        "before": "fracture-fan",
+        "after": "settled-fan"
+      },
+      {
+        "world": "fractured-estuary",
+        "instance": 1,
+        "before": "fracture-fan",
+        "after": "settled-fan"
+      },
+      {
+        "world": "fractured-estuary",
+        "instance": 2,
+        "before": "fracture-fan",
+        "after": "settled-fan"
+      },
+      {
+        "world": "fractured-estuary",
+        "instance": 3,
+        "before": "fracture-fan",
+        "after": "settled-fan"
+      },
+      {
+        "world": "shell-patchwork",
+        "instance": 6,
+        "before": "torn-sheet",
+        "after": "settled-sheet"
+      }
+    ],
+    "unchangedWorldRows": 98,
+    "oldDraftsNotModified": true
+  },
+  "body": {
+    "originalCases": 30,
+    "worlds": 10,
+    "reports": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/b11-body9/report.json",
+        "sha256": "57905fe54db80a65225c08406eaee8cb616d7a12837b365b0517f83deb0b6e67",
+        "cases": 9,
+        "status": "PASS"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/b12-body6/report.json",
+        "sha256": "c21b94efb88cb23f4e1670070a6a67d819be044bb40b247d9a31894fbc8c562f",
+        "cases": 6,
+        "status": "PASS"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/b13-body9/report.json",
+        "sha256": "2833d4c48e27706f6828043d7f57faf46b1bd364650c1449b29286514d54e946",
+        "cases": 9,
+        "status": "PASS"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/b14-body6/report.json",
+        "sha256": "325e96421d58d46afb2694e4da7a834442b26193ed02c7dcc2577dee65e1ede8",
+        "cases": 6,
+        "status": "PASS"
+      }
+    ],
+    "bodySize": [
+      20,
+      20
+    ],
+    "stationMaximumDistanceExclusive": 24,
+    "intentRoutesAndBoundsUnchanged": true,
+    "contactsCheckedByOriginalIntentAndSupplementalContract": true
+  },
+  "protection": {
+    "status": "PASS",
+    "oldWorldRowsExact": 98,
+    "oldWorldsExact": 98,
+    "oldDefinitionsExact": 294,
+    "authorizedChangedWorlds": 10,
+    "authorizedChangedInstances": 21,
+    "oldSelectedProfileMeshesExact": 1263,
+    "oldSolidProfileMeshesExact": 897,
+    "oldSettledSheetFanSourceExact": true,
+    "scope": "All 108 before-input geometry constructions compared against saved pre-change dispatcher/ground/settled module. Ground-edge additions excluded from per-instance geometry; actual Master body/contacts cover final worlds. No RGBA or normal-view approval.",
+    "sources": [
+      {
+        "path": "src/generation/world-study/native-volume-ground.ts",
+        "sha256": "b20a619d0df2d0def4ed2d6cdc66bbdd7ab64450fb7d4efc1abf46ad67761c24"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-geometry.ts",
+        "sha256": "b9d56c768a33fc855661d37912bc28df76dfecd66fe75414a21cfc57b489e2a8"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-settled-sheet.ts",
+        "sha256": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925"
+      },
+      {
+        "path": "src/generation/world-study/native-volume-settled-projection.ts",
+        "sha256": "c3758e2dbf0639158c17ad3d9b4998fe8d9f341129ccf000f723e0b81e84ddb6"
+      },
+      {
+        "path": "data/rift-native-worlds.csv",
+        "sha256": "f8d64f1c96a7ef494552118f762ce675b0a1ad9f12cb1e02f1d9a63f61b6397b"
+      },
+      {
+        "path": "src/generated/r100-native-worlds.ts",
+        "sha256": "12011f423a12c145cf0ca377336c609460ed2d1e02b553de49d1d8dc4e627b47"
+      }
+    ],
+    "executors": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/previous-geometry.mjs",
+        "sha256": "a5c0e95c29db48aa0f2c26f22fa57e105e8053ac16a18fa7c2d6406046977201"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/current-geometry.mjs",
+        "sha256": "5adb5ea4b08da3e9998053ec93a7d3f86d8bd38731184b483819d3654d79acc9"
+      }
+    ]
+  },
+  "allChangedGradeMeshes": {
+    "count": 63,
+    "maximumTriangles": 572,
+    "sharedXYNoZCracks": true
+  },
+  "checks": {
+    "typecheck": "PASS tsc --noEmit",
+    "existingGroundContract": "PASS old52 exact + 43 negative contracts",
+    "codegen": "PASS 108 / 324",
+    "dev": "PASS owned npm run dev and 4 HTTP200, owned process stopped",
+    "lint": "No separate lint script exists; scoped git diff --check PASS",
+    "qaHelper": "Original helper self-check 5 positive / 7 negative PASS; explicit separate author draft still must match formal rows, no original draft overwritten"
+  },
+  "geometryBoundary": [
+    "settled-clamp retains the exact original projected triangle list.",
+    "settled-bundle is the union of four midpoint children of every original projected triangle by construction; 4px coverage sampling is regression evidence, not a mathematical full-domain verification.",
+    "Union exterior detection and shared sampled heights are bounded to the two validated source constructions; no general exact upper-envelope remeshing claim.",
+    "Old 98 complete world definitions and every high solid remain unchanged. Current outputs of all 1263 pre-change instance specs match the saved pre-change implementation, including 897 solid instances.",
+    "No normal-view, material readability, current RGBA equivalence or final qualification approval. Coarse shallow edge faceting remains a specific normal-view check."
+  ],
+  "sourceStable": true,
+  "chromeUsed": false,
+  "rawFailuresPreserved": true,
+  "evidence": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/contracts-attempt1.json",
+      "sha256": "cfb47b01809e25194c8a114dcbddf21bea932847303c4814269d243d506d6f2e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/protection.json",
+      "sha256": "ed4e16ebfb9e6e4c3054bbac78140864631f636c1a3faf62fb802f3b0b6857dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/all-selected-mesh-contract.json",
+      "sha256": "d0eeff90bd2b4013eb6714576957a18e0295857bd3e2d0ca906badd10f514cea"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/existing-ground-contract.json",
+      "sha256": "6467f5635c772a8af083b42834996dc126b01b0e6d1bf9114281f8d1927bca22"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/typecheck.log",
+      "sha256": "36fd20075ac26da97b5d4e422fc5b3f5899266cc2751e63aae3d82f3865f8ef0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/dev-smoke.json",
+      "sha256": "ce3dc4c079c082c65e976afd0ea5e1f4e36ec214fbe588c3a2f797e731f0ff52"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-shallow-refined/qa-helper-contract.log",
+      "sha256": "e9735b9b5db7b78fb65752fddf9be37302ddbb3f85e26d0ea31ed2ef763985f0"
+    }
+  ]
+}

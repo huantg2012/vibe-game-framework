@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-08T02:39:13.663127+00:00",
+  "sequence": 125,
+  "launchPid": 10356,
+  "processes": [
+    {
+      "pid": 10356,
+      "ppid": 10317,
+      "command": "(node)"
+    },
+    {
+      "pid": 10358,
+      "ppid": 10356,
+      "command": "/usr/bin/caffeinate -i /usr/local/bin/node tools/qa/r100-i09-final-probe.mjs --probe production --source docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json --output docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep --expected-worlds 108 --expected-revision 6 --stop-on-failure --observe-workers"
+    }
+  ],
+  "ownedIdleSleepAssertionPids": []
+}

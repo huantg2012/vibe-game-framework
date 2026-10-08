@@ -1,0 +1,289 @@
+{
+  "status": "approved-single-full-recheck-after-external-sleep",
+  "reviewer": "root",
+  "at": "2026-10-08T01:34:42.263559+00:00",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/candidate-plan.json",
+    "sha256": "98d2e2f282aed5cfb35a28e8fc0106f955657161629624a3461cfb45067051c5"
+  },
+  "independentReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/production-environment-review/review.json",
+    "sha256": "a1793d1d0e25925bcd93248f54b6439070e73e85b42758f50011df7913756d29"
+  },
+  "originalFailure": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/report.json",
+    "sha256": "cffeffdd4ec738243ab6017b9b0cf83011dae2e9b47f6ea9a2553b865ad91096"
+  },
+  "originalSourceBinding": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/source-binding.json",
+    "sha256": "3f22e21154d8255350804de66da1470c608b9dc495652e3d90340c1aaf8c0768"
+  },
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "expectedCases": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/expected-cases.json",
+    "sha256": "f86f76c4e1c0e37a4f92c6f345d184b2cca91c7ef2f5b89375c76ae188df6da9"
+  },
+  "decision": "Approve exactly one new complete324 formal entry/cold-reload execution with the unchanged frozen tools, source, timeouts and seed schedule. Only the new successful complete run can become canonical; original152 attempts and failure remain unchanged.",
+  "authorizedCommand": {
+    "cwd": "/Users/yilungao/coh",
+    "executable": "/usr/bin/caffeinate",
+    "argv": [
+      "-i",
+      "/usr/local/bin/node",
+      "tools/qa/r100-i09-final-probe.mjs",
+      "--probe",
+      "production",
+      "--source",
+      "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "--output",
+      "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep",
+      "--expected-worlds",
+      "108",
+      "--expected-revision",
+      "6",
+      "--stop-on-failure",
+      "--observe-workers"
+    ],
+    "envOverrides": {
+      "GAME_URL": "http://127.0.0.1:3122/",
+      "NODE_OPTIONS": "",
+      "DEBUG": ""
+    },
+    "environmentHandling": "Original final wrapper sanitizes inherited QA settings before the same harness. No harness/world/seed/timeout overrides are introduced.",
+    "onlyProbeArgvDifference": "--output changes to the declared fresh recheck directory; all other original arguments are byte-for-byte identical.",
+    "outputMustBeAbsent": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep",
+    "operationalAuditDirectoryMustBeAbsent": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution"
+  },
+  "executionLimits": {
+    "newFullMatrixAttempts": 1,
+    "expectedNewCases": 324,
+    "originalActualAttempts": 152,
+    "maximumCombinedActualAttempts": 476,
+    "automaticRetry": false,
+    "preserveReadyTimeoutMs": 30000,
+    "preserveCatalogOrder": true,
+    "preserveMinimumSeedSelection": true,
+    "preserveFreshOrdinaryInventory": true,
+    "qaBrowserLimit": 1,
+    "nextStagePolicy": "Any wrapper, source, observer, power or identity failure stops downstream work and is reported to root. No automatic rerun."
+  },
+  "powerAudit": {
+    "assertion": "PreventUserIdleSystemSleep",
+    "scope": "The utility-scoped /usr/bin/caffeinate -i process only. No pmset mutation, permanent settings, -d, -s, -u or game-clock change. Manual sleep/lid events are not claimed to be prevented.",
+    "before": [
+      "Write UTC/local start timestamps and operator PID/PPID.",
+      "Capture ps process inventory, lsof3122 listener, pmset -g assertions, and pmset -g log baseline. Reject an existing matching QA Chrome/probe or caffeinate process.",
+      "Reverify all candidate, original evidence, source and tool SHA references; verify1397 working/frozen source files; require both new directories absent."
+    ],
+    "during": [
+      "Launch the declared argv exactly once and record launch PID plus every observed related PID/PPID/command (actual caffeinate assertion owner, node wrapper, harness, browser). Do not assume a fixed caffeinate fork topology.",
+      "Capture pmset -g assertions and process inventory after startup, then at bounded intervals. Require a PreventUserIdleSystemSleep assertion owned by the observed utility-scoped caffeinate process. Missing assertion fails the operational audit; stop the launched process tree only and retain evidence.",
+      "Write stdout/stderr to a new operational log outside the probe output. Preserve process, assertion and timing samples without rewriting old samples."
+    ],
+    "after": [
+      "Capture end timestamp, exit code, final ps and pmset -g assertions/log. Confirm the assertion owner and this run browser/probe processes exited.",
+      "Filter actual pmset Sleep event records by the execution start/end timestamps, preserving raw log and selected lines. Any Sleep event in the execution window invalidates the clean-recheck claim and stops downstream work.",
+      "Record the parent/child lifecycle and assertion release; an unclosed owned process or unproven assertion release is an operational failure."
+    ],
+    "localManual": {
+      "path": "/usr/share/man/man8/caffeinate.8",
+      "sha256": "dcde2d301a6be6151afc331cbb5ab3b855e2e7a2a88c9a7db2e58c8195d33711"
+    }
+  },
+  "postRunReconciliation": {
+    "requireFullWrapperPass": true,
+    "expectedCases": 324,
+    "expectedObservedContexts": 324,
+    "requireObservedBrowserLifecycle": 1,
+    "requireAllContextsAndWorkersClosed": true,
+    "requireOriginalEvidenceHashesUnchanged": true,
+    "requireEveryCaseOrderAndSeedEqualExpectedCases": true,
+    "original152Schedule": "Deep-equal world, grade and controlledSeed for original cases1..152 with corresponding new cases1..152.",
+    "availableOriginalIdentities": "Deep-equal each original case.identity when present; otherwise the entire diagnostic.saved.riftCheckpoint.identity. For original failed152, compare every identity field including full generation object with the new row.identity. No field subset or world/seed-only comparison.",
+    "originalFullIdentityCount": 152,
+    "failed152": {
+      "ordinal": 152,
+      "world": "silt-colonnade",
+      "grade": "medium",
+      "controlledSeed": 340,
+      "resolvedSeed": 1500724393,
+      "signature": "028dc1bf",
+      "completeIdentity": {
+        "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/failed-case-identity.json",
+        "sha256": "6ca0812fc1b675030eb84a835cc914ef1e632b56b61997e54ca82db3dae60c5b"
+      }
+    },
+    "noResultUpgrade": "Original case152 remains failed even if the new independently stored full run passes. No first-run failure is relabeled.",
+    "scope": "Formal entry/cold reload integration only; not natural48, gameplay, budget or lifecycle qualification."
+  },
+  "optionalServerRestoration": {
+    "requiredNow": false,
+    "originalServerAlivePid": 76518,
+    "script": {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/restore-frozen-server.mjs",
+      "sha256": "aa70f73cc6bb3c3503bef2d91cc269187bdadfca2da8b5eac97aeda2de1fb7ec"
+    },
+    "runOnlyIf": "Original3122 listener is absent at approved dispatch. Do not kill or replace an occupied listener. Root dispatch must cover restoration.",
+    "verifyOnlyArgv": [
+      "/usr/local/bin/node",
+      "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/restore-frozen-server.mjs",
+      "--verify-only"
+    ],
+    "restoreArgv": [
+      "/usr/local/bin/node",
+      "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/restore-frozen-server.mjs"
+    ],
+    "restoreEnv": {
+      "QA_RESTORE_ORIGINAL_SOURCE": "1"
+    },
+    "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-IFvDxZ",
+    "port": 3122,
+    "filesRequiredExact": 1397,
+    "manifestMustRemain": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    "prohibitions": [
+      "No new frozen snapshot",
+      "No manifest write or PID patch",
+      "No source copy or mixing",
+      "No product or frozen harness changes"
+    ],
+    "postRestore": "Record fresh restore PID separately; recheck disk and served source before any QA browser."
+  },
+  "reason": "Independent system evidence corroborates an automatic1216s Idle Sleep overlapping originalcase152. A clean complete single-run recheck retains the existing complete-matrix and source/Worker gates without altering the game or accounting tools. It does not establish that sleep was the only cause or turn the original failure into a pass.",
+  "nextStage": "Stop after production execution and reconciliation; root checks outcomes before equivalence/natural/performance. No automatic retry.",
+  "reviewedInputs": [
+    {
+      "path": "/usr/bin/caffeinate",
+      "sha256": "76c09f9c9aeacf773ba9e51749a4d76f32342217fc914ceaaa170692cfec0ccd"
+    },
+    {
+      "path": "/usr/bin/pmset",
+      "sha256": "80817eecc1f4af438f7a212e694e8ce64b621db890deb390b656afabd1df42f0"
+    },
+    {
+      "path": "/usr/local/bin/node",
+      "sha256": "c583851fc85e4618b2374cda13399d59d373ad7cebfc4b55160820b88dcce67b"
+    },
+    {
+      "path": "/usr/share/man/man8/caffeinate.8",
+      "sha256": "dcde2d301a6be6151afc331cbb5ab3b855e2e7a2a88c9a7db2e58c8195d33711"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/production-environment-review/review.json",
+      "sha256": "a1793d1d0e25925bcd93248f54b6439070e73e85b42758f50011df7913756d29"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/commands.json",
+      "sha256": "24a0e53e23461cbe5978ee5fa6c0e0b35d323d139c0b36b9e74f6cc790944361"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/production-execution.json",
+      "sha256": "7c3ac31e81d6830ce16c32ca9c9061dd6573d17876828edf96c2dfdd0a5c55ce"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108/report.json",
+      "sha256": "cffeffdd4ec738243ab6017b9b0cf83011dae2e9b47f6ea9a2553b865ad91096"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108/source-binding.json",
+      "sha256": "3f22e21154d8255350804de66da1470c608b9dc495652e3d90340c1aaf8c0768"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108/worker-observations/observer-85087.jsonl",
+      "sha256": "336169a74595533e634f72d4c2dc3d3c851288a5e3185dd7249700879f6deae4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/diagnosis.json",
+      "sha256": "ac11fbc01df424fbb45ba24afac4f7cda589cb8e2e8d0221b4c4b1b252d242e8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/failed-case-identity.json",
+      "sha256": "6ca0812fc1b675030eb84a835cc914ef1e632b56b61997e54ca82db3dae60c5b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/failed-case-saved.json",
+      "sha256": "6adce06b3872403c6e39e344524315139271c3c933277cfe4cffbeeebcc530bc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/system-sleep-excerpt.txt",
+      "sha256": "4d2ece88d835893bb4e8078cb15b60d261defd864527aa766ad3c63db801b45b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/candidate-plan.json",
+      "sha256": "98d2e2f282aed5cfb35a28e8fc0106f955657161629624a3461cfb45067051c5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/expected-cases.json",
+      "sha256": "f86f76c4e1c0e37a4f92c6f345d184b2cca91c7ef2f5b89375c76ae188df6da9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/preflight.json",
+      "sha256": "b9e4532184c95a818dd5f6eab464d03b0413af173c0ce53c7490882c72681e38"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/restore-frozen-server.mjs",
+      "sha256": "aa70f73cc6bb3c3503bef2d91cc269187bdadfca2da8b5eac97aeda2de1fb7ec"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "path": "tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "path": "tools/qa/check-r100-production-browser.mjs",
+      "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "7680dd09c9d9a4989ecde5b0173efd72c6cd24fee33ecf272eb57330a4af2c60"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/r100-revision6-journey.mjs",
+      "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+    },
+    {
+      "path": "tools/qa/r100-revision6-review-continuous.mjs",
+      "sha256": "28db9ca4224f48e06ea9fadf50521fbff80d58b45d01512c8a29a2fc5b0b57b5"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    },
+    {
+      "path": "tools/recovery/fixtures/r100-revision1-gold.json",
+      "sha256": "a61b9c30e27ae6c303a1290dbb5e7555c9434e7efb189ba0e3cea4351f0c30ef"
+    },
+    {
+      "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+      "sha256": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc"
+    },
+    {
+      "path": "tools/world-study/r100-frozen-server.mjs",
+      "sha256": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7"
+    }
+  ]
+}

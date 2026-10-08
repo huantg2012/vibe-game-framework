@@ -1,0 +1,180 @@
+{
+  "schema": "coh.qa.policy17-actual-execution-independent.v1",
+  "status": "pass-bounded-two-original-seed-processes",
+  "scope": "P43 ochre-folds severe supplementary policy17 on the two original seeds only; original deaths remain immutable failed attempts.",
+  "protocol": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/approved-protocol.json",
+    "sha256": "d88c904ce2c95d2c0be396016fda6f7db1ed82788781a90b6ab98792feb72ce6"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/execution.json",
+    "sha256": "bf714ec6b0a2753602431929b3383d7168a32a433cad9ec44de5252d6d1f512e"
+  },
+  "policy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/policy-freeze.json",
+    "sha256": "790cbbb84e0a01663e48031f9cce6f071e7985c4d68e0676b03e080d5f9bdf6b"
+  },
+  "batch": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/batch-report.json",
+    "sha256": "dbeb521d7501fc2edbb8f136bf3e6263280f5b7ca7759da8912246ab7a95e922"
+  },
+  "inputGuard": {
+    "path": "tools/qa/r100-i12-facing-supplement.mjs",
+    "sha256": "b21c89be8dc1e6d86a1d2d0337afaf1b641aed2891effc9d0834ec06c8f31672"
+  },
+  "frozenSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "frozenSourceFilesRehashed": 1397,
+  "storageExactExceptOrigin": true,
+  "originalFailuresRetained": true,
+  "actualOriginalSeeds": [
+    20261005,
+    3075192741
+  ],
+  "bothProcessesCompleted": true,
+  "bothNonEntrySearchAndExtract": true,
+  "rows": [
+    {
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/report.json",
+        "sha256": "fb8b62b51d0ca351a6343d4cced68ce4361598b05d2181a9d4acb4e8cd2ea9ab"
+      },
+      "inputLog": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/journey.jsonl",
+        "sha256": "45a9bff315bf72362c98c980f4f281516dedc9e2ca9e02f797a70f81b0676048"
+      },
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+        "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+      },
+      "originalOutcomePreserved": "death",
+      "fullIdentityExact": true,
+      "earnedBeforeExact": true,
+      "outcome": "extract",
+      "fieldElapsedMs": 63164.13999999964,
+      "terminalNodeChanges": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "from": false,
+          "to": true,
+          "distanceFromEntry": 551.5360369005818
+        }
+      ],
+      "actualPickupCount": 1,
+      "runId": "a17676bd-414e-4a9b-af6f-1ae652485d1e",
+      "sameRunSettled": true,
+      "kindlingCarried": 6,
+      "kindlingGained": 6,
+      "kindlingBefore": 20,
+      "kindlingAfter": 26,
+      "facing": {
+        "count": 4,
+        "allowed": 4,
+        "abandoned": [],
+        "actualSpaceEvents": 4,
+        "observedGeometryBindings": 12,
+        "maximumWholeElapsedMs": 400.00000000001455,
+        "maximumRequestedTurnMs": 120,
+        "finalAllowedAngles": [
+          18.2542250019,
+          12.4514991763,
+          20.2599736037,
+          15.2177319696
+        ],
+        "finalAllowedDistances": [
+          25.202389404688727,
+          25.24737626959073,
+          25.10807766138234,
+          25.022054478769743
+        ]
+      }
+    },
+    {
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/report.json",
+        "sha256": "9cc5a9adc59ddc3d4ca21813b43acfed105ed1e43bb2089b611d9420e6a88cf6"
+      },
+      "inputLog": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/journey.jsonl",
+        "sha256": "07b3954647d8e9d452c5e720dceb502921bec0ee7c0642b22da59801566245d6"
+      },
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+        "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+      },
+      "originalOutcomePreserved": "death",
+      "fullIdentityExact": true,
+      "earnedBeforeExact": true,
+      "outcome": "extract",
+      "fieldElapsedMs": 67730.62999999963,
+      "terminalNodeChanges": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "from": false,
+          "to": true,
+          "distanceFromEntry": 554.3139904422402
+        }
+      ],
+      "actualPickupCount": 1,
+      "runId": "44c40244-8e3f-4588-9175-319462b01dd5",
+      "sameRunSettled": true,
+      "kindlingCarried": 6,
+      "kindlingGained": 6,
+      "kindlingBefore": 20,
+      "kindlingAfter": 26,
+      "facing": {
+        "count": 3,
+        "allowed": 2,
+        "abandoned": [
+          {
+            "index": 0,
+            "reason": "visible-attack-phase",
+            "phase": "windup",
+            "elapsedMs": 450.01999999998225
+          }
+        ],
+        "actualSpaceEvents": 2,
+        "observedGeometryBindings": 9,
+        "maximumWholeElapsedMs": 450.01999999998225,
+        "maximumRequestedTurnMs": 180,
+        "finalAllowedAngles": [
+          22.3849933954,
+          0.2502433785
+        ],
+        "finalAllowedDistances": [
+          25.62259444052039,
+          25.197112199395168
+        ]
+      }
+    }
+  ],
+  "workerObservation": {
+    "status": "pass",
+    "contexts": 2,
+    "files": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/worker-observations/observer-72027.jsonl",
+        "sha256": "9fc746aad04b8ba1386ffa043bc175db616ce46288409a7e1cee2213085e8af0"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/worker-observations/observer-72034.jsonl",
+        "sha256": "89f1c632dbfdb59d3e19b7b331eaa15557fe7b6cb3e9b9859f9bf7df6d3ae224"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/worker-observations/observer-73060.jsonl",
+        "sha256": "fa9278089ef082a46c78e33536fdbe37398d382322ed89f65a523af220a9df05"
+      }
+    ]
+  },
+  "limitations": [
+    "No enemy HP or contact-frame hit proof was logged; this receipt makes no hit or causal success-rate claim.",
+    "Controlled same-source/save/world/seeds; no natural48, final108, visual, audio, performance or overall I10-I12 acceptance.",
+    "Main aggregate summary must still count both original failed reports and these two approved supplemental reports."
+  ]
+}

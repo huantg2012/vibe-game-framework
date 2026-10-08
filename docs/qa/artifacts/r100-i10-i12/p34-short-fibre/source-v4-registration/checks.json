@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-07T06:12:11.838Z",
+  "typecheck": "passed",
+  "materialOrganizationContract": "passed; three independent atoms and two exact opt-ins",
+  "sampling": {
+    "cases": 27,
+    "sourceCoordinatesChecked": 463968,
+    "status": "pass"
+  },
+  "lint": {
+    "configuredScript": false,
+    "substitute": "scoped git diff --check passed; not a lint pass"
+  },
+  "dev": {
+    "command": "npm run dev -- --host 127.0.0.1 --port 3187 --strictPort",
+    "status": "http-smoke-pass",
+    "requests": [
+      {
+        "path": "/",
+        "status": 200,
+        "bytes": 1021
+      },
+      {
+        "path": "/src/generated/r100-material-organizations.ts",
+        "status": 200,
+        "bytes": 12627
+      },
+      {
+        "path": "/src/generated/r100-world-appearance.ts",
+        "status": 200,
+        "bytes": 227965
+      },
+      {
+        "path": "/assets/r100-materials/short-fibre-loose-ground-source.png",
+        "status": 200,
+        "bytes": 3528407
+      },
+      {
+        "path": "/assets/r100-materials/short-fibre-loose-solid-source.png",
+        "status": 200,
+        "bytes": 3806531
+      }
+    ],
+    "processClosed": true,
+    "exitCode": 130
+  },
+  "sourceRegistrationCheck": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-registration/check-registration.mjs",
+    "sha256": "15fa7259c83f4db62ce93678b17828410fa6645717b554f3569f836fe8957ae3"
+  }
+}

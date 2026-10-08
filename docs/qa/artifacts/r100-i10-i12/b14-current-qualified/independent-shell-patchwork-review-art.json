@@ -1,0 +1,410 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-fixed-process-and-frame-observation",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T13:08:05.047Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "world": "shell-patchwork",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "admission": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/commands.json",
+    "sha256": "703b4cf4f20e6936a9c0b9c2386b64290a9731264cddfbf5c06210f3ae3d5f14"
+  },
+  "cases": [
+    {
+      "originalIndex": 13,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/013-shell-patchwork-low-20261005/report.json",
+        "sha256": "8b95dffdb0422567b8dafa4a59f3702dd539b7222f23654646e835ff3d09f0c4"
+      },
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "4441f2f3",
+      "dependencyHash": "c0347c3a",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 32232.04999999966,
+      "hp": 145,
+      "chaos": 29.630544098993987,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 593.3498125052371
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-1"
+          ],
+          "elapsedMs": 20165.839999999887,
+          "hp": 145,
+          "chaos": 27.52272509546392
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 14,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/014-shell-patchwork-low-3075192741/report.json",
+        "sha256": "00f62182f0e1ba846fa36ae979e193acca2567df77bd6e71bc91c238a53f860e"
+      },
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "7c784248",
+      "dependencyHash": "c0347c3a",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 52881.259999999944,
+      "hp": 100,
+      "chaos": 48.72019728367509,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 608.0526293011156
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "visible-approach",
+          "actualCollectedNodeIds": [],
+          "elapsedMs": 19832.559999999874,
+          "hp": 145,
+          "chaos": 30.86449991915413
+        },
+        {
+          "id": "r100-kindling-contested-2",
+          "attempted": true,
+          "reason": "collected",
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-2"
+          ],
+          "elapsedMs": 36915.209999999744,
+          "hp": 100,
+          "chaos": 45.931124028583575
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 15,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/015-shell-patchwork-medium-20261005/report.json",
+        "sha256": "4974adb31b25b451e1730133396431a25d1855dc9a49bed63c7978bb88023400"
+      },
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "ecd9065f",
+      "dependencyHash": "7bd6ed82",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 62830.80999999964,
+      "hp": 115,
+      "chaos": 65.81105352152197,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 604.0397337924054
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-1"
+          ],
+          "elapsedMs": 48398.06999999982,
+          "hp": 115,
+          "chaos": 55.51453908323888
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 16,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/016-shell-patchwork-medium-3075192741/report.json",
+        "sha256": "66c13ba3d0da797af4dad4dfa03b0066d7cb83b3bd13cdd81e0ae709ddadcb6a"
+      },
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "d5efacb6",
+      "dependencyHash": "7bd6ed82",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 29682.129999999765,
+      "hp": 145,
+      "chaos": 33.073932571925866,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 610.5735008989499
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-1"
+          ],
+          "elapsedMs": 17815.92999999993,
+          "hp": 145,
+          "chaos": 29.446393083183423
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 17,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/017-shell-patchwork-severe-20261005/report.json",
+        "sha256": "06226bd93fa932ee6b9552176f443fe822b7d560912b436f42bf798a44211297"
+      },
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "866a0148",
+      "dependencyHash": "c3d9516f",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 34431.91999999985,
+      "hp": 145,
+      "chaos": 40.03955847036936,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 608.4734998338055
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "attempted": true,
+          "reason": "collected",
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-2"
+          ],
+          "elapsedMs": 19765.849999999955,
+          "hp": 145,
+          "chaos": 33.20760465264611
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 18,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/018-shell-patchwork-severe-3075192741/report.json",
+        "sha256": "5cb34975b8bce22bf7cf0eb5f19cdb01f8c0cdbae070aa32b11771dec7809288"
+      },
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "dbabe91c",
+      "dependencyHash": "c3d9516f",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 37381.85999999997,
+      "hp": 145,
+      "chaos": 41.41374077313037,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 610.5735008989499
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "actualCollectedNodeIds": [
+            "r100-kindling-contested-1"
+          ],
+          "elapsedMs": 24965.669999999915,
+          "hp": 145,
+          "chaos": 35.62985751932945
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "counts": {
+    "originalProcesses": 6,
+    "nonEntrySearchAndExtract": 6,
+    "trueEmptyReturns": 0,
+    "deaths": 0
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/013-shell-patchwork-low-20261005/low/1-far-exploration.png",
+      "sha256": "237999b47f3cab754a30053241a7fe191b785cc1bb46c3eac1e5844567e2f979",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "人物尺度下厚壳端大平面和侧面高度清楚，灰白壳/粉红接边与蓝灰底床分开；整齐切边、宽平侧面有棱块感，膜独立折边较弱，只覆盖一端。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/014-shell-patchwork-low-3075192741/low/1-search-1.png",
+      "sha256": "d7bbf23442dd50776b312da42aba9cdf1fddb1895c15a6033aba3d577617e00e",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "145HP时人物在白壳残骸旁，敌人正靠近；此处首次搜索虽尝试但未收取，后续另点成功，不把画面提示计为完成。底床长直斜分界仍明显。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/015-shell-patchwork-medium-20261005/medium/1-far-exploration.png",
+      "sha256": "3b27c746fbec36a86a5577b158de4c3b9c13237b2ff171897e48cef1bfdf46bb",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "与低档近侧相近位置可见同一厚壳端和黑绿宿主，主体/脚边/污染体局部分开；膜折边和全部拼片未完全显现。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/015-shell-patchwork-medium-20261005/medium/1-field-result.png",
+      "sha256": "3b60f6303c907093206145c522977b024be4774d7f8aff4598025195ba9ae27f",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "115HP、6薪柴、63秒、峰值混乱66返回，实际受伤和一击杀保留；背景床面只是一段，不代表全路线。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/017-shell-patchwork-severe-20261005/severe/1-far-exploration.png",
+      "sha256": "16587ebb0a71a3f302dd0bfd69231fc8459a8613c23ac379fdee8a06aed9add8",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "重档同处近侧可见青侵蚀线与灰白壳、粉红接边和蓝灰床，黑绿宿主独立；大平面/整齐切边的棱块感在此视角仍在。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/018-shell-patchwork-severe-3075192741/severe/1-search-1.png",
+      "sha256": "7a7a63e670fd72fc0c5413c0c4f71b2202111ba5564fd8812a48842d2edff1ba",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "重档第二种子145HP/35混乱时取得6薪柴，蓝灰床与右侧浅绿污染形分开；主体不在完整视野中，不能据此签重档全部壳膜交接。"
+    }
+  ],
+  "findings": [
+    "六个原种子过程均带6薪柴同趟返回；低档第二种子100HP、中档第一种子115HP，未把成功写成无压力。",
+    "低档第二种子首处attempted=true但actualCollectedNodeIds为空，之后另一个争夺点成功；已明确区分尝试与取得。",
+    "两个重档34.43/37.38秒、40.04/41.41混乱、145HP返回，属于有限争夺点搜撤，不是临界深部峰值体验。",
+    "已见厚端/蓝灰床/粉红接边局部可区分；不扩为两大低壳与全部短端、膜折边组织已审。"
+  ],
+  "retainedWeaknesses": [
+    "同一近侧视角下，壳端大平面和整齐切边仍有棱块感，膜的独立折边较弱；这是局部视觉弱项，不以过程搜撤成功替代人审。",
+    "底床有较长斜直材质分界；连续视野中的误读、动态遮挡及整体重复感仍未验证。"
+  ],
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/013-shell-patchwork-low-20261005/low/1-far-exploration.png",
+      "sha256": "237999b47f3cab754a30053241a7fe191b785cc1bb46c3eac1e5844567e2f979",
+      "reason": "人物尺度下厚壳端大平面和侧面高度清楚，灰白壳/粉红接边与蓝灰底床分开；整齐切边、宽平侧面有棱块感，膜独立折边较弱，只覆盖一端。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/014-shell-patchwork-low-3075192741/low/1-search-1.png",
+      "sha256": "d7bbf23442dd50776b312da42aba9cdf1fddb1895c15a6033aba3d577617e00e",
+      "reason": "145HP时人物在白壳残骸旁，敌人正靠近；此处首次搜索虽尝试但未收取，后续另点成功，不把画面提示计为完成。底床长直斜分界仍明显。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/015-shell-patchwork-medium-20261005/medium/1-field-result.png",
+      "sha256": "3b60f6303c907093206145c522977b024be4774d7f8aff4598025195ba9ae27f",
+      "reason": "115HP、6薪柴、63秒、峰值混乱66返回，实际受伤和一击杀保留；背景床面只是一段，不代表全路线。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/017-shell-patchwork-severe-20261005/severe/1-far-exploration.png",
+      "sha256": "16587ebb0a71a3f302dd0bfd69231fc8459a8613c23ac379fdee8a06aed9add8",
+      "reason": "重档同处近侧可见青侵蚀线与灰白壳、粉红接边和蓝灰床，黑绿宿主独立；大平面/整齐切边的棱块感在此视角仍在。"
+    }
+  ],
+  "limits": [
+    "Original fixed fixtures and policy15, not natural48.",
+    "Six original normal PNGs personally viewed; no continuous video, hands-on play, audio, GPU/performance or human aesthetic approval.",
+    "This record neither erases existing static review scope nor proves visual causation for interrupted searches."
+  ],
+  "pixelModelsScope": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+    "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+  }
+}

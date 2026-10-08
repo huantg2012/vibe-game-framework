@@ -1,0 +1,36 @@
+{
+  "status": "compiled-selection-only-not-visually-approved",
+  "worldId": "woven-quarters",
+  "changedFields": [
+    "materialOrganization"
+  ],
+  "oldValue": "short-fibre",
+  "newValue": "short-fibre-loose",
+  "other107AppearancesDeepExact": true,
+  "wovenAllOtherFieldsDeepExact": true,
+  "changes": [
+    {
+      "path": "data/rift-world-appearance.csv",
+      "sha256": "8fc9ea2cac80fda4bba849f01e7b5096dd7fb3212acfaef6bf983f89ea0a9cca"
+    },
+    {
+      "path": "src/generated/r100-world-appearance.ts",
+      "sha256": "11b5690fc573f4a4085d3816b51fdbd6f7008b582b735bcdf7ecffb427c6e387"
+    },
+    {
+      "path": "tools/world-study/check-r100-material-organization.ts",
+      "sha256": "c7dd26f04b44fed1302351949daef5cd5fce5cfa540c0adc71cb414439ba7821"
+    }
+  ],
+  "checks": [
+    "appearance codegen --check108 PASS",
+    "material organization contract3pairs/CSV negatives/explicit resolver/old52 absent/three selected worlds PASS",
+    "tsc --noEmit PASS; scoped git diff --check PASS",
+    "package-readiness-3121/dev-smoke.json: npm dev3198 three HTTP200; current frozen3121 HTTP200"
+  ],
+  "pending": [
+    "new source original-position three-grade normal art review",
+    "same-world current-material actual play"
+  ],
+  "history": "Old3120 rejection and all original frames preserved; new selection is not a visual pass."
+}

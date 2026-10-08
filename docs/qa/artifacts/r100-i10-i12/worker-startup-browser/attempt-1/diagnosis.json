@@ -1,0 +1,6 @@
+{
+  "status": "qa-observation-assumption-diagnosed",
+  "failure": "page.worker event counts executable Worker contexts, not necessarily every Worker whose initial module request was aborted. First injected request had requestfailed and no exposed Worker context; second identical request produced an actual result and a paired worker/close before context teardown.",
+  "preservedReportSha256": "0d97e0ed97de6b639fd546218c3e92ebd87c4a4535b9f8677e3b735fd98e1da7",
+  "proposedCorrection": "Keep exactly2 initial script requests, exact1 controlled requestfailed, same URL and result/input comparison. Require the1 successfully exposed replacement Worker context to close before context teardown; do not claim the failed pre-context object termination was externally observed. Source disposal remains independently covered by fakeclock contract."
+}

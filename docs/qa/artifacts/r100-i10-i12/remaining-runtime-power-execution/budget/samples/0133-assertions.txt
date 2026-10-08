@@ -1,0 +1,28 @@
+2026-10-08 14:20:07 +0800 
+Assertion status system-wide:
+   BackgroundTask                 0
+   ApplePushServiceTask           0
+   UserIsActive                   1
+   PreventUserIdleDisplaySleep    0
+   SoftwareUpdateTask             0
+   PreventSystemSleep             0
+   ExternalMedia                  0
+   InternalPreventDisplaySleep    1
+   PreventUserIdleSystemSleep     1
+   NetworkClientActive            0
+Listed by owning process:
+   pid 395(runningboardd): [0x0023ab04000190cf] 00:00:00 PreventUserIdleSystemSleep named: "osservice<com.tencent.iOABus.Daemon>395-53242-2148510:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 53242. 
+   pid 94761(caffeinate): [0x00239baf000185e8] 01:05:25 PreventUserIdleSystemSleep named: "caffeinate command-line tool"  
+	Details: caffeinate asserting on behalf of '/usr/local/bin/node' (pid 94758)
+	Localized=THE CAFFEINATE TOOL IS PREVENTING SLEEP.
+   pid 401(WindowServer): [0x0023607f0009a483] 00:00:00 UserIsActive named: "com.apple.iohideventsystem.queue.tickle serviceID:1002818e3 service:AppleMultitouchDevice product:Apple Internal Keyboard / Trackpad eventType:11"  
+	Timeout will fire in 10800 secs Action=TimeoutActionRelease
+   pid 400(coreaudiod): [0x0023ab00000185f6] 00:00:04 PreventUserIdleSystemSleep named: "com.apple.audio.BuiltInSpeakerDevice.context.preventuseridlesleep"  
+	Created for PID: 94857. 
+	Resources: audio-out BuiltInSpeakerDevice 
+   pid 330(powerd): [0x0023665a000185dd] 04:52:58 PreventUserIdleSystemSleep named: "Powerd - Prevent sleep while display is on"  
+   pid 330(powerd): [0x00239bf2001083fd] 00:00:05 InternalPreventDisplaySleep named: "com.apple.powermanagement.delayDisplayOff"  
+	Timeout will fire in 295 secs Action=TimeoutActionTurnOff
+Kernel Assertions: 0x100=MAGICWAKE
+   id=556  level=255 0x100=MAGICWAKE creat=2026/8/10 18:03  mod=2026/10/8 09:40 description=en0 owner=IOSkywalkNetworkBSDClient

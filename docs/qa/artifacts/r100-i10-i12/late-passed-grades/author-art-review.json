@@ -1,0 +1,891 @@
+{
+  "status": "bounded-author-low-severe-pass",
+  "at": "2026-10-07T07:17:37.603Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/report.json",
+    "sha256": "0b8230f65592845ef22fc68cc06b7e1803b844bd625ba491241a99c69f9ce86b"
+  },
+  "scope": "All 26 original PNGs personally viewed; fixed requested seed20261005, real WASD, normal FOV/light and active pressure. Static floor planning, not visible-only natural play.",
+  "limitations": [
+    "Only illuminated local faces and relationships; no complete-map, full search-return, economy, audio, dynamic fatigue or human approval.",
+    "Actual poses/enemies/pressure differ; comparable directions, not pixel-aligned frames.",
+    "No new explicit art obstruction found in reviewed frames; rejected surfaces in other worlds remain rejected pending current-source review."
+  ],
+  "worlds": [
+    {
+      "worldId": "husk-reef",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "husk-reef",
+        "grade": "low",
+        "package": {
+          "id": "r100-husk-reef",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "b6c5e8c9",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=husk-reef&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧的红/黄厚背、灰内面和紫床仍分层，脚沿清楚；高低残背与可通行裸床有区别，重档绿色没有吞掉近面本色。",
+      "limits": "03主要是东侧近床/短沿，04敌人和黑处遮住部分后壁；不签所有壳背。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/husk-reef-low/01-material-approach-west.png",
+          "sha256": "97b7d0af4eb3c124beb02ecf9ff0e60a6c551d39720c148cc0a7563897bccaf2",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 474.41129744729017,
+              "y": 322.84532231349044
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.009678471999965,
+            "elapsedMs": 10682.800000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/husk-reef-low/03-material-approach-north.png",
+          "sha256": "a23b243aff93f2ad7549d5ba4ce1d3b2bf08deae8b2527d1527dbce4025b9d60",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887508,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 740.2901192710386,
+              "y": 535.9912971146748
+            },
+            "facingAngle": -1.5706706630887508,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 25.35429861599991,
+            "elapsedMs": 18065.899999999998
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/husk-reef-low/04-material-approach-east.png",
+          "sha256": "8113f73eba057c48f6fb46de2ee68743c1095468f309000c6f0687cf9f7cc8be",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 242.1699288762331,
+              "y": 490.5442356870748
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 29.866600391999814,
+            "elapsedMs": 29965.4
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "husk-reef",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "husk-reef",
+        "grade": "severe",
+        "package": {
+          "id": "r100-husk-reef",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "a9eff3a9",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=husk-reef&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧的红/黄厚背、灰内面和紫床仍分层，脚沿清楚；高低残背与可通行裸床有区别，重档绿色没有吞掉近面本色。",
+      "limits": "03主要是东侧近床/短沿，04敌人和黑处遮住部分后壁；不签所有壳背。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/husk-reef-severe/01-material-approach-west.png",
+          "sha256": "3787aa53ab546f45d8c322e915313f5cd1cb0ecefbb5a808b41827b3c2b2cd56",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141278494324434,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 476.58560396455846,
+              "y": 322.40959799320376
+            },
+            "facingAngle": 3.141278494324434,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 20.637212479999764,
+            "elapsedMs": 11232.8
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/husk-reef-severe/03-material-approach-north.png",
+          "sha256": "d531050bfa09d256b901af6cc5f5c52d38ce4aaf907a9f349f36d57abbbd23a6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.570670663088757,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 739.3145631658018,
+              "y": 535.0560546602351
+            },
+            "facingAngle": -1.570670663088757,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 24.336374207999587,
+            "elapsedMs": 18549.2
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/husk-reef-severe/04-material-approach-east.png",
+          "sha256": "f986a3e87efdda923c9b15e77b0c322c41c15368cd692c7c2c24efd0bed921d8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 242.30742032969394,
+              "y": 490.1148371004308
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 30.150546687999164,
+            "elapsedMs": 30048.699999999997
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "double-return",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "double-return",
+        "grade": "low",
+        "package": {
+          "id": "r100-double-return",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "cf65efb6",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=double-return&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "八帧中短厚端、分叉肩与裸地/真缺地边可分；05两向保留了回转地床及断沿，不以颜色线假冒墙。",
+      "limits": "05有敌人贴近或遮住局部；部分低母床仍有直色界，当前原图未见必须新增返工的完整黑圈，不扩大到完整长短路体验。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-low/01-material-approach-north.png",
+          "sha256": "be72feb1674c4ab731be0efdcaeb453a41b6ce5c94c021e8f29e754b4e89c311",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 582.6969632024188,
+              "y": 617.7141255937447
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.276588175999983,
+            "elapsedMs": 6816.3
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-low/03-material-approach-west.png",
+          "sha256": "dabec2d07a49cf6c346b098a5540d65d05488819c24d748deaf689f70c84ba90",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.1415298217367202,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 598.9338940948156,
+              "y": 409.1865826624571
+            },
+            "facingAngle": 3.1415298217367202,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 17.98608244799995,
+            "elapsedMs": 15832.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-low/05-original-route-boundary-east.png",
+          "sha256": "39a44802a4b49d8937ab2c8d6166beea38a7ffa764315fb0634bdeb90e069754",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.0000628318530662142,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 553.5054197185169,
+              "y": 151.67974076332888
+            },
+            "facingAngle": -0.0000628318530662142,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 22.39539820799992,
+            "elapsedMs": 22749.1
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-low/05-original-route-boundary-west.png",
+          "sha256": "32337806ff6e392c2a6ff77b0dfaa1781238a02eb1cac7b63759063158301903",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1413413261775007,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 537.5625530518502,
+              "y": 151.67974076332888
+            },
+            "facingAngle": -3.1413413261775007,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 22.584979247999915,
+            "elapsedMs": 23249
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "double-return",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "double-return",
+        "grade": "severe",
+        "package": {
+          "id": "r100-double-return",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "bef1ef23",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=double-return&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "八帧中短厚端、分叉肩与裸地/真缺地边可分；05两向保留了回转地床及断沿，不以颜色线假冒墙。",
+      "limits": "05有敌人贴近或遮住局部；部分低母床仍有直色界，当前原图未见必须新增返工的完整黑圈，不扩大到完整长短路体验。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-severe/01-material-approach-north.png",
+          "sha256": "9c8f24f03f884e8e09b54dd90fca77c6e5f6ef4d99b234d1f134d951984c365e",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5708591586479694,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 578.3439982090933,
+              "y": 623.6455524556919
+            },
+            "facingAngle": -1.5708591586479694,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.286268543999867,
+            "elapsedMs": 6583
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-severe/03-material-approach-west.png",
+          "sha256": "105136280cba457210e8e24bc4c62342935657382e631c3012bfb6c88ea50eb1",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 596.461769528691,
+              "y": 407.51118354440524
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 22.903898175999696,
+            "elapsedMs": 15716
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-severe/05-original-route-boundary-east.png",
+          "sha256": "3c262111f44a136e419caf40eec811dfb0fb4746a34a1e8b2df344555eda8a39",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 554.7222915006951,
+              "y": 154.17281225795867
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 26.249160127999488,
+            "elapsedMs": 22332.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-severe/05-original-route-boundary-west.png",
+          "sha256": "a0b38c272c0f95a8a199bde61782e595aa28ab994e89c19ee8b54b857a1ed7b3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141089998765215,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 538.7789915006949,
+              "y": 154.17281225795867
+            },
+            "facingAngle": 3.141089998765215,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 28.49352166399947,
+            "elapsedMs": 22815.7
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "offset-basins",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-basins",
+        "grade": "low",
+        "package": {
+          "id": "r100-offset-basins",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "ebd42e8d",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=offset-basins&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧可读红背、灰曲内面和蓝裸床；03近灯脚线连续，04宽裸床可读，低重没有新增覆盖硬片。",
+      "limits": "细绿色平行层纹仍偏规律；04不等于两盆全部组织/后壁均可见。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/offset-basins-low/01-material-approach-north.png",
+          "sha256": "662c752dc5f85ace90e00cf88fa6a9f17e2289891c557a9cff4dd1fd5075e46c",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 513.4454199438463,
+              "y": 403.7242137512675
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.55464415999997,
+            "elapsedMs": 8282.9
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/offset-basins-low/03-material-approach-north.png",
+          "sha256": "7021d6bd9ae95d9fa62cb981fc9f79ce900c73ea97145ede87ad0e64d3083d83",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 632.1291156607464,
+              "y": 640.4877084478381
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.15038032799994,
+            "elapsedMs": 16699.300000000003
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/offset-basins-low/04-material-approach-west.png",
+          "sha256": "c529d2516558f149825681bd72d8cb7be440339c3cdee8d2e7ccf104a3a7c048",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1411528306182817,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 477.72806016266145,
+              "y": 495.0993590218979
+            },
+            "facingAngle": -3.1411528306182817,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.101504935999923,
+            "elapsedMs": 21715.7
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "offset-basins",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-basins",
+        "grade": "severe",
+        "package": {
+          "id": "r100-offset-basins",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "7968ee0b",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=offset-basins&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧可读红背、灰曲内面和蓝裸床；03近灯脚线连续，04宽裸床可读，低重没有新增覆盖硬片。",
+      "limits": "细绿色平行层纹仍偏规律；04不等于两盆全部组织/后壁均可见。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/offset-basins-severe/01-material-approach-north.png",
+          "sha256": "961bcbba467e01266290b6f79415a3e582c2a4d03c64a4d879de77e7d90ea7f3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 516.5293887034109,
+              "y": 402.20603297473684
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.28900479999981,
+            "elapsedMs": 8566.3
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/offset-basins-severe/03-material-approach-north.png",
+          "sha256": "462936f2d3633353d42b7a0a02a30a81b9a6a65d1e79a6db15b45f47a34ed2f9",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707334949418303,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 632.75083635394,
+              "y": 640.6105432052367
+            },
+            "facingAngle": -1.5707334949418303,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 23.957184319999598,
+            "elapsedMs": 17799.2
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/offset-basins-severe/04-material-approach-west.png",
+          "sha256": "6028243b34d805018076c604336fc2c2bf738e57276666519eeee30befc28034",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1413413261775074,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 478.62646162311256,
+              "y": 494.049640294177
+            },
+            "facingAngle": -3.1413413261775074,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 38.40924825599953,
+            "elapsedMs": 22649
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "last-shelf",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "last-shelf",
+        "grade": "low",
+        "package": {
+          "id": "r100-last-shelf",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "75de9264",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=last-shelf&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧蓝厚断端、金色颗粒床和带绿色侵蚀的真缺地近沿可分；02内侧短端与04近脚岸维持可读。",
+      "limits": "低02/04实际85HP；04视野外墙被吞光遮住，敌人在场；01仍有单分叉同族形，未据此称各部件独立新构造。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/last-shelf-low/01-material-approach-north.png",
+          "sha256": "ffe097fb3f91b5ddaa7ca29bf9cb05a7e531e860d8d868ba8cd7615bd4c27277",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5703565038233946,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 765.9999001,
+              "y": 340.71328676630344
+            },
+            "facingAngle": -1.5703565038233946,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 20.875483079999952,
+            "elapsedMs": 13249.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/last-shelf-low/02-material-approach-east.png",
+          "sha256": "e9a43378eba279ab1b66f792395d2ab7caff4459c99fabc63099f69b16f9ac7f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 728.5156815852973,
+              "y": 537.5574186296714
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 85,
+            "chaos": 22.310072519999924,
+            "elapsedMs": 17032.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/last-shelf-low/04-material-approach-east.png",
+          "sha256": "7c3b8f155fc2858bff8c73028258be119504f8d785fb357a85b83c7048457a86",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 821.9999226482937,
+              "y": 569.267356050721
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 85,
+            "chaos": 23.118993335999896,
+            "elapsedMs": 19165.899999999998
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "last-shelf",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "last-shelf",
+        "grade": "severe",
+        "package": {
+          "id": "r100-last-shelf",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "92566615",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=last-shelf&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-grade-pass",
+      "findings": "六帧蓝厚断端、金色颗粒床和带绿色侵蚀的真缺地近沿可分；02内侧短端与04近脚岸维持可读。",
+      "limits": "低02/04实际85HP；04视野外墙被吞光遮住，敌人在场；01仍有单分叉同族形，未据此称各部件独立新构造。",
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/last-shelf-severe/01-material-approach-north.png",
+          "sha256": "3d879b1f3e92f1cda5ddcfc0685184c27dcaa5204e0890669c71306d7300cb9d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 765.1773434074919,
+              "y": 335.80121436764057
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 29.215651135999842,
+            "elapsedMs": 12599.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/last-shelf-severe/02-material-approach-east.png",
+          "sha256": "fa6279bc883d76fed1771c5d87d23689a2c9471a34392bc68ee8a2b5e2b80e0a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0.0002513274122923903,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 729.5420156142433,
+              "y": 537.8174634451439
+            },
+            "facingAngle": 0.0002513274122923903,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 33.37827615999975,
+            "elapsedMs": 16716.100000000002
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/last-shelf-severe/04-material-approach-east.png",
+          "sha256": "6cc59e4e31e980b3cff3a33002f93026b59cf48cae92ec982cea808656806a7a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 819.3258926757345,
+              "y": 565.2647255268671
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 35.65338515199958,
+            "elapsedMs": 18965.9
+          }
+        }
+      ]
+    }
+  ]
+}

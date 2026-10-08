@@ -1,0 +1,9 @@
+import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';import assert from 'node:assert/strict';
+const root=process.cwd(),area=root+'/docs/qa/artifacts/r100-i10-i12';
+const batches=[['b11',['crushed-seam']],['b12',['double-return','offset-basins']],['b13',['white-scarfield']],['b14',['woven-quarters','shell-patchwork','last-shelf']]];
+const results=[];for(const[tag,worlds]of batches){const dir=area+'/'+tag+'-isolated-author',out=dir+'/refined-static3';assert(!fs.existsSync(out+'/report.json'),'Never overwrite an executed attempt');fs.mkdirSync(out,{recursive:true});const started=performance.now();
+ const prepare=spawnSync('python3',[dir+'/prepare-drafts.py'],{cwd:root,encoding:'utf8'});fs.writeFileSync(out+'/prepare.log',(prepare.stdout??'')+(prepare.stderr??''));let code=prepare.status;
+ if(code===0){const compile=spawnSync(process.execPath,[root+'/tools/world-study/codegen-r100-worlds.mjs'],{cwd:'/tmp/r100-i10-'+tag+'-catalog',encoding:'utf8'});fs.writeFileSync(out+'/compile.log',(compile.stdout??'')+(compile.stderr??''));code=compile.status;}
+ if(code===0){const test=spawnSync(process.execPath,[root+'/docs/qa/artifacts/r100-i10-i12/author-preparation/check-static.mjs',out,'--batch='+tag,'--all-grades',...worlds.map(w=>'--world='+w)],{cwd:root,encoding:'utf8'});fs.writeFileSync(out+'/check.log',(test.stdout??'')+(test.stderr??''));code=test.status;console.log(tag,(test.stdout??'').trim());}
+ results.push({batch:tag,worlds,exitCode:code,durationMs:performance.now()-started,report:fs.existsSync(out+'/report.json')?path.relative(root,out+'/report.json'):null});fs.writeFileSync(area+'/author-preparation/late-refined-run.json',JSON.stringify({scope:'Only seven changed isolated author worlds, all three grades. First failed reports remain immutable; no production-world append, raster or gameplay claim.',results},null,2)+'\n');}
+if(results.some(r=>r.exitCode!==0))process.exitCode=1;

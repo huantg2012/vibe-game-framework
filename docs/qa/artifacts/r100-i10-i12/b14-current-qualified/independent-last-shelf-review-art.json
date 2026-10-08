@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-fixed-process-and-frame-observation",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T13:13:02.156Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "world": "last-shelf",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "admission": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/commands.json",
+    "sha256": "703b4cf4f20e6936a9c0b9c2386b64290a9731264cddfbf5c06210f3ae3d5f14"
+  },
+  "cases": [
+    {
+      "originalIndex": 19,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/019-last-shelf-low-20261005/report.json",
+        "sha256": "a4689b2336a9fd8d5c442d4a8d8bd694356165232238af697570ad7278e9ad42"
+      },
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "bc433efd",
+      "dependencyHash": "75de9264",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 28432.159999999683,
+      "hp": 145,
+      "chaos": 28.966749887445896,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 578.7158197250185
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 20,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/020-last-shelf-low-3075192741/report.json",
+        "sha256": "ccb7d426a0a65ae178ee7690157a70661d315477dad029783ab9e68cb0c8e293"
+      },
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "c4a4b2b8",
+      "dependencyHash": "75de9264",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 27448.899999999736,
+      "hp": 145,
+      "chaos": 28.794986416280544,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.0540515865085
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 21,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/021-last-shelf-medium-20261005/report.json",
+        "sha256": "bbe6c6beef0c453db51e4bd24276d01b73e47d83f6bf33180ab1895536293b39"
+      },
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "9ac40fb1",
+      "dependencyHash": "f36a6ba3",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 32315.369999999788,
+      "hp": 145,
+      "chaos": 33.87892339319434,
+      "actualPickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 592.4862867611367
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 22,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/022-last-shelf-medium-3075192741/report.json",
+        "sha256": "69d5298d5f0033079bf7c6a88dae2c508d1271d17ca5f8ea5960d76d790e7044"
+      },
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "d255b0fe",
+      "dependencyHash": "f36a6ba3",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 29032.18999999978,
+      "hp": 145,
+      "chaos": 32.87524360533886,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.0540515865085
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 23,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/023-last-shelf-severe-20261005/report.json",
+        "sha256": "1438f5c82adefb07dbc9472238148f4b6772c3465ee4fab7678dd58405ebee59"
+      },
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "66039954",
+      "dependencyHash": "92566615",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 43648.25000000006,
+      "hp": 145,
+      "chaos": 44.35006075782022,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.4862867611367
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 24,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/024-last-shelf-severe-3075192741/report.json",
+        "sha256": "e8433aeb21ea5ef05496d0d923b71dd0767407484625101ad181cf08726b6b57"
+      },
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "8f20818a",
+      "dependencyHash": "92566615",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 36481.86999999995,
+      "hp": 145,
+      "chaos": 40.994494845869966,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.0540515865085
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "counts": {
+    "originalProcesses": 6,
+    "nonEntrySearchAndExtract": 6,
+    "trueEmptyReturns": 0,
+    "deaths": 0
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/019-last-shelf-low-20261005/low/1-far-exploration.png",
+      "sha256": "7f84a39a9e2f22cbba1db338612c0528983b6240fe3bcc18a2c0b5faac69ce9f",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "正常肩灯下赭金粒床存在粗细密度和裂纹变化，人物左侧一处颗粒残骸可见，未照到蓝断肩或三段缺地，不能用此帧签世界全貌。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/021-last-shelf-medium-20261005/medium/1-search-1.png",
+      "sha256": "8c574704998d7db326942d4ad6dcfd92a48a80cc59e5e4a472ae67c0bf779117",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "中档取到一件残渣，蓝黑层肩厚侧、赭金粒床和上下黑缺地同框；近侧灯照脚边能看出实际停止边，局部青侵蚀与材料本色分离。只见一个突台。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/021-last-shelf-medium-20261005/medium/1-field-result.png",
+      "sha256": "d8f71cc090d32292944bf60d8ad9542d964ff617725ed50a88548a8a645e646c",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "145HP、0薪柴但带1件薄壳卵、32秒、峰值混乱34返回，按实际残渣带回记成功而非空返。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/023-last-shelf-severe-20261005/severe/1-search-1.png",
+      "sha256": "b00c43ba7a2fedd5fba58c9605fe06bf6bc239149e4feffad582a8200edd26fa",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "145HP/36混乱时取到6薪柴，蓝厚肩、粒床、右侧敌人与两段黑缺地局部可分；视野仍只覆盖一侧突台和近脚归向，不能签完整共用床及临界动态。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/023-last-shelf-severe-20261005/severe/1-field-result.png",
+      "sha256": "aac1711fb3517a757f9cb7808bc2086cd224b3a5c4fa3588e30da9ea18eaf2d0",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "重档首种子145HP、6薪柴、44秒、峰值混乱44返回；该例没有重伤或临界峰值经历。"
+    }
+  ],
+  "findings": [
+    "六个原种子过程均有同趟非入口拾取并带回、全部145HP；中档首种子是残渣带回，其余五次各6薪柴。",
+    "重档两次43.65秒/44.35混乱与36.48秒/40.99混乱返回，没有临界或深部高压证据。",
+    "所看一侧突台正常帧中粒床、蓝黑层肩厚面、黑缺地及局部侵蚀可分；不扩成两个突台和三段削缺全局已审。"
+  ],
+  "retainedWeaknesses": [
+    "地床局部有长直材质/阴影分界，暗处边沿与全绕行关系没有覆盖；整个余台组织仍需保持既有静态证据范围。",
+    "当前离散成功帧不能证明连续疲劳、真实临界读路、音频或人审审美。"
+  ],
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/021-last-shelf-medium-20261005/medium/1-search-1.png",
+      "sha256": "8c574704998d7db326942d4ad6dcfd92a48a80cc59e5e4a472ae67c0bf779117",
+      "reason": "中档取到一件残渣，蓝黑层肩厚侧、赭金粒床和上下黑缺地同框；近侧灯照脚边能看出实际停止边，局部青侵蚀与材料本色分离。只见一个突台。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/023-last-shelf-severe-20261005/severe/1-search-1.png",
+      "sha256": "b00c43ba7a2fedd5fba58c9605fe06bf6bc239149e4feffad582a8200edd26fa",
+      "reason": "145HP/36混乱时取到6薪柴，蓝厚肩、粒床、右侧敌人与两段黑缺地局部可分；视野仍只覆盖一侧突台和近脚归向，不能签完整共用床及临界动态。"
+    }
+  ],
+  "limits": [
+    "Original fixed fixtures and policy15, not natural48.",
+    "Five original normal PNGs personally viewed; no continuous video, hands-on play, audio, GPU/performance or human aesthetic approval.",
+    "B14 successes do not cure B13 severe qualification deficits or constitute108 enabled acceptance."
+  ],
+  "pixelModelsScope": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+    "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+  }
+}

@@ -1,0 +1,458 @@
+{
+  "status": "mixed-bounded-review",
+  "at": "2026-10-07T07:02:22.062Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/report.json",
+    "sha256": "3c4e49d5c9685ee70de55ea5cfc25f8473a87a2741b6e05a63ff72529d2843f3"
+  },
+  "scope": "All 14 original PNGs personally viewed. Normal FOV/light, fixed requested seed20261005, real WASD with active pressure. Static floor planning; not visible-only natural play.",
+  "limitations": [
+    "Only illuminated local faces/relationships shown; no complete-map, full search-return, economic, audio, dynamic fatigue or human approval.",
+    "Different actual poses and pressure; not pixel-aligned comparisons.",
+    "Rejected local surfaces do not imply collision or runtime failure; unchanged readable areas retain only their observed scope."
+  ],
+  "worlds": [
+    {
+      "worldId": "fractured-estuary",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "fractured-estuary",
+        "grade": "medium",
+        "package": {
+          "id": "r100-fractured-estuary",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "gel-flow": {
+              "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+              "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+              "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+            }
+          },
+          "dependencyHash": "c75e11c7",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=fractured-estuary&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "01/02及补点05三个紫低床均有完整硬黑外沿、尖叉和平贴大片读法；03/04红胶肩的厚面、脚沿和蓝裸床本身可读。",
+      "limitations": [
+        "05有85HP及真实敌人遮局部床，不把遮挡认作美术故障；拒绝限三低床落地。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/01-material-approach-east.png",
+          "sha256": "ab3af729ed343dd2ca01c01add14d5215a1299d91e07af0c53d52e4ab84f633b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.0004398229715119051,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 298.57538176051304,
+              "y": 225.890209637893
+            },
+            "facingAngle": -0.0004398229715119051,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 20.059747601999508,
+            "elapsedMs": 15332.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/02-material-approach-south.png",
+          "sha256": "42b0c903542730956fd4a9bc8cf002eb32b2ec4350ecc5e878f2314b5e504ea3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707334949418166,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 500.5060388099641,
+              "y": 315.9257232978697
+            },
+            "facingAngle": 1.5707334949418166,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 21.630213407999424,
+            "elapsedMs": 20065.8
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/03-material-approach-north.png",
+          "sha256": "71145bf48ca27953094f45f6c4479434300a8452399d2ebd93ec905fe734342b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 554.7053957478677,
+              "y": 357.47423467126754
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 22.526033591999415,
+            "elapsedMs": 22765.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/04-material-approach-west.png",
+          "sha256": "e4c70570d29cdd50dd5d9184d6f9e7eb8b764a3bfd523aa6583f4f247ea2b114",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 739.1713895926496,
+              "y": 563.3960188552162
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 28.92685087199934,
+            "elapsedMs": 31248.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/fractured-estuary-medium/05-original-route-boundary-east.png",
+          "sha256": "5b1c22bf05846bd948a6e916c57cef1d3ce9e3ab84f88b80cc1348e8023ee464",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 305.9930294436488,
+              "y": 578.0522782135135
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 85,
+            "chaos": 34.169078519999516,
+            "elapsedMs": 39148.399999999994
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "shell-patchwork",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shell-patchwork",
+        "grade": "medium",
+        "package": {
+          "id": "r100-shell-patchwork",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "ff76ec6a",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=shell-patchwork&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "04角色脚旁粉色低皮有硬黑折角，01/02浅壳低面亦有长切界；01/03高壳压红皮、厚面与相邻床面关系仍清楚。",
+      "limitations": [
+        "具体低层归属应由原实例/三角来源核对后窄修，不据图名猜物件id；高壳关系不随低面拒绝改写。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/01-material-approach-north.png",
+          "sha256": "cdff4e1d47c67e65e587c5fcdf63a041266f3c5d1f91744baa78f8bf0c549eaa",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707334949418235,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 542.2665519874502,
+              "y": 380.65949384015295
+            },
+            "facingAngle": -1.5707334949418235,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.174085067999705,
+            "elapsedMs": 9649.6
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/02-material-approach-north.png",
+          "sha256": "a42e83d7921cc2b9dffb048e5cf809a2d2bd90b0e0dfd3b5d50d7f26a212e6d6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 509.4267531939003,
+              "y": 477.7310393582231
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.174982993999578,
+            "elapsedMs": 12666.1
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/03-material-approach-north.png",
+          "sha256": "3ab4196713e8da26c5fdef62693bcd46dfbd45107ca3243e5d7e216f337a3a7d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 582.4300486173713,
+              "y": 585.4755489222241
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 20.651426633999414,
+            "elapsedMs": 17115.899999999998
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/shell-patchwork-medium/04-material-approach-north.png",
+          "sha256": "935f432af45df32ec85a2505de61fca1cfc14bebce13161b44735f7a31939bac",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 731.1949485265028,
+              "y": 503.80842278891595
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 21.923279075999396,
+            "elapsedMs": 20949.199999999997
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "last-shelf",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "last-shelf",
+        "grade": "medium",
+        "package": {
+          "id": "r100-last-shelf",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "f36a6ba3",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=last-shelf&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-medium-pass",
+      "finding": "01/02蓝高断端与金色颗粒床、03可走裸床、04真实缺地脚沿可分；未见需立即返工的完整低面黑圈。",
+      "limitations": [
+        "03之后敌人遮挡，04为85HP、05为55HP；05角色位于视口最右，仅照见脚下近台，不签远墙/全台。低母床大外轮廓未全照见，有限通过不升全图。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/01-material-approach-north.png",
+          "sha256": "a9f87970a5f59d7670e3bb12d926683fd8f99f2f78326a07a74f2b3bc1a84c52",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 764.2798130279184,
+              "y": 338.66045099074546
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.97037520599959,
+            "elapsedMs": 12049.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/02-material-approach-east.png",
+          "sha256": "76b253256c0b22e2abac9c91255e7639e9c85029e3476329857eeee3bc7ecb6b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 728.4317220675262,
+              "y": 533.7192534484121
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 24.64124243999957,
+            "elapsedMs": 16132.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/03-material-approach-south.png",
+          "sha256": "586cf0e10253f05bbf4ad8184d521542c4bd3fac8093d6b4f43ebc4944c87be8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5706706630887575,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 757.9999706490025,
+              "y": 314.69574617978975
+            },
+            "facingAngle": 1.5706706630887575,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 28.224556355999283,
+            "elapsedMs": 21532.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/04-material-approach-east.png",
+          "sha256": "cf46ffdd1b319e59b216d96ddacc36f33d861cc8152a8fa43f915874e0b1be17",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 829.9999001,
+              "y": 565.9999001
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 85,
+            "chaos": 33.05758169999892,
+            "elapsedMs": 28815.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/last-shelf-medium/05-original-route-boundary-east.png",
+          "sha256": "86869ac111f1d05d30d651fca4f9692d3adad485a566bb58621e3ada547985fc",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.00006283185306632522,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 955.894549427326,
+              "y": 264.3144041982694
+            },
+            "facingAngle": -0.00006283185306632522,
+            "facing4": "right",
+            "hp": 55,
+            "chaos": 40.19100962399942,
+            "elapsedMs": 39565
+          }
+        }
+      ]
+    }
+  ]
+}

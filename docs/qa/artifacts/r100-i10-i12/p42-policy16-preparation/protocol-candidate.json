@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "status": "candidate-awaiting-independent-review-and-root-approval",
+  "reviewer": null,
+  "issueId": "R100-P42",
+  "policyRevision": 16,
+  "algorithmRevision": 6,
+  "gameplayChanges": "none",
+  "limits": {
+    "maxRechecksPerJourney": 1,
+    "maxRecheckElapsedMs": 6000,
+    "maxActualPickups": 3,
+    "minimumNonEntryDistance": 320,
+    "noHiddenAiState": true
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "storage": {
+    "path": "docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+    "sha256": "965a98687e87690f71115472384fba50578ff9618aed328793c3a3bd1cf33b6e"
+  },
+  "originalPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/policy-freeze.json",
+    "sha256": "616bef332366fa5d62af780c1fa1f09820fcad41cef177809da2ad98018f47f9"
+  },
+  "executor": {
+    "path": "tools/qa/r100-i12-recheck-journey.mjs",
+    "sha256": "747ed743b89fb26aee9a3185ca9f57eae8cbdaf0d8e0e36e77c4f2a314e9127d"
+  },
+  "wrapper": {
+    "path": "tools/qa/r100-i12-recheck-coverage.mjs",
+    "sha256": "9d3e72e4bcdf82d0b5737fd93df9a25f642ae13911816ef7fa6a8136b7cec2c7"
+  },
+  "dependencies": [
+    {
+      "file": "tools/qa/r100-i12-recheck-encounters.mjs",
+      "sha256": "c86d641469950f61905e1beb7e7d9ddba4074b611c609fd78349d1e3c1a0cbd5"
+    },
+    {
+      "file": "tools/qa/r100-i12-recheck-budget.mjs",
+      "sha256": "5795b280b50339a67e52aa323a52eb50db7fb6a38df10a904db7764ae912f528"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "cases": [
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 20261005,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+      }
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 3075192741,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+      }
+    }
+  ]
+}

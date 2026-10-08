@@ -1,0 +1,32 @@
+2026-10-08 14:16:05 +0800 
+Assertion status system-wide:
+   BackgroundTask                 0
+   ApplePushServiceTask           0
+   UserIsActive                   1
+   PreventUserIdleDisplaySleep    0
+   SoftwareUpdateTask             0
+   PreventSystemSleep             0
+   ExternalMedia                  0
+   InternalPreventDisplaySleep    1
+   PreventUserIdleSystemSleep     1
+   NetworkClientActive            0
+Listed by owning process:
+   pid 644(nsurlsessiond): [0x0023aa10000b9021] 00:00:03 BackgroundTask named: "NSURLSessionTask AE06208B-B42D-4A07-B584-35A4570024C1"  
+	Timeout will fire in 10797 secs Action=TimeoutActionTurnOff
+   pid 644(nsurlsessiond): [0x0023aa10000b9022] 00:00:03 BackgroundTask named: "NSURLSessionTask 455EEDAA-B4EA-429D-AA11-7772CF26A688"  
+	Timeout will fire in 10797 secs Action=TimeoutActionTurnOff
+   pid 395(runningboardd): [0x0023aa1200019023] 00:00:01 PreventUserIdleSystemSleep named: "osservice<com.tencent.iOABus.Daemon>395-53242-2148325:com.apple.CFNetwork.StorageDB"  
+	Created for PID: 53242. 
+   pid 94761(caffeinate): [0x00239baf000185e8] 01:01:24 PreventUserIdleSystemSleep named: "caffeinate command-line tool"  
+	Details: caffeinate asserting on behalf of '/usr/local/bin/node' (pid 94758)
+	Localized=THE CAFFEINATE TOOL IS PREVENTING SLEEP.
+   pid 401(WindowServer): [0x0023607f0009a483] 00:00:00 UserIsActive named: "com.apple.iohideventsystem.queue.tickle serviceID:10028182d service:AppleHIDKeyboardEventDriverV2 product:Apple Internal Keyboard / Trackpad eventType:3"  
+	Timeout will fire in 10800 secs Action=TimeoutActionRelease
+   pid 400(coreaudiod): [0x0023a9fa000185f6] 00:00:25 PreventUserIdleSystemSleep named: "com.apple.audio.BuiltInSpeakerDevice.context.preventuseridlesleep"  
+	Created for PID: 94857. 
+	Resources: audio-out BuiltInSpeakerDevice 
+   pid 330(powerd): [0x0023665a000185dd] 04:48:56 PreventUserIdleSystemSleep named: "Powerd - Prevent sleep while display is on"  
+   pid 330(powerd): [0x00239bf2001083fd] 00:00:26 InternalPreventDisplaySleep named: "com.apple.powermanagement.delayDisplayOff"  
+	Timeout will fire in 274 secs Action=TimeoutActionTurnOff
+Kernel Assertions: 0x100=MAGICWAKE
+   id=556  level=255 0x100=MAGICWAKE creat=2026/8/10 18:03  mod=2026/10/8 09:40 description=en0 owner=IOSkywalkNetworkBSDClient

@@ -1,0 +1,95 @@
+import type { NativeVolumeFamily, NativeVolumeMesh } from '@/generation/world-study/native-volume-geometry';
+
+export interface ShortFibreField {
+  readonly minU: number;
+  readonly minV: number;
+  readonly width: number;
+  readonly height: number;
+  readonly pressed: Float32Array;
+  readonly torn: Float32Array;
+}
+
+/** Preparation-only pigment structure. Bundles follow the object's material
+ * coordinates, so a rotated wedge rotates its compressed fibres with it.
+ * This field cannot alter geometry, normals, opacity, emission or visibility. */
+export function prepareShortFibreFields(
+  meshes: readonly NativeVolumeMesh[], primaryFamily: NativeVolumeFamily,
+): ReadonlyMap<number, ShortFibreField> {
+  const fields = new Map<number, ShortFibreField>();
+  for (const mesh of meshes) {
+    if (mesh.spec.family !== primaryFamily) continue;
+    let minU = Infinity, minV = Infinity, maxU = -Infinity, maxV = -Infinity;
+    for (let i = 0; i < mesh.uv.length; i += 2) {
+      minU = Math.min(minU, mesh.uv[i]!); maxU = Math.max(maxU, mesh.uv[i]!);
+      minV = Math.min(minV, mesh.uv[i + 1]!); maxV = Math.max(maxV, mesh.uv[i + 1]!);
+    }
+    if (!Number.isFinite(minU + minV + maxU + maxV)) throw new Error('Short fibres require finite material coordinates');
+    minU = Math.floor(minU) - 2; minV = Math.floor(minV) - 2;
+    const width = Math.ceil(maxU) - minU + 3, height = Math.ceil(maxV) - minV + 3;
+    const pressed = new Float32Array(width * height), torn = new Float32Array(width * height);
+    let state = (mesh.spec.seed ^ Math.imul(mesh.spec.id, 0x45d9f3b)) >>> 0;
+    const random = (): number => {
+      state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+      return state / 4294967296;
+    };
+    // A compact stroke has a shared bend and finite frayed ends. Its interior
+    // carries several unequal fibres, not independent dots or periodic lines.
+    const stroke = (out: Float32Array, cx: number, cy: number, angle: number,
+      length: number, radius: number, bend: number, value: number): void => {
+      const ca = Math.cos(angle), sa = Math.sin(angle);
+      const reach = length * .5 + Math.abs(bend) + radius + 2;
+      const x0 = Math.max(0, Math.floor(cx - reach)), x1 = Math.min(width - 1, Math.ceil(cx + reach));
+      const y0 = Math.max(0, Math.floor(cy - reach)), y1 = Math.min(height - 1, Math.ceil(cy + reach));
+      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+        const dx = x - cx, dy = y - cy, along = dx * ca + dy * sa;
+        const t = along / length + .5;
+        if (t <= 0 || t >= 1) continue;
+        const cross = -dx * sa + dy * ca - bend * 4 * t * (1 - t);
+        const taper = Math.min(1, t * 7, (1 - t) * 5);
+        const coverage = Math.max(0, Math.min(1, radius * taper + .45 - Math.abs(cross)));
+        const at = y * width + x;
+        out[at] = Math.max(-46, Math.min(46, out[at]! + value * coverage));
+      }
+    };
+    const bundle = (out: Float32Array, x: number, y: number, angle: number, broken: boolean): void => {
+      const length = (broken ? 13 : 24) + random() * (broken ? 16 : 24);
+      const breadth = 7 + random() * 6, bend = (random() - .5) * 12;
+      const ca = Math.cos(angle), sa = Math.sin(angle);
+      stroke(out, x, y, angle, length + 4, breadth * .55, bend, -17);
+      const count = 3 + Math.floor(random() * 2);
+      for (let strand = 0; strand < count; strand++) {
+        const offset = (strand / (count - 1) - .5) * breadth;
+        const shift = (random() - .5) * 9;
+        const sx = x - sa * offset + ca * shift, sy = y + ca * offset + sa * shift;
+        const strandLength = length * (.57 + random() * .43);
+        const thickness = .85 + random() * .55;
+        // The dark inter-fibre gap belongs to the same bent bundle. A narrow
+        // lighter strand replaces it locally; there is no object outline.
+        stroke(out, sx - sa * 1.35, sy + ca * 1.35, angle, strandLength, thickness + .45, bend, -14);
+        stroke(out, sx, sy, angle, strandLength, thickness, bend, 36 + random() * 9);
+        if (broken && strand % 2 === 0) {
+          const endX = sx + ca * strandLength * .28, endY = sy + sa * strandLength * .28;
+          stroke(out, endX, endY, angle + (random() - .5) * .7, strandLength * .37, .55, bend * .2, 14);
+        }
+      }
+    };
+    // Jittered, staggered groups leave broad quiet compressed intervals.
+    // Their spacing is deliberately larger than individual fibre lengths.
+    for (let row = -1; row < height / 33 + 1; row++) for (let col = -1; col < width / 45 + 1; col++) {
+      const x = col * 45 + (row % 2) * 19 + (random() - .5) * 25;
+      const y = row * 33 + (random() - .5) * 23;
+      if (random() > .18) bundle(pressed, x, y, (random() - .5) * 1.2, false);
+      if (random() > .12) bundle(torn, x, y, Math.PI * .42 + (random() - .5) * .85, true);
+    }
+    fields.set(mesh.spec.id, { minU, minV, width, height, pressed, torn });
+  }
+  return fields;
+}
+
+/** Returns a bounded pigment offset. The original painted grain is retained
+ * by the caller; this material organization does not invent a new light. */
+export function sampleShortFibre(field: ShortFibreField, u: number, v: number, torn: boolean): number {
+  const x = Math.max(0, Math.min(field.width - 1, Math.floor(u - field.minU)));
+  const y = Math.max(0, Math.min(field.height - 1, Math.floor(v - field.minV)));
+  return (torn ? field.torn : field.pressed)[y * field.width + x]!;
+}

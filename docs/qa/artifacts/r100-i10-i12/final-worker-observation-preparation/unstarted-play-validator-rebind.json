@@ -1,0 +1,67 @@
+{
+  "status": "pass-unstarted-plans-only",
+  "createdAt": "2026-10-07T07:32:46.729Z",
+  "reason": "Root-approved numeric report validator repair. Actual journey policy, inputs, map source, ancestor, original seeds, observer, and runner bytes unchanged.",
+  "oldProbe": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/final-probe-before-numeric-validator.mjs",
+    "sha256": "93bccf1021f8b1fd65631c1da9e358d3a2169e40592664c2d8ed213bd821c4f8"
+  },
+  "newProbe": {
+    "path": "tools/qa/r100-i09-final-probe.mjs",
+    "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+  },
+  "contract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/contract-attempt2.json",
+    "sha256": "dcfe6e6f704aecb4ccd3f701e64598a277427fff52276184b0d9100954de54b6"
+  },
+  "rows": [
+    {
+      "before": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play-commands-before-numeric-validator.json",
+        "sha256": "37807c64ead4eaa2d4405331de21f7c4c043aec7eadc723aebf17424c024f31a"
+      },
+      "after": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/play-commands.json",
+        "sha256": "b3d4f2008e1a68516ea113ee696bbf4ffc459af8375eedea30c81c125c7590b4"
+      },
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b07-refined-qualified/run-play.mjs",
+        "sha256": "e5745f2c67c238110fcf3b7521d934329de02e7ac25931559c814b527f694aee"
+      },
+      "unchangedInputPolicy": true,
+      "notStarted": true
+    },
+    {
+      "before": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-commands-before-numeric-validator.json",
+        "sha256": "4f85935c25f6313f2b855a618ea09753abd4817d5c69ff072cd7b34dd597e84c"
+      },
+      "after": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/play-commands.json",
+        "sha256": "22cbd7eb36552b1f7788943cf28a338b7e1c9a5340a560b95dfa7351df9bd88e"
+      },
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b08-current-qualified/run-play.mjs",
+        "sha256": "e33e449fad2ed44f207a0ad36a43a6910cfb4bf4fe3ae594ae6a94c8c10cfeec"
+      },
+      "unchangedInputPolicy": true,
+      "notStarted": true
+    },
+    {
+      "before": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/play-commands-before-numeric-validator.json",
+        "sha256": "6891f8fa6b6e3c2b94106298dc263577b85d458105ce819a95c8feb662801d7a"
+      },
+      "after": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/play-commands.json",
+        "sha256": "93fa07d345e3f71bcd4d836dd2a918dfd77d386b0725ed433ab7c4bd3c7c767c"
+      },
+      "runner": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b06-short-fibre-qualified/run-play.mjs",
+        "sha256": "cfe4ce9f38dc9228a06d525b7e8f2d4762ee10a93baac8b7b36f0f3d85244b33"
+      },
+      "unchangedInputPolicy": true,
+      "notStarted": true
+    }
+  ]
+}

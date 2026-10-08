@@ -1,0 +1,76 @@
+{
+  "status": "new-source-required",
+  "reviewer": "world_loot_pixels",
+  "attempts": [
+    {
+      "folder": "isolated-v1",
+      "status": "author-rejected",
+      "reason": "too-fine",
+      "finding": "程序弯束仍读细擦纹。",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/isolated-v1/report.json",
+        "sha256": "2aa1d5aa0e87f715448637182a64e9eb4a68c73760c7b80fdea0b15b499b7815"
+      },
+      "personallyViewed": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/isolated-v1/felt-wedges-east-after.png",
+          "sha256": "f428e2dcbc1f18f6e8dfd79b835546c40cbf38b432ee41e48c28120b0db589fd"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/isolated-v1/short-fibre-mat-east-after.png",
+          "sha256": "9bfde7426156efa613bd26885b6049ff0294a5f4258a9bc61afeafa005cc6573"
+        }
+      ]
+    },
+    {
+      "folder": "isolated-v2",
+      "status": "author-rejected",
+      "reason": "stamped-comb-pattern",
+      "finding": "放大后读刻花/梳纹，不是原料短纤。",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/isolated-v2/report.json",
+        "sha256": "86b4e6b416115ea679bb051d6b9e44b31de93859d7d7be20831ed1a5784cf96d"
+      },
+      "personallyViewed": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/isolated-v2/felt-wedges-east-after.png",
+          "sha256": "8a25428a7497815bb0183a7b4ca2b22ff3c711076b7120e42279a70226d988af"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/isolated-v2/felt-wedges-south-after.png",
+          "sha256": "d31f77ced3a0e4dc8f97a63dce1856acb79e2db1e8aaad19e72baf4b8f8d2379"
+        }
+      ]
+    },
+    {
+      "folder": "source-reconstruction-v1",
+      "status": "author-rejected",
+      "reason": "source-semantic-insufficient",
+      "finding": "仅增强原source仍像碎叶团/颗粒，停止继续滤镜。",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-reconstruction-v1/report.json",
+        "sha256": "5fb285f37d20e9da7abb6ec1d7050d5a62bbcacac3f4dfd67b0a2bc5f21819c7"
+      },
+      "personallyViewed": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-reconstruction-v1/felt-wedges-east-after.png",
+          "sha256": "56fce04c8c7eb8a69ff3e750cbfc62021d132059c74f43b505d6f192ebb56272"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-reconstruction-v1/felt-wedges-south-after.png",
+          "sha256": "f68d123d04bd9e38fbbfae711fe70b2700d552503d5aba2c318f045fb08af215"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-reconstruction-v1/short-fibre-mat-east-after.png",
+          "sha256": "ebb69c1d9190d33599f71340a4c85f810e64345b39ea3ebe863a43fa70ea8405"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-reconstruction-v1/short-fibre-mat-south-after.png",
+          "sha256": "c4db022b8a9b01ee66d3d85aa1d20dfdb4140e5b0225d4fcb2964cb2f1f26ffd"
+        }
+      ]
+    }
+  ],
+  "productionState": "Neither helper was imported into surface-bake. Rejected helper/test raw source archived out of src/tools; no geometry/source asset/palette/lighting changes.",
+  "decision": "Root agrees replace only short-fibre atom pair. Keep old52/default families and porous-marrow exact; new source needs actual near-light review."
+}

@@ -1,0 +1,46 @@
+{
+  "status": "candidate-source-only-not-production-art-pass",
+  "reviewer": "world_loot_pixels",
+  "method": "New unmodified image_gen atom, existing continuous window and native lighting; no stripe/noise overlay.",
+  "viewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated/solid-native128-4x.png",
+      "sha256": "4eadce9cf4dbf1c1282cc70147583866eab77021fe3e9d591ad35aa3268ac3b2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated/ground-native128-4x.png",
+      "sha256": "252303903b6f6188018ef97d62e5d10b0af69c7585d0ebf0b059e44bb183caf5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated/short-fibre-mat-east-before.png",
+      "sha256": "f14a274c39baa3edb23f6ad8ad6f8a7ea314c8d7b3e797e4e62a3947fbf7e85b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated/short-fibre-mat-east-after.png",
+      "sha256": "97896e38d5ac7af93636f24de58b1d5f6aeb74e22025705e149402679a135832"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated/felt-wedges-south-after.png",
+      "sha256": "690f6e6a048f50eaee3abd6bac3edf427ac8bca2dae699859cc4d58771fba138"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated128/short-fibre-mat-east-after.png",
+      "sha256": "41ebc70c9178fd4dcc8ba6f8fc259a10b295f46c64138d3c37ec5f6f1b3a97f5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-short-fibre/source-v4-isolated128/felt-wedges-south-after.png",
+      "sha256": "d7f66198c54eadcf78ce81446b58a445a5146fdeb51b4ad1c697184af9849896"
+    }
+  ],
+  "findings": {
+    "source128": "弯束/压团比旧碎片和木屑更连贯，来源方向成立。",
+    "sameBody512": "主面仍以细密毛纹为主，正常实体尺度的成组短束辨识仍不足，不能签成品。",
+    "sameBody128": "削去细毛也削去可辨纹理，模糊团块不优于512，不采用该降质方案。"
+  },
+  "productionChanged": false,
+  "limitations": [
+    "Isolated native lighting is not normal game FOV.",
+    "Only listed views were personally inspected.",
+    "No old material, geometry, source hash or gameplay evidence is promoted."
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "version": 1,
+  "status": "prepared-only",
+  "at": "2026-10-08T01:49:55.965Z",
+  "featureIds": [
+    "F052",
+    "F044",
+    "F005"
+  ],
+  "ownership": "New QA checker and this independent-review directory only; no product data/source, frozen runtime harness, binder, source manifest, original evidence, progress ledger or approval file was written by this preparation.",
+  "checker": {
+    "path": "tools/qa/check-r100-i10-i12-final-binding.mjs",
+    "sha256": "bf7732ce152012ccc5451ab0381bd04e86d88eb3edb5526d29007c2695d54ab5"
+  },
+  "binder": {
+    "path": "tools/qa/r100-bind-i10-i12.mjs",
+    "sha256": "f2139f859ea10a5d8a06a0004d14937936d60e64886e9dfd3b43fc0ef485ed07"
+  },
+  "contracts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-artifact-contract.json",
+      "sha256": "74a2dd6c7ae289dbb0a839db004313d1bc15714a45cfe8ed63855c1149e6bf53"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-execution-order.json",
+      "sha256": "ae80adfacf5241c3d5e65d86b7592a7f7bb686f518f9817c26891ec3f8779517"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-readiness-supplement-review-shapes.json",
+      "sha256": "ecce9bd640cef849c9c982467af503b297d6feba3b052ee01f90207a827d2f88"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility-supplement.json",
+      "sha256": "e50b3e0368dfdf1af39305775ae8eb85743c0430dff3ff1b06695550abb5de75"
+    }
+  ],
+  "preparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/prepared-only-v3.json",
+    "sha256": "d09c5b4f133a29eb5c9f75f173095aacf3097c549737a8092f1bd474af746207"
+  },
+  "actualFinalBaseline": {
+    "status": "not-run",
+    "reason": "Actual final runtime reports and independent final reviews must all exist before the first dry buildProposal baseline."
+  },
+  "actualSemanticNegativeMatrix": {
+    "status": "not-run",
+    "requiredCases": 89,
+    "axes": {
+      "production": 12,
+      "equivalence": 8,
+      "budget": 13,
+      "lifecycle": 9,
+      "generation": 6,
+      "historical-source": 4,
+      "inheritance": 3,
+      "play": 2,
+      "policy16": 7,
+      "policy17": 14,
+      "art": 4,
+      "technical-review": 2,
+      "shader": 5
+    }
+  },
+  "completedLightChecks": {
+    "syntax": {
+      "command": [
+        "node",
+        "--check",
+        "tools/qa/check-r100-i10-i12-final-binding.mjs"
+      ],
+      "exitCode": 0
+    },
+    "infrastructureFixtures": {
+      "count": 10,
+      "status": "pass-small-fixtures-only"
+    },
+    "harnessMethodFix": {
+      "positive": 4,
+      "negative": 4,
+      "review": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/harness-path-fix-independent-review.json",
+        "sha256": "dd0ad0ed7b8617ae7188f0511562a1ebf2346a57721ace965f8ba499e373feff"
+      }
+    }
+  },
+  "retainedFinding": {
+    "review": {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/harness-path-gap.json",
+      "sha256": "e9ef2377ff6ce8206e4afd29c7c72d6bbd0b9c8dee1bd1cbd060c122f1396a2c"
+    },
+    "resolution": "Root added the four known method-to-harness path constraints before existing byte validation; independent fresh metadata checks reject each resealed wrong method."
+  },
+  "failClosedProperties": [
+    "Unchanged real final108 buildProposal must first produce qualified108, production324, humanApproved0 and exact 7488/8064/2592/648 accounting.",
+    "Every negative starts from original cached disk bytes and a separate cloned plan; only in-memory overlays of existing files are allowed.",
+    "Changed report/source SHA references are resealed through runtime, Shader, technical and inheritance consumers to reach the intended semantic predicate.",
+    "Setup errors, missing inputs, stale hashes, TypeErrors, accepted corruption and wrong innermost validator failures are never credited as passing negatives.",
+    "The original ledger, all actually consumed repository files and frozen1397 source bytes are checked for preservation; a new output path is mandatory.",
+    "No browser or gameplay execution and no ledger write is present in the checker. A dry proposal is not independent runtime or human/audio approval."
+  ],
+  "genuineDataBoundary": "Both actual policy16 records contain no bounded search recheck. Final actual negatives therefore cover protocol, original retention, identity/save, explicit list and rejected added action count. The 6000ms executed-action guard remains covered by separately labeled preparation fixtures, not invented actual action evidence.",
+  "previousPreparationVersions": [
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/prepared-only.json",
+        "sha256": "4cfdb45c246e2e35358a9290a632d78358d495afa31b7741ad05ac091ecf0dc6"
+      },
+      "exactArchivedChecker": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/checker-prepared-v1.mjs",
+        "sha256": "bb06e7b59b4111b40c304336b999c69b1aeaeccb4f0214912819a7be07112f93"
+      },
+      "disposition": "Retained preparation revision; not the executable selected for final actual checks."
+    },
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/prepared-only-v2.json",
+        "sha256": "806c4dcea431d14fbd3a06f6e78cf8cf49ffe7448c17f679488e498779d4fb27"
+      },
+      "exactArchivedChecker": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/checker-prepared-v2.mjs",
+        "sha256": "a46a145c51d0e41e9743e1bdda2c3053a34080f639f30faf6bb9471a27e280dc"
+      },
+      "disposition": "Retained preparation revision; not the executable selected for final actual checks."
+    }
+  ],
+  "developmentChanges": [
+    "v2 strengthened rejection classification so a buildProposal caller on an unrelated guard stack cannot masquerade as the intended failure; added a tenth infrastructure fixture.",
+    "v3 calculates the deliberately short budget duration from its mutated start/end values, avoiding an incidental floating-point duration mismatch instead of the intended under60s rejection.",
+    "These were checker preparation improvements. No actual final baseline or semantic negative matrix had run; v1/v2 reports and exact checker bytes remain archived."
+  ],
+  "suggestedActualCommand": [
+    "node",
+    "tools/qa/check-r100-i10-i12-final-binding.mjs",
+    "--plan",
+    "docs/qa/artifacts/r100-i10-i12/final-binding/plan.json",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-actual/negative-check.json"
+  ],
+  "dispatchCondition": "Root supplies the completed reviewed actual final plan and a suitable CPU window. If its path differs, use that explicit path. Do not fill missing runtime reports with fixtures.",
+  "limitation": "Successful infrastructure preparation does not establish that all89 definitions will reject the final actual evidence correctly. The real baseline and each negative must still be run and reviewed.",
+  "inspectedInputs": [
+    {
+      "path": "tools/qa/check-r100-i10-i12-final-binding.mjs",
+      "sha256": "bf7732ce152012ccc5451ab0381bd04e86d88eb3edb5526d29007c2695d54ab5"
+    },
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "f2139f859ea10a5d8a06a0004d14937936d60e64886e9dfd3b43fc0ef485ed07"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/prepared-only-v3.json",
+      "sha256": "d09c5b4f133a29eb5c9f75f173095aacf3097c549737a8092f1bd474af746207"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/prepared-only.json",
+      "sha256": "4cfdb45c246e2e35358a9290a632d78358d495afa31b7741ad05ac091ecf0dc6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/checker-prepared-v1.mjs",
+      "sha256": "bb06e7b59b4111b40c304336b999c69b1aeaeccb4f0214912819a7be07112f93"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/prepared-only-v2.json",
+      "sha256": "806c4dcea431d14fbd3a06f6e78cf8cf49ffe7448c17f679488e498779d4fb27"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/checker-prepared-v2.mjs",
+      "sha256": "a46a145c51d0e41e9743e1bdda2c3053a34080f639f30faf6bb9471a27e280dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/harness-path-gap.json",
+      "sha256": "e9ef2377ff6ce8206e4afd29c7c72d6bbd0b9c8dee1bd1cbd060c122f1396a2c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/harness-path-fix-independent-review.json",
+      "sha256": "dd0ad0ed7b8617ae7188f0511562a1ebf2346a57721ace965f8ba499e373feff"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-artifact-contract.json",
+      "sha256": "74a2dd6c7ae289dbb0a839db004313d1bc15714a45cfe8ed63855c1149e6bf53"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-execution-order.json",
+      "sha256": "ae80adfacf5241c3d5e65d86b7592a7f7bb686f518f9817c26891ec3f8779517"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-readiness-supplement-review-shapes.json",
+      "sha256": "ecce9bd640cef849c9c982467af503b297d6feba3b052ee01f90207a827d2f88"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility-supplement.json",
+      "sha256": "e50b3e0368dfdf1af39305775ae8eb85743c0430dff3ff1b06695550abb5de75"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    }
+  ],
+  "inspectedInputsUnchanged": true
+}

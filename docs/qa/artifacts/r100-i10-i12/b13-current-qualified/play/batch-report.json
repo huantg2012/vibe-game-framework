@@ -1,0 +1,136 @@
+{
+  "status": "stopped-after-failed-attempt",
+  "startedAt": "2026-10-07T09:50:56.434Z",
+  "policy": "policy-freeze.json",
+  "attempts": [
+    {
+      "world": "white-scarfield",
+      "grade": "low",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 1,
+      "dir": "001-white-scarfield-low-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-07T09:50:56.434Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-07T09:51:36.926Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "white-scarfield",
+          "grade": "low",
+          "revision": 6,
+          "requestedSeed": 20261005,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 28482.209999999668,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 162.13272834922807,
+            "y": 631.1014449014748
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "low",
+      "seed": 3075192741,
+      "role": "second-seed-process",
+      "index": 2,
+      "dir": "002-white-scarfield-low-3075192741",
+      "status": "completed-script",
+      "startedAt": "2026-10-07T09:51:36.928Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-07T09:52:16.494Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "white-scarfield",
+          "grade": "low",
+          "revision": 6,
+          "requestedSeed": 3075192741,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 27665.54999999977,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 178.47015444720452,
+            "y": 645.724463880484
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    },
+    {
+      "world": "white-scarfield",
+      "grade": "medium",
+      "seed": 20261005,
+      "role": "search-and-extract",
+      "index": 3,
+      "dir": "003-white-scarfield-medium-20261005",
+      "status": "completed-script",
+      "startedAt": "2026-10-07T09:52:16.497Z",
+      "exitCode": 0,
+      "signal": null,
+      "endedAt": "2026-10-07T09:52:58.364Z",
+      "journeys": [
+        {
+          "status": "completed-real-input",
+          "outcome": "extract",
+          "world": "white-scarfield",
+          "grade": "medium",
+          "revision": 6,
+          "requestedSeed": 20261005,
+          "matchesPlan": true,
+          "collected": 1,
+          "actualPickups": 1,
+          "elapsedMs": 29565.489999999783,
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          },
+          "lastPosition": {
+            "x": 175.6440999940976,
+            "y": 644.4655043441936
+          },
+          "navigationWarning": null,
+          "baseSettled": true
+        }
+      ]
+    }
+  ],
+  "stoppedAfterFailure": {
+    "index": 3,
+    "dir": "003-white-scarfield-medium-20261005",
+    "observation": {
+      "at": "2026-10-07T09:52:23.436Z",
+      "pid": 94063,
+      "event": "requestfailed",
+      "browserId": 1,
+      "contextId": 1,
+      "urlId": 266,
+      "url": "http://127.0.0.1:3121/src/entities/form-renderers/d/fragment-ramp.ts",
+      "failure": {
+        "errorText": "net::ERR_NETWORK_CHANGED"
+      },
+      "resourceType": "script"
+    }
+  },
+  "endedAt": "2026-10-07T09:52:58.367Z"
+}

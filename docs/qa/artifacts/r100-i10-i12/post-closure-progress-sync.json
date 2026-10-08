@@ -1,0 +1,22 @@
+{
+  "status": "applied-progress-pointer-only-after-closure",
+  "reviewer": "root",
+  "date": "2026-10-08",
+  "closureApplication": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closure-application.json",
+    "sha256": "165a4abaf1edbf5bf91d84af13354411c93507d371baaadc59ba992b9b432081"
+  },
+  "before": {
+    "path": "docs/progress/rift-r100.json",
+    "sha256": "e8f8e2412c6d574fa0b13336ac72f6e376866ed45fbf10002bc4529d1b9a6be4"
+  },
+  "afterSnapshot": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/ledger.after-progress-sync.json",
+    "sha256": "5f2da30ee0708078ca8b7ddc422076c231de1a46f94ecfdaac7d72917325e5ad"
+  },
+  "changedSections": [
+    "resume",
+    "changeLog"
+  ],
+  "preserved": "World qualification/evidence, all iteration closure decisions, issues/risks/release gates and version state are byte-equivalent JSON subtrees."
+}

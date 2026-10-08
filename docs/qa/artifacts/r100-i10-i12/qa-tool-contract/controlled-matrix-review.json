@@ -1,0 +1,52 @@
+{
+  "status": "bounded-source-review-pass",
+  "reviewer": "identity_shapes",
+  "createdAt": "2026-10-07T05:57:12.762785+00:00",
+  "reviewedSources": [
+    {
+      "path": "tools/qa/prepare-r100-controlled-matrices.mjs",
+      "sha256": "652a68a425c08eff106faf973c48df886e7e874bca6641814c14312eb8885829"
+    },
+    {
+      "path": "tools/qa/check-r100-cross-world-capabilities.ts",
+      "sha256": "2de93b8cbb539b2c888f3d44835f8f73f0721657344e220db8e13fc4fd9f8aca"
+    },
+    {
+      "path": "tools/qa/check-r100-presentation-phases.ts",
+      "sha256": "2df8f623c0c73cbec4dd8b8c2e3d643bebcca9aa9bc9edbf7a92e672b29bce0b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    }
+  ],
+  "scope": "Independent read-only review of preparation, frozen input/dependency closure, matrix identities, lifecycle assertions and evidence interpretation. No full matrix/browser/map execution. Root authored and repaired all three reviewed tools.",
+  "resolvedFindings": [
+    {
+      "id": "CM-01",
+      "problem": "The earlier presentation harness could report pass for a subset or stale compiled catalog; expectedCases/unsetEnvironment were only preparation metadata.",
+      "resolution": "Preparation now compiles QA_MATRIX_FINAL as1. The final harness rejects QA_WORLDS, checks the real compiled108 catalog against the fixed-plan IDs, binds the plan SHA, checks unique8 directions/6 phases, and requires the complete unique15552 Cartesian set. Capability binds the same fixed plan and verifies all1536 unique expected labels. Pilot reports are explicitly partial-author-scope."
+    }
+  ],
+  "openBlockingFindings": [],
+  "checks": {
+    "runtimeSource": "Source manifest verifiedCopyHashes=true and patches=[]; every frozen listed file SHA checked before and after preparation. Runtime/data symlinks resolve into that frozen copy.",
+    "harnessAndDependencies": "Harness, Phaser stub and exact qualification plan are separately copied and hashed. Every esbuild input must match either its copied harness/stub receipt or one frozen runtime source entry; no live application file can silently enter the accepted dependency list.",
+    "capabilityCoverage": "12 ordinary core families ×8 directions ×4 lifecycle time samples ×4 synthetic topologies =1536. These are controlled real-runtime fixtures, not108-world actual tool-use journeys.",
+    "presentationCoverage": "108 actual authored worlds ×3 grades ×8 directions ×6 phases =15552. Each world/grade is generated once, then a recorded renderer checks restore/next-frame equality, pause, teardown and unchanged terrain/mesh data.",
+    "immutableExecutionBoundary": "Preparation emits prepared-not-run. Coordinator must still verify the declared source/plan/executor hashes before and after each actual process and preserve original exits/reports. This review grants no matrix execution pass."
+  },
+  "negativeContract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/controlled-matrix-final-selection-check.json",
+    "sha256": "4f9721386ea389bab4d29afccb3012d945c066e12f088b3ede404385ae5b2be8",
+    "positiveSelectionCases": 2,
+    "rejectedBeforeGenerationCases": 6,
+    "method": "Extract and transpile the actual harness selection-prefix expressions, with the same esbuild final define; no mirrored selection algorithm and no runtime/map imports."
+  },
+  "audioBoundary": "Each fresh presentation starts directly at a selected phase. MasterMaterialAudio anti-backlog consumes an unobserved partial cycle, so these samples establish serializable audio clocks/state and restored frame consistency, not a complete loading→stress→release event sequence, audible quality, or listening approval.",
+  "otherLimits": [
+    "Recorded graphics/renderer do not validate native pixel quality or GPU execution.",
+    "Controlled pause is a no-tick/setMotion contract, not physical browser pause-key input.",
+    "Neither the fake-input coverage checks nor this review count as game journeys, qualification cases or enabled-world approval."
+  ]
+}

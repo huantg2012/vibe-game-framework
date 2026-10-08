@@ -1,0 +1,2863 @@
+{
+  "status": "proposal-not-applied",
+  "iterationId": "R100-I10",
+  "previousLedger": {
+    "path": "docs/progress/rift-r100.json",
+    "sha256": "e47a72ee0e421fa94f63984872ea59a18b2924a48c9508de42dce87bd2895c6d"
+  },
+  "proposedLedger": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i10-ledger-proposal.json",
+    "sha256": "9df81931ec2301e417d52d31afe671474a9ade6faee68b1f51aa4e50d9b85c49"
+  },
+  "evidence": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/sampled-final-proposals/r100-i10-achievement.json",
+    "sha256": "e40bc43c929485d4b283d5919b438d88ce406c135772f572788aa85ccb86c08c"
+  },
+  "achievementHash": "8f8993d106914ef09bd9fe6fc11a17e29ed26ccc714abda14baff27db3550873",
+  "checkPlan": {
+    "ok": true,
+    "errors": [],
+    "warnings": [],
+    "counts": {
+      "candidates": 108,
+      "qualified": 108,
+      "production": 108,
+      "humanApproved": 0,
+      "qualifiedGradeCases": 324,
+      "productionGradeCases": 324
+    },
+    "gradeCounts": {
+      "low": {
+        "qualified": 108,
+        "production": 108
+      },
+      "medium": {
+        "qualified": 108,
+        "production": 108
+      },
+      "severe": {
+        "qualified": 108,
+        "production": 108
+      }
+    },
+    "qualifiedGradeCases": [
+      {
+        "worldId": "ash-strata",
+        "grade": "low"
+      },
+      {
+        "worldId": "ash-strata",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ash-strata",
+        "grade": "severe"
+      },
+      {
+        "worldId": "crystal-fibre",
+        "grade": "low"
+      },
+      {
+        "worldId": "crystal-fibre",
+        "grade": "medium"
+      },
+      {
+        "worldId": "crystal-fibre",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ivory-basin",
+        "grade": "low"
+      },
+      {
+        "worldId": "ivory-basin",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ivory-basin",
+        "grade": "severe"
+      },
+      {
+        "worldId": "cinder-ridge",
+        "grade": "low"
+      },
+      {
+        "worldId": "cinder-ridge",
+        "grade": "medium"
+      },
+      {
+        "worldId": "cinder-ridge",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pallid-membrane",
+        "grade": "low"
+      },
+      {
+        "worldId": "pallid-membrane",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pallid-membrane",
+        "grade": "severe"
+      },
+      {
+        "worldId": "silt-gel",
+        "grade": "low"
+      },
+      {
+        "worldId": "silt-gel",
+        "grade": "medium"
+      },
+      {
+        "worldId": "silt-gel",
+        "grade": "severe"
+      },
+      {
+        "worldId": "schist-shear",
+        "grade": "low"
+      },
+      {
+        "worldId": "schist-shear",
+        "grade": "medium"
+      },
+      {
+        "worldId": "schist-shear",
+        "grade": "severe"
+      },
+      {
+        "worldId": "splayed-fibres",
+        "grade": "low"
+      },
+      {
+        "worldId": "splayed-fibres",
+        "grade": "medium"
+      },
+      {
+        "worldId": "splayed-fibres",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-chain",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-chain",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-chain",
+        "grade": "severe"
+      },
+      {
+        "worldId": "grain-laminate",
+        "grade": "low"
+      },
+      {
+        "worldId": "grain-laminate",
+        "grade": "medium"
+      },
+      {
+        "worldId": "grain-laminate",
+        "grade": "severe"
+      },
+      {
+        "worldId": "tension-membrane",
+        "grade": "low"
+      },
+      {
+        "worldId": "tension-membrane",
+        "grade": "medium"
+      },
+      {
+        "worldId": "tension-membrane",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-gel-delta",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-gel-delta",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-gel-delta",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pressed-dunes",
+        "grade": "low"
+      },
+      {
+        "worldId": "pressed-dunes",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pressed-dunes",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ruptured-film",
+        "grade": "low"
+      },
+      {
+        "worldId": "ruptured-film",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ruptured-film",
+        "grade": "severe"
+      },
+      {
+        "worldId": "reversed-flow",
+        "grade": "low"
+      },
+      {
+        "worldId": "reversed-flow",
+        "grade": "medium"
+      },
+      {
+        "worldId": "reversed-flow",
+        "grade": "severe"
+      },
+      {
+        "worldId": "laminate-shell",
+        "grade": "low"
+      },
+      {
+        "worldId": "laminate-shell",
+        "grade": "medium"
+      },
+      {
+        "worldId": "laminate-shell",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fibre-silt",
+        "grade": "low"
+      },
+      {
+        "worldId": "fibre-silt",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fibre-silt",
+        "grade": "severe"
+      },
+      {
+        "worldId": "film-laminate",
+        "grade": "low"
+      },
+      {
+        "worldId": "film-laminate",
+        "grade": "medium"
+      },
+      {
+        "worldId": "film-laminate",
+        "grade": "severe"
+      },
+      {
+        "worldId": "gel-fibre",
+        "grade": "low"
+      },
+      {
+        "worldId": "gel-fibre",
+        "grade": "medium"
+      },
+      {
+        "worldId": "gel-fibre",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-grit",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-grit",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-grit",
+        "grade": "severe"
+      },
+      {
+        "worldId": "rib-vault",
+        "grade": "low"
+      },
+      {
+        "worldId": "rib-vault",
+        "grade": "medium"
+      },
+      {
+        "worldId": "rib-vault",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pleated-hide",
+        "grade": "low"
+      },
+      {
+        "worldId": "pleated-hide",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pleated-hide",
+        "grade": "severe"
+      },
+      {
+        "worldId": "blister-field",
+        "grade": "low"
+      },
+      {
+        "worldId": "blister-field",
+        "grade": "medium"
+      },
+      {
+        "worldId": "blister-field",
+        "grade": "severe"
+      },
+      {
+        "worldId": "wax-tongues",
+        "grade": "low"
+      },
+      {
+        "worldId": "wax-tongues",
+        "grade": "medium"
+      },
+      {
+        "worldId": "wax-tongues",
+        "grade": "severe"
+      },
+      {
+        "worldId": "monolith-sill",
+        "grade": "low"
+      },
+      {
+        "worldId": "monolith-sill",
+        "grade": "medium"
+      },
+      {
+        "worldId": "monolith-sill",
+        "grade": "severe"
+      },
+      {
+        "worldId": "bleached-court",
+        "grade": "low"
+      },
+      {
+        "worldId": "bleached-court",
+        "grade": "medium"
+      },
+      {
+        "worldId": "bleached-court",
+        "grade": "severe"
+      },
+      {
+        "worldId": "split-rib-causeway",
+        "grade": "low"
+      },
+      {
+        "worldId": "split-rib-causeway",
+        "grade": "medium"
+      },
+      {
+        "worldId": "split-rib-causeway",
+        "grade": "severe"
+      },
+      {
+        "worldId": "satin-fan",
+        "grade": "low"
+      },
+      {
+        "worldId": "satin-fan",
+        "grade": "medium"
+      },
+      {
+        "worldId": "satin-fan",
+        "grade": "severe"
+      },
+      {
+        "worldId": "chalk-steps",
+        "grade": "low"
+      },
+      {
+        "worldId": "chalk-steps",
+        "grade": "medium"
+      },
+      {
+        "worldId": "chalk-steps",
+        "grade": "severe"
+      },
+      {
+        "worldId": "porcelain-maw",
+        "grade": "low"
+      },
+      {
+        "worldId": "porcelain-maw",
+        "grade": "medium"
+      },
+      {
+        "worldId": "porcelain-maw",
+        "grade": "severe"
+      },
+      {
+        "worldId": "amber-ribs",
+        "grade": "low"
+      },
+      {
+        "worldId": "amber-ribs",
+        "grade": "medium"
+      },
+      {
+        "worldId": "amber-ribs",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pale-sail",
+        "grade": "low"
+      },
+      {
+        "worldId": "pale-sail",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pale-sail",
+        "grade": "severe"
+      },
+      {
+        "worldId": "root-cistern",
+        "grade": "low"
+      },
+      {
+        "worldId": "root-cistern",
+        "grade": "medium"
+      },
+      {
+        "worldId": "root-cistern",
+        "grade": "severe"
+      },
+      {
+        "worldId": "scab-islands",
+        "grade": "low"
+      },
+      {
+        "worldId": "scab-islands",
+        "grade": "medium"
+      },
+      {
+        "worldId": "scab-islands",
+        "grade": "severe"
+      },
+      {
+        "worldId": "foam-trenches",
+        "grade": "low"
+      },
+      {
+        "worldId": "foam-trenches",
+        "grade": "medium"
+      },
+      {
+        "worldId": "foam-trenches",
+        "grade": "severe"
+      },
+      {
+        "worldId": "resin-fall",
+        "grade": "low"
+      },
+      {
+        "worldId": "resin-fall",
+        "grade": "medium"
+      },
+      {
+        "worldId": "resin-fall",
+        "grade": "severe"
+      },
+      {
+        "worldId": "tendon-shelves",
+        "grade": "low"
+      },
+      {
+        "worldId": "tendon-shelves",
+        "grade": "medium"
+      },
+      {
+        "worldId": "tendon-shelves",
+        "grade": "severe"
+      },
+      {
+        "worldId": "felt-basin",
+        "grade": "low"
+      },
+      {
+        "worldId": "felt-basin",
+        "grade": "medium"
+      },
+      {
+        "worldId": "felt-basin",
+        "grade": "severe"
+      },
+      {
+        "worldId": "cork-shelves",
+        "grade": "low"
+      },
+      {
+        "worldId": "cork-shelves",
+        "grade": "medium"
+      },
+      {
+        "worldId": "cork-shelves",
+        "grade": "severe"
+      },
+      {
+        "worldId": "lacquer-court",
+        "grade": "low"
+      },
+      {
+        "worldId": "lacquer-court",
+        "grade": "medium"
+      },
+      {
+        "worldId": "lacquer-court",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ribbed-delta",
+        "grade": "low"
+      },
+      {
+        "worldId": "ribbed-delta",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ribbed-delta",
+        "grade": "severe"
+      },
+      {
+        "worldId": "bladder-weave",
+        "grade": "low"
+      },
+      {
+        "worldId": "bladder-weave",
+        "grade": "medium"
+      },
+      {
+        "worldId": "bladder-weave",
+        "grade": "severe"
+      },
+      {
+        "worldId": "flake-thicket",
+        "grade": "low"
+      },
+      {
+        "worldId": "flake-thicket",
+        "grade": "medium"
+      },
+      {
+        "worldId": "flake-thicket",
+        "grade": "severe"
+      },
+      {
+        "worldId": "resin-hollows",
+        "grade": "low"
+      },
+      {
+        "worldId": "resin-hollows",
+        "grade": "medium"
+      },
+      {
+        "worldId": "resin-hollows",
+        "grade": "severe"
+      },
+      {
+        "worldId": "sentinel-mass",
+        "grade": "low"
+      },
+      {
+        "worldId": "sentinel-mass",
+        "grade": "medium"
+      },
+      {
+        "worldId": "sentinel-mass",
+        "grade": "severe"
+      },
+      {
+        "worldId": "stepped-bowl",
+        "grade": "low"
+      },
+      {
+        "worldId": "stepped-bowl",
+        "grade": "medium"
+      },
+      {
+        "worldId": "stepped-bowl",
+        "grade": "severe"
+      },
+      {
+        "worldId": "draped-bay",
+        "grade": "low"
+      },
+      {
+        "worldId": "draped-bay",
+        "grade": "medium"
+      },
+      {
+        "worldId": "draped-bay",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ember-cushions",
+        "grade": "low"
+      },
+      {
+        "worldId": "ember-cushions",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ember-cushions",
+        "grade": "severe"
+      },
+      {
+        "worldId": "splinter-rotunda",
+        "grade": "low"
+      },
+      {
+        "worldId": "splinter-rotunda",
+        "grade": "medium"
+      },
+      {
+        "worldId": "splinter-rotunda",
+        "grade": "severe"
+      },
+      {
+        "worldId": "quilted-scars",
+        "grade": "low"
+      },
+      {
+        "worldId": "quilted-scars",
+        "grade": "medium"
+      },
+      {
+        "worldId": "quilted-scars",
+        "grade": "severe"
+      },
+      {
+        "worldId": "silt-colonnade",
+        "grade": "low"
+      },
+      {
+        "worldId": "silt-colonnade",
+        "grade": "medium"
+      },
+      {
+        "worldId": "silt-colonnade",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-causeway",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-causeway",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-causeway",
+        "grade": "severe"
+      },
+      {
+        "worldId": "cleft-tableland",
+        "grade": "low"
+      },
+      {
+        "worldId": "cleft-tableland",
+        "grade": "medium"
+      },
+      {
+        "worldId": "cleft-tableland",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fallen-spines",
+        "grade": "low"
+      },
+      {
+        "worldId": "fallen-spines",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fallen-spines",
+        "grade": "severe"
+      },
+      {
+        "worldId": "clamped-shore",
+        "grade": "low"
+      },
+      {
+        "worldId": "clamped-shore",
+        "grade": "medium"
+      },
+      {
+        "worldId": "clamped-shore",
+        "grade": "severe"
+      },
+      {
+        "worldId": "torn-reservoir",
+        "grade": "low"
+      },
+      {
+        "worldId": "torn-reservoir",
+        "grade": "medium"
+      },
+      {
+        "worldId": "torn-reservoir",
+        "grade": "severe"
+      },
+      {
+        "worldId": "braided-seam",
+        "grade": "low"
+      },
+      {
+        "worldId": "braided-seam",
+        "grade": "medium"
+      },
+      {
+        "worldId": "braided-seam",
+        "grade": "severe"
+      },
+      {
+        "worldId": "scalloped-reach",
+        "grade": "low"
+      },
+      {
+        "worldId": "scalloped-reach",
+        "grade": "medium"
+      },
+      {
+        "worldId": "scalloped-reach",
+        "grade": "severe"
+      },
+      {
+        "worldId": "offset-pan",
+        "grade": "low"
+      },
+      {
+        "worldId": "offset-pan",
+        "grade": "medium"
+      },
+      {
+        "worldId": "offset-pan",
+        "grade": "severe"
+      },
+      {
+        "worldId": "thin-delta",
+        "grade": "low"
+      },
+      {
+        "worldId": "thin-delta",
+        "grade": "medium"
+      },
+      {
+        "worldId": "thin-delta",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shard-switchback",
+        "grade": "low"
+      },
+      {
+        "worldId": "shard-switchback",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shard-switchback",
+        "grade": "severe"
+      },
+      {
+        "worldId": "hollow-wreckage",
+        "grade": "low"
+      },
+      {
+        "worldId": "hollow-wreckage",
+        "grade": "medium"
+      },
+      {
+        "worldId": "hollow-wreckage",
+        "grade": "severe"
+      },
+      {
+        "worldId": "knotted-run",
+        "grade": "low"
+      },
+      {
+        "worldId": "knotted-run",
+        "grade": "medium"
+      },
+      {
+        "worldId": "knotted-run",
+        "grade": "severe"
+      },
+      {
+        "worldId": "rolled-fragments",
+        "grade": "low"
+      },
+      {
+        "worldId": "rolled-fragments",
+        "grade": "medium"
+      },
+      {
+        "worldId": "rolled-fragments",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fibre-choke",
+        "grade": "low"
+      },
+      {
+        "worldId": "fibre-choke",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fibre-choke",
+        "grade": "severe"
+      },
+      {
+        "worldId": "buried-lamellae",
+        "grade": "low"
+      },
+      {
+        "worldId": "buried-lamellae",
+        "grade": "medium"
+      },
+      {
+        "worldId": "buried-lamellae",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pressed-rim",
+        "grade": "low"
+      },
+      {
+        "worldId": "pressed-rim",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pressed-rim",
+        "grade": "severe"
+      },
+      {
+        "worldId": "wedged-hide",
+        "grade": "low"
+      },
+      {
+        "worldId": "wedged-hide",
+        "grade": "medium"
+      },
+      {
+        "worldId": "wedged-hide",
+        "grade": "severe"
+      },
+      {
+        "worldId": "quiet-spur",
+        "grade": "low"
+      },
+      {
+        "worldId": "quiet-spur",
+        "grade": "medium"
+      },
+      {
+        "worldId": "quiet-spur",
+        "grade": "severe"
+      },
+      {
+        "worldId": "split-fall",
+        "grade": "low"
+      },
+      {
+        "worldId": "split-fall",
+        "grade": "medium"
+      },
+      {
+        "worldId": "split-fall",
+        "grade": "severe"
+      },
+      {
+        "worldId": "three-shelves",
+        "grade": "low"
+      },
+      {
+        "worldId": "three-shelves",
+        "grade": "medium"
+      },
+      {
+        "worldId": "three-shelves",
+        "grade": "severe"
+      },
+      {
+        "worldId": "frayed-outwash",
+        "grade": "low"
+      },
+      {
+        "worldId": "frayed-outwash",
+        "grade": "medium"
+      },
+      {
+        "worldId": "frayed-outwash",
+        "grade": "severe"
+      },
+      {
+        "worldId": "short-fibre-mat",
+        "grade": "low"
+      },
+      {
+        "worldId": "short-fibre-mat",
+        "grade": "medium"
+      },
+      {
+        "worldId": "short-fibre-mat",
+        "grade": "severe"
+      },
+      {
+        "worldId": "marrow-break",
+        "grade": "low"
+      },
+      {
+        "worldId": "marrow-break",
+        "grade": "medium"
+      },
+      {
+        "worldId": "marrow-break",
+        "grade": "severe"
+      },
+      {
+        "worldId": "felt-wedges",
+        "grade": "low"
+      },
+      {
+        "worldId": "felt-wedges",
+        "grade": "medium"
+      },
+      {
+        "worldId": "felt-wedges",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pore-bank",
+        "grade": "low"
+      },
+      {
+        "worldId": "pore-bank",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pore-bank",
+        "grade": "severe"
+      },
+      {
+        "worldId": "staggered-cups",
+        "grade": "low"
+      },
+      {
+        "worldId": "staggered-cups",
+        "grade": "medium"
+      },
+      {
+        "worldId": "staggered-cups",
+        "grade": "severe"
+      },
+      {
+        "worldId": "split-tows",
+        "grade": "low"
+      },
+      {
+        "worldId": "split-tows",
+        "grade": "medium"
+      },
+      {
+        "worldId": "split-tows",
+        "grade": "severe"
+      },
+      {
+        "worldId": "curled-flats",
+        "grade": "low"
+      },
+      {
+        "worldId": "curled-flats",
+        "grade": "medium"
+      },
+      {
+        "worldId": "curled-flats",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pitch-forks",
+        "grade": "low"
+      },
+      {
+        "worldId": "pitch-forks",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pitch-forks",
+        "grade": "severe"
+      },
+      {
+        "worldId": "grain-weld",
+        "grade": "low"
+      },
+      {
+        "worldId": "grain-weld",
+        "grade": "medium"
+      },
+      {
+        "worldId": "grain-weld",
+        "grade": "severe"
+      },
+      {
+        "worldId": "silk-catch",
+        "grade": "low"
+      },
+      {
+        "worldId": "silk-catch",
+        "grade": "medium"
+      },
+      {
+        "worldId": "silk-catch",
+        "grade": "severe"
+      },
+      {
+        "worldId": "resin-sleeve",
+        "grade": "low"
+      },
+      {
+        "worldId": "resin-sleeve",
+        "grade": "medium"
+      },
+      {
+        "worldId": "resin-sleeve",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-threads",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-threads",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-threads",
+        "grade": "severe"
+      },
+      {
+        "worldId": "chalk-divide",
+        "grade": "low"
+      },
+      {
+        "worldId": "chalk-divide",
+        "grade": "medium"
+      },
+      {
+        "worldId": "chalk-divide",
+        "grade": "severe"
+      },
+      {
+        "worldId": "red-vault-fragments",
+        "grade": "low"
+      },
+      {
+        "worldId": "red-vault-fragments",
+        "grade": "medium"
+      },
+      {
+        "worldId": "red-vault-fragments",
+        "grade": "severe"
+      },
+      {
+        "worldId": "blue-fault",
+        "grade": "low"
+      },
+      {
+        "worldId": "blue-fault",
+        "grade": "medium"
+      },
+      {
+        "worldId": "blue-fault",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pale-pressure",
+        "grade": "low"
+      },
+      {
+        "worldId": "pale-pressure",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pale-pressure",
+        "grade": "severe"
+      },
+      {
+        "worldId": "notched-backwater",
+        "grade": "low"
+      },
+      {
+        "worldId": "notched-backwater",
+        "grade": "medium"
+      },
+      {
+        "worldId": "notched-backwater",
+        "grade": "severe"
+      },
+      {
+        "worldId": "crossed-casings",
+        "grade": "low"
+      },
+      {
+        "worldId": "crossed-casings",
+        "grade": "medium"
+      },
+      {
+        "worldId": "crossed-casings",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fibre-stumpfield",
+        "grade": "low"
+      },
+      {
+        "worldId": "fibre-stumpfield",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fibre-stumpfield",
+        "grade": "severe"
+      },
+      {
+        "worldId": "sloughed-court",
+        "grade": "low"
+      },
+      {
+        "worldId": "sloughed-court",
+        "grade": "medium"
+      },
+      {
+        "worldId": "sloughed-court",
+        "grade": "severe"
+      },
+      {
+        "worldId": "crushed-seam",
+        "grade": "low"
+      },
+      {
+        "worldId": "crushed-seam",
+        "grade": "medium"
+      },
+      {
+        "worldId": "crushed-seam",
+        "grade": "severe"
+      },
+      {
+        "worldId": "husk-reef",
+        "grade": "low"
+      },
+      {
+        "worldId": "husk-reef",
+        "grade": "medium"
+      },
+      {
+        "worldId": "husk-reef",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fibre-scree",
+        "grade": "low"
+      },
+      {
+        "worldId": "fibre-scree",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fibre-scree",
+        "grade": "severe"
+      },
+      {
+        "worldId": "gel-rafts",
+        "grade": "low"
+      },
+      {
+        "worldId": "gel-rafts",
+        "grade": "medium"
+      },
+      {
+        "worldId": "gel-rafts",
+        "grade": "severe"
+      },
+      {
+        "worldId": "double-return",
+        "grade": "low"
+      },
+      {
+        "worldId": "double-return",
+        "grade": "medium"
+      },
+      {
+        "worldId": "double-return",
+        "grade": "severe"
+      },
+      {
+        "worldId": "offset-basins",
+        "grade": "low"
+      },
+      {
+        "worldId": "offset-basins",
+        "grade": "medium"
+      },
+      {
+        "worldId": "offset-basins",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pinched-fan",
+        "grade": "low"
+      },
+      {
+        "worldId": "pinched-fan",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pinched-fan",
+        "grade": "severe"
+      },
+      {
+        "worldId": "spliced-reaches",
+        "grade": "low"
+      },
+      {
+        "worldId": "spliced-reaches",
+        "grade": "medium"
+      },
+      {
+        "worldId": "spliced-reaches",
+        "grade": "severe"
+      },
+      {
+        "worldId": "white-scarfield",
+        "grade": "low"
+      },
+      {
+        "worldId": "white-scarfield",
+        "grade": "medium"
+      },
+      {
+        "worldId": "white-scarfield",
+        "grade": "severe"
+      },
+      {
+        "worldId": "black-lacuna",
+        "grade": "low"
+      },
+      {
+        "worldId": "black-lacuna",
+        "grade": "medium"
+      },
+      {
+        "worldId": "black-lacuna",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ochre-folds",
+        "grade": "low"
+      },
+      {
+        "worldId": "ochre-folds",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ochre-folds",
+        "grade": "severe"
+      },
+      {
+        "worldId": "violet-marrows",
+        "grade": "low"
+      },
+      {
+        "worldId": "violet-marrows",
+        "grade": "medium"
+      },
+      {
+        "worldId": "violet-marrows",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fractured-estuary",
+        "grade": "low"
+      },
+      {
+        "worldId": "fractured-estuary",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fractured-estuary",
+        "grade": "severe"
+      },
+      {
+        "worldId": "woven-quarters",
+        "grade": "low"
+      },
+      {
+        "worldId": "woven-quarters",
+        "grade": "medium"
+      },
+      {
+        "worldId": "woven-quarters",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-patchwork",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-patchwork",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-patchwork",
+        "grade": "severe"
+      },
+      {
+        "worldId": "last-shelf",
+        "grade": "low"
+      },
+      {
+        "worldId": "last-shelf",
+        "grade": "medium"
+      },
+      {
+        "worldId": "last-shelf",
+        "grade": "severe"
+      }
+    ],
+    "productionGradeCases": [
+      {
+        "worldId": "ash-strata",
+        "grade": "low"
+      },
+      {
+        "worldId": "ash-strata",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ash-strata",
+        "grade": "severe"
+      },
+      {
+        "worldId": "crystal-fibre",
+        "grade": "low"
+      },
+      {
+        "worldId": "crystal-fibre",
+        "grade": "medium"
+      },
+      {
+        "worldId": "crystal-fibre",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ivory-basin",
+        "grade": "low"
+      },
+      {
+        "worldId": "ivory-basin",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ivory-basin",
+        "grade": "severe"
+      },
+      {
+        "worldId": "cinder-ridge",
+        "grade": "low"
+      },
+      {
+        "worldId": "cinder-ridge",
+        "grade": "medium"
+      },
+      {
+        "worldId": "cinder-ridge",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pallid-membrane",
+        "grade": "low"
+      },
+      {
+        "worldId": "pallid-membrane",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pallid-membrane",
+        "grade": "severe"
+      },
+      {
+        "worldId": "silt-gel",
+        "grade": "low"
+      },
+      {
+        "worldId": "silt-gel",
+        "grade": "medium"
+      },
+      {
+        "worldId": "silt-gel",
+        "grade": "severe"
+      },
+      {
+        "worldId": "schist-shear",
+        "grade": "low"
+      },
+      {
+        "worldId": "schist-shear",
+        "grade": "medium"
+      },
+      {
+        "worldId": "schist-shear",
+        "grade": "severe"
+      },
+      {
+        "worldId": "splayed-fibres",
+        "grade": "low"
+      },
+      {
+        "worldId": "splayed-fibres",
+        "grade": "medium"
+      },
+      {
+        "worldId": "splayed-fibres",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-chain",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-chain",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-chain",
+        "grade": "severe"
+      },
+      {
+        "worldId": "grain-laminate",
+        "grade": "low"
+      },
+      {
+        "worldId": "grain-laminate",
+        "grade": "medium"
+      },
+      {
+        "worldId": "grain-laminate",
+        "grade": "severe"
+      },
+      {
+        "worldId": "tension-membrane",
+        "grade": "low"
+      },
+      {
+        "worldId": "tension-membrane",
+        "grade": "medium"
+      },
+      {
+        "worldId": "tension-membrane",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-gel-delta",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-gel-delta",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-gel-delta",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pressed-dunes",
+        "grade": "low"
+      },
+      {
+        "worldId": "pressed-dunes",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pressed-dunes",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ruptured-film",
+        "grade": "low"
+      },
+      {
+        "worldId": "ruptured-film",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ruptured-film",
+        "grade": "severe"
+      },
+      {
+        "worldId": "reversed-flow",
+        "grade": "low"
+      },
+      {
+        "worldId": "reversed-flow",
+        "grade": "medium"
+      },
+      {
+        "worldId": "reversed-flow",
+        "grade": "severe"
+      },
+      {
+        "worldId": "laminate-shell",
+        "grade": "low"
+      },
+      {
+        "worldId": "laminate-shell",
+        "grade": "medium"
+      },
+      {
+        "worldId": "laminate-shell",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fibre-silt",
+        "grade": "low"
+      },
+      {
+        "worldId": "fibre-silt",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fibre-silt",
+        "grade": "severe"
+      },
+      {
+        "worldId": "film-laminate",
+        "grade": "low"
+      },
+      {
+        "worldId": "film-laminate",
+        "grade": "medium"
+      },
+      {
+        "worldId": "film-laminate",
+        "grade": "severe"
+      },
+      {
+        "worldId": "gel-fibre",
+        "grade": "low"
+      },
+      {
+        "worldId": "gel-fibre",
+        "grade": "medium"
+      },
+      {
+        "worldId": "gel-fibre",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-grit",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-grit",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-grit",
+        "grade": "severe"
+      },
+      {
+        "worldId": "rib-vault",
+        "grade": "low"
+      },
+      {
+        "worldId": "rib-vault",
+        "grade": "medium"
+      },
+      {
+        "worldId": "rib-vault",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pleated-hide",
+        "grade": "low"
+      },
+      {
+        "worldId": "pleated-hide",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pleated-hide",
+        "grade": "severe"
+      },
+      {
+        "worldId": "blister-field",
+        "grade": "low"
+      },
+      {
+        "worldId": "blister-field",
+        "grade": "medium"
+      },
+      {
+        "worldId": "blister-field",
+        "grade": "severe"
+      },
+      {
+        "worldId": "wax-tongues",
+        "grade": "low"
+      },
+      {
+        "worldId": "wax-tongues",
+        "grade": "medium"
+      },
+      {
+        "worldId": "wax-tongues",
+        "grade": "severe"
+      },
+      {
+        "worldId": "monolith-sill",
+        "grade": "low"
+      },
+      {
+        "worldId": "monolith-sill",
+        "grade": "medium"
+      },
+      {
+        "worldId": "monolith-sill",
+        "grade": "severe"
+      },
+      {
+        "worldId": "bleached-court",
+        "grade": "low"
+      },
+      {
+        "worldId": "bleached-court",
+        "grade": "medium"
+      },
+      {
+        "worldId": "bleached-court",
+        "grade": "severe"
+      },
+      {
+        "worldId": "split-rib-causeway",
+        "grade": "low"
+      },
+      {
+        "worldId": "split-rib-causeway",
+        "grade": "medium"
+      },
+      {
+        "worldId": "split-rib-causeway",
+        "grade": "severe"
+      },
+      {
+        "worldId": "satin-fan",
+        "grade": "low"
+      },
+      {
+        "worldId": "satin-fan",
+        "grade": "medium"
+      },
+      {
+        "worldId": "satin-fan",
+        "grade": "severe"
+      },
+      {
+        "worldId": "chalk-steps",
+        "grade": "low"
+      },
+      {
+        "worldId": "chalk-steps",
+        "grade": "medium"
+      },
+      {
+        "worldId": "chalk-steps",
+        "grade": "severe"
+      },
+      {
+        "worldId": "porcelain-maw",
+        "grade": "low"
+      },
+      {
+        "worldId": "porcelain-maw",
+        "grade": "medium"
+      },
+      {
+        "worldId": "porcelain-maw",
+        "grade": "severe"
+      },
+      {
+        "worldId": "amber-ribs",
+        "grade": "low"
+      },
+      {
+        "worldId": "amber-ribs",
+        "grade": "medium"
+      },
+      {
+        "worldId": "amber-ribs",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pale-sail",
+        "grade": "low"
+      },
+      {
+        "worldId": "pale-sail",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pale-sail",
+        "grade": "severe"
+      },
+      {
+        "worldId": "root-cistern",
+        "grade": "low"
+      },
+      {
+        "worldId": "root-cistern",
+        "grade": "medium"
+      },
+      {
+        "worldId": "root-cistern",
+        "grade": "severe"
+      },
+      {
+        "worldId": "scab-islands",
+        "grade": "low"
+      },
+      {
+        "worldId": "scab-islands",
+        "grade": "medium"
+      },
+      {
+        "worldId": "scab-islands",
+        "grade": "severe"
+      },
+      {
+        "worldId": "foam-trenches",
+        "grade": "low"
+      },
+      {
+        "worldId": "foam-trenches",
+        "grade": "medium"
+      },
+      {
+        "worldId": "foam-trenches",
+        "grade": "severe"
+      },
+      {
+        "worldId": "resin-fall",
+        "grade": "low"
+      },
+      {
+        "worldId": "resin-fall",
+        "grade": "medium"
+      },
+      {
+        "worldId": "resin-fall",
+        "grade": "severe"
+      },
+      {
+        "worldId": "tendon-shelves",
+        "grade": "low"
+      },
+      {
+        "worldId": "tendon-shelves",
+        "grade": "medium"
+      },
+      {
+        "worldId": "tendon-shelves",
+        "grade": "severe"
+      },
+      {
+        "worldId": "felt-basin",
+        "grade": "low"
+      },
+      {
+        "worldId": "felt-basin",
+        "grade": "medium"
+      },
+      {
+        "worldId": "felt-basin",
+        "grade": "severe"
+      },
+      {
+        "worldId": "cork-shelves",
+        "grade": "low"
+      },
+      {
+        "worldId": "cork-shelves",
+        "grade": "medium"
+      },
+      {
+        "worldId": "cork-shelves",
+        "grade": "severe"
+      },
+      {
+        "worldId": "lacquer-court",
+        "grade": "low"
+      },
+      {
+        "worldId": "lacquer-court",
+        "grade": "medium"
+      },
+      {
+        "worldId": "lacquer-court",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ribbed-delta",
+        "grade": "low"
+      },
+      {
+        "worldId": "ribbed-delta",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ribbed-delta",
+        "grade": "severe"
+      },
+      {
+        "worldId": "bladder-weave",
+        "grade": "low"
+      },
+      {
+        "worldId": "bladder-weave",
+        "grade": "medium"
+      },
+      {
+        "worldId": "bladder-weave",
+        "grade": "severe"
+      },
+      {
+        "worldId": "flake-thicket",
+        "grade": "low"
+      },
+      {
+        "worldId": "flake-thicket",
+        "grade": "medium"
+      },
+      {
+        "worldId": "flake-thicket",
+        "grade": "severe"
+      },
+      {
+        "worldId": "resin-hollows",
+        "grade": "low"
+      },
+      {
+        "worldId": "resin-hollows",
+        "grade": "medium"
+      },
+      {
+        "worldId": "resin-hollows",
+        "grade": "severe"
+      },
+      {
+        "worldId": "sentinel-mass",
+        "grade": "low"
+      },
+      {
+        "worldId": "sentinel-mass",
+        "grade": "medium"
+      },
+      {
+        "worldId": "sentinel-mass",
+        "grade": "severe"
+      },
+      {
+        "worldId": "stepped-bowl",
+        "grade": "low"
+      },
+      {
+        "worldId": "stepped-bowl",
+        "grade": "medium"
+      },
+      {
+        "worldId": "stepped-bowl",
+        "grade": "severe"
+      },
+      {
+        "worldId": "draped-bay",
+        "grade": "low"
+      },
+      {
+        "worldId": "draped-bay",
+        "grade": "medium"
+      },
+      {
+        "worldId": "draped-bay",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ember-cushions",
+        "grade": "low"
+      },
+      {
+        "worldId": "ember-cushions",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ember-cushions",
+        "grade": "severe"
+      },
+      {
+        "worldId": "splinter-rotunda",
+        "grade": "low"
+      },
+      {
+        "worldId": "splinter-rotunda",
+        "grade": "medium"
+      },
+      {
+        "worldId": "splinter-rotunda",
+        "grade": "severe"
+      },
+      {
+        "worldId": "quilted-scars",
+        "grade": "low"
+      },
+      {
+        "worldId": "quilted-scars",
+        "grade": "medium"
+      },
+      {
+        "worldId": "quilted-scars",
+        "grade": "severe"
+      },
+      {
+        "worldId": "silt-colonnade",
+        "grade": "low"
+      },
+      {
+        "worldId": "silt-colonnade",
+        "grade": "medium"
+      },
+      {
+        "worldId": "silt-colonnade",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-causeway",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-causeway",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-causeway",
+        "grade": "severe"
+      },
+      {
+        "worldId": "cleft-tableland",
+        "grade": "low"
+      },
+      {
+        "worldId": "cleft-tableland",
+        "grade": "medium"
+      },
+      {
+        "worldId": "cleft-tableland",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fallen-spines",
+        "grade": "low"
+      },
+      {
+        "worldId": "fallen-spines",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fallen-spines",
+        "grade": "severe"
+      },
+      {
+        "worldId": "clamped-shore",
+        "grade": "low"
+      },
+      {
+        "worldId": "clamped-shore",
+        "grade": "medium"
+      },
+      {
+        "worldId": "clamped-shore",
+        "grade": "severe"
+      },
+      {
+        "worldId": "torn-reservoir",
+        "grade": "low"
+      },
+      {
+        "worldId": "torn-reservoir",
+        "grade": "medium"
+      },
+      {
+        "worldId": "torn-reservoir",
+        "grade": "severe"
+      },
+      {
+        "worldId": "braided-seam",
+        "grade": "low"
+      },
+      {
+        "worldId": "braided-seam",
+        "grade": "medium"
+      },
+      {
+        "worldId": "braided-seam",
+        "grade": "severe"
+      },
+      {
+        "worldId": "scalloped-reach",
+        "grade": "low"
+      },
+      {
+        "worldId": "scalloped-reach",
+        "grade": "medium"
+      },
+      {
+        "worldId": "scalloped-reach",
+        "grade": "severe"
+      },
+      {
+        "worldId": "offset-pan",
+        "grade": "low"
+      },
+      {
+        "worldId": "offset-pan",
+        "grade": "medium"
+      },
+      {
+        "worldId": "offset-pan",
+        "grade": "severe"
+      },
+      {
+        "worldId": "thin-delta",
+        "grade": "low"
+      },
+      {
+        "worldId": "thin-delta",
+        "grade": "medium"
+      },
+      {
+        "worldId": "thin-delta",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shard-switchback",
+        "grade": "low"
+      },
+      {
+        "worldId": "shard-switchback",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shard-switchback",
+        "grade": "severe"
+      },
+      {
+        "worldId": "hollow-wreckage",
+        "grade": "low"
+      },
+      {
+        "worldId": "hollow-wreckage",
+        "grade": "medium"
+      },
+      {
+        "worldId": "hollow-wreckage",
+        "grade": "severe"
+      },
+      {
+        "worldId": "knotted-run",
+        "grade": "low"
+      },
+      {
+        "worldId": "knotted-run",
+        "grade": "medium"
+      },
+      {
+        "worldId": "knotted-run",
+        "grade": "severe"
+      },
+      {
+        "worldId": "rolled-fragments",
+        "grade": "low"
+      },
+      {
+        "worldId": "rolled-fragments",
+        "grade": "medium"
+      },
+      {
+        "worldId": "rolled-fragments",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fibre-choke",
+        "grade": "low"
+      },
+      {
+        "worldId": "fibre-choke",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fibre-choke",
+        "grade": "severe"
+      },
+      {
+        "worldId": "buried-lamellae",
+        "grade": "low"
+      },
+      {
+        "worldId": "buried-lamellae",
+        "grade": "medium"
+      },
+      {
+        "worldId": "buried-lamellae",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pressed-rim",
+        "grade": "low"
+      },
+      {
+        "worldId": "pressed-rim",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pressed-rim",
+        "grade": "severe"
+      },
+      {
+        "worldId": "wedged-hide",
+        "grade": "low"
+      },
+      {
+        "worldId": "wedged-hide",
+        "grade": "medium"
+      },
+      {
+        "worldId": "wedged-hide",
+        "grade": "severe"
+      },
+      {
+        "worldId": "quiet-spur",
+        "grade": "low"
+      },
+      {
+        "worldId": "quiet-spur",
+        "grade": "medium"
+      },
+      {
+        "worldId": "quiet-spur",
+        "grade": "severe"
+      },
+      {
+        "worldId": "split-fall",
+        "grade": "low"
+      },
+      {
+        "worldId": "split-fall",
+        "grade": "medium"
+      },
+      {
+        "worldId": "split-fall",
+        "grade": "severe"
+      },
+      {
+        "worldId": "three-shelves",
+        "grade": "low"
+      },
+      {
+        "worldId": "three-shelves",
+        "grade": "medium"
+      },
+      {
+        "worldId": "three-shelves",
+        "grade": "severe"
+      },
+      {
+        "worldId": "frayed-outwash",
+        "grade": "low"
+      },
+      {
+        "worldId": "frayed-outwash",
+        "grade": "medium"
+      },
+      {
+        "worldId": "frayed-outwash",
+        "grade": "severe"
+      },
+      {
+        "worldId": "short-fibre-mat",
+        "grade": "low"
+      },
+      {
+        "worldId": "short-fibre-mat",
+        "grade": "medium"
+      },
+      {
+        "worldId": "short-fibre-mat",
+        "grade": "severe"
+      },
+      {
+        "worldId": "marrow-break",
+        "grade": "low"
+      },
+      {
+        "worldId": "marrow-break",
+        "grade": "medium"
+      },
+      {
+        "worldId": "marrow-break",
+        "grade": "severe"
+      },
+      {
+        "worldId": "felt-wedges",
+        "grade": "low"
+      },
+      {
+        "worldId": "felt-wedges",
+        "grade": "medium"
+      },
+      {
+        "worldId": "felt-wedges",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pore-bank",
+        "grade": "low"
+      },
+      {
+        "worldId": "pore-bank",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pore-bank",
+        "grade": "severe"
+      },
+      {
+        "worldId": "staggered-cups",
+        "grade": "low"
+      },
+      {
+        "worldId": "staggered-cups",
+        "grade": "medium"
+      },
+      {
+        "worldId": "staggered-cups",
+        "grade": "severe"
+      },
+      {
+        "worldId": "split-tows",
+        "grade": "low"
+      },
+      {
+        "worldId": "split-tows",
+        "grade": "medium"
+      },
+      {
+        "worldId": "split-tows",
+        "grade": "severe"
+      },
+      {
+        "worldId": "curled-flats",
+        "grade": "low"
+      },
+      {
+        "worldId": "curled-flats",
+        "grade": "medium"
+      },
+      {
+        "worldId": "curled-flats",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pitch-forks",
+        "grade": "low"
+      },
+      {
+        "worldId": "pitch-forks",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pitch-forks",
+        "grade": "severe"
+      },
+      {
+        "worldId": "grain-weld",
+        "grade": "low"
+      },
+      {
+        "worldId": "grain-weld",
+        "grade": "medium"
+      },
+      {
+        "worldId": "grain-weld",
+        "grade": "severe"
+      },
+      {
+        "worldId": "silk-catch",
+        "grade": "low"
+      },
+      {
+        "worldId": "silk-catch",
+        "grade": "medium"
+      },
+      {
+        "worldId": "silk-catch",
+        "grade": "severe"
+      },
+      {
+        "worldId": "resin-sleeve",
+        "grade": "low"
+      },
+      {
+        "worldId": "resin-sleeve",
+        "grade": "medium"
+      },
+      {
+        "worldId": "resin-sleeve",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-threads",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-threads",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-threads",
+        "grade": "severe"
+      },
+      {
+        "worldId": "chalk-divide",
+        "grade": "low"
+      },
+      {
+        "worldId": "chalk-divide",
+        "grade": "medium"
+      },
+      {
+        "worldId": "chalk-divide",
+        "grade": "severe"
+      },
+      {
+        "worldId": "red-vault-fragments",
+        "grade": "low"
+      },
+      {
+        "worldId": "red-vault-fragments",
+        "grade": "medium"
+      },
+      {
+        "worldId": "red-vault-fragments",
+        "grade": "severe"
+      },
+      {
+        "worldId": "blue-fault",
+        "grade": "low"
+      },
+      {
+        "worldId": "blue-fault",
+        "grade": "medium"
+      },
+      {
+        "worldId": "blue-fault",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pale-pressure",
+        "grade": "low"
+      },
+      {
+        "worldId": "pale-pressure",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pale-pressure",
+        "grade": "severe"
+      },
+      {
+        "worldId": "notched-backwater",
+        "grade": "low"
+      },
+      {
+        "worldId": "notched-backwater",
+        "grade": "medium"
+      },
+      {
+        "worldId": "notched-backwater",
+        "grade": "severe"
+      },
+      {
+        "worldId": "crossed-casings",
+        "grade": "low"
+      },
+      {
+        "worldId": "crossed-casings",
+        "grade": "medium"
+      },
+      {
+        "worldId": "crossed-casings",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fibre-stumpfield",
+        "grade": "low"
+      },
+      {
+        "worldId": "fibre-stumpfield",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fibre-stumpfield",
+        "grade": "severe"
+      },
+      {
+        "worldId": "sloughed-court",
+        "grade": "low"
+      },
+      {
+        "worldId": "sloughed-court",
+        "grade": "medium"
+      },
+      {
+        "worldId": "sloughed-court",
+        "grade": "severe"
+      },
+      {
+        "worldId": "crushed-seam",
+        "grade": "low"
+      },
+      {
+        "worldId": "crushed-seam",
+        "grade": "medium"
+      },
+      {
+        "worldId": "crushed-seam",
+        "grade": "severe"
+      },
+      {
+        "worldId": "husk-reef",
+        "grade": "low"
+      },
+      {
+        "worldId": "husk-reef",
+        "grade": "medium"
+      },
+      {
+        "worldId": "husk-reef",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fibre-scree",
+        "grade": "low"
+      },
+      {
+        "worldId": "fibre-scree",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fibre-scree",
+        "grade": "severe"
+      },
+      {
+        "worldId": "gel-rafts",
+        "grade": "low"
+      },
+      {
+        "worldId": "gel-rafts",
+        "grade": "medium"
+      },
+      {
+        "worldId": "gel-rafts",
+        "grade": "severe"
+      },
+      {
+        "worldId": "double-return",
+        "grade": "low"
+      },
+      {
+        "worldId": "double-return",
+        "grade": "medium"
+      },
+      {
+        "worldId": "double-return",
+        "grade": "severe"
+      },
+      {
+        "worldId": "offset-basins",
+        "grade": "low"
+      },
+      {
+        "worldId": "offset-basins",
+        "grade": "medium"
+      },
+      {
+        "worldId": "offset-basins",
+        "grade": "severe"
+      },
+      {
+        "worldId": "pinched-fan",
+        "grade": "low"
+      },
+      {
+        "worldId": "pinched-fan",
+        "grade": "medium"
+      },
+      {
+        "worldId": "pinched-fan",
+        "grade": "severe"
+      },
+      {
+        "worldId": "spliced-reaches",
+        "grade": "low"
+      },
+      {
+        "worldId": "spliced-reaches",
+        "grade": "medium"
+      },
+      {
+        "worldId": "spliced-reaches",
+        "grade": "severe"
+      },
+      {
+        "worldId": "white-scarfield",
+        "grade": "low"
+      },
+      {
+        "worldId": "white-scarfield",
+        "grade": "medium"
+      },
+      {
+        "worldId": "white-scarfield",
+        "grade": "severe"
+      },
+      {
+        "worldId": "black-lacuna",
+        "grade": "low"
+      },
+      {
+        "worldId": "black-lacuna",
+        "grade": "medium"
+      },
+      {
+        "worldId": "black-lacuna",
+        "grade": "severe"
+      },
+      {
+        "worldId": "ochre-folds",
+        "grade": "low"
+      },
+      {
+        "worldId": "ochre-folds",
+        "grade": "medium"
+      },
+      {
+        "worldId": "ochre-folds",
+        "grade": "severe"
+      },
+      {
+        "worldId": "violet-marrows",
+        "grade": "low"
+      },
+      {
+        "worldId": "violet-marrows",
+        "grade": "medium"
+      },
+      {
+        "worldId": "violet-marrows",
+        "grade": "severe"
+      },
+      {
+        "worldId": "fractured-estuary",
+        "grade": "low"
+      },
+      {
+        "worldId": "fractured-estuary",
+        "grade": "medium"
+      },
+      {
+        "worldId": "fractured-estuary",
+        "grade": "severe"
+      },
+      {
+        "worldId": "woven-quarters",
+        "grade": "low"
+      },
+      {
+        "worldId": "woven-quarters",
+        "grade": "medium"
+      },
+      {
+        "worldId": "woven-quarters",
+        "grade": "severe"
+      },
+      {
+        "worldId": "shell-patchwork",
+        "grade": "low"
+      },
+      {
+        "worldId": "shell-patchwork",
+        "grade": "medium"
+      },
+      {
+        "worldId": "shell-patchwork",
+        "grade": "severe"
+      },
+      {
+        "worldId": "last-shelf",
+        "grade": "low"
+      },
+      {
+        "worldId": "last-shelf",
+        "grade": "medium"
+      },
+      {
+        "worldId": "last-shelf",
+        "grade": "severe"
+      }
+    ],
+    "qualifiedIds": [
+      "ash-strata",
+      "crystal-fibre",
+      "ivory-basin",
+      "cinder-ridge",
+      "pallid-membrane",
+      "silt-gel",
+      "schist-shear",
+      "splayed-fibres",
+      "shell-chain",
+      "grain-laminate",
+      "tension-membrane",
+      "shell-gel-delta",
+      "pressed-dunes",
+      "ruptured-film",
+      "reversed-flow",
+      "laminate-shell",
+      "fibre-silt",
+      "film-laminate",
+      "gel-fibre",
+      "shell-grit",
+      "rib-vault",
+      "pleated-hide",
+      "blister-field",
+      "wax-tongues",
+      "monolith-sill",
+      "bleached-court",
+      "split-rib-causeway",
+      "satin-fan",
+      "chalk-steps",
+      "porcelain-maw",
+      "amber-ribs",
+      "pale-sail",
+      "root-cistern",
+      "scab-islands",
+      "foam-trenches",
+      "resin-fall",
+      "tendon-shelves",
+      "felt-basin",
+      "cork-shelves",
+      "lacquer-court",
+      "ribbed-delta",
+      "bladder-weave",
+      "flake-thicket",
+      "resin-hollows",
+      "sentinel-mass",
+      "stepped-bowl",
+      "draped-bay",
+      "ember-cushions",
+      "splinter-rotunda",
+      "quilted-scars",
+      "silt-colonnade",
+      "shell-causeway",
+      "cleft-tableland",
+      "fallen-spines",
+      "clamped-shore",
+      "torn-reservoir",
+      "braided-seam",
+      "scalloped-reach",
+      "offset-pan",
+      "thin-delta",
+      "shard-switchback",
+      "hollow-wreckage",
+      "knotted-run",
+      "rolled-fragments",
+      "fibre-choke",
+      "buried-lamellae",
+      "pressed-rim",
+      "wedged-hide",
+      "quiet-spur",
+      "split-fall",
+      "three-shelves",
+      "frayed-outwash",
+      "short-fibre-mat",
+      "marrow-break",
+      "felt-wedges",
+      "pore-bank",
+      "staggered-cups",
+      "split-tows",
+      "curled-flats",
+      "pitch-forks",
+      "grain-weld",
+      "silk-catch",
+      "resin-sleeve",
+      "shell-threads",
+      "chalk-divide",
+      "red-vault-fragments",
+      "blue-fault",
+      "pale-pressure",
+      "notched-backwater",
+      "crossed-casings",
+      "fibre-stumpfield",
+      "sloughed-court",
+      "crushed-seam",
+      "husk-reef",
+      "fibre-scree",
+      "gel-rafts",
+      "double-return",
+      "offset-basins",
+      "pinched-fan",
+      "spliced-reaches",
+      "white-scarfield",
+      "black-lacuna",
+      "ochre-folds",
+      "violet-marrows",
+      "fractured-estuary",
+      "woven-quarters",
+      "shell-patchwork",
+      "last-shelf"
+    ],
+    "productionIds": [
+      "ash-strata",
+      "crystal-fibre",
+      "ivory-basin",
+      "cinder-ridge",
+      "pallid-membrane",
+      "silt-gel",
+      "schist-shear",
+      "splayed-fibres",
+      "shell-chain",
+      "grain-laminate",
+      "tension-membrane",
+      "shell-gel-delta",
+      "pressed-dunes",
+      "ruptured-film",
+      "reversed-flow",
+      "laminate-shell",
+      "fibre-silt",
+      "film-laminate",
+      "gel-fibre",
+      "shell-grit",
+      "rib-vault",
+      "pleated-hide",
+      "blister-field",
+      "wax-tongues",
+      "monolith-sill",
+      "bleached-court",
+      "split-rib-causeway",
+      "satin-fan",
+      "chalk-steps",
+      "porcelain-maw",
+      "amber-ribs",
+      "pale-sail",
+      "root-cistern",
+      "scab-islands",
+      "foam-trenches",
+      "resin-fall",
+      "tendon-shelves",
+      "felt-basin",
+      "cork-shelves",
+      "lacquer-court",
+      "ribbed-delta",
+      "bladder-weave",
+      "flake-thicket",
+      "resin-hollows",
+      "sentinel-mass",
+      "stepped-bowl",
+      "draped-bay",
+      "ember-cushions",
+      "splinter-rotunda",
+      "quilted-scars",
+      "silt-colonnade",
+      "shell-causeway",
+      "cleft-tableland",
+      "fallen-spines",
+      "clamped-shore",
+      "torn-reservoir",
+      "braided-seam",
+      "scalloped-reach",
+      "offset-pan",
+      "thin-delta",
+      "shard-switchback",
+      "hollow-wreckage",
+      "knotted-run",
+      "rolled-fragments",
+      "fibre-choke",
+      "buried-lamellae",
+      "pressed-rim",
+      "wedged-hide",
+      "quiet-spur",
+      "split-fall",
+      "three-shelves",
+      "frayed-outwash",
+      "short-fibre-mat",
+      "marrow-break",
+      "felt-wedges",
+      "pore-bank",
+      "staggered-cups",
+      "split-tows",
+      "curled-flats",
+      "pitch-forks",
+      "grain-weld",
+      "silk-catch",
+      "resin-sleeve",
+      "shell-threads",
+      "chalk-divide",
+      "red-vault-fragments",
+      "blue-fault",
+      "pale-pressure",
+      "notched-backwater",
+      "crossed-casings",
+      "fibre-stumpfield",
+      "sloughed-court",
+      "crushed-seam",
+      "husk-reef",
+      "fibre-scree",
+      "gel-rafts",
+      "double-return",
+      "offset-basins",
+      "pinched-fan",
+      "spliced-reaches",
+      "white-scarfield",
+      "black-lacuna",
+      "ochre-folds",
+      "violet-marrows",
+      "fractured-estuary",
+      "woven-quarters",
+      "shell-patchwork",
+      "last-shelf"
+    ],
+    "humanApprovedIds": []
+  },
+  "rootReviewStillRequired": true,
+  "actualLedgerWritten": false
+}

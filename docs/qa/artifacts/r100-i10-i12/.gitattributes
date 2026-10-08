@@ -1,0 +1,4 @@
+# Evidence and content-addressed archives bind exact bytes, including CRLF.
+* -text
+# Opaque archive objects should not be rendered as source diffs or merged.
+source-archive/objects/** -diff -merge

@@ -1,0 +1,679 @@
+{
+  "status": "prepared-only",
+  "at": "2026-10-08T07:01:38.236Z",
+  "scope": "Lightweight contract/metadata preparation only. No buildProposal baseline, actual semantic-negative matrix, browser, full89 or ledger write.",
+  "actualFinalBaseline": "not-run",
+  "actualEightNegatives": "not-run",
+  "tools": [
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "48507ab4f117159dea563b6c32594939408464aa253dcf558a41e51504859ad1"
+    },
+    {
+      "path": "tools/qa/r100-sampled-acceptance.mjs",
+      "sha256": "7fd7cf4e04f7e394ac55e7c4df4075058b533dc871b0aaf125bcb45900fcaf11"
+    },
+    {
+      "path": "tools/qa/check-r100-i10-i12-sampled-binding.mjs",
+      "sha256": "527bd69ea324e357edd0ed5ae786d7d35a9078205dbf82d2d3460eb2fef3bdf0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/proposal-builder.mjs",
+      "sha256": "d3996919407d836887254656ff68a682e6f7bb213512584e1a25637db1a706b7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/sampling-adaptation-preparation-check.mjs",
+      "sha256": "aaeb64c0c7937066264919a7318550d251963b76bcd62320951ab03d150ca89f"
+    }
+  ],
+  "checks": [
+    {
+      "name": "actual completed74 budget metadata and original stop receipts match",
+      "status": "pass",
+      "result": {
+        "status": "pass-sampled-budget",
+        "originalStatus": "failed",
+        "completed": 74,
+        "interrupted": 1,
+        "notStarted": 33,
+        "numeric": {
+          "status": "pass-measured-budget-contract",
+          "thresholds": {
+            "frameP95Ms": 20,
+            "frameP99Ms": 33.4,
+            "framesOver50Fraction": 0.005,
+            "cpuP95Ms": 12,
+            "materialP95Ms": 3,
+            "minimumAliveMs": 60000,
+            "seed": 20261004
+          },
+          "exclusivity": "operator-declared; resource scheduling must also be independently checked"
+        }
+      }
+    },
+    {
+      "name": "actual sampled lifecycle metadata retains original resource thresholds",
+      "status": "pass",
+      "result": {
+        "status": "pass-measured-lifecycle-contract",
+        "retainedBytesLimit": 10485760,
+        "maxCombinedGrowth": 1447018,
+        "shaderSamples": [
+          {
+            "label": "warmed-baseline",
+            "created": 78,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-1",
+            "created": 80,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-2",
+            "created": 82,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-3",
+            "created": 84,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-4",
+            "created": 86,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-5",
+            "created": 88,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-6",
+            "created": 90,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-7",
+            "created": 92,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-8",
+            "created": 94,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-9",
+            "created": 96,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "identical-10",
+            "created": 98,
+            "live": 64,
+            "active": 62
+          },
+          {
+            "label": "after-mixed-18",
+            "created": 138,
+            "live": 64,
+            "active": 62
+          }
+        ],
+        "independentShaderReview": "pending-separate-receipt",
+        "limitation": "Numeric resource checks only. Final technical/closure binding must separately consume the independent Shader review; no GPU driver bytes/RSS or unbounded lifetime claim."
+      }
+    },
+    {
+      "name": "actual budget and lifecycle method/source-binding metadata",
+      "status": "pass"
+    },
+    {
+      "name": "unchanged full validator still rejects stopped74 budget and partial lifecycle",
+      "status": "pass"
+    },
+    {
+      "name": "one synthetic copy preserves named old52 invalidation history; unrelated reason rejected",
+      "status": "pass",
+      "scope": "No actual ledger/proposal mutation"
+    },
+    {
+      "name": "8-case inert inventory and separate full/sampled closure gates",
+      "status": "pass",
+      "inventory": [
+        {
+          "name": "unauthorized-sampling-amendment",
+          "axis": "authorization",
+          "rejectAt": {
+            "functions": [
+              "samplingForPlan"
+            ],
+            "message": "exact human-authorized root amendment"
+          }
+        },
+        {
+          "name": "production-served-source-missing",
+          "axis": "source-binding",
+          "rejectAt": {
+            "functions": [
+              "validateRuntimeBinding"
+            ]
+          }
+        },
+        {
+          "name": "lifecycle-wrong-method-harness",
+          "axis": "method-binding",
+          "rejectAt": {
+            "functions": [
+              "validateRuntimeBinding"
+            ],
+            "message": "wrong runtime harness"
+          }
+        },
+        {
+          "name": "budget-completed-subset-missing",
+          "axis": "budget",
+          "rejectAt": {
+            "functions": [
+              "validateSampledBudget"
+            ],
+            "message": "completed subset differs"
+          }
+        },
+        {
+          "name": "budget-original-cpu-threshold",
+          "axis": "budget",
+          "rejectAt": {
+            "functions": [
+              "validateBudgetMeasurements"
+            ],
+            "message": "CPU P95 exceeds 12ms"
+          }
+        },
+        {
+          "name": "lifecycle-mixed-order-changed",
+          "axis": "lifecycle",
+          "rejectAt": {
+            "functions": [
+              "validateSampledLifecycle"
+            ],
+            "message": "mixed order differs"
+          }
+        },
+        {
+          "name": "lifecycle-active-resources-grow",
+          "axis": "lifecycle",
+          "rejectAt": {
+            "functions": [
+              "validateLifecycleMeasurements"
+            ],
+            "message": "active resources did not return to baseline"
+          }
+        },
+        {
+          "name": "shader-unreviewed-sample",
+          "axis": "shader",
+          "rejectAt": {
+            "functions": [
+              "validateShaderReview"
+            ],
+            "message": "does not concern the observed counts"
+          }
+        }
+      ],
+      "rcCoverage": {
+        "budgetCompleted": 74,
+        "budgetInterrupted": 1,
+        "budgetNotStarted": 33,
+        "lifecycleWarmups": 6,
+        "lifecycleIdentical": 10,
+        "lifecycleMixed": 18,
+        "lifecycleRetainedSamples": 12,
+        "semanticNegatives": 8,
+        "full108BudgetClaim": false,
+        "full334LifecycleClaim": false,
+        "full89Claim": false
+      }
+    }
+  ],
+  "error": null,
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/report.json",
+      "sha256": "083ade6e14e71f63057888c55067ca97dd079de7fa9ab07fbe3fc1c59ef1a6d4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/report.json",
+      "sha256": "8f4c573d859c323ac51445efcc7cfbb0ff48ac18e6992980b1018362f4fe19eb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-directed-sampling-stop.json",
+      "sha256": "1133ec3c54335cadbd3a6933e419da8161627dd6402298dc0a4210654ff6da39"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/source-binding.json",
+      "sha256": "480de40956a3c8060da003bd3d1d0b2ac1d8f28985f7a5d78fc8eb25eee94af2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/source-binding.json",
+      "sha256": "1b223c82d366bf6fd2e2eb91f7a9bfad17876e927f78ae44f77d163cd2540b5b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+      "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+      "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-directed-sampling-stop-request.json",
+      "sha256": "8a3b651dff0e06e74a2167ae96c036a10c56b8dbf8a8f74559798f1514c9b613"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/source-consistency-after-user-stop.json",
+      "sha256": "6144a2d5e84b6918d9529cb07a04128af541b7124467e5a1bc913930547f6f9b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-stop-processes-after.json",
+      "sha256": "7079ed85094946b4d3067ce9da56aa012c7cfb73ccbb6f049494be212aff04de"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/dispatch.json",
+      "sha256": "3d2d93c827c82d2daaf496ef210715bdb2e18f9df4238625b4391126aac226e5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget-root-dispatch.json",
+      "sha256": "50c399eedef3cb6c2cac0b49dcfa8dd4c7cacc837ded99bed5cc2f423fc0ae4c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/finalize-user-directed-sampling-stop.py",
+      "sha256": "66c357dc197b6fc32954c76fc47b7a76f0f0afff5394e4df9b1f154ad7a85098"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/ash-strata-end.png",
+      "sha256": "ed81faa01aa69e24432fcac0b44d296f21073ab884ca0af2ee5ebc55e913155d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/crystal-fibre-end.png",
+      "sha256": "0b705b3e8ebba0022643af1d78d3f2022bd755e16ef5a63cdc1c461792545982"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/ivory-basin-end.png",
+      "sha256": "18078bbc738fb7ac03c5b2ae8c6271392a5910765f30a0cf1f501d29390050aa"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/cinder-ridge-end.png",
+      "sha256": "7963ea5bc21b5bd04f1b0e58aebc20314dbb2252465d95a7f354cec7a879e20b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/pallid-membrane-end.png",
+      "sha256": "3aae608588f762ef58d766584294cd6c1d5fe74b5d4e8c7c8794238949f507df"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/silt-gel-end.png",
+      "sha256": "8780903b7c659a68097ef48db9c4462f08ba255c7d49fead4e34127c047adaf7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/schist-shear-end.png",
+      "sha256": "f4a38372a2b2cef0d56f369b2f5c7f41a47e7f31e50ae4f47959feaf56328a44"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/splayed-fibres-end.png",
+      "sha256": "76046e1efc63b38174c3405435770b071b82ca032856fd0e5be837cae5d217ed"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/shell-chain-end.png",
+      "sha256": "bbab23333781b3734e467c4f2cd5ec4b18afd261fd54f33015a7a4725946c85a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/grain-laminate-end.png",
+      "sha256": "d97fbd0d73d01ef67f6956fd7e82440cd4c96102033314ccf639f5b298ed314c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/tension-membrane-end.png",
+      "sha256": "4cfed19d73b4ab9bdd87a8c37610685d29a335f8683f3adeec0b4c7747bcb74c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/shell-gel-delta-end.png",
+      "sha256": "5e3fe45cad42a67e4c29fb931e761b3a632679e6ba178c5b4775b3b1ea9ee2e6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/pressed-dunes-end.png",
+      "sha256": "1c2668f9c0c1d177615882997dccba162d52f7219b561dc8221d4c96392cdc22"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/ruptured-film-end.png",
+      "sha256": "f7302f24341973b4fe8d28309264d20d52120f56d0af648e2ceaea0984757ba8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/reversed-flow-end.png",
+      "sha256": "5b87e80aa142406438a9016f6e12323302d9e4f241be099b53e9c93f29e43bd9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/laminate-shell-end.png",
+      "sha256": "1b6de319856a33e9c7e5940310c4aba476119e74e35d7a2422e0c7bf7b980dc5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/fibre-silt-end.png",
+      "sha256": "5cc177977b50c8c00ff8fc849eedc20305ab21c9877c1723e556a4135612ea36"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/film-laminate-end.png",
+      "sha256": "8f64cb14ca24c02c36d9f572b3b20c69a1821b904dee5fd7da5900820c0fb7c0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/gel-fibre-end.png",
+      "sha256": "85a041fd2cfbb20a8108f854914ae034e5d22331e77601a211bc010d68db2e64"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/shell-grit-end.png",
+      "sha256": "ce138e519de5205053b78691a5f842c8e645573c4a99446c09c9d8f1473abe64"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/rib-vault-end.png",
+      "sha256": "4e9524135fd7a954512220c782e66265616c9cc7d7f3b7729f34b284a33b1c52"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/pleated-hide-end.png",
+      "sha256": "93d8086bdb1563defef00ec679aad253529299c740f8c90aa9bf8e3bebe27018"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/blister-field-end.png",
+      "sha256": "8ed60159df2009c7a0db33c162ad2afacc5753dd3e8c9a47d61c1505aa2f87ec"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/wax-tongues-end.png",
+      "sha256": "229c5560d7ae6892a4328323e121f3f072e84dbf4860448e4603321f23bf77a2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/monolith-sill-end.png",
+      "sha256": "3ab65df3074b3e0c4a8c8775e9e70160e2bd8baf51c011beb4aa09e156106eab"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/bleached-court-end.png",
+      "sha256": "be44052a8d40b041466564978b2036d6509c068f30f18ce4d509a3dcc95e6394"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/split-rib-causeway-end.png",
+      "sha256": "133d61857798f1fd193d7ce52016fe698775d41515996f02b4352a8778437e70"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/satin-fan-end.png",
+      "sha256": "a39d3c2d77d87bd7f8f9080c76369d1a6303ef5c421e42dbb4b2c0b89cb48e53"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/chalk-steps-end.png",
+      "sha256": "8dc654e2efd9f285abdf9174bc74dd85fa28ec899af1b3580dcf8db499147423"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/porcelain-maw-end.png",
+      "sha256": "167dd35546ecac6bbff6c2b776f32376a527a17ec47780e6ea6bf3d7ca899e27"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/amber-ribs-end.png",
+      "sha256": "ca1637620b853c78f29e2a70b70de047421b6a84663cad07b8229a5cb289fc03"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/pale-sail-end.png",
+      "sha256": "f1e4b0a5cfd5133bfc579c49e0328a20377c70eab11ba55d0850a5bb60f5690f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/root-cistern-end.png",
+      "sha256": "0c2be17ddda786ac7bdff546e1fa9c1b1f440041f1f7d42027a29be87bb4a8ca"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/scab-islands-end.png",
+      "sha256": "c53bce630ded9608ece76cb3abe9b8c2ae2ae46c77e5da17498da4863a7a65a3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/foam-trenches-end.png",
+      "sha256": "19a6f9b6fc9fc276674615e3d91c604ea5aead82adfe83d0c480f0f10aa2ee18"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/resin-fall-end.png",
+      "sha256": "b8c375a1682eea66816fd03eb42ec954f296b9cb9234179b6485b2ac10275be7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/tendon-shelves-end.png",
+      "sha256": "32043f47978dc8007e1e54c3d584aac700f909409ee9aa7d1b65cdbadc326f52"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/felt-basin-end.png",
+      "sha256": "2e241ceefb327678578710ae83ecb761deda6828eb25b99dacd91626fae20063"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/cork-shelves-end.png",
+      "sha256": "93ddb0092ef54a133c6941157e2e0c5d25fc2257c20eeb99f669eb604eba2383"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/lacquer-court-end.png",
+      "sha256": "932add8640c215e9bb3e8a54c1b6dd5d68e46f74253e3572283a49cbeee5be8c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/ribbed-delta-end.png",
+      "sha256": "db9628fae82f6e88293482f48630dfa41a6fb200739927e13af754b97b2b6125"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/bladder-weave-end.png",
+      "sha256": "b3be680db4d22511579b41b531e265551652a8a52983ed71532354f40c5b249b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/flake-thicket-end.png",
+      "sha256": "e237074270ea9614c4c89deef9c93f546c4ede3f40c72eee95cfe3eb86103202"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/resin-hollows-end.png",
+      "sha256": "4798d4c6427d00145e72af7b7535442e9ee0210e1ec774e15689ab9d79e6af68"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/sentinel-mass-end.png",
+      "sha256": "774b849e5cb523af11d2a9df98e9b042bb8716236d37e599d89bf9776aee309a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/stepped-bowl-end.png",
+      "sha256": "b19bfa53b2dad08891429dcd81f70610be66883356c908368b5074556f8d632e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/draped-bay-end.png",
+      "sha256": "42d8d660ea41d75056ca3ef0ea9eb12ea0585c1ce927443879a2755744f4fea6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/ember-cushions-end.png",
+      "sha256": "c24eb0f06ae3c83fdd34a6ee37968c3ae84d1ddab4a2763efbb549a86f03e012"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/splinter-rotunda-end.png",
+      "sha256": "cbdd9918b43e55b8e45bc3200e2111c37451490ed7d90c01fab26dcad722d72a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/quilted-scars-end.png",
+      "sha256": "fd2617fdcdcfa50cdb088ecaa392ec3000a096cf4910a9e92f3654953ff25b41"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/silt-colonnade-end.png",
+      "sha256": "e773469cd7472b05f66428bbe45b5716ecb9798765078af7be36ab742c92c849"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/shell-causeway-end.png",
+      "sha256": "73ce52f8eaf83e69d6599f213676a9f065ea7abb933014899d859cd84a22329e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/cleft-tableland-end.png",
+      "sha256": "ebb45608c3a4aa6253e17479e7c0d0e90d69f31e4fa95c9760daba31e8e58914"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/fallen-spines-end.png",
+      "sha256": "d1c2f43517510a8a332851c77cd84d66b9dd826b11688bbb0722f6b46406c7ca"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/clamped-shore-end.png",
+      "sha256": "75b32cda7886eea3ef957bfa7c1c1c8da42d2e16b1d7373c1fe16f1deafbdf15"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/torn-reservoir-end.png",
+      "sha256": "2c329d2c9a0d7d82eebe2f642d3e400d8ad679b327bfe811e75aabd3767abb9b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/braided-seam-end.png",
+      "sha256": "cc1a847dd1ead7fc7f7f8cec9dce0c3b3ab8509db51319dcc13987151fa3c16a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/scalloped-reach-end.png",
+      "sha256": "541e9ee652788bf0e47d711273aa2e8d8299a0cdf949f94ac9c631de83a27361"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/offset-pan-end.png",
+      "sha256": "38dc3443a7829e1bb676c83c5992a1f5c4a70b52a8dc3f5284ac7de7bf38c531"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/thin-delta-end.png",
+      "sha256": "99f5c230aebdae8ec1480e80306e61bdc94d7a446d0035d9348a9896257b4fb4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/shard-switchback-end.png",
+      "sha256": "6cf3e714f0342a5c445864e2483d721c8261ff0733fc26718be7fd841ad46c42"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/hollow-wreckage-end.png",
+      "sha256": "b14d51ebe8ca6972c9846404f4db8d2ee9ea565f1df9a7d9e076e50ea9fc353d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/knotted-run-end.png",
+      "sha256": "035acabc0153d2ba7c59c0a2b0987e5adf370fc72d2c0e8dd189420ebfc48d7c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/rolled-fragments-end.png",
+      "sha256": "746110fd383e4da33c2529142edf60e150255d4d1505e3f4cd54e284335fc518"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/fibre-choke-end.png",
+      "sha256": "ae66c8f5454c0be2be0d0b25b28fd9e5288ed839ed56be33f5e2e5ead77477fc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/buried-lamellae-end.png",
+      "sha256": "d2669b0d1b731daae518aec59c89db212f28188d07888040667c6721c119df66"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/pressed-rim-end.png",
+      "sha256": "cd24cf3939d7abc4535d172c5570015324f64b3394cb2d2fc0da22195b713e41"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/wedged-hide-end.png",
+      "sha256": "6b0e9294cc31fb3942d948f9d497274f543bcb1a4039773770adec6d0cf9b739"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/quiet-spur-end.png",
+      "sha256": "f7efb5a73b9b1ba792b687a62d284e12c9e49a3345a6bf6b30fca56ad9ffc4e3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/split-fall-end.png",
+      "sha256": "481c64d7a9f34912f610849998f7d899efceb39b671c7b4244034da8e0aad024"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/three-shelves-end.png",
+      "sha256": "13dd9fd7e5b4d628da03815e205608c56b5571f7779a57b326565c60276e74a0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/frayed-outwash-end.png",
+      "sha256": "0a1c3462b620c57b83c82ffc8907588ae628990437220c0e0ac7a2053a52a824"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/short-fibre-mat-end.png",
+      "sha256": "b74d2cd46448a52d116fce68e01a8f3e1276a657656de188b048665ead637d7a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/marrow-break-end.png",
+      "sha256": "3866f0ec27239a0f8a11d95a894feb8024f73d8b3a6760824a5e700ab9e1bada"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/samples/0001.json",
+      "sha256": "1e36643451f1326b6ff0c6823fe95c57f369af10ea1174aba251d2aca4a9a631"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/samples/0161.json",
+      "sha256": "e6ad151d0fd5a51e2bcc915c84800b6b58b95c87fd23e631d33f675d115b64cb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-stop-power-log-after.txt",
+      "sha256": "8226e054992da302e45c31cd5a3f572469ffd915af1b78afec56d2bfb56a2a5b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-stop-power-log-window.txt",
+      "sha256": "7699ff60e5158cfc016741510328f117e12fabeb8890b69f984984754fe49bd9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-stop-assertions-after.txt",
+      "sha256": "a1a757a1527d278bc8b629ce29d41d2148379ab6f0023bebfe8d353aba96acd6"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/recovery/fixtures/r100-revision1-gold.json",
+      "sha256": "a61b9c30e27ae6c303a1290dbb5e7555c9434e7efb189ba0e3cea4351f0c30ef"
+    },
+    {
+      "path": "tools/contam-preview/tsconfig.json",
+      "sha256": "850e0edc2abb6b9c590c4159373984ef8fadcb9ccb0ef7b2a7ba38a838de9ea3"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/execute-lifecycle-sampled.mjs",
+      "sha256": "6b88cbb884bd0d1e2d67dc1fecb8d9c5d7e7541a9880c1c616f770e43e8fcae1"
+    },
+    {
+      "path": "docs/progress/rift-r100.json",
+      "sha256": "0817d25d392550878166652d779ef6865a81254b699830ce46dc98baa10e3030"
+    },
+    {
+      "path": "tools/qa/r100-bind-i10-i12.mjs",
+      "sha256": "48507ab4f117159dea563b6c32594939408464aa253dcf558a41e51504859ad1"
+    },
+    {
+      "path": "tools/qa/r100-sampled-acceptance.mjs",
+      "sha256": "7fd7cf4e04f7e394ac55e7c4df4075058b533dc871b0aaf125bcb45900fcaf11"
+    },
+    {
+      "path": "tools/qa/check-r100-i10-i12-sampled-binding.mjs",
+      "sha256": "527bd69ea324e357edd0ed5ae786d7d35a9078205dbf82d2d3460eb2fef3bdf0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closure-preparation/proposal-builder.mjs",
+      "sha256": "d3996919407d836887254656ff68a682e6f7bb213512584e1a25637db1a706b7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/sampling-adaptation-preparation-check.mjs",
+      "sha256": "aaeb64c0c7937066264919a7318550d251963b76bcd62320951ab03d150ca89f"
+    }
+  ],
+  "actualInputsUnchanged": true
+}

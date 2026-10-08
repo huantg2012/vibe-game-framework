@@ -1,0 +1,301 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "staggered-cups",
+    "label": "错口壳片",
+    "description": "错口壳片的原生材料与完整搜撤地段",
+    "material": "glaze",
+    "surface": {
+      "substrate": "glaze",
+      "coating": "glaze",
+      "organization": "clusters",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 3155243,
+      "floor": 6836300,
+      "floorLight": 10849921,
+      "materialDark": 2701129,
+      "materialMid": 6322057,
+      "materialLight": 11648456,
+      "faceLight": 14269896,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 6836300,
+      "groundLight": 10849921,
+      "groundDark": 3155243,
+      "wall": 6322057,
+      "wallLight": 11648456,
+      "wallDark": 2701129
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "staggered-cups",
+    "ground": {
+      "dark": 3155243,
+      "mid": 6836300,
+      "light": 10849921
+    },
+    "solid": {
+      "dark": 2701129,
+      "mid": 6322057,
+      "light": 11648456
+    },
+    "cleaved": {
+      "dark": 6374736,
+      "mid": 11372181,
+      "light": 14269896
+    },
+    "secondary": {
+      "dark": 3419715,
+      "mid": 7364728,
+      "light": 10984110
+    },
+    "groundPattern": "plates",
+    "patternScale": 240,
+    "patternStrength": 0.39,
+    "secondaryCoverage": 0.15,
+    "textureContrast": 1.12,
+    "quietCoverage": 0.6
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "staggered-cups-severe",
+    "family": "broken-shell",
+    "grade": "severe",
+    "label": "错口壳片",
+    "profile": "staggered-cups",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.42,
+    "light_radius": 155,
+    "emission": 0.72,
+    "motion_period": 17,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 426,
+        "y": 462,
+        "rotation": -0.52,
+        "length": 310,
+        "width": 225,
+        "height": 48,
+        "thickness": 11,
+        "fold": 0.5830000000000001,
+        "branches": 2,
+        "opening": 0.94,
+        "distortion": 0.30800000000000005,
+        "constructionVersion": 3,
+        "shapeProfile": "cellular-shell"
+      },
+      {
+        "id": 2,
+        "family": "broken-shell",
+        "role": "solid",
+        "x": 701,
+        "y": 300,
+        "rotation": 0.45,
+        "length": 328,
+        "width": 238,
+        "height": 59,
+        "thickness": 14,
+        "fold": 0.7480000000000001,
+        "branches": 2,
+        "opening": 0.82,
+        "distortion": 0.35200000000000004,
+        "constructionVersion": 3,
+        "shapeProfile": "cellular-shell"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 632,
+          "y": 424
+        },
+        {
+          "x": 712,
+          "y": 392
+        },
+        {
+          "x": 824,
+          "y": 424
+        },
+        {
+          "x": 864,
+          "y": 480
+        },
+        {
+          "x": 800,
+          "y": 520
+        },
+        {
+          "x": 712,
+          "y": 480
+        },
+        {
+          "x": 664,
+          "y": 504
+        },
+        {
+          "x": 616,
+          "y": 472
+        }
+      ],
+      [
+        {
+          "x": 176,
+          "y": 176
+        },
+        {
+          "x": 256,
+          "y": 152
+        },
+        {
+          "x": 344,
+          "y": 184
+        },
+        {
+          "x": 352,
+          "y": 224
+        },
+        {
+          "x": 288,
+          "y": 248
+        },
+        {
+          "x": 224,
+          "y": 232
+        },
+        {
+          "x": 160,
+          "y": 216
+        }
+      ],
+      [
+        {
+          "x": 384,
+          "y": 560
+        },
+        {
+          "x": 456,
+          "y": 544
+        },
+        {
+          "x": 528,
+          "y": 576
+        },
+        {
+          "x": 520,
+          "y": 612
+        },
+        {
+          "x": 448,
+          "y": 620
+        },
+        {
+          "x": 392,
+          "y": 592
+        }
+      ]
+    ]
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "package": {
+    "id": "r100-staggered-cups",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "broken-shell": {
+        "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+        "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+        "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+      }
+    },
+    "dependencyHash": "f53cd1ab",
+    "grade": "severe"
+  }
+}

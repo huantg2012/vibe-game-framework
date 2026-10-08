@@ -1,0 +1,64 @@
+{
+  "status": "pass",
+  "startedAt": "2026-10-07T05:36:12.084098+00:00",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/extended-profiles/check-1.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "node",
+        "tools/world-study/codegen-r100-packages.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/extended-profiles/check-2.log",
+      "sha256": "4157794d48e80d1ed90b9ff03c50560e364472372c03f2841ed41430313af2b2"
+    },
+    {
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "tools/world-study/check-r100-revision6-contract.ts",
+        "--organizations",
+        "--extended-profiles"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/extended-profiles/check-3.log",
+      "sha256": "f63224175d293fec8a421532b97dc241bb81ebc87faa40801f6911b2f4143361"
+    },
+    {
+      "command": [
+        "node",
+        "tools/qa/check-r100-worker-observer.mjs",
+        "--output",
+        "docs/qa/artifacts/r100-i10-i12/compatibility-r5/extended-profiles/worker-observer-contract.json"
+      ],
+      "exitCode": 0,
+      "log": "docs/qa/artifacts/r100-i10-i12/compatibility-r5/extended-profiles/check-4.log",
+      "sha256": "b4e18bc4c7c61b79ef071ddf55059e197d435ce385dcecc45b6cf35c7d17c2aa"
+    }
+  ],
+  "endedAt": "2026-10-07T05:36:12.784549+00:00",
+  "sources": {
+    "tools/world-study/codegen-r100-packages.mjs": "f1a5097272cb1573ecd120ba35424de96f4cce0ea759a42fc38961d4056357e3",
+    "tools/world-study/check-r100-revision6-contract.ts": "a80c8400945933cf7f862985b879d4b999d263ce569a06c429b0422194baadff",
+    "src/generated/r100-package-manifest.ts": "51c5772659e02597edd3170a77837dbc4f7674f881dd898c8557745d75d79189",
+    "src/generation/world-study/native-volume-pleated-tear.ts": "a542f83a5da9b9d7b70ce35c37cfb0a09984bed56a6cec152af84c425e32eae1",
+    "src/generation/world-study/native-volume-settled-sheet.ts": "443e0c433cdf89fbccc7819ef1bc6dfbb1f65550f6ce9e81a6c9992c84424925",
+    "src/generation/world-study/native-volume-expansion.ts": "508b6dfaf744a63671035838c86ad36906b57be341ee26f1f1e55ed68e10d0b4",
+    "src/generation/world-study/native-volume-ground.ts": "dd4e4619f2635516f20704dda011a5fccc2805c7389278e97200a835db7067c3",
+    "src/generation/world-study/native-volume-geometry.ts": "c4707a3f3354301798ee91487868f14566f4e46554a30b536ab303b087ae8ef6",
+    "src/generation/world-study/r100-package.ts": "ef068eaa8c0c6a24c8bc0df76e9ee83dd4b4161a9acc819fbae12c187f6e85e4",
+    "src/generation/legacy-r100-v5/executor-revision5.js": "9129bd82ad367edb6271de5563a5f004a5b2065101f198b7df233e87f29ab8ac",
+    "src/generation/legacy-r100-v5/executor-recovery.js": "f0fbc687c80030a9a048cd897c4ddb84d0afbad78e5a9ab0b0b0a4822fea60c6"
+  },
+  "scope": "Package schema and frozen version boundary only, no map generation/rendering or world qualification"
+}

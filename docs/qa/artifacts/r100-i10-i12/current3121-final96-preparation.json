@@ -1,0 +1,20 @@
+{
+  "status": "prepared-not-started",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-final96-plan.json",
+    "sha256": "84ff65f3a8cd835c839cacc15c0e179adc56bba6fed5b47ca78d0eabf2f59f31"
+  },
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/run-current3121-final96.mjs",
+    "sha256": "19a18141ccb7c8ca416d73bca6a1454084f30edaf4836c4e04713d97d6510a16"
+  },
+  "base576x4": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/base-execution.json",
+    "sha256": "63994aaa184b1d21867f40fb0cc2da0aa44c9ebd306fece4eee6717fe8f94a1d"
+  },
+  "scope": "Four original24 stage plans. Never starts until current3120 remaining60 completes with all original children closed; fresh play logs, one Chrome, first hard failure stops the queue. No result, enablement or final qualification is claimed."
+}

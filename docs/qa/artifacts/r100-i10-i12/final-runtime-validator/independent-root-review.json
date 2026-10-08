@@ -1,0 +1,33 @@
+{
+  "status": "bounded-independent-code-pass",
+  "reviewer": "root",
+  "at": "2026-10-07T07:32:50.044723+00:00",
+  "repair": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/repair-summary-v2.json",
+    "sha256": "f854db1595eef614872401f050b5424e0388e9813e8a91fa40caf49872e03db5"
+  },
+  "reviewedDiff": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/numeric-validation-v2.diff",
+    "sha256": "12da12af337cf0e622f1f5598b68c24f65071467db627726c16ee77f9e80f212"
+  },
+  "sources": [
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-report-contract.mjs",
+      "sha256": "5de91c51eb0fca83974b85f4a92d62e739d295d4c1a9f55fe93bd706adbac707"
+    }
+  ],
+  "findings": [
+    "Budget复核原测量数值、原阈值、固定种子和实际存活时长，不只信budgetPass。",
+    "Lifecycle核冻结目录顺序对应的固定mixed种子、十二GC样本、资源与Shader计数和实际内存差值；不自签独立Shader审核。",
+    "修改限budget/lifecycle验证分支和纯helper，原执行策略、时长、重试与输入不变；35异常克隆与原两真实52基线用于限定合同验证。"
+  ],
+  "limits": [
+    "尚未执行最终108性能与324恢复。",
+    "独占窗口不能仅由报告布尔值证明，必须按实际任务调度执行。",
+    "最终binder新增budget/lifecycle/shader绑定仍待其独立复核。"
+  ]
+}

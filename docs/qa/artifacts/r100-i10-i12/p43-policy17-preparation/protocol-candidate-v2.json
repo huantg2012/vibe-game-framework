@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "status": "candidate-awaiting-independent-review-and-root-approval",
+  "reviewer": null,
+  "issueId": "R100-P43",
+  "policyRevision": 17,
+  "algorithmRevision": 6,
+  "gameplayChanges": "none",
+  "limits": {
+    "maxFacingSegments": 3,
+    "maxSegmentInputMs": 60,
+    "maxTurnInputMs": 180,
+    "maxFacingElapsedMs": 1000,
+    "earlyStopMs": 750,
+    "actionReserveMs": 100,
+    "maxErrorDegrees": 25,
+    "maxActualPickups": 3,
+    "minimumNonEntryDistance": 320,
+    "noHiddenAiState": true
+  },
+  "inputDurationSemantics": "turnInputMs sums the direction-key wait requests actually issued (each<=60ms,total<=180ms). Segment elapsed clocks include input dispatch/read/release latency and are not claimed<=180ms. The whole alignment, Space and cleanup must be<=1000ms actual game time.",
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "storage": {
+    "path": "docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+    "sha256": "965a98687e87690f71115472384fba50578ff9618aed328793c3a3bd1cf33b6e"
+  },
+  "originalPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/policy-freeze.json",
+    "sha256": "ebac047bbbe767c6b8ae1f1d2f0e65751036700774175ae70c6af2541450b23a"
+  },
+  "executor": {
+    "path": "tools/qa/r100-i12-turn-journey.mjs",
+    "sha256": "5a2b1d80111d075397810420f771e5c8c731b3f71cdfa0868f46ae95afcfd473"
+  },
+  "wrapper": {
+    "path": "tools/qa/r100-i12-turn-coverage.mjs",
+    "sha256": "093959b8c34ca8295d250b65daf9b2ce418ecc7b7ef2ef92ab85c4c0ec6766c5"
+  },
+  "dependencies": [
+    {
+      "file": "tools/qa/r100-i12-turn-encounters.mjs",
+      "sha256": "1b1f703bb2f3785f3aa2117fa66c47012fc26f0ebe8334f26aa5253175730b51"
+    },
+    {
+      "file": "tools/qa/r100-i12-turn-align.mjs",
+      "sha256": "8e68e5aa7242ad6c07ba4c108b9f18e37dff589e5acc942f5e3f077569583150"
+    },
+    {
+      "file": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "file": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "file": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "file": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    }
+  ],
+  "cases": [
+    {
+      "world": "ochre-folds",
+      "grade": "severe",
+      "seed": 20261005,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+        "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+      }
+    },
+    {
+      "world": "ochre-folds",
+      "grade": "severe",
+      "seed": 3075192741,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+        "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+      }
+    }
+  ]
+}

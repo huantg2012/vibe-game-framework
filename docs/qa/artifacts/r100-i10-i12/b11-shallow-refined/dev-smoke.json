@@ -1,0 +1,43 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "dev",
+    "--",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "3199",
+    "--strictPort"
+  ],
+  "browser": false,
+  "requests": [
+    {
+      "route": "/",
+      "status": 200,
+      "bytes": 1021,
+      "responseSha256": "ab6ea5f179eee364155690e3b1003032c4560a46b101fe5bb58194946457a19b"
+    },
+    {
+      "route": "/src/generation/world-study/native-volume-settled-projection.ts",
+      "status": 200,
+      "bytes": 18606,
+      "responseSha256": "c73fd02a2eb34567189e6742e7761b9e72f776bd2d7c61beb7667c2abfb75484"
+    },
+    {
+      "route": "/src/generation/world-study/native-volume-ground.ts",
+      "status": 200,
+      "bytes": 78019,
+      "responseSha256": "d016411b375f31be3a243bbe29f4bf52dc87bbadca13c3def3d6043826248f01"
+    },
+    {
+      "route": "/src/generated/r100-native-worlds.ts",
+      "status": 200,
+      "bytes": 4117783,
+      "responseSha256": "e99cb2eb9e4c82a48c46a0d9f101d1286946897b1994c27cff4c40ca5d27d6fd"
+    }
+  ],
+  "status": "PASS-owned-dev-module-smoke",
+  "ownedPid": 54057,
+  "ownedProcessExited": true
+}

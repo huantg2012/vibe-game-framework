@@ -1,0 +1,106 @@
+{
+  "status": "pass",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-source/source-snapshot.json",
+    "sha256": "ac64f6bf0a0f0bda9992997a981e8df3f45dfec7164b1435bf09055f94487ed8"
+  },
+  "harness": {
+    "path": "docs/qa/artifacts/r100-i10-i12/material-organization/source-v4-package/check.ts",
+    "sha256": "45a60c12a8bb7f251fb8ad17cb785e13d4770dedd50ffc8a56d08ebb52d6bce2"
+  },
+  "sources": [
+    {
+      "path": "tools/world-study/codegen-r100-packages.mjs",
+      "sha256": "1cd433ad6735298ebd5195608b7b0746d586d8590f879978abe31ff846442a35"
+    },
+    {
+      "path": "src/generated/r100-package-manifest.ts",
+      "sha256": "dad5c30f5296dddbec58a7d02370c313d861d65a6409029babf9e4cf1eabfac7"
+    },
+    {
+      "path": "src/generation/world-study/r100-world-appearance.ts",
+      "sha256": "71441ad19d1ef8702e737f46898abf05a7b0262de4916aede9bfddbe6fe04b59"
+    },
+    {
+      "path": "src/generated/r100-world-appearance.ts",
+      "sha256": "250d9b2777a48206007e2162d2e4b582765e3b738f640684f445de50d2404f16"
+    },
+    {
+      "path": "data/rift-material-organizations.csv",
+      "sha256": "352cea48094c2f7bc214b2390e5cfc4c5e9ac6af5817f736773f51ac5d6c3d48"
+    },
+    {
+      "path": "data/rift-world-appearance.csv",
+      "sha256": "277e7d0485f4b4aaab21323fba613df662321a82fff54668a25079e620f1c7d1"
+    }
+  ],
+  "oldAtomEntriesExact": 8,
+  "unmodifiedAppearances": 106,
+  "changedWorlds": [
+    "short-fibre-mat",
+    "felt-wedges"
+  ],
+  "cases": [
+    {
+      "world": "short-fibre-mat",
+      "grade": "low",
+      "currentSelectedKey": "organization:short-fibre-loose",
+      "reconstructedPriorKey": "organization:short-fibre",
+      "currentValid": true,
+      "priorValid": true,
+      "currentHash": "b741d0b3",
+      "priorHash": "aed92bb8"
+    },
+    {
+      "world": "short-fibre-mat",
+      "grade": "medium",
+      "currentSelectedKey": "organization:short-fibre-loose",
+      "reconstructedPriorKey": "organization:short-fibre",
+      "currentValid": true,
+      "priorValid": true,
+      "currentHash": "1bc70d30",
+      "priorHash": "c300d677"
+    },
+    {
+      "world": "short-fibre-mat",
+      "grade": "severe",
+      "currentSelectedKey": "organization:short-fibre-loose",
+      "reconstructedPriorKey": "organization:short-fibre",
+      "currentValid": true,
+      "priorValid": true,
+      "currentHash": "07c26c68",
+      "priorHash": "64648e6f"
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "low",
+      "currentSelectedKey": "organization:short-fibre-loose",
+      "reconstructedPriorKey": "organization:short-fibre",
+      "currentValid": true,
+      "priorValid": true,
+      "currentHash": "576cfef8",
+      "priorHash": "ebba59ff"
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "medium",
+      "currentSelectedKey": "organization:short-fibre-loose",
+      "reconstructedPriorKey": "organization:short-fibre",
+      "currentValid": true,
+      "priorValid": true,
+      "currentHash": "8b00af7c",
+      "priorHash": "7aaf8fb3"
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "severe",
+      "currentSelectedKey": "organization:short-fibre-loose",
+      "reconstructedPriorKey": "organization:short-fibre",
+      "currentValid": true,
+      "priorValid": true,
+      "currentHash": "2f18cecb",
+      "priorHash": "9a3d2c30"
+    }
+  ],
+  "scope": "Material dependency append and current/previous selection integrity only. Prior recipes are reconstructed from frozen fields under the unchanged constructor; this is not a prior-source game run, RGBA comparison, current entry/recovery or art approval."
+}

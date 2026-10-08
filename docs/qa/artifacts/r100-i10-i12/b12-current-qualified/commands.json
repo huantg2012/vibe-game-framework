@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "status": "authorized-original-base48",
+  "worlds": [
+    "double-return",
+    "offset-basins",
+    "pinched-fan",
+    "spliced-reaches"
+  ],
+  "wholeBatchReady": false,
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "qualificationPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+    "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+  },
+  "executor": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+    "sha256": "4426f52bfb5e719735680ad97c436d44375eadb6ba04fe566e086bbd74c87a4d"
+  },
+  "originalPreparation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/source-snapshot.json",
+    "sha256": "b21e226add3052a153c4a81079a9d2556503217b38e4be22087aa02ecc6bfd96"
+  },
+  "requiredAdmission": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/normal-admission.json",
+  "generation": [
+    {
+      "cases": 480,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+        "--worlds",
+        "double-return,offset-basins,pinched-fan,spliced-reaches",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--full",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b12-current-qualified/generation-full/report.json"
+      ]
+    },
+    {
+      "cases": 96,
+      "command": "/usr/local/bin/node",
+      "args": [
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+        "--executor",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+        "--worlds",
+        "double-return,offset-basins,pinched-fan,spliced-reaches",
+        "--concurrency",
+        "1",
+        "--compact-report",
+        "--holdout",
+        "docs/qa/artifacts/r100-i07-i09/qualification-policy/holdout-seeds.json",
+        "--report",
+        "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b12-current-qualified/generation-holdout/report.json"
+      ]
+    }
+  ],
+  "scope": "Original base48 only: 32 ordinary + 8 boundary + original8 holdout. Additional8 already executed separately. No current art or actual-play approval follows from this plan.",
+  "rootReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-current-qualified/normal-admission.json",
+    "sha256": "f3faa71717816812a4f1b1c8e947143c1d8f1a4fb92402435dc4d2998d4b8308"
+  },
+  "additionalReceipts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/current3121-generation/base-batches-plan.json",
+      "sha256": "f9beca73da3b2ba20a471b3135488f588f4f98c95714e863f761ccf00ed2720c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/current3121-generation/preparation/qualification-4426f52bfb5e.mjs",
+      "sha256": "4426f52bfb5e719735680ad97c436d44375eadb6ba04fe566e086bbd74c87a4d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-medium/independent-review.json",
+      "sha256": "08bfc334b78b0181e7a2eb1a43876c3739f8351e513ed1ea9502075b537c2848"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/independent-review.json",
+      "sha256": "f9fb1c06635a1c58ebdfac1f0f5388897315a864e4b293aec3f7de4236cfc846"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b11-current-medium/independent-review.json",
+      "sha256": "9a39b1d686e3ad976717abbb492b16accee077df6d8228ac6efad1c2f26bfbd7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/independent-review.json",
+      "sha256": "950029e61539f7367e38347c66b95b589c36bfe2f06d75c1b746fa2dba0f3994"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-medium/independent-review.json",
+      "sha256": "12b5ad2d3640bcd038b1107d91e0f155bb24143336dca5d5a3a4c1efc92de537"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/independent-review.json",
+      "sha256": "8ce5143e4a9fcead3e42ba0377162780bb5afb1ba56880b428e6eea363dddc06"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/earlier-passed-grades/independent-review.json",
+      "sha256": "c8a817c17f56596c6e209013540436f4bc8daa988f591895f9809e5a3be8607f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-medium/author-art-review.json",
+      "sha256": "5e2638d9b830f8d228e9e7fc762c86e1e8058997f63e46c386e42b36e7919585"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-grades/author-art-review.json",
+      "sha256": "7df4afa8f6cfc475ef3a6ae0b6fed359c773ba244d39eee8df23782e42822b4e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/ochre-near-tear-medium/independent-review.json",
+      "sha256": "acaedec117a0e03dc1fa69914a3e176d46bd0c0e393210451c1d2bba184978c2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/current3120-to3121-unselected97-binding-fix.json",
+      "sha256": "060761a543fd62bc2b4aff48d61cb354e2faf21ff028f2344d463836446bafe0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-binding-fix-execution.json",
+      "sha256": "0e408357b02607b248567151dd5379626fa2c3a60ace78142455c0ef4a1ced94"
+    }
+  ]
+}

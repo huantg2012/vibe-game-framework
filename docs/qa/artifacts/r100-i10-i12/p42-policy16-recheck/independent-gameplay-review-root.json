@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-supplement-pass",
+  "reviewer": "root",
+  "createdAt": "2026-10-07T13:25:02.717031+00:00",
+  "issueId": "R100-P42",
+  "features": [
+    "COH-F052",
+    "COH-F013"
+  ],
+  "protocol": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/approved-protocol.json",
+    "sha256": "878da1c64b23902119f0e822f9502f688d7abf7bde098f60d34e295979d58171"
+  },
+  "reconciliation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/reconciliation.json",
+    "sha256": "2a42f6ee361e1bc6cb7c3909574c221a83539d34fb641add27caae889d6e1bd3"
+  },
+  "qualificationSummary": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/supplement16-summary.json",
+    "sha256": "5a016d1191b5a94e67e0dcdf88666ceccca6148fa0fad08a36dca55b501be193"
+  },
+  "workerObservation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/worker-observation-summary.json",
+    "sha256": "7f75caa8e96d456fad1a7f346b10b3390e9377327e434da6f9aa5fa3818e00e7"
+  },
+  "independentArtReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/independent-art-process-review.json",
+    "sha256": "edce0d1ab82cb9e037ee85ce0d001772d66b03b5b8b8051b1cb33e0570c77c09"
+  },
+  "originalsRetained": true,
+  "rows": [
+    {
+      "seed": 20261005,
+      "original": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+      },
+      "supplement": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "020f431f7a3e1c725f0e96a137f018eb588f0280273e0723795ce8ef0410f9e1"
+      },
+      "fullIdentityExact": true,
+      "beforeSaveExact": true,
+      "outcome": "extract",
+      "nonEntryPickups": [
+        {
+          "id": "r100-kindling-deep-1",
+          "distanceFromEntry": 789.7341324775067,
+          "elapsedMs": 63580.80999999971
+        }
+      ],
+      "hp": 130,
+      "chaos": 93.9899500319061,
+      "elapsedMs": 96029.49000000037,
+      "extraSearchBranchTriggered": false
+    },
+    {
+      "seed": 3075192741,
+      "original": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+      },
+      "supplement": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "e3239ead963eea8548f120e271b8637e6764a653649f289f6f22653851b10bc2"
+      },
+      "fullIdentityExact": true,
+      "beforeSaveExact": true,
+      "outcome": "extract",
+      "nonEntryPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "distanceFromEntry": 576.0555528766301,
+          "elapsedMs": 38415.119999999806
+        }
+      ],
+      "hp": 100,
+      "chaos": 84.13159515682335,
+      "elapsedMs": 60397.589999999815,
+      "extraSearchBranchTriggered": false
+    }
+  ],
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/001-white-scarfield-severe-20261005/severe/1-search-2.png",
+      "sha256": "89fbfc86b0df5c67572108da458a220bd9ba0ae2d5d2cefd6c602129effb3be1",
+      "observation": "130HP/71混乱，深部薪柴+12；正常灰白床和黑绿宿主可分。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/001-white-scarfield-severe-20261005/severe/1-field-result.png",
+      "sha256": "a0f827115e968190b0003a5ba5fa7519cb4f67487e957bbbc5c4c7ce66b8d8b3",
+      "observation": "130HP、12薪柴、96秒、峰值混乱94，一击杀的实际结算可见。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/002-white-scarfield-severe-3075192741/severe/1-search-1.png",
+      "sha256": "1a23add1121687492970ce5dbfa700f8e5bf70397fa6a69d0f85e2fd44639b7b",
+      "observation": "100HP/73混乱，争夺点薪柴+6；左下敌人和右方宿主可见，规整床面切线弱项保留。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/002-white-scarfield-severe-3075192741/severe/1-field-result.png",
+      "sha256": "a8df6a82361df72d6c2ba38fd62b06ce4e39c9fe23ff762fb9f2103dd9feba4a",
+      "observation": "100HP、6薪柴、60秒、峰值混乱84，两击杀的实际结算可见。"
+    }
+  ],
+  "conclusion": "原双种子/完整身份/赚取存档不变，各完成一次真实非入口拾取并同趟结算，白砂重档固定过程缺口闭合。",
+  "causality": "两趟均未触发额外重搜，不能把成功归因于重搜，也不从四次过程估计成功率。原policy15死亡/空返保留；新报告按预先批准policy16单列。",
+  "limitations": "受控熟练输入与4张局部原帧；不证明新手/自然经济/所有路线、整体人审或听感。最终源资格待全库绑定。"
+}

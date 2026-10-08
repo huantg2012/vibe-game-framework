@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "status": "confirmed-validator-gap",
+  "at": "2026-10-08T01:36:57.262Z",
+  "scope": "Synthetic metadata fixture invokes validateRuntimeBinding only. Both harness and wrapper SHA values refer to actual files. No final108 baseline, runtime report, browser, source claim, ledger mutation or acceptance decision is fabricated.",
+  "binder": {
+    "path": "tools/qa/r100-bind-i10-i12.mjs",
+    "sha256": "1da437d9385d4e306eb6cd8e143809a7b0191293ac7dee3608da529909b5b70e"
+  },
+  "verifier": "validateRuntimeBinding",
+  "correctMethodHarness": {
+    "path": "tools/qa/check-r100-runtime-budget.mjs",
+    "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+  },
+  "wrongMethodHarness": {
+    "path": "tools/qa/check-r100-production-browser.mjs",
+    "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+  },
+  "wrapper": {
+    "path": "tools/qa/r100-i09-final-probe.mjs",
+    "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+  },
+  "expected": "The budget binding must reject the production harness even when its actual bytes and new SHA match.",
+  "actual": "Both the correct budget harness and resealed production harness were accepted for kind=budget.",
+  "boundary": "This demonstrates a validator identity gap; it does not allege any recorded production or budget execution used the wrong harness.",
+  "recommendation": "Binder owner should require the declared method to use its specific frozen harness path; retain four method-specific negatives in the final real-evidence checker.",
+  "binderUnchanged": true
+}

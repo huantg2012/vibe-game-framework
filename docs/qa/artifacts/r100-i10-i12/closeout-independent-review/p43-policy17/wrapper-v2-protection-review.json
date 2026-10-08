@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "wrapper": {
+    "path": "tools/qa/r100-i12-turn-coverage.mjs",
+    "sha256": "093959b8c34ca8295d250b65daf9b2ce418ecc7b7ef2ef92ab85c4c0ec6766c5"
+  },
+  "checks": [
+    {
+      "name": "existing partial output preserved before manifest/network/browser work",
+      "exitCode": 1,
+      "expectedDiagnostic": true,
+      "priorFileUnchanged": true,
+      "noNewFiles": true
+    },
+    {
+      "name": "wrapper syntax",
+      "exitCode": 0
+    }
+  ],
+  "scope": "Only initial output guard and syntax executed. No network or Chrome, no game qualification."
+}

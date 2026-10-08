@@ -1,0 +1,138 @@
+{
+  "status": "completed-with-at-least-one-nonentry-extraction",
+  "protocol": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/approved-protocol.json",
+    "sha256": "d88c904ce2c95d2c0be396016fda6f7db1ed82788781a90b6ab98792feb72ce6"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/execution.json",
+    "sha256": "bf714ec6b0a2753602431929b3383d7168a32a433cad9ec44de5252d6d1f512e"
+  },
+  "policy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/policy-freeze.json",
+    "sha256": "790cbbb84e0a01663e48031f9cce6f071e7985c4d68e0676b03e080d5f9bdf6b"
+  },
+  "batch": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/batch-report.json",
+    "sha256": "dbeb521d7501fc2edbb8f136bf3e6263280f5b7ca7759da8912246ab7a95e922"
+  },
+  "observations": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/worker-observation-summary.json",
+    "sha256": "b59733d5b37421b03977b6259a8487d01005c7529a1ccfa75351729d6ea434a4"
+  },
+  "postprocessor": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/reconcile-execution.mjs",
+    "sha256": "ce0091c1dd272039ab08db7ca4d24790bccd085c23f50dab3d07535bf2b66555"
+  },
+  "earnedStorageExactExceptOrigin": true,
+  "rows": [
+    {
+      "case": {
+        "world": "ochre-folds",
+        "grade": "severe",
+        "seed": 20261005,
+        "originalReport": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+          "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/report.json",
+        "sha256": "fb8b62b51d0ca351a6343d4cced68ce4361598b05d2181a9d4acb4e8cd2ea9ab"
+      },
+      "inputLog": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/journey.jsonl",
+        "sha256": "45a9bff315bf72362c98c980f4f281516dedc9e2ca9e02f797a70f81b0676048"
+      },
+      "checks": {
+        "originalFailureRetained": true,
+        "fullIdentityExact": true,
+        "beforeSaveExact": true,
+        "harnessAndDependenciesExact": true,
+        "completedCleanly": true,
+        "sameRunSettled": true,
+        "facingReportMatchesOriginalLog": true,
+        "everySpaceHasFacingRecord": true
+      },
+      "outcome": "extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "distanceFromEntry": 551.5360369005818,
+          "elapsedMs": 48714.739999999845,
+          "evidence": "target-observed / terminal-collected",
+          "timing": "observation upper bound",
+          "eligibleNonEntry": true
+        }
+      ],
+      "nonEntryExtraction": true,
+      "fieldElapsedMs": 63164.13999999964,
+      "hp": 115,
+      "chaos": 93.4949341723231,
+      "facingChecks": {
+        "count": 4,
+        "allowed": 4,
+        "abandoned": 0,
+        "failed": 0,
+        "issuedSpace": 4,
+        "maximumWholeElapsedMs": 400.00000000001455
+      }
+    },
+    {
+      "case": {
+        "world": "ochre-folds",
+        "grade": "severe",
+        "seed": 3075192741,
+        "originalReport": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+          "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/report.json",
+        "sha256": "9cc5a9adc59ddc3d4ca21813b43acfed105ed1e43bb2089b611d9420e6a88cf6"
+      },
+      "inputLog": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/journey.jsonl",
+        "sha256": "07b3954647d8e9d452c5e720dceb502921bec0ee7c0642b22da59801566245d6"
+      },
+      "checks": {
+        "originalFailureRetained": true,
+        "fullIdentityExact": true,
+        "beforeSaveExact": true,
+        "harnessAndDependenciesExact": true,
+        "completedCleanly": true,
+        "sameRunSettled": true,
+        "facingReportMatchesOriginalLog": true,
+        "everySpaceHasFacingRecord": true
+      },
+      "outcome": "extract",
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "distanceFromEntry": 554.3139904422402,
+          "elapsedMs": 49881.349999999846,
+          "evidence": "target-observed / terminal-collected",
+          "timing": "observation upper bound",
+          "eligibleNonEntry": true
+        }
+      ],
+      "nonEntryExtraction": true,
+      "fieldElapsedMs": 67730.62999999963,
+      "hp": 130,
+      "chaos": 75.05043600652155,
+      "facingChecks": {
+        "count": 3,
+        "allowed": 2,
+        "abandoned": 1,
+        "failed": 0,
+        "issuedSpace": 2,
+        "maximumWholeElapsedMs": 450.01999999998225
+      }
+    }
+  ],
+  "problems": [],
+  "limitations": "Two appended controlled original identities. Preserved original deaths remain failures; no hit, causal improvement, success-rate, natural48, or final production claim."
+}

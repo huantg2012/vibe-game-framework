@@ -28,8 +28,14 @@
         "--expected-worlds",
         "108",
         "--expected-revision",
-        "6"
-      ]
+        "6",
+        "--stop-on-failure",
+        "--observe-workers"
+      ],
+      "workerObservationPlan": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/plan-runtime-gates.json",
+        "sha256": "94fcc2ce447a4f89133db782d7719cfe3b676b3d595095fa86f1b2d61e2fdda8"
+      }
     },
     "equivalence": {
       "folder": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108",
@@ -98,6 +104,23 @@
       "caseBreakdown": {
         "identical": 10,
         "mixedWorldGrade": 324
+      },
+      "shaderReview": {
+        "required": true,
+        "artifact": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108/shader-review.json",
+        "status": "pending-actual-matrix",
+        "method": "Review real created/live/active shader trajectories, deletion and GC ownership after the actual rebuild matrix. A harness pass without this interpretation is insufficient; no counts or outcome are supplied by this plan.",
+        "requiredStatus": "bounded-independent-shader-pass",
+        "requiredReviewer": "root",
+        "requiredFields": [
+          "finalSource",
+          "report",
+          "sourceBinding",
+          "reviewedShaderSamples",
+          "scope",
+          "ownershipConclusion",
+          "limitations"
+        ]
       }
     }
   },
@@ -147,5 +170,63 @@
   },
   "failurePolicy": "Never overwrite initial attempts; any recheck gets a new directory and an explicit canonical reference only after actual pass. Original source, input policy and seed retained unless a separately reviewed defect requires a new version.",
   "soundGate": "R10 remains a separate honest I12 disposition; engineering checks or artifact existence never substitute for listening.",
-  "scope": "Path and count contract only. No game execution or qualification assigned."
+  "scope": "Path and count contract only. No game execution or qualification assigned.",
+  "planRevision": 3,
+  "planRevisionHistory": [
+    {
+      "revision": 1,
+      "original": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/final-artifact-contract-before-command-unification.json",
+        "sha256": "89387d90508b2e67f002bb989abe913e6a4649e71b649af79510afee666bd07b"
+      },
+      "reason": "The original path/count contract omitted the two production observation flags already present in the independently reviewed companion command. Revision2 makes the canonical command identical and explicitly records the separate shader review required after actual lifecycle samples. No earlier game execution is altered.",
+      "at": "2026-10-07T07:16:19.975230+00:00",
+      "reviewedCompanion": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/plan.json",
+        "sha256": "204bc2ecedb0271149419a0fd09700e3e29795ad83346e1f15ca6f91a11974ff"
+      }
+    },
+    {
+      "revision": 2,
+      "original": {
+        "path": "docs/qa/artifacts/r100-i10-i12/final-worker-observation-preparation/final-artifact-contract-before-runtime-gates.json",
+        "sha256": "0bd1942bb61fad93bc94088943a235c1764aac2605288a58606b768cea4016e8"
+      },
+      "reason": "Unstarted final-runtime plan now binds the reviewed raw numeric validator, running/failed case telemetry, and mandatory budget/lifecycle/shader binder inputs. No completed execution or controller inputs change.",
+      "at": "2026-10-07T07:39:49.921Z"
+    }
+  ],
+  "runtimeToolPreparation": {
+    "status": "prepared-not-executed",
+    "inputs": [
+      {
+        "path": "tools/qa/r100-i09-final-probe.mjs",
+        "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+      },
+      {
+        "path": "tools/qa/check-r100-runtime-budget.mjs",
+        "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+      },
+      {
+        "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+        "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+      },
+      {
+        "path": "tools/qa/r100-bind-i10-i12.mjs",
+        "sha256": "66dc64028d4359560b88d04da4a0004d0d0353ef45630adbb66f3c7ff8f8ae55"
+      }
+    ],
+    "numericContract": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/contract-attempt2.json",
+      "sha256": "dcfe6e6f704aecb4ccd3f701e64598a277427fff52276184b0d9100954de54b6"
+    },
+    "runningCaseRecords": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-validator/running-case-records.json",
+      "sha256": "68e31237c9d25de89784fcffc4cbfa2711402f62d8a79e4d464d624c5279d7b8"
+    },
+    "bindingContract": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/expansion-binding-runtime-complete.json",
+      "sha256": "543b841bca58813d9ddbd47a1315fe413d97f7940eb15ee68b88bf55731470c8"
+    }
+  }
 }

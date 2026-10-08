@@ -1,0 +1,70 @@
+{
+  "status": "pass",
+  "scope": "Earlier evidence remains applicable to the listed world content and unchanged runtime paths. This creates no new art/play approval, and enabled-pool behavior still needs formal entry and selection tests.",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b05-source/source-snapshot.json",
+    "sha256": "5d258e240f23980a4615503ef4e0c7dd7e36f4cbbe99cb7189f685f56d1f6598"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b07-source/source-snapshot.json",
+    "sha256": "4e8f60c754a1688df0313410b446738e6103f36d6f6e239ae3248f55ae6eff0b"
+  },
+  "mode": "none",
+  "worlds": [
+    {
+      "worldId": "quiet-spur",
+      "contentSha256": "1f78cc125252e85953fb01647b75612e5e03e3d61d6b48b30ecffd5bb5415734",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "three-shelves",
+      "contentSha256": "d066400d67294a8ce7b3e15599308540a8a43d8847ae8f76610c6f86f159def5",
+      "enabledBefore": false,
+      "enabledAfter": false
+    },
+    {
+      "worldId": "frayed-outwash",
+      "contentSha256": "95d08bc942b48e6b557e1d8a02a3b42751b2ce38fdbe912115c26740d7cafad3",
+      "enabledBefore": false,
+      "enabledAfter": false
+    }
+  ],
+  "materialDependencyKeys": [
+    "broken-shell",
+    "fibre-knot",
+    "granular-ridge"
+  ],
+  "unchangedFiles": 1384,
+  "reviewedChanges": [
+    {
+      "file": "src/generated/r100-native-worlds.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-package-manifest.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/r100-world-appearance.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "src/generated/rift-search-remains.ts",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-native-worlds.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-search-remains.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    },
+    {
+      "file": "data/rift-world-appearance.csv",
+      "reason": "selected world projection unchanged; catalog or enabled rows may expand"
+    }
+  ],
+  "limitations": "Catalog codegen consistency is checked independently. Existing source copies must remain available to repeat this comparison."
+}

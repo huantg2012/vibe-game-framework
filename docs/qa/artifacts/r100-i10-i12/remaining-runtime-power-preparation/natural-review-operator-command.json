@@ -1,0 +1,60 @@
+{
+  "status": "prepared-only-awaiting-complete-natural48",
+  "at": "2026-10-08T03:19:44.524953+00:00",
+  "operatorSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-natural-review.py",
+    "sha256": "4b49a96581f8b5a8cfca662dea9f628796d1200df747726ee6d72c3736c9016b"
+  },
+  "operatorArgv": [
+    "python3",
+    "-u",
+    "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-natural-review.py",
+    "--root-dispatch-natural-review"
+  ],
+  "utilityArgv": [
+    "/usr/bin/caffeinate",
+    "-i",
+    "/usr/local/bin/node",
+    "--import",
+    "tsx",
+    "tools/qa/r100-revision6-review-continuous.mjs",
+    "--input",
+    "docs/qa/artifacts/r100-i10-i12/continuous-final108",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json"
+  ],
+  "envOverrides": {
+    "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+  },
+  "cwd": "/Users/yilungao/coh",
+  "originalStage": {
+    "id": "natural-review",
+    "command": "node",
+    "args": [
+      "--import",
+      "tsx",
+      "tools/qa/r100-revision6-review-continuous.mjs",
+      "--input",
+      "docs/qa/artifacts/r100-i10-i12/continuous-final108",
+      "--output",
+      "docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json"
+    ],
+    "env": {
+      "TSX_TSCONFIG_PATH": "tools/contam-preview/tsconfig.json"
+    },
+    "output": "docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json",
+    "exclusiveCpuAndBrowser": false,
+    "notes": [
+      "Small offline read-only accounting; independent root experience review is separate."
+    ]
+  },
+  "originalPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/commands.json",
+    "sha256": "24a0e53e23461cbe5978ee5fa6c0e0b35d323d139c0b36b9e74f6cc790944361"
+  },
+  "rootDispatch": "The same explicit root natural48 dispatch authorized its original offline review after completion; no new stage or gameplay attempt.",
+  "syntaxCheck": "python ast.parse passed before launch",
+  "automaticRetry": false,
+  "reviewOutputMustBeAbsent": "docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json",
+  "auditDirectoryMustBeAbsent": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/natural-review"
+}

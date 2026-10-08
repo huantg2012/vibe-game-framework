@@ -1,0 +1,225 @@
+{
+  "scope": "Read-only pure geometry against the original failed medium definition and executor. No edited routes or author fields; proposed points equal the original swept actual stations. Original source report receipts retained.",
+  "results": [
+    {
+      "world": "white-scarfield",
+      "grade": "medium",
+      "source": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-isolated-author/static4/report.json",
+        "sha256": "b804c78d2b8ae69ece1ca8b37f06da7d99a7ef078c649bde450600fb77bb4e89"
+      },
+      "original": {
+        "x": 902,
+        "y": 447
+      },
+      "proposed": {
+        "x": 948,
+        "y": 476
+      },
+      "displacement": 54.378304497290095,
+      "originalGroundSupport20": false,
+      "originalBlockingIds": [],
+      "originalFootprintObjects": [],
+      "candidateSupport20": true,
+      "candidateFootprintObjects": [],
+      "originalActualStation": {
+        "x": 948,
+        "y": 476
+      },
+      "candidateMatchesAlreadySweptStation": true,
+      "originalRouteSweepsRechecked": [
+        true,
+        true
+      ],
+      "routePathExtents": [
+        {
+          "minX": 852,
+          "maxX": 948,
+          "minY": 476,
+          "maxY": 644
+        },
+        {
+          "minX": 860,
+          "maxX": 964,
+          "minY": 180,
+          "maxY": 476
+        }
+      ],
+      "assertionThresholdUnchanged": 24,
+      "innerSheetCandidates": [
+        {
+          "point": {
+            "x": 804,
+            "y": 444
+          },
+          "supported20": true,
+          "surface": [
+            {
+              "id": 2,
+              "role": "relief"
+            }
+          ],
+          "fromPrior": 1,
+          "toNext": 0.17857105156926345
+        },
+        {
+          "point": {
+            "x": 788,
+            "y": 444
+          },
+          "supported20": true,
+          "surface": [
+            {
+              "id": 2,
+              "role": "relief"
+            }
+          ],
+          "fromPrior": 1,
+          "toNext": 1
+        },
+        {
+          "point": {
+            "x": 804,
+            "y": 476
+          },
+          "supported20": true,
+          "surface": [
+            {
+              "id": 2,
+              "role": "relief"
+            }
+          ],
+          "fromPrior": 1,
+          "toNext": 0.1785710925193044
+        }
+      ]
+    },
+    {
+      "world": "woven-quarters",
+      "grade": "medium",
+      "source": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-isolated-author/static4/report.json",
+        "sha256": "97f94aa285d15676a9a66c0bd7b21ff4697a3b8727e89a0c805ca473749b4035"
+      },
+      "original": {
+        "x": 417,
+        "y": 341
+      },
+      "proposed": {
+        "x": 428,
+        "y": 364
+      },
+      "displacement": 25.495097567963924,
+      "originalGroundSupport20": true,
+      "originalBlockingIds": [
+        2
+      ],
+      "originalFootprintObjects": [
+        {
+          "id": 2,
+          "role": "solid"
+        }
+      ],
+      "candidateSupport20": true,
+      "candidateFootprintObjects": [],
+      "originalActualStation": {
+        "x": 428,
+        "y": 364
+      },
+      "candidateMatchesAlreadySweptStation": true,
+      "originalRouteSweepsRechecked": [
+        true,
+        true,
+        true
+      ],
+      "routePathExtents": [
+        {
+          "minX": 380,
+          "maxX": 428,
+          "minY": 364,
+          "maxY": 468
+        },
+        {
+          "minX": 428,
+          "maxX": 700,
+          "minY": 324,
+          "maxY": 460
+        },
+        {
+          "minX": 644,
+          "maxX": 772,
+          "minY": 324,
+          "maxY": 356
+        }
+      ],
+      "assertionThresholdUnchanged": 24
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "medium",
+      "source": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-isolated-author/static4/report.json",
+        "sha256": "97f94aa285d15676a9a66c0bd7b21ff4697a3b8727e89a0c805ca473749b4035"
+      },
+      "original": {
+        "x": 559,
+        "y": 414
+      },
+      "proposed": {
+        "x": 556,
+        "y": 388
+      },
+      "displacement": 26.1725046566048,
+      "originalGroundSupport20": true,
+      "originalBlockingIds": [
+        4
+      ],
+      "originalFootprintObjects": [
+        {
+          "id": 4,
+          "role": "solid"
+        }
+      ],
+      "candidateSupport20": true,
+      "candidateFootprintObjects": [],
+      "originalActualStation": {
+        "x": 556,
+        "y": 388
+      },
+      "candidateMatchesAlreadySweptStation": true,
+      "originalRouteSweepsRechecked": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "routePathExtents": [
+        {
+          "minX": 500,
+          "maxX": 540,
+          "minY": 540,
+          "maxY": 652
+        },
+        {
+          "minX": 508,
+          "maxX": 556,
+          "minY": 388,
+          "maxY": 540
+        },
+        {
+          "minX": 556,
+          "maxX": 668,
+          "minY": 332,
+          "maxY": 388
+        },
+        {
+          "minX": 668,
+          "maxX": 732,
+          "minY": 212,
+          "maxY": 332
+        }
+      ],
+      "assertionThresholdUnchanged": 24
+    }
+  ]
+}

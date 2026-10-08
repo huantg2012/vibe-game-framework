@@ -1,0 +1,22 @@
+{
+  "status": "read-only-supplement-aligned-command-correction",
+  "createdAt": "2026-10-07T09:49:22.282513+00:00",
+  "priorAudit": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-readiness-gap-audit-shapes.json",
+    "sha256": "dbd97e995afcfdbad0865b1ed63ef1de716e2000773cfe4436f7a7e39fd37b4e"
+  },
+  "supplement": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-compatibility-supplement.json",
+    "sha256": "e50b3e0368dfdf1af39305775ae8eb85743c0430dff3ff1b06695550abb5de75"
+  },
+  "correction": "The prior audit revision6-contract command omitted --organizations --extended-profiles while describing those optional negative contracts. The supplement explicitly includes both flags and is the correct executable command; the original audit is preserved. No runtime result was produced or reclassified.",
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "tools/world-study/check-r100-revision6-contract.ts",
+    "--organizations",
+    "--extended-profiles"
+  ],
+  "review": "Five existing commands, final-source pre/post binding, original order preservation and old2–5 inheritance limits match the requested closure integration. Prepared only; not executed or passed final compatibility."
+}

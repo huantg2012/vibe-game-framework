@@ -57,9 +57,9 @@
     "id": "COH-F049",
     "title": "世界方向查看与隔离搜撤体验",
     "domain": "development",
-    "summary": "旧v2的30组合与历史研究页保留；r100-gym遍历当前正式修订5的52世界×三档，Boot前内存存储隔离。新增32实图/近邻图册可检索、切档和打开同配方场景。E161区分正常图审、实际旅程、正式接入与独占性能，不把Gym可见等同人审。",
+    "summary": "r100-gym遍历当前108世界×三档并在Boot前隔离内存存储；原生正常帧/近邻/返修记录和108世界离线图册v4浏览复验完成。I10–I12已按授权抽查内部结案；图册54历史档位缺活跃直接帧仍明确留空，Gym可见不等同用户认可。",
     "delivery": "dev",
-    "work": "settled",
+    "work": "active",
     "entryPoints": [
       "rift-worlds.html",
       "rift-world-play.html",
@@ -67,8 +67,9 @@
       "rift-gym.html",
       "gym.html?lesson=rift-world → rift-gym.html",
       "rift-r100-masters.html（I01/I02历史DEV母版入口）",
-      "r100-gym.html（当前52世界×三级，正式生成器与原生RiftScene，内存存储）",
-      "docs/qa/interactive/r100-world-identity.html（修订3/4正常实帧对照及验证范围）"
+      "r100-gym.html（当前108世界×三级，正式生成器与原生RiftScene，内存存储）",
+      "docs/qa/interactive/r100-world-identity.html（修订3/4正常实帧对照及验证范围）",
+      "docs/qa/interactive/r100-i10-i12-worlds.html（全108原帧与证据，54历史缺直接帧档位明确留空）"
     ],
     "sources": [
       {
@@ -411,6 +412,301 @@
       {
         "path": "tools/qa/check-r100-material-listening.mjs",
         "role": "test"
+      },
+      {
+        "path": "tools/qa/capture-r100-expansion-art.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-explicit-profile-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-i12-controller-supplement.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-i12-facing-supplement.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-inactive-presentation-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-remains-source-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-reviewed-startup-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-runtime-budget.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-runtime-report-contract.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-settled-projection-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-source-archive.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-worker-observer.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/check-r100-worker-startup-browser.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/derive-r100-revision6-journey.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/derive-r100-revision6-reviewer.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/prepare-r100-controlled-matrices.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/prepare-r100-expansion-batch.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-explicit-profile-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-controller-supplement.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-facing-supplement.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-recheck-budget.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-recheck-budget.test.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-recheck-coverage.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-recheck-encounters.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-recheck-journey.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-align.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-align.test.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-coverage.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-encounters.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-i12-turn-journey.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-inactive-presentation-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-remains-source-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-reviewed-startup-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-revision6-journey.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-revision6-review-continuous.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-settled-projection-continuity.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-source-archive.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/qa/r100-worker-observer.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/recovery/check-worker-startup-retry.ts",
+        "role": "test",
+        "note": "修订5投影或Worker启动恢复专项；历史版本和实际执行范围分别保留。"
+      },
+      {
+        "path": "tools/recovery/project-native-r100-revision5.mjs",
+        "role": "test",
+        "note": "修订5投影或Worker启动恢复专项；历史版本和实际执行范围分别保留。"
+      },
+      {
+        "path": "tools/world-study/check-compressed-felt.mjs",
+        "role": "test",
+        "note": "短纤隔离候选/源窗比较工具；含未采用历史方案，P34记录实际准入范围。"
+      },
+      {
+        "path": "tools/world-study/check-native-fracture-connection.ts",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/world-study/check-native-torn-connection.ts",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/world-study/check-organization-remains.ts",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/world-study/check-primary-fibre-surface.ts",
+        "role": "test",
+        "note": "短纤隔离候选/源窗比较工具；含未采用历史方案，P34记录实际准入范围。"
+      },
+      {
+        "path": "tools/world-study/check-r100-current-continuity.ts",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/world-study/check-r100-organization-manifests.mjs",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/world-study/check-r100-revision5-projection.ts",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/world-study/check-settled-projection.ts",
+        "role": "test",
+        "note": "I10–I12证据采集、输入协议、连续性、归档或运行合同工具；工具存在不授予游戏/美术/人审资格。"
+      },
+      {
+        "path": "tools/world-study/check-short-fibre-source-candidate.ts",
+        "role": "test",
+        "note": "短纤隔离候选/源窗比较工具；含未采用历史方案，P34记录实际准入范围。"
+      },
+      {
+        "path": "tools/world-study/generate-material-organizations.mjs",
+        "role": "code",
+        "note": "材料组织生成或隔离预览入口；候选不自动进入生产。"
+      },
+      {
+        "path": "tools/world-study/preview-r100-material-atoms.ts",
+        "role": "test",
+        "note": "材料组织生成或隔离预览入口；候选不自动进入生产。"
+      },
+      {
+        "path": "tools/qa/check-r100-i10-i12-final-binding.mjs",
+        "role": "test",
+        "note": "对真实最终证据先核baseline，再独立重封SHA执行89项语义反例；当前仅准备自检，不代表实际最终验收。"
+      },
+      {
+        "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+        "role": "doc",
+        "note": "108世界原帧与来源离线浏览；793张直接原PNG、54历史无直接帧档位明确留空，不增加图审或人审资格。"
+      },
+      {
+        "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+        "role": "doc",
+        "note": "与离线浏览入口同源的108世界数据与证据引用。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/closure-application.json",
+        "role": "doc",
+        "note": "I10–I12实际内部结案与用户抽查范围；不是发布或人审通过。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+        "role": "doc",
+        "note": "I10–I12实际内部结案与用户抽查范围；不是发布或人审通过。"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+        "role": "doc",
+        "note": "I10–I12实际内部结案与用户抽查范围；不是发布或人审通过。"
       }
     ],
     "dependsOn": [
@@ -438,7 +734,12 @@
       "COH-E159",
       "COH-E160",
       "COH-E161",
-      "COH-E163"
+      "COH-E163",
+      "COH-E176",
+      "COH-E177",
+      "COH-E178",
+      "COH-E179",
+      "COH-E180"
     ],
     "unknowns": [
       "v2的30组合、当前修订4的20世界×三级及固定种子巡检均非穷举uint32种子或连续条件；正常短走和定点补图只覆盖实际取景，不能当作完整自然旅程。",
@@ -448,7 +749,7 @@
       "e8888655后用户确认折板南侧低斜面在normal中仍像地面。已局部重做阻挡物厚断面及材质坐标，外足占地不变；本轮取得44/48独立方向、50次受控键盘接近和600支撑采样；四方向未覆盖、四次战斗干扰和三次沿边滑动见E133，不算完整自然绕行。此前54帧不证明全部阻挡边缘可读，“这次好多了”当时仅为局部肯定；其后2026-10-04明确整体验收单列E138，未覆盖的运行范围仍不补判。",
       "E134来源外观的14图与三组行为采集是不同批次；额外材料依赖的事后指纹未冒充起点基线，不覆盖之后并行地形材料变更。",
       "E137为三中档母版/五正式来源同点近照及三中档实际运行；关键帧和状态序列不等于连续动画审美通过。受控归位、旧局隔离、完整自然搜撤和全等级未测范围按本批QA保持。",
-      "当前修订5为有限内部验收；原20修订4人审不扩为新增32/当前版本人审。静帧与熟练控制器路线不代表新手或全种子品质；实际听感R100-R10、弱设备I14及长期收益I13独立保留。"
+      "当前修订6为用户授权抽查范围的内部验收；原20修订4人审保持历史范围。性能74完整/1中断/33未启动，资源10同图/18混合及8反例不外推全库性能、所有设备或全种子品质；I13长期收益与I14听感R100-R10/弱设备/用户终验仍待。"
     ]
   },
   {

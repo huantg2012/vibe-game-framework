@@ -1,0 +1,22 @@
+{
+  "status": "failed",
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "after": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "helper": {
+    "path": "tools/qa/r100-settled-projection-continuity.mjs",
+    "sha256": "4d0c0cee03539812c4bca894d649c8ae164941040ba2928d077e191066c091f8"
+  },
+  "harness": {
+    "path": "tools/qa/check-r100-settled-projection-continuity.mjs",
+    "sha256": "34d2bb8fb8d75aab4e075d199bb0ffdf318c9edfb2cbdeaac8f2f03d3e6b74ae"
+  },
+  "checks": [],
+  "scope": "Actual frozen AST/default-path proof and adversarial mutations only; no game execution or changed-world approval.",
+  "error": "AssertionError [ERR_ASSERTION]: Shared geometry and validation must otherwise stay AST-exact\n+ actual - expected\n... Skipped lines\n\n  \"import { buildExpandedNativeVolume, NATIVE_VOLUME_SHAPE_PROFILES, type NativeVolumeShapeProfile as NativeVolumeV3Profile } from './native-volume-expansion';\\n\" +\n    \"import { buildGroundNativeVolume, NATIVE_VOLUME_V4_PROFILES, type NativeVolumeV4Profile } from './native-volume-ground';\\n\" +\n    \"import { appendNativeGroundEdges, type NativeGroundEdgeContext } from './native-volume-ground-edge';\\n\" +\n    \"import { smoothOrganizedSurface } from './native-volume-organization';\\n\" +\n    \"export { NATIVE_VOLUME_SHAPE_PROFILES } from './native-volume-expansion';\\n\" +\n...\n    \"        throw new Error('Native volume blocking must be 0 or 1');\\n\" +\n+   \"    if ((spec.shapeProfile === rtsWith('settled || spec.shapeProfile === 0 || spec.hei) && (spec.blocking !== E || spec.height > er))\\n\" +\n+   \"        throw new Error(onblocking material with height at most 6');\\n\" +\n+   '  if (spec.groundEdgeWidth !== und);\\n' +\n-   \"    if ((spec.shapeProfile === 'settled-sheet' || spec.shapeProfile === 'settled-fan') && (spec.blocking !== 0 || spec.height > 6))\\n\" +\n-   \"        throw new Error('Settled material requires explicit nonblocking material with height at most 6');\\n\" +\n    '    if (spec.groundEdgeWidth !== undefined && (spec.constructionVersion !== 4 || spec.blocking !== 0 || spec.height > 6\\n' +\n    '        || spec.groundEdgeWidth < 8 || spec.groundEdgeWidth > 24))\\n' +\n    \"        throw new Error('Native ground edge requires v4 low relief and width 8–24px');\\n\" +\n    '    if (spec.length < 16 || spec.width < 12 || spec.height < 2 || spec.thickness < 1\\n' +\n    '        || spec.length > 2048 || spec.width > 2048 || spec.height > 512\\n' +\n...\n    '        return { spec: Object.freeze({ ...this.spec }), positions: new Float32Array(this.points), normals: new Float32Array(this.normalData),\\n' +\n+   '            uv: new Float32Array(this.texels), indices: new Uint32Array(this.triangles), mater'... 36780 more characters\n-   '            uv: new Float32Array(this.texels), indices: new Uint32Array(this.triangles), materia'... 36778 more characters\n\n    at assertSettledProjectionContinuity (file:///Users/yilungao/coh/tools/qa/r100-settled-projection-continuity.mjs:26:9)\n    at file:///Users/yilungao/coh/tools/qa/check-r100-settled-projection-continuity.mjs:16:15\n    at ModuleJob.run (node:internal/modules/esm/module_job:271:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:578:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)"
+}

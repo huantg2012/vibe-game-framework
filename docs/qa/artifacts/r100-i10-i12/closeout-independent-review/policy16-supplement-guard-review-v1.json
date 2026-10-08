@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "status": "changes-required-before-candidate-approval",
+  "createdAt": "2026-10-07T12:52:04.384Z",
+  "reviewer": "i12_qa",
+  "authority": "Root policy16 scope: one reapproach only after visible-opponent-too-close, for the same already observed target; preserve original inputs and evidence.",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/controller-supplement-reviewed-889b4d9a59a8.mjs",
+    "sha256": "889b4d9a59a804b57d72e47affc99babfc20f53b3a0812997e1ed9ce6aae9300",
+    "originalPath": "tools/qa/r100-i12-controller-supplement.mjs"
+  },
+  "originalReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+    "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+  },
+  "checks": [
+    {
+      "name": "Exact original identity/save with synthetically bounded metadata",
+      "status": "accepted",
+      "scope": "contract fixture only"
+    },
+    {
+      "name": "Changed full identity",
+      "status": "correctly-rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement changed original full generation identity\n+ actual - expected\n... Skipped lines\n\n  {\n    catalogVersion: 'contaminant-v1',\n    combatRulesVersion: 2,\n    generation: {\n      appearance: {\n...\n    seed: 20261005,\n+   signature: 'changed',\n-   signature: '7864d455',\n    worldId: 'procedural-rift'\n  }\n"
+      }
+    },
+    {
+      "name": "Added starting resource",
+      "status": "correctly-rejected",
+      "result": {
+        "accepted": false,
+        "error": "Supplement changed the earned starting save\n+ actual - expected\n... Skipped lines\n\n  {\n    sha256: '68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a',\n    state: {\n      contaminantRuntimeState: {},\n      cycle: 30,\n...\n      },\n+     kindlingReserve: 21,\n-     kindlingReserve: 20,\n      moduleMaxHpTier: 2,\n      moduleSwapActive: false,\n      modules: [\n        {\n          hp: 52,\n"
+      }
+    },
+    {
+      "name": "Second supplemental action",
+      "status": "correctly-rejected",
+      "result": {
+        "accepted": false,
+        "error": "Too many additional search attempts"
+      }
+    },
+    {
+      "name": "Elapsed overrun",
+      "status": "correctly-invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement exceeded its 6000ms game-time budget",
+          "Supplement observed game duration exceeded 6000ms"
+        ]
+      }
+    },
+    {
+      "name": "Tracked keys unreleased",
+      "status": "correctly-invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement action did not release every tracked key"
+        ]
+      }
+    },
+    {
+      "name": "Runtime reported error",
+      "status": "correctly-invalid-retained",
+      "result": {
+        "accepted": true,
+        "problems": [
+          "Supplement action: probe failure"
+        ]
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "QA-P16-01a",
+      "name": "Nonexistent/unobserved target",
+      "severity": "medium",
+      "type": "evidence-contract-gap",
+      "result": {
+        "accepted": true,
+        "problems": []
+      },
+      "action": {
+        "targetId": "never-observed-node",
+        "reason": "visible-opponent-too-close",
+        "startedElapsedMs": 47000,
+        "endedElapsedMs": 48000,
+        "status": "stopped-budget",
+        "errors": [],
+        "withinTimeBound": true,
+        "releasedAllTrackedKeys": true,
+        "maxObservedElapsedMs": 1000
+      },
+      "currentJourneySearches": [
+        {
+          "targetId": "r100-kindling-deep-1",
+          "elapsedMs": 46164.82999999987,
+          "decision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QA-P16-01b",
+      "name": "No refusal in current journey",
+      "severity": "medium",
+      "type": "evidence-contract-gap",
+      "result": {
+        "accepted": true,
+        "problems": []
+      },
+      "action": {
+        "targetId": "r100-kindling-deep-1",
+        "reason": "visible-opponent-too-close",
+        "startedElapsedMs": 47000,
+        "endedElapsedMs": 48000,
+        "status": "stopped-budget",
+        "errors": [],
+        "withinTimeBound": true,
+        "releasedAllTrackedKeys": true,
+        "maxObservedElapsedMs": 1000
+      },
+      "currentJourneySearches": []
+    },
+    {
+      "id": "QA-P16-01c",
+      "name": "Action before the actual refusal",
+      "severity": "medium",
+      "type": "evidence-contract-gap",
+      "result": {
+        "accepted": true,
+        "problems": []
+      },
+      "action": {
+        "targetId": "r100-kindling-deep-1",
+        "reason": "visible-opponent-too-close",
+        "startedElapsedMs": 1000,
+        "endedElapsedMs": 2000,
+        "status": "stopped-budget",
+        "errors": [],
+        "withinTimeBound": true,
+        "releasedAllTrackedKeys": true,
+        "maxObservedElapsedMs": 1000
+      },
+      "currentJourneySearches": [
+        {
+          "targetId": "r100-kindling-deep-1",
+          "elapsedMs": 46164.82999999987,
+          "decision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QA-P16-02",
+      "name": "Missing action status",
+      "severity": "medium",
+      "type": "evidence-contract-gap",
+      "result": {
+        "accepted": true,
+        "problems": []
+      },
+      "action": {
+        "targetId": "r100-kindling-deep-1",
+        "reason": "visible-opponent-too-close",
+        "startedElapsedMs": 47000,
+        "endedElapsedMs": 48000,
+        "errors": [],
+        "withinTimeBound": true,
+        "releasedAllTrackedKeys": true,
+        "maxObservedElapsedMs": 1000
+      },
+      "currentJourneySearches": [
+        {
+          "targetId": "r100-kindling-deep-1",
+          "elapsedMs": 46164.82999999987,
+          "decision": {
+            "attempted": false,
+            "reason": "visible-opponent-too-close"
+          }
+        }
+      ]
+    }
+  ],
+  "recommendation": "Link each record to an explicit search index/trigger time and the same uncollected non-entry target; require a recognized status. Reject missing or prior-to-trigger records. Keep original failure and bounded deadline evidence separately.",
+  "limitations": [
+    "This tests only the helper predicate on synthetic metadata carrying an actual original journey",
+    "No policy16 controller, wrapper or protocol has yet been approved by this reviewer",
+    "No Chrome, game input or qualification claim",
+    "Reviewed source bytes are preserved because root may fix the live helper concurrently"
+  ],
+  "harness": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/audit-policy16-supplement-guards.mjs",
+    "sha256": "66d8061ca87e69c2179cc6e56159ffffff2d840d60a87847669025777ce5fc15"
+  }
+}

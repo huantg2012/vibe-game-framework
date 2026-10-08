@@ -1,0 +1,60 @@
+{
+  "status": "candidate-not-authorized-to-execute",
+  "expectedApprovedProtocol": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/approved-protocol.json",
+  "command": "/usr/local/bin/node",
+  "args": [
+    "tools/qa/r100-i12-turn-coverage.mjs"
+  ],
+  "env": {
+    "GAME_URL": "http://127.0.0.1:3121/",
+    "QA_SOURCE_MANIFEST": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "QA_EXPANSION_PLAN": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-current-qualified/execution-plan.json",
+    "QA_BATCH_ID": "B13",
+    "QA_WORLDS": "ochre-folds",
+    "QA_GRADES": "severe",
+    "QA_SEEDS": "20261005,3075192741",
+    "QA_CONCURRENCY": "1",
+    "QA_RESOURCE_PAUSE_FILE": "/tmp/coh-r100-i10-i12.pause",
+    "QA_OUTPUT_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play",
+    "QA_STOP_ON_FAILURE": "1",
+    "QA_WORKER_OBSERVER_DIR": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/worker-observations",
+    "QA_WORKER_OBSERVER_FAILURE_FILE": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/worker-observation-first-error.json",
+    "NODE_OPTIONS": "--import /Users/yilungao/coh/tools/qa/r100-worker-observer.mjs",
+    "DEBUG": "pw:browser",
+    "QA_CONTROLLER_SUPPLEMENT": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/approved-protocol.json"
+  },
+  "cases": [
+    {
+      "world": "ochre-folds",
+      "grade": "severe",
+      "seed": 20261005,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+        "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+      }
+    },
+    {
+      "world": "ochre-folds",
+      "grade": "severe",
+      "seed": 3075192741,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+        "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+      }
+    }
+  ],
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/execution-plan.json",
+    "sha256": "933ba58a8e2db0977d271ba71c227d736c740688ea5e7fbc20b978cbbc31e032"
+  },
+  "output": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck",
+  "originalReportsRetained": true,
+  "scope": [
+    "Only both original ochre-folds severe seeds, once each, source3121 and original earned save.",
+    "Root must approve final candidate and the independent review; no execution from this preparation.",
+    "Technical failure stops, no automatic retries or replacement.",
+    "Original search limit1 and HP30/chaos120/return145, 550ms opportunity gate and route time caps retained.",
+    "The35ms swing branch appears in P43;cornered40ms branch shares a static risk but occurred0 times in these two original logs.",
+    "No policy16 re-search extension or its three enum substitutions. Same final visible target must be aligned and not windup/strike before Space."
+  ]
+}

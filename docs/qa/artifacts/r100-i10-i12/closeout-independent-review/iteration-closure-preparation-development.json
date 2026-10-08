@@ -1,0 +1,15 @@
+{
+  "status": "audit-script-path-error-corrected-before-report",
+  "at": "2026-10-08T02:05:16.244654+00:00",
+  "initialAuditScript": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/prepare-iteration-closure-attempt1.mjs",
+    "sha256": "d31f936a35ac2339b7244c9dee6d830be3259f618282b136e6952e3130de9f85"
+  },
+  "observedFailure": {
+    "code": "ENOENT",
+    "requestedPath": "docs/qa/artifacts/r100-i10-i12/final-source-restore-verification.json",
+    "actualExistingPath": "docs/qa/artifacts/r100-i10-i12/source-archive/final-source-restore-verification.json"
+  },
+  "classification": "Independent audit script used an incorrect artifact path; this is neither a tested-product failure nor failed source restoration. No intended output receipt was created by that attempt.",
+  "repairScope": "Correct own audit reference only; preserve original source/archive/ledger/frozen tools and prior attempt script."
+}

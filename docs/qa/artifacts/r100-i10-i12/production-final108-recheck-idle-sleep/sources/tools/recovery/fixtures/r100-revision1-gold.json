@@ -1,0 +1,4573 @@
+{
+  "scope": "Original real Chromium entry identities before revision 2; exact saved package, seed, content and signature are the expected values.",
+  "records": [
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ash-strata-low-20261004-resist-suppress/low/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:folded-slab-low",
+        "signature": "813a5f3b",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ash-strata",
+            "label": "无彩层原",
+            "description": "沉积层片与失色断面",
+            "material": "strata",
+            "surface": {
+              "substrate": "strata",
+              "coating": "strata",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "folded-slab-low",
+            "family": "folded-slab",
+            "grade": "low",
+            "label": "逆折·初入",
+            "profile": "ash-strata",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 548,
+            "search_y": 424,
+            "enemy_x": 708,
+            "enemy_y": 180,
+            "axis": -0.22,
+            "light_radius": 112,
+            "emission": 0.35,
+            "motion_period": 19,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "relief",
+                "x": 448,
+                "y": 276,
+                "rotation": -0.22,
+                "length": 286,
+                "width": 120,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.46,
+                "branches": 3,
+                "opening": 0.22,
+                "distortion": 0.16
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 618,
+                "y": 281,
+                "rotation": 0.31,
+                "length": 188,
+                "width": 88,
+                "height": 24,
+                "thickness": 9,
+                "fold": 0.34,
+                "branches": 3,
+                "opening": 0.25,
+                "distortion": 0.12
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 620,
+                  "y": 352
+                },
+                {
+                  "x": 656,
+                  "y": 344
+                },
+                {
+                  "x": 704,
+                  "y": 368
+                },
+                {
+                  "x": 696,
+                  "y": 392
+                },
+                {
+                  "x": 644,
+                  "y": 382
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "99dd6618",
+            "grade": "low"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "813a5f3b"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ash-strata-low-20261005-resist-suppress/low/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:folded-slab-low",
+        "signature": "8f220613",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ash-strata",
+            "label": "无彩层原",
+            "description": "沉积层片与失色断面",
+            "material": "strata",
+            "surface": {
+              "substrate": "strata",
+              "coating": "strata",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "folded-slab-low",
+            "family": "folded-slab",
+            "grade": "low",
+            "label": "逆折·初入",
+            "profile": "ash-strata",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 548,
+            "search_y": 424,
+            "enemy_x": 708,
+            "enemy_y": 180,
+            "axis": -0.22,
+            "light_radius": 112,
+            "emission": 0.35,
+            "motion_period": 19,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "relief",
+                "x": 448,
+                "y": 276,
+                "rotation": -0.22,
+                "length": 286,
+                "width": 120,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.46,
+                "branches": 3,
+                "opening": 0.22,
+                "distortion": 0.16
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 618,
+                "y": 281,
+                "rotation": 0.31,
+                "length": 188,
+                "width": 88,
+                "height": 24,
+                "thickness": 9,
+                "fold": 0.34,
+                "branches": 3,
+                "opening": 0.25,
+                "distortion": 0.12
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 620,
+                  "y": 352
+                },
+                {
+                  "x": 656,
+                  "y": 344
+                },
+                {
+                  "x": 704,
+                  "y": 368
+                },
+                {
+                  "x": 696,
+                  "y": 392
+                },
+                {
+                  "x": 644,
+                  "y": 382
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "99dd6618",
+            "grade": "low"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "8f220613"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ash-strata-medium-20261004-resist-suppress/medium/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:folded-slab-medium",
+        "signature": "3471f64b",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ash-strata",
+            "label": "无彩层原",
+            "description": "沉积层片与失色断面",
+            "material": "strata",
+            "surface": {
+              "substrate": "strata",
+              "coating": "strata",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "folded-slab-medium",
+            "family": "folded-slab",
+            "grade": "medium",
+            "label": "逆折·穿层",
+            "profile": "ash-strata",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 570,
+            "search_y": 440,
+            "enemy_x": 716,
+            "enemy_y": 180,
+            "axis": -0.22,
+            "light_radius": 132,
+            "emission": 0.55,
+            "motion_period": 16,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 448,
+                "y": 276,
+                "rotation": -0.22,
+                "length": 350,
+                "width": 146,
+                "height": 126,
+                "thickness": 14,
+                "fold": 0.66,
+                "branches": 4,
+                "opening": 0.18,
+                "distortion": 0.28
+              },
+              {
+                "id": 2,
+                "role": "relief",
+                "x": 633,
+                "y": 294,
+                "rotation": 0.67,
+                "length": 238,
+                "width": 100,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.55,
+                "branches": 3,
+                "opening": 0.18,
+                "distortion": 0.22
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 442,
+                "y": 156,
+                "rotation": 2.79,
+                "length": 252,
+                "width": 94,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.47,
+                "branches": 3,
+                "opening": 0.18,
+                "distortion": 0.22
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 648,
+                  "y": 328
+                },
+                {
+                  "x": 728,
+                  "y": 352
+                },
+                {
+                  "x": 756,
+                  "y": 392
+                },
+                {
+                  "x": 716,
+                  "y": 416
+                },
+                {
+                  "x": 652,
+                  "y": 388
+                },
+                {
+                  "x": 608,
+                  "y": 392
+                }
+              ],
+              [
+                {
+                  "x": 168,
+                  "y": 128
+                },
+                {
+                  "x": 240,
+                  "y": 104
+                },
+                {
+                  "x": 284,
+                  "y": 128
+                },
+                {
+                  "x": 268,
+                  "y": 160
+                },
+                {
+                  "x": 200,
+                  "y": 168
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "f8056a28",
+            "grade": "medium"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "3471f64b"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ash-strata-medium-20261005-resist-suppress/medium/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:folded-slab-medium",
+        "signature": "4c0830e6",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ash-strata",
+            "label": "无彩层原",
+            "description": "沉积层片与失色断面",
+            "material": "strata",
+            "surface": {
+              "substrate": "strata",
+              "coating": "strata",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "folded-slab-medium",
+            "family": "folded-slab",
+            "grade": "medium",
+            "label": "逆折·穿层",
+            "profile": "ash-strata",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 570,
+            "search_y": 440,
+            "enemy_x": 716,
+            "enemy_y": 180,
+            "axis": -0.22,
+            "light_radius": 132,
+            "emission": 0.55,
+            "motion_period": 16,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 448,
+                "y": 276,
+                "rotation": -0.22,
+                "length": 350,
+                "width": 146,
+                "height": 126,
+                "thickness": 14,
+                "fold": 0.66,
+                "branches": 4,
+                "opening": 0.18,
+                "distortion": 0.28
+              },
+              {
+                "id": 2,
+                "role": "relief",
+                "x": 633,
+                "y": 294,
+                "rotation": 0.67,
+                "length": 238,
+                "width": 100,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.55,
+                "branches": 3,
+                "opening": 0.18,
+                "distortion": 0.22
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 442,
+                "y": 156,
+                "rotation": 2.79,
+                "length": 252,
+                "width": 94,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.47,
+                "branches": 3,
+                "opening": 0.18,
+                "distortion": 0.22
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 648,
+                  "y": 328
+                },
+                {
+                  "x": 728,
+                  "y": 352
+                },
+                {
+                  "x": 756,
+                  "y": 392
+                },
+                {
+                  "x": 716,
+                  "y": 416
+                },
+                {
+                  "x": 652,
+                  "y": 388
+                },
+                {
+                  "x": 608,
+                  "y": 392
+                }
+              ],
+              [
+                {
+                  "x": 168,
+                  "y": 128
+                },
+                {
+                  "x": 240,
+                  "y": 104
+                },
+                {
+                  "x": 284,
+                  "y": 128
+                },
+                {
+                  "x": 268,
+                  "y": 160
+                },
+                {
+                  "x": 200,
+                  "y": 168
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "f8056a28",
+            "grade": "medium"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "4c0830e6"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ash-strata-severe-20261004-resist-suppress/severe/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:folded-slab-severe",
+        "signature": "9f918048",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ash-strata",
+            "label": "无彩层原",
+            "description": "沉积层片与失色断面",
+            "material": "strata",
+            "surface": {
+              "substrate": "strata",
+              "coating": "strata",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "folded-slab-severe",
+            "family": "folded-slab",
+            "grade": "severe",
+            "label": "逆折·承压",
+            "profile": "ash-strata",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 622,
+            "search_y": 454,
+            "enemy_x": 756,
+            "enemy_y": 168,
+            "axis": -0.22,
+            "light_radius": 154,
+            "emission": 0.72,
+            "motion_period": 14,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 448,
+                "y": 243,
+                "rotation": -0.22,
+                "length": 528,
+                "width": 186,
+                "height": 194,
+                "thickness": 18,
+                "fold": 0.9,
+                "branches": 6,
+                "opening": 0.15,
+                "distortion": 0.4
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 674,
+                "y": 304,
+                "rotation": 0.81,
+                "length": 280,
+                "width": 114,
+                "height": 138,
+                "thickness": 15,
+                "fold": 0.79,
+                "branches": 4,
+                "opening": 0.14,
+                "distortion": 0.35
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 418,
+                "y": 130,
+                "rotation": 2.95,
+                "length": 338,
+                "width": 124,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.74,
+                "branches": 4,
+                "opening": 0.12,
+                "distortion": 0.33
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 664,
+                  "y": 320
+                },
+                {
+                  "x": 776,
+                  "y": 352
+                },
+                {
+                  "x": 816,
+                  "y": 408
+                },
+                {
+                  "x": 752,
+                  "y": 448
+                },
+                {
+                  "x": 664,
+                  "y": 408
+                },
+                {
+                  "x": 616,
+                  "y": 432
+                },
+                {
+                  "x": 568,
+                  "y": 400
+                }
+              ],
+              [
+                {
+                  "x": 128,
+                  "y": 104
+                },
+                {
+                  "x": 208,
+                  "y": 80
+                },
+                {
+                  "x": 296,
+                  "y": 112
+                },
+                {
+                  "x": 304,
+                  "y": 152
+                },
+                {
+                  "x": 240,
+                  "y": 176
+                },
+                {
+                  "x": 176,
+                  "y": 160
+                },
+                {
+                  "x": 112,
+                  "y": 144
+                }
+              ],
+              [
+                {
+                  "x": 336,
+                  "y": 488
+                },
+                {
+                  "x": 408,
+                  "y": 472
+                },
+                {
+                  "x": 480,
+                  "y": 504
+                },
+                {
+                  "x": 472,
+                  "y": 540
+                },
+                {
+                  "x": 400,
+                  "y": 548
+                },
+                {
+                  "x": 344,
+                  "y": 520
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 3,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "96d77f55",
+            "grade": "severe"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "9f918048"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ash-strata-severe-20261005-resist-suppress/severe/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:folded-slab-severe",
+        "signature": "6a42192d",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ash-strata",
+            "label": "无彩层原",
+            "description": "沉积层片与失色断面",
+            "material": "strata",
+            "surface": {
+              "substrate": "strata",
+              "coating": "strata",
+              "organization": "bands",
+              "coverage": 0.46,
+              "wear": 0.52,
+              "deposits": 0.52,
+              "scale": 1.1,
+              "relief": 0.52,
+              "contrast": 0.75,
+              "regionScale": 1.15,
+              "quietness": 0.48,
+              "formScale": 1.3,
+              "fragmentation": 0.65,
+              "accentCoverage": 0.02
+            },
+            "palette": {
+              "void": 592137,
+              "shadow": 1381653,
+              "floorDeep": 2302755,
+              "floor": 3421236,
+              "floorLight": 4539717,
+              "materialDark": 3158064,
+              "materialMid": 5855577,
+              "materialLight": 7895160,
+              "faceLight": 10066329,
+              "accentDim": 5395026,
+              "accent": 11184810,
+              "accentLight": 13421772,
+              "peak": 15658734,
+              "actorDark": 1842204,
+              "actorMid": 12237498,
+              "actorLight": 16777215,
+              "ground": 3421236,
+              "groundLight": 4539717,
+              "groundDark": 2302755,
+              "wall": 5855577,
+              "wallLight": 10066329,
+              "wallDark": 3158064
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "folded-slab-severe",
+            "family": "folded-slab",
+            "grade": "severe",
+            "label": "逆折·承压",
+            "profile": "ash-strata",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 622,
+            "search_y": 454,
+            "enemy_x": 756,
+            "enemy_y": 168,
+            "axis": -0.22,
+            "light_radius": 154,
+            "emission": 0.72,
+            "motion_period": 14,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 448,
+                "y": 243,
+                "rotation": -0.22,
+                "length": 528,
+                "width": 186,
+                "height": 194,
+                "thickness": 18,
+                "fold": 0.9,
+                "branches": 6,
+                "opening": 0.15,
+                "distortion": 0.4
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 674,
+                "y": 304,
+                "rotation": 0.81,
+                "length": 280,
+                "width": 114,
+                "height": 138,
+                "thickness": 15,
+                "fold": 0.79,
+                "branches": 4,
+                "opening": 0.14,
+                "distortion": 0.35
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 418,
+                "y": 130,
+                "rotation": 2.95,
+                "length": 338,
+                "width": 124,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.74,
+                "branches": 4,
+                "opening": 0.12,
+                "distortion": 0.33
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 664,
+                  "y": 320
+                },
+                {
+                  "x": 776,
+                  "y": 352
+                },
+                {
+                  "x": 816,
+                  "y": 408
+                },
+                {
+                  "x": 752,
+                  "y": 448
+                },
+                {
+                  "x": 664,
+                  "y": 408
+                },
+                {
+                  "x": 616,
+                  "y": 432
+                },
+                {
+                  "x": 568,
+                  "y": 400
+                }
+              ],
+              [
+                {
+                  "x": 128,
+                  "y": 104
+                },
+                {
+                  "x": 208,
+                  "y": 80
+                },
+                {
+                  "x": 296,
+                  "y": 112
+                },
+                {
+                  "x": 304,
+                  "y": 152
+                },
+                {
+                  "x": 240,
+                  "y": 176
+                },
+                {
+                  "x": 176,
+                  "y": 160
+                },
+                {
+                  "x": 112,
+                  "y": 144
+                }
+              ],
+              [
+                {
+                  "x": 336,
+                  "y": 488
+                },
+                {
+                  "x": 408,
+                  "y": 472
+                },
+                {
+                  "x": 480,
+                  "y": 504
+                },
+                {
+                  "x": 472,
+                  "y": 540
+                },
+                {
+                  "x": 400,
+                  "y": 548
+                },
+                {
+                  "x": 344,
+                  "y": 520
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 3,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-ash-strata",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "folded-slab": {
+                "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+                "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+                "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+              }
+            },
+            "dependencyHash": "96d77f55",
+            "grade": "severe"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "6a42192d"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/crystal-fibre-low-20261004-resist-suppress/low/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:fibre-knot-low",
+        "signature": "e61eb7a3",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "crystal-fibre",
+            "label": "晶化林床",
+            "description": "纤维床沿统一方向晶化",
+            "material": "crystal",
+            "surface": {
+              "substrate": "strata",
+              "coating": "crystal",
+              "organization": "clusters",
+              "coverage": 0.66,
+              "wear": 0.43,
+              "deposits": 0.42,
+              "scale": 0.95,
+              "relief": 0.58,
+              "contrast": 0.85,
+              "regionScale": 1.1,
+              "quietness": 0.5,
+              "formScale": 1.5,
+              "fragmentation": 0.32,
+              "accentCoverage": 0.18
+            },
+            "palette": {
+              "void": 856090,
+              "shadow": 1449000,
+              "floorDeep": 2303798,
+              "floor": 3158599,
+              "floorLight": 4472919,
+              "materialDark": 3488592,
+              "materialMid": 5001839,
+              "materialLight": 7173782,
+              "faceLight": 10136256,
+              "accentDim": 5326174,
+              "accent": 7956100,
+              "accentLight": 11444401,
+              "peak": 14476773,
+              "actorDark": 2433318,
+              "actorMid": 11702376,
+              "actorLight": 15584925,
+              "ground": 3158599,
+              "groundLight": 4472919,
+              "groundDark": 2303798,
+              "wall": 5001839,
+              "wallLight": 10136256,
+              "wallDark": 3488592
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "fibre-knot-low",
+            "family": "fibre-knot",
+            "grade": "low",
+            "label": "纤维·未结",
+            "profile": "crystal-fibre",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 538,
+            "search_y": 420,
+            "enemy_x": 712,
+            "enemy_y": 180,
+            "axis": -0.28,
+            "light_radius": 112,
+            "emission": 0.35,
+            "motion_period": 22,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "relief",
+                "x": 471,
+                "y": 270,
+                "rotation": -0.28,
+                "length": 310,
+                "width": 100,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.38,
+                "branches": 3,
+                "opening": 0.3,
+                "distortion": 0.18
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 641,
+                "y": 310,
+                "rotation": 0.52,
+                "length": 182,
+                "width": 70,
+                "height": 43,
+                "thickness": 7,
+                "fold": 0.28,
+                "branches": 2,
+                "opening": 0.36,
+                "distortion": 0.16
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 620,
+                  "y": 352
+                },
+                {
+                  "x": 656,
+                  "y": 344
+                },
+                {
+                  "x": 704,
+                  "y": 368
+                },
+                {
+                  "x": 696,
+                  "y": 392
+                },
+                {
+                  "x": 644,
+                  "y": 382
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-crystal-fibre",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "8042d38a",
+            "grade": "low"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "e61eb7a3"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/crystal-fibre-low-20261005-resist-suppress/low/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:fibre-knot-low",
+        "signature": "980abf7d",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "crystal-fibre",
+            "label": "晶化林床",
+            "description": "纤维床沿统一方向晶化",
+            "material": "crystal",
+            "surface": {
+              "substrate": "strata",
+              "coating": "crystal",
+              "organization": "clusters",
+              "coverage": 0.66,
+              "wear": 0.43,
+              "deposits": 0.42,
+              "scale": 0.95,
+              "relief": 0.58,
+              "contrast": 0.85,
+              "regionScale": 1.1,
+              "quietness": 0.5,
+              "formScale": 1.5,
+              "fragmentation": 0.32,
+              "accentCoverage": 0.18
+            },
+            "palette": {
+              "void": 856090,
+              "shadow": 1449000,
+              "floorDeep": 2303798,
+              "floor": 3158599,
+              "floorLight": 4472919,
+              "materialDark": 3488592,
+              "materialMid": 5001839,
+              "materialLight": 7173782,
+              "faceLight": 10136256,
+              "accentDim": 5326174,
+              "accent": 7956100,
+              "accentLight": 11444401,
+              "peak": 14476773,
+              "actorDark": 2433318,
+              "actorMid": 11702376,
+              "actorLight": 15584925,
+              "ground": 3158599,
+              "groundLight": 4472919,
+              "groundDark": 2303798,
+              "wall": 5001839,
+              "wallLight": 10136256,
+              "wallDark": 3488592
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "fibre-knot-low",
+            "family": "fibre-knot",
+            "grade": "low",
+            "label": "纤维·未结",
+            "profile": "crystal-fibre",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 538,
+            "search_y": 420,
+            "enemy_x": 712,
+            "enemy_y": 180,
+            "axis": -0.28,
+            "light_radius": 112,
+            "emission": 0.35,
+            "motion_period": 22,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "relief",
+                "x": 471,
+                "y": 270,
+                "rotation": -0.28,
+                "length": 310,
+                "width": 100,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.38,
+                "branches": 3,
+                "opening": 0.3,
+                "distortion": 0.18
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 641,
+                "y": 310,
+                "rotation": 0.52,
+                "length": 182,
+                "width": 70,
+                "height": 43,
+                "thickness": 7,
+                "fold": 0.28,
+                "branches": 2,
+                "opening": 0.36,
+                "distortion": 0.16
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 620,
+                  "y": 352
+                },
+                {
+                  "x": 656,
+                  "y": 344
+                },
+                {
+                  "x": 704,
+                  "y": 368
+                },
+                {
+                  "x": 696,
+                  "y": 392
+                },
+                {
+                  "x": 644,
+                  "y": 382
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-crystal-fibre",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "8042d38a",
+            "grade": "low"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "980abf7d"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/crystal-fibre-medium-20261004-resist-suppress/medium/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:fibre-knot-medium",
+        "signature": "a1a36301",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "crystal-fibre",
+            "label": "晶化林床",
+            "description": "纤维床沿统一方向晶化",
+            "material": "crystal",
+            "surface": {
+              "substrate": "strata",
+              "coating": "crystal",
+              "organization": "clusters",
+              "coverage": 0.66,
+              "wear": 0.43,
+              "deposits": 0.42,
+              "scale": 0.95,
+              "relief": 0.58,
+              "contrast": 0.85,
+              "regionScale": 1.1,
+              "quietness": 0.5,
+              "formScale": 1.5,
+              "fragmentation": 0.32,
+              "accentCoverage": 0.18
+            },
+            "palette": {
+              "void": 856090,
+              "shadow": 1449000,
+              "floorDeep": 2303798,
+              "floor": 3158599,
+              "floorLight": 4472919,
+              "materialDark": 3488592,
+              "materialMid": 5001839,
+              "materialLight": 7173782,
+              "faceLight": 10136256,
+              "accentDim": 5326174,
+              "accent": 7956100,
+              "accentLight": 11444401,
+              "peak": 14476773,
+              "actorDark": 2433318,
+              "actorMid": 11702376,
+              "actorLight": 15584925,
+              "ground": 3158599,
+              "groundLight": 4472919,
+              "groundDark": 2303798,
+              "wall": 5001839,
+              "wallLight": 10136256,
+              "wallDark": 3488592
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "fibre-knot-medium",
+            "family": "fibre-knot",
+            "grade": "medium",
+            "label": "纤维·强贯",
+            "profile": "crystal-fibre",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 594,
+            "search_y": 442,
+            "enemy_x": 720,
+            "enemy_y": 176,
+            "axis": -0.28,
+            "light_radius": 136,
+            "emission": 0.55,
+            "motion_period": 18,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 471,
+                "y": 270,
+                "rotation": -0.28,
+                "length": 370,
+                "width": 136,
+                "height": 116,
+                "thickness": 9,
+                "fold": 0.59,
+                "branches": 4,
+                "opening": 0.25,
+                "distortion": 0.35
+              },
+              {
+                "id": 2,
+                "role": "relief",
+                "x": 636,
+                "y": 287,
+                "rotation": 0.77,
+                "length": 263,
+                "width": 92,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.52,
+                "branches": 3,
+                "opening": 0.24,
+                "distortion": 0.25
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 430,
+                "y": 155,
+                "rotation": 2.88,
+                "length": 228,
+                "width": 78,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.46,
+                "branches": 3,
+                "opening": 0.25,
+                "distortion": 0.24
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 648,
+                  "y": 328
+                },
+                {
+                  "x": 728,
+                  "y": 352
+                },
+                {
+                  "x": 756,
+                  "y": 392
+                },
+                {
+                  "x": 716,
+                  "y": 416
+                },
+                {
+                  "x": 652,
+                  "y": 388
+                },
+                {
+                  "x": 608,
+                  "y": 392
+                }
+              ],
+              [
+                {
+                  "x": 168,
+                  "y": 128
+                },
+                {
+                  "x": 240,
+                  "y": 104
+                },
+                {
+                  "x": 284,
+                  "y": 128
+                },
+                {
+                  "x": 268,
+                  "y": 160
+                },
+                {
+                  "x": 200,
+                  "y": 168
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-crystal-fibre",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "60cb5698",
+            "grade": "medium"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "a1a36301"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/crystal-fibre-medium-20261005-resist-suppress/medium/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:fibre-knot-medium",
+        "signature": "278b924a",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "crystal-fibre",
+            "label": "晶化林床",
+            "description": "纤维床沿统一方向晶化",
+            "material": "crystal",
+            "surface": {
+              "substrate": "strata",
+              "coating": "crystal",
+              "organization": "clusters",
+              "coverage": 0.66,
+              "wear": 0.43,
+              "deposits": 0.42,
+              "scale": 0.95,
+              "relief": 0.58,
+              "contrast": 0.85,
+              "regionScale": 1.1,
+              "quietness": 0.5,
+              "formScale": 1.5,
+              "fragmentation": 0.32,
+              "accentCoverage": 0.18
+            },
+            "palette": {
+              "void": 856090,
+              "shadow": 1449000,
+              "floorDeep": 2303798,
+              "floor": 3158599,
+              "floorLight": 4472919,
+              "materialDark": 3488592,
+              "materialMid": 5001839,
+              "materialLight": 7173782,
+              "faceLight": 10136256,
+              "accentDim": 5326174,
+              "accent": 7956100,
+              "accentLight": 11444401,
+              "peak": 14476773,
+              "actorDark": 2433318,
+              "actorMid": 11702376,
+              "actorLight": 15584925,
+              "ground": 3158599,
+              "groundLight": 4472919,
+              "groundDark": 2303798,
+              "wall": 5001839,
+              "wallLight": 10136256,
+              "wallDark": 3488592
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "fibre-knot-medium",
+            "family": "fibre-knot",
+            "grade": "medium",
+            "label": "纤维·强贯",
+            "profile": "crystal-fibre",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 594,
+            "search_y": 442,
+            "enemy_x": 720,
+            "enemy_y": 176,
+            "axis": -0.28,
+            "light_radius": 136,
+            "emission": 0.55,
+            "motion_period": 18,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 471,
+                "y": 270,
+                "rotation": -0.28,
+                "length": 370,
+                "width": 136,
+                "height": 116,
+                "thickness": 9,
+                "fold": 0.59,
+                "branches": 4,
+                "opening": 0.25,
+                "distortion": 0.35
+              },
+              {
+                "id": 2,
+                "role": "relief",
+                "x": 636,
+                "y": 287,
+                "rotation": 0.77,
+                "length": 263,
+                "width": 92,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.52,
+                "branches": 3,
+                "opening": 0.24,
+                "distortion": 0.25
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 430,
+                "y": 155,
+                "rotation": 2.88,
+                "length": 228,
+                "width": 78,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.46,
+                "branches": 3,
+                "opening": 0.25,
+                "distortion": 0.24
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 648,
+                  "y": 328
+                },
+                {
+                  "x": 728,
+                  "y": 352
+                },
+                {
+                  "x": 756,
+                  "y": 392
+                },
+                {
+                  "x": 716,
+                  "y": 416
+                },
+                {
+                  "x": 652,
+                  "y": 388
+                },
+                {
+                  "x": 608,
+                  "y": 392
+                }
+              ],
+              [
+                {
+                  "x": 168,
+                  "y": 128
+                },
+                {
+                  "x": 240,
+                  "y": 104
+                },
+                {
+                  "x": 284,
+                  "y": 128
+                },
+                {
+                  "x": 268,
+                  "y": 160
+                },
+                {
+                  "x": 200,
+                  "y": 168
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-crystal-fibre",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "60cb5698",
+            "grade": "medium"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "278b924a"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/crystal-fibre-severe-20261004-resist-suppress/severe/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:fibre-knot-severe",
+        "signature": "2c4cfa40",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "crystal-fibre",
+            "label": "晶化林床",
+            "description": "纤维床沿统一方向晶化",
+            "material": "crystal",
+            "surface": {
+              "substrate": "strata",
+              "coating": "crystal",
+              "organization": "clusters",
+              "coverage": 0.66,
+              "wear": 0.43,
+              "deposits": 0.42,
+              "scale": 0.95,
+              "relief": 0.58,
+              "contrast": 0.85,
+              "regionScale": 1.1,
+              "quietness": 0.5,
+              "formScale": 1.5,
+              "fragmentation": 0.32,
+              "accentCoverage": 0.18
+            },
+            "palette": {
+              "void": 856090,
+              "shadow": 1449000,
+              "floorDeep": 2303798,
+              "floor": 3158599,
+              "floorLight": 4472919,
+              "materialDark": 3488592,
+              "materialMid": 5001839,
+              "materialLight": 7173782,
+              "faceLight": 10136256,
+              "accentDim": 5326174,
+              "accent": 7956100,
+              "accentLight": 11444401,
+              "peak": 14476773,
+              "actorDark": 2433318,
+              "actorMid": 11702376,
+              "actorLight": 15584925,
+              "ground": 3158599,
+              "groundLight": 4472919,
+              "groundDark": 2303798,
+              "wall": 5001839,
+              "wallLight": 10136256,
+              "wallDark": 3488592
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "fibre-knot-severe",
+            "family": "fibre-knot",
+            "grade": "severe",
+            "label": "纤维·绞紧",
+            "profile": "crystal-fibre",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 610,
+            "search_y": 452,
+            "enemy_x": 756,
+            "enemy_y": 170,
+            "axis": -0.28,
+            "light_radius": 154,
+            "emission": 0.72,
+            "motion_period": 16,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 471,
+                "y": 251,
+                "rotation": -0.28,
+                "length": 538,
+                "width": 184,
+                "height": 172,
+                "thickness": 12,
+                "fold": 0.85,
+                "branches": 6,
+                "opening": 0.18,
+                "distortion": 0.47
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 677,
+                "y": 298,
+                "rotation": 0.89,
+                "length": 299,
+                "width": 110,
+                "height": 132,
+                "thickness": 10,
+                "fold": 0.72,
+                "branches": 4,
+                "opening": 0.18,
+                "distortion": 0.38
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 417,
+                "y": 136,
+                "rotation": 2.98,
+                "length": 329,
+                "width": 112,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.7,
+                "branches": 4,
+                "opening": 0.17,
+                "distortion": 0.36
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 664,
+                  "y": 320
+                },
+                {
+                  "x": 776,
+                  "y": 352
+                },
+                {
+                  "x": 816,
+                  "y": 408
+                },
+                {
+                  "x": 752,
+                  "y": 448
+                },
+                {
+                  "x": 664,
+                  "y": 408
+                },
+                {
+                  "x": 616,
+                  "y": 432
+                },
+                {
+                  "x": 568,
+                  "y": 400
+                }
+              ],
+              [
+                {
+                  "x": 128,
+                  "y": 104
+                },
+                {
+                  "x": 208,
+                  "y": 80
+                },
+                {
+                  "x": 296,
+                  "y": 112
+                },
+                {
+                  "x": 304,
+                  "y": 152
+                },
+                {
+                  "x": 240,
+                  "y": 176
+                },
+                {
+                  "x": 176,
+                  "y": 160
+                },
+                {
+                  "x": 112,
+                  "y": 144
+                }
+              ],
+              [
+                {
+                  "x": 336,
+                  "y": 488
+                },
+                {
+                  "x": 408,
+                  "y": 472
+                },
+                {
+                  "x": 480,
+                  "y": 504
+                },
+                {
+                  "x": 472,
+                  "y": 540
+                },
+                {
+                  "x": 400,
+                  "y": 548
+                },
+                {
+                  "x": 344,
+                  "y": 520
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 3,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-crystal-fibre",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "2472d350",
+            "grade": "severe"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "2c4cfa40"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/crystal-fibre-severe-20261005-resist-suppress/severe/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:fibre-knot-severe",
+        "signature": "fccc4a4d",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "crystal-fibre",
+            "label": "晶化林床",
+            "description": "纤维床沿统一方向晶化",
+            "material": "crystal",
+            "surface": {
+              "substrate": "strata",
+              "coating": "crystal",
+              "organization": "clusters",
+              "coverage": 0.66,
+              "wear": 0.43,
+              "deposits": 0.42,
+              "scale": 0.95,
+              "relief": 0.58,
+              "contrast": 0.85,
+              "regionScale": 1.1,
+              "quietness": 0.5,
+              "formScale": 1.5,
+              "fragmentation": 0.32,
+              "accentCoverage": 0.18
+            },
+            "palette": {
+              "void": 856090,
+              "shadow": 1449000,
+              "floorDeep": 2303798,
+              "floor": 3158599,
+              "floorLight": 4472919,
+              "materialDark": 3488592,
+              "materialMid": 5001839,
+              "materialLight": 7173782,
+              "faceLight": 10136256,
+              "accentDim": 5326174,
+              "accent": 7956100,
+              "accentLight": 11444401,
+              "peak": 14476773,
+              "actorDark": 2433318,
+              "actorMid": 11702376,
+              "actorLight": 15584925,
+              "ground": 3158599,
+              "groundLight": 4472919,
+              "groundDark": 2303798,
+              "wall": 5001839,
+              "wallLight": 10136256,
+              "wallDark": 3488592
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "fibre-knot-severe",
+            "family": "fibre-knot",
+            "grade": "severe",
+            "label": "纤维·绞紧",
+            "profile": "crystal-fibre",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 610,
+            "search_y": 452,
+            "enemy_x": 756,
+            "enemy_y": 170,
+            "axis": -0.28,
+            "light_radius": 154,
+            "emission": 0.72,
+            "motion_period": 16,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 471,
+                "y": 251,
+                "rotation": -0.28,
+                "length": 538,
+                "width": 184,
+                "height": 172,
+                "thickness": 12,
+                "fold": 0.85,
+                "branches": 6,
+                "opening": 0.18,
+                "distortion": 0.47
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 677,
+                "y": 298,
+                "rotation": 0.89,
+                "length": 299,
+                "width": 110,
+                "height": 132,
+                "thickness": 10,
+                "fold": 0.72,
+                "branches": 4,
+                "opening": 0.18,
+                "distortion": 0.38
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 417,
+                "y": 136,
+                "rotation": 2.98,
+                "length": 329,
+                "width": 112,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.7,
+                "branches": 4,
+                "opening": 0.17,
+                "distortion": 0.36
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 664,
+                  "y": 320
+                },
+                {
+                  "x": 776,
+                  "y": 352
+                },
+                {
+                  "x": 816,
+                  "y": 408
+                },
+                {
+                  "x": 752,
+                  "y": 448
+                },
+                {
+                  "x": 664,
+                  "y": 408
+                },
+                {
+                  "x": 616,
+                  "y": 432
+                },
+                {
+                  "x": 568,
+                  "y": 400
+                }
+              ],
+              [
+                {
+                  "x": 128,
+                  "y": 104
+                },
+                {
+                  "x": 208,
+                  "y": 80
+                },
+                {
+                  "x": 296,
+                  "y": 112
+                },
+                {
+                  "x": 304,
+                  "y": 152
+                },
+                {
+                  "x": 240,
+                  "y": 176
+                },
+                {
+                  "x": 176,
+                  "y": 160
+                },
+                {
+                  "x": 112,
+                  "y": 144
+                }
+              ],
+              [
+                {
+                  "x": 336,
+                  "y": 488
+                },
+                {
+                  "x": 408,
+                  "y": 472
+                },
+                {
+                  "x": 480,
+                  "y": 504
+                },
+                {
+                  "x": 472,
+                  "y": 540
+                },
+                {
+                  "x": 400,
+                  "y": 548
+                },
+                {
+                  "x": 344,
+                  "y": 520
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 3,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-crystal-fibre",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "fibre-knot": {
+                "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+                "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+                "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+              }
+            },
+            "dependencyHash": "2472d350",
+            "grade": "severe"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "fccc4a4d"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ivory-basin-low-20261004-resist-suppress/low/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:broken-shell-low",
+        "signature": "f5b78dff",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ivory-basin",
+            "label": "吸光釉原",
+            "description": "厚釉沉积与吸光结节",
+            "material": "glaze",
+            "surface": {
+              "substrate": "strata",
+              "coating": "glaze",
+              "organization": "patches",
+              "coverage": 0.54,
+              "wear": 0.57,
+              "deposits": 0.55,
+              "scale": 1.2,
+              "relief": 0.5,
+              "contrast": 0.72,
+              "regionScale": 1.4,
+              "quietness": 0.55,
+              "formScale": 1.6,
+              "fragmentation": 0.42,
+              "accentCoverage": 0.11
+            },
+            "palette": {
+              "void": 1448997,
+              "shadow": 2699322,
+              "floorDeep": 7367527,
+              "floor": 11182476,
+              "floorLight": 12564125,
+              "materialDark": 4868945,
+              "materialMid": 7695973,
+              "materialLight": 9799795,
+              "faceLight": 13813675,
+              "accentDim": 6443617,
+              "accent": 8809848,
+              "accentLight": 11639443,
+              "peak": 15590084,
+              "actorDark": 2369326,
+              "actorMid": 4936539,
+              "actorLight": 12750939,
+              "ground": 11182476,
+              "groundLight": 12564125,
+              "groundDark": 7367527,
+              "wall": 7695973,
+              "wallLight": 13813675,
+              "wallDark": 4868945
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "broken-shell-low",
+            "family": "broken-shell",
+            "grade": "low",
+            "label": "壳腔·初裂",
+            "profile": "ivory-basin",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 538,
+            "search_y": 428,
+            "enemy_x": 708,
+            "enemy_y": 182,
+            "axis": -0.18,
+            "light_radius": 108,
+            "emission": 0.35,
+            "motion_period": 24,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "relief",
+                "x": 471,
+                "y": 266,
+                "rotation": 1.25,
+                "length": 224,
+                "width": 172,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.32,
+                "branches": 3,
+                "opening": 0.34,
+                "distortion": 0.18
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 656,
+                "y": 277,
+                "rotation": 0.38,
+                "length": 132,
+                "width": 114,
+                "height": 48,
+                "thickness": 17,
+                "fold": 0.25,
+                "branches": 2,
+                "opening": 0.46,
+                "distortion": 0.14
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 620,
+                  "y": 352
+                },
+                {
+                  "x": 656,
+                  "y": 344
+                },
+                {
+                  "x": 704,
+                  "y": 368
+                },
+                {
+                  "x": 696,
+                  "y": 392
+                },
+                {
+                  "x": 644,
+                  "y": 382
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-ivory-basin",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              }
+            },
+            "dependencyHash": "8698fcfe",
+            "grade": "low"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "f5b78dff"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ivory-basin-low-20261005-resist-suppress/low/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:broken-shell-low",
+        "signature": "38a88407",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ivory-basin",
+            "label": "吸光釉原",
+            "description": "厚釉沉积与吸光结节",
+            "material": "glaze",
+            "surface": {
+              "substrate": "strata",
+              "coating": "glaze",
+              "organization": "patches",
+              "coverage": 0.54,
+              "wear": 0.57,
+              "deposits": 0.55,
+              "scale": 1.2,
+              "relief": 0.5,
+              "contrast": 0.72,
+              "regionScale": 1.4,
+              "quietness": 0.55,
+              "formScale": 1.6,
+              "fragmentation": 0.42,
+              "accentCoverage": 0.11
+            },
+            "palette": {
+              "void": 1448997,
+              "shadow": 2699322,
+              "floorDeep": 7367527,
+              "floor": 11182476,
+              "floorLight": 12564125,
+              "materialDark": 4868945,
+              "materialMid": 7695973,
+              "materialLight": 9799795,
+              "faceLight": 13813675,
+              "accentDim": 6443617,
+              "accent": 8809848,
+              "accentLight": 11639443,
+              "peak": 15590084,
+              "actorDark": 2369326,
+              "actorMid": 4936539,
+              "actorLight": 12750939,
+              "ground": 11182476,
+              "groundLight": 12564125,
+              "groundDark": 7367527,
+              "wall": 7695973,
+              "wallLight": 13813675,
+              "wallDark": 4868945
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "broken-shell-low",
+            "family": "broken-shell",
+            "grade": "low",
+            "label": "壳腔·初裂",
+            "profile": "ivory-basin",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 538,
+            "search_y": 428,
+            "enemy_x": 708,
+            "enemy_y": 182,
+            "axis": -0.18,
+            "light_radius": 108,
+            "emission": 0.35,
+            "motion_period": 24,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "relief",
+                "x": 471,
+                "y": 266,
+                "rotation": 1.25,
+                "length": 224,
+                "width": 172,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.32,
+                "branches": 3,
+                "opening": 0.34,
+                "distortion": 0.18
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 656,
+                "y": 277,
+                "rotation": 0.38,
+                "length": 132,
+                "width": 114,
+                "height": 48,
+                "thickness": 17,
+                "fold": 0.25,
+                "branches": 2,
+                "opening": 0.46,
+                "distortion": 0.14
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 620,
+                  "y": 352
+                },
+                {
+                  "x": 656,
+                  "y": 344
+                },
+                {
+                  "x": 704,
+                  "y": 368
+                },
+                {
+                  "x": 696,
+                  "y": 392
+                },
+                {
+                  "x": 644,
+                  "y": 382
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "low",
+            "version": 1,
+            "label": "低污染",
+            "status": "dev-masters",
+            "intent": "污染局部侵入；允许停留观察和低损耗搜取",
+            "paintCount": 2,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "infiltrate",
+            "volumeCount": 1,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "infiltrate",
+            "volumeCols": 3,
+            "volumeRows": 3,
+            "chaosStartRate": 0.24,
+            "chaosEndRate": 0.34,
+            "chaosRampStartSeconds": 90,
+            "chaosRampEndSeconds": 210
+          },
+          "contentDefinition": {
+            "grade_id": "low",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "低污染",
+            "public_risk": "污染较少，混乱增长较慢",
+            "public_preparation": "观察路线，补充行装",
+            "public_reward": "深入仍需承担路程",
+            "enemy_count": 2,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 1,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 0
+          },
+          "package": {
+            "id": "r100-ivory-basin",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              }
+            },
+            "dependencyHash": "8698fcfe",
+            "grade": "low"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "38a88407"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ivory-basin-medium-20261004-resist-suppress/medium/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:broken-shell-medium",
+        "signature": "a9b3ae2b",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ivory-basin",
+            "label": "吸光釉原",
+            "description": "厚釉沉积与吸光结节",
+            "material": "glaze",
+            "surface": {
+              "substrate": "strata",
+              "coating": "glaze",
+              "organization": "patches",
+              "coverage": 0.54,
+              "wear": 0.57,
+              "deposits": 0.55,
+              "scale": 1.2,
+              "relief": 0.5,
+              "contrast": 0.72,
+              "regionScale": 1.4,
+              "quietness": 0.55,
+              "formScale": 1.6,
+              "fragmentation": 0.42,
+              "accentCoverage": 0.11
+            },
+            "palette": {
+              "void": 1448997,
+              "shadow": 2699322,
+              "floorDeep": 7367527,
+              "floor": 11182476,
+              "floorLight": 12564125,
+              "materialDark": 4868945,
+              "materialMid": 7695973,
+              "materialLight": 9799795,
+              "faceLight": 13813675,
+              "accentDim": 6443617,
+              "accent": 8809848,
+              "accentLight": 11639443,
+              "peak": 15590084,
+              "actorDark": 2369326,
+              "actorMid": 4936539,
+              "actorLight": 12750939,
+              "ground": 11182476,
+              "groundLight": 12564125,
+              "groundDark": 7367527,
+              "wall": 7695973,
+              "wallLight": 13813675,
+              "wallDark": 4868945
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "broken-shell-medium",
+            "family": "broken-shell",
+            "grade": "medium",
+            "label": "壳腔·内翻",
+            "profile": "ivory-basin",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 582,
+            "search_y": 450,
+            "enemy_x": 716,
+            "enemy_y": 176,
+            "axis": -0.18,
+            "light_radius": 134,
+            "emission": 0.55,
+            "motion_period": 20,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 471,
+                "y": 266,
+                "rotation": 1.25,
+                "length": 278,
+                "width": 206,
+                "height": 131,
+                "thickness": 31,
+                "fold": 0.57,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.3
+              },
+              {
+                "id": 2,
+                "role": "relief",
+                "x": 637,
+                "y": 260,
+                "rotation": 0.41,
+                "length": 192,
+                "width": 153,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.45,
+                "branches": 3,
+                "opening": 0.38,
+                "distortion": 0.25
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 459,
+                "y": 125,
+                "rotation": 2.62,
+                "length": 161,
+                "width": 116,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.4,
+                "branches": 3,
+                "opening": 0.4,
+                "distortion": 0.24
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 648,
+                  "y": 328
+                },
+                {
+                  "x": 728,
+                  "y": 352
+                },
+                {
+                  "x": 756,
+                  "y": 392
+                },
+                {
+                  "x": 716,
+                  "y": 416
+                },
+                {
+                  "x": 652,
+                  "y": 388
+                },
+                {
+                  "x": 608,
+                  "y": 392
+                }
+              ],
+              [
+                {
+                  "x": 168,
+                  "y": 128
+                },
+                {
+                  "x": 240,
+                  "y": 104
+                },
+                {
+                  "x": 284,
+                  "y": 128
+                },
+                {
+                  "x": 268,
+                  "y": 160
+                },
+                {
+                  "x": 200,
+                  "y": 168
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-ivory-basin",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              }
+            },
+            "dependencyHash": "c00fc555",
+            "grade": "medium"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "a9b3ae2b"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ivory-basin-medium-20261005-resist-suppress/medium/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:broken-shell-medium",
+        "signature": "62b347d8",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ivory-basin",
+            "label": "吸光釉原",
+            "description": "厚釉沉积与吸光结节",
+            "material": "glaze",
+            "surface": {
+              "substrate": "strata",
+              "coating": "glaze",
+              "organization": "patches",
+              "coverage": 0.54,
+              "wear": 0.57,
+              "deposits": 0.55,
+              "scale": 1.2,
+              "relief": 0.5,
+              "contrast": 0.72,
+              "regionScale": 1.4,
+              "quietness": 0.55,
+              "formScale": 1.6,
+              "fragmentation": 0.42,
+              "accentCoverage": 0.11
+            },
+            "palette": {
+              "void": 1448997,
+              "shadow": 2699322,
+              "floorDeep": 7367527,
+              "floor": 11182476,
+              "floorLight": 12564125,
+              "materialDark": 4868945,
+              "materialMid": 7695973,
+              "materialLight": 9799795,
+              "faceLight": 13813675,
+              "accentDim": 6443617,
+              "accent": 8809848,
+              "accentLight": 11639443,
+              "peak": 15590084,
+              "actorDark": 2369326,
+              "actorMid": 4936539,
+              "actorLight": 12750939,
+              "ground": 11182476,
+              "groundLight": 12564125,
+              "groundDark": 7367527,
+              "wall": 7695973,
+              "wallLight": 13813675,
+              "wallDark": 4868945
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "broken-shell-medium",
+            "family": "broken-shell",
+            "grade": "medium",
+            "label": "壳腔·内翻",
+            "profile": "ivory-basin",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 582,
+            "search_y": 450,
+            "enemy_x": 716,
+            "enemy_y": 176,
+            "axis": -0.18,
+            "light_radius": 134,
+            "emission": 0.55,
+            "motion_period": 20,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 471,
+                "y": 266,
+                "rotation": 1.25,
+                "length": 278,
+                "width": 206,
+                "height": 131,
+                "thickness": 31,
+                "fold": 0.57,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.3
+              },
+              {
+                "id": 2,
+                "role": "relief",
+                "x": 637,
+                "y": 260,
+                "rotation": 0.41,
+                "length": 192,
+                "width": 153,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.45,
+                "branches": 3,
+                "opening": 0.38,
+                "distortion": 0.25
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 459,
+                "y": 125,
+                "rotation": 2.62,
+                "length": 161,
+                "width": 116,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.4,
+                "branches": 3,
+                "opening": 0.4,
+                "distortion": 0.24
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 648,
+                  "y": 328
+                },
+                {
+                  "x": 728,
+                  "y": 352
+                },
+                {
+                  "x": 756,
+                  "y": 392
+                },
+                {
+                  "x": 716,
+                  "y": 416
+                },
+                {
+                  "x": 652,
+                  "y": 388
+                },
+                {
+                  "x": 608,
+                  "y": 392
+                }
+              ],
+              [
+                {
+                  "x": 168,
+                  "y": 128
+                },
+                {
+                  "x": 240,
+                  "y": 104
+                },
+                {
+                  "x": 284,
+                  "y": 128
+                },
+                {
+                  "x": 268,
+                  "y": 160
+                },
+                {
+                  "x": 200,
+                  "y": 168
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "medium",
+            "version": 1,
+            "label": "中污染",
+            "status": "dev-masters",
+            "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+            "paintCount": 4,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "rewrite",
+            "volumeCount": 2,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "rewrite",
+            "volumeCols": 4,
+            "volumeRows": 3,
+            "chaosStartRate": 0.42,
+            "chaosEndRate": 0.6,
+            "chaosRampStartSeconds": 60,
+            "chaosRampEndSeconds": 180
+          },
+          "contentDefinition": {
+            "grade_id": "medium",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "中污染",
+            "public_risk": "侵蚀更广，久留代价更高",
+            "public_preparation": "按行装选择绕行或穿越",
+            "public_reward": "更多收获在较深处",
+            "enemy_count": 3,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 2,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 1
+          },
+          "package": {
+            "id": "r100-ivory-basin",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              }
+            },
+            "dependencyHash": "c00fc555",
+            "grade": "medium"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "62b347d8"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ivory-basin-severe-20261004-resist-suppress/severe/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261004,
+        "recipeId": "r100-native-v3:broken-shell-severe",
+        "signature": "dfbe7c02",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261004,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ivory-basin",
+            "label": "吸光釉原",
+            "description": "厚釉沉积与吸光结节",
+            "material": "glaze",
+            "surface": {
+              "substrate": "strata",
+              "coating": "glaze",
+              "organization": "patches",
+              "coverage": 0.54,
+              "wear": 0.57,
+              "deposits": 0.55,
+              "scale": 1.2,
+              "relief": 0.5,
+              "contrast": 0.72,
+              "regionScale": 1.4,
+              "quietness": 0.55,
+              "formScale": 1.6,
+              "fragmentation": 0.42,
+              "accentCoverage": 0.11
+            },
+            "palette": {
+              "void": 1448997,
+              "shadow": 2699322,
+              "floorDeep": 7367527,
+              "floor": 11182476,
+              "floorLight": 12564125,
+              "materialDark": 4868945,
+              "materialMid": 7695973,
+              "materialLight": 9799795,
+              "faceLight": 13813675,
+              "accentDim": 6443617,
+              "accent": 8809848,
+              "accentLight": 11639443,
+              "peak": 15590084,
+              "actorDark": 2369326,
+              "actorMid": 4936539,
+              "actorLight": 12750939,
+              "ground": 11182476,
+              "groundLight": 12564125,
+              "groundDark": 7367527,
+              "wall": 7695973,
+              "wallLight": 13813675,
+              "wallDark": 4868945
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "broken-shell-severe",
+            "family": "broken-shell",
+            "grade": "severe",
+            "label": "壳腔·重封",
+            "profile": "ivory-basin",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 613,
+            "search_y": 466,
+            "enemy_x": 762,
+            "enemy_y": 172,
+            "axis": -0.18,
+            "light_radius": 155,
+            "emission": 0.72,
+            "motion_period": 17,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 471,
+                "y": 224,
+                "rotation": 1.25,
+                "length": 405,
+                "width": 292,
+                "height": 190,
+                "thickness": 38,
+                "fold": 0.83,
+                "branches": 5,
+                "opening": 0.25,
+                "distortion": 0.41
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 691,
+                "y": 276,
+                "rotation": 0.34,
+                "length": 247,
+                "width": 187,
+                "height": 139,
+                "thickness": 31,
+                "fold": 0.72,
+                "branches": 4,
+                "opening": 0.29,
+                "distortion": 0.36
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 428,
+                "y": 89,
+                "rotation": 2.79,
+                "length": 244,
+                "width": 168,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.69,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.33
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 664,
+                  "y": 320
+                },
+                {
+                  "x": 776,
+                  "y": 352
+                },
+                {
+                  "x": 816,
+                  "y": 408
+                },
+                {
+                  "x": 752,
+                  "y": 448
+                },
+                {
+                  "x": 664,
+                  "y": 408
+                },
+                {
+                  "x": 616,
+                  "y": 432
+                },
+                {
+                  "x": 568,
+                  "y": 400
+                }
+              ],
+              [
+                {
+                  "x": 128,
+                  "y": 104
+                },
+                {
+                  "x": 208,
+                  "y": 80
+                },
+                {
+                  "x": 296,
+                  "y": 112
+                },
+                {
+                  "x": 304,
+                  "y": 152
+                },
+                {
+                  "x": 240,
+                  "y": 176
+                },
+                {
+                  "x": 176,
+                  "y": 160
+                },
+                {
+                  "x": 112,
+                  "y": 144
+                }
+              ],
+              [
+                {
+                  "x": 336,
+                  "y": 488
+                },
+                {
+                  "x": 408,
+                  "y": 472
+                },
+                {
+                  "x": 480,
+                  "y": 504
+                },
+                {
+                  "x": 472,
+                  "y": 540
+                },
+                {
+                  "x": 400,
+                  "y": 548
+                },
+                {
+                  "x": 344,
+                  "y": 520
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 3,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-ivory-basin",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              }
+            },
+            "dependencyHash": "fa03aef6",
+            "grade": "severe"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "9f8ebef0"
+    },
+    {
+      "source": "docs/qa/artifacts/r100-i03/matrix/ivory-basin-severe-20261005-resist-suppress/severe/1-entry.save.json",
+      "identity": {
+        "worldId": "procedural-rift",
+        "layoutId": "procedural-rift",
+        "seed": 20261005,
+        "recipeId": "r100-native-v3:broken-shell-severe",
+        "signature": "a2f68826",
+        "generation": {
+          "version": 3,
+          "requestedSeed": 20261005,
+          "paintGeometryVersion": 2,
+          "profile": {
+            "id": "ivory-basin",
+            "label": "吸光釉原",
+            "description": "厚釉沉积与吸光结节",
+            "material": "glaze",
+            "surface": {
+              "substrate": "strata",
+              "coating": "glaze",
+              "organization": "patches",
+              "coverage": 0.54,
+              "wear": 0.57,
+              "deposits": 0.55,
+              "scale": 1.2,
+              "relief": 0.5,
+              "contrast": 0.72,
+              "regionScale": 1.4,
+              "quietness": 0.55,
+              "formScale": 1.6,
+              "fragmentation": 0.42,
+              "accentCoverage": 0.11
+            },
+            "palette": {
+              "void": 1448997,
+              "shadow": 2699322,
+              "floorDeep": 7367527,
+              "floor": 11182476,
+              "floorLight": 12564125,
+              "materialDark": 4868945,
+              "materialMid": 7695973,
+              "materialLight": 9799795,
+              "faceLight": 13813675,
+              "accentDim": 6443617,
+              "accent": 8809848,
+              "accentLight": 11639443,
+              "peak": 15590084,
+              "actorDark": 2369326,
+              "actorMid": 4936539,
+              "actorLight": 12750939,
+              "ground": 11182476,
+              "groundLight": 12564125,
+              "groundDark": 7367527,
+              "wall": 7695973,
+              "wallLight": 13813675,
+              "wallDark": 4868945
+            }
+          },
+          "space": {
+            "id": "open-scars",
+            "label": "疏落蚀坑",
+            "voidFraction": 0.09,
+            "crackFraction": 0.2,
+            "holeScale": 1,
+            "directionality": 0.2,
+            "clustering": 0.25
+          },
+          "contentFragmentTypeId": "frag-outdoor",
+          "nativeDefinition": {
+            "id": "broken-shell-severe",
+            "family": "broken-shell",
+            "grade": "severe",
+            "label": "壳腔·重封",
+            "profile": "ivory-basin",
+            "cols": 28,
+            "rows": 20,
+            "seed": 20261002,
+            "spawn_x": 260,
+            "spawn_y": 380,
+            "exit_x": 196,
+            "exit_y": 460,
+            "search_x": 613,
+            "search_y": 466,
+            "enemy_x": 762,
+            "enemy_y": 172,
+            "axis": -0.18,
+            "light_radius": 155,
+            "emission": 0.72,
+            "motion_period": 17,
+            "ground_quietness": 0.84,
+            "ground_contrast": 0.5,
+            "ground_coverage": 0.26,
+            "ground_material_blend": 0.32,
+            "instances": [
+              {
+                "id": 1,
+                "role": "solid",
+                "x": 471,
+                "y": 224,
+                "rotation": 1.25,
+                "length": 405,
+                "width": 292,
+                "height": 190,
+                "thickness": 38,
+                "fold": 0.83,
+                "branches": 5,
+                "opening": 0.25,
+                "distortion": 0.41
+              },
+              {
+                "id": 2,
+                "role": "solid",
+                "x": 691,
+                "y": 276,
+                "rotation": 0.34,
+                "length": 247,
+                "width": 187,
+                "height": 139,
+                "thickness": 31,
+                "fold": 0.72,
+                "branches": 4,
+                "opening": 0.29,
+                "distortion": 0.36
+              },
+              {
+                "id": 3,
+                "role": "relief",
+                "x": 428,
+                "y": 89,
+                "rotation": 2.79,
+                "length": 244,
+                "width": 168,
+                "height": 6,
+                "thickness": 2,
+                "fold": 0.69,
+                "branches": 4,
+                "opening": 0.3,
+                "distortion": 0.33
+              }
+            ],
+            "erosion": [
+              [
+                {
+                  "x": 584,
+                  "y": 352
+                },
+                {
+                  "x": 664,
+                  "y": 320
+                },
+                {
+                  "x": 776,
+                  "y": 352
+                },
+                {
+                  "x": 816,
+                  "y": 408
+                },
+                {
+                  "x": 752,
+                  "y": 448
+                },
+                {
+                  "x": 664,
+                  "y": 408
+                },
+                {
+                  "x": 616,
+                  "y": 432
+                },
+                {
+                  "x": 568,
+                  "y": 400
+                }
+              ],
+              [
+                {
+                  "x": 128,
+                  "y": 104
+                },
+                {
+                  "x": 208,
+                  "y": 80
+                },
+                {
+                  "x": 296,
+                  "y": 112
+                },
+                {
+                  "x": 304,
+                  "y": 152
+                },
+                {
+                  "x": 240,
+                  "y": 176
+                },
+                {
+                  "x": 176,
+                  "y": 160
+                },
+                {
+                  "x": 112,
+                  "y": 144
+                }
+              ],
+              [
+                {
+                  "x": 336,
+                  "y": 488
+                },
+                {
+                  "x": 408,
+                  "y": 472
+                },
+                {
+                  "x": 480,
+                  "y": 504
+                },
+                {
+                  "x": 472,
+                  "y": 540
+                },
+                {
+                  "x": 400,
+                  "y": 548
+                },
+                {
+                  "x": 344,
+                  "y": 520
+                }
+              ]
+            ]
+          },
+          "gradeDefinition": {
+            "id": "severe",
+            "version": 1,
+            "label": "重度污染",
+            "status": "dev-masters",
+            "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+            "paintCount": 6,
+            "paintSubstrate": "oil_film",
+            "paintContinuity": "monolith",
+            "paintCoverage": "overwrite",
+            "volumeCount": 3,
+            "volumeSubstrate": "gas_mass",
+            "volumeCoverage": "overwrite",
+            "volumeCols": 5,
+            "volumeRows": 3,
+            "chaosStartRate": 0.64,
+            "chaosEndRate": 0.96,
+            "chaosRampStartSeconds": 40,
+            "chaosRampEndSeconds": 130
+          },
+          "contentDefinition": {
+            "grade_id": "severe",
+            "version": 1,
+            "status": "production-candidate",
+            "label": "重度污染",
+            "public_risk": "地面与空气受侵占，混乱增长快",
+            "public_preparation": "备好脱身工具，留出归途",
+            "public_reward": "更多收获在深处，入口无加成",
+            "enemy_count": 4,
+            "kindling_safe_count": 1,
+            "kindling_contested_count": 2,
+            "kindling_deep_count": 3,
+            "kindling_safe_value": 1,
+            "kindling_contested_value": 2,
+            "kindling_deep_value": 4,
+            "contaminant_safe_count": 1,
+            "contaminant_contested_count": 1,
+            "contaminant_deep_count": 2
+          },
+          "package": {
+            "id": "r100-ivory-basin",
+            "algorithm": "r100-native",
+            "version": 3,
+            "algorithmRevision": 1,
+            "materials": {
+              "broken-shell": {
+                "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+                "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+                "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+              }
+            },
+            "dependencyHash": "fa03aef6",
+            "grade": "severe"
+          }
+        },
+        "catalogVersion": "contaminant-v1",
+        "lootAlgorithmVersion": 1,
+        "combatRulesVersion": 2
+      },
+      "nodeSignature": "a2f68826"
+    }
+  ],
+  "nodeOracle": "docs/qa/artifacts/r100-i05-qualification/qualification-07d63a2322cd.mjs",
+  "nodeOracleSha256": "07d63a2322cddc78b9bf89735f96911e95933e1132e04473f03f993453f1dfce"
+}

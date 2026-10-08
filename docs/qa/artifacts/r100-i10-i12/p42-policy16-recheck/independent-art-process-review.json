@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "status": "additional-policy16-search-and-extract-observed",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T13:19:23.761Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "issue": "R100-P42",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "approvedProtocol": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/approved-protocol.json",
+    "sha256": "878da1c64b23902119f0e822f9502f688d7abf7bde098f60d34e295979d58171"
+  },
+  "rootInputProtocolReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/root-input-protocol-review.json",
+    "sha256": "0081d07f705687017359b83034ae4c35a558bac7a086ca25056da43b940469a1"
+  },
+  "originalPairReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/independent-outcome-frame-review-art.json",
+    "sha256": "ccea46f204f57b40f5bbe498ddd5072880d403dbfdbf334e4b4414bc4fa10cc2"
+  },
+  "cases": [
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "020f431f7a3e1c725f0e96a137f018eb588f0280273e0723795ce8ef0410f9e1"
+      },
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+      },
+      "attemptKind": "additional-policy16-original-seed",
+      "world": "white-scarfield",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "7864d455",
+      "dependencyHash": "b219f1bd",
+      "policyRevision": 16,
+      "fullIdentityExactToOriginal": true,
+      "beforeStateExactToOriginal": true,
+      "outcome": "extract",
+      "elapsedMs": 96029.49000000037,
+      "hp": 130,
+      "chaos": 93.9899500319061,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-deep-1",
+          "tier": "deep",
+          "kind": "kindling",
+          "distanceFromEntry": 789.7341324775067
+        }
+      ],
+      "kindlingGained": 12,
+      "returnedItemCount": 0,
+      "boundedSearchRechecks": [],
+      "sameRunSettlementVerified": true,
+      "originalOutcome": "death",
+      "originalHp": 0,
+      "originalKindling": 0,
+      "originalReturnedItemCount": 0,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "e3239ead963eea8548f120e271b8637e6764a653649f289f6f22653851b10bc2"
+      },
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+      },
+      "attemptKind": "additional-policy16-original-seed",
+      "world": "white-scarfield",
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "6ff3dd6f",
+      "dependencyHash": "b219f1bd",
+      "policyRevision": 16,
+      "fullIdentityExactToOriginal": true,
+      "beforeStateExactToOriginal": true,
+      "outcome": "extract",
+      "elapsedMs": 60397.589999999815,
+      "hp": 100,
+      "chaos": 84.13159515682335,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 576.0555528766301
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "boundedSearchRechecks": [],
+      "sameRunSettlementVerified": true,
+      "originalOutcome": "extract",
+      "originalHp": 55,
+      "originalKindling": 0,
+      "originalReturnedItemCount": 0,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "counts": {
+    "additionalAttempts": 2,
+    "additionalNonEntrySearchAndExtract": 2,
+    "additionalEmptyReturns": 0,
+    "additionalDeaths": 0,
+    "actualBoundedSearchRechecks": 0,
+    "retainedOriginalDeaths": 1,
+    "retainedOriginalTrueEmptyReturns": 1
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/001-white-scarfield-severe-20261005/severe/1-search-2.png",
+      "sha256": "89fbfc86b0df5c67572108da458a220bd9ba0ae2d5d2cefd6c602129effb3be1",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "130HP/71混乱时深部取得12薪柴，粉白粗床与右侧黑绿宿主局部分开，绿色侵蚀仍在视野外缘；只见局部床，不补签完整暗蓝中列或撤路。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/001-white-scarfield-severe-20261005/severe/1-field-result.png",
+      "sha256": "a0f827115e968190b0003a5ba5fa7519cb4f67487e957bbbc5c4c7ce66b8d8b3",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "130HP、12薪柴、96秒、峰值混乱94、一击杀返回，明确为受伤后的实际带回；原seed第一次死亡仍保留。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/002-white-scarfield-severe-3075192741/severe/1-search-1.png",
+      "sha256": "1a23add1121687492970ce5dbfa700f8e5bf70397fa6a69d0f85e2fd44639b7b",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "100HP/73混乱时争夺点取得6薪柴，粉白粒床、右侧浅绿污染体与上方黑缺地能局部区分；右侧和下沿仍有较直材料切界。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/002-white-scarfield-severe-3075192741/severe/1-field-result.png",
+      "sha256": "a8df6a82361df72d6c2ba38fd62b06ce4e39c9fe23ff762fb9f2103dd9feba4a",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "100HP、6薪柴、60秒、峰值混乱84、两击杀返回；原seed第一次55HP真空返仍保留，不用新结果改写旧过程。"
+    }
+  ],
+  "findings": [
+    "两新增policy16过程的完整identity与各自原过程、before.state逐项深比较相等，两个原seed均实际取得一次非入口资源后同趟返回。",
+    "新增第一seed深部12薪柴/130HP/93.99混乱，第二seed争夺点6薪柴/100HP/84.13混乱，均保留受伤及消耗过程。",
+    "两个boundedSearchRechecks数组均为空；本次没有真实执行有界重搜，不能声称重搜机制解决了原失败，也不由这些图归因具体输入修正的效果。",
+    "粉白地床、污染形体与黑缺地在所见局部可辨，直材料界线弱项仍保留；没有新的共享画法或UI审美判定。"
+  ],
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/001-white-scarfield-severe-20261005/severe/1-search-2.png",
+      "sha256": "89fbfc86b0df5c67572108da458a220bd9ba0ae2d5d2cefd6c602129effb3be1",
+      "reason": "130HP/71混乱时深部取得12薪柴，粉白粗床与右侧黑绿宿主局部分开，绿色侵蚀仍在视野外缘；只见局部床，不补签完整暗蓝中列或撤路。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/002-white-scarfield-severe-3075192741/severe/1-search-1.png",
+      "sha256": "1a23add1121687492970ce5dbfa700f8e5bf70397fa6a69d0f85e2fd44639b7b",
+      "reason": "100HP/73混乱时争夺点取得6薪柴，粉白粒床、右侧浅绿污染体与上方黑缺地能局部区分；右侧和下沿仍有较直材料切界。"
+    }
+  ],
+  "limits": [
+    "Four original normal PNGs personally viewed plus two completed reports; no Chrome session, live gameplay, video, audio, GPU/performance or human aesthetic approval.",
+    "Additional fixed policy16 attempts; not replacements for original policy15 death/empty return and not natural48.",
+    "This art/process receipt does not close P43 or enable final108, and does not modify the final-art candidate.",
+    "Technical supplemental qualification and issue disposition belong to root/QA; only actual outcome and exact identity/save comparison are asserted here."
+  ],
+  "pixelModelsScope": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+    "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+  }
+}

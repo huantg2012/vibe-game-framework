@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-import {validateAccountingScopes, validateInheritance, validateRuntimeBinding, assertPlaySummaryExact, validateBoundedPlayContinuity, validateFinalRuntimeBindings, validateShaderReview} from './r100-bind-i10-i12.mjs';
+import {validateAccountingScopes, validateInheritance, validateRuntimeBinding, assertPlaySummaryExact, validateBoundedPlayContinuity, validateFinalRuntimeBindings, validateShaderReview, validateHistoricalGenerationSources, validateGenerationHarnessSources} from './r100-bind-i10-i12.mjs';
 import {validateFinalReport, summarizeWorkerEvents} from './r100-i09-final-probe.mjs';
 
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -24,6 +24,29 @@ const accounting = () => ({generations:{historicalGeneration:generation(old,48),
   plays:{historicalPlay:play(old,5),play:play(added,6)}});
 const checks=[];
 const check=(name,run)=>{run();checks.push({name,status:'pass'});};
+const historicalPlan=read('docs/qa/artifacts/r100-i07-i09/final-binding/plan.json');
+const supplement=read('docs/qa/artifacts/r100-i10-i12/closeout-independent-review/historical-generation-harness-supplement.json');
+const historicalGeneration=read(supplement.historicalGeneration.path);
+const validateSupplement=value=>{
+  const sources=validateHistoricalGenerationSources(value,historicalPlan.generationSources);
+  for(const entry of sources){
+    const group=historicalGeneration.groups.find(row=>row.id===entry.groupId);
+    validateGenerationHarnessSources(entry,group.dependencies.filter(row=>row.path.startsWith('tools/')),file=>fs.readFileSync(file));
+  }
+};
+check('all11 historical QA source supplements preserve original identities and executed bytes',()=>validateSupplement(supplement.historicalGenerationSources));
+for(const [name,mutate] of [
+  ['missing historical QA source group',x=>x.pop()],
+  ['duplicate historical QA group hides another source',x=>x[1]=structuredClone(x[0])],
+  ['historical QA supplement cannot replace source path',x=>x[0].path=x[1].path],
+  ['historical QA supplement cannot reseal different source SHA',x=>x[0].sha256=sha('other source')],
+  ['historical QA supplement cannot omit executed dependency',x=>x[0].harnessSources=[]],
+  ['historical QA supplement cannot add unrelated dependency',x=>x[0].harnessSources.push(structuredClone(x[0].harnessSources[0]))],
+  ['historical QA supplement cannot reseal newer executor bytes',x=>{
+    x[0].harnessSources[0].path='tools/world-study/check-r100-library.ts';
+    x[0].harnessSources[0].sha256=sha(fs.readFileSync(x[0].harnessSources[0].path));
+  }],
+])check(name,()=>{const x=structuredClone(supplement.historicalGenerationSources);mutate(x);assert.throws(()=>validateSupplement(x));});
 check('original r5 summary schema only omits verified 5/13 metadata',()=>{
   const old={sources:[{folder:'fixture'}],result:'unchanged'};
   const current={...old,algorithmRevisions:[5],sources:[{folder:'fixture',algorithmRevision:5,controllerPolicyRevision:13}]};
@@ -70,7 +93,7 @@ const plan={finalSource:{path:'synthetic-source.json',sha256:sha('source')},prod
 const wrapper='tools/qa/r100-i09-final-probe.mjs';
 const binding={status:'pass',kind:'production',finalSource:plan.finalSource,report:plan.production,
   beforeRuntimeVerified:true,afterRuntimeVerified:true,servedSourceVerified:true,exitCode:0,
-  harness:{path:'synthetic-harness',sha256:sha('tool')},wrapper:{path:wrapper,sha256:sha('tool')},
+  harness:{path:'tools/qa/check-r100-production-browser.mjs',sha256:sha('tool')},wrapper:{path:wrapper,sha256:sha('tool')},
   beforeServedHashes:source.sources,afterServedHashes:source.sources,
   beforeFiles:{nodeWorkingDirectory:process.cwd(),frozenDirectory:source.temporaryRoot,files:2},worldIds:['one']};
 binding.afterFiles=binding.beforeFiles;
@@ -97,6 +120,7 @@ for(const [name,mutate] of [
   ['missing observation cannot be substituted by passed gameplay',x=>delete x.workerObservation],
   ['missing explicit failure stop',x=>x.probeOptions.stopOnFailure=false],
   ['changed observer implementation',x=>x.dependencies[0].sha256=sha('other observer')],
+  ['different runtime method with valid harness bytes',x=>x.harness.path='tools/qa/check-r100-runtime-budget.mjs'],
 ])check(name,()=>{const x=structuredClone(binding);mutate(x);assert.throws(()=>verify(x));});
 for(const [name,events]of [
   ['caught Worker failure despite successful case, resealed raw', [...observedEvents,event('console',{type:'error',text:'Generation worker failed'})]],
@@ -110,10 +134,14 @@ check('false clean observation summary cannot hide original raw failure',()=>{
 });
 // Audit all four runtime methods without inventing any final108 execution.
 const runtimeKinds=['production','equivalence','budget','lifecycle'];
+const runtimeHarnesses={production:'tools/qa/check-r100-production-browser.mjs',
+  equivalence:'tools/world-study/check-r100-browser-equivalence.mjs',
+  budget:'tools/qa/check-r100-runtime-budget.mjs',lifecycle:'tools/qa/check-r100-gym-lifecycle.mjs'};
 const runtimePlan=structuredClone(plan), auditMemory=new Map();
 for(const kind of runtimeKinds){
   runtimePlan[kind]={path:`synthetic-${kind}-report.json`,sha256:sha(kind)};
   const audit={...structuredClone(binding),kind,report:runtimePlan[kind]};
+  audit.harness.path=runtimeHarnesses[kind];
   const raw=Buffer.from(JSON.stringify(audit)), file=`synthetic-${kind}-binding.json`;
   auditMemory.set(file,raw);(runtimePlan.runtimeBindings??=[]).push({path:file,sha256:sha(raw)});
 }

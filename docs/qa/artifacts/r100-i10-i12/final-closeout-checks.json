@@ -1,0 +1,46 @@
+{
+  "status": "completed-scoped-closeout-checks",
+  "reviewer": "root",
+  "date": "2026-10-08",
+  "progress": {
+    "exitCode": 0,
+    "report": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-progress-check.log",
+      "sha256": "f048b54cb527374d09e20428c6395611dbbf6d3324c9057c9ad51d91639f0d96"
+    },
+    "closed": 12,
+    "qualifiedWorlds": 108,
+    "productionGradeCases": 324
+  },
+  "gameState": {
+    "checkExitCode": 2,
+    "check": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-game-state-check.log",
+      "sha256": "260755a30a032ccc3f9d7de334c3b31f89155afcedfac965a4c5f0b26f17a670"
+    },
+    "renderExitCode": 0,
+    "render": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-game-state-render-with-entry.log",
+      "sha256": "add1afba50acf2d3b9ea4f8ae0a81d778c0365e50b747c82e967a4b9b7af7d67"
+    },
+    "features": 53,
+    "evidence": 180,
+    "retainedWarnings": "46 historical evidence links have changed implementation; 134 lack comparable version; existing source baseline and language/settings coverage warnings retained. No global baseline reset."
+  },
+  "scope": "Final ledger/index checks and user-authorized sampling only; completed build/production/generation evidence reused without rerunning full game tests.",
+  "closureApplication": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closure-application.json",
+    "sha256": "165a4abaf1edbf5bf91d84af13354411c93507d371baaadc59ba992b9b432081"
+  },
+  "postClosureProgressSync": {
+    "path": "docs/qa/artifacts/r100-i10-i12/post-closure-progress-sync.json",
+    "sha256": "176887512932e29d9af092f24e9b6bbbfffea7c48716f4f01c0016148084f02b"
+  },
+  "gameSourceUnchangedSinceFinalFreeze": true,
+  "pending": [
+    "R100-I13",
+    "R100-I14"
+  ],
+  "humanApproval": false,
+  "releaseApproval": false
+}

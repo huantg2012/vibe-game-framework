@@ -1,0 +1,101 @@
+{
+  "status": "two-original-identities-completed-with-nonentry-extraction",
+  "protocol": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-preparation/approved-protocol.json",
+    "sha256": "878da1c64b23902119f0e822f9502f688d7abf7bde098f60d34e295979d58171"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/execution.json",
+    "sha256": "749c95c25f8ff4db78d1532bf435375c3245d44fe72d6c630dfd80804460e6c4"
+  },
+  "policy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/policy-freeze.json",
+    "sha256": "9b56be8d5daedcc4b5c8b0db712a3560629f37bf988328052800ee626addab86"
+  },
+  "batch": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/batch-report.json",
+    "sha256": "1c6eb3bb577f685d87643f3f8ffd8c2321302fa3d2d87e771cf8e335cedc073e"
+  },
+  "observations": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/worker-observation-summary.json",
+    "sha256": "7f75caa8e96d456fad1a7f346b10b3390e9377327e434da6f9aa5fa3818e00e7"
+  },
+  "earnedStorageExactExceptOrigin": true,
+  "rows": [
+    {
+      "case": {
+        "world": "white-scarfield",
+        "grade": "severe",
+        "seed": 20261005,
+        "originalReport": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+          "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "020f431f7a3e1c725f0e96a137f018eb588f0280273e0723795ce8ef0410f9e1"
+      },
+      "fullIdentityExact": true,
+      "beforeSaveExact": true,
+      "originalFailureRetained": true,
+      "harnessAndDependenciesExact": true,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-deep-1",
+          "kind": "kindling",
+          "distanceFromEntry": 789.7341324775067,
+          "elapsedMs": 63580.80999999971,
+          "evidence": "target-observed / terminal-collected",
+          "timing": "observation upper bound",
+          "eligibleNonEntry": true
+        }
+      ],
+      "outcome": "extract",
+      "fieldElapsedMs": 96029.49000000037,
+      "hp": 130,
+      "chaos": 93.9899500319061,
+      "runId": "00f6c9f4-e18c-44e1-9707-d20e8a278b31",
+      "boundedSearchRechecks": [],
+      "noClaimThatUntriggeredRecheckCausedSuccess": true
+    },
+    {
+      "case": {
+        "world": "white-scarfield",
+        "grade": "severe",
+        "seed": 3075192741,
+        "originalReport": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+          "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p42-policy16-recheck/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "e3239ead963eea8548f120e271b8637e6764a653649f289f6f22653851b10bc2"
+      },
+      "fullIdentityExact": true,
+      "beforeSaveExact": true,
+      "originalFailureRetained": true,
+      "harnessAndDependenciesExact": true,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "distanceFromEntry": 576.0555528766301,
+          "elapsedMs": 38415.119999999806,
+          "evidence": "target-observed / terminal-collected",
+          "timing": "observation upper bound",
+          "eligibleNonEntry": true
+        }
+      ],
+      "outcome": "extract",
+      "fieldElapsedMs": 60397.589999999815,
+      "hp": 100,
+      "chaos": 84.13159515682335,
+      "runId": "ba562069-a58c-4dbf-9945-cd350d834fd8",
+      "boundedSearchRechecks": [],
+      "noClaimThatUntriggeredRecheckCausedSuccess": true
+    }
+  ],
+  "interpretation": "Both processes used approved policy16 and exactly retained their original full identities and earned starting saves. Neither invoked bounded re-search; success cannot be attributed to the untriggered branch. Original death/empty return remain separate evidence; no causal or success-rate estimate is made."
+}

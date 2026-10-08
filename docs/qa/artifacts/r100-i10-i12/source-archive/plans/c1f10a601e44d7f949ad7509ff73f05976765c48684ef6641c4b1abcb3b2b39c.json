@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "status": "planned-not-archived",
+  "createdAt": "2026-10-07T14:43:42.529Z",
+  "project": "/Users/yilungao/coh",
+  "scope": "Original manifest-declared source files and required directory modes. External node_modules, caches, OS/browser binaries and unlisted QA executors are not frozen by these manifests and are not claimed as preserved runtime dependencies.",
+  "references": [],
+  "pending": [],
+  "aliasesApplied": [],
+  "supplements": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/generation-harness-sources/03b8b3b8fe98eb74da45f164d13eb96cf1c8b6df20f2badd192b271a04b57d76/check-r100-library.ts",
+      "sha256": "03b8b3b8fe98eb74da45f164d13eb96cf1c8b6df20f2badd192b271a04b57d76",
+      "authority": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/historical-generation-harness-supplement.json",
+        "sha256": "7487ab29c41db02b242e0b0951b6c5c10d7ed2a29f5928c91516d9825127a388",
+        "jsonPointer": "/preservedFiles/0"
+      },
+      "scope": "Explicit historical QA source supplement, exact original receipt-bound bytes. Not retroactively part of any original source manifest."
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/generation-harness-sources/0132952581cf7b60af9dfca6b3129e7622700622f83e84120aed084f229a31bd/check-r100-library.ts",
+      "sha256": "0132952581cf7b60af9dfca6b3129e7622700622f83e84120aed084f229a31bd",
+      "authority": {
+        "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/historical-generation-harness-supplement.json",
+        "sha256": "7487ab29c41db02b242e0b0951b6c5c10d7ed2a29f5928c91516d9825127a388",
+        "jsonPointer": "/preservedFiles/1"
+      },
+      "scope": "Explicit historical QA source supplement, exact original receipt-bound bytes. Not retroactively part of any original source manifest."
+    }
+  ],
+  "snapshots": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af",
+      "temporaryRoot": "/private/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/coh-r100-qa-IFvDxZ",
+      "fileCount": 1397,
+      "reasons": [
+        "explicit manifest"
+      ]
+    }
+  ]
+}

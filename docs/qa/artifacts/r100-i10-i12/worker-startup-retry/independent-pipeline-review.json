@@ -1,0 +1,66 @@
+{
+  "status": "bounded-code-review-pass",
+  "reviewer": "identity_pipeline",
+  "reviewedAt": "2026-10-07T06:30:31.317Z",
+  "reviewedSource": [
+    {
+      "path": "src/utils/worker-request.ts",
+      "sha256": "daffb6b048af03e206c50756dbfe5ecc66763e5a222a44081de66e4ef8395e87"
+    },
+    {
+      "path": "src/generation/rift-generation-client.ts",
+      "sha256": "eadc68f5d3ed49d53fc0d251b5e316d97aba91acbf2e2a3b23aad1153eb57e1b"
+    },
+    {
+      "path": "src/generation/rift-generation-protocol.ts",
+      "sha256": "ee929416e408074916458f5445b3ff8f7487ad9e52ff9f1eac41e92b00acf61b"
+    },
+    {
+      "path": "src/generation/rift-generation-worker.ts",
+      "sha256": "2d38af7ac34d11b44669b2775e81ae2b092277611eb37bd61e6008af0bb40567"
+    },
+    {
+      "path": "src/systems/r100-world/surface-preparation-client.ts",
+      "sha256": "864d605301d0323257cf455bd9710e9245517dd1691bdd7616cae91eba488ce0"
+    },
+    {
+      "path": "src/systems/r100-world/surface-preparation.ts",
+      "sha256": "00a027404b24ea056702f642c15388bd59f127183a19739eb125e139fa4b4427"
+    },
+    {
+      "path": "src/systems/r100-world/surface-preparation-worker.ts",
+      "sha256": "6082f9ff20ab38d5db9a877a368c5fa4cc1ebc1569f8090931296a99d65be00a"
+    }
+  ],
+  "reportedChecks": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-retry/contract.json",
+      "sha256": "f9b72f3792b9ed3f8e089ad470dd0ec6cdc4eca92beab1e5420ef89ee2778bec"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-retry/generation-regression-shim.log",
+      "sha256": "96f27226ce0331e07a4f873a980cefa876fef44a204ce611eb13491674871e67"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-retry/surface-regression/report.json",
+      "sha256": "a638911d62239012e7db1680d4a6d84d30a00e85b3e8796402f8a7c6393e4cb6"
+    }
+  ],
+  "deterministicContractCases": 14,
+  "findings": [
+    "The request ID and input object are allocated once by the client, then shared across at most two Worker attempts. No request transfer list detaches buffers.",
+    "Only the first onerror before any same-request acknowledgement may schedule the replacement. started, result, explicit error, decoder error, structured-clone failure, messageerror, construction failure, cancel and deadline cannot open another retry.",
+    "The deadline is allocated once outside start and remains active through the 120 ms delay. Abort cleanup removes the listener, cancels both timers, nulls old handlers and terminates the current Worker.",
+    "Per-attempt/current-object/finished guards reject late messages; old Worker is disposed before scheduling replacement. Original errors remain externally observable; terminal failure retains firstStartupError.",
+    "Both Workers acknowledge before calling their existing pure executor. Save beginRun transactions, selection history and RNG inputs are outside this helper and unchanged."
+  ],
+  "limits": [
+    "The helper retains the same request object; it does not freeze arbitrary caller mutations. Current production callers await their established immutable generation/native/material inputs.",
+    "This is a read-only code review of exact listed files and existing test receipts, not a new browser execution. Controlled browser validation and final324 entry/cold-resume remain required.",
+    "No diagnosis of the original intermittent network/Worker failures is inferred. P36 remains open."
+  ],
+  "parentReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/worker-startup-retry/report.json",
+    "sha256": "559d02b4fe9ea51e99f9568526f217bf19877585a9102552da196aefd285adac"
+  }
+}

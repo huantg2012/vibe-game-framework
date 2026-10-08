@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "status": "review-criteria-only-candidate-pending",
+  "createdAt": "2026-10-07T12:47:38.931Z",
+  "reviewer": "i12_qa",
+  "featureIds": [
+    "COH-F052"
+  ],
+  "authority": "Root task instructions: supplemental policy16 may add one bounded observed-target reapproach after the first visible-opponent-too-close result, to the original two white-scarfield severe seeds only; immutable original policy15 evidence remains.",
+  "baseline": {
+    "qualification": {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    "policy": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/policy-freeze.json",
+      "sha256": "a971cfbecf497c4a46ebb152c5641813d33254d1461ea354b8a0a41670cbf026"
+    },
+    "source": {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+    },
+    "earnedStorage": {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+      "sha256": "965a98687e87690f71115472384fba50578ff9618aed328793c3a3bd1cf33b6e"
+    },
+    "actualPickupLimit": 1,
+    "originals": [
+      {
+        "seed": 20261005,
+        "report": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+          "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+        },
+        "identity": {
+          "signature": "7864d455",
+          "fullIdentitySha256": "21470cab4652ab3eb0a43b4dcd0ec97cf297913948a9528e2e460b59fd54ace4",
+          "fullGenerationSha256": "42efdf51780ef5d4fd85bedad5064ae49c97c739b7a22627372b0ba69c42a9fd",
+          "beforeStateSha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a",
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          }
+        },
+        "outcome": "death"
+      },
+      {
+        "seed": 3075192741,
+        "report": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+          "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+        },
+        "identity": {
+          "signature": "6ff3dd6f",
+          "fullIdentitySha256": "9f8c02cce29943a6df912733ce436aa9f010f75cac3b261ef19419119f675c09",
+          "fullGenerationSha256": "252414d6aa4adcd314d01914bd1a7ce4d3fc61736c0d6315bac088637f969c4e",
+          "beforeStateSha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a",
+          "entryPosition": {
+            "x": 196,
+            "y": 588
+          }
+        },
+        "outcome": "extract"
+      }
+    ]
+  },
+  "requiredChecks": [
+    {
+      "id": "P16-SCOPE",
+      "criterion": "Only white-scarfield/severe seeds20261005 and3075192741, one appended process each; no automatic extension to ochre-folds or new seeds; policy16 is disclosed distinctly from15."
+    },
+    {
+      "id": "P16-TRIGGER",
+      "criterion": "At most one supplemental episode per journey; only after visible-opponent-too-close on an already observed, uncollected, non-entry target. The episode keeps that target identity; no hidden loot/AI reads or unobserved target selection."
+    },
+    {
+      "id": "P16-CLOCK",
+      "criterion": "Deadline is the start runtime elapsedMs+6000 and covers all nested caution, travel, tool, attack and E-channel activity; startup/ended/stop conditions and near-deadline actions are exercised. No danger input remains held or starts beyond the bound. Wall-clock caps cannot substitute for the actual game clock."
+    },
+    {
+      "id": "P16-DANGER",
+      "criterion": "The existing enemy caution and owned weapon/tool predicates remain. active→strike fixes visible attack enum matching only; no threat exemption, direct state mutation, clock/reward/HP injection, or budget increase."
+    },
+    {
+      "id": "P16-BUDGET",
+      "criterion": "Preserve searchHealthLimit30, searchChaosLimit120 and returnChaosBudget145 plus original search limit1, strict nonEntryDistance>320 and shared maximum3 real pickups. Stop criteria apply within the entire supplemental episode, not only outside it."
+    },
+    {
+      "id": "P16-IDENTITY",
+      "criterion": "Full original saved identity, generation recipe/signature and same frozen product source remain exact; earned-storage contents change only origin for isolation. Original earned equipment/resources and normal costs are retained. Each actual journey settles its own matching run transaction."
+    },
+    {
+      "id": "P16-PROVENANCE",
+      "criterion": "Archive old/new controller and dependencies, exact transformation, tests, root scope disposition, original report SHA, and supplemented report SHA. Preserve every original failure. No rewritten raw report or hidden rerun."
+    },
+    {
+      "id": "P16-ACCOUNTING",
+      "criterion": "The ordinary336 process plan remains intact and both original white-scarfield receipts remain in summary. Supplemental attempts add to actualAttempts; each original case permits at most one. Empty/death never qualify and successful receipt still needs actual non-entry collection plus same-run settled extraction."
+    },
+    {
+      "id": "P16-NEGATIVES",
+      "criterion": "Reject missing original, swapped seed/grade/world or full identity, altered earned save/source, absent approval, duplicate supplemental execution and missing actual collected/settled proof. Candidate tests do not stand in for actual gameplay evidence."
+    }
+  ],
+  "exclusions": [
+    "No execution authorization from this receipt",
+    "No candidate file yet reviewed",
+    "No gameplay pass or root-cause claim",
+    "Ochre-folds severe remains a separate unqualified pair",
+    "No Chrome launched or product/source changed"
+  ]
+}

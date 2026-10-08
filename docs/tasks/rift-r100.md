@@ -1,7 +1,7 @@
 ---
 status: ACTIVE
 created-date: 2026-10-02
-last-modified-date: 2026-10-05
+last-modified-date: 2026-10-08
 version-id: R100
 features: COH-F052 / COH-F011 / COH-F012 / COH-F013 / COH-F049 / COH-F044 / COH-F003 / COH-F004 / COH-F008 / COH-F023
 scope: Rift世界内容与生成制作链的大版本计划；不是当前已实现系统合同
@@ -12,7 +12,7 @@ authority: 用户2026-10-02明确“开工！！！！”，已启动R100
 
 **本版本终点：108个独立世界，全部覆盖低/中/重污染的324个资格单元，经过技术、美术与游戏体验审核并进入正式等级出击池；等级选择、准备、重度风险回报与整库运行/体验一同验收。** 108将“100+”落实为明确排产数；可因实际发现增加任务、拆分迭代或替换世界，不可自行缩减终点。3和6只属于前期检查点，不是可替代的大版本成果。
 
-**当前状态：I01/I02人审、I03—I09内部结案，9/14轮；当前52世界、156等级已正式启用。** I07/I08新增32世界完成来源材料、形体与路线设计、固定生成、正常有限图审和双原种子实际搜撤；I09完成近期抽选、存档接续、48连续出征及独占性能/生命周期验证。原20修订4“pass”仅保留历史人审范围，当前修订5用户终审分账；实际声音、弱设备、长期经济仍按原后续轮次推进。用户已授权继续I10／I11／I12，当前首批样板与修订6兼容并行；三个迭代任务分别跟踪，当前没有后台定时任务。详见[I07](rift-r100-i07.md)、[I08](rift-r100-i08.md)、[I09](rift-r100-i09.md)与[本轮QA](../qa/rift-r100-i07-i09.md)。
+**当前状态（2026-10-08）：** I10／I11／I12 已按用户授权的抽查范围完成内部验收并依次结案，R100 为 **12／14 轮**。108世界／324等级修订6已正式启用并绑定当前内部资格，内部RC已冻结。 既有324项正式进入／冷续、342项浏览器等价、48趟自然流程与原生成／固定过程验证已完成。按用户“不用做全量测试，抽查即可”，性能保留74个完整通过样本、1项中断、33项未开始；资源抽查10次同图＋18次混合、12个GC样本通过，8项真实语义反例通过。原失败、未测范围及各自限制完整保留。 I13的等级选择、自然准备与长期净收益，以及I14的真实弱设备、实际听感R100-R10和用户终验仍为已规划、未启动；R100保持active，不代签发布或新增美术人审。 详见[I10](rift-r100-i10.md)、[I11](rift-r100-i11.md)、[I12](rift-r100-i12.md)与[本轮QA](../qa/rift-r100-i10-i12.md)。
 
 [版本看板](../reading/rift-r100.html) · [唯一进度与迭代数据](../progress/rift-r100.json) · [设计依据](../design-notes/rift-world-space.md) · [现行地图系统合同](../specs/system-map-generation.md)
 
@@ -36,7 +36,7 @@ authority: 用户2026-10-02明确“开工！！！！”，已启动R100
 
 ### 1.2 双轴与阻断条件
 
-世界身份与地图污染等级分别建模；108×3是324个资格格，不是324个世界。现有污染年龄、实体覆盖档、玩家混乱不能直接改名顶替地图等级。等级生成前冻结，重试/恢复不暗换；旧在途局保持旧合同。三级设计、首选进入/压力/收益方案及反例集中在[设计依据](../design-notes/rift-world-space.md#rift-pollution-grades)，具体机制仍为待实施提案。
+世界身份与地图污染等级分别建模；108×3是324个资格格，不是324个世界。污染年龄、实体覆盖档、玩家混乱与地图等级各自建模。正式备行已可选低／中／重，等级生成前冻结，重试/恢复不暗换；旧在途局保持旧合同。三级设计、首选进入/压力/收益方案及反例集中在[设计依据](../design-notes/rift-world-space.md#rift-pollution-grades)；等级选择与冻结已接入，长期自然准备、净收益与选择深度仍归I13验收。
 
 专业审美具体标准集中在[art-direction的R100正文](../art-direction.md#rift-r100-standard)：身份与吸引力、空间、材料、色光、运动声景、行动读法、成品一致性；有独立否决权，不以量化总分或技术通过代签。净化点/首页已认可画面不代表Rift自动通过。
 
@@ -184,9 +184,9 @@ I06/I09/I13/I14分别安排集合、多趟选级、等级经济和最终体验�
 
 启动/最终授权记录使用{date,evidenceIds,note}，引用真实human证据；不能由代理自行写出用户认可。
 
-启动证据用途为`start-authority`；最终人审须为`final-acceptance`，不能挪用启动消息。发布时`version.releaseManifest:{path,hash,revision}`绑定实际RC清单及SHA-256；发布门结果引用`purpose:release-gate`、相应`gateId`且与RC revision / releaseManifestHash匹配的证据，终验也绑定该RC。当前releaseManifest为null，所有发布结果为空。
+启动证据用途为`start-authority`；最终人审须为`final-acceptance`，不能挪用启动消息。发布时`version.releaseManifest:{path,hash,revision}`绑定实际RC清单及SHA-256；发布门结果引用`purpose:release-gate`、相应`gateId`且与RC revision / releaseManifestHash匹配的证据，终验也绑定该RC。当前releaseManifest已绑定修订6内部RC，所有发布门结果仍为空，最终发布及人审未通过。
 
-每个世界记录id、family、revision、dependencyManifest:{path,hash}、implementation、integration、三审和human状态、evidenceIds、reviewEvidence:{technical,visual,experience,human}、最近邻与差异说明、invalidated。通过项必须指向当前包revision与依赖清单hash相匹配的实际证据，不允许只写三个pass。当前为空，五旧demo没有偷偷转成五个合格包。证据记录id/kind/revision/path/scope/limitations；世界审核证据还绑定worldId和dependencyHash；实际运行再补环境、包/算子/资产哈希、种子、配置和失败记录。审核/校验只能检查记录是否齐全，不能证明审美自动成立。
+每个世界记录id、family、revision、dependencyManifest:{path,hash}、implementation、integration、三审和human状态、evidenceIds、reviewEvidence:{technical,visual,experience,human}、最近邻与差异说明、invalidated。通过项必须指向当前包revision与依赖清单hash相匹配的实际证据，不允许只写三个pass。初始规划时为空，五旧demo未直接转算合格包；当前108份资格由具名证据和抽查范围绑定。证据记录id/kind/revision/path/scope/limitations；世界审核证据还绑定worldId和dependencyHash；实际运行再补环境、包/算子/资产哈希、种子、配置和失败记录。审核/校验只能检查记录是否齐全，不能证明审美自动成立。
 
 世界另含grades.low / medium / severe，分别记录三审review、reviewEvidence、integration与invalidated。共用包revision和依赖清单，等级证据显式含grades范围并匹配当前世界/revision/hash；同一份证据可确实覆盖多级，但不可无范围借用。世界总体身份三审有效是资格格共同前提；单级失效撤本格并撤完整世界资格，world失效撤全三级。正式世界还要求world及三级全部production。qualityPlan只存方案与门名称，releaseGateResults的通过需真实版本及证据；其记录完整也不等于机器证明游戏好玩。
 
@@ -221,7 +221,7 @@ HTML为只读生成快照，页内不启动开发、不修改进度或存档；�
 
 同一根本视觉/设计问题连续两轮仍不成立时，强制重查表示、因果或假设，提交能区分方法的实际对照；机器门连续失败按项目升级规则处理。允许换方法、追加返工轮、重排排产；不允许降低质量门槛、把world变体算新world、取消尾部回归或改写完成定义。
 
-当前用户认可仅为要求我们制定上述大版本和流程；本文件的14轮安排、108/324排产、选级/重度机制与候选构造是待启动的计划，不冒称用户已经批准具体美术。
+初始规划时用户认可仅为要求制定大版本和流程。后续授权、I01/I02及修订4旧20的人审按各自记录保留；当前I10–I12为内部结案，未扩展新内容的人审范围。
 
 ## 7. 首次敲钟后的第一动作
 

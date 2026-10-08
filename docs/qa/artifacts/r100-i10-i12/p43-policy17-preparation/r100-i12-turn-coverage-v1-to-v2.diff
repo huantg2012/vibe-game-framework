@@ -1,0 +1,52 @@
+--- docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive/tools/qa/r100-i12-turn-coverage.mjs
++++ tools/qa/r100-i12-turn-coverage.mjs
+@@ -8,7 +8,7 @@
+ import { validateExpansionExecutionPlan } from './check-r100-expansion-plan.mjs';
+ import { verifyServedSourceFile } from './r100-i09-final-probe.mjs';
+ import { collectI09SearchReceipts } from './r100-i09-search-receipts.mjs';
+-import { validateControllerSupplement, validateSupplementJourney } from './r100-i12-controller-supplement.mjs';
++import { validateFacingControllerSupplement, validateFacingSupplementJourney } from './r100-i12-facing-supplement.mjs';
+ 
+ const out = process.env.QA_OUTPUT_DIR;
+ const manifest = process.env.QA_SOURCE_MANIFEST;
+@@ -33,7 +33,7 @@
+ const dependencies = ['tools/qa/r100-i12-turn-encounters.mjs','tools/qa/r100-i12-turn-align.mjs',
+   'tools/qa/r100-i09-tool-slots.mjs','tools/qa/i27-journey-driver.mjs',
+   'src/systems/last-light-locomotion.ts','src/systems/last-light-layout.ts'];
+-const wrapperDependencies = ['tools/qa/r100-i12-controller-supplement.mjs','tools/qa/check-r100-expansion-plan.mjs', 'tools/qa/r100-i09-final-probe.mjs',
++const wrapperDependencies = ['tools/qa/r100-i12-facing-supplement.mjs','tools/qa/check-r100-expansion-plan.mjs', 'tools/qa/r100-i09-final-probe.mjs',
+   'tools/qa/r100-i09-search-receipts.mjs', 'tools/qa/r100-observed-searches.mjs'];
+ const source = JSON.parse(fs.readFileSync(manifest));
+ assert.equal(new URL(gameUrl).hostname, '127.0.0.1');
+@@ -103,7 +103,7 @@
+ const validationPlan={controllerSupplements:[supplementRef],batches:[...new Set(supplement.cases.map(row=>path.dirname(path.dirname(row.originalReport.path))))]};
+ // Validate the frozen scheduler before opening Chrome; this is a planned case list,
+ // not a fabricated execution batch. The actual batch is independently checked below.
+-const binding=validateControllerSupplement(supplementRef,policy,{attempts:cases},validationPlan,file=>fs.readFileSync(file));
++const binding=validateFacingControllerSupplement(supplementRef,policy,{attempts:cases},validationPlan,file=>fs.readFileSync(file));
+ assert.equal(sha(new URL(import.meta.url)),supplement.wrapper.sha256);
+ assert.equal(policy.actualPickupLimit,1);
+ fs.writeFileSync(freeze, JSON.stringify(policy, null, 2));
+@@ -145,7 +145,13 @@
+       row.journeys = data.realJourneyAttempts.map(journey => {
+         let pickups, accountingError;
+         if (expansion && journey.status === 'completed-real-input') {
+-          try { pickups = collectI09SearchReceipts(journey); const problems=validateSupplementJourney(binding,row,journey,pickups);assert.deepEqual(problems,[]); } catch (error) { accountingError = String(error); }
++          try {
++            pickups = collectI09SearchReceipts(journey);
++            const events = fs.readFileSync(path.join(folder, row.grade, 'journey.jsonl'), 'utf8').trim()
++              .split('\n').filter(Boolean).map(line => JSON.parse(line));
++            const problems = validateFacingSupplementJourney(binding,row,journey,pickups,events);
++            assert.deepEqual(problems,[]);
++          } catch (error) { accountingError = String(error); }
+         }
+         return {status: journey.status, outcome: journey.outcome ?? null,
+         world: journey.identity?.generation.package.id?.replace(/^r100-/, ''), grade: journey.identity?.generation.package.grade, revision: journey.identity?.generation.package.algorithmRevision,
+@@ -171,6 +177,6 @@
+ }
+ await Promise.all(Array.from({length: policy.parallelism}, worker));
+ report.status = report.stoppedAfterFailure ? 'stopped-after-failed-attempt' : 'completed-fixed-attempts-pending-review'; report.endedAt = new Date().toISOString(); save();
+-if(report.attempts.length===cases.length)validateControllerSupplement(supplementRef,policy,report,validationPlan,file=>fs.readFileSync(file));
++if(report.attempts.length===cases.length)validateFacingControllerSupplement(supplementRef,policy,report,validationPlan,file=>fs.readFileSync(file));
+ console.log('DONE', cases.length, 'supplementary fixed attempts; original failures retained, no automatic qualification');
+ if (report.stoppedAfterFailure || report.attempts.length !== cases.length || report.attempts.some(row => row.exitCode !== 0 || !row.journeys?.length || row.journeys.some(journey => !journey.matchesPlan || journey.accountingError))) process.exitCode = 1;

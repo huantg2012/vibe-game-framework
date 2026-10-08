@@ -1,0 +1,15 @@
+{
+  "status": "auditor-selection-order-correction-no-product-failure",
+  "at": "2026-10-07T15:05:53.055Z",
+  "script": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/audit-final-static-readiness-attempt2.mjs",
+    "sha256": "e1b1ac5c3be51531316722da53ea953c3375058e60b390c260c726d9857cd3bb"
+  },
+  "log": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-static-readiness-audit-attempt2.log",
+    "sha256": "07ccc52809f8fe937cec53bc6a5990ffcaa48118cb46b89a27663a0b9dc78a70"
+  },
+  "exitCode": 1,
+  "failure": "Selection report intentionally sorts worldIds; independent comparison incorrectly required catalog ordering. Compare unique sets and retain separate original ordering for catalog/package checks.",
+  "scope": "Read-only audit development; no product/source/evidence changes or game rerun."
+}

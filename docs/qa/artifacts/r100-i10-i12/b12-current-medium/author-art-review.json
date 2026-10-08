@@ -1,0 +1,574 @@
+{
+  "status": "mixed-bounded-review",
+  "at": "2026-10-07T06:57:18.020Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/report.json",
+    "sha256": "bb0a59d5d0d7a46b2085a0cb7022cd9f6e2b9f125bcace33b62a384feed56338"
+  },
+  "scope": "All 18 original PNGs personally viewed. Normal FOV/light, fixed requested seed20261005, real WASD with active pressure. Static floor planning; not visible-only natural play.",
+  "limitations": [
+    "Only illuminated local faces/relationships shown; no complete-map, full search-return, economic, audio, dynamic fatigue or human approval.",
+    "Different actual poses and pressure; not pixel-aligned comparisons.",
+    "Rejected local surfaces do not imply collision or runtime failure; unchanged readable areas retain only their observed scope."
+  ],
+  "worlds": [
+    {
+      "worldId": "double-return",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "double-return",
+        "grade": "medium",
+        "package": {
+          "id": "r100-double-return",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "bbe99810",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=double-return&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-medium-pass",
+      "finding": "01/02短断体与压端、03分叉厚肩各有区别，04及05双向实帧显示真缺地和内外返路近床。低母床色界仍较直，列为近邻/地面弱项，但本组未见完整黑封边伪装高障碍。",
+      "limitations": [
+        "03之后真实敌人接近，04/05为85HP；遮挡和视野外范围不签。只给所见近床/厚端/缺地有限通过，非全母床外围。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/01-material-approach-north.png",
+          "sha256": "562a73e802e64afb919f6ce2300837931c8dec69667073bdf8a6cb6499513677",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 579.9525032783887,
+              "y": 618.2794923614251
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.289333731999797,
+            "elapsedMs": 6983.000000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/02-material-approach-north.png",
+          "sha256": "91afe85c2275ecdaaedf15d2a0ff6b76cb3e1fb4673502b60df696da477962ba",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.9020294096098,
+              "y": 587.3010237902108
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.75382718799978,
+            "elapsedMs": 8383
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/03-material-approach-west.png",
+          "sha256": "895f366684a8d476fd16cc1b8ed7c25cb18d181a6feeeab484c614121ec417c8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 598.4309556876477,
+              "y": 408.91334218723466
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 26.029238153999632,
+            "elapsedMs": 17232.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/04-material-approach-north.png",
+          "sha256": "76f9cd92e2e889d958f4fd994e7d10d86f4daf115de2f76d6580256831fc6922",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5701051764111127,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 715.1794315723427,
+              "y": 627.4229545475454
+            },
+            "facingAngle": -1.5701051764111127,
+            "facing4": "up",
+            "hp": 85,
+            "chaos": 32.731319441999084,
+            "elapsedMs": 27332.2
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/05-original-route-boundary-east.png",
+          "sha256": "4f1294723c18fbdb7878d873f1f3e4701585f6ae8e552e62c5f7f82d48e062fb",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 556.3952290743475,
+              "y": 155.43511503043666
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 85,
+            "chaos": 43.84904533799966,
+            "elapsedMs": 39565.100000000006
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/05-original-route-boundary-west.png",
+          "sha256": "894b93b15a4f53a0b0e6b3e58f5710dac0bd4acbd4c865363bc97a7c0db64424",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141466989883633,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 540.4492290743475,
+              "y": 155.43511503043666
+            },
+            "facingAngle": 3.141466989883633,
+            "facing4": "left",
+            "hp": 85,
+            "chaos": 44.18081879399968,
+            "elapsedMs": 40065
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "offset-basins",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "offset-basins",
+        "grade": "medium",
+        "package": {
+          "id": "r100-offset-basins",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            }
+          },
+          "dependencyHash": "f5ad7177",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=offset-basins&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "bounded-author-medium-pass",
+      "finding": "01/03红壳背和灰内弧形成明确厚面，02侧切与04宽裸床区别可读；不同接近方向没有把近脚高边画成可走低面。",
+      "limitations": [
+        "04主要是宽床，不能单帧证明两腔整体布局；青绿细层线仍是共享弱项。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/offset-basins-medium/01-material-approach-north.png",
+          "sha256": "2a9b46c1fecdf5490f4fd8b1c298519fb27425a77d99f3ecbbf7faa96d4691e3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 517.4106013899761,
+              "y": 408.32722457808853
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.69853935399976,
+            "elapsedMs": 8216.400000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/offset-basins-medium/02-material-approach-east.png",
+          "sha256": "f9d3a9fc65582fc7d19765eacaa952b779fb328b099e1f3a5176fd59dd9342b2",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0.00006283185307287553,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 509.9958458143584,
+              "y": 472.49672894550673
+            },
+            "facingAngle": 0.00006283185307287553,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.19068833999972,
+            "elapsedMs": 9699.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/offset-basins-medium/03-material-approach-north.png",
+          "sha256": "a6c820e475461acac2b6749ca4da94ac48fec48534f008536f9f892b32395a7b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 632.0606041436475,
+              "y": 640.474160309181
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 21.038524421999412,
+            "elapsedMs": 18282.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/offset-basins-medium/04-material-approach-west.png",
+          "sha256": "d3f99ec6d510190ee415f102184b98c5446cd9d3b7cefa9ea314ce59c05a67b6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 478.60672437248365,
+              "y": 494.95881380710995
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 22.653212531999387,
+            "elapsedMs": 23149.2
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "pinched-fan",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "pinched-fan",
+        "grade": "medium",
+        "package": {
+          "id": "r100-pinched-fan",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            },
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "5a462c72",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=pinched-fan&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "03/04玩家脚旁仍出现完整细黑多边形封边，01/02低膜尖角与直切拼片读法明确；高粒肩压卷根局部成立不能替低面通过。",
+      "limitations": [
+        "拒绝限两可走低面落地，不否认新露卷根实际接触或原身体路线。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/pinched-fan-medium/01-material-approach-east.png",
+          "sha256": "28e65339bf7d0b1cb6d9ffa33dc03fedf3c85312eeeb54fbac5c3e400b4e7a7b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 286.64338603391815,
+              "y": 348.1585801807353
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 25.10684373199981,
+            "elapsedMs": 6433.099999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/pinched-fan-medium/02-material-approach-north.png",
+          "sha256": "7ac61b13a9e75ada70112994a6e6b0aa749706bc03a05e4d0267ca77b9b8677b",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5704821675295446,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 571.6461211954015,
+              "y": 546.8974867502219
+            },
+            "facingAngle": -1.5704821675295446,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 28.24775543599943,
+            "elapsedMs": 15899.400000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/pinched-fan-medium/03-material-approach-west.png",
+          "sha256": "f006583b667ea62dbb52297fc0838e36de73d13121991b88ffc5a3f8d31c3153",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1415298217367207,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 829.1203843893751,
+              "y": 478.41921393052587
+            },
+            "facingAngle": -3.1415298217367207,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 29.961993499999366,
+            "elapsedMs": 21065.8
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/pinched-fan-medium/04-material-approach-west.png",
+          "sha256": "f95118b887af3a3c575b4ee5c76f9380d940785ff579d56b8c660df5f43304b9",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 864.5976524929433,
+              "y": 509.9814023778923
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 30.592380319999354,
+            "elapsedMs": 22965.8
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "spliced-reaches",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "spliced-reaches",
+        "grade": "medium",
+        "package": {
+          "id": "r100-spliced-reaches",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "6678cc79",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=spliced-reaches&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "status": "rejected-local-appearance",
+      "finding": "01/04浅长低束仍以整条斜直边压在地表，宽带层理不消除贴片读法；02/03紫厚束的近脚边界与斜向接合可辨。",
+      "limitations": [
+        "04真实85HP，不据此判美术难度；拒绝低层长硬边，非整个斜接路线/所有厚束。"
+      ],
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/spliced-reaches-medium/01-material-approach-north.png",
+          "sha256": "2b1cdae37f53effd7d1d40875e636dfd345ac3331d3cb0fd7979281433b25bd3",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 389.5939492756658,
+              "y": 605.1052874833337
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.293966911999902,
+            "elapsedMs": 3983.2000000000003
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/spliced-reaches-medium/02-material-approach-west.png",
+          "sha256": "48089b61fa985231f831faffbe6237270037d4bbacf10894a892f3df367c5a82",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 607.4382617587828,
+              "y": 386.3455097774132
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.501238615999505,
+            "elapsedMs": 13649.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/spliced-reaches-medium/03-material-approach-east.png",
+          "sha256": "dc698c93d55905773708a1c465bb56c47ef708d690298fa4be1d5f00f96c4439",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 517.9112081240376,
+              "y": 469.9999470064367
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 25.111290227999373,
+            "elapsedMs": 18066
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/spliced-reaches-medium/04-material-approach-north.png",
+          "sha256": "e6406f9b527d820917ec1a1b9d5edb1eee47eaf69f47e9d394ed29283bad212f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 733.1990784768932,
+              "y": 364.49253320326807
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 85,
+            "chaos": 30.06597335999892,
+            "elapsedMs": 25532.300000000003
+          }
+        }
+      ]
+    }
+  ]
+}

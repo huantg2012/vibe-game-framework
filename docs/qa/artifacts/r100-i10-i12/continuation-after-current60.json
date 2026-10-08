@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "startedAt": "2026-10-07T08:37:38.320Z",
+  "pid": 26016,
+  "runner": {
+    "path": "docs/qa/artifacts/r100-i10-i12/run-current3121-final96.mjs",
+    "sha256": "19a18141ccb7c8ca416d73bca6a1454084f30edaf4836c4e04713d97d6510a16"
+  },
+  "plan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/current3121-final96-plan.json",
+    "sha256": "84ff65f3a8cd835c839cacc15c0e179adc56bba6fed5b47ca78d0eabf2f59f31"
+  },
+  "predecessor": "docs/qa/artifacts/r100-i10-i12/current3120-remaining60.json",
+  "error": "AssertionError [ERR_ASSERTION]: Previous failure is preserved; do not advance\n+ actual - expected\n\n+ 'failed'\n- 'running'\n\n    at file:///Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/continue-after-current60.mjs:26:12",
+  "finishedAt": "2026-10-07T08:52:08.627Z"
+}

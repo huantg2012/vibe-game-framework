@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-08T05:00:07.584508+00:00",
+  "sequence": 1,
+  "processes": [
+    {
+      "pid": 88937,
+      "ppid": 88916,
+      "command": "/usr/local/bin/node --import tsx tools/qa/r100-revision6-review-continuous.mjs --input docs/qa/artifacts/r100-i10-i12/continuous-final108 --output docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json"
+    },
+    {
+      "pid": 88939,
+      "ppid": 88937,
+      "command": "/usr/bin/caffeinate -i /usr/local/bin/node --import tsx tools/qa/r100-revision6-review-continuous.mjs --input docs/qa/artifacts/r100-i10-i12/continuous-final108 --output docs/qa/artifacts/r100-i10-i12/continuous-final108/review.json"
+    }
+  ],
+  "ownedIdleSleepAssertionPids": [
+    88939
+  ]
+}

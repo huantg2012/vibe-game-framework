@@ -1,0 +1,13 @@
+import fs from 'node:fs';import{buildNativeVolume,NativeBodyCollision,TileType}from'../b12-isolated-author/static4/executor.mjs';
+const original=JSON.parse(fs.readFileSync('docs/qa/artifacts/r100-i10-i12/b12-isolated-author/static4/report.json')).results.find(r=>r.world==='double-return').definition;
+const inside=(p,x,y)=>{let z=false;for(let i=0,j=p.length-1;i<p.length;j=i++){const a=p[i],b=p[j];if((a.y>y)!==(b.y>y)&&x<(b.x-a.x)*(y-a.y)/(b.y-a.y)+a.x)z=!z;}return z;};
+const map={cols:128,rows:96,tileSize:8,tiles:Array.from({length:96},(_,y)=>Array.from({length:128},(_,x)=>x<4||x>=124||y<4||y>=92||original.erosion.some(p=>inside(p,x*8+4,y*8+4))?TileType.VOID:TileType.FLOOR))};
+const out=[];
+for(const variant of ['original','bounded-short-ends']){
+ const d=structuredClone(original);if(variant!=='original'){Object.assign(d.instances[3],{shapeProfile:'compressed-wedge',length:105,width:70,rotation:.05});}if(variant==='bounded-short-ends'){Object.assign(d.instances[0],{shapeProfile:'fallen-bundle'});Object.assign(d.instances[2],{shapeProfile:'fallen-bundle',length:120,width:64,rotation:-.10});}
+ const meshes=d.instances.map(({role,groundEdgeWidth,...s})=>buildNativeVolume({...s,family:s.family??d.family,blocking:role==='solid'?1:0,seed:20261005^Math.imul(s.id,104729)}));const b=new NativeBodyCollision({definition:d,meshes},map);
+ const cross=[];for(let y=476;y<=588;y+=8){const spans=[];let start;for(let x=440;x<=660;x++){const ok=b.supports({x,y},10,10);if(ok&&start===undefined)start=x;if((!ok||x===660)&&start!==undefined){spans.push([start,ok?x:x-1]);start=undefined;}}cross.push({y,spans});}
+ const sequence=[[612,556],[612,488],[516,488],[516,476]],legs=sequence.slice(1).map((p,i)=>{const a=sequence[i];return{from:a,to:p,forward:b.displacementFraction({x:a[0],y:a[1]},10,10,p[0]-a[0],p[1]-a[1]),reverse:b.displacementFraction({x:p[0],y:p[1]},10,10,a[0]-p[0],a[1]-p[1])};});
+ out.push({variant,definition:d,cross,legs,bounds:meshes.filter(m=>m.spec.blocking).map(m=>({id:m.spec.id,...m.bounds})),middleCross32:{forward:b.displacementFraction({x:612,y:487},16,16,-96,0),reverse:b.displacementFraction({x:516,y:487},16,16,96,0)}});
+}
+fs.writeFileSync('docs/qa/artifacts/r100-i10-i12/author-preparation/double-gap-query.json',JSON.stringify({scope:'Original and one declared topology candidate (the earlier two exploratory cross-section candidates are retained in double-gap-query-initial.json); exact native20 support cross sections only, not a world qualification or route-pass claim.',results:out},null,2)+'\n');console.log(JSON.stringify(out.map(v=>({variant:v.variant,cross:v.cross,legs:v.legs,bounds:v.bounds,middleCross32:v.middleCross32})),null,2));

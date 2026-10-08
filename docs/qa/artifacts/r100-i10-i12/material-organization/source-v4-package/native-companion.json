@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "worlds": [
+    "short-fibre-mat",
+    "felt-wedges"
+  ],
+  "exactDefinitions": 6,
+  "before": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-source/source-snapshot.json",
+    "sha256": "ac64f6bf0a0f0bda9992997a981e8df3f45dfec7164b1435bf09055f94487ed8"
+  },
+  "currentNative": {
+    "path": "src/generated/r100-native-worlds.ts",
+    "sha256": "3d5bf2ef485269a043a431407c58fb5550f508a33333302d9791b2afe0646158"
+  },
+  "materialContract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/material-organization/source-v4-package/report.json",
+    "sha256": "da7b4c5e4db5f70ba51cf91ff6c84d57f067e828bd4ac315a3a123d5cf637ac1"
+  },
+  "scope": "Both selected worlds whole native/profile catalog entries are exact versus the old snapshot; complements the reconstructed prior material-recipe contracts without claiming an old-code execution."
+}

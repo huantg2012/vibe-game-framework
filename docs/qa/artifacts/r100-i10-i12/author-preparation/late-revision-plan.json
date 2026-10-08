@@ -1,0 +1,104 @@
+{
+  "status": "isolated-revisions-prepared-not-checked",
+  "scope": "Only seven isolated worlds; no formal CSV/runtime edits, no art admission. Author threshold24px, full native20 body and original route bounds remain. Root approved three fixture corrections and the double candidate; art agreed the three silhouette directions.",
+  "changes": [
+    {
+      "world": "crushed-seam",
+      "batch": "b11",
+      "reason": "Prevent six complete fork silhouettes: two continuous low mother beds and four short compressed/broken ends, only one fork head.",
+      "changed": "shapeProfile 1/2/5 fallen-bundle; 4/6 compressed-wedge; positions and all route fixtures unchanged.",
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b11-isolated-author/static4/report.json",
+        "sha256": "ed08c9f8a88b0be672fd93b5a99c04137c4cd0fc0c8b482174cbbe6161a6d704"
+      }
+    },
+    {
+      "world": "double-return",
+      "batch": "b12",
+      "reason": "Original middle/lower fork shoulders block the declared interior segment. Preserve VOID, endpoints and route bounds while providing actual cross-gap.",
+      "changed": "mother1 fallen-bundle; shoulder3 fallen-bundle L120 W64 rotation-.10; shoulder4 compressed-wedge L105 W70 rotation.05. Centers and heights unchanged.",
+      "evidence": "author-preparation/double-gap-query.json",
+      "trueVerticalGapPx": 33.06509183040842,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-isolated-author/static4/report.json",
+        "sha256": "0bfed04e65448f288583beddf7a17d20a01ca6b398d13a30e2036b9906a858fa"
+      }
+    },
+    {
+      "world": "offset-basins",
+      "batch": "b12",
+      "reason": "Root independent proposal: second shell bank obstructed the original eastern inner connector; move only its centre32px south.",
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-isolated-author/static4/report.json",
+        "sha256": "0bfed04e65448f288583beddf7a17d20a01ca6b398d13a30e2036b9906a858fa"
+      },
+      "changed": "object2 y507→539, all original route nodes/bounds and other fields unchanged.",
+      "evidence": "b12-isolated-author/offset-proposal/decision.json"
+    },
+    {
+      "world": "white-scarfield",
+      "batch": "b13",
+      "reason": "Original902447 lies on actual VOID;948476 nearest outside edge is not the intended low bed.788444 is supported on relief2 with direct full-body connections to prior/next stations. This intentionally follows inside the VOID, not the outer narrow strip.",
+      "original": [
+        902,
+        447
+      ],
+      "replacement": [
+        788,
+        444
+      ],
+      "displacementPx": 114.03946685248927,
+      "geometryUnchanged": true,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-isolated-author/static4/report.json",
+        "sha256": "b804c78d2b8ae69ece1ca8b37f06da7d99a7ef078c649bde450600fb77bb4e89"
+      }
+    },
+    {
+      "world": "woven-quarters",
+      "batch": "b14",
+      "reason": "Original417341 overlaps object2; replace the pre-guessed position with428364, the same actual station already used by the original valid swept route.",
+      "original": [
+        417,
+        341
+      ],
+      "replacement": [
+        428,
+        364
+      ],
+      "geometryUnchanged": true,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-isolated-author/static4/report.json",
+        "sha256": "97f94aa285d15676a9a66c0bd7b21ff4697a3b8727e89a0c805ca473749b4035"
+      }
+    },
+    {
+      "world": "shell-patchwork",
+      "batch": "b14",
+      "reason": "Original559414 overlaps object4; replace with556388, the same actual station already used by the original valid swept middle route.",
+      "original": [
+        559,
+        414
+      ],
+      "replacement": [
+        556,
+        388
+      ],
+      "geometryUnchanged": true,
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-isolated-author/static4/report.json",
+        "sha256": "97f94aa285d15676a9a66c0bd7b21ff4697a3b8727e89a0c805ca473749b4035"
+      }
+    },
+    {
+      "world": "last-shelf",
+      "batch": "b14",
+      "reason": "Keep one fractured upper shoulder and one intact taller compressed end on a continuous low granular bed; avoid three arrow-like nested silhouettes.",
+      "changed": "profile1 fallen-bundle; profile3 compressed-wedge; all dimensions/positions/routes unchanged.",
+      "originalReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-isolated-author/static4/report.json",
+        "sha256": "97f94aa285d15676a9a66c0bd7b21ff4697a3b8727e89a0c805ca473749b4035"
+      }
+    }
+  ]
+}

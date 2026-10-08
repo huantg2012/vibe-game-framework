@@ -1,0 +1,222 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+  "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+  "scope": "P34 fixed material-only source: original compressed-wedge. Two world low/severe original stations, includes felt exposed-head joint P32 observation. Actual WASD, normal FOV/light, no state injection; not full gameplay.",
+  "priorPlans": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b06-medium/plan.json",
+      "sha256": "737eda9b205e9190754133cb764c4d384ffa1b794ddedd7d443089c9d1d95387",
+      "worlds": [
+        "short-fibre-mat",
+        "felt-wedges"
+      ]
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b09-medium/plan.json",
+      "sha256": "e3fe3ed293d2ea20d09585c249313fc9fb7a7313939898def55802b7760415af",
+      "worlds": [
+        "blue-fault",
+        "pale-pressure"
+      ]
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b10-medium/plan.json",
+      "sha256": "e1823efe350d1fda7572e54b439b7b09db3fd1926e88f4106ff8cb7f292f95dc",
+      "worlds": [
+        "sloughed-court"
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "world": "short-fibre-mat",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-west-thick-shoulder",
+          "x": 224,
+          "y": 420,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 220,
+            "y": 420
+          },
+          "lookAtMaterialPoint": {
+            "x": 337,
+            "y": 340
+          }
+        },
+        {
+          "label": "02-north-torn-end",
+          "x": 252,
+          "y": 228,
+          "faces": [
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 252,
+            "y": 228
+          },
+          "lookAtMaterialPoint": {
+            "x": 337,
+            "y": 340
+          }
+        },
+        {
+          "label": "03-low-pressed-bed",
+          "x": 565,
+          "y": 455,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 564,
+            "y": 452
+          },
+          "lookAtMaterialPoint": {
+            "x": 515,
+            "y": 320
+          }
+        }
+      ]
+    },
+    {
+      "world": "short-fibre-mat",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-west-thick-shoulder",
+          "x": 224,
+          "y": 420,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 220,
+            "y": 420
+          },
+          "lookAtMaterialPoint": {
+            "x": 337,
+            "y": 340
+          }
+        },
+        {
+          "label": "02-north-torn-end",
+          "x": 252,
+          "y": 228,
+          "faces": [
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 252,
+            "y": 228
+          },
+          "lookAtMaterialPoint": {
+            "x": 337,
+            "y": 340
+          }
+        },
+        {
+          "label": "03-low-pressed-bed",
+          "x": 565,
+          "y": 455,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 564,
+            "y": 452
+          },
+          "lookAtMaterialPoint": {
+            "x": 515,
+            "y": 320
+          }
+        }
+      ]
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "low",
+      "goals": [
+        {
+          "label": "01-exposed-head-joint",
+          "x": 610,
+          "y": 538,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 612,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 525,
+            "y": 461
+          }
+        },
+        {
+          "label": "03-west-outer-cut",
+          "x": 405,
+          "y": 435,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 404,
+            "y": 436
+          },
+          "lookAtMaterialPoint": {
+            "x": 505,
+            "y": 362
+          }
+        }
+      ]
+    },
+    {
+      "world": "felt-wedges",
+      "grade": "severe",
+      "goals": [
+        {
+          "label": "01-exposed-head-joint",
+          "x": 610,
+          "y": 538,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 612,
+            "y": 540
+          },
+          "lookAtMaterialPoint": {
+            "x": 525,
+            "y": 461
+          }
+        },
+        {
+          "label": "03-west-outer-cut",
+          "x": 405,
+          "y": 435,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 404,
+            "y": 436
+          },
+          "lookAtMaterialPoint": {
+            "x": 505,
+            "y": 362
+          }
+        }
+      ]
+    }
+  ]
+}

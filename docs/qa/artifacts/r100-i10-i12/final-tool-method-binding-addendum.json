@@ -1,0 +1,46 @@
+{
+  "status": "approved-method-harness-binding-hardening-pending-real-final-proposal",
+  "reviewer": "root",
+  "at": "2026-10-08T01:40:08.580998+00:00",
+  "priorToolDisposition": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-tool-change-addendum.json",
+    "sha256": "315731509cc4f46bae6c940b9182b9bb7b6ebd294d21603b67e1fafcd296c950"
+  },
+  "gap": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/harness-path-gap.json",
+    "sha256": "e9ef2377ff6ce8206e4afd29c7c72d6bbd0b9c8dee1bd1cbd060c122f1396a2c"
+  },
+  "preservedPriorBytes": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/method-fix-preserved-sources.json",
+    "sha256": "787fa0c33cd9dc412d50bd911a61fe3d822bda577ff561a9b725221c0a3bcecd"
+  },
+  "independentReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-binding-preparation/harness-path-fix-independent-review.json",
+    "sha256": "dd0ad0ed7b8617ae7188f0511562a1ebf2346a57721ace965f8ba499e373feff"
+  },
+  "contracts": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/binding-contracts-method-harness.json",
+    "sha256": "dbd407ab9a99df31d002cc2059651629910368e8a2182afb879ceabaf738e0db"
+  },
+  "binder": {
+    "path": "tools/qa/r100-bind-i10-i12.mjs",
+    "sha256": "f2139f859ea10a5d8a06a0004d14937936d60e64886e9dfd3b43fc0ef485ed07"
+  },
+  "contractChecker": {
+    "path": "tools/qa/check-r100-expansion-binding.mjs",
+    "sha256": "00e34e54c1564e55dd376063c0514dda2b9648df09388173c903268a395e3c1c"
+  },
+  "scope": "Require each production/equivalence/budget/lifecycle source-binding to name its actual declared method harness before its existing exact-byte check. Preserve all other eligibility checks and all original runtime tools.",
+  "results": {
+    "rootContractCases": 49,
+    "independentCorrectMethods": 4,
+    "independentResealedWrongMethodsRejected": 4,
+    "gameExecutions": 0
+  },
+  "limitations": [
+    "Metadata predicate tests only; no final108 runtime result or world qualification is inferred.",
+    "No evidence that any recorded run actually used a wrong harness; the confirmed issue was an eligibility-validator identity gap.",
+    "Full final-plan dry proposal plus real-evidence semantic negatives remain mandatory before the binder writes the ledger.",
+    "Original tool disposition and pre-fix byte identities remain immutable; this is a separately scoped additive disposition."
+  ]
+}

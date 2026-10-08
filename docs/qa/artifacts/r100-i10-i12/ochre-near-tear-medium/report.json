@@ -1,0 +1,321 @@
+{
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-and-low-surface-source/source-snapshot.json",
+    "sha256": "ca7c824799dcf428a691fda42c0b449fa7b34ae83ba95c2a847a4fbfadb57edd"
+  },
+  "plan": {
+    "status": "prepared-one-actual-path-near-tear",
+    "seed": 20261005,
+    "viewport": {
+      "width": 1440,
+      "height": 1000
+    },
+    "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b13-and-low-surface-source/source-snapshot.json",
+    "sourceManifestSha256": "ca7c824799dcf428a691fda42c0b449fa7b34ae83ba95c2a847a4fbfadb57edd",
+    "scope": "One existing actual20 path point, normal actual WASD and two real cardinal directions toward representative solid3 tear. Not all joints or entire world.",
+    "inheritedPlanSources": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-author-preflight/pleated-tear-refined/near-joint-camera.json"
+      }
+    ],
+    "cases": [
+      {
+        "world": "ochre-folds",
+        "grade": "medium",
+        "goals": [
+          {
+            "label": "01-third-tear-near",
+            "x": 804,
+            "y": 564,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "lookAtMaterialPoint": {
+              "index": 0,
+              "x": 851.9053575133896,
+              "y": 601.2919960922009,
+              "z": 26.141478670770706
+            },
+            "authorSupportedBodyPoint": {
+              "x": 804,
+              "y": 564
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "harnessSha256": "07777041a063734fb97d2f179cd14fb16e0fc55f75609a82c6010b8ef6b58e08",
+  "scope": "Normal finite FOV and camera; controlled world/seed/bare training loadout. Real WASD from spawn, complete static floor read for body routing. No player, health, lighting, fog or clock edits. Enemies remain active. Brief route and still images are not full-run qualification.",
+  "cases": [
+    {
+      "world": "ochre-folds",
+      "grade": "medium",
+      "seed": 20261005,
+      "steps": [
+        {
+          "goal": {
+            "label": "01-third-tear-near",
+            "x": 804,
+            "y": 564,
+            "faces": [
+              "east",
+              "south"
+            ],
+            "lookAtMaterialPoint": {
+              "index": 0,
+              "x": 851.9053575133896,
+              "y": 601.2919960922009,
+              "z": 26.141478670770706
+            },
+            "authorSupportedBodyPoint": {
+              "x": 804,
+              "y": 564
+            }
+          },
+          "route": {
+            "requested": {
+              "label": "01-third-tear-near",
+              "x": 804,
+              "y": 564,
+              "faces": [
+                "east",
+                "south"
+              ],
+              "lookAtMaterialPoint": {
+                "index": 0,
+                "x": 851.9053575133896,
+                "y": 601.2919960922009,
+                "z": 26.141478670770706
+              },
+              "authorSupportedBodyPoint": {
+                "x": 804,
+                "y": 564
+              }
+            },
+            "actual": {
+              "x": 796,
+              "y": 564
+            },
+            "points": [
+              {
+                "x": 196,
+                "y": 588
+              },
+              {
+                "x": 652,
+                "y": 588
+              },
+              {
+                "x": 652,
+                "y": 604
+              },
+              {
+                "x": 668,
+                "y": 604
+              },
+              {
+                "x": 668,
+                "y": 612
+              },
+              {
+                "x": 676,
+                "y": 612
+              },
+              {
+                "x": 676,
+                "y": 620
+              },
+              {
+                "x": 756,
+                "y": 620
+              },
+              {
+                "x": 756,
+                "y": 612
+              },
+              {
+                "x": 764,
+                "y": 612
+              },
+              {
+                "x": 764,
+                "y": 604
+              },
+              {
+                "x": 780,
+                "y": 604
+              },
+              {
+                "x": 780,
+                "y": 596
+              },
+              {
+                "x": 788,
+                "y": 596
+              },
+              {
+                "x": 788,
+                "y": 564
+              },
+              {
+                "x": 796,
+                "y": 564
+              }
+            ],
+            "length": 688,
+            "originConnector": {
+              "origin": {
+                "x": 196,
+                "y": 588
+              },
+              "halfX": 10,
+              "halfY": 10,
+              "selected": {
+                "index": 9368,
+                "x": 196,
+                "y": 588,
+                "distance": 0
+              },
+              "fraction": 1
+            }
+          },
+          "captures": [
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/ochre-near-tear-medium/ochre-folds-medium/01-third-tear-near-east.png",
+              "sha256": "4a603b30e219b0aee6cf2625b143cfd58ca4fcecdd3e3039c2d496d89524241c",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "east",
+              "actualAngle": 0,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 797.1996773882695,
+                  "y": 564.813864555156
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.644100781999633,
+                "elapsedMs": 11066.2
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 797.1996773882695,
+                  "y": 564.813864555156
+                },
+                "facingAngle": 0,
+                "facing4": "right",
+                "hp": 100,
+                "chaos": 18.677277463999626,
+                "elapsedMs": 11166.2
+              }
+            },
+            {
+              "file": "docs/qa/artifacts/r100-i10-i12/ochre-near-tear-medium/ochre-folds-medium/01-third-tear-near-south.png",
+              "sha256": "7b3d0cf7ac963473d05b27d1f556c483b90f062c9a8ac5c98ccfc21251bb156a",
+              "png": {
+                "width": 1136,
+                "height": 758
+              },
+              "facing": "south",
+              "actualAngle": 1.5707334949418235,
+              "before": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 797.1996773882695,
+                  "y": 572.258364555156
+                },
+                "facingAngle": 1.5707334949418235,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.771283039999613,
+                "elapsedMs": 11449.5
+              },
+              "after": {
+                "active": true,
+                "ended": false,
+                "pos": {
+                  "x": 797.1996773882695,
+                  "y": 572.258364555156
+                },
+                "facingAngle": 1.5707334949418235,
+                "facing4": "down",
+                "hp": 100,
+                "chaos": 18.80999082799961,
+                "elapsedMs": 11566.2
+              }
+            }
+          ]
+        }
+      ],
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "ochre-folds",
+        "grade": "medium",
+        "package": {
+          "id": "r100-ochre-folds",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "01c9279c",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3118/r100-gym.html?world=ochre-folds&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/ochre-near-tear-medium/ochre-folds-medium/recipe.json",
+        "sha256": "fefeda4af1415dd0c98bbe087d3fb647264da7cc4564d550bcddcd3f363264ff"
+      },
+      "activityBefore": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 797.1996773882695,
+          "y": 572.258364555156
+        },
+        "facingAngle": 1.5707334949418235,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 18.80999082799961,
+        "elapsedMs": 11566.2
+      },
+      "activityAfter": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 797.1996773882695,
+          "y": 572.258364555156
+        },
+        "facingAngle": 1.5707334949418235,
+        "facing4": "down",
+        "hp": 100,
+        "chaos": 19.208144191999565,
+        "elapsedMs": 12766.1
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "status": "captured-limited-art-routes"
+}

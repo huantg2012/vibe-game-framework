@@ -1,0 +1,23 @@
+{
+  "status": "pass",
+  "checks": [
+    "14 focused actual AST/mutation contracts",
+    "same97 frozen source comparison",
+    "node syntax two changed files",
+    "scoped whitespace"
+  ],
+  "contract": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-binding-fix.json",
+    "sha256": "47267579b5b48ba5bb8fbc54ba14a151b3c90b9af0306b235ccb54b3e96b393f"
+  },
+  "sourceComparison": {
+    "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/current3120-to3121-unselected97-binding-fix.json",
+    "sha256": "060761a543fd62bc2b4aff48d61cb354e2faf21ff028f2344d463836446bafe0"
+  },
+  "independentReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/settled-projection-independent-shapes.json",
+    "sha256": "ff3ad80a30c60ad18bcbb7650aef287118b526631ebc61ba1c8f32dfbdf4c76a"
+  },
+  "existingTypeDevEvidence": "docs/qa/artifacts/r100-i10-i12/qa-tool-contract/final-preparation-checks/",
+  "scope": "QA-only JS binding guard. No TypeScript/runtime/source/input changes. Earlier same-product tsc/dev smoke retained; no lint script is configured. No new game execution claimed."
+}

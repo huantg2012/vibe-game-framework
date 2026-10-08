@@ -1,0 +1,283 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "black-lacuna",
+    "label": "暗脂缺湾",
+    "description": "暗脂缺湾的原生材料与完整搜撤地段",
+    "material": "gel",
+    "surface": {
+      "substrate": "gel",
+      "coating": "gel",
+      "organization": "patches",
+      "coverage": 0.54,
+      "wear": 0.57,
+      "deposits": 0.55,
+      "scale": 1.2,
+      "relief": 0.5,
+      "contrast": 0.72,
+      "regionScale": 1.4,
+      "quietness": 0.55,
+      "formScale": 1.6,
+      "fragmentation": 0.42,
+      "accentCoverage": 0.11
+    },
+    "palette": {
+      "void": 1448997,
+      "shadow": 2699322,
+      "floorDeep": 3947589,
+      "floor": 8816788,
+      "floorLight": 12698059,
+      "materialDark": 2104105,
+      "materialMid": 4799067,
+      "materialLight": 8877204,
+      "faceLight": 14071751,
+      "accentDim": 6443617,
+      "accent": 8809848,
+      "accentLight": 11639443,
+      "peak": 15590084,
+      "actorDark": 2369326,
+      "actorMid": 4936539,
+      "actorLight": 12750939,
+      "ground": 8816788,
+      "groundLight": 12698059,
+      "groundDark": 3947589,
+      "wall": 4799067,
+      "wallLight": 8877204,
+      "wallDark": 2104105
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "black-lacuna",
+    "ground": {
+      "dark": 3947589,
+      "mid": 8816788,
+      "light": 12698059
+    },
+    "solid": {
+      "dark": 2104105,
+      "mid": 4799067,
+      "light": 8877204
+    },
+    "cleaved": {
+      "dark": 6308945,
+      "mid": 10976912,
+      "light": 14071751
+    },
+    "secondary": {
+      "dark": 3489355,
+      "mid": 7570841,
+      "light": 11385802
+    },
+    "groundPattern": "flow",
+    "patternScale": 256,
+    "patternStrength": 0.3,
+    "secondaryCoverage": 0.11,
+    "textureContrast": 1.17,
+    "quietCoverage": 0.65
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "black-lacuna-severe",
+    "family": "gel-flow",
+    "grade": "severe",
+    "label": "暗脂缺湾",
+    "profile": "black-lacuna",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": 0.1,
+    "light_radius": 154,
+    "emission": 0.72,
+    "motion_period": 16,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 705,
+        "y": 377,
+        "rotation": 1.48,
+        "length": 560,
+        "width": 320,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.462,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-fan",
+        "groundEdgeWidth": 8
+      },
+      {
+        "id": 2,
+        "family": "gel-flow",
+        "role": "solid",
+        "x": 653,
+        "y": 254,
+        "rotation": 0.12,
+        "length": 260,
+        "width": 160,
+        "height": 52,
+        "thickness": 13,
+        "fold": 0.7370000000000001,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 3,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 826,
+        "y": 349,
+        "rotation": 1.32,
+        "length": 330,
+        "width": 100,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.528,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      },
+      {
+        "id": 4,
+        "family": "gel-flow",
+        "role": "relief",
+        "x": 700,
+        "y": 523,
+        "rotation": 0.16,
+        "length": 280,
+        "width": 115,
+        "height": 3,
+        "thickness": 1,
+        "fold": 0.35200000000000004,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.275,
+        "constructionVersion": 4,
+        "shapeProfile": "clamp-bank"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 427,
+          "y": 332
+        },
+        {
+          "x": 603,
+          "y": 307
+        },
+        {
+          "x": 740,
+          "y": 331
+        },
+        {
+          "x": 806,
+          "y": 401
+        },
+        {
+          "x": 759,
+          "y": 482
+        },
+        {
+          "x": 584,
+          "y": 522
+        },
+        {
+          "x": 446,
+          "y": 486
+        },
+        {
+          "x": 402,
+          "y": 416
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "severe",
+    "version": 1,
+    "label": "重度污染",
+    "status": "dev-masters",
+    "intent": "大片地面和空气已被侵占；充分准备后短时深入并尽早撤离",
+    "paintCount": 6,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "overwrite",
+    "volumeCount": 3,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "overwrite",
+    "volumeCols": 5,
+    "volumeRows": 3,
+    "chaosStartRate": 0.64,
+    "chaosEndRate": 0.96,
+    "chaosRampStartSeconds": 40,
+    "chaosRampEndSeconds": 130
+  },
+  "contentDefinition": {
+    "grade_id": "severe",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "重度污染",
+    "public_risk": "地面与空气受侵占，混乱增长快",
+    "public_preparation": "备好脱身工具，留出归途",
+    "public_reward": "更多收获在深处，入口无加成",
+    "enemy_count": 4,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 6,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 2
+  },
+  "package": {
+    "id": "r100-black-lacuna",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "gel-flow": {
+        "definition": "0ce794cb484749b4d4ba54007c2de6e4f01089fccb2ef7d420b06c105dd40dc9",
+        "surface": "7bbcfaa18563ef08395152454a7007eb71a573b0d83171e959dfa6b58ec805bd",
+        "solid": "c4b7797bd83d18746d027b9cd4e556f77109fcbfa9dacacd2bb7b30083444612"
+      }
+    },
+    "dependencyHash": "1c7fd9b1",
+    "grade": "severe"
+  }
+}

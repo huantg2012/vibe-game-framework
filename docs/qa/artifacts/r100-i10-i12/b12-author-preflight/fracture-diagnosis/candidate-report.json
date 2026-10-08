@@ -1,0 +1,505 @@
+{
+  "scope": "Pure candidate geometry at original medium seed. Original actual-route points and segments checked against candidate solids only; original terrain is unchanged, but this is not the actual3/12 admission. Marker ownership uses the same XY pixel-centre/highest-Z rule; official raster remains decisive.",
+  "results": [
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "original",
+        "updates": {}
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 3,
+          "visible": 3,
+          "owners": {
+            "4": 3
+          },
+          "bounds": {
+            "minX": 458.45444640138834,
+            "minY": 503.7366225915691,
+            "maxX": 570.6326426352651,
+            "maxY": 577.943112664228,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": 33.06509183040839
+    },
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "longer140",
+        "updates": {
+          "4": {
+            "length": 140
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 4,
+          "visible": 4,
+          "owners": {
+            "4": 4
+          },
+          "bounds": {
+            "minX": 440.10241036663086,
+            "minY": 503.11211048086415,
+            "maxX": 588.2750666100121,
+            "maxY": 577.9044075960447,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalActualMediumRoutePointsSupported": false,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": {
+        "x": 444,
+        "y": 572
+      },
+      "gapY": 32.440579719703464
+    },
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "longer150-square-axis",
+        "updates": {
+          "4": {
+            "length": 150,
+            "rotation": 0
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 6,
+          "visible": 6,
+          "owners": {
+            "4": 6
+          },
+          "bounds": {
+            "minX": 433.45,
+            "minY": 505.30434890351654,
+            "maxX": 593.505,
+            "maxY": 578.1043489035166,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalActualMediumRoutePointsSupported": false,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": {
+        "x": 500,
+        "y": 588
+      },
+      "gapY": 34.63281814235586
+    },
+    {
+      "id": "double-return",
+      "candidate": {
+        "label": "longer160-square-axis",
+        "updates": {
+          "4": {
+            "length": 160,
+            "rotation": 0
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 4,
+          "projected": 7,
+          "visible": 7,
+          "owners": {
+            "4": 7
+          },
+          "bounds": {
+            "minX": 428.2,
+            "minY": 505.30434890351654,
+            "maxX": 598.552,
+            "maxY": 578.1043489035166,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [],
+      "allOriginalActualMediumRoutePointsSupported": false,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": {
+        "x": 500,
+        "y": 588
+      },
+      "gapY": 34.63281814235586
+    },
+    {
+      "id": "pinched-fan",
+      "candidate": {
+        "label": "south0",
+        "updates": {
+          "5": {
+            "y": 324
+          },
+          "6": {
+            "y": 357
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 5,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "3": 30
+          },
+          "bounds": {
+            "minX": 327.1015863553686,
+            "minY": 236.94216569911907,
+            "maxX": 495.04016820220653,
+            "maxY": 391.7455571758162,
+            "maxZ": 35
+          }
+        },
+        {
+          "id": 6,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "4": 30
+          },
+          "bounds": {
+            "minX": 650.5965749725619,
+            "minY": 291.67729434951684,
+            "maxX": 815.0680146706503,
+            "maxY": 429.3395278828507,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "projectedAreaEstimate": 8608
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "projectedAreaEstimate": 7824
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "projectedAreaEstimate": 11120
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "projectedAreaEstimate": 6848
+        }
+      ],
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": null
+    },
+    {
+      "id": "pinched-fan",
+      "candidate": {
+        "label": "south8",
+        "updates": {
+          "5": {
+            "y": 332
+          },
+          "6": {
+            "y": 365
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 5,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "3": 30
+          },
+          "bounds": {
+            "minX": 327.1015863553686,
+            "minY": 244.94216569911907,
+            "maxX": 495.04016820220653,
+            "maxY": 399.7455571758162,
+            "maxZ": 35
+          }
+        },
+        {
+          "id": 6,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "4": 30
+          },
+          "bounds": {
+            "minX": 650.5965749725619,
+            "minY": 299.67729434951684,
+            "maxX": 815.0680146706503,
+            "maxY": 437.3395278828507,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "projectedAreaEstimate": 9600
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "projectedAreaEstimate": 7232
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "projectedAreaEstimate": 11792
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "projectedAreaEstimate": 5888
+        }
+      ],
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": null
+    },
+    {
+      "id": "pinched-fan",
+      "candidate": {
+        "label": "south16",
+        "updates": {
+          "5": {
+            "y": 340
+          },
+          "6": {
+            "y": 373
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 5,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "3": 30
+          },
+          "bounds": {
+            "minX": 327.1015863553686,
+            "minY": 252.94216569911907,
+            "maxX": 495.04016820220653,
+            "maxY": 407.7455571758162,
+            "maxZ": 35
+          }
+        },
+        {
+          "id": 6,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "4": 30
+          },
+          "bounds": {
+            "minX": 650.5965749725619,
+            "minY": 307.67729434951684,
+            "maxX": 815.0680146706503,
+            "maxY": 445.3395278828507,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "projectedAreaEstimate": 10560
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "projectedAreaEstimate": 6464
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "projectedAreaEstimate": 12368
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "projectedAreaEstimate": 5056
+        }
+      ],
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": null
+    },
+    {
+      "id": "pinched-fan",
+      "candidate": {
+        "label": "south24",
+        "updates": {
+          "5": {
+            "y": 348
+          },
+          "6": {
+            "y": 381
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 5,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "3": 30
+          },
+          "bounds": {
+            "minX": 327.1015863553686,
+            "minY": 260.9421656991191,
+            "maxX": 495.04016820220653,
+            "maxY": 415.7455571758162,
+            "maxZ": 35
+          }
+        },
+        {
+          "id": 6,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "4": 30
+          },
+          "bounds": {
+            "minX": 650.5965749725619,
+            "minY": 315.67729434951684,
+            "maxX": 815.0680146706503,
+            "maxY": 453.3395278828507,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "projectedAreaEstimate": 11424
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "projectedAreaEstimate": 5600
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "projectedAreaEstimate": 12880
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "projectedAreaEstimate": 4304
+        }
+      ],
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": null
+    },
+    {
+      "id": "pinched-fan",
+      "candidate": {
+        "label": "south32",
+        "updates": {
+          "5": {
+            "y": 356
+          },
+          "6": {
+            "y": 389
+          }
+        }
+      },
+      "objects": [
+        {
+          "id": 5,
+          "projected": 30,
+          "visible": 24,
+          "owners": {
+            "3": 6,
+            "5": 24
+          },
+          "bounds": {
+            "minX": 327.1015863553686,
+            "minY": 268.9421656991191,
+            "maxX": 495.04016820220653,
+            "maxY": 423.7455571758162,
+            "maxZ": 35
+          }
+        },
+        {
+          "id": 6,
+          "projected": 30,
+          "visible": 0,
+          "owners": {
+            "4": 30
+          },
+          "bounds": {
+            "minX": 650.5965749725619,
+            "minY": 323.67729434951684,
+            "maxX": 815.0680146706503,
+            "maxY": 461.3395278828507,
+            "maxZ": 32
+          }
+        }
+      ],
+      "contacts": [
+        {
+          "a": 1,
+          "b": 5,
+          "projectedAreaEstimate": 12144
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "projectedAreaEstimate": 4688
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "projectedAreaEstimate": 13280
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "projectedAreaEstimate": 3632
+        }
+      ],
+      "allOriginalActualMediumRoutePointsSupported": true,
+      "allOriginalActualMediumRouteStepsSweptBothDirections": true,
+      "firstBad": null,
+      "gapY": null
+    }
+  ]
+}

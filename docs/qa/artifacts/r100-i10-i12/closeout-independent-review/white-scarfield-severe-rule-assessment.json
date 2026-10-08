@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "status": "qualification-failed-no-nonentry-extraction",
+  "createdAt": "2026-10-07T12:33:35.757Z",
+  "reviewer": "i12_qa",
+  "featureIds": [
+    "COH-F052",
+    "COH-F013"
+  ],
+  "world": "white-scarfield",
+  "grade": "severe",
+  "rule": "Each world/grade keeps both original seed processes, with at least one actual non-entry pickup and same-run settled extraction. Empty return/death is pressure evidence, never pickup success. Original errors remain and exact retries append.",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "originalPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/policy-freeze.json",
+    "sha256": "a971cfbecf497c4a46ebb152c5641813d33254d1461ea354b8a0a41670cbf026"
+  },
+  "currentPolicy": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/policy-freeze.json",
+    "sha256": "616bef332366fa5d62af780c1fa1f09820fcad41cef177809da2ad98018f47f9"
+  },
+  "decisions": {
+    "bothOriginalProcessesComplete": true,
+    "atLeastOneNonEntrySettledExtraction": false,
+    "qualifiedGradePair": false,
+    "deathCount": 1,
+    "genuineEmptyReturnCount": 1,
+    "actualPickupCount": 0,
+    "originalFailurePreserved": true,
+    "originalPolicyAndEarnedStorageUnchanged": true
+  },
+  "attempts": [
+    {
+      "originalIndex": 5,
+      "seed": 20261005,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+      },
+      "status": "completed-real-input",
+      "processComplete": true,
+      "searchAndExtract": false,
+      "outcome": "death",
+      "elapsedMs": 93329.60000000008,
+      "hp": 0,
+      "chaos": 150,
+      "carried": 0,
+      "actualPickups": 0,
+      "nonEntryPickups": 0,
+      "independentEntryToTerminalTransitions": [],
+      "observedSearchDecisions": [
+        {
+          "nodeId": "r100-kindling-deep-1",
+          "collected": false,
+          "attempted": false,
+          "reason": "visible-opponent-too-close"
+        }
+      ],
+      "sameRunSettlement": {
+        "runId": "8ec74f91-8ea5-4009-b84c-027a3e0a63dd",
+        "baseSettled": true,
+        "status": "settled",
+        "outcome": "death"
+      },
+      "identity": {
+        "signature": "7864d455",
+        "fullIdentitySha256": "21470cab4652ab3eb0a43b4dcd0ec97cf297913948a9528e2e460b59fd54ace4",
+        "fullGenerationSha256": "42efdf51780ef5d4fd85bedad5064ae49c97c739b7a22627372b0ba69c42a9fd",
+        "beforeStateSha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a",
+        "entryPosition": {
+          "x": 196,
+          "y": 588
+        }
+      },
+      "problems": []
+    },
+    {
+      "originalIndex": 6,
+      "seed": 3075192741,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+      },
+      "status": "completed-real-input",
+      "processComplete": true,
+      "searchAndExtract": false,
+      "outcome": "extract",
+      "elapsedMs": 96046.18000000042,
+      "hp": 55,
+      "chaos": 136.32462434351268,
+      "carried": 0,
+      "actualPickups": 0,
+      "nonEntryPickups": 0,
+      "independentEntryToTerminalTransitions": [],
+      "observedSearchDecisions": [
+        {
+          "nodeId": "r100-kindling-contested-2",
+          "collected": false,
+          "attempted": false,
+          "reason": "visible-opponent-too-close"
+        }
+      ],
+      "sameRunSettlement": {
+        "runId": "338645ac-1138-42b0-a8b1-0c64c920aab3",
+        "baseSettled": true,
+        "status": "settled",
+        "outcome": "extract"
+      },
+      "identity": {
+        "signature": "6ff3dd6f",
+        "fullIdentitySha256": "9f8c02cce29943a6df912733ce436aa9f010f75cac3b261ef19419119f675c09",
+        "fullGenerationSha256": "252414d6aa4adcd314d01914bd1a7ce4d3fc61736c0d6315bac088637f969c4e",
+        "beforeStateSha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a",
+        "entryPosition": {
+          "x": 196,
+          "y": 588
+        }
+      },
+      "problems": []
+    }
+  ],
+  "interpretation": "Two valid pressure outcomes remain original evidence, but neither is a successful non-entry search. completed-script, completed-real-input and exitCode0 only show completion; they cannot close this grade-pair gate. The report establishes the gate failure, not a product/AI/navigation root cause.",
+  "recheckRequirements": [
+    "Diagnose and separately review a concrete defect before any repair recheck. Do not rerun repeatedly for a favorable outcome.",
+    "Append in a fresh directory; preserve both original reports, inputs, death/empty return, costs, source and controller byte identities.",
+    "Keep world white-scarfield, grade severe, the relevant original seed, full saved generation recipe and signature, earned-storage contents, loadout/resources/budgets. Merely matching world/seed labels is insufficient.",
+    "For a controller repair, bind old/new harness and dependency hashes, exact intended behavior delta, root disposition and affected coverage. A changed controller must not be called byte-identical policy or silently replace its frozen derivation.",
+    "For product or authored-map repair that changes generation, invalidate affected qualifications and record a new source/recipe identity with its actual required regression. Do not claim full-identity conservation when the content changed.",
+    "At least one original seed must actually produce an uncollected→collected non-entry node at distance strictly greater than320px and extract; reconcile the node with same-run settled kindling or inventory receipts. Do not lower the bound or reinterpret near-entry/empty/death as pickup success.",
+    "Recompute final raw accounting with original and supplementary attempts retained. The original death and empty return remain outcomes even if a later repaired execution passes."
+  ],
+  "limitations": [
+    "No browser launched; no route replay or game execution",
+    "No visual/audio/physics-root-cause judgment",
+    "No supplemental attempt authorized or scheduled by this report",
+    "No changes to the frozen plan, original reports, product or ledger"
+  ],
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/policy-freeze.json",
+      "sha256": "616bef332366fa5d62af780c1fa1f09820fcad41cef177809da2ad98018f47f9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/batch-report.json",
+      "sha256": "09047f9a47ad69cb0fab126a1c8c643884f8ba7816524c0a93c029a94713e109"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/policy-freeze.json",
+      "sha256": "a971cfbecf497c4a46ebb152c5641813d33254d1461ea354b8a0a41670cbf026"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+      "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/journey-source.mjs",
+      "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/coverage-source.mjs",
+      "sha256": "f7af44fe0c9b2c5a6ab7cac2ed3d5d51c7c01c29424e32a8aa051807ce58a5d8"
+    },
+    {
+      "path": "tools/qa/r100-i09-costed-encounters.mjs",
+      "sha256": "90fd4ce9ccdc2496038d628be1baf917e161ffe4eb0d2fc49d5e9527a202fc01"
+    },
+    {
+      "path": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "path": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "path": "src/systems/last-light-locomotion.ts",
+      "sha256": "291b3ef4e31f8271cb2246247d2d878f6e36bf4356b432d02ea9806b8e7945e2"
+    },
+    {
+      "path": "src/systems/last-light-layout.ts",
+      "sha256": "a7b63d04351eacf80f60c752db2db418249ca9d0a9fd2786b16eea36cb7960dd"
+    },
+    {
+      "path": "tools/qa/check-r100-expansion-plan.mjs",
+      "sha256": "46f93fbee706a09ca9a35a0df52ca6053ac8d59904fcb602917137906a3b482c"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "path": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+      "sha256": "965a98687e87690f71115472384fba50578ff9618aed328793c3a3bd1cf33b6e"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/earned-storage.json",
+      "sha256": "7ccb13aa029ce0776556d48ef00fca9b196e7d71ec38507557e9abf7975c26e8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+      "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/1-entry.save.json",
+      "sha256": "04fb4e8cffb627c3fd15716125445f459a98af85469f372d7b86d6e11df96361"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/severe/1-returned.save.json",
+      "sha256": "6e7a1c7aafd940328114d422a4303030829b4fc40ed8b4e317490eaae8700134"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+      "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-entry.save.json",
+      "sha256": "dd221d425333d2e5d1a6bd9b7a24abfa56653f0d096eed7990658128126bedfc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/severe/1-returned.save.json",
+      "sha256": "0a1f420ed915566ab90b9c5af38312458d3c985f8c659b3ee85a0dcce60df569"
+    }
+  ],
+  "tools": [
+    {
+      "path": "tools/qa/r100-play-qualification.mjs",
+      "sha256": "80b3d618b0d54bbd8f39fc4c77aa301690e1cc8f6109e5b55f1089be3139ac46"
+    },
+    {
+      "path": "tools/qa/r100-i09-search-receipts.mjs",
+      "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+    },
+    {
+      "path": "tools/qa/r100-observed-searches.mjs",
+      "sha256": "1a33681a81a9c4f70053febb82770dccf9063c11f877aeab0812e9b2c16c4f24"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/audit-white-scarfield-severe.mjs",
+      "sha256": "33d10080cc23f720ea202267ca4fa8de838cf7e6dd9bd7d91923622e3a9a3dc2"
+    }
+  ]
+}

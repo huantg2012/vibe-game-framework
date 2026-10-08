@@ -1,0 +1,291 @@
+{
+  "worldId": "procedural-rift",
+  "layoutId": "procedural-rift",
+  "seed": 1500724393,
+  "recipeId": "r100-native-v3:silt-colonnade-medium",
+  "signature": "028dc1bf",
+  "generation": {
+    "version": 3,
+    "requestedSeed": 340,
+    "paintGeometryVersion": 2,
+    "profile": {
+      "id": "silt-colonnade",
+      "label": "淤堆柱廊",
+      "description": "淤堆柱廊的原生材料与完整搜撤地段",
+      "material": "granular",
+      "surface": {
+        "substrate": "granular",
+        "coating": "granular",
+        "organization": "clusters",
+        "coverage": 0.46,
+        "wear": 0.52,
+        "deposits": 0.52,
+        "scale": 1.1,
+        "relief": 0.52,
+        "contrast": 0.75,
+        "regionScale": 1.15,
+        "quietness": 0.48,
+        "formScale": 1.3,
+        "fragmentation": 0.65,
+        "accentCoverage": 0.02
+      },
+      "palette": {
+        "void": 592137,
+        "shadow": 1381653,
+        "floorDeep": 1846080,
+        "floor": 4217719,
+        "floorLight": 8822708,
+        "materialDark": 4934477,
+        "materialMid": 10527136,
+        "materialLight": 14539473,
+        "faceLight": 14195060,
+        "accentDim": 5395026,
+        "accent": 11184810,
+        "accentLight": 13421772,
+        "peak": 15658734,
+        "actorDark": 1842204,
+        "actorMid": 12237498,
+        "actorLight": 16777215,
+        "ground": 4217719,
+        "groundLight": 8822708,
+        "groundDark": 1846080,
+        "wall": 10527136,
+        "wallLight": 14539473,
+        "wallDark": 4934477
+      }
+    },
+    "appearance": {
+      "version": 1,
+      "worldId": "silt-colonnade",
+      "ground": {
+        "dark": 1846080,
+        "mid": 4217719,
+        "light": 8822708
+      },
+      "solid": {
+        "dark": 4934477,
+        "mid": 10527136,
+        "light": 14539473
+      },
+      "cleaved": {
+        "dark": 5056291,
+        "mid": 11096380,
+        "light": 14195060
+      },
+      "secondary": {
+        "dark": 4800061,
+        "mid": 9535875,
+        "light": 12956852
+      },
+      "groundPattern": "grains",
+      "patternScale": 224,
+      "patternStrength": 0.45,
+      "secondaryCoverage": 0.23,
+      "textureContrast": 1.18,
+      "quietCoverage": 0.58
+    },
+    "space": {
+      "id": "open-scars",
+      "label": "疏落蚀坑",
+      "voidFraction": 0.09,
+      "crackFraction": 0.2,
+      "holeScale": 1,
+      "directionality": 0.2,
+      "clustering": 0.25
+    },
+    "contentFragmentTypeId": "frag-outdoor",
+    "nativeDefinition": {
+      "id": "silt-colonnade-medium",
+      "family": "granular-ridge",
+      "grade": "medium",
+      "label": "淤堆柱廊",
+      "profile": "silt-colonnade",
+      "cols": 32,
+      "rows": 24,
+      "seed": 20261002,
+      "spawn_x": 196,
+      "spawn_y": 588,
+      "exit_x": 148,
+      "exit_y": 664,
+      "search_x": 516,
+      "search_y": 580,
+      "enemy_x": 840,
+      "enemy_y": 172,
+      "axis": 0.42,
+      "light_radius": 132,
+      "emission": 0.55,
+      "motion_period": 16,
+      "ground_quietness": 0.84,
+      "ground_contrast": 0.5,
+      "ground_coverage": 0.26,
+      "ground_material_blend": 0.32,
+      "instances": [
+        {
+          "id": 1,
+          "family": "granular-ridge",
+          "role": "solid",
+          "x": 355,
+          "y": 260,
+          "rotation": 0.3,
+          "length": 260,
+          "width": 220,
+          "height": 100,
+          "thickness": 17,
+          "fold": 0.62,
+          "branches": 2,
+          "opening": 0.94,
+          "distortion": 0.64,
+          "constructionVersion": 3,
+          "shapeProfile": "monolith-buttress"
+        },
+        {
+          "id": 2,
+          "family": "granular-ridge",
+          "role": "solid",
+          "x": 640,
+          "y": 515,
+          "rotation": 0.8,
+          "length": 290,
+          "width": 250,
+          "height": 115,
+          "thickness": 19,
+          "fold": 0.68,
+          "branches": 2,
+          "opening": 0.94,
+          "distortion": 0.7,
+          "constructionVersion": 3,
+          "shapeProfile": "monolith-buttress"
+        },
+        {
+          "id": 3,
+          "family": "granular-ridge",
+          "role": "solid",
+          "x": 850,
+          "y": 250,
+          "rotation": 2.5,
+          "length": 230,
+          "width": 230,
+          "height": 82,
+          "thickness": 15,
+          "fold": 0.56,
+          "branches": 2,
+          "opening": 0.94,
+          "distortion": 0.66,
+          "constructionVersion": 3,
+          "shapeProfile": "monolith-buttress"
+        }
+      ],
+      "erosion": [
+        [
+          {
+            "x": 632,
+            "y": 424
+          },
+          {
+            "x": 696,
+            "y": 400
+          },
+          {
+            "x": 776,
+            "y": 424
+          },
+          {
+            "x": 804,
+            "y": 464
+          },
+          {
+            "x": 764,
+            "y": 488
+          },
+          {
+            "x": 700,
+            "y": 460
+          },
+          {
+            "x": 656,
+            "y": 464
+          }
+        ],
+        [
+          {
+            "x": 216,
+            "y": 200
+          },
+          {
+            "x": 288,
+            "y": 176
+          },
+          {
+            "x": 332,
+            "y": 200
+          },
+          {
+            "x": 316,
+            "y": 232
+          },
+          {
+            "x": 248,
+            "y": 240
+          }
+        ]
+      ]
+    },
+    "gradeDefinition": {
+      "id": "medium",
+      "version": 1,
+      "label": "中污染",
+      "status": "dev-masters",
+      "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+      "paintCount": 4,
+      "paintSubstrate": "oil_film",
+      "paintContinuity": "monolith",
+      "paintCoverage": "rewrite",
+      "volumeCount": 2,
+      "volumeSubstrate": "gas_mass",
+      "volumeCoverage": "rewrite",
+      "volumeCols": 4,
+      "volumeRows": 3,
+      "chaosStartRate": 0.42,
+      "chaosEndRate": 0.6,
+      "chaosRampStartSeconds": 60,
+      "chaosRampEndSeconds": 180
+    },
+    "contentDefinition": {
+      "grade_id": "medium",
+      "version": 2,
+      "status": "production-candidate",
+      "label": "中污染",
+      "public_risk": "侵蚀更广，久留代价更高",
+      "public_preparation": "按行装选择绕行或穿越",
+      "public_reward": "更多收获在较深处",
+      "enemy_count": 3,
+      "kindling_safe_count": 1,
+      "kindling_contested_count": 2,
+      "kindling_deep_count": 2,
+      "kindling_safe_value": 1,
+      "kindling_contested_value": 2,
+      "kindling_deep_value": 4,
+      "contaminant_safe_count": 1,
+      "contaminant_contested_count": 1,
+      "contaminant_deep_count": 1
+    },
+    "package": {
+      "id": "r100-silt-colonnade",
+      "algorithm": "r100-native",
+      "version": 3,
+      "algorithmRevision": 6,
+      "materials": {
+        "granular-ridge": {
+          "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+          "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+          "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+        }
+      },
+      "dependencyHash": "0c93f504",
+      "grade": "medium"
+    }
+  },
+  "catalogVersion": "contaminant-v1",
+  "lootAlgorithmVersion": 1,
+  "combatRulesVersion": 2
+}

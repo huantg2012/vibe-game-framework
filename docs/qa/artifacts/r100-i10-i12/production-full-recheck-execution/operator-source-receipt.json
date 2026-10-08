@@ -1,0 +1,24 @@
+{
+  "status": "retrospective-source-archive-not-a-new-execution",
+  "at": "2026-10-08T02:19:00.103868+00:00",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/operator-source.py",
+    "sha256": "e6ca96cf4b592fd5a6acd1b9a54bb56bebb9f9df727a1b4063746ebe5241c52f"
+  },
+  "exactCommandText": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/operator-command.txt",
+    "sha256": "dbe80d412c6b1ed1a4ac41bbba390761b3e7c6e89bc6af86c29bd801f2aa5a7c"
+  },
+  "sourceOfText": "Copied verbatim from the executed functions.exec exec_command heredoc that opened exec session25438. The running Python process reads stdin and was not launched from this archived file. This is not a pre-execution source hash.",
+  "execSessionId": 25438,
+  "operatorPid": 10317,
+  "launchPid": 10356,
+  "syntax": "ast.parse passed; no code from the archived file was executed",
+  "executionReceiptPath": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/execution.json",
+  "publicationProcessInventory": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/processes-before.for-publication.json",
+    "sha256": "39e4dbe44d87f50acd0ace427a348b1a578c3cb5b732598e07c181b3089ed8a8"
+  },
+  "localOnlyOriginalProcessInventory": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/processes-before.json",
+  "publicationRestriction": "The original before inventory includes a shared Codex execution-service parent argv. Retain original locally, use the filtered inventory for any commit/export. All periodic samples contain only the owned probe child tree."
+}

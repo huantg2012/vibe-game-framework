@@ -1,0 +1,164 @@
+{
+  "status": "bounded-pass",
+  "reviewer": "root",
+  "at": "2026-10-07T14:36:26.822103+00:00",
+  "issueId": "R100-P43",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "protocol": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/approved-protocol.json",
+    "sha256": "d88c904ce2c95d2c0be396016fda6f7db1ed82788781a90b6ab98792feb72ce6"
+  },
+  "candidateIndependentReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/candidate-v2-review.json",
+    "sha256": "46010372ebc68147ab18d81158effd2e27873db6c0a4171049718b5fe943b152"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/execution.json",
+    "sha256": "bf714ec6b0a2753602431929b3383d7168a32a433cad9ec44de5252d6d1f512e"
+  },
+  "reconciliation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/reconciliation.json",
+    "sha256": "8078f229d6b1be1f092f4de669d3afda4acb95959b5809c367658d3ff77ac8b7"
+  },
+  "workerObservation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/worker-observation-summary.json",
+    "sha256": "b59733d5b37421b03977b6259a8487d01005c7529a1ccfa75351729d6ea434a4"
+  },
+  "rawRecomputedAllNew56": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/summary.json",
+    "sha256": "ecc10117b880a364d2d75b8204d7f2287a839ab9c5f56587657845d6baa9f1ab"
+  },
+  "rows": [
+    {
+      "case": {
+        "world": "ochre-folds",
+        "grade": "severe",
+        "seed": 20261005,
+        "originalReport": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+          "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/report.json",
+        "sha256": "fb8b62b51d0ca351a6343d4cced68ce4361598b05d2181a9d4acb4e8cd2ea9ab"
+      },
+      "inputLog": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/journey.jsonl",
+        "sha256": "45a9bff315bf72362c98c980f4f281516dedc9e2ca9e02f797a70f81b0676048"
+      },
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "kind": "kindling",
+          "distanceFromEntry": 551.5360369005818,
+          "elapsedMs": 48714.739999999845,
+          "evidence": "target-observed / terminal-collected",
+          "timing": "observation upper bound",
+          "eligibleNonEntry": true
+        }
+      ],
+      "fieldElapsedMs": 63164.13999999964,
+      "hp": 115,
+      "chaos": 93.4949341723231,
+      "facingChecks": {
+        "count": 4,
+        "allowed": 4,
+        "abandoned": 0,
+        "failed": 0,
+        "issuedSpace": 4,
+        "maximumWholeElapsedMs": 400.00000000001455
+      },
+      "kindling": 6,
+      "abandonments": [],
+      "fullOriginalIdentityAndBeforeExact": true
+    },
+    {
+      "case": {
+        "world": "ochre-folds",
+        "grade": "severe",
+        "seed": 3075192741,
+        "originalReport": {
+          "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+          "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+        }
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/report.json",
+        "sha256": "9cc5a9adc59ddc3d4ca21813b43acfed105ed1e43bb2089b611d9420e6a88cf6"
+      },
+      "inputLog": {
+        "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/journey.jsonl",
+        "sha256": "07b3954647d8e9d452c5e720dceb502921bec0ee7c0642b22da59801566245d6"
+      },
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "kind": "kindling",
+          "distanceFromEntry": 554.3139904422402,
+          "elapsedMs": 49881.349999999846,
+          "evidence": "target-observed / terminal-collected",
+          "timing": "observation upper bound",
+          "eligibleNonEntry": true
+        }
+      ],
+      "fieldElapsedMs": 67730.62999999963,
+      "hp": 130,
+      "chaos": 75.05043600652155,
+      "facingChecks": {
+        "count": 3,
+        "allowed": 2,
+        "abandoned": 1,
+        "failed": 0,
+        "issuedSpace": 2,
+        "maximumWholeElapsedMs": 450.01999999998225
+      },
+      "kindling": 6,
+      "abandonments": [
+        "visible-attack-phase"
+      ],
+      "fullOriginalIdentityAndBeforeExact": true
+    }
+  ],
+  "reviewedFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/1-far-exploration.png",
+      "sha256": "50c9eaaf0e467385a573500a8ebec4a6354282cc0d1e9c7f0a8dbbb02b86d493"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/1-search-2.png",
+      "sha256": "6ba6a52ff3017d9b198cf2e3057d96e1523838c6955279645e04180f24b37afd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/001-ochre-folds-severe-20261005/severe/1-field-result.png",
+      "sha256": "61ca287ea2aa65134f6eade4c60a8204c32ca3ae5fba35efa202d03c950ec119"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/1-far-exploration.png",
+      "sha256": "683236b94bbb425c8c876e862c5066482c03dd81b8698bf55bb390bbe14f7708"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/1-search-2.png",
+      "sha256": "e37dfad82e01796ba8f4ad902ba0393d6418b8897276dd400466fa8fca22ee7c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-recheck/play/002-ochre-folds-severe-3075192741/severe/1-field-result.png",
+      "sha256": "22e4e718c4c468d7c9af51e4ec4eddd674f310a269a78256ef13b82f0de1b3ce"
+    }
+  ],
+  "method": "Root independently recomputed all346 raw attempts using signed protocol guards and the actual journey JSONL, matched full identity and earned before-save against both immutable originals, read the reports and six original PNG frames listed above.",
+  "visibleObservations": [
+    "Ochre folded masses retain dark substantial cut edges and a cold gray traversable channel; the local turquoise accents stay separable from the carried-resource readout.",
+    "Both search frames show a real+6 pickup with reduced HP; field-result frames show extraction with6kindling at63s/68s. One frame includes two visible opposing ring forms on the approach.",
+    "Sparse stills do not inspect continuous facing movement or confirm individual attack contacts; those input boundaries are tied separately to the real log."
+  ],
+  "decision": "Both original seed identities now have completed non-entry search-and-extract supplemental processes; close the bounded fixed-process qualification gap. Original deaths remain and do not become passes.",
+  "limitations": [
+    "Two controlled supplemental processes, not population success rate, novice research, natural economy, final108 production or deep severe stress coverage.",
+    "No hit-rate or causal gameplay improvement claim is drawn from the different outcomes.",
+    "Actual sound was not heard; R100-R10/I14 remains separate."
+  ]
+}

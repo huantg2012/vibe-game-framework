@@ -1,0 +1,355 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b12-source/source-snapshot.json",
+  "sourceManifestSha256": "dace95f2a592111ec52c17917739aaa6cded86a0817ade1d9b810e3a0da51dc0",
+  "authorCamera": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/camera-supported.json",
+    "sha256": "09ce40280663159b375b5904a77fa906c044ae685876f9c346680c69aa3c9ea2"
+  },
+  "scope": "Prepared real-WASD normal-FOV material approaches only. No browser started; actual requested seed, recipe grade and facing must be verified by capture. CPU support is not a visual pass.",
+  "omitted": [],
+  "cases": [
+    {
+      "world": "double-return",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 580,
+          "y": 628,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 628
+          },
+          "lookAtMaterialPoint": {
+            "x": 515,
+            "y": 542
+          },
+          "purpose": "南侧地颈与下钝端"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 556,
+          "y": 596,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 556,
+            "y": 596
+          },
+          "lookAtMaterialPoint": {
+            "x": 553,
+            "y": 487
+          },
+          "purpose": "中段34.63px真实横口"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 604,
+          "y": 404,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 604,
+            "y": 404
+          },
+          "lookAtMaterialPoint": {
+            "x": 525,
+            "y": 331
+          },
+          "purpose": "上裂肩与内返路"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 716,
+          "y": 636,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 716,
+            "y": 636
+          },
+          "lookAtMaterialPoint": {
+            "x": 740,
+            "y": 530
+          },
+          "purpose": "东侧宽外返床"
+        },
+        {
+          "label": "05-original-route-boundary",
+          "x": 548,
+          "y": 156,
+          "faces": [
+            "east",
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 548,
+            "y": 156
+          },
+          "lookAtMaterialPoint": null,
+          "purpose": "补北颈及两条原返路共同终点；朝实际缺地边，不用南颈图代替。",
+          "existingSweptPathEvidence": {
+            "low": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            },
+            "medium": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            },
+            "severe": {
+              "kind": "spawnRoute",
+              "routeIndex": 5,
+              "pointIndex": 98
+            }
+          },
+          "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+        }
+      ]
+    },
+    {
+      "world": "offset-basins",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 516,
+          "y": 412,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 516,
+            "y": 412
+          },
+          "lookAtMaterialPoint": {
+            "x": 475,
+            "y": 311
+          },
+          "purpose": "上岸厚唇"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 508,
+          "y": 468,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 508,
+            "y": 468
+          },
+          "lookAtMaterialPoint": {
+            "x": 594,
+            "y": 404
+          },
+          "purpose": "两错岸短接床"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 628,
+          "y": 644,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 628,
+            "y": 644
+          },
+          "lookAtMaterialPoint": {
+            "x": 694,
+            "y": 559
+          },
+          "purpose": "下岸不等厚端"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 484,
+          "y": 500,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 484,
+            "y": 500
+          },
+          "lookAtMaterialPoint": {
+            "x": 392,
+            "y": 444
+          },
+          "purpose": "西侧共同外返床"
+        }
+      ]
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 276,
+          "y": 348,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 276,
+            "y": 348
+          },
+          "lookAtMaterialPoint": {
+            "x": 410,
+            "y": 345
+          },
+          "purpose": "左粒肩压起膜根"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 572,
+          "y": 556,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 572,
+            "y": 556
+          },
+          "lookAtMaterialPoint": {
+            "x": 572,
+            "y": 451
+          },
+          "purpose": "中央裸裂床"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 836,
+          "y": 484,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 836,
+            "y": 484
+          },
+          "lookAtMaterialPoint": {
+            "x": 739,
+            "y": 388
+          },
+          "purpose": "右粒肩与膜褶交接"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 876,
+          "y": 508,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 876,
+            "y": 508
+          },
+          "lookAtMaterialPoint": {
+            "x": 787,
+            "y": 447
+          },
+          "purpose": "可踩东低膜面"
+        }
+      ]
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 388,
+          "y": 620,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 388,
+            "y": 620
+          },
+          "lookAtMaterialPoint": {
+            "x": 341,
+            "y": 522
+          },
+          "purpose": "左侧南低束床"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 620,
+          "y": 388,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 620,
+            "y": 388
+          },
+          "lookAtMaterialPoint": {
+            "x": 512,
+            "y": 382
+          },
+          "purpose": "斜横接与上断束"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 508,
+          "y": 468,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 508,
+            "y": 468
+          },
+          "lookAtMaterialPoint": {
+            "x": 615,
+            "y": 453
+          },
+          "purpose": "下断束与短横返口"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 732,
+          "y": 364,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 732,
+            "y": 364
+          },
+          "lookAtMaterialPoint": {
+            "x": 726,
+            "y": 255
+          },
+          "purpose": "北侧右床"
+        }
+      ]
+    }
+  ],
+  "reviewChecklist": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/checklist.json",
+    "sha256": "f2e82e38ba8230ff447aad1b31d20e1aacca22fbc948bddffbaddd7c84f1943c"
+  },
+  "supplementSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/supplement-existing-route-points.json",
+    "sha256": "1feb0c3b63a848c18c7673660fbb3f893a4a1c42005dc9927bf3affc02925f9d"
+  }
+}

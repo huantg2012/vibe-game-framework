@@ -1,0 +1,671 @@
+{
+  "status": "four-bounded-pass-one-close-view-pending",
+  "at": "2026-10-07T05:52:21.639Z",
+  "reviewer": "art-author",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-and-low-surface-source/source-snapshot.json",
+    "sha256": "ca7c824799dcf428a691fda42c0b449fa7b34ae83ba95c2a847a4fbfadb57edd"
+  },
+  "rawReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/report.json",
+    "sha256": "031c358061855e02655c540269fb661882f5d6ca9030996f8b8e0c413e9ba728"
+  },
+  "scope": "20 personally inspected original medium PNGs; real WASD with normal FOV and active pressure. Source repairs compared with retained original rejected images, not relabelled.",
+  "limitations": [
+    "Different actual position/facing adjustment and elapsed pressure prevent pixel-aligned A/B claims.",
+    "Still images and short controlled routes do not establish full-run qualification, full-map coverage, listening or human approval.",
+    "All prior rejected source/report files remain unchanged. Low/severe review is separate."
+  ],
+  "worlds": [
+    {
+      "worldId": "curled-flats",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-visual-pass",
+      "finding": "原低地长硬黑缝和尖角整片边显著消退，浅皮与裸床连续，04近脚可走床与高蓝卷唇仍分开。高实体沿用原形，所见范围未新增边界混淆。",
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/curled-flats-medium/recipe.json",
+        "sha256": "550286d5f8da12e666ae25f25bc9f2d0e137ff233a86f3a91807f726c328affa"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "curled-flats",
+        "grade": "medium",
+        "package": {
+          "id": "r100-curled-flats",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "c66837c2",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3118/r100-gym.html?world=curled-flats&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/curled-flats-medium/01-south-low-sheet-north.png",
+          "sha256": "7a5230cfcfd18f90abd3d93db772a1ada1ca36f1d066eadb337251106527cff8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 470.2501997430493,
+              "y": 627.9588539176758
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.65340585199985,
+            "elapsedMs": 5066.4
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/curled-flats-medium/02-west-rolled-edge-west.png",
+          "sha256": "8406cdaedab556dfb5ff14c61088c7f86499e4860094e011583401f024615756",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.1414041580305767,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 526.0743206980072,
+              "y": 450.7661336965445
+            },
+            "facingAngle": 3.1414041580305767,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.080089445999718,
+            "elapsedMs": 9366.2
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/curled-flats-medium/03-north-high-lip-north.png",
+          "sha256": "4a38beb547aa1acc6de4a2246622187124fcfaab92296301870d0a716f760bd9",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 545.6063915536705,
+              "y": 280.3937812713446
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.224756311999577,
+            "elapsedMs": 12816.2
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/curled-flats-medium/04-east-high-lip-south.png",
+          "sha256": "9c734b18317afa7b2ab6a2bd4851e128facc1579500a2d1a49408f882fa442db",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 715.0450246214509,
+              "y": 408.0366408227046
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 20.889217739999417,
+            "elapsedMs": 17832.600000000002
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "grain-weld",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-visual-pass",
+      "finding": "01/03原跨床尖紫覆片收成贴地露层；02仍保留粉灰材料分界，但不再有整段假抬高的片边。04灰断肩与短叉端可读。只确认观察段低地修复，不据此签全部颜色分区。",
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/grain-weld-medium/recipe.json",
+        "sha256": "6450cf9c7774c2b19923cbc0f8dc772db3a1eedea968615706516aae77ed0735"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "grain-weld",
+        "grade": "medium",
+        "package": {
+          "id": "r100-grain-weld",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            },
+            "granular-ridge": {
+              "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+              "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+              "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+            }
+          },
+          "dependencyHash": "ea8cf06d",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3118/r100-gym.html?world=grain-weld&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/grain-weld-medium/01-south-layer-contact-north.png",
+          "sha256": "bdf4c65407a8a7283f78ffb8685a0d00061d71e5b1b8c6045d60531532a61c8a",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 388.35639556944983,
+              "y": 530.1745788697176
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 16.28844244199991,
+            "elapsedMs": 3966.3999999999996
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/grain-weld-medium/02-low-granular-contact-east.png",
+          "sha256": "6b8c4759cdbca6857d8f1855beefcc8fccdafaa0f375f512fb700ec4ba086486",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.00025132741228556243,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 592.8273393410001,
+              "y": 488.4733536304499
+            },
+            "facingAngle": -0.00025132741228556243,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 17.643234929999775,
+            "elapsedMs": 8049.700000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/grain-weld-medium/03-east-broken-end-east.png",
+          "sha256": "3408ddb0c0460c42cd2279e1f93adc26adddc1c3c25e5698e9ce4fd7a8e1443d",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 726.844980306241,
+              "y": 470.69183154082384
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 18.75472511399966,
+            "elapsedMs": 11399.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/grain-weld-medium/04-north-grain-shoulder-west.png",
+          "sha256": "a3c721592d4b82f016d354fda9b47d012d1a8db5d1119a9d059941af84f2bbb6",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1413413261775007,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 620.3527314544497,
+              "y": 375.22951152828307
+            },
+            "facingAngle": -3.1413413261775007,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 20.076340919999463,
+            "elapsedMs": 15382.7
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "silk-catch",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-visual-pass",
+      "finding": "01低紫皮接浅床的重硬线消退，02蓝折体与金纤交接保留，03薄尾和可走裸床可分；04仍有材色分区，未读成新增阻挡。",
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/silk-catch-medium/recipe.json",
+        "sha256": "5f42925fba88d96bbd72b67dc46a5559390d2c5206694cd55dd4ed4c9d0269dc"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "silk-catch",
+        "grade": "medium",
+        "package": {
+          "id": "r100-silk-catch",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            },
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "d44f4a93",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3118/r100-gym.html?world=silk-catch&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/silk-catch-medium/01-low-caught-sheet-east.png",
+          "sha256": "794bccb0df989891e94129eef01336d7145340027a3a88f8e7f2f6abb3275dea",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -0.00006283185306976691,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 354.6417232489942,
+              "y": 554.9399653756014
+            },
+            "facingAngle": -0.00006283185306976691,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 16.10594248799994,
+            "elapsedMs": 3416.5000000000005
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/silk-catch-medium/02-fold-fibre-contact-north.png",
+          "sha256": "0b0267aa38dda345c9e410f9c76d2337c97712cada60003087b8a617036e4628",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 475.89981286828066,
+              "y": 493.9424760314754
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.28932709599982,
+            "elapsedMs": 6983
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/silk-catch-medium/03-south-open-tail-north.png",
+          "sha256": "93ae4fe2726c7ed1c54eaad674eff33195e051eb52ab4fedbe519b90af589305",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5706706630887541,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 666.6542437519307,
+              "y": 565.8373221192641
+            },
+            "facingAngle": -1.5706706630887541,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.87083520599964,
+            "elapsedMs": 11749.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/silk-catch-medium/04-north-torn-contact-west.png",
+          "sha256": "4a6a96a2708d4243ec840fe309246410538de28cfd6560a3020ac4eb3c3d2ca7",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 709.8508890809647,
+              "y": 240.18973943521812
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 21.176758937999434,
+            "elapsedMs": 18699.2
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "ochre-folds",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "bounded-shape-pass-new-tear-close-view-pending",
+      "finding": "四站可读赭褶厚端、灰床及局部宽窄通路；01/04见局部绿断纹，但代表新斜短裂口多在远处或灯边。不能据本四帧确认新凹口细部，需一次实际近侧观察。",
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/ochre-folds-medium/recipe.json",
+        "sha256": "fefeda4af1415dd0c98bbe087d3fb647264da7cc4564d550bcddcd3f363264ff"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "ochre-folds",
+        "grade": "medium",
+        "package": {
+          "id": "r100-ochre-folds",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "membrane-rim": {
+              "definition": "0d780b412e533356e5cff9eadd1b7a35a7709aabc070833b37ede3ec3024db5b",
+              "surface": "9faf60060f8b9e6a41bc89c8fc1a8c393ff3b821a7a822735d063f5f2ff732cf",
+              "solid": "3d11b9161c969fd35cb77a8d77b161b98105122b00b772b58ebb43ee61921d23"
+            }
+          },
+          "dependencyHash": "01c9279c",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3118/r100-gym.html?world=ochre-folds&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/ochre-folds-medium/01-pleated-tear-1-north.png",
+          "sha256": "4854d469e9e7d2cf865ed29d516cf2f68c417855689bf4962e45e382cf72f8db",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 444.25370968753464,
+              "y": 367.1184705709291
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 17.267181657999792,
+            "elapsedMs": 6916.400000000001
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/ochre-folds-medium/02-pleated-tear-2-north.png",
+          "sha256": "6d02396604a2c3bd165a51dcd860ea141ada324761a8e421269cf870eb5c8bd5",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 596.5301663736429,
+              "y": 443.5255820777343
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 19.086474237999596,
+            "elapsedMs": 12399.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/ochre-folds-medium/03-pleated-tear-3-east.png",
+          "sha256": "9f59e81cb2207c9c28954b898bb10f271875af6a5080d690fbe944d6b72a4e5f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0.00006283185306615868,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 562.1853802774127,
+              "y": 461.0791791502524
+            },
+            "facingAngle": 0.00006283185306615868,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 19.63393096599954,
+            "elapsedMs": 14049.5
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/ochre-folds-medium/04-pleated-tear-4-east.png",
+          "sha256": "5d7fe7e67ada0071c2656976cb000ea539c3deabcf95d84c569c96f6e2198f75",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 0,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 691.7699006694844,
+              "y": 647.642756046687
+            },
+            "facingAngle": 0,
+            "facing4": "right",
+            "hp": 100,
+            "chaos": 23.58040912199939,
+            "elapsedMs": 19915.899999999998
+          }
+        }
+      ]
+    },
+    {
+      "worldId": "shell-threads",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "status": "bounded-author-visual-pass",
+      "finding": "01north与02west照到蓝束前壁接浅壳/粗床，右侧材料接合不再完全被吞光或怪体遮挡。其余两向补足床面范围；主体背侧和全部壳腔未覆验。",
+      "recipe": {
+        "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/shell-threads-medium/recipe.json",
+        "sha256": "f88d93ef9f615e7e7aaa529876e00d5613f596d4fe226c101b5d66124ce66f51"
+      },
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "shell-threads",
+        "grade": "medium",
+        "package": {
+          "id": "r100-shell-threads",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "broken-shell": {
+              "definition": "b8e69dc639ee9d3254ea4e31d2985a9fe72d9222b546981738083bf0fa456835",
+              "surface": "0f3a10c683852461fc38543f508953ed058799dc7922c87c98bfb705f0b62f8d",
+              "solid": "784e95d608ea573f99bd99ff8f345e601504d3ebd24b18918dc78179cf4a4220"
+            },
+            "fibre-knot": {
+              "definition": "07c4626ba229e38d6cb11f6000b93bd0cea55899fc28c0781bb1f005bcf67634",
+              "surface": "b94630043fdc4418673337daa5eb3121dc5238b62b94f5b0fb2ef8fc461df002",
+              "solid": "015e854e49a0b48f5554f725341564817a0a267ad0c6b84708925a7231306089"
+            }
+          },
+          "dependencyHash": "1df77d06",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3118/r100-gym.html?world=shell-threads&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "images": [
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/shell-threads-medium/01-right-contact-south-approach-north.png",
+          "sha256": "e3442fde65868730922b77d38722d644c8730dc32a081372021d5ee442492a9f",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 749.6677848318029,
+              "y": 544.038285038095
+            },
+            "facingAngle": -1.5707963267948966,
+            "facing4": "up",
+            "hp": 100,
+            "chaos": 18.605418431999663,
+            "elapsedMs": 10949.599999999999
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/shell-threads-medium/01-right-contact-south-approach-west.png",
+          "sha256": "819418dd0a6d7281c14a12897a6ba236b710ab8c3ddd4062d01e158bcaae46c8",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": -3.1415298217367202,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 742.2232181651364,
+              "y": 544.038285038095
+            },
+            "facingAngle": -3.1415298217367202,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 18.727076219999645,
+            "elapsedMs": 11316.2
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/shell-threads-medium/02-right-contact-east-side-west.png",
+          "sha256": "20af29baaf05578fa9069aa6494d4caea66aac0ac6cce1e9d9b577c142e58ece",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 3.141592653589793,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 822.1807229796898,
+              "y": 423.017550782883
+            },
+            "facingAngle": 3.141592653589793,
+            "facing4": "left",
+            "hp": 100,
+            "chaos": 19.993387601999462,
+            "elapsedMs": 15132.7
+          }
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/low-surface-refined-medium/shell-threads-medium/02-right-contact-east-side-south.png",
+          "sha256": "73bee13d93696d422aa72a307374b0cb439d0d8671e09a9ca0f1f6d9df1a430c",
+          "png": {
+            "width": 1136,
+            "height": 758
+          },
+          "actualAngle": 1.5707963267948966,
+          "before": {
+            "active": true,
+            "ended": false,
+            "pos": {
+              "x": 822.1807229796898,
+              "y": 430.46208411621626
+            },
+            "facingAngle": 1.5707963267948966,
+            "facing4": "down",
+            "hp": 100,
+            "chaos": 20.11504870799945,
+            "elapsedMs": 15499.400000000001
+          }
+        }
+      ]
+    }
+  ]
+}

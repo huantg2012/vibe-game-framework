@@ -1,0 +1,366 @@
+{
+  "status": "bounded-author-local-pass",
+  "reviewer": "art-author",
+  "worldId": "double-return",
+  "issue": "P35",
+  "sourceManifest": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+  },
+  "scope": "Personally re-viewed the four original normal PNGs: medium01/02, low01 and severe01. Only the near-side instance4 compressed wedge local marker and illuminated cut end are judged here.",
+  "geometryAttribution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/fracture-refined/double-return-joint-attribution.json",
+    "sha256": "93726e6c520c05a8a5b868c3364fdbe213c130549ee7fa2806cbc42e32b1f9df",
+    "joint0": {
+      "x": 497.647309569,
+      "y": 530.585066532,
+      "z": 30.138090612
+    },
+    "basis": "Read-only buildNativeVolume reconstruction by geometry author from immutable3120 source; no new browser or map. This is attribution, not a substitute for visual judgment."
+  },
+  "finding": "三档01中，近侧蓝压楔左中的局部青绿点与其右端亮切口均可辨；中档02靠近后同处更清楚。根据真实mesh归属，这是物4，未混用上方物3的另一个绿点。",
+  "limitations": [
+    "低档标记较小，不支持两片material3三角具体形状或每个像素的独立读法。",
+    "只确认局部侵蚀标记和亮厚切端在这些正常视角可见，不签完整物4表面、背面或所有方向。",
+    "没有新取景、改光照、改色或调整玩法；原requested seed20261005、真实WASD脚位与场内状态保留。",
+    "此作者记录只补P35 double-return部分；pinched-fan和问题最终关闭由root独立收据裁决。"
+  ],
+  "imagesPersonallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/01-material-approach-north.png",
+      "sha256": "562a73e802e64afb919f6ce2300837931c8dec69667073bdf8a6cb6499513677",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "double-return",
+        "grade": "medium",
+        "package": {
+          "id": "r100-double-return",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "bbe99810",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=double-return&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "png": {
+        "width": 1136,
+        "height": 758
+      },
+      "requestedGoal": {
+        "label": "01-material-approach",
+        "x": 580,
+        "y": 628,
+        "faces": [
+          "north"
+        ],
+        "authorSupportedBodyPoint": {
+          "x": 580,
+          "y": 628
+        },
+        "lookAtMaterialPoint": {
+          "x": 515,
+          "y": 542
+        },
+        "purpose": "南侧地颈与下钝端"
+      },
+      "actualAngle": -1.5707963267948966,
+      "before": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 579.9525032783887,
+          "y": 618.2794923614251
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 17.289333731999797,
+        "elapsedMs": 6983.000000000001
+      },
+      "after": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 579.9525032783887,
+          "y": 618.2794923614251
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 17.322500459999794,
+        "elapsedMs": 7083.000000000001
+      },
+      "rawReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/report.json",
+        "sha256": "bb0a59d5d0d7a46b2085a0cb7022cd9f6e2b9f125bcace33b62a384feed56338"
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/double-return-medium/02-material-approach-north.png",
+      "sha256": "91afe85c2275ecdaaedf15d2a0ff6b76cb3e1fb4673502b60df696da477962ba",
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "double-return",
+        "grade": "medium",
+        "package": {
+          "id": "r100-double-return",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "bbe99810",
+          "grade": "medium"
+        },
+        "runtimeGrade": "medium",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=double-return&grade=medium&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "png": {
+        "width": 1136,
+        "height": 758
+      },
+      "requestedGoal": {
+        "label": "02-material-approach",
+        "x": 556,
+        "y": 596,
+        "faces": [
+          "north"
+        ],
+        "authorSupportedBodyPoint": {
+          "x": 556,
+          "y": 596
+        },
+        "lookAtMaterialPoint": {
+          "x": 553,
+          "y": 487
+        },
+        "purpose": "中段34.63px真实横口"
+      },
+      "actualAngle": -1.5707963267948966,
+      "before": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 556.9020294096098,
+          "y": 587.3010237902108
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 17.75382718799978,
+        "elapsedMs": 8383
+      },
+      "after": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 556.9020294096098,
+          "y": 587.3010237902108
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 17.78700386999978,
+        "elapsedMs": 8482.900000000001
+      },
+      "rawReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b12-current-medium/report.json",
+        "sha256": "bb0a59d5d0d7a46b2085a0cb7022cd9f6e2b9f125bcace33b62a384feed56338"
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-low/01-material-approach-north.png",
+      "sha256": "be72feb1674c4ab731be0efdcaeb453a41b6ce5c94c021e8f29e754b4e89c311",
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "double-return",
+        "grade": "low",
+        "package": {
+          "id": "r100-double-return",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "cf65efb6",
+          "grade": "low"
+        },
+        "runtimeGrade": "low",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=double-return&grade=low&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "png": {
+        "width": 1136,
+        "height": 758
+      },
+      "requestedGoal": {
+        "label": "01-material-approach",
+        "x": 580,
+        "y": 628,
+        "faces": [
+          "north"
+        ],
+        "authorSupportedBodyPoint": {
+          "x": 580,
+          "y": 628
+        },
+        "lookAtMaterialPoint": {
+          "x": 515,
+          "y": 542
+        },
+        "purpose": "南侧地颈与下钝端"
+      },
+      "actualAngle": -1.5707963267948966,
+      "before": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 582.6969632024188,
+          "y": 617.7141255937447
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 16.276588175999983,
+        "elapsedMs": 6816.3
+      },
+      "after": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 582.6969632024188,
+          "y": 617.7141255937447
+        },
+        "facingAngle": -1.5707963267948966,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 16.29238375199998,
+        "elapsedMs": 6899.7
+      },
+      "rawReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/report.json",
+        "sha256": "0b8230f65592845ef22fc68cc06b7e1803b844bd625ba491241a99c69f9ce86b"
+      }
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/double-return-severe/01-material-approach-north.png",
+      "sha256": "9c8f24f03f884e8e09b54dd90fca77c6e5f6ef4d99b234d1f134d951984c365e",
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "identity": {
+        "requestedSeed": 20261005,
+        "worldId": "double-return",
+        "grade": "severe",
+        "package": {
+          "id": "r100-double-return",
+          "algorithm": "r100-native",
+          "version": 3,
+          "algorithmRevision": 6,
+          "materials": {
+            "folded-slab": {
+              "definition": "cff866a51ffb73b54f28f80b01bd1d4cf2d18d91cf7da55908d520c34614e781",
+              "surface": "88bda7c04ecd21f8954fa7076dc73ce332ff0bb8935d39752b9923778fe01f4a",
+              "solid": "4b2082c1be77d27f0ba57aef104204e3c10bb59c88078df8f741b9bd6ce38454"
+            }
+          },
+          "dependencyHash": "bef1ef23",
+          "grade": "severe"
+        },
+        "runtimeGrade": "severe",
+        "url": "http://127.0.0.1:3120/r100-gym.html?world=double-return&grade=severe&seed=20261005&loadout=bare",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      "png": {
+        "width": 1136,
+        "height": 758
+      },
+      "requestedGoal": {
+        "label": "01-material-approach",
+        "x": 580,
+        "y": 628,
+        "faces": [
+          "north"
+        ],
+        "authorSupportedBodyPoint": {
+          "x": 580,
+          "y": 628
+        },
+        "lookAtMaterialPoint": {
+          "x": 515,
+          "y": 542
+        },
+        "purpose": "南侧地颈与下钝端"
+      },
+      "actualAngle": -1.5708591586479694,
+      "before": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 578.3439982090933,
+          "y": 623.6455524556919
+        },
+        "facingAngle": -1.5708591586479694,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 18.286268543999867,
+        "elapsedMs": 6583
+      },
+      "after": {
+        "active": true,
+        "ended": false,
+        "pos": {
+          "x": 578.3439982090933,
+          "y": 623.6455524556919
+        },
+        "facingAngle": -1.5708591586479694,
+        "facing4": "up",
+        "hp": 100,
+        "chaos": 18.345241727999866,
+        "elapsedMs": 6699.700000000001
+      },
+      "rawReport": {
+        "path": "docs/qa/artifacts/r100-i10-i12/late-passed-grades/report.json",
+        "sha256": "0b8230f65592845ef22fc68cc06b7e1803b844bd625ba491241a99c69f9ce86b"
+      }
+    }
+  ]
+}

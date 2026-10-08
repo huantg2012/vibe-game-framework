@@ -1,0 +1,866 @@
+{
+  "schemaVersion": 1,
+  "status": "original24-reviewed-with-two-severe-pair-qualification-gaps",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T12:50:23.405Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "runtimeAggregation": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/reconciliation.json",
+      "sha256": "ee1ba73833d114d857f53d70190e4cca8be7167d3f2bbf6587cee58fe8033b0f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/outcomes.json",
+      "sha256": "7c6a5c6ecd1913cf3cc4a6210744903e1788e86caa2a57b566af280453e3452e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/play-summary.json",
+      "sha256": "fa9167d9832fd4e5609aa18d16d26d54acdf99472408ef9bb360b46d2d4acaa5"
+    }
+  ],
+  "independentArtReceipts": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+      "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/independent-outcome-frame-review-art.json",
+      "sha256": "ccea46f204f57b40f5bbe498ddd5072880d403dbfdbf334e4b4414bc4fa10cc2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/independent-black-lacuna-review-art.json",
+      "sha256": "021ecd12a0731a204f32ff891486a377e7e8223b282859ff935519795889709c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/independent-ochre-folds-review-art.json",
+      "sha256": "596580146b8db3490a9a1a089a95ee4dd9525a844bbb43f49677207be4834390"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/independent-violet-marrows-review-art.json",
+      "sha256": "7e6c27bf7e7cacedddf983f5a3f99623a55f1897c38add721365c623f0c8c5e3"
+    }
+  ],
+  "attempts": [
+    {
+      "originalIndex": 1,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/001-white-scarfield-low-20261005/report.json",
+        "sha256": "427cc75356a832f560af29d9b2a18b75fb289a9c31c420cbc352ba2f566c9288"
+      },
+      "world": "white-scarfield",
+      "grade": "low",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 28.975493009033077,
+      "elapsedMs": 28482.209999999668,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 544.0588203494177
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 2,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/002-white-scarfield-low-3075192741/report.json",
+        "sha256": "171196647ce3c40f216b4e84e16a1d7ffa6af6ac7eccf473f2705b094335ed9f"
+      },
+      "world": "white-scarfield",
+      "grade": "low",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 28.83283251601804,
+      "elapsedMs": 27665.54999999977,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 576.0555528766301
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 3,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/play/003-white-scarfield-medium-20261005/report.json",
+        "sha256": "96840a1f23f988940d7ff87e7307bf038ab179676fac9720ceed3ee629fef154"
+      },
+      "world": "white-scarfield",
+      "grade": "medium",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 33.03827530962048,
+      "elapsedMs": 29565.489999999783,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.4862867611367
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 4,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original004/play/001-white-scarfield-medium-3075192741/report.json",
+        "sha256": "e055fccc344709162d091562f56d3cea237c7028be0a6321820999de524441e5"
+      },
+      "world": "white-scarfield",
+      "grade": "medium",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 33.78213153456024,
+      "elapsedMs": 31998.74999999965,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 576.0555528766301
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 5,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/001-white-scarfield-severe-20261005/report.json",
+        "sha256": "dc1e58d0b9dcbe0d2427eb9c3c4b822c05d1edc218ac01e2aba1074022130c1d"
+      },
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "death",
+      "hp": 0,
+      "chaos": 150,
+      "elapsedMs": 93329.60000000008,
+      "pickups": [],
+      "kindlingGained": 0,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "death",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 6,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/play/002-white-scarfield-severe-3075192741/report.json",
+        "sha256": "09d769ceccf744bdc446c977fd14586527f7abc5cfd6f447d6bc82a69fa153a0"
+      },
+      "world": "white-scarfield",
+      "grade": "severe",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 55,
+      "chaos": 136.32462434351268,
+      "elapsedMs": 96046.18000000042,
+      "pickups": [],
+      "kindlingGained": 0,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "true-empty-return",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 7,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/001-black-lacuna-low-20261005/report.json",
+        "sha256": "bb63e7e53bd4640b3a2e345bd4ac2d3c972c7425f827ec5c52a92fb87b44a73e"
+      },
+      "world": "black-lacuna",
+      "grade": "low",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 28.480557211467644,
+      "elapsedMs": 25648.949999999804,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 624.4613679003689
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 8,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/002-black-lacuna-low-3075192741/report.json",
+        "sha256": "e233ab059ab9152e84eca64538b32c7d5766523b25bf27212b8dce299bd86a48"
+      },
+      "world": "black-lacuna",
+      "grade": "low",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 34.177606709328664,
+      "elapsedMs": 28398.86999999974,
+      "pickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 625.2807369494122
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 9,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/003-black-lacuna-medium-20261005/report.json",
+        "sha256": "821f3e8c45be72ad252faabca51e306c5b00d65376c048301b73a72c41d45cbd"
+      },
+      "world": "black-lacuna",
+      "grade": "medium",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 31.876653781624228,
+      "elapsedMs": 25765.659999999738,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 640.4498419080139
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 10,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/004-black-lacuna-medium-3075192741/report.json",
+        "sha256": "c3723e02178fa346b3b37eb47fc77dd9c5166388a995d73199413baf5b593236"
+      },
+      "world": "black-lacuna",
+      "grade": "medium",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 31.89193284515313,
+      "elapsedMs": 25815.639999999737,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 640.0499980470277
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 11,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/005-black-lacuna-severe-20261005/report.json",
+        "sha256": "7768dede68e12b66f549528cb37ffb146a1591767584267f6a376fe107d18595"
+      },
+      "world": "black-lacuna",
+      "grade": "severe",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 31.282233604996453,
+      "elapsedMs": 15632.67999999999,
+      "pickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant",
+          "distanceFromEntry": 320.09998437988094
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 12,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/006-black-lacuna-severe-3075192741/report.json",
+        "sha256": "16a3ab8b7134816ad52020ce514be29c2f808c186b3d179089049964990df83d"
+      },
+      "world": "black-lacuna",
+      "grade": "severe",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 31.390954598522214,
+      "elapsedMs": 15866.069999999987,
+      "pickups": [
+        {
+          "id": "r100-contaminant-safe-1",
+          "tier": "safe",
+          "kind": "contaminant",
+          "distanceFromEntry": 320.8987379221053
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 13,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/007-ochre-folds-low-20261005/report.json",
+        "sha256": "4e9198bf725a9ca991df92982ebad03520d1db92e719d6c51b520e33eba707cf"
+      },
+      "world": "ochre-folds",
+      "grade": "low",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 37.61611314294679,
+      "elapsedMs": 33065.35999999971,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 545.93772538633
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 14,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/008-ochre-folds-low-3075192741/report.json",
+        "sha256": "6d48b4d01825763df13477146ef596be3e284c4c15d0c5ccb4c6a2427f427a16"
+      },
+      "world": "ochre-folds",
+      "grade": "low",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 42.62632878844447,
+      "elapsedMs": 61714.18999999981,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 564.8362594593233
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 15,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/009-ochre-folds-medium-20261005/report.json",
+        "sha256": "64d84ff2a55b2d519037f28d36068444179511cdd72017628936d53dcfdb33d3"
+      },
+      "world": "ochre-folds",
+      "grade": "medium",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 45.570372363715435,
+      "elapsedMs": 36398.56999999976,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 566.4203386178854
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 16,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/010-ochre-folds-medium-3075192741/report.json",
+        "sha256": "c414029eee1753c1b7b22c968f94b1d7c4c7db380e797bde9a2625715c8d70f0"
+      },
+      "world": "ochre-folds",
+      "grade": "medium",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 25,
+      "chaos": 64.77367299031935,
+      "elapsedMs": 54497.810000000114,
+      "pickups": [],
+      "kindlingGained": 0,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "true-empty-return",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 17,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/011-ochre-folds-severe-20261005/report.json",
+        "sha256": "87523db52d3f881198ed52c2b37541e0b97b63fb1eda961fa342dcf8dfffa9f7"
+      },
+      "world": "ochre-folds",
+      "grade": "severe",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "death",
+      "hp": 0,
+      "chaos": 61.00260932644061,
+      "elapsedMs": 43248.27999999988,
+      "pickups": [],
+      "kindlingGained": 0,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "death",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 18,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/012-ochre-folds-severe-3075192741/report.json",
+        "sha256": "dab996d8f03ade6414dc5125a48dbbb73fb1659f48fcf1d32e5702a9c52d5df3"
+      },
+      "world": "ochre-folds",
+      "grade": "severe",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "death",
+      "hp": 0,
+      "chaos": 150,
+      "elapsedMs": 114562.0400000005,
+      "pickups": [],
+      "kindlingGained": 0,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "death",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 19,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/013-violet-marrows-low-20261005/report.json",
+        "sha256": "39337993e5f6a11564a86c3e95bbaeb62691eb2c1a5332e51685bc387ceadb05"
+      },
+      "world": "violet-marrows",
+      "grade": "low",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 29.82559694018958,
+      "elapsedMs": 33348.62999999976,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.4862867611367
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 20,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/014-violet-marrows-low-3075192741/report.json",
+        "sha256": "b8080962e80798e630f03b1b6cda2eef1bdbb1fa0849718dd00b8b2345a2ac85"
+      },
+      "world": "violet-marrows",
+      "grade": "low",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 48.609551813503344,
+      "elapsedMs": 61380.859999999746,
+      "pickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 609.3143687785476
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 21,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/015-violet-marrows-medium-20261005/report.json",
+        "sha256": "0f460db762a45407e21d86ef7f5dd048acb72a51ba76196f7efa9bdafb6c1622"
+      },
+      "world": "violet-marrows",
+      "grade": "medium",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 38.270691191582216,
+      "elapsedMs": 46681.46999999999,
+      "pickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 512.562191348523
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 22,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/016-violet-marrows-medium-3075192741/report.json",
+        "sha256": "c4ea9d9a67b8595c3ef002d4b0a73110d6643cccd01e4a3ee9a6d6f7d3d1b3c5"
+      },
+      "world": "violet-marrows",
+      "grade": "medium",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 36.8899841560095,
+      "elapsedMs": 42164.97999999991,
+      "pickups": [
+        {
+          "id": "r100-contaminant-contested-1",
+          "tier": "contested",
+          "kind": "contaminant",
+          "distanceFromEntry": 609.3143687785476
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 23,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/017-violet-marrows-severe-20261005/report.json",
+        "sha256": "0035496d04e5a26b467333e0eddbbdb847a40d903144326db9cfd105af23a175"
+      },
+      "world": "violet-marrows",
+      "grade": "severe",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 115,
+      "chaos": 102.29636173231738,
+      "elapsedMs": 86596.55000000048,
+      "pickups": [
+        {
+          "id": "r100-contaminant-deep-1",
+          "tier": "deep",
+          "kind": "contaminant",
+          "distanceFromEntry": 817.6062622069378
+        }
+      ],
+      "kindlingGained": 0,
+      "returnedItemCount": 1,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 24,
+      "attemptKind": "original",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/play/018-violet-marrows-severe-3075192741/report.json",
+        "sha256": "f38314572f7f96ea01503ff29bc58eb9a4d9f4e055d064136ceb6f961253d98b"
+      },
+      "world": "violet-marrows",
+      "grade": "severe",
+      "seed": 3075192741,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 52.07893798924788,
+      "elapsedMs": 59247.61999999995,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 610.5735008989499
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 3,
+      "attemptKind": "additional-clean-same-identity-recheck",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/003-same-identity-recheck/play/001-white-scarfield-medium-20261005/report.json",
+        "sha256": "cba853fdfa569e74aee7176ba1b5c15b749aa19d0526812cb7394ff5b62edb27"
+      },
+      "world": "white-scarfield",
+      "grade": "medium",
+      "seed": 20261005,
+      "policyRevision": 15,
+      "outcome": "extract",
+      "hp": 145,
+      "chaos": 33.47132579027726,
+      "elapsedMs": 30982.0599999997,
+      "pickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 592.4862867611367
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "classification": "non-entry-search-and-extract",
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "counts": {
+    "originalIdentities": 24,
+    "actualAttempts": 25,
+    "originalNonEntrySearchAndExtract": 19,
+    "originalTrueEmptyReturns": 2,
+    "originalDeaths": 3,
+    "additionalCleanSameIdentityRechecks": 1
+  },
+  "originalNetworkFailure": {
+    "report": {
+      "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-network-failure-shapes.json",
+      "sha256": "bde4352753ada12370af28e9ef4c6096a51e3544ec8b64f314a00f2031f132d3"
+    },
+    "failedTransportRequests": 3,
+    "error": "net::ERR_NETWORK_CHANGED",
+    "pendingAtContextClose": 12,
+    "interpretation": "Original003 completed search and same-run settlement, but is not clean runtime evidence. The clean replay is a new additional attempt and cannot erase the original failure or establish its root cause."
+  },
+  "cleanRecheckScope": "Original003 and its clean replay are separate actual attempts. Exact full identity and before state equality are recorded in the early receipt; original network errors and pending requests remain retained.",
+  "qualificationGaps": [
+    {
+      "world": "white-scarfield",
+      "grade": "severe",
+      "originalIndices": [
+        5,
+        6
+      ],
+      "outcomes": [
+        "death",
+        "true-empty-return"
+      ],
+      "scope": "Neither original seed completed a non-entry pickup/extract."
+    },
+    {
+      "world": "ochre-folds",
+      "grade": "severe",
+      "originalIndices": [
+        17,
+        18
+      ],
+      "outcomes": [
+        "death",
+        "death"
+      ],
+      "scope": "Neither original seed completed a non-entry pickup/extract."
+    }
+  ],
+  "personallyViewedFrames": {
+    "uniqueCount": 34,
+    "previouslyRecorded": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+        "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original005-006/independent-outcome-frame-review-art.json",
+        "sha256": "ccea46f204f57b40f5bbe498ddd5072880d403dbfdbf334e4b4414bc4fa10cc2"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/independent-black-lacuna-review-art.json",
+        "sha256": "021ecd12a0731a204f32ff891486a377e7e8223b282859ff935519795889709c"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/independent-ochre-folds-review-art.json",
+        "sha256": "596580146b8db3490a9a1a089a95ee4dd9525a844bbb43f49677207be4834390"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original007-024/independent-violet-marrows-review-art.json",
+        "sha256": "7e6c27bf7e7cacedddf983f5a3f99623a55f1897c38add721365c623f0c8c5e3"
+      }
+    ],
+    "additional": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/b13-network-recheck/original004/play/001-white-scarfield-medium-3075192741/medium/1-search-1.png",
+        "sha256": "2a5519b0559e677252f9a81aadb9697cb28ecd6b06c813a98a9f7fe21e1a5882",
+        "viewedBy": "i12_art",
+        "method": "view_image original normal-play PNG",
+        "dimensions": [
+          1440,
+          960
+        ],
+        "observation": "补读原004同趟6薪柴搜后帧；正常肩灯下粉白粒床与左下黑绿污染体局部分开，右侧床面有明显直切与斜直材料界线，保留此弱项。没有完整暗蓝粗粒中列。"
+      }
+    ]
+  },
+  "retainedWeaknesses": [
+    "White-scarfield: several straight bed/material boundaries remain visible.",
+    "Black-lacuna: both severe successes are short safe-tier pickups only about320px from entry; whole thick head/lip not reviewed in these frames.",
+    "Ochre-folds: only local folds/cutfaces/bare floor viewed; full three-fold organization and failure cause not established.",
+    "Violet-marrows: long sideface and pore groups retain regular repetition; no all-body/whole-gap aesthetic claim."
+  ],
+  "scope": "Independent bounded reading of all25 completed reports and34 personally viewed original normal PNGs, with same-run settlement and actual collected outcomes checked. Scope complements prior static art receipts without replacing them.",
+  "limits": [
+    "This is not natural48, all108 fresh art review, continuous gameplay/fatigue observation, audio listening or human aesthetic approval.",
+    "The two severe pair gaps remain blocking fixed-process qualification; successes in other worlds or grades do not substitute.",
+    "Existing F052/F012 implementation, candidate108 art table and source are unchanged.",
+    "B14 is still separate and pending its own completed reports."
+  ]
+}

@@ -1,0 +1,325 @@
+{
+  "status": "prepared-not-executed",
+  "seed": 20261005,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+  "sourceManifestSha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d",
+  "authorCamera": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-author-preflight/camera-supported.json",
+    "sha256": "12ce52e42435d6a24c2f45983b84bc5114e7086720b282df9d3cf99064dcda59"
+  },
+  "scope": "Prepared real-WASD normal-FOV material approaches only. No browser started; actual requested seed, recipe grade and facing must be verified by capture. CPU support is not a visual pass.",
+  "omitted": [
+    {
+      "world": "woven-quarters",
+      "reason": "Old short-fibre candidate remains visually rejected in two related worlds. Hold this case until root selects approved material; do not knowingly recapture an unresolved material as new evidence."
+    }
+  ],
+  "cases": [
+    {
+      "world": "fractured-estuary",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 292,
+          "y": 228,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 292,
+            "y": 228
+          },
+          "lookAtMaterialPoint": {
+            "x": 400,
+            "y": 238
+          },
+          "purpose": "上低层支床"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 500,
+          "y": 316,
+          "faces": [
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 500,
+            "y": 316
+          },
+          "lookAtMaterialPoint": {
+            "x": 572,
+            "y": 396
+          },
+          "purpose": "两床汇入地颈"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 556,
+          "y": 372,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 556,
+            "y": 372
+          },
+          "lookAtMaterialPoint": {
+            "x": 593,
+            "y": 271
+          },
+          "purpose": "汇口上胶肩"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 748,
+          "y": 564,
+          "faces": [
+            "west"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 748,
+            "y": 564
+          },
+          "lookAtMaterialPoint": {
+            "x": 662,
+            "y": 499
+          },
+          "purpose": "汇口下胶肩"
+        },
+        {
+          "label": "05-original-route-boundary",
+          "x": 300,
+          "y": 580,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 300,
+            "y": 580
+          },
+          "lookAtMaterialPoint": {
+            "x": 400,
+            "y": 580
+          },
+          "purpose": "补下支床进入汇颈的低层，原01只覆盖上支床。",
+          "existingSweptPathEvidence": {
+            "low": {
+              "kind": "spawnRoute",
+              "routeIndex": 3,
+              "pointIndex": 14
+            },
+            "medium": {
+              "kind": "spawnRoute",
+              "routeIndex": 3,
+              "pointIndex": 14
+            },
+            "severe": {
+              "kind": "spawnRoute",
+              "routeIndex": 3,
+              "pointIndex": 14
+            }
+          },
+          "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+        }
+      ]
+    },
+    {
+      "world": "shell-patchwork",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 540,
+          "y": 388,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 540,
+            "y": 388
+          },
+          "lookAtMaterialPoint": {
+            "x": 495,
+            "y": 291
+          },
+          "purpose": "北厚壳夹皮"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 508,
+          "y": 484,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 508,
+            "y": 484
+          },
+          "lookAtMaterialPoint": {
+            "x": 556,
+            "y": 388
+          },
+          "purpose": "不规则中裸床"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 580,
+          "y": 588,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 580,
+            "y": 588
+          },
+          "lookAtMaterialPoint": {
+            "x": 650,
+            "y": 505
+          },
+          "purpose": "南厚壳夹低皮"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 732,
+          "y": 508,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 732,
+            "y": 508
+          },
+          "lookAtMaterialPoint": {
+            "x": 765,
+            "y": 405
+          },
+          "purpose": "东侧大低壳面"
+        }
+      ]
+    },
+    {
+      "world": "last-shelf",
+      "grade": "medium",
+      "goals": [
+        {
+          "label": "01-material-approach",
+          "x": 764,
+          "y": 348,
+          "faces": [
+            "north"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 764,
+            "y": 348
+          },
+          "lookAtMaterialPoint": {
+            "x": 786,
+            "y": 242
+          },
+          "purpose": "上台短裂肩"
+        },
+        {
+          "label": "02-material-approach",
+          "x": 724,
+          "y": 532,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 724,
+            "y": 532
+          },
+          "lookAtMaterialPoint": {
+            "x": 817,
+            "y": 476
+          },
+          "purpose": "下台高完整断端"
+        },
+        {
+          "label": "03-material-approach",
+          "x": 756,
+          "y": 308,
+          "faces": [
+            "south"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 756,
+            "y": 308
+          },
+          "lookAtMaterialPoint": {
+            "x": 684,
+            "y": 388
+          },
+          "purpose": "连续内侧颗粒床"
+        },
+        {
+          "label": "04-material-approach",
+          "x": 820,
+          "y": 564,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 820,
+            "y": 564
+          },
+          "lookAtMaterialPoint": {
+            "x": 922,
+            "y": 532
+          },
+          "purpose": "下探台真实终止边"
+        },
+        {
+          "label": "05-original-route-boundary",
+          "x": 948,
+          "y": 268,
+          "faces": [
+            "east"
+          ],
+          "authorSupportedBodyPoint": {
+            "x": 948,
+            "y": 268
+          },
+          "lookAtMaterialPoint": null,
+          "purpose": "补上台外探及相邻真实缺地边，原04只覆盖下台。",
+          "existingSweptPathEvidence": {
+            "low": {
+              "kind": "spawnRoute",
+              "routeIndex": 3,
+              "pointIndex": 134
+            },
+            "medium": {
+              "kind": "spawnRoute",
+              "routeIndex": 3,
+              "pointIndex": 134
+            },
+            "severe": {
+              "kind": "spawnRoute",
+              "routeIndex": 3,
+              "pointIndex": 134
+            }
+          },
+          "headingLimitation": "Explicit proposed cardinal views of the boundary; actual runtime facing and visibly lit edge must be recorded, no assumed visibility."
+        }
+      ]
+    }
+  ],
+  "reviewChecklist": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/checklist.json",
+    "sha256": "f2e82e38ba8230ff447aad1b31d20e1aacca22fbc948bddffbaddd7c84f1943c"
+  },
+  "supplementSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b11-b14-normal-preparation/supplement-existing-route-points.json",
+    "sha256": "1feb0c3b63a848c18c7673660fbb3f893a4a1c42005dc9927bf3affc02925f9d"
+  },
+  "originalPreparedPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-medium-prepared/plan.json",
+    "sha256": "de520447c7bb05a763102391857bc97de699d46e73fc66603c5cae17efd9c103"
+  },
+  "sourcePurpose": "New actual images on3120, not relabelled historical images or inherited art approval. Selected definitions/profile choices and material SHAs match original successful body evidence. Runtime WASD/facing/identity remains mandatory."
+}

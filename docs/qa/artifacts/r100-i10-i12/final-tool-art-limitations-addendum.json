@@ -1,0 +1,31 @@
+{
+  "status": "approved-art-limitation-serialization-fix",
+  "reviewer": "root",
+  "date": "2026-10-08",
+  "previousAddendum": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-tool-sampling-binding-addendum.json",
+    "sha256": "17a87ce89116cea71360b59c83ecdaf679c04700c6585be1955080e85bab95db"
+  },
+  "priorBinder": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/binder-before-art-limitations-fix.mjs",
+    "sha256": "48507ab4f117159dea563b6c32594939408464aa253dcf558a41e51504859ad1"
+  },
+  "binder": {
+    "path": "tools/qa/r100-bind-i10-i12.mjs",
+    "sha256": "af7c227633fac649c90e23e0de2bfab827b2db888d2a1980ed809fb354d4148f"
+  },
+  "checker": {
+    "path": "tools/qa/check-r100-i10-i12-sampled-binding.mjs",
+    "sha256": "527bd69ea324e357edd0ed5ae786d7d35a9078205dbf82d2d3460eb2fef3bdf0"
+  },
+  "samplingAmendment": {
+    "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+    "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+  },
+  "observedFailure": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-binding/dry-reconciled.stderr.log",
+    "sha256": "60977ce6ff158ef1f2a0f415a69a3d4b61277eed4774b8c6ac7274fa170b30ec"
+  },
+  "scope": "第二次dry的失败由root定位到原艺术报告limitations数组与台账string合同不一致。原108数组逐项确认非空字符串；序列化使用换行保留全文，并以limitationItems保留原数组，输入错误仍拒绝。未改艺术结论、冻结源或验收阈值。",
+  "limits": "保留两次dry失败；此次格式修复后需实际成功dry和8项语义负例，未提前签通过。"
+}

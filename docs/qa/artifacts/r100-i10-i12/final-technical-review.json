@@ -1,0 +1,284 @@
+{
+  "schemaVersion": 1,
+  "status": "independent-technical-sampled-pass",
+  "reviewer": "root",
+  "date": "2026-10-08",
+  "validationMode": "sampled",
+  "finalSourceSha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af",
+  "evidence": {
+    "generation": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-generation/summary.json",
+      "sha256": "a708aba0ac42d652871931ebc357a6f830835c060b8a463587a774a4c132ea3f"
+    },
+    "historicalGeneration": {
+      "path": "docs/qa/artifacts/r100-i07-i09/qualification-policy/final52-summary.json",
+      "sha256": "1d66b70fa3e6ec73f812b3d8e3eb48551480be033591df6b3ffc022798692159"
+    },
+    "expandedHoldoutI11": {
+      "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i11/summary.json",
+      "sha256": "1c8d7255b5da05d5aa87d052856f2d3f9127da30b10e2ac4e615f6914bb29539"
+    },
+    "expandedHoldoutI12": {
+      "path": "docs/qa/artifacts/r100-i10-i12/expanded-holdout-i12/summary.json",
+      "sha256": "a31cb4ea7c73dc705df86d7355e640c76232411bfb6ca8b733d0c6bd543ea5e7"
+    },
+    "play": {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-fixed-play/summary.json",
+      "sha256": "ecc10117b880a364d2d75b8204d7f2287a839ab9c5f56587657845d6baa9f1ab"
+    },
+    "historicalPlay": {
+      "path": "docs/qa/artifacts/r100-i07-i09/final-fixed-play/summary.json",
+      "sha256": "d29784aba32287105f99b1c55be076017ddd857de10b16f7ed6f4c0972034a52"
+    },
+    "inheritance": {
+      "path": "docs/qa/artifacts/r100-i10-i12/old52-r6-inheritance/independent-review.json",
+      "sha256": "2168637d4bc9fb70f3652ead770a74a0acf0dbe21fca4fa4d8758b1d34987da7"
+    },
+    "production": {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep/report.json",
+      "sha256": "c2a0bebb5d2a003d00760ceb5e35ad264de8b4facd97f653c45c5362bc15ea1a"
+    },
+    "equivalence": {
+      "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/browser-equivalence.json",
+      "sha256": "fccd157245e7ec536dfb7592bf8cd0b52e5c189863fd6b7bd89a1dcfcbd3074a"
+    },
+    "budget": {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/report.json",
+      "sha256": "083ade6e14e71f63057888c55067ca97dd079de7fa9ab07fbe3fc1c59ef1a6d4"
+    },
+    "lifecycle": {
+      "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/report.json",
+      "sha256": "8f4c573d859c323ac51445efcc7cfbb0ff48ac18e6992980b1018362f4fe19eb"
+    },
+    "shaderReview": {
+      "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/shader-review.json",
+      "sha256": "e05b369a7406e28383f07ceddf859e33bbb8ba146f23a7dff60d91683b5d980b"
+    },
+    "samplingAmendment": {
+      "path": "docs/qa/artifacts/r100-i10-i12/sampling-amendment/root-approved-sampling.json",
+      "sha256": "3cbe3cde85dcb601d51190ad349a46fc81c2902e68c89a4e773dbdf81fc2364e"
+    },
+    "budgetStop": {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/budget/user-directed-sampling-stop.json",
+      "sha256": "1133ec3c54335cadbd3a6933e419da8161627dd6402298dc0a4210654ff6da39"
+    },
+    "runtimeBindings": [
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/production-final108-recheck-idle-sleep/source-binding.json",
+        "sha256": "0a29932b9304224eb2c6cc1f3ce2f115c55e884d5b726401e706fca8416ed6f0"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108/source-binding.json",
+        "sha256": "28c90454d6e1c1cc7bfaf89837bcc4eac19b80eb88b34aa03e9f17f737dab481"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108/source-binding.json",
+        "sha256": "480de40956a3c8060da003bd3d1d0b2ac1d8f28985f7a5d78fc8eb25eee94af2"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/source-binding.json",
+        "sha256": "1b223c82d366bf6fd2e2eb91f7a9bfad17876e927f78ae44f77d163cd2540b5b"
+      }
+    ]
+  },
+  "scope": "108内容包/324正式等级修订6的内部技术验收；沿用已完成的完整生成、固定种子、生产进入/冷续、等价及兼容证据，性能与生命周期按用户授权抽查。实际台账绑定和8项语义负例由后续独立执行记录承载，本根审不提前声称其完成。",
+  "accounting": {
+    "historicalRevision5Base": 7488,
+    "currentRevision6Base": 8064,
+    "additionalHoldout": 2592,
+    "fixedSeedProcesses": 648,
+    "fixedActualReports": 661,
+    "productionCases": 324,
+    "productionActualAttempts": 476,
+    "browserEquivalenceCases": 342,
+    "naturalTrips": 48
+  },
+  "performance": {
+    "completed": 74,
+    "interrupted": 1,
+    "notStarted": 33,
+    "selection": "original queue prefix; not random",
+    "minimumAliveMs": 61247.50999999999,
+    "maximumAliveMs": 61280.899999999994,
+    "worstFrameP95Ms": 18.299999713897705,
+    "worstFrameP99Ms": 18.59999990463257,
+    "worstCpuP95Ms": 7.5,
+    "worstMaterialP95Ms": 3,
+    "materialAtOriginalLimit": [
+      "hollow-wreckage",
+      "buried-lamellae"
+    ],
+    "originalThresholdsPreserved": true,
+    "perWorldCoverage": {
+      "mode": "reuse-completed-original-prefix",
+      "originalWorldCount": 108,
+      "completedWorldIds": [
+        "ash-strata",
+        "crystal-fibre",
+        "ivory-basin",
+        "cinder-ridge",
+        "pallid-membrane",
+        "silt-gel",
+        "schist-shear",
+        "splayed-fibres",
+        "shell-chain",
+        "grain-laminate",
+        "tension-membrane",
+        "shell-gel-delta",
+        "pressed-dunes",
+        "ruptured-film",
+        "reversed-flow",
+        "laminate-shell",
+        "fibre-silt",
+        "film-laminate",
+        "gel-fibre",
+        "shell-grit",
+        "rib-vault",
+        "pleated-hide",
+        "blister-field",
+        "wax-tongues",
+        "monolith-sill",
+        "bleached-court",
+        "split-rib-causeway",
+        "satin-fan",
+        "chalk-steps",
+        "porcelain-maw",
+        "amber-ribs",
+        "pale-sail",
+        "root-cistern",
+        "scab-islands",
+        "foam-trenches",
+        "resin-fall",
+        "tendon-shelves",
+        "felt-basin",
+        "cork-shelves",
+        "lacquer-court",
+        "ribbed-delta",
+        "bladder-weave",
+        "flake-thicket",
+        "resin-hollows",
+        "sentinel-mass",
+        "stepped-bowl",
+        "draped-bay",
+        "ember-cushions",
+        "splinter-rotunda",
+        "quilted-scars",
+        "silt-colonnade",
+        "shell-causeway",
+        "cleft-tableland",
+        "fallen-spines",
+        "clamped-shore",
+        "torn-reservoir",
+        "braided-seam",
+        "scalloped-reach",
+        "offset-pan",
+        "thin-delta",
+        "shard-switchback",
+        "hollow-wreckage",
+        "knotted-run",
+        "rolled-fragments",
+        "fibre-choke",
+        "buried-lamellae",
+        "pressed-rim",
+        "wedged-hide",
+        "quiet-spur",
+        "split-fall",
+        "three-shelves",
+        "frayed-outwash",
+        "short-fibre-mat",
+        "marrow-break"
+      ],
+      "interruptedWorldId": "felt-wedges",
+      "notStartedWorldIds": [
+        "pore-bank",
+        "staggered-cups",
+        "split-tows",
+        "curled-flats",
+        "pitch-forks",
+        "grain-weld",
+        "silk-catch",
+        "resin-sleeve",
+        "shell-threads",
+        "chalk-divide",
+        "red-vault-fragments",
+        "blue-fault",
+        "pale-pressure",
+        "notched-backwater",
+        "crossed-casings",
+        "fibre-stumpfield",
+        "sloughed-court",
+        "crushed-seam",
+        "husk-reef",
+        "fibre-scree",
+        "gel-rafts",
+        "double-return",
+        "offset-basins",
+        "pinched-fan",
+        "spliced-reaches",
+        "white-scarfield",
+        "black-lacuna",
+        "ochre-folds",
+        "violet-marrows",
+        "fractured-estuary",
+        "woven-quarters",
+        "shell-patchwork",
+        "last-shelf"
+      ],
+      "sampleCount": 74,
+      "minimumAliveMs": 60000,
+      "thresholdsUnchanged": true,
+      "acceptance": "Only the74 original completed cases are performance-sampled;34 other worlds have no completed final budget sample. Never relabel the interrupted raw full report as passed."
+    }
+  },
+  "resources": {
+    "identicalRebuilds": 10,
+    "mixedRebuilds": 18,
+    "retainedSamples": 12,
+    "maximumRetainedGrowthBytes": 1447018,
+    "shaderReview": {
+      "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-sampled-final108/shader-review.json",
+      "sha256": "e05b369a7406e28383f07ceddf859e33bbb8ba146f23a7dff60d91683b5d980b"
+    }
+  },
+  "supportingReviews": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/production-completion-review.json",
+      "sha256": "0668ad0861d93739a09bd86d8b061205ecd502478aa2c0a7313d49aec31cc249"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json",
+      "sha256": "0f6eee447bdc4faef6ed19598ca974035ec74bdbea1beeef65d7ee49118af198"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-static-readiness-review.json",
+      "sha256": "1ea362f34f8e8406718acfa5f201d69362c9fa2ef961ad4f204d06154137ae79"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-static-readiness-supplement.json",
+      "sha256": "06427d5db6be14b8da6c2be921aa5a1d3d1246e1c8611b7ee49a512185d62c8e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-execution/equivalence/integrity-review.json",
+      "sha256": "06066afc14c08235f8cb50c5d6cca88d2daf033a96475fc1264197805ce813fd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/independent-experience-review.json",
+      "sha256": "a99125cad5b6d615803645e81833ff6949eef4eb488137ec0e01207f8c8bf008"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-art-root-review.json",
+      "sha256": "c0b765ab2c9ee7e41216a5148d65cb67643faf04054ae86bf09ed244ecd8694b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-audio-root-disposition.json",
+      "sha256": "d5c33c68f41b2c783020a7f2bdaa0de0008df130334c95cc7acfd45142951534"
+    }
+  ],
+  "limitations": "按用户“不用做全量测试，抽查即可”的实际原文授权执行。性能只含74个完整重档样本，第75项被用户指示停止、33项未启动；原failed报告与外层operator退出码缺失及103.175835秒电源观测缺口保留。资源只含6族重档预热、10次同图、18个低档切换及12次GC样本，不是全库334重建。参考机结果不替代I13经济或I14弱设备、R100-R10听感和用户终验。",
+  "humanApproval": false,
+  "releaseApproval": false,
+  "pendingIterations": [
+    "R100-I13",
+    "R100-I14"
+  ]
+}

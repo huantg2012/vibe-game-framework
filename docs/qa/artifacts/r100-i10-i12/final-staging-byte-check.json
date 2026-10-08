@@ -1,0 +1,17 @@
+{
+  "status": "pass-staged-original-bytes",
+  "reviewer": "root",
+  "date": "2026-10-08",
+  "filesCompared": 7646,
+  "regularFiles": 7643,
+  "symlinks": 3,
+  "mismatches": [],
+  "method": "Compare git index blob IDs with git hash-object --no-filters of every staged regular file, and exact symlink target bytes.",
+  "attributes": "Task-local .gitattributes sets -text for all evidence and -diff/-merge only for opaque content-addressed objects.",
+  "reason": "Initial staging warned that CRLF would normalize in one resource CSV and several raw source archive objects; re-staged under exact-byte attributes before commit.",
+  "whitespace": "Original raw evidence whitespace is intentionally preserved. Authored diff has one harmless final blank line in the already-hash-bound sampling helper; retained to preserve completed evidence.",
+  "excluded": [
+    "CLAUDE.md",
+    "docs/qa/artifacts/r100-i10-i12/production-full-recheck-execution/processes-before.json"
+  ]
+}

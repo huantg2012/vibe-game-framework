@@ -1,0 +1,1013 @@
+{
+  "version": 1,
+  "status": "prepared-only",
+  "at": "2026-10-08T01:45:44.525Z",
+  "scope": "Checker infrastructure fixtures and static case inventory only. No buildProposal, final108 baseline, genuine semantic-negative matrix, browser or game execution occurred.",
+  "checker": {
+    "path": "tools/qa/check-r100-i10-i12-final-binding.mjs",
+    "sha256": "bb06e7b59b4111b40c304336b999c69b1aeaeccb4f0214912819a7be07112f93"
+  },
+  "binder": {
+    "path": "tools/qa/r100-bind-i10-i12.mjs",
+    "sha256": "f2139f859ea10a5d8a06a0004d14937936d60e64886e9dfd3b43fc0ef485ed07"
+  },
+  "baseline": {
+    "status": "not-run",
+    "reason": "Wait for the complete real final108 plan and independent runtime/art/Shader reviews."
+  },
+  "checks": [
+    {
+      "name": "overlay leaves all original fixture bytes and input plan untouched",
+      "status": "pass"
+    },
+    {
+      "name": "reseal cascades report to runtime audit and Shader report/sourceBinding to technical review",
+      "status": "pass"
+    },
+    {
+      "name": "unknown synthetic input cannot be invented by an overlay",
+      "status": "pass"
+    },
+    {
+      "name": "a stale receipt is a checker failure, never a semantic negative",
+      "status": "pass"
+    },
+    {
+      "name": "accepted evidence and non-assertion exceptions fail closed",
+      "status": "pass"
+    },
+    {
+      "name": "rejection must reach the declared predicate and message",
+      "status": "pass"
+    },
+    {
+      "name": "case names are unique and every axis has executable negative definitions",
+      "status": "pass"
+    },
+    {
+      "name": "all four method-harness semantic negatives are mandatory",
+      "status": "pass"
+    },
+    {
+      "name": "repository traversal is rejected",
+      "status": "pass"
+    }
+  ],
+  "caseCount": 89,
+  "cases": [
+    {
+      "name": "production-missing-runtime-audit",
+      "axis": "production",
+      "rationale": "Each runtime method requires its own source binding.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalRuntimeBindings"
+        ],
+        "message": "Exactly four runtime-source audits required"
+      }
+    },
+    {
+      "name": "production-wrong-method-harness-resealed",
+      "axis": "production",
+      "rationale": "A valid SHA of another actual method does not establish this method execution.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ],
+        "message": "wrong runtime harness"
+      }
+    },
+    {
+      "name": "production-another-real-source",
+      "axis": "production",
+      "rationale": "A passed audit of an earlier real source cannot bind the final snapshot.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ]
+      }
+    },
+    {
+      "name": "production-served-source-missing",
+      "axis": "production",
+      "rationale": "True verification flags cannot replace the complete before/after served byte maps.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ]
+      }
+    },
+    {
+      "name": "equivalence-missing-runtime-audit",
+      "axis": "equivalence",
+      "rationale": "Each runtime method requires its own source binding.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalRuntimeBindings"
+        ],
+        "message": "Exactly four runtime-source audits required"
+      }
+    },
+    {
+      "name": "equivalence-wrong-method-harness-resealed",
+      "axis": "equivalence",
+      "rationale": "A valid SHA of another actual method does not establish this method execution.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ],
+        "message": "wrong runtime harness"
+      }
+    },
+    {
+      "name": "equivalence-another-real-source",
+      "axis": "equivalence",
+      "rationale": "A passed audit of an earlier real source cannot bind the final snapshot.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ]
+      }
+    },
+    {
+      "name": "equivalence-served-source-missing",
+      "axis": "equivalence",
+      "rationale": "True verification flags cannot replace the complete before/after served byte maps.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ]
+      }
+    },
+    {
+      "name": "budget-missing-runtime-audit",
+      "axis": "budget",
+      "rationale": "Each runtime method requires its own source binding.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalRuntimeBindings"
+        ],
+        "message": "Exactly four runtime-source audits required"
+      }
+    },
+    {
+      "name": "budget-wrong-method-harness-resealed",
+      "axis": "budget",
+      "rationale": "A valid SHA of another actual method does not establish this method execution.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ],
+        "message": "wrong runtime harness"
+      }
+    },
+    {
+      "name": "budget-another-real-source",
+      "axis": "budget",
+      "rationale": "A passed audit of an earlier real source cannot bind the final snapshot.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ]
+      }
+    },
+    {
+      "name": "budget-served-source-missing",
+      "axis": "budget",
+      "rationale": "True verification flags cannot replace the complete before/after served byte maps.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ]
+      }
+    },
+    {
+      "name": "lifecycle-missing-runtime-audit",
+      "axis": "lifecycle",
+      "rationale": "Each runtime method requires its own source binding.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalRuntimeBindings"
+        ],
+        "message": "Exactly four runtime-source audits required"
+      }
+    },
+    {
+      "name": "lifecycle-wrong-method-harness-resealed",
+      "axis": "lifecycle",
+      "rationale": "A valid SHA of another actual method does not establish this method execution.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ],
+        "message": "wrong runtime harness"
+      }
+    },
+    {
+      "name": "lifecycle-another-real-source",
+      "axis": "lifecycle",
+      "rationale": "A passed audit of an earlier real source cannot bind the final snapshot.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ]
+      }
+    },
+    {
+      "name": "lifecycle-served-source-missing",
+      "axis": "lifecycle",
+      "rationale": "True verification flags cannot replace the complete before/after served byte maps.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ]
+      }
+    },
+    {
+      "name": "production-duplicate-grade",
+      "axis": "production",
+      "rationale": "324 rows must have 324 unique world/grade identities.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "production-cold-identity-false",
+      "axis": "production",
+      "rationale": "Identity recovery must be demonstrated for each case.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "production-body-position-false",
+      "axis": "production",
+      "rationale": "Identity alone does not prove body-position recovery.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "production-history-double-commit",
+      "axis": "production",
+      "rationale": "Reload must not append another departure visit.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "production-requested-seed-mismatch",
+      "axis": "production",
+      "rationale": "Actual full identity must use the controlled departure seed.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "production-missing-failure-stop",
+      "axis": "production",
+      "rationale": "The final production gate must preserve its failure-stop policy.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ],
+        "message": "must stop after failure"
+      }
+    },
+    {
+      "name": "production-raw-worker-error-resealed",
+      "axis": "production",
+      "rationale": "A resealed worker/network error cannot be concealed by successful case rows.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ],
+        "message": "Original Worker/network events need diagnosis"
+      }
+    },
+    {
+      "name": "production-missing-worker-close-resealed",
+      "axis": "production",
+      "rationale": "Every created worker must retain its actual matching close.",
+      "rejectAt": {
+        "functions": [
+          "validateRuntimeBinding"
+        ],
+        "message": "Original Worker/network events need diagnosis"
+      }
+    },
+    {
+      "name": "equivalence-wrong-requested-seed",
+      "axis": "equivalence",
+      "rationale": "Current equivalence uses the frozen requested seed.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "equivalence-duplicate-current-grade",
+      "axis": "equivalence",
+      "rationale": "A duplicate cannot conceal one missing current world/grade.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "equivalence-r1-gold-identity-changed",
+      "axis": "equivalence",
+      "rationale": "The original revision1 gold identity set remains exact.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "equivalence-exactness-false",
+      "axis": "equivalence",
+      "rationale": "Count coverage cannot replace current CPU/browser equality.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "budget-missing-world",
+      "axis": "budget",
+      "rationale": "Every enabled world needs its severe measured run.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "budget-nonexclusive-window",
+      "axis": "budget",
+      "rationale": "Budget sampling requires the separately scheduled exclusive window.",
+      "rejectAt": {
+        "functions": [
+          "validateFinalReport"
+        ]
+      }
+    },
+    {
+      "name": "budget-under-60s-with-consistent-clock",
+      "axis": "budget",
+      "rationale": "A truthful shorter game-clock duration cannot qualify as a 60-second sample.",
+      "rejectAt": {
+        "functions": [
+          "validateBudgetMeasurements"
+        ],
+        "message": "At least 60 seconds"
+      }
+    },
+    {
+      "name": "budget-frames-p95-over-limit",
+      "axis": "budget",
+      "rationale": "The original measured threshold cannot be replaced by budgetPass=true.",
+      "rejectAt": {
+        "functions": [
+          "validateBudgetMeasurements"
+        ],
+        "message": "frame P95 exceeds"
+      }
+    },
+    {
+      "name": "budget-frames-p99-over-limit",
+      "axis": "budget",
+      "rationale": "The original measured threshold cannot be replaced by budgetPass=true.",
+      "rejectAt": {
+        "functions": [
+          "validateBudgetMeasurements"
+        ],
+        "message": "frame P99 exceeds"
+      }
+    },
+    {
+      "name": "budget-frames-over50-over-limit",
+      "axis": "budget",
+      "rationale": "The original measured threshold cannot be replaced by budgetPass=true.",
+      "rejectAt": {
+        "functions": [
+          "validateBudgetMeasurements"
+        ],
+        "message": "frames over 50ms"
+      }
+    },
+    {
+      "name": "budget-cpu-p95-over-limit",
+      "axis": "budget",
+      "rationale": "The original measured threshold cannot be replaced by budgetPass=true.",
+      "rejectAt": {
+        "functions": [
+          "validateBudgetMeasurements"
+        ],
+        "message": "CPU P95 exceeds"
+      }
+    },
+    {
+      "name": "budget-materialSubmit-p95-over-limit",
+      "axis": "budget",
+      "rationale": "The original measured threshold cannot be replaced by budgetPass=true.",
+      "rejectAt": {
+        "functions": [
+          "validateBudgetMeasurements"
+        ],
+        "message": "material submission P95 exceeds"
+      }
+    },
+    {
+      "name": "budget-observed-death",
+      "axis": "budget",
+      "rationale": "The complete measured interval must remain alive.",
+      "rejectAt": {
+        "functions": [
+          "validateBudgetMeasurements"
+        ],
+        "message": "All observations must remain alive"
+      }
+    },
+    {
+      "name": "lifecycle-wrong-mixed-seed",
+      "axis": "lifecycle",
+      "rationale": "The mixed reconstruction order and seed schedule stay frozen.",
+      "rejectAt": {
+        "functions": [
+          "validateLifecycleMeasurements"
+        ],
+        "message": "Mixed reconstruction identities"
+      }
+    },
+    {
+      "name": "lifecycle-missing-gc-sample",
+      "axis": "lifecycle",
+      "rationale": "All warmed and double-GC observations are required.",
+      "rejectAt": {
+        "functions": [
+          "validateLifecycleMeasurements"
+        ],
+        "message": "All twelve double-GC"
+      }
+    },
+    {
+      "name": "lifecycle-active-resource-growth",
+      "axis": "lifecycle",
+      "rationale": "Destroyed scenes must return active resource counts to baseline.",
+      "rejectAt": {
+        "functions": [
+          "validateLifecycleMeasurements"
+        ],
+        "message": "active resources did not return"
+      }
+    },
+    {
+      "name": "lifecycle-live-shader-growth",
+      "axis": "lifecycle",
+      "rationale": "Cumulative creates do not excuse growing live Shader wrappers.",
+      "rejectAt": {
+        "functions": [
+          "validateLifecycleMeasurements"
+        ],
+        "message": "live Shader wrappers grew"
+      }
+    },
+    {
+      "name": "lifecycle-retained-10mib-boundary",
+      "axis": "lifecycle",
+      "rationale": "Exactly 10 MiB fails the original strict retained-growth limit.",
+      "rejectAt": {
+        "functions": [
+          "validateLifecycleMeasurements"
+        ],
+        "message": "retained growth reaches"
+      }
+    },
+    {
+      "name": "historicalGeneration-actual-raw-case-removed-resealed",
+      "axis": "generation",
+      "rationale": "A missing actual raw case cannot retain the fully successful derived summary.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ],
+        "message": "historicalGeneration: summary does not match raw evidence"
+      }
+    },
+    {
+      "name": "generation-actual-raw-case-removed-resealed",
+      "axis": "generation",
+      "rationale": "A missing actual raw case cannot retain the fully successful derived summary.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ],
+        "message": "generation: summary does not match raw evidence"
+      }
+    },
+    {
+      "name": "expandedHoldoutI11-actual-raw-case-removed-resealed",
+      "axis": "generation",
+      "rationale": "A missing actual raw case cannot retain the fully successful derived summary.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ],
+        "message": "expandedHoldoutI11: summary does not match raw evidence"
+      }
+    },
+    {
+      "name": "expandedHoldoutI12-actual-raw-case-removed-resealed",
+      "axis": "generation",
+      "rationale": "A missing actual raw case cannot retain the fully successful derived summary.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ],
+        "message": "expandedHoldoutI12: summary does not match raw evidence"
+      }
+    },
+    {
+      "name": "current-generation-harness-dependency-missing",
+      "axis": "generation",
+      "rationale": "Every executed tool dependency needs its exact archived bytes.",
+      "rejectAt": {
+        "functions": [
+          "validateGenerationHarnessSources"
+        ],
+        "message": "dependency coverage changed"
+      }
+    },
+    {
+      "name": "current-generation-harness-other-real-version",
+      "axis": "generation",
+      "rationale": "A real archived executor from another generation is not the executed dependency.",
+      "rejectAt": {
+        "functions": [
+          "validateGenerationHarnessSources"
+        ],
+        "message": "differs from the executed dependency"
+      }
+    },
+    {
+      "name": "historical-generation-group-missing",
+      "axis": "historical-source",
+      "rationale": "All eleven original generation groups retain their source mapping.",
+      "rejectAt": {
+        "functions": [
+          "validateHistoricalGenerationSources"
+        ],
+        "message": "coverage changed"
+      }
+    },
+    {
+      "name": "historical-generation-group-duplicate",
+      "axis": "historical-source",
+      "rationale": "A duplicate historical group cannot hide another original group.",
+      "rejectAt": {
+        "functions": [
+          "validateHistoricalGenerationSources"
+        ],
+        "message": "Duplicate historical generation group"
+      }
+    },
+    {
+      "name": "historical-generation-source-replaced-by-real-source",
+      "axis": "historical-source",
+      "rationale": "An actual later snapshot cannot replace an original group source identity.",
+      "rejectAt": {
+        "functions": [
+          "validateHistoricalGenerationSources"
+        ],
+        "message": "Historical source path changed"
+      }
+    },
+    {
+      "name": "historical-harness-newer-real-version",
+      "axis": "historical-source",
+      "rationale": "Historical execution may use a repository copy only if its bytes exactly match the original dependency.",
+      "rejectAt": {
+        "functions": [
+          "validateGenerationHarnessSources"
+        ],
+        "message": "differs from the executed dependency"
+      }
+    },
+    {
+      "name": "historical-play-relabeled-current-revision",
+      "axis": "inheritance",
+      "rationale": "Historical played processes retain their executed revision5 identity.",
+      "rejectAt": {
+        "functions": [
+          "validateAccountingScopes"
+        ],
+        "message": "Do not relabel executed revisions"
+      }
+    },
+    {
+      "name": "inheritance-old-generation-relabeled-revision6",
+      "axis": "inheritance",
+      "rationale": "A root review does not turn historical execution into current execution.",
+      "rejectAt": {
+        "functions": [
+          "validateInheritance"
+        ],
+        "message": "Historical evidence was executed by revision5"
+      }
+    },
+    {
+      "name": "bounded-play-continuity-behavior-differs",
+      "axis": "inheritance",
+      "rationale": "A play-only edge must preserve actual deployed behavior.",
+      "rejectAt": {
+        "functions": [
+          "validateBoundedPlayContinuity"
+        ],
+        "message": "Actual production behavior differs"
+      }
+    },
+    {
+      "name": "play-missing-original-fixed-seed",
+      "axis": "play",
+      "rationale": "Both predeclared seed processes are required for every grade pair.",
+      "rejectAt": {
+        "functions": [
+          "assertPlaySummaryExact"
+        ],
+        "message": "Play summary does not match raw evidence"
+      }
+    },
+    {
+      "name": "play-raw-settlement-missing-resealed",
+      "axis": "play",
+      "rationale": "A real extract claim without matching settlement cannot remain qualified.",
+      "rejectAt": {
+        "functions": [
+          "assertPlaySummaryExact"
+        ],
+        "message": "Play summary does not match raw evidence"
+      }
+    },
+    {
+      "name": "policy16-unapproved-protocol-resealed",
+      "axis": "policy16",
+      "rationale": "Only the explicit root-approved input supplement is admissible.",
+      "rejectAt": {
+        "functions": [
+          "validateControllerSupplement"
+        ]
+      }
+    },
+    {
+      "name": "policy16-third-attempt-resealed",
+      "axis": "policy16",
+      "rationale": "Each of the two original seeds may have exactly one supplemental attempt.",
+      "rejectAt": {
+        "functions": [
+          "validateControllerSupplement"
+        ],
+        "message": "Both original seeds must be attempted exactly once"
+      }
+    },
+    {
+      "name": "policy16-changed-full-identity-resealed",
+      "axis": "policy16",
+      "rationale": "Unchanged world and seed alone cannot replace complete original identity.",
+      "rejectAt": {
+        "functions": [
+          "validateSupplementJourney"
+        ],
+        "message": "full generation identity"
+      }
+    },
+    {
+      "name": "policy16-changed-earned-before-resealed",
+      "axis": "policy16",
+      "rationale": "The complete actually earned starting save stays identical.",
+      "rejectAt": {
+        "functions": [
+          "validateSupplementJourney"
+        ],
+        "message": "earned starting save"
+      }
+    },
+    {
+      "name": "policy16-original-failure-batch-omitted",
+      "axis": "policy16",
+      "rationale": "A supplement cannot erase the original unsuccessful processes from the main accounting.",
+      "rejectAt": {
+        "functions": [
+          "validateControllerSupplement"
+        ],
+        "message": "Original unsuccessful attempt must remain in the summary"
+      }
+    },
+    {
+      "name": "policy17-unapproved-protocol-resealed",
+      "axis": "policy17",
+      "rationale": "Only the explicit root-approved input supplement is admissible.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingControllerSupplement"
+        ]
+      }
+    },
+    {
+      "name": "policy17-third-attempt-resealed",
+      "axis": "policy17",
+      "rationale": "Each of the two original seeds may have exactly one supplemental attempt.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingControllerSupplement"
+        ],
+        "message": "Both original seeds must be attempted exactly once"
+      }
+    },
+    {
+      "name": "policy17-changed-full-identity-resealed",
+      "axis": "policy17",
+      "rationale": "Unchanged world and seed alone cannot replace complete original identity.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingSupplementJourney"
+        ],
+        "message": "full original identity"
+      }
+    },
+    {
+      "name": "policy17-changed-earned-before-resealed",
+      "axis": "policy17",
+      "rationale": "The complete actually earned starting save stays identical.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingSupplementJourney"
+        ],
+        "message": "earned starting save"
+      }
+    },
+    {
+      "name": "policy17-original-failure-batch-omitted",
+      "axis": "policy17",
+      "rationale": "A supplement cannot erase the original unsuccessful processes from the main accounting.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingControllerSupplement"
+        ],
+        "message": "Original unsuccessful attempt must remain in the summary"
+      }
+    },
+    {
+      "name": "policy16-missing-explicit-action-list",
+      "axis": "policy16",
+      "rationale": "Even a journey using no repeat action must explicitly record its empty bounded list.",
+      "rejectAt": {
+        "functions": [
+          "validateSupplementJourney"
+        ],
+        "message": "explicitly record"
+      }
+    },
+    {
+      "name": "policy16-invented-two-extra-rechecks",
+      "axis": "policy16",
+      "rationale": "Adding two purported actions to actual reports must fail before any claimed success can count.",
+      "rejectAt": {
+        "functions": [
+          "validateSupplementJourney"
+        ],
+        "message": "Too many additional search attempts"
+      }
+    },
+    {
+      "name": "policy17-extra-unbound-space",
+      "axis": "policy17",
+      "rationale": "Every actual Space requires its own current-facing decision.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingSupplementJourney"
+        ],
+        "message": "Every actual Space"
+      }
+    },
+    {
+      "name": "policy17-space-before-permission",
+      "axis": "policy17",
+      "rationale": "Matching action counts cannot hide a Space pressed before permission.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingSupplementJourney"
+        ],
+        "message": "chronological order"
+      }
+    },
+    {
+      "name": "policy17-wrong-visible-facing-geometry",
+      "axis": "policy17",
+      "rationale": "Reported alignment must be independently recomputable from the observed position and actual facing.",
+      "rejectAt": {
+        "functions": [
+          "validateGeometry"
+        ],
+        "message": "angle differs"
+      }
+    },
+    {
+      "name": "policy17-space-during-windup",
+      "axis": "policy17",
+      "rationale": "A claimed allowed Space cannot bypass the visible enemy attack phase.",
+      "rejectAt": {
+        "functions": [
+          "validateGeometry"
+        ],
+        "message": "Space requires current visible safe geometry"
+      }
+    },
+    {
+      "name": "policy17-direction-away-from-visible-target",
+      "axis": "policy17",
+      "rationale": "Direction keys must follow the same observed target bearing.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingSupplementJourney"
+        ],
+        "message": "same currently visible bearing"
+      }
+    },
+    {
+      "name": "policy17-segment-over-60ms",
+      "axis": "policy17",
+      "rationale": "A segment cannot exceed its frozen 60ms input request.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingSupplementJourney"
+        ]
+      }
+    },
+    {
+      "name": "policy17-observed-game-clock-over-1000ms",
+      "axis": "policy17",
+      "rationale": "Reported success cannot conceal a real observed whole-action deadline overrun.",
+      "rejectAt": {
+        "functions": [
+          "assertPlaySummaryExact"
+        ],
+        "message": "Play summary does not match raw evidence"
+      }
+    },
+    {
+      "name": "policy17-keys-not-released",
+      "axis": "policy17",
+      "rationale": "A completed correction must prove key cleanup.",
+      "rejectAt": {
+        "functions": [
+          "assertPlaySummaryExact"
+        ],
+        "message": "Play summary does not match raw evidence"
+      }
+    },
+    {
+      "name": "policy17-added-search-retry",
+      "axis": "policy17",
+      "rationale": "Facing correction does not authorize another search attempt.",
+      "rejectAt": {
+        "functions": [
+          "validateFacingSupplementJourney"
+        ],
+        "message": "must not introduce repeat searches"
+      }
+    },
+    {
+      "name": "art-package-dependency-mismatch",
+      "axis": "art",
+      "rationale": "Each bounded art verdict must concern the exact final world package.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ]
+      }
+    },
+    {
+      "name": "art-missing-limitations",
+      "axis": "art",
+      "rationale": "Internal art approval must preserve an explicit bounded scope.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ]
+      }
+    },
+    {
+      "name": "art-author-self-signoff",
+      "axis": "art",
+      "rationale": "The independent root verdict cannot be replaced by an author assertion.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ]
+      }
+    },
+    {
+      "name": "art-source-not-in-world-continuity",
+      "axis": "art",
+      "rationale": "A real receipt outside the source-continuity graph cannot bind a reused art capture.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ],
+        "message": "Unbound art source"
+      }
+    },
+    {
+      "name": "technical-review-wrong-final-source",
+      "axis": "technical-review",
+      "rationale": "An independent technical verdict must name the final frozen source.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ]
+      }
+    },
+    {
+      "name": "technical-review-wrong-budget-evidence",
+      "axis": "technical-review",
+      "rationale": "A review from another validation axis cannot stand in for the final budget report.",
+      "rejectAt": {
+        "functions": [
+          "buildProposal"
+        ],
+        "message": "Technical review concerns different budget"
+      }
+    },
+    {
+      "name": "shader-author-self-signoff",
+      "axis": "shader",
+      "rationale": "Numeric lifecycle results do not replace root Shader ownership review.",
+      "rejectAt": {
+        "functions": [
+          "validateShaderReview"
+        ]
+      }
+    },
+    {
+      "name": "shader-one-sample-unreviewed",
+      "axis": "shader",
+      "rationale": "The independent review must bind all twelve actual Shader samples.",
+      "rejectAt": {
+        "functions": [
+          "validateShaderReview"
+        ],
+        "message": "does not concern the observed counts"
+      }
+    },
+    {
+      "name": "shader-count-changed-resealed",
+      "axis": "shader",
+      "rationale": "A signed status cannot conceal a mismatched Shader count.",
+      "rejectAt": {
+        "functions": [
+          "validateShaderReview"
+        ],
+        "message": "does not concern the observed counts"
+      }
+    },
+    {
+      "name": "shader-wrong-runtime-binding",
+      "axis": "shader",
+      "rationale": "Shader ownership review must use the lifecycle source audit.",
+      "rejectAt": {
+        "functions": [
+          "validateShaderReview"
+        ]
+      }
+    },
+    {
+      "name": "shader-empty-ownership-conclusion",
+      "axis": "shader",
+      "rationale": "An empty numerical signoff is not an ownership conclusion.",
+      "rejectAt": {
+        "functions": [
+          "validateShaderReview"
+        ],
+        "message": "Missing Shader review ownershipConclusion"
+      }
+    }
+  ],
+  "policy16Boundary": "Both actual policy16 records contain no bounded search recheck. Final actual negatives therefore cover protocol, original retention, identity/save, explicit list and rejected added action count. The 6000ms executed-action guard remains covered by separately labeled preparation fixtures, not invented actual action evidence.",
+  "nextCommand": "node tools/qa/check-r100-i10-i12-final-binding.mjs --plan <root-approved-finished-plan.json> --output <new-negative-report.json>",
+  "limitations": "Prepared code may still reveal mutation setup defects or binder defects when run against final actual evidence. Such outcomes are failures and retained; preparation is not a final acceptance pass."
+}

@@ -1,0 +1,246 @@
+/** Construction v3. Material comes from `family`; these profiles own only the
+ * joined physical surfaces. Empty passages never receive a floor or a lid. */
+import type { NativeVolumeSpec } from './native-volume-geometry';
+import { buildCellularShell } from './native-volume-cellular';
+
+export const NATIVE_VOLUME_SHAPE_PROFILES = ['rib-vault', 'pleated-sheet', 'cellular-shell', 'lobed-cushion', 'monolith-buttress', 'terrace-shelf'] as const;
+export type NativeVolumeShapeProfile = typeof NATIVE_VOLUME_SHAPE_PROFILES[number];
+export type Point = readonly [number, number, number];
+export type UV = readonly [number, number];
+export interface Builder {
+  readonly spec: Readonly<NativeVolumeSpec>;
+  quad(a: Point, b: Point, c: Point, d: Point, material: number, uv: readonly [UV, UV, UV, UV], wanted?: Point, region?: number): void;
+  joint(point: Point): void;
+}
+const uv = (p: Point): UV => [p[0], p[1]];
+const clamp = (v: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, v));
+function noise(seed: number, salt: number): number {
+  let value = Math.imul(seed ^ salt, 0x45d9f3b);
+  value = Math.imul(value ^ (value >>> 16), 0x45d9f3b);
+  return ((value ^ (value >>> 16)) >>> 0) / 0x100000000;
+}
+
+/** A short material fracture lies inside one actual triangle. Its light is
+ * barycentric on that same face, rather than guessed from a silhouette centre. */
+function fracture(b: Builder, a: Point, c: Point, d: Point, size?: readonly [number, number]): void {
+  const sample = (u: number, v: number): Point => [a[0] + (c[0] - a[0]) * u + (d[0] - a[0]) * v,
+    a[1] + (c[1] - a[1]) * u + (d[1] - a[1]) * v, a[2] + (c[2] - a[2]) * u + (d[2] - a[2]) * v + .08];
+  const length = Math.hypot(c[0] - a[0], c[1] - a[1]);
+  const perpendicular = Math.abs((c[0] - a[0]) * (d[1] - a[1]) - (c[1] - a[1]) * (d[0] - a[0])) / Math.max(.001, length);
+  const du = size ? Math.min(.44, size[0] / Math.max(.001, length)) : .44;
+  const dv = size ? Math.min(.22, size[1] / Math.max(.001, perpendicular)) : .22;
+  const p = sample(.16, .12), q = sample(size ? .16 + du : .60, .12), r = sample(size ? .16 + du * .82 : .52, size ? .12 + dv : .34), s = sample(.16, size ? .12 + dv : .34);
+  b.quad(p, q, r, s, 3, [uv(p), uv(q), uv(r), uv(s)], [0, 0, 1], 3);
+  b.joint(sample(size ? .16 + du * .43 : .35, size ? .12 + dv * .50 : .23));
+}
+
+/** Grounded broad sections, unlike an elevated tube. Both feet and every cut
+ * end are real surfaces. `ridge` has a narrow crown, `pad` a broad quiet top. */
+function ribbon(b: Builder, centres: readonly Point[], radii: readonly number[], form: 'ridge' | 'pad', marked = false,
+  sideScales?: readonly (readonly [number, number])[]): void {
+  const rows: Point[][] = [];
+  const section = form === 'ridge'
+    ? [[-1, 0], [-.91, .14], [-.63, .62], [-.12, 1], [.28, .90], [.75, .41], [.94, .14], [1, 0]]
+    : [[-1, 0], [-.95, .20], [-.76, .77], [-.37, .98], [.29, 1], [.74, .84], [.94, .20], [1, 0]];
+  for (let i = 0; i < centres.length; i++) {
+    const p = centres[i]!, before = centres[Math.max(0, i - 1)]!, after = centres[Math.min(centres.length - 1, i + 1)]!;
+    const dx = after[0] - before[0], dy = after[1] - before[1], length = Math.hypot(dx, dy) || 1;
+    const radius = radii[i]!, foot = b.spec.blocking === 1 ? Math.min(8, p[2] * .32) : 0;
+    rows.push(section.map(([across, rise], at) => {
+      const breadth = radius * across! * (sideScales?.[i]?.[across! < 0 ? 0 : 1] ?? 1);
+      return [p[0] - dy / length * breadth, p[1] + dx / length * breadth,
+        at === 0 || at === section.length - 1 ? 0 : Math.max(foot, p[2] * rise!)] as Point;
+    }));
+  }
+  let distance = 0;
+  for (let i = 0; i < rows.length - 1; i++) {
+    const a = rows[i]!, c = rows[i + 1]!, nextDistance = distance + Math.hypot(centres[i + 1]![0] - centres[i]![0], centres[i + 1]![1] - centres[i]![1]);
+    for (let j = 0; j < a.length - 1; j++) {
+      const cut = j === 0 || j === a.length - 2, slot = cut ? 1 : j >= 4 ? 2 : 0;
+      b.quad(a[j]!, c[j]!, c[j + 1]!, a[j + 1]!, slot,
+        [[distance, j * radii[i]! / 3], [nextDistance, j * radii[i + 1]! / 3], [nextDistance, (j + 1) * radii[i + 1]! / 3], [distance, (j + 1) * radii[i]! / 3]], [0, 0, 1], cut ? 3 : form === 'pad' ? 5 : 4);
+      if (marked && i === Math.floor((rows.length - 1) * .53) && j === 3) fracture(b, a[j]!, c[j]!, c[j + 1]!);
+    }
+    distance = nextDistance;
+  }
+  for (const index of [0, rows.length - 1]) {
+    const row = rows[index]!, centre = centres[index]!, neighbour = centres[index === 0 ? 1 : index - 1]!;
+    const dx = centre[0] - neighbour[0], dy = centre[1] - neighbour[1], length = Math.hypot(dx, dy) || 1;
+    const run = Math.min(7, b.spec.thickness * .6);
+    for (let j = 0; j < row.length - 1; j++) {
+      const a = row[j]!, c = row[j + 1]!, af: Point = [a[0] + dx / length * run, a[1] + dy / length * run, 0], cf: Point = [c[0] + dx / length * run, c[1] + dy / length * run, 0];
+      b.quad(a, af, cf, c, 1, [uv(a), uv(af), uv(cf), uv(c)], [0, 0, 1], 3);
+    }
+  }
+}
+
+function ribVault(b: Builder): void {
+  const s = b.spec, count = s.branches, spine: Point[] = [], radii: number[] = [];
+  for (let i = 0; i <= 28; i++) {
+    const t = i / 28, arch = Math.sin(Math.PI * t);
+    spine.push([(t - .5) * s.length, -s.width * (.33 + .035 * Math.sin(t * 5)), s.height * (.53 + arch * .47)]);
+    radii.push(s.width * (.058 + .018 * arch));
+  }
+  ribbon(b, spine, radii, 'ridge', true);
+  for (let rib = 0; rib < count; rib++) {
+    const at = (rib + .52) / count, length = s.width * (.46 + noise(s.seed, 1900 + rib) * .28), centres: Point[] = [], widths: number[] = [];
+    for (let i = 0; i <= 20; i++) {
+      const t = i / 20, bend = Math.sin(t * Math.PI * .86);
+      centres.push([(at - .5) * s.length + bend * s.length * (.036 + s.fold * .035), -s.width * .33 + t * length,
+        s.height * (.60 - t * .36 + bend * .12) * (1 - rib % 3 * .055)]);
+      widths.push(Math.min(s.length / count * .18, s.width * .057) * (1 - t * .38));
+    }
+    ribbon(b, centres, widths, 'ridge');
+  }
+}
+
+function pleatedSheet(b: Builder): void {
+  const s = b.spec, gap = Math.min(s.length * .38, Math.max(48, s.width * (.28 + s.opening * .14) + 20));
+  const centreGap = (.04 + (noise(s.seed, 1981) - .5) * .10) * s.length;
+  // Unequal fold runs belong to one skin. They do not alternate paint slots:
+  // large ridge/trough planes receive their contrast from their real normals.
+  const folds: readonly UV[] = [[-.35, .08], [0, .68], [.16, .13], [.43, .94], [.56, .17],
+    [.90, .58], [1.14, .06], [1.31, .85], [1.60, .14], [1.87, .70], [2.20, .12]];
+  const creaseAt = (at: number): number => {
+    for (let i = 1; i < folds.length; i++) if (at <= folds[i]![0]) {
+      const a = folds[i - 1]!, c = folds[i]!, t = clamp((at - a[0]) / (c[0] - a[0]), 0, 1);
+      return a[1] + (c[1] - a[1]) * t;
+    }
+    return folds[folds.length - 1]![1];
+  };
+  const tear = (at: number, centre: number, radius: number): number => Math.max(0, 1 - Math.abs(at - centre) / radius);
+  const pieces = [[-s.length * .50, centreGap - gap * .5], [centreGap + gap * .5, s.length * .50]];
+  for (const [piece, [start, end]] of pieces.entries()) {
+    const along = 36, across = 16, rows: Point[][] = [];
+    for (let i = 0; i <= along; i++) {
+      const t = i / along, baseX = start! + (end! - start!) * t, u = baseX / s.length + .5, row: Point[] = [];
+      const north = s.width * (-.43 + .045 * Math.sin(u * 5.1) + .13 * tear(t, piece ? .28 : .70, .16));
+      const south = s.width * (.38 + .065 * Math.sin(u * 4.6 + .8) - .17 * tear(t, piece ? .78 : .23, .13));
+      for (let j = 0; j <= across; j++) {
+        const v = j / across;
+        // Retreat both torn ends into their own piece, preserving the entire
+        // original ground-to-top crossing while removing aligned square caps.
+        const x = baseX + s.length * (.012 + .060 * tear(v, piece ? .70 : .24, .20)) * (1 - t) ** 5
+          - s.length * (.018 + .075 * tear(v, piece ? .34 : .76, .18)) * t ** 5;
+        const phase = u * (.60 + s.branches * .16) + (v - .5) * (.20 + s.fold * .10);
+        const crease = creaseAt(phase), amplitude = .79 + .12 * Math.sin(u * 4.7 + .9) + v * .09;
+        const foot = s.blocking === 1 ? Math.min(8, s.height * .22) : 0;
+        row.push([x, north + (south - north) * v,
+          foot + s.height * (.065 + crease * amplitude) * (.79 + .21 * Math.sin(Math.PI * v))]);
+      }
+      rows.push(row);
+    }
+    for (let i = 0; i < along; i++) for (let j = 0; j < across; j++) {
+      const a = rows[i]![j]!, c = rows[i + 1]![j]!, d = rows[i + 1]![j + 1]!, e = rows[i]![j + 1]!;
+      b.quad(a, c, d, e, 0, [uv(a), uv(c), uv(d), uv(e)], [0, 0, 1], 4);
+      if (start! < 0 && i === 15 && j === 7) fracture(b, a, c, d);
+    }
+    const outline: Point[] = [...rows.map(row => row[0]!), ...rows[along]!.slice(1),
+      ...rows.slice(0, along).reverse().map(row => row[across]!), ...rows[0]!.slice(1, across).reverse()];
+    const feet = outline.map((p, i) => {
+      const prev = outline[(i + outline.length - 1) % outline.length]!, next = outline[(i + 1) % outline.length]!;
+      const dx = next[0] - prev[0], dy = next[1] - prev[1], length = Math.hypot(dx, dy) || 1, width = s.blocking === 1 ? Math.min(6, s.thickness * .55) : 1.5;
+      return [p[0] + dy / length * width, p[1] - dx / length * width, 0] as Point;
+    });
+    for (let i = 0; i < outline.length; i++) {
+      const next = (i + 1) % outline.length, a = outline[i]!, c = outline[next]!;
+      const exposedInnerTear = piece === 0 && i > along + 3 && i < along + across - 3;
+      b.quad(a, feet[i]!, feet[next]!, c, exposedInnerTear ? 2 : 1, [uv(a), uv(feet[i]!), uv(feet[next]!), uv(c)], [0, 0, 1], 3);
+    }
+  }
+}
+
+
+function lobedCushion(b: Builder): void {
+  const s = b.spec, count = clamp(s.branches - 1, 2, 3);
+  for (let lobe = 0; lobe < count; lobe++) {
+    const side = (lobe + .5) / count - .5, extent = (lobe === 0 ? .94 : .70) + noise(s.seed, 2100 + lobe) * .05;
+    const points: Point[] = [], radii: number[] = [], sideScales: (readonly [number, number])[] = [];
+    for (let i = 0; i <= 36; i++) {
+      const t = i / 36, shoulder = Math.pow(Math.sin(Math.PI * t), .50), taper = .04 + .96 * shoulder;
+      const widthPeak = Math.exp(-Math.pow((t - (.32 + lobe * .18)) / .22, 2));
+      const curl = Math.exp(-Math.pow((t - (lobe === 0 ? .81 : .67)) / (.10 + s.fold * .04), 2));
+      points.push([(t - .5) * s.length * extent + lobe * s.length * .105,
+        side * s.width + (t - .5) * s.width * (.12 + s.distortion * .14),
+        s.height * (.10 + shoulder * .15 + curl * (lobe === 0 ? .50 + s.fold * .25 : .19))]);
+      radii.push(s.width / count * .33 * taper * (1 - s.opening * .14));
+      // Broad shoulders grow away from the passage, leaving the inner foot
+      // narrower than the accepted lane. The two outer edges are not twins.
+      const outer = 1.15 + widthPeak * (lobe === 0 ? .80 : .40);
+      const notch = 1 - .17 * Math.exp(-Math.pow((t - .61) / .095, 2));
+      sideScales.push(lobe === 0 ? [outer * notch, .90] : lobe === count - 1 ? [.90, outer] : [.86, .88]);
+    }
+    ribbon(b, points, radii, 'pad', lobe === 0, sideScales);
+  }
+}
+
+/** A small set of convex mother planes, each with a real sloped lower section.
+ * Concave openings are assembled from separate convex masses, never centre-fan
+ * triangulated across an empty notch. The top is intentionally quiet and broad. */
+function planarMass(b: Builder, outline: readonly UV[], topHeight: (x: number, y: number) => number, baseZ = 0, marked = false): void {
+  const cx = outline.reduce((sum, p) => sum + p[0], 0) / outline.length, cy = outline.reduce((sum, p) => sum + p[1], 0) / outline.length;
+  const foot = outline.map(([x, y]) => [x, y, baseZ] as Point);
+  const low = outline.map(([x, y]) => [cx + (x - cx) * .965, cy + (y - cy) * .965,
+    baseZ + Math.min(b.spec.blocking === 1 ? 9 : 1, (topHeight(x, y) - baseZ) * .32)] as Point);
+  const crown = outline.map(([x, y]) => { const px = cx + (x - cx) * .85, py = cy + (y - cy) * .85; return [px, py, topHeight(px, py)] as Point; });
+  const centre: Point = [cx, cy, topHeight(cx, cy)];
+  let distance = 0;
+  for (let i = 0; i < outline.length; i++) {
+    const next = (i + 1) % outline.length, a = foot[i]!, c = foot[next]!, edge = Math.hypot(c[0] - a[0], c[1] - a[1]);
+    b.quad(a, c, low[next]!, low[i]!, 1, [[distance, baseZ], [distance + edge, baseZ], [distance + edge, low[next]![2]], [distance, low[i]![2]]], [0, 0, 1], 3);
+    b.quad(low[i]!, low[next]!, crown[next]!, crown[i]!, i % 3 === 0 ? 2 : 1,
+      [[distance, low[i]![2]], [distance + edge, low[next]![2]], [distance + edge, crown[next]![2]], [distance, crown[i]![2]]], [0, 0, 1], 1);
+    b.quad(centre, crown[i]!, crown[next]!, centre, 0, [uv(centre), uv(crown[i]!), uv(crown[next]!), uv(centre)], [0, 0, 1], 0);
+    if (marked && i === 1) fracture(b, centre, crown[i]!, crown[next]!, [18, 1.4]);
+    distance += edge;
+  }
+}
+
+function monolithButtress(b: Builder): void {
+  const s = b.spec, l = s.length, w = s.width, gap = Math.max(30, l * (.12 + s.opening * .14));
+  const offset = (noise(s.seed, 2201) - .5) * l * .08;
+  const sideMouth = Math.min(w * .20, Math.max(32, w * (.08 + s.opening * .08)) - w * .025);
+  // The left shoulder joins the rear mother mass. Its opposite support is
+  // broken forward, so the front notch turns into a real side exit instead of
+  // a blind pocket. Neither route has a roof or an invisible floor closure.
+  planarMass(b, [[-l * .46, -w * .42], [l * .34, -w * .49], [l * .46, -w * .27], [l * .38, -w * .025], [-l * .40, -w * .025]],
+    (x, y) => s.height * (.80 + x / l * s.fold * .20 - y / w * .24), 0, true);
+  planarMass(b, [[-l * .40, -w * .12], [-gap * .5 + offset, -w * .12], [-gap * .5 + offset, w * .31],
+    [-l * .25, w * .48], [-l * .46, w * .34]], (x, y) => s.height * (.65 - y / w * .40 - x / l * .14));
+  planarMass(b, [[gap * .5 + offset, sideMouth], [l * .39, sideMouth], [l * .46, w * .26],
+    [l * .31, w * .43], [gap * .5 + offset, w * .29]], (_x, y) => s.height * (.67 - y / w * (.20 + s.fold * .22)));
+}
+
+function terraceShelf(b: Builder): void {
+  const s = b.spec, tiers = clamp(s.branches, 2, 4), l = s.length, w = s.width;
+  const scaled = (outline: readonly UV[]): UV[] => outline.map(([x, y]) => [x * l, y * w]);
+  const lowerHeight = (x: number, y: number): number => s.height * (.40 + x / l * .17 + y / w * (.06 + s.fold * .04));
+  // A continuous rear bank and two unequal broken ends enclose a deep front
+  // recession. Each section is convex: no fan fills the empty cut between them.
+  planarMass(b, scaled([[-.49, -.32], [-.34, -.50], [.41, -.43], [.49, -.18], [.39, .035], [-.38, .035]]), lowerHeight);
+  planarMass(b, scaled([[-.43, -.09], [.085, -.09], [.045, .22], [-.10, .44], [-.48, .32]]), lowerHeight);
+  planarMass(b, scaled([[.245, -.09], [.41, -.10], [.50, .13], [.35, .39], [.285, .25]]), lowerHeight);
+  const upper: readonly UV[] = [[-.37, -.26], [-.27, -.43], [-.02, -.39], [.18, -.17], [.04, -.055], [-.28, -.09]];
+  for (let tier = 1; tier < tiers; tier++) {
+    const along = .56 ** (tier - 1), across = .68 ** (tier - 1);
+    const outline = scaled(upper.map(([x, y]) => [-.12 + (x + .12) * along, -.23 + (y + .23) * across]));
+    // Upper material ends within the bank rather than tracing a concentric
+    // border. Every segment extends to ground inside its lower support, so a
+    // varying top plane cannot create an invisible bridge or floating shelf.
+    const height = (x: number, y: number): number => s.height * (.42 + .53 * tier / (tiers - 1)
+      + (x / l + .15) * .10 - (y / w + .25) * (.08 + s.fold * .05));
+    planarMass(b, outline, height, 0, tier === tiers - 1);
+  }
+}
+
+export function buildExpandedNativeVolume(builder: Builder): void {
+  switch (builder.spec.shapeProfile) {
+    case 'rib-vault': ribVault(builder); return;
+    case 'pleated-sheet': pleatedSheet(builder); return;
+    case 'cellular-shell': buildCellularShell(builder); return;
+    case 'lobed-cushion': lobedCushion(builder); return;
+    case 'monolith-buttress': monolithButtress(builder); return;
+    case 'terrace-shelf': terraceShelf(builder); return;
+    default: throw new Error('Unknown expanded native shape profile');
+  }
+}

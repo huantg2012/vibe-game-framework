@@ -1,0 +1,95 @@
+{
+  "status": "awaiting-root-final-source-and-dispatch",
+  "at": "2026-10-07T14:37:27.217934+00:00",
+  "commands": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/commands.json",
+    "sha256": "24a0e53e23461cbe5978ee5fa6c0e0b35d323d139c0b36b9e74f6cc790944361"
+  },
+  "tools": [
+    {
+      "path": "tools/world-study/r100-frozen-server.mjs",
+      "expected": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7",
+      "actual": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "expected": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb",
+      "actual": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/check-r100-production-browser.mjs",
+      "expected": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17",
+      "actual": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17",
+      "unchanged": true
+    },
+    {
+      "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+      "expected": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc",
+      "actual": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "expected": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868",
+      "actual": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "expected": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9",
+      "actual": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "expected": "7680dd09c9d9a4989ecde5b0173efd72c6cd24fee33ecf272eb57330a4af2c60",
+      "actual": "7680dd09c9d9a4989ecde5b0173efd72c6cd24fee33ecf272eb57330a4af2c60",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/r100-revision6-journey.mjs",
+      "expected": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+      "actual": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/r100-revision6-review-continuous.mjs",
+      "expected": "28db9ca4224f48e06ea9fadf50521fbff80d58b45d01512c8a29a2fc5b0b57b5",
+      "actual": "28db9ca4224f48e06ea9fadf50521fbff80d58b45d01512c8a29a2fc5b0b57b5",
+      "unchanged": true
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "expected": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42",
+      "actual": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42",
+      "unchanged": true
+    }
+  ],
+  "outputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-final108",
+      "exists": false
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108",
+      "exists": false
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108",
+      "exists": false
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108",
+      "exists": false
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/lifecycle-final108",
+      "exists": false
+    }
+  ],
+  "finalSourceExists": false,
+  "chrome": "P43 execution exited normally; no final browser launched",
+  "scope": "Read-only tool and output inventory. No claim that final108 source, entry324, equivalence342, natural48 or exclusive budget/lifecycle exists."
+}

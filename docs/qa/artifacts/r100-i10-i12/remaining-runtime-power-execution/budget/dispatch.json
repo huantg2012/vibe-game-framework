@@ -1,0 +1,144 @@
+{
+  "status": "root-dispatched-budget-once",
+  "startedAt": "2026-10-08T05:14:41.343778+00:00",
+  "rootDispatch": "Root stage-specific budget dispatch and an exclusive CPU/Chrome window are prerequisites to this operator invocation; this receipt records that operational dispatch, not a fabricated signed protocol or experience approval.",
+  "rootOperationalReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/root-review.json",
+    "sha256": "5f410fb6451db5467a6d20667bec3a83715101d39f8a38afe0714c2297807463"
+  },
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/commands.json",
+    "sha256": "c507d38209a081fc62466650e11d8bba982aff08758cc73a687bf41e4aed4d45"
+  },
+  "operatorSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-budget.py",
+    "sha256": "1a4876b977d434a38e25ef89e9b71c0d176533016710854e50b79651b0520430"
+  },
+  "operatorCommand": {
+    "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/budget-operator-command.json",
+    "sha256": "b2b6c277f2b8ca4450a57cc1df388c3ff8ea963c8cc77fe94d800fb68a103c19"
+  },
+  "argv": [
+    "/usr/bin/caffeinate",
+    "-i",
+    "/usr/local/bin/node",
+    "tools/qa/r100-i09-final-probe.mjs",
+    "--probe",
+    "budget",
+    "--source",
+    "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "--output",
+    "docs/qa/artifacts/r100-i10-i12/runtime-budget-final108",
+    "--expected-worlds",
+    "108",
+    "--expected-revision",
+    "6"
+  ],
+  "envOverrides": {
+    "GAME_URL": "http://127.0.0.1:3122/",
+    "NODE_OPTIONS": "",
+    "DEBUG": "",
+    "QA_EXCLUSIVE_WINDOW": "1"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "frozenRefs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/commands.json",
+      "sha256": "24a0e53e23461cbe5978ee5fa6c0e0b35d323d139c0b36b9e74f6cc790944361"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+      "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+    },
+    {
+      "path": "tools/world-study/r100-frozen-server.mjs",
+      "sha256": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7"
+    },
+    {
+      "path": "tools/qa/r100-i09-final-probe.mjs",
+      "sha256": "00d0d75ff5b973eabdab12a0376134e34ee8edfc531b2c1672033e5c4e0431bb"
+    },
+    {
+      "path": "tools/qa/check-r100-production-browser.mjs",
+      "sha256": "078e45277d145ece053ed898be5c958ccc621819d5dfce14298e8d293c399a17"
+    },
+    {
+      "path": "tools/world-study/check-r100-browser-equivalence.mjs",
+      "sha256": "3239369565e75fb920fefd98066e673fcca0d0ead21ae45141c2dc34e7ff44dc"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "path": "tools/qa/check-r100-gym-lifecycle.mjs",
+      "sha256": "1686423d0875c69f1df8e81e173e1cb0cebc5d4f5dff145c0569f789b43df2a9"
+    },
+    {
+      "path": "tools/qa/r100-i09-continuous.mjs",
+      "sha256": "7680dd09c9d9a4989ecde5b0173efd72c6cd24fee33ecf272eb57330a4af2c60"
+    },
+    {
+      "path": "tools/qa/r100-revision6-journey.mjs",
+      "sha256": "1386811f4b10785803315d795240dddb3b288fa350db728cbb8fde2b325a1277"
+    },
+    {
+      "path": "tools/qa/r100-revision6-review-continuous.mjs",
+      "sha256": "28db9ca4224f48e06ea9fadf50521fbff80d58b45d01512c8a29a2fc5b0b57b5"
+    },
+    {
+      "path": "tools/qa/r100-worker-observer.mjs",
+      "sha256": "3081221d24dd946c3e2f8dc77ba7ff5b3f754e275e8aea415fec2f877d691a42"
+    },
+    {
+      "path": "/usr/bin/caffeinate",
+      "sha256": "76c09f9c9aeacf773ba9e51749a4d76f32342217fc914ceaaa170692cfec0ccd"
+    },
+    {
+      "path": "/usr/bin/pmset",
+      "sha256": "80817eecc1f4af438f7a212e694e8ce64b621db890deb390b656afabd1df42f0"
+    },
+    {
+      "path": "/usr/local/bin/node",
+      "sha256": "c583851fc85e4618b2374cda13399d59d373ad7cebfc4b55160820b88dcce67b"
+    },
+    {
+      "path": "/usr/share/man/man8/caffeinate.8",
+      "sha256": "dcde2d301a6be6151afc331cbb5ab3b855e2e7a2a88c9a7db2e58c8195d33711"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/production-environment-review/review.json",
+      "sha256": "a1793d1d0e25925bcd93248f54b6439070e73e85b42758f50011df7913756d29"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/root-approved-protocol.json",
+      "sha256": "a1e2c7d8bce4d63897b74b1c028c60a6f07b368072978c8f7d6e0b3aabbe8e14"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/production-full-recheck-preparation/restore-frozen-server.mjs",
+      "sha256": "aa70f73cc6bb3c3503bef2d91cc269187bdadfca2da8b5eac97aeda2de1fb7ec"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/root-review.json",
+      "sha256": "5f410fb6451db5467a6d20667bec3a83715101d39f8a38afe0714c2297807463"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-budget.py",
+      "sha256": "1a4876b977d434a38e25ef89e9b71c0d176533016710854e50b79651b0520430"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/budget-operator-command.json",
+      "sha256": "b2b6c277f2b8ca4450a57cc1df388c3ff8ea963c8cc77fe94d800fb68a103c19"
+    }
+  ],
+  "sourceFilesBefore": 1397,
+  "operatorPid": 94733,
+  "operatorPpid": 88685,
+  "exclusiveHeavyCpuAndQaBrowser": true,
+  "fullyExclusiveCpuAndChromeDeclared": true,
+  "measurementOperatorWork": "Only lightweight owned-subtree and pmset sampling while the frozen utility runs. No full-source hashing, builds, extra browsers or independent tests during measurement.",
+  "automaticRetry": false
+}

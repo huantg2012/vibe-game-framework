@@ -1,0 +1,39 @@
+{
+  "status": "pass",
+  "at": "2026-10-07T05:56:46.918Z",
+  "sourceManifest": "docs/qa/artifacts/r100-i10-i12/b13-and-low-surface-source/source-snapshot.json",
+  "sourceManifestSha256": "ca7c824799dcf428a691fda42c0b449fa7b34ae83ba95c2a847a4fbfadb57edd",
+  "method": "Fetch exact three failed TS module URLs; decode their Vite inline source maps and compare original TS bytes against immutable3118 manifest. No network or game repair inferred.",
+  "rows": [
+    {
+      "url": "http://127.0.0.1:3118/src/generated/r100-package-manifest.ts",
+      "httpStatus": 200,
+      "transformedSha256": "9249e809aad8ad7659fab6da4b171b606830674dc5eee42b9844c0a65b556f28",
+      "sourceMapOriginalSha256": "51c5772659e02597edd3170a77837dbc4f7674f881dd898c8557745d75d79189",
+      "sourceMapCandidates": [
+        "51c5772659e02597edd3170a77837dbc4f7674f881dd898c8557745d75d79189"
+      ],
+      "exact": true
+    },
+    {
+      "url": "http://127.0.0.1:3118/src/generated/r100-native-worlds.ts",
+      "httpStatus": 200,
+      "transformedSha256": "ec6b555ce0826da85d2490c5acd316422a7742bd0e4f68f0f0d50171a06dddc8",
+      "sourceMapOriginalSha256": "a3d9da5acc86b7960335ae8792f7ed3f092d13aa10de1994da48d934b53c205c",
+      "sourceMapCandidates": [
+        "a3d9da5acc86b7960335ae8792f7ed3f092d13aa10de1994da48d934b53c205c"
+      ],
+      "exact": true
+    },
+    {
+      "url": "http://127.0.0.1:3118/src/generated/rift-expedition-grade-data.ts",
+      "httpStatus": 200,
+      "transformedSha256": "d17c6ba7daf45cae6062de96fbf76471019be202a6ce117edeeb97771354e2a7",
+      "sourceMapOriginalSha256": "8abb62cb1d601290e97edede8d190394664075e2ae0219bafe149ae6868daf71",
+      "sourceMapCandidates": [
+        "8abb62cb1d601290e97edede8d190394664075e2ae0219bafe149ae6868daf71"
+      ],
+      "exact": true
+    }
+  ]
+}

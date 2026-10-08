@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "reviewer": "root",
+  "reviewedAt": "2026-10-08T02:49:55.561Z",
+  "status": "bounded-gallery-layout-and-interaction-pass",
+  "html": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+    "sha256": "b68da40194dea28956b95b6361bd1b19cca2c7d21ea197242d347d569a53a534"
+  },
+  "data": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+    "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+  },
+  "browserReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/report.json",
+    "sha256": "5fd0aaba319ca32d5faefa9d9e597cff450365da055e0391ecf7ac09b22bf2bf"
+  },
+  "previousVisualReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-visual-review-v3.json",
+    "sha256": "44c1c633c3f7dbfa0eb4cf4928a19f7bf4461adadd99469054e153189789aea5"
+  },
+  "staticCheck": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.check-v4.json",
+    "sha256": "b046b8755d92fd14efa8b31cc9bdc88aca452d9b75256430e95517d4c6acbb8f"
+  },
+  "repair": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.thumbnail-height-fix.json",
+    "sha256": "e5b3d75ce81d1095356f004907d41557006d15b5373f6efbb10308cea33d7ca0"
+  },
+  "viewedScreenshots": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/01-default.png",
+      "sha256": "831e7d52d234d1004940547cce144943db6f8e8358480320f2803b46d1a153c7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/02-viewer.png",
+      "sha256": "a7bd98eecbfb0909c42704d9fae5f41c4ecfdd986d940b133224959b4fd11d4f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/03-last-world-severe.png",
+      "sha256": "8e9d9e58f2764369c845a0a9c3eb7d8b305ffd86921cfefcbf6a228c58a79a66"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/04-filter.png",
+      "sha256": "8c313100c059cf826c5e3ffbad9ad165e72fd1ef3aa4762b47ddecc4cad35439"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/05-explicit-historical-missing.png",
+      "sha256": "8eb817eada94c186420a3bfcdb3f261597fbd0d7f398730bde323faeb6d466e9"
+    }
+  ],
+  "observations": [
+    {
+      "screenshots": [
+        "01-default.png",
+        "02-viewer.png",
+        "03-last-world-severe.png"
+      ],
+      "finding": "At 1440×1000 the heading, selected world/grade/frame, full original-frame viewer, neighbor navigation and bounded evidence copy remain readable without horizontal overflow or overlap."
+    },
+    {
+      "screenshots": [
+        "04-filter.png"
+      ],
+      "finding": "The four filtered cards now show landscape images directly above complete names, IDs, grade counts and nearest-world labels; excessive vertical image-box blank space is removed.",
+      "actualBounds": [
+        {
+          "world": "cleft-tableland",
+          "width": 325.5,
+          "height": 217,
+          "naturalWidth": 1136,
+          "naturalHeight": 758,
+          "declaredHeight": "758"
+        },
+        {
+          "world": "braided-seam",
+          "width": 325.5,
+          "height": 217,
+          "naturalWidth": 1136,
+          "naturalHeight": 758,
+          "declaredHeight": "758"
+        },
+        {
+          "world": "offset-pan",
+          "width": 325.5,
+          "height": 217,
+          "naturalWidth": 1136,
+          "naturalHeight": 758,
+          "declaredHeight": "758"
+        },
+        {
+          "world": "double-return",
+          "width": 325.5,
+          "height": 217,
+          "naturalWidth": 1136,
+          "naturalHeight": 758,
+          "declaredHeight": "758"
+        }
+      ]
+    },
+    {
+      "screenshots": [
+        "05-explicit-historical-missing.png"
+      ],
+      "finding": "The low-grade historical slot explicitly remains without an original frame, with disabled frame controls and preserved historical review limitations; a different grade image is not substituted."
+    }
+  ],
+  "interactionScope": [
+    "108 world entries and cards",
+    "grade switch and next/previous frame",
+    "neighbor navigation preserves selected grade",
+    "last world hash reload",
+    "world/neighbor and empty search",
+    "missing-slot own-grade selection and keyboard focus",
+    "return from missing low-grade slot to an existing medium frame"
+  ],
+  "limitations": [
+    "Bounded offline evidence-gallery review at 1440×1000; not a new art, sound or human approval of the worlds.",
+    "793 original PNGs cover270 slots;54 historical slots remain explicitly without direct frames. New56 have all3 grades represented.",
+    "The previous v3 defect report and all original browsing evidence remain unchanged."
+  ],
+  "browserClosed": true
+}

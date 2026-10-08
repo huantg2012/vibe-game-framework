@@ -1,0 +1,311 @@
+{
+  "version": 3,
+  "requestedSeed": 20261005,
+  "paintGeometryVersion": 2,
+  "profile": {
+    "id": "white-scarfield",
+    "label": "白砂断原",
+    "description": "白砂断原的原生材料与完整搜撤地段",
+    "material": "granular",
+    "surface": {
+      "substrate": "granular",
+      "coating": "granular",
+      "organization": "bands",
+      "coverage": 0.46,
+      "wear": 0.52,
+      "deposits": 0.52,
+      "scale": 1.1,
+      "relief": 0.52,
+      "contrast": 0.75,
+      "regionScale": 1.15,
+      "quietness": 0.48,
+      "formScale": 1.3,
+      "fragmentation": 0.65,
+      "accentCoverage": 0.02
+    },
+    "palette": {
+      "void": 592137,
+      "shadow": 1381653,
+      "floorDeep": 4340032,
+      "floor": 10062737,
+      "floorLight": 13681860,
+      "materialDark": 2042948,
+      "materialMid": 4742784,
+      "materialLight": 9742527,
+      "faceLight": 13482139,
+      "accentDim": 5395026,
+      "accent": 11184810,
+      "accentLight": 13421772,
+      "peak": 15658734,
+      "actorDark": 1842204,
+      "actorMid": 12237498,
+      "actorLight": 16777215,
+      "ground": 10062737,
+      "groundLight": 13681860,
+      "groundDark": 4340032,
+      "wall": 4742784,
+      "wallLight": 9742527,
+      "wallDark": 2042948
+    }
+  },
+  "appearance": {
+    "version": 1,
+    "worldId": "white-scarfield",
+    "ground": {
+      "dark": 4340032,
+      "mid": 10062737,
+      "light": 13681860
+    },
+    "solid": {
+      "dark": 2042948,
+      "mid": 4742784,
+      "light": 9742527
+    },
+    "cleaved": {
+      "dark": 5982778,
+      "mid": 10586731,
+      "light": 13482139
+    },
+    "secondary": {
+      "dark": 4865352,
+      "mid": 10059150,
+      "light": 13020347
+    },
+    "groundPattern": "grains",
+    "patternScale": 256,
+    "patternStrength": 0.31,
+    "secondaryCoverage": 0.1,
+    "textureContrast": 1.15,
+    "quietCoverage": 0.65
+  },
+  "space": {
+    "id": "open-scars",
+    "label": "疏落蚀坑",
+    "voidFraction": 0.09,
+    "crackFraction": 0.2,
+    "holeScale": 1,
+    "directionality": 0.2,
+    "clustering": 0.25
+  },
+  "contentFragmentTypeId": "frag-outdoor",
+  "nativeDefinition": {
+    "id": "white-scarfield-medium",
+    "family": "granular-ridge",
+    "grade": "medium",
+    "label": "白砂断原",
+    "profile": "white-scarfield",
+    "cols": 32,
+    "rows": 24,
+    "seed": 20261002,
+    "spawn_x": 196,
+    "spawn_y": 588,
+    "exit_x": 148,
+    "exit_y": 664,
+    "search_x": 516,
+    "search_y": 580,
+    "enemy_x": 840,
+    "enemy_y": 172,
+    "axis": -0.28,
+    "light_radius": 132,
+    "emission": 0.55,
+    "motion_period": 16,
+    "ground_quietness": 0.84,
+    "ground_contrast": 0.5,
+    "ground_coverage": 0.26,
+    "ground_material_blend": 0.32,
+    "instances": [
+      {
+        "id": 1,
+        "family": "granular-ridge",
+        "role": "relief",
+        "x": 354,
+        "y": 389,
+        "rotation": 1.43,
+        "length": 555,
+        "width": 300,
+        "height": 5,
+        "thickness": 2,
+        "fold": 0.42,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-fan",
+        "groundEdgeWidth": 8
+      },
+      {
+        "id": 2,
+        "family": "granular-ridge",
+        "role": "relief",
+        "x": 788,
+        "y": 423,
+        "rotation": 1.52,
+        "length": 570,
+        "width": 260,
+        "height": 4,
+        "thickness": 2,
+        "fold": 0.35,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "settled-fan"
+      },
+      {
+        "id": 3,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 558,
+        "y": 238,
+        "rotation": 0.25,
+        "length": 140,
+        "width": 120,
+        "height": 49,
+        "thickness": 12,
+        "fold": 0.58,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 4,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 617,
+        "y": 389,
+        "rotation": -0.32,
+        "length": 150,
+        "width": 125,
+        "height": 60,
+        "thickness": 14,
+        "fold": 0.69,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      },
+      {
+        "id": 5,
+        "family": "granular-ridge",
+        "role": "solid",
+        "x": 552,
+        "y": 574,
+        "rotation": 0.33,
+        "length": 155,
+        "width": 115,
+        "height": 42,
+        "thickness": 11,
+        "fold": 0.48,
+        "branches": 3,
+        "opening": 0.7,
+        "distortion": 0.25,
+        "constructionVersion": 4,
+        "shapeProfile": "fallen-bundle"
+      }
+    ],
+    "erosion": [
+      [
+        {
+          "x": 200,
+          "y": 245
+        },
+        {
+          "x": 292,
+          "y": 263
+        },
+        {
+          "x": 307,
+          "y": 351
+        },
+        {
+          "x": 247,
+          "y": 382
+        },
+        {
+          "x": 208,
+          "y": 343
+        }
+      ],
+      [
+        {
+          "x": 825,
+          "y": 397
+        },
+        {
+          "x": 912,
+          "y": 369
+        },
+        {
+          "x": 952,
+          "y": 450
+        },
+        {
+          "x": 903,
+          "y": 520
+        },
+        {
+          "x": 844,
+          "y": 494
+        }
+      ]
+    ],
+    "authoredErosion": true
+  },
+  "gradeDefinition": {
+    "id": "medium",
+    "version": 1,
+    "label": "中污染",
+    "status": "dev-masters",
+    "intent": "污染分布在多处路径边；观察风险后选择绕行或承受污染",
+    "paintCount": 4,
+    "paintSubstrate": "oil_film",
+    "paintContinuity": "monolith",
+    "paintCoverage": "rewrite",
+    "volumeCount": 2,
+    "volumeSubstrate": "gas_mass",
+    "volumeCoverage": "rewrite",
+    "volumeCols": 4,
+    "volumeRows": 3,
+    "chaosStartRate": 0.42,
+    "chaosEndRate": 0.6,
+    "chaosRampStartSeconds": 60,
+    "chaosRampEndSeconds": 180
+  },
+  "contentDefinition": {
+    "grade_id": "medium",
+    "version": 2,
+    "status": "production-candidate",
+    "label": "中污染",
+    "public_risk": "侵蚀更广，久留代价更高",
+    "public_preparation": "按行装选择绕行或穿越",
+    "public_reward": "更多收获在较深处",
+    "enemy_count": 3,
+    "kindling_safe_count": 1,
+    "kindling_contested_count": 2,
+    "kindling_deep_count": 2,
+    "kindling_safe_value": 1,
+    "kindling_contested_value": 2,
+    "kindling_deep_value": 4,
+    "contaminant_safe_count": 1,
+    "contaminant_contested_count": 1,
+    "contaminant_deep_count": 1
+  },
+  "package": {
+    "id": "r100-white-scarfield",
+    "algorithm": "r100-native",
+    "version": 3,
+    "algorithmRevision": 6,
+    "materials": {
+      "granular-ridge": {
+        "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+        "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+        "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+      }
+    },
+    "dependencyHash": "84b60c68",
+    "grade": "medium"
+  }
+}

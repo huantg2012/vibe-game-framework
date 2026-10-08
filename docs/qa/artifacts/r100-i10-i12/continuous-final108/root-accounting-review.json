@@ -1,0 +1,1939 @@
+{
+  "version": 1,
+  "status": "bounded-actual48-accounting-pass",
+  "reviewer": "root",
+  "reviewedAt": "2026-10-08T05:11:55.421Z",
+  "audit": {
+    "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/root-accounting-audit.mjs",
+    "sha256": "c12a8925cca2541aa0c6d9d5b9aacdcf5ccd3c4d28e08b3cfbefca53d210bf56"
+  },
+  "accountingHelper": {
+    "path": "tools/qa/r100-i09-search-receipts.mjs",
+    "sha256": "073ee58b4ca95f3832732486c5a8cfd2143658a59e58d767d681a2ef94830560"
+  },
+  "inputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/summary.json",
+      "sha256": "cc5c4f17cb2877f49fa6d82505f44e0b8a8d8757c83656793ba542fcdceceae4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/policy-freeze.json",
+      "sha256": "ea7d65b6f66e24b2cbe770ea45b9b3746ac249ed3861134f4353c7ba546e0d79"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/report.json",
+      "sha256": "c1ccabf3979884cd40e46d62af8eeb2fbbf42b9cb2feaf187564cb2423184958"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/journey.jsonl",
+      "sha256": "4d256360267b9d9092815715bc7987ce72448a46808c56b218379bbcbbf952d6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/report.json",
+      "sha256": "6e42b7a260112e8bee0fdc9c58cbc658787f2c6540a7a698575eaad76706aee8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/journey.jsonl",
+      "sha256": "db8080c1a6cada28bedbf7be9c29af3d308a6fc413adedcbdcfa2bb4470096e4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/report.json",
+      "sha256": "67511eff84a339c4caa2832cb376fd97086a73cbf603dd432dd5bab455bd9e83"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/journey.jsonl",
+      "sha256": "65a93ec5af9c4678dd2cd6e643d642aedc1ab80de2210f89245a405658a2a962"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/report.json",
+      "sha256": "6a5127735b3fcdf5149d45981c54d51046cdb084989d08219f2285a436954b20"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/journey.jsonl",
+      "sha256": "2a30cadbbfe15487e671cd266c339edc802122f4523a6510582fb7edb7d348c8"
+    }
+  ],
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "checks": {
+    "exactSaveFiles": 192,
+    "uniqueSettledRunIds": 48,
+    "exactAdjacentSaveStates": true,
+    "oneHistoryAppendPerDeparture": true,
+    "actualPickupsReconciled": true,
+    "repairGrowthAndReturnedKindlingReconciled": true,
+    "deathCarriedItemsCleared": true
+  },
+  "totals": {
+    "trips": 48,
+    "nonEntrySearchAndExtract": 42,
+    "emptyExtractions": 4,
+    "deaths": 2,
+    "actualPickups": 100,
+    "nonEntryPickups": 100,
+    "extractedPickups": 99,
+    "kindlingGained": 550,
+    "repairSpent": 267,
+    "growthSpent": 314,
+    "returnedItems": 47,
+    "destroyedItems": 58
+  },
+  "branches": [
+    {
+      "policy": "low",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/report.json",
+        "sha256": "c1ccabf3979884cd40e46d62af8eeb2fbbf42b9cb2feaf187564cb2423184958"
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "world": "shell-threads",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 131794.73000000147,
+          "finalHp": 40,
+          "finalChaos": 86.88523778504447,
+          "beforeReserve": 20,
+          "returnedReserve": 26,
+          "preparedReserve": 21,
+          "kindlingGained": 6,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 2,
+          "world": "shell-chain",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 74213.70999999854,
+          "finalHp": 130,
+          "finalChaos": 57.971985152966944,
+          "beforeReserve": 21,
+          "returnedReserve": 42,
+          "preparedReserve": 14,
+          "kindlingGained": 21,
+          "repairSpent": 4,
+          "growthSpent": 24,
+          "returnedItems": 0,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 3,
+          "world": "reversed-flow",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 74597.02999999787,
+          "finalHp": 145,
+          "finalChaos": 57.218048497378206,
+          "beforeReserve": 14,
+          "returnedReserve": 21,
+          "preparedReserve": 17,
+          "kindlingGained": 7,
+          "repairSpent": 4,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 4,
+          "world": "gel-rafts",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 67797.30999999952,
+          "finalHp": 145,
+          "finalChaos": 47.82186533887976,
+          "beforeReserve": 17,
+          "returnedReserve": 24,
+          "preparedReserve": 19,
+          "kindlingGained": 7,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 5,
+          "world": "flake-thicket",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 47731.37999999941,
+          "finalHp": 130,
+          "finalChaos": 39.298752980851454,
+          "beforeReserve": 19,
+          "returnedReserve": 36,
+          "preparedReserve": 6,
+          "kindlingGained": 17,
+          "repairSpent": 4,
+          "growthSpent": 26,
+          "returnedItems": 2,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 6,
+          "world": "fibre-choke",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 63997.429999999826,
+          "finalHp": 145,
+          "finalChaos": 56.0026814347523,
+          "beforeReserve": 6,
+          "returnedReserve": 30,
+          "preparedReserve": 25,
+          "kindlingGained": 24,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 7,
+          "world": "laminate-shell",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 0,
+          "nonEntryPickups": 0,
+          "elapsedMs": 82030.0200000033,
+          "finalHp": 130,
+          "finalChaos": 65.32070730767036,
+          "beforeReserve": 25,
+          "returnedReserve": 25,
+          "preparedReserve": 19,
+          "kindlingGained": 0,
+          "repairSpent": 6,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 8,
+          "world": "three-shelves",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 67547.32000000181,
+          "finalHp": 85,
+          "finalChaos": 58.97198689984551,
+          "beforeReserve": 19,
+          "returnedReserve": 29,
+          "preparedReserve": 18,
+          "kindlingGained": 10,
+          "repairSpent": 11,
+          "growthSpent": 0,
+          "returnedItems": 2,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 9,
+          "world": "silt-gel",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 78613.54000000423,
+          "finalHp": 100,
+          "finalChaos": 76.37268072995045,
+          "beforeReserve": 18,
+          "returnedReserve": 35,
+          "preparedReserve": 28,
+          "kindlingGained": 17,
+          "repairSpent": 7,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 10,
+          "world": "rolled-fragments",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 72597.11000000428,
+          "finalHp": 115,
+          "finalChaos": 68.12119070037242,
+          "beforeReserve": 28,
+          "returnedReserve": 38,
+          "preparedReserve": 31,
+          "kindlingGained": 10,
+          "repairSpent": 7,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 11,
+          "world": "pleated-hide",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 107662.3600000034,
+          "finalHp": 115,
+          "finalChaos": 79.29655834825674,
+          "beforeReserve": 31,
+          "returnedReserve": 41,
+          "preparedReserve": 31,
+          "kindlingGained": 10,
+          "repairSpent": 10,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 12,
+          "world": "gel-rafts",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 77346.92000000415,
+          "finalHp": 130,
+          "finalChaos": 70.36076998049133,
+          "beforeReserve": 31,
+          "returnedReserve": 48,
+          "preparedReserve": 11,
+          "kindlingGained": 17,
+          "repairSpent": 9,
+          "growthSpent": 28,
+          "returnedItems": 1,
+          "destroyedItems": 0
+        }
+      ],
+      "startingReserve": 20,
+      "endingReserve": 11,
+      "distinctWorlds": 11,
+      "actualFinalGrowth": {
+        "schemaVersion": 2,
+        "upgrades": {
+          "growth_chaos_resist": 3,
+          "growth_kindling_affinity": 3,
+          "growth_vitality": 3,
+          "growth_sortie_slot": 1,
+          "growth_defense_slot": 3,
+          "growth_forecast_clarity": 3
+        },
+        "progression": {
+          "version": 1,
+          "impactExperienced": true,
+          "offeringCompleted": true,
+          "toolRevealed": true,
+          "crestExperienced": true
+        }
+      },
+      "recurrence": {
+        "transitions": 11,
+        "same": 0,
+        "near": 0,
+        "sameRate": 0,
+        "nearRate": 0,
+        "withinEight": 1,
+        "expectedSameFromActualWeights": 0.02223803890800438,
+        "expectedNearFromActualWeights": 0.25734048814177046,
+        "longestSameMaterial": 2,
+        "longestSameShapes": 1
+      }
+    },
+    {
+      "policy": "medium",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/report.json",
+        "sha256": "6e42b7a260112e8bee0fdc9c58cbc658787f2c6540a7a698575eaad76706aee8"
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "world": "red-vault-fragments",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 151710.600000007,
+          "finalHp": 130,
+          "finalChaos": 89.41969108187686,
+          "beforeReserve": 20,
+          "returnedReserve": 20,
+          "preparedReserve": 15,
+          "kindlingGained": 0,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 2,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 2,
+          "world": "marrow-break",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 74880.32999999788,
+          "finalHp": 130,
+          "finalChaos": 68.49688561113669,
+          "beforeReserve": 15,
+          "returnedReserve": 27,
+          "preparedReserve": 24,
+          "kindlingGained": 12,
+          "repairSpent": 3,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 3,
+          "world": "cleft-tableland",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 91946.33999999815,
+          "finalHp": 115,
+          "finalChaos": 107.02544021253549,
+          "beforeReserve": 24,
+          "returnedReserve": 39,
+          "preparedReserve": 10,
+          "kindlingGained": 15,
+          "repairSpent": 5,
+          "growthSpent": 24,
+          "returnedItems": 3,
+          "destroyedItems": 3
+        },
+        {
+          "ordinal": 4,
+          "world": "ash-strata",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 96112.85000000641,
+          "finalHp": 55,
+          "finalChaos": 118.53182288362667,
+          "beforeReserve": 10,
+          "returnedReserve": 20,
+          "preparedReserve": 15,
+          "kindlingGained": 10,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 3,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 5,
+          "world": "split-fall",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 131778.03000001374,
+          "finalHp": 55,
+          "finalChaos": 121.84255178616996,
+          "beforeReserve": 15,
+          "returnedReserve": 22,
+          "preparedReserve": 16,
+          "kindlingGained": 7,
+          "repairSpent": 6,
+          "growthSpent": 0,
+          "returnedItems": 3,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 6,
+          "world": "reversed-flow",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 69030.5800000006,
+          "finalHp": 70,
+          "finalChaos": 78.8398540026253,
+          "beforeReserve": 16,
+          "returnedReserve": 40,
+          "preparedReserve": 8,
+          "kindlingGained": 24,
+          "repairSpent": 6,
+          "growthSpent": 26,
+          "returnedItems": 1,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 7,
+          "world": "pallid-membrane",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 75230.34000000414,
+          "finalHp": 145,
+          "finalChaos": 88.460924657098,
+          "beforeReserve": 8,
+          "returnedReserve": 35,
+          "preparedReserve": 29,
+          "kindlingGained": 27,
+          "repairSpent": 6,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 8,
+          "world": "resin-hollows",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 88079.8000000039,
+          "finalHp": 130,
+          "finalChaos": 116.76081674443193,
+          "beforeReserve": 29,
+          "returnedReserve": 43,
+          "preparedReserve": 9,
+          "kindlingGained": 14,
+          "repairSpent": 6,
+          "growthSpent": 28,
+          "returnedItems": 0,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 9,
+          "world": "buried-lamellae",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 0,
+          "nonEntryPickups": 0,
+          "elapsedMs": 124545.02000000325,
+          "finalHp": 70,
+          "finalChaos": 124.91156858462128,
+          "beforeReserve": 9,
+          "returnedReserve": 9,
+          "preparedReserve": 6,
+          "kindlingGained": 0,
+          "repairSpent": 3,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 4
+        },
+        {
+          "ordinal": 10,
+          "world": "quilted-scars",
+          "grade": "medium",
+          "outcome": "death",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 128228.18000000314,
+          "finalHp": 0,
+          "finalChaos": 140.94226984355237,
+          "beforeReserve": 6,
+          "returnedReserve": 6,
+          "preparedReserve": 1,
+          "kindlingGained": 0,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 11,
+          "world": "violet-marrows",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 96979.46000000382,
+          "finalHp": 100,
+          "finalChaos": 111.27574524293236,
+          "beforeReserve": 1,
+          "returnedReserve": 19,
+          "preparedReserve": 16,
+          "kindlingGained": 18,
+          "repairSpent": 3,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 12,
+          "world": "red-vault-fragments",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 82530.03000000406,
+          "finalHp": 10,
+          "finalChaos": 117.80080506739505,
+          "beforeReserve": 16,
+          "returnedReserve": 16,
+          "preparedReserve": 9,
+          "kindlingGained": 0,
+          "repairSpent": 7,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 1
+        }
+      ],
+      "startingReserve": 20,
+      "endingReserve": 9,
+      "distinctWorlds": 11,
+      "actualFinalGrowth": {
+        "schemaVersion": 2,
+        "upgrades": {
+          "growth_chaos_resist": 3,
+          "growth_kindling_affinity": 3,
+          "growth_vitality": 3,
+          "growth_sortie_slot": 1,
+          "growth_defense_slot": 3,
+          "growth_forecast_clarity": 3
+        },
+        "progression": {
+          "version": 1,
+          "impactExperienced": true,
+          "offeringCompleted": true,
+          "toolRevealed": true,
+          "crestExperienced": true
+        }
+      },
+      "recurrence": {
+        "transitions": 11,
+        "same": 0,
+        "near": 0,
+        "sameRate": 0,
+        "nearRate": 0,
+        "withinEight": 0,
+        "expectedSameFromActualWeights": 0.02192171444407666,
+        "expectedNearFromActualWeights": 0.21899108862198385,
+        "longestSameMaterial": 3,
+        "longestSameShapes": 1
+      }
+    },
+    {
+      "policy": "severe",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/report.json",
+        "sha256": "67511eff84a339c4caa2832cb376fd97086a73cbf603dd432dd5bab455bd9e83"
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "world": "rolled-fragments",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 121528.44000000111,
+          "finalHp": 10,
+          "finalChaos": 150,
+          "beforeReserve": 20,
+          "returnedReserve": 38,
+          "preparedReserve": 9,
+          "kindlingGained": 18,
+          "repairSpent": 5,
+          "growthSpent": 24,
+          "returnedItems": 0,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 2,
+          "world": "cinder-ridge",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 96429.46999999936,
+          "finalHp": 145,
+          "finalChaos": 106.5682598307607,
+          "beforeReserve": 9,
+          "returnedReserve": 22,
+          "preparedReserve": 18,
+          "kindlingGained": 13,
+          "repairSpent": 4,
+          "growthSpent": 0,
+          "returnedItems": 2,
+          "destroyedItems": 3
+        },
+        {
+          "ordinal": 3,
+          "world": "porcelain-maw",
+          "grade": "severe",
+          "outcome": "death",
+          "actualPickups": 0,
+          "nonEntryPickups": 0,
+          "elapsedMs": 59914.25999999804,
+          "finalHp": 0,
+          "finalChaos": 132.96452542978125,
+          "beforeReserve": 18,
+          "returnedReserve": 18,
+          "preparedReserve": 14,
+          "kindlingGained": 0,
+          "repairSpent": 4,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 4,
+          "world": "bleached-court",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 0,
+          "nonEntryPickups": 0,
+          "elapsedMs": 76330.31000000236,
+          "finalHp": 25,
+          "finalChaos": 143.07385181608322,
+          "beforeReserve": 14,
+          "returnedReserve": 14,
+          "preparedReserve": 9,
+          "kindlingGained": 0,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 5,
+          "world": "reversed-flow",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 59014.29999999968,
+          "finalHp": 145,
+          "finalChaos": 86.25892529619034,
+          "beforeReserve": 9,
+          "returnedReserve": 29,
+          "preparedReserve": 25,
+          "kindlingGained": 20,
+          "repairSpent": 4,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 6,
+          "world": "three-shelves",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 95046.17000000642,
+          "finalHp": 70,
+          "finalChaos": 123.75738325519163,
+          "beforeReserve": 25,
+          "returnedReserve": 32,
+          "preparedReserve": 26,
+          "kindlingGained": 7,
+          "repairSpent": 6,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 7,
+          "world": "draped-bay",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 0,
+          "nonEntryPickups": 0,
+          "elapsedMs": 52247.899999999434,
+          "finalHp": 55,
+          "finalChaos": 128.32081973808147,
+          "beforeReserve": 26,
+          "returnedReserve": 26,
+          "preparedReserve": 20,
+          "kindlingGained": 0,
+          "repairSpent": 6,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 8,
+          "world": "grain-weld",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 95879.52000000371,
+          "finalHp": 10,
+          "finalChaos": 134.85787477800878,
+          "beforeReserve": 20,
+          "returnedReserve": 33,
+          "preparedReserve": 24,
+          "kindlingGained": 13,
+          "repairSpent": 9,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 9,
+          "world": "offset-basins",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 59097.6400000035,
+          "finalHp": 100,
+          "finalChaos": 85.90752297965622,
+          "beforeReserve": 24,
+          "returnedReserve": 44,
+          "preparedReserve": 11,
+          "kindlingGained": 20,
+          "repairSpent": 7,
+          "growthSpent": 26,
+          "returnedItems": 1,
+          "destroyedItems": 3
+        },
+        {
+          "ordinal": 10,
+          "world": "cleft-tableland",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 48448.06000000203,
+          "finalHp": 145,
+          "finalChaos": 61.63345353128546,
+          "beforeReserve": 11,
+          "returnedReserve": 18,
+          "preparedReserve": 15,
+          "kindlingGained": 7,
+          "repairSpent": 3,
+          "growthSpent": 0,
+          "returnedItems": 2,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 11,
+          "world": "stepped-bowl",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 65147.390000004314,
+          "finalHp": 115,
+          "finalChaos": 123.54184079059412,
+          "beforeReserve": 15,
+          "returnedReserve": 15,
+          "preparedReserve": 12,
+          "kindlingGained": 0,
+          "repairSpent": 3,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 12,
+          "world": "clamped-shore",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 66214.02000000446,
+          "finalHp": 115,
+          "finalChaos": 111.41632343007555,
+          "beforeReserve": 12,
+          "returnedReserve": 12,
+          "preparedReserve": 5,
+          "kindlingGained": 0,
+          "repairSpent": 7,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 0
+        }
+      ],
+      "startingReserve": 20,
+      "endingReserve": 5,
+      "distinctWorlds": 12,
+      "actualFinalGrowth": {
+        "schemaVersion": 2,
+        "upgrades": {
+          "growth_chaos_resist": 3,
+          "growth_kindling_affinity": 3,
+          "growth_vitality": 3,
+          "growth_sortie_slot": 1,
+          "growth_defense_slot": 2,
+          "growth_forecast_clarity": 3
+        },
+        "progression": {
+          "version": 1,
+          "impactExperienced": true,
+          "offeringCompleted": true,
+          "toolRevealed": true,
+          "crestExperienced": true
+        }
+      },
+      "recurrence": {
+        "transitions": 11,
+        "same": 0,
+        "near": 0,
+        "sameRate": 0,
+        "nearRate": 0,
+        "withinEight": 0,
+        "expectedSameFromActualWeights": 0.022214866236655986,
+        "expectedNearFromActualWeights": 0.31487020186511133,
+        "longestSameMaterial": 2,
+        "longestSameShapes": 1
+      }
+    },
+    {
+      "policy": "alternating",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/report.json",
+        "sha256": "6a5127735b3fcdf5149d45981c54d51046cdb084989d08219f2285a436954b20"
+      },
+      "rows": [
+        {
+          "ordinal": 1,
+          "world": "double-return",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 68963.91999999984,
+          "finalHp": 130,
+          "finalChaos": 50.66497497509859,
+          "beforeReserve": 20,
+          "returnedReserve": 32,
+          "preparedReserve": 6,
+          "kindlingGained": 12,
+          "repairSpent": 2,
+          "growthSpent": 24,
+          "returnedItems": 1,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 2,
+          "world": "grain-laminate",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 94979.54000000052,
+          "finalHp": 115,
+          "finalChaos": 83.85041336701978,
+          "beforeReserve": 6,
+          "returnedReserve": 23,
+          "preparedReserve": 17,
+          "kindlingGained": 17,
+          "repairSpent": 6,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 3,
+          "world": "ash-strata",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 65814.02999999777,
+          "finalHp": 145,
+          "finalChaos": 100.0575358392239,
+          "beforeReserve": 17,
+          "returnedReserve": 31,
+          "preparedReserve": 26,
+          "kindlingGained": 14,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 2
+        },
+        {
+          "ordinal": 4,
+          "world": "spliced-reaches",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 70680.49999999774,
+          "finalHp": 130,
+          "finalChaos": 78.99545586730831,
+          "beforeReserve": 26,
+          "returnedReserve": 26,
+          "preparedReserve": 21,
+          "kindlingGained": 0,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 3
+        },
+        {
+          "ordinal": 5,
+          "world": "split-tows",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 2,
+          "nonEntryPickups": 2,
+          "elapsedMs": 58880.98999999958,
+          "finalHp": 115,
+          "finalChaos": 112.54427696627812,
+          "beforeReserve": 21,
+          "returnedReserve": 35,
+          "preparedReserve": 30,
+          "kindlingGained": 14,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 0,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 6,
+          "world": "shell-grit",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 67347.31000000022,
+          "finalHp": 115,
+          "finalChaos": 97.79380990125819,
+          "beforeReserve": 30,
+          "returnedReserve": 43,
+          "preparedReserve": 12,
+          "kindlingGained": 13,
+          "repairSpent": 5,
+          "growthSpent": 26,
+          "returnedItems": 2,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 7,
+          "world": "white-scarfield",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 80830.10000000324,
+          "finalHp": 100,
+          "finalChaos": 68.34228401677234,
+          "beforeReserve": 12,
+          "returnedReserve": 29,
+          "preparedReserve": 24,
+          "kindlingGained": 17,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 8,
+          "world": "lacquer-court",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 55881.08999999959,
+          "finalHp": 145,
+          "finalChaos": 86.08020557045496,
+          "beforeReserve": 24,
+          "returnedReserve": 48,
+          "preparedReserve": 14,
+          "kindlingGained": 24,
+          "repairSpent": 6,
+          "growthSpent": 28,
+          "returnedItems": 0,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 9,
+          "world": "rib-vault",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 89379.74000000388,
+          "finalHp": 130,
+          "finalChaos": 118.94245518246534,
+          "beforeReserve": 14,
+          "returnedReserve": 28,
+          "preparedReserve": 19,
+          "kindlingGained": 14,
+          "repairSpent": 9,
+          "growthSpent": 0,
+          "returnedItems": 2,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 10,
+          "world": "wax-tongues",
+          "grade": "low",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 91163.03000000386,
+          "finalHp": 145,
+          "finalChaos": 75.30865636955917,
+          "beforeReserve": 19,
+          "returnedReserve": 36,
+          "preparedReserve": 31,
+          "kindlingGained": 17,
+          "repairSpent": 5,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 0
+        },
+        {
+          "ordinal": 11,
+          "world": "bladder-weave",
+          "grade": "medium",
+          "outcome": "extract",
+          "actualPickups": 3,
+          "nonEntryPickups": 3,
+          "elapsedMs": 74147.03000000419,
+          "finalHp": 145,
+          "finalChaos": 62.146288571382016,
+          "beforeReserve": 31,
+          "returnedReserve": 55,
+          "preparedReserve": 18,
+          "kindlingGained": 24,
+          "repairSpent": 7,
+          "growthSpent": 30,
+          "returnedItems": 2,
+          "destroyedItems": 1
+        },
+        {
+          "ordinal": 12,
+          "world": "shell-chain",
+          "grade": "severe",
+          "outcome": "extract",
+          "actualPickups": 1,
+          "nonEntryPickups": 1,
+          "elapsedMs": 86213.20000000391,
+          "finalHp": 70,
+          "finalChaos": 150,
+          "beforeReserve": 18,
+          "returnedReserve": 31,
+          "preparedReserve": 24,
+          "kindlingGained": 13,
+          "repairSpent": 7,
+          "growthSpent": 0,
+          "returnedItems": 1,
+          "destroyedItems": 2
+        }
+      ],
+      "startingReserve": 20,
+      "endingReserve": 24,
+      "distinctWorlds": 12,
+      "actualFinalGrowth": {
+        "schemaVersion": 2,
+        "upgrades": {
+          "growth_chaos_resist": 3,
+          "growth_kindling_affinity": 3,
+          "growth_vitality": 4,
+          "growth_sortie_slot": 1,
+          "growth_defense_slot": 3,
+          "growth_forecast_clarity": 3
+        },
+        "progression": {
+          "version": 1,
+          "impactExperienced": true,
+          "offeringCompleted": true,
+          "toolRevealed": true,
+          "crestExperienced": true
+        }
+      },
+      "recurrence": {
+        "transitions": 11,
+        "same": 0,
+        "near": 1,
+        "sameRate": 0,
+        "nearRate": 0.09090909090909091,
+        "withinEight": 0,
+        "expectedSameFromActualWeights": 0.021988558515038628,
+        "expectedNearFromActualWeights": 0.2512969992038581,
+        "longestSameMaterial": 2,
+        "longestSameShapes": 2
+      }
+    }
+  ],
+  "saveReferences": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/1-entry.save.json",
+      "sha256": "c54a7b4e50af84c8b03cbe21d731d39914bf0ddda074961ea5697edb89186349"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/1-returned.save.json",
+      "sha256": "5b21d66ae2d7ff3c315b2d66f3e886e610ec8b479d4509cbaaf8f2b3dc89422a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/1-after-preparation.save.json",
+      "sha256": "a817fc9c8abdc258117b21f395e197f87437db6c0b29b6f17147348b893682b7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/2-before.save.json",
+      "sha256": "a817fc9c8abdc258117b21f395e197f87437db6c0b29b6f17147348b893682b7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/2-entry.save.json",
+      "sha256": "0b633a1e10a0f5fc018211c3ce5481d309d0eebb17dff42d520bc8c654f13ba5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/2-returned.save.json",
+      "sha256": "3526a582a733c82185fff0cc5d2fb4f1cfa5c724fd17d93de8382c0abfc68a22"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/2-after-preparation.save.json",
+      "sha256": "3eb550991c29126632544c9d87020816de6ad849dea9f291dd98671dc8913161"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/3-before.save.json",
+      "sha256": "3eb550991c29126632544c9d87020816de6ad849dea9f291dd98671dc8913161"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/3-entry.save.json",
+      "sha256": "fa069924fec4e93d2f7ead69b98ef94c7306af3e84b6cf3f4af3d52b77728fb7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/3-returned.save.json",
+      "sha256": "e2618be8696e5ed7d7676cb6472aa224931ed9ad911c936f9a2297284f09b947"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/3-after-preparation.save.json",
+      "sha256": "b7106a35a1862268512c5e5562b1a944327f561188303932334d24f6cb36ff75"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/4-before.save.json",
+      "sha256": "b7106a35a1862268512c5e5562b1a944327f561188303932334d24f6cb36ff75"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/4-entry.save.json",
+      "sha256": "b98f2659c219f5a774be6faf41683fe37f94117ee61b7c6ca0a3a97bc3b8fe41"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/4-returned.save.json",
+      "sha256": "99e7e6e7f94265805af17d0a9f70c5fd09a5833248a5c6440e0f0527831a49ed"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/4-after-preparation.save.json",
+      "sha256": "d5454eb0b6ada1a1cd813b1c503e96adc9b47bab99ce9fab94c1552a9a569e2d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/5-before.save.json",
+      "sha256": "d5454eb0b6ada1a1cd813b1c503e96adc9b47bab99ce9fab94c1552a9a569e2d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/5-entry.save.json",
+      "sha256": "a1d2054b10bd33bdff817897bc16c54d7445f3ddd0103fb6e5ff1539e79010d3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/5-returned.save.json",
+      "sha256": "9ec4a30f66b5c282e132b860ba6406248f676385c51a47a321b04ad0e67e2c24"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/5-after-preparation.save.json",
+      "sha256": "16ae5ff1a3365fece0ceb4c067137039993da8ebdef2048404f0a659bb239431"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/6-before.save.json",
+      "sha256": "16ae5ff1a3365fece0ceb4c067137039993da8ebdef2048404f0a659bb239431"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/6-entry.save.json",
+      "sha256": "efb2120387b1fbdca70a2bafa233246074ecaf233ad1bf29e05b5aae4cadf593"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/6-returned.save.json",
+      "sha256": "7ad0125d7f8997f418531c103a9935bb432c82720e991b26463b888226e0efe1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/6-after-preparation.save.json",
+      "sha256": "89c9e7553906d25817d669395efcbb731eb4aa04452ffed86100c7a23af97d9f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/7-before.save.json",
+      "sha256": "89c9e7553906d25817d669395efcbb731eb4aa04452ffed86100c7a23af97d9f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/7-entry.save.json",
+      "sha256": "09063fa5ddb8c099044be50c0107169035ed974ca2c82ca3d1b94975753a5e11"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/7-returned.save.json",
+      "sha256": "53c4167faae7f16aef6abda1b7e51fc44a65431aea2aa36b2aa51b0420613092"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/7-after-preparation.save.json",
+      "sha256": "594d36cbcb8f31709bd338884a7db7fc7b6768025017f9662256a67ae6248916"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/8-before.save.json",
+      "sha256": "594d36cbcb8f31709bd338884a7db7fc7b6768025017f9662256a67ae6248916"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/8-entry.save.json",
+      "sha256": "d01d4ecb5eb33ccf19079f87720f5814a9864bbebb72479ade30543968c667e1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/8-returned.save.json",
+      "sha256": "35c3442229a187689e67ddf2025c54d4bd0170cd1cd7b70570655452a6fa49db"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/8-after-preparation.save.json",
+      "sha256": "c58f5b271c99ffa517c74a1256959707f99f4d3112e5ef11cca50e9b75b8f479"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/9-before.save.json",
+      "sha256": "c58f5b271c99ffa517c74a1256959707f99f4d3112e5ef11cca50e9b75b8f479"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/9-entry.save.json",
+      "sha256": "d086fc907ff4e3e4823e8fdfc3047c480a40e3086186fffd79a9f61b7c512573"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/9-returned.save.json",
+      "sha256": "d925169f5f0e9b50edb3feddbababcc9c8c556b597790183fa70d7f391640a1a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/9-after-preparation.save.json",
+      "sha256": "655a36bef810d3d6e011ece8382ee8da0fccabac477541b393dc18040f50dda7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/10-before.save.json",
+      "sha256": "655a36bef810d3d6e011ece8382ee8da0fccabac477541b393dc18040f50dda7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/10-entry.save.json",
+      "sha256": "a852ee607340be23ef7bc2fa2056bbc141008d57c890403f23666fe73345f3ee"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/10-returned.save.json",
+      "sha256": "243dbcb32ad74d52fbf086ecac44503b851f5abaf9f4889b6b635486306311dd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/10-after-preparation.save.json",
+      "sha256": "2eebc6b85914cdafe30dae34034d5eb827d0bafa5d112b1ed4fd1dc1469d2510"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/11-before.save.json",
+      "sha256": "2eebc6b85914cdafe30dae34034d5eb827d0bafa5d112b1ed4fd1dc1469d2510"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/11-entry.save.json",
+      "sha256": "c17b1924a06cc7d588bbc199f02cf04ed837281a02701522788d9f5ff287ba1f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/11-returned.save.json",
+      "sha256": "905a3307d4fc89ddbe0a976094df0d8762e2bddc0fd99178746d6f66e96d37f5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/11-after-preparation.save.json",
+      "sha256": "f5e13d4beca37ffafb8f10b118cdaa28e3f70dc4834639015f4d36e62abe74db"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/12-before.save.json",
+      "sha256": "f5e13d4beca37ffafb8f10b118cdaa28e3f70dc4834639015f4d36e62abe74db"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/12-entry.save.json",
+      "sha256": "2a36d7c2e2c4b6ccba4eac3a88693170c198af53a0557fa888a38af7845d2a24"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/12-returned.save.json",
+      "sha256": "c0990409d31ea60fc24fb9fbc6094ac6223cdc0cd1fc39ac58f23d3de114da7f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/low/low/12-after-preparation.save.json",
+      "sha256": "585fbc490b15f395046e90343db1d03d5c5dcc071c836a96a1d94198068bff2a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/1-entry.save.json",
+      "sha256": "8527db2a473ed2a61cec80fa8e4489b42215081cc4b22707bb76bf1ab91e185d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/1-returned.save.json",
+      "sha256": "5cc58296640a1c4a27e1350bcf2e028eef9cf343f38f3ab41cfe7c0c206d516a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/1-after-preparation.save.json",
+      "sha256": "175d8467efcc38e0906b35d9d00895edbd15a235a455b076474a84327aa30c09"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/2-before.save.json",
+      "sha256": "175d8467efcc38e0906b35d9d00895edbd15a235a455b076474a84327aa30c09"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/2-entry.save.json",
+      "sha256": "75fa3a3afc03c899d7e0265daf991b1d08a69069b8a3d73207c4fd4168cc6b32"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/2-returned.save.json",
+      "sha256": "ea7a95d62cd05c8e8fe31f79bb3f192367b3e6b16799c6f8a8ba51ee7a584a36"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/2-after-preparation.save.json",
+      "sha256": "322fbb1bc5c831e4149c9dd1ccf1399150b1e23af4fd4d84929a80ac049f4607"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/3-before.save.json",
+      "sha256": "322fbb1bc5c831e4149c9dd1ccf1399150b1e23af4fd4d84929a80ac049f4607"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/3-entry.save.json",
+      "sha256": "ecd1a5673650956aa6c17bb128f118a0818407446b2782aaf1750b7fe5588273"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/3-returned.save.json",
+      "sha256": "ce47d99d621cc81e879ede0afa009b8abeb1523ec12cb54f4994166b51a452f9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/3-after-preparation.save.json",
+      "sha256": "d44cb29dfa4ac5de43ae2e0a12486d0192fae89e507a09d7df1345945de855a2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/4-before.save.json",
+      "sha256": "d44cb29dfa4ac5de43ae2e0a12486d0192fae89e507a09d7df1345945de855a2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/4-entry.save.json",
+      "sha256": "a08535c207bb6c765083726aebb7ef40e5db116388b53bcd70f8b68b62b52d2d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/4-returned.save.json",
+      "sha256": "b21a5ab1244553d2888c68af9cacfcb8888c3aa1112381eebce27d38b7b5a5c9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/4-after-preparation.save.json",
+      "sha256": "3c136d653bafb70a2a4a27d63597a0ecb4bc9079432bcd933fc123af2ed75cb5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/5-before.save.json",
+      "sha256": "3c136d653bafb70a2a4a27d63597a0ecb4bc9079432bcd933fc123af2ed75cb5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/5-entry.save.json",
+      "sha256": "df1a145e4327c435a89729e65d5dd18ccbcd7e9b80560a05f1461ab906981364"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/5-returned.save.json",
+      "sha256": "fd4012d203417f7a1d9474d4d564699ced52825cae4e9046cfb1e50ab3a372db"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/5-after-preparation.save.json",
+      "sha256": "961f881d1c9328b2a7d851bb773db7f2b7715ff69e961d62b2e378f725ed7354"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/6-before.save.json",
+      "sha256": "961f881d1c9328b2a7d851bb773db7f2b7715ff69e961d62b2e378f725ed7354"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/6-entry.save.json",
+      "sha256": "9b80e42c28460b7dc78a4244d3cd671b296bcb442019ec0070463ab45c53c60b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/6-returned.save.json",
+      "sha256": "13721af86be6bd815c2c0865c49937bdcee3623ee8f538c6a3ac8a22b1d91824"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/6-after-preparation.save.json",
+      "sha256": "469d7263c64a4dd8c0c6d3bba8a6d8a284c15cb4eb62bfa4d41d35cc0811902d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/7-before.save.json",
+      "sha256": "469d7263c64a4dd8c0c6d3bba8a6d8a284c15cb4eb62bfa4d41d35cc0811902d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/7-entry.save.json",
+      "sha256": "caadd9f212c95591c34453e7a446a1671fe2967b1e9e22b80f6852d845d64b72"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/7-returned.save.json",
+      "sha256": "75b20bbf9224ce19bc26648fe625759847f978cad7d3d3e60751796af9f2552b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/7-after-preparation.save.json",
+      "sha256": "07f592050c40060dad9f8ba4f3d6bab025636e8e71d62182811a3d37baa2cfd1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/8-before.save.json",
+      "sha256": "07f592050c40060dad9f8ba4f3d6bab025636e8e71d62182811a3d37baa2cfd1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/8-entry.save.json",
+      "sha256": "68ed4137e3dd5eb95e208ebdc7b3cef0df5daefd947b36469f7bdc84e46cb108"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/8-returned.save.json",
+      "sha256": "43176162ae7ef04058ebc47cf63fe13c528b289f1b0a2ce54aed509438252ea2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/8-after-preparation.save.json",
+      "sha256": "8d4add8c7cb12484b8a38fbf33cc19ddcb8da8d71b390a7ce28474a9c68d4975"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/9-before.save.json",
+      "sha256": "8d4add8c7cb12484b8a38fbf33cc19ddcb8da8d71b390a7ce28474a9c68d4975"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/9-entry.save.json",
+      "sha256": "6ff0b803da152e2dbf577dc395a3a8b2a6412224db66ae7268a1c6fc00fc3ae8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/9-returned.save.json",
+      "sha256": "5997280b6e1b96832aa8eb09b19aa5d8560d506e3d2b367a466ff64f43478f27"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/9-after-preparation.save.json",
+      "sha256": "f5d75a0725a814f3712f98270739b5ee782e727bea829613c9eebfd137c6aa15"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/10-before.save.json",
+      "sha256": "f5d75a0725a814f3712f98270739b5ee782e727bea829613c9eebfd137c6aa15"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/10-entry.save.json",
+      "sha256": "217cdbc6dbc3297800748a63af5ab5e90ea3e3826e9b7d2da3b607dc28c04db4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/10-returned.save.json",
+      "sha256": "3ff7b6b3489d982c105fad076eac08f452c805f19aa000062fd36ef35e441f9a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/10-after-preparation.save.json",
+      "sha256": "a416998a1ca20b52768ecf2ac11551449d0728ce01f7d5285dcdce82f1d89b90"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/11-before.save.json",
+      "sha256": "a416998a1ca20b52768ecf2ac11551449d0728ce01f7d5285dcdce82f1d89b90"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/11-entry.save.json",
+      "sha256": "9c3b8534496fcb293447105e0c73fe3d3ee199a5e544afdc613846d418ffaa63"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/11-returned.save.json",
+      "sha256": "519b207f66e498fdff29439735ea38ebd293d561ea779279ff6fc27d1af21b3e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/11-after-preparation.save.json",
+      "sha256": "c41b85be9f00744f3707162addd1625edf4dbdbe2bbbeeb4e14aca99e916a52f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/12-before.save.json",
+      "sha256": "c41b85be9f00744f3707162addd1625edf4dbdbe2bbbeeb4e14aca99e916a52f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/12-entry.save.json",
+      "sha256": "c67ee3dfdb686ab8a5c28794e228e3d26335a2f1f0862d20bb3ddfd12cbdefe0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/12-returned.save.json",
+      "sha256": "415b641ad6a21d321e3b447d2480d8fb99dabab05231561c2289b69af0f8ec0a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/medium/medium/12-after-preparation.save.json",
+      "sha256": "ec3ec41e405d2574bdd07d206adfa2e87d896a719c87cbd67a3d6371f90108f5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/1-entry.save.json",
+      "sha256": "32f56a497ddc3b8350d3991f3bf19d0ce0b3920db91b2a8cd4eb3b8989c9dd29"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/1-returned.save.json",
+      "sha256": "4674fc25a54e91610f0e548dd32fd48a48e6edd5153523e0e919169dd302b34d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/1-after-preparation.save.json",
+      "sha256": "a388b1583b4cf7b1e09881fc17d3f28ac0026e1c9f73bc4a3e5ee11bd0bb0de5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/2-before.save.json",
+      "sha256": "a388b1583b4cf7b1e09881fc17d3f28ac0026e1c9f73bc4a3e5ee11bd0bb0de5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/2-entry.save.json",
+      "sha256": "a4fa1480b6aa6f6aaca733b1eed1707936590468fee1d1408408f06dfd006cfb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/2-returned.save.json",
+      "sha256": "27af130b13c53e75487f44ea5ba09e69b407911e239955f581655b472bc37829"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/2-after-preparation.save.json",
+      "sha256": "c92740f12cf9028ca949a764308e222ae3252747a2c5804e6ba3ef7c68d2f11e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/3-before.save.json",
+      "sha256": "c92740f12cf9028ca949a764308e222ae3252747a2c5804e6ba3ef7c68d2f11e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/3-entry.save.json",
+      "sha256": "11fff5f8d068d5294e27ae7c3c2d3f0afb197e8ca0b3bcb49a64514c100e2f20"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/3-returned.save.json",
+      "sha256": "ce6f74f5f57b0bd2282b8ffd540c4a5369ec5517b94bdca0c7d82a63fc458a12"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/3-after-preparation.save.json",
+      "sha256": "73dfe0d05f004fc2e122cb85a943cba271721d6429abb80afed89d68750c08ee"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/4-before.save.json",
+      "sha256": "73dfe0d05f004fc2e122cb85a943cba271721d6429abb80afed89d68750c08ee"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/4-entry.save.json",
+      "sha256": "b8d8d2274598c5a63790759a45ad456fc7e8dd8fe6fec66ad2425ee501bd6ad7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/4-returned.save.json",
+      "sha256": "0571bdebd2a6e08995673e719a890f017868d0ccd821a90be321223fa0bbf4cc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/4-after-preparation.save.json",
+      "sha256": "6074ddc6e36f8a3a8f4821329ddaba6acc094986c65de1947343c96007928489"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/5-before.save.json",
+      "sha256": "6074ddc6e36f8a3a8f4821329ddaba6acc094986c65de1947343c96007928489"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/5-entry.save.json",
+      "sha256": "2d763416416c8f14a2eebbe284902f89849a089bc4494e07bae15ec9b9eaa2b2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/5-returned.save.json",
+      "sha256": "ca1102cbe2abbb1e37ba29fbca7141747d1e1034ad37fb4413645e2a3ecbae58"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/5-after-preparation.save.json",
+      "sha256": "e59b95811cf12b38b07d903775424c18783e3c05d60e205324089c327dfe6ba0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/6-before.save.json",
+      "sha256": "e59b95811cf12b38b07d903775424c18783e3c05d60e205324089c327dfe6ba0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/6-entry.save.json",
+      "sha256": "77d5fd16ef7b88e87dae519d1fccbb768610cc89ca2d399d030e114bd7939419"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/6-returned.save.json",
+      "sha256": "009d6e77713a457deb103964399372ff21b548857199f31bb707e7f23ab8ad7a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/6-after-preparation.save.json",
+      "sha256": "9cead452710999d9dd3d80a8f824dbf9ad8764c2703e54a5502e19023803b612"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/7-before.save.json",
+      "sha256": "9cead452710999d9dd3d80a8f824dbf9ad8764c2703e54a5502e19023803b612"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/7-entry.save.json",
+      "sha256": "65fe4f0a60e8940443625a1df2faf3661826726e981d8cfe4c01368c215ea571"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/7-returned.save.json",
+      "sha256": "0ad484bffcbf6cb6e72fc93b2db92178c858ae2c81b55d5ffc325d74fdf88d7d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/7-after-preparation.save.json",
+      "sha256": "e4003364a48a0bd8cae4351f909c0a47d4629d9f66736c956427fe48018e1abf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/8-before.save.json",
+      "sha256": "e4003364a48a0bd8cae4351f909c0a47d4629d9f66736c956427fe48018e1abf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/8-entry.save.json",
+      "sha256": "1f5828919bd1c6cec1ad2811d08556f6d9241c3a819777d93265990d87f5391f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/8-returned.save.json",
+      "sha256": "b50b136dbf1028b2e4654787c8bd9a51e6a7c6f1f092ad48314153961360e10f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/8-after-preparation.save.json",
+      "sha256": "a51747bfdd3154be0a2a3b0c8c08ad87d0a6419bd3f61c0440b7fb9a4958a2ea"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/9-before.save.json",
+      "sha256": "a51747bfdd3154be0a2a3b0c8c08ad87d0a6419bd3f61c0440b7fb9a4958a2ea"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/9-entry.save.json",
+      "sha256": "5b9a2b259c2f20e0f21894dcf765834f36b7f964be8903284682754576181ed8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/9-returned.save.json",
+      "sha256": "9377ec6df1aaf0b7e36864c6a4e231b80654fc4b581840a895d3c77f12a9a1ec"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/9-after-preparation.save.json",
+      "sha256": "34954c6252870b0b035af81ee6ee0a7203707cc5e958d88cf00640f62e0b0993"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/10-before.save.json",
+      "sha256": "34954c6252870b0b035af81ee6ee0a7203707cc5e958d88cf00640f62e0b0993"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/10-entry.save.json",
+      "sha256": "d4971bfa82871430ce5abfe3e1b3e1ce42688c568dd61e8235b9e2eb68153388"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/10-returned.save.json",
+      "sha256": "619d9e2acfae8f8570028cb6db2e15caac31c12d7283a28bd314dcc48835b768"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/10-after-preparation.save.json",
+      "sha256": "ab75d4234fb382a174aa5fba087990fe3360c84d0616972d3572a9bc32f6ba80"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/11-before.save.json",
+      "sha256": "ab75d4234fb382a174aa5fba087990fe3360c84d0616972d3572a9bc32f6ba80"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/11-entry.save.json",
+      "sha256": "f2b688959c50457458a46220c20fa9dfdfdebf24b3093b70da010f47a42ac515"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/11-returned.save.json",
+      "sha256": "20acfd9bdb7637edaab486a123f7b08a60ebd50817952329e8e88f981b88925c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/11-after-preparation.save.json",
+      "sha256": "5a8a4a532d3f9890bb8be2fb9fa1282fa749ed76598baed6d355607b63da905c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/12-before.save.json",
+      "sha256": "5a8a4a532d3f9890bb8be2fb9fa1282fa749ed76598baed6d355607b63da905c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/12-entry.save.json",
+      "sha256": "7ca21db3c94abc496638262c26725f8d55a8f48ecfeca73fa93193eecbbbf01e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/12-returned.save.json",
+      "sha256": "dcb500ebe1575795b638865b14c19fa0a9c78c0d8fee7c47657040a4018b9317"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/severe/severe/12-after-preparation.save.json",
+      "sha256": "6f554c41a27541ab4f43ee117bffc44d57d4ee0228374b62735bf265ccb30e9a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/1-before.save.json",
+      "sha256": "68b83e4ac2fe771d5c80bb4a68a48bcb39ff0781feebfafc103634ce7da6066a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/1-entry.save.json",
+      "sha256": "fc3edca62ae5cc55008bdb5a9421ca3b7b0375bb0465f3d453bfa5cb9b5ca4aa"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/1-returned.save.json",
+      "sha256": "230494129d27ba1e9266801ded25b8131e0f0ee53fcbe3c13dbf06c900fe1978"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/1-after-preparation.save.json",
+      "sha256": "b3ac65c89bcc3fa279305bc154043efd035c64c0b340295a3696c2832252ea3d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/2-before.save.json",
+      "sha256": "b3ac65c89bcc3fa279305bc154043efd035c64c0b340295a3696c2832252ea3d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/2-entry.save.json",
+      "sha256": "db0827e7e6e2553b5c3091d3cc21fa08c6ca199f75502fab3654c70b5172e0c2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/2-returned.save.json",
+      "sha256": "9db56f3b70ca0e96f300e75fb8e4a35b29ddac5b9e915f5e216e0a14948ebab1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/2-after-preparation.save.json",
+      "sha256": "32153f76c8e765799ecd30343316b183f5d1e17aedc372da17575cbd1e8e7ffc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/3-before.save.json",
+      "sha256": "32153f76c8e765799ecd30343316b183f5d1e17aedc372da17575cbd1e8e7ffc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/3-entry.save.json",
+      "sha256": "8732120ebe5fbd228561640393dd8b80cb67bc0b1be364d31fd03bb9913e858a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/3-returned.save.json",
+      "sha256": "dd7ea092c876b4e98d3ddd8727861b968dd4a9f441406abc263b4d24300f5040"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/3-after-preparation.save.json",
+      "sha256": "d67cf4ea4a1939e1828a2a8ae1d734da29f22476d9ec84a8468748473bdb5bf9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/4-before.save.json",
+      "sha256": "d67cf4ea4a1939e1828a2a8ae1d734da29f22476d9ec84a8468748473bdb5bf9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/4-entry.save.json",
+      "sha256": "b46146b1ea296872a272530f173da6a3cb7ce6ff474e1bfa2fb44742eed769dd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/4-returned.save.json",
+      "sha256": "b8b9d7edeb6805304ff7f7bb1e66b45da4c6d7280556f0168034da8acf00cc1b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/4-after-preparation.save.json",
+      "sha256": "d7cfa2c0a935c94b06f0be9677af5106d6e4f8afd074ac1d17b3a0d174f42e47"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/5-before.save.json",
+      "sha256": "d7cfa2c0a935c94b06f0be9677af5106d6e4f8afd074ac1d17b3a0d174f42e47"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/5-entry.save.json",
+      "sha256": "70e94c75edb5327e5a13a3beaafb3dcb95341be2f75c5b2f8627afe22165bff6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/5-returned.save.json",
+      "sha256": "b162d80d39b2c4f734dbb27dd54761ea4e7a078173a18e9e19db934a3b68c885"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/5-after-preparation.save.json",
+      "sha256": "96c7246fd6e9c476fecb865567f33baf25d320104e60aa557968dfc5ad8bdf11"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/6-before.save.json",
+      "sha256": "96c7246fd6e9c476fecb865567f33baf25d320104e60aa557968dfc5ad8bdf11"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/6-entry.save.json",
+      "sha256": "4393e1f72eecbc811f6ef3a8be04c9977b2f632d1f5b5f5baa9ed1fe5449b4d2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/6-returned.save.json",
+      "sha256": "22038d7e7e25c302b8c31d5148f0901c3293814bc34a7f7a539438ec9934912e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/6-after-preparation.save.json",
+      "sha256": "16710bbdfbc14512071346cb1090d8598c33b01659b2eae898f3d5de8127b3c1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/7-before.save.json",
+      "sha256": "16710bbdfbc14512071346cb1090d8598c33b01659b2eae898f3d5de8127b3c1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/7-entry.save.json",
+      "sha256": "8a969362c6c03d2715ed49e0dd4c5ae86dd34ad314718e235b0b4169f813c23a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/7-returned.save.json",
+      "sha256": "6ef45dbf69324e65319fb3139c0bb2075c72a5c41ef00fbcf76e5a394ada272f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/7-after-preparation.save.json",
+      "sha256": "29e2c192e1437326622980af502c3e7a32cb8851b7d292708fcfae9fc0650119"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/8-before.save.json",
+      "sha256": "29e2c192e1437326622980af502c3e7a32cb8851b7d292708fcfae9fc0650119"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/8-entry.save.json",
+      "sha256": "95c1265a26a24d02e4dfe47fe29ae9a113cd3bcf96eeeec989af71f2a33b4f10"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/8-returned.save.json",
+      "sha256": "c3e5bfd22207e5409cb5dd64fe5ebb7db716487ec5193f4bc30d1e6926678fa5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/8-after-preparation.save.json",
+      "sha256": "a46aafab40b006e3b30e116483fdb91b1a6dd37a718aa7f989c72d8ee909efa9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/9-before.save.json",
+      "sha256": "a46aafab40b006e3b30e116483fdb91b1a6dd37a718aa7f989c72d8ee909efa9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/9-entry.save.json",
+      "sha256": "ef841a25c193b5314ea9a50b50494f0699ed8e09f2bda2ca1615c80daaee8aa0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/9-returned.save.json",
+      "sha256": "7a2c6f2b6c194b2b12337f6c10992a146ebf19cac9b81e4a9bfd541dedcf9a32"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/9-after-preparation.save.json",
+      "sha256": "11ec2cfc0c42f2033b4fcd078c1fe705a6d42e62ea57ef05841b7fb9854ff1ad"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/10-before.save.json",
+      "sha256": "11ec2cfc0c42f2033b4fcd078c1fe705a6d42e62ea57ef05841b7fb9854ff1ad"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/10-entry.save.json",
+      "sha256": "8f853b2e91c62a1098bb39f422484c6b9d3c39769bbdfe28798b542ce9828aeb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/10-returned.save.json",
+      "sha256": "0d92d78057e9da626ed9c2f7c4e068b842476b21d0e7ccb08b883f4d2d10b4b8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/10-after-preparation.save.json",
+      "sha256": "346b528b4016ce14ee9db5d3dd705657cd40c418c256e187a6ba010f2045b0d4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/11-before.save.json",
+      "sha256": "346b528b4016ce14ee9db5d3dd705657cd40c418c256e187a6ba010f2045b0d4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/11-entry.save.json",
+      "sha256": "75252d99bd940635648736616fc205bd5f19ad3943b5c5626ab25e043b56e4af"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/11-returned.save.json",
+      "sha256": "3f1c19f716a895037bc2b4f366062b797a2092327fa5e09871af183857a493f7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/11-after-preparation.save.json",
+      "sha256": "033afed5ddaca85e7f53f9c4b0d0b91e306449ef1a2d96afaca86dfe60f9f148"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/12-before.save.json",
+      "sha256": "033afed5ddaca85e7f53f9c4b0d0b91e306449ef1a2d96afaca86dfe60f9f148"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/12-entry.save.json",
+      "sha256": "70e52eacd18000a2005c8a33c2fa8abcca81a363fedb337564c814655a6e0587"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/12-returned.save.json",
+      "sha256": "eff2cc204c0492252938bb2a4f22df6e687a617b0b6b26f7ff55f8ba6873ac9c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/continuous-final108/alternating/alternating/12-after-preparation.save.json",
+      "sha256": "f4d2b8a9ff16068bdce0fb26b6234c8b5f0fb1b4da5d05dbb2e3467132cebf38"
+    }
+  ],
+  "limitations": [
+    "Read-only actual accounting; source selection replay and per-key active/passive input checks additionally rely on the exact original automatic review.",
+    "No experience, balance, human, listening, performance or release approval is issued by this accounting audit."
+  ]
+}

@@ -1,0 +1,450 @@
+{
+  "status": "actual-Master-body12-pass-not-normal-view-qualified",
+  "worlds": 4,
+  "grades": 3,
+  "cases": 12,
+  "seed": 20261005,
+  "report": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/fracture-refined/body12/report.json",
+    "sha256": "03f684ee8e783f9d39a2bc6608fc9949ace8927113864924a6a7f2bb5113895b"
+  },
+  "sourceSnapshot": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/fracture-refined/body12/source-snapshot.json",
+    "sha256": "453532ac356eebe27d4a0c4e61e2a4196b9615bbe9a0652ea50fdf31a8d7ccce"
+  },
+  "scope": "Actual Master terrain/raster/native20 body; all original intent routes and spawn links,24px station bound, per-solid visible cut>=16 and fracture>=4. No production play or normal-FOV art admission.",
+  "minimumVisibleCutPixels": 233,
+  "minimumVisibleFracturePixels": 6,
+  "durationMsSum": 6146.942623999998,
+  "timingLimit": "Diagnostic duration only; not an exclusive performance benchmark.",
+  "rows": [
+    {
+      "world": "double-return",
+      "grade": "low",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 522,
+          "joint": 89
+        },
+        {
+          "id": 3,
+          "cut": 233,
+          "joint": 21
+        },
+        {
+          "id": 4,
+          "cut": 322,
+          "joint": 6
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": {
+        "short": "inside-short-turns",
+        "long": "outside-wide-return",
+        "shortLengthPx": 784,
+        "longLengthPx": 1104
+      }
+    },
+    {
+      "world": "double-return",
+      "grade": "medium",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 522,
+          "joint": 89
+        },
+        {
+          "id": 3,
+          "cut": 236,
+          "joint": 19
+        },
+        {
+          "id": 4,
+          "cut": 322,
+          "joint": 6
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": {
+        "short": "inside-short-turns",
+        "long": "outside-wide-return",
+        "shortLengthPx": 784,
+        "longLengthPx": 1104
+      }
+    },
+    {
+      "world": "double-return",
+      "grade": "severe",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 2,
+          "cut": 522,
+          "joint": 89
+        },
+        {
+          "id": 3,
+          "cut": 237,
+          "joint": 21
+        },
+        {
+          "id": 4,
+          "cut": 322,
+          "joint": 6
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": {
+        "short": "inside-short-turns",
+        "long": "outside-wide-return",
+        "shortLengthPx": 784,
+        "longLengthPx": 1104
+      }
+    },
+    {
+      "world": "offset-basins",
+      "grade": "low",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 1,
+          "cut": 2030,
+          "joint": 30
+        },
+        {
+          "id": 2,
+          "cut": 2090,
+          "joint": 32
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "offset-basins",
+      "grade": "medium",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 1,
+          "cut": 2030,
+          "joint": 33
+        },
+        {
+          "id": 2,
+          "cut": 2090,
+          "joint": 29
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "offset-basins",
+      "grade": "severe",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 1,
+          "cut": 2030,
+          "joint": 31
+        },
+        {
+          "id": 2,
+          "cut": 2090,
+          "joint": 30
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "low",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 3,
+          "cut": 577,
+          "joint": 105
+        },
+        {
+          "id": 4,
+          "cut": 611,
+          "joint": 101
+        },
+        {
+          "id": 5,
+          "cut": 367,
+          "joint": 24
+        },
+        {
+          "id": 6,
+          "cut": 332,
+          "joint": 24
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 1,
+          "b": 3,
+          "footprintOverlapAreaEstimate": 2112,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 12144,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 5184,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 13664,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 4688,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 2352,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "medium",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 3,
+          "cut": 580,
+          "joint": 105
+        },
+        {
+          "id": 4,
+          "cut": 611,
+          "joint": 101
+        },
+        {
+          "id": 5,
+          "cut": 367,
+          "joint": 24
+        },
+        {
+          "id": 6,
+          "cut": 333,
+          "joint": 24
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 1,
+          "b": 3,
+          "footprintOverlapAreaEstimate": 2112,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 12144,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 5184,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 13664,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 4688,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 2352,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "pinched-fan",
+      "grade": "severe",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 3,
+          "cut": 581,
+          "joint": 105
+        },
+        {
+          "id": 4,
+          "cut": 609,
+          "joint": 101
+        },
+        {
+          "id": 5,
+          "cut": 366,
+          "joint": 24
+        },
+        {
+          "id": 6,
+          "cut": 333,
+          "joint": 24
+        }
+      ],
+      "materialContacts": [
+        {
+          "a": 1,
+          "b": 3,
+          "footprintOverlapAreaEstimate": 2112,
+          "samplingStep": 4
+        },
+        {
+          "a": 1,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 12144,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 4,
+          "footprintOverlapAreaEstimate": 5184,
+          "samplingStep": 4
+        },
+        {
+          "a": 2,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 13664,
+          "samplingStep": 4
+        },
+        {
+          "a": 3,
+          "b": 5,
+          "footprintOverlapAreaEstimate": 4688,
+          "samplingStep": 4
+        },
+        {
+          "a": 4,
+          "b": 6,
+          "footprintOverlapAreaEstimate": 2352,
+          "samplingStep": 4
+        }
+      ],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "low",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 4,
+          "cut": 532,
+          "joint": 57
+        },
+        {
+          "id": 5,
+          "cut": 553,
+          "joint": 46
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "medium",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 4,
+          "cut": 532,
+          "joint": 59
+        },
+        {
+          "id": 5,
+          "cut": 555,
+          "joint": 46
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    },
+    {
+      "world": "spliced-reaches",
+      "grade": "severe",
+      "status": "PASS",
+      "visibleSolidAreas": [
+        {
+          "id": 4,
+          "cut": 525,
+          "joint": 57
+        },
+        {
+          "id": 5,
+          "cut": 554,
+          "joint": 43
+        }
+      ],
+      "materialContacts": [],
+      "routeLengthOrder": null
+    }
+  ],
+  "oldPrefix": {
+    "status": "author-catalog-ready-not-qualified",
+    "baseWorldCount": 96,
+    "newWorldCount": 100,
+    "appendedWorlds": [
+      "double-return",
+      "offset-basins",
+      "pinched-fan",
+      "spliced-reaches"
+    ],
+    "oldCsvSha256": "7525e2cfa5f20bd673ef7226a8c91a0d0e1f8f83ef0d1ace6ac9075683f67d4c",
+    "newCsvSha256": "c92b69f8ff4c09c6ef91d5355c7a490ffc205c1fc34b43deef31cdf0a62c966e",
+    "oldCsvPrefixByteExact": true,
+    "oldWorldObjectsDeepExact": 96,
+    "oldGradeDefinitionsDeepExact": 288,
+    "generatedSha256": "1c41103e9d1093abc5594d708f9583922428e59bc2255e7cebccf5c74c84de2a",
+    "qualification": "Actual12, visual and frozen production evidence pending; new4 remain disabled."
+  },
+  "preservedOriginal": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/body12/report.json",
+    "sha256": "a5dd147db2cf4859d93fd72673784dd7ca4b266d51fdf1d2884f62ace4794b93",
+    "cases": 12,
+    "failed": 6,
+    "passedButSuperseded": 6
+  },
+  "protection": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b12-author-preflight/fracture-refined/protection.json",
+    "sha256": "6f959e75d88c6f62304009112d6ec9ea1b23246ad98c60f4dc783c6bf92f5489"
+  }
+}

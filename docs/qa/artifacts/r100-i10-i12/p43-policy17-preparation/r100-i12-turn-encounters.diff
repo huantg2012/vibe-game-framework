@@ -1,0 +1,53 @@
+diff --git a/tools/qa/r100-i09-costed-encounters.mjs b/tools/qa/r100-i12-turn-encounters.mjs
+index aba402ab..f788be04 100644
+--- a/tools/qa/r100-i09-costed-encounters.mjs
++++ b/tools/qa/r100-i12-turn-encounters.mjs
+@@ -1,3 +1,5 @@
++// Policy17: only replace the two existing defensive Space inputs with bounded visible facing checks.
++// The35ms branch is observed in P43; the40ms cornered branch is the same static risk, not an observed cause.
+ /** Local I09 slot adapter copied from tools/world-study/r100-p13-costed-encounters.mjs.
+  * Original SHA256: 8850a30414e72f0465304fc3c90e38a0e08406b9e442b9b8ea7bfaea80ae3715.
+  * Differences: runtime active slot enumeration and matching key dispatch;
+@@ -8,6 +10,7 @@
+  */
+ import assert from 'node:assert/strict';
+ import { activeToolSlots } from './r100-i09-tool-slots.mjs';
++import { createBoundedFacingInput } from './r100-i12-turn-align.mjs';
+ 
+ /** Only completion flags and IDs are consumed, never unrevealed loot contents. */
+ export function newlyCollectedNodeIds(before, after) {
+@@ -22,6 +25,9 @@ export function newlyCollectedNodeIds(before, after) {
+  */
+ export function createVisibleEncounterPolicy(page,driver,ownedForPreparation,options={}){
+  const observedWindows=options.observedWindows===true,visiblePollution=options.visiblePollution===true;
++ assert(Array.isArray(options.facingChecks)&&typeof options.returnBudgetStopped==='function');
++ const alignAndSwing=createBoundedFacingInput({page,driver,observe,returnBudgetStopped:options.returnBudgetStopped,
++  onRecord:record=>{options.facingChecks.push(record);for(const error of record.errors)options.reportFacingError(error);}});
+  const pollutionMemory=new Map(),surveyMemory=new Map(),knownSearches=new Map(),ownSuppressions=new Map();
+  const memory=new Map(),toolTimes=new Map(),closeSince=new Map(),luredEnemies=new Map(),stoppedUntil=new Map(),windowPermits=new Map();let lastLook=0,lastSwing=-Infinity,clockMs=0,lastMoveCheck=-Infinity,lurePass=null;
+  const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+@@ -148,7 +154,7 @@ export function createVisibleEncounterPolicy(page,driver,ownedForPreparation,opt
+    candidates.push({p,score:(min-current)*3-distance(p,target.pos)*.04});}
+   candidates.sort((a,b)=>b.score-a.score);
+   if(!candidates.length){
+-   if(facts.enemies.some(e=>distance(e.position,facts.position)<40)){await face(nearest.position,40);await driver.press('Space',60);driver.log({event:'cornered-defensive-swing'});}
++   if(facts.enemies.some(e=>distance(e.position,facts.position)<40)){const facing=await alignAndSwing({targetId:nearest.id,context:'cornered',triggerElapsedMs:facts.elapsedMs,maxDistance:40,minimumHp:30});driver.log({event:'cornered-defensive-swing',attempted:facing.status==='allowed',facingCheckIndex:facing.index});}
+    return false;
+   }
+   const p=candidates[0].p;
+@@ -203,7 +209,14 @@ export function createVisibleEncounterPolicy(page,driver,ownedForPreparation,opt
+    if(weapon){
+     if(nearest.attack==='windup'){await evade(target,facts);return{reroute:true,facts:await observe()};}
+     if(distance(nearest.position,facts.position)>37){await face(nearest.position,170);return{reroute:true,facts:await observe()};}
+-    if(facts.elapsedMs-lastSwing>550){await face(nearest.position,35);await driver.press('Space',60);lastSwing=facts.elapsedMs;driver.log({event:'visible-pursuer-defensive-swing',opponent:nearest.id,weapon:weapon.name});await page.waitForTimeout(110);}
++    if(facts.elapsedMs-lastSwing>550){
++     // Consume the original eligible opportunity even when current alignment refuses Space.
++     // Do not create a faster retry cadence after an abandoned check.
++     lastSwing=facts.elapsedMs;
++     const facing=await alignAndSwing({targetId:nearest.id,context:'visible-pursuer',triggerElapsedMs:facts.elapsedMs,maxDistance:37,minimumHp:45});
++     driver.log({event:'visible-pursuer-defensive-swing',opponent:nearest.id,weapon:weapon.name,attempted:facing.status==='allowed',facingCheckIndex:facing.index});
++     if(facing.status==='allowed')await page.waitForTimeout(110);
++    }
+     await evade(target,await observe());return{reroute:true,facts:await observe()};
+    }
+   }

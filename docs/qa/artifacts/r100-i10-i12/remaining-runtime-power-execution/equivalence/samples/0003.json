@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-08T02:46:42.567140+00:00",
+  "sequence": 3,
+  "launchPid": 54555,
+  "processes": [
+    {
+      "pid": 54555,
+      "ppid": 54522,
+      "command": "/usr/local/bin/node tools/qa/r100-i09-final-probe.mjs --probe equivalence --source docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json --output docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108 --expected-worlds 108 --expected-revision 6"
+    },
+    {
+      "pid": 54557,
+      "ppid": 54555,
+      "command": "/usr/bin/caffeinate -i /usr/local/bin/node tools/qa/r100-i09-final-probe.mjs --probe equivalence --source docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json --output docs/qa/artifacts/r100-i10-i12/browser-equivalence-final108 --expected-worlds 108 --expected-revision 6"
+    },
+    {
+      "pid": 54597,
+      "ppid": 54555,
+      "command": "/usr/local/bin/node tools/world-study/check-r100-browser-equivalence.mjs"
+    },
+    {
+      "pid": 54598,
+      "ppid": 54597,
+      "command": "/usr/local/bin/node --import tsx --input-type=module -e import {R100_NATIVE_WORLDS} from './src/generated/r100-native-worlds.ts';\\012import {createR100ProductionRecipe} from './src/generation/world-study/r100-package.ts';\\012import {createR100ProductionMap} from './src/generation/world-study/r100-production-map.ts';\\012import {generatedRiftIdentity} from './src/generation/rift-generation-identity.ts';\\012const rows=[];for(const world of R100_NATIVE_WORLDS)for(const grade of ['low','medium','severe']){\\012const recipe=createR100ProductionRecipe(world.id,20261004,grade),map=createR100ProductionMap(recipe);\\012rows.push(generatedRiftIdentity(map.layout,recipe,map));}console.log(JSON.stringify(rows));"
+    },
+    {
+      "pid": 54599,
+      "ppid": 54598,
+      "command": "/Users/yilungao/coh/node_modules/tsx/node_modules/@esbuild/darwin-arm64/bin/esbuild --service=0.28.1 --ping"
+    }
+  ],
+  "ownedIdleSleepAssertionPids": [
+    54557
+  ]
+}

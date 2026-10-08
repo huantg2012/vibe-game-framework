@@ -1,0 +1,83 @@
+{
+  "status": "approved-input-protocol-only",
+  "reviewer": "root",
+  "at": "2026-10-07T14:30:13.473447+00:00",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/candidate-v2.json",
+    "sha256": "7b84d3bbdc8cbe89f1066eabd30aafa2086e9e88b5c9cc4c9665aef46b2fde33"
+  },
+  "protocolCandidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/protocol-candidate-v2.json",
+    "sha256": "30d48763a2c32a3446edf075485d6fa35b378285a7944ce7cc645974e4ce9b4e"
+  },
+  "sourceArchive": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/source-archive-v2.json",
+    "sha256": "662ca946b13bb80540718dfafaf3ad61464bb90db8abd58f480fd25bad867abc"
+  },
+  "diagnosis": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-melee-input/review.json",
+    "sha256": "4614d65e6cbd885556858c85167c195fa3168eecaf4255888cbdfc5d006d0ade"
+  },
+  "independentReview": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/boundary-review.json",
+      "sha256": "001fc77f4b196b1dcee20cb40d58ccb382a5f8877dc7ebc4e67499b388eccd28"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/guard-review-v2.json",
+      "sha256": "f50be11e722d79aebb0479f4c7b2b7ebaef44700754a24db11d83a5444db9a13"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/p43-policy17/wrapper-v2-protection-review.json",
+      "sha256": "b0e7b960765d5254ff16b5878f2342fd39649a5305a34cd31068ca47231b049f"
+    }
+  ],
+  "rootGuardReview": {
+    "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/facing-supplement-predicates-root-v4.json",
+    "sha256": "fb85dda0bf36dd4c5c78187e3056716533c2a3a029ed29b5c06a895389b0ab75"
+  },
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "storage": {
+    "path": "docs/qa/artifacts/r100-i09/continuous-final52/earned-storage.json",
+    "sha256": "965a98687e87690f71115472384fba50578ff9618aed328793c3a3bd1cf33b6e"
+  },
+  "executionPlan": {
+    "path": "docs/qa/artifacts/r100-i10-i12/p43-policy17-preparation/execution-plan.json",
+    "sha256": "d6e89054a8ea3371bf70a0a451a51d88e7a9bdf6ce096b83b8ac5d0681c86db5"
+  },
+  "hashChecks": 41,
+  "archivedFilesExact": 20,
+  "frozenSourceFilesExact": 1397,
+  "rootReadScope": [
+    "Full facing helper and chronological qualification guard",
+    "Encounter and journey diffs against frozen15",
+    "Full V2 wrapper, actual JSONL integration, immutable-input preflight and stop-on-failure boundaries",
+    "Candidate/independent boundary and adversarial receipts plus SHA verification"
+  ],
+  "decision": "Run exactly the two preserved ochre-folds severe seeds once each on3121 with the identical earned save, actual pickup limit1 and unchanged original route/return/search budgets. No product change or extra search is authorized or implied.",
+  "approvedBounds": {
+    "maxFacingSegments": 3,
+    "maxSegmentInputMs": 60,
+    "maxTurnInputMs": 180,
+    "maxFacingElapsedMs": 1000,
+    "earlyStopMs": 750,
+    "actionReserveMs": 100,
+    "maxErrorDegrees": 25,
+    "maxActualPickups": 3,
+    "minimumNonEntryDistance": 320,
+    "noHiddenAiState": true
+  },
+  "inputDurationSemantics": "turnInputMs sums the direction-key wait requests actually issued (each<=60ms,total<=180ms). Segment elapsed clocks include input dispatch/read/release latency and are not claimed<=180ms. The whole alignment, Space and cleanup must be<=1000ms actual game time.",
+  "preservedFailures": [
+    "Original policy15 deaths and all V1 candidate/guard failures remain immutable.",
+    "Actual technical failure, overrun or unreleased input invalidates qualification and stops the scheduled batch. No automatic rerun."
+  ],
+  "limitations": [
+    "Pre-execution code/input approval only; no completed gameplay, hit-rate, qualification or world acceptance claim.",
+    "Observed near-enemy geometry is not contact-frame hit evidence.",
+    "At most180ms requested direction waits; real key hold includes dispatch latency. Whole action, Space and cleanup must remain within1000ms actual game time."
+  ]
+}

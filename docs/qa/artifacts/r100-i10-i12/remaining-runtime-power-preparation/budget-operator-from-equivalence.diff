@@ -1,0 +1,122 @@
+--- docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-equivalence.py
++++ docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-budget.py
+@@ -1,4 +1,4 @@
+-"""Execute only the root-dispatched equivalence stage once; keep its frozen utility unchanged."""
++"""Execute only the root-dispatched budget stage once in its exclusive CPU/Chrome window; preserve the frozen utility."""
+ import hashlib
+ import json
+ import os
+@@ -13,10 +13,10 @@
+ 
+ BASE = pathlib.Path('docs/qa/artifacts/r100-i10-i12')
+ PREP = BASE / 'remaining-runtime-power-preparation'
+-SCRIPT = PREP / 'execute-equivalence.py'
++SCRIPT = PREP / 'execute-budget.py'
+ REVIEW = PREP / 'root-review.json'
+ REVIEW_SHA = '5f410fb6451db5467a6d20667bec3a83715101d39f8a38afe0714c2297807463'
+-assert sys.argv[1:] == ['--root-dispatch-equivalence']
++assert sys.argv[1:] == ['--root-dispatch-budget', '--exclusive-cpu-and-chrome']
+ 
+ def now():
+     return datetime.now(timezone.utc)
+@@ -53,6 +53,8 @@
+         return False
+     return ('tools/qa/r100-i09-final-probe.mjs' in argv
+             or 'tools/world-study/check-r100-browser-equivalence.mjs' in argv
++            or 'tools/qa/r100-i09-continuous.mjs' in argv
++            or 'tools/qa/r100-revision6-journey.mjs' in argv
+             or 'playwright_chromiumdev_profile-' in argv
+             or argv.startswith(('/usr/bin/caffeinate', 'caffeinate ')))
+ 
+@@ -61,10 +63,13 @@
+ assert review['status'] == 'operational-protocol-approved-awaiting-stage-dispatch'
+ assert sha(review['candidate']['path']) == review['candidate']['sha256']
+ plan = read(review['candidate']['path'])
+-stage = next(item for item in plan['stages'] if item['id'] == 'equivalence')
++stage = next(item for item in plan['stages'] if item['id'] == 'budget')
+ assert stage['argv'][2:] == stage['unchangedOriginalStage']['args']
+ assert stage['argv'][:2] == ['-i', '/usr/local/bin/node']
+-assert stage['envOverrides'] == {'GAME_URL': 'http://127.0.0.1:3122/', 'NODE_OPTIONS': '', 'DEBUG': ''}
++assert stage['envOverrides'] == {'GAME_URL': 'http://127.0.0.1:3122/', 'NODE_OPTIONS': '', 'DEBUG': '', 'QA_EXCLUSIVE_WINDOW': '1'}
++assert stage['requiresFullyExclusiveCpuAndBrowser'] is True
++prior = read(BASE / 'remaining-runtime-power-execution/natural-review/execution.json')
++assert prior['status'] == 'complete-offline-natural-review-pending-root-experience' and prior['problems'] == []
+ refs = {}
+ 
+ def collect(value):
+@@ -81,7 +86,7 @@
+ collect(plan)
+ refs[str(REVIEW)] = REVIEW_SHA
+ refs[str(SCRIPT)] = sha(SCRIPT)
+-refs[str(PREP / 'equivalence-operator-command.json')] = sha(PREP / 'equivalence-operator-command.json')
++refs[str(PREP / 'budget-operator-command.json')] = sha(PREP / 'budget-operator-command.json')
+ for file, expected in refs.items():
+     assert sha(file) == expected, file
+ source = read(plan['finalSource']['path'])
+@@ -117,14 +122,15 @@
+ started = now()
+ argv = [stage['executable'], *stage['argv']]
+ write(audit / 'dispatch.json', {
+-    'status': 'root-dispatched-equivalence-once', 'startedAt': started.isoformat(),
+-    'rootDispatch': 'Root explicitly dispatched equivalence342 after its gallery Chrome closed; this records that message and does not invent a signed protocol.',
++    'status': 'root-dispatched-budget-once', 'startedAt': started.isoformat(),
++    'rootDispatch': 'Root stage-specific budget dispatch and an exclusive CPU/Chrome window are prerequisites to this operator invocation; this receipt records that operational dispatch, not a fabricated signed protocol or experience approval.',
+     'rootOperationalReview': ref(REVIEW), 'candidate': review['candidate'], 'operatorSource': ref(SCRIPT),
+-    'operatorCommand': ref(PREP / 'equivalence-operator-command.json'), 'argv': argv,
++    'operatorCommand': ref(PREP / 'budget-operator-command.json'), 'argv': argv,
+     'envOverrides': stage['envOverrides'], 'source': plan['finalSource'],
+     'frozenRefs': [{'path': file, 'sha256': expected} for file, expected in refs.items()],
+     'sourceFilesBefore': 1397, 'operatorPid': os.getpid(), 'operatorPpid': os.getppid(),
+-    'exclusiveHeavyCpuAndQaBrowser': True, 'automaticRetry': False,
++    'exclusiveHeavyCpuAndQaBrowser': True, 'fullyExclusiveCpuAndChromeDeclared': True,
++    'measurementOperatorWork': 'Only lightweight owned-subtree and pmset sampling while the frozen utility runs. No full-source hashing, builds, extra browsers or independent tests during measurement.', 'automaticRetry': False,
+ })
+ log = (audit / 'command.log').open('x')
+ proc = None
+@@ -137,7 +143,7 @@
+     proc = subprocess.Popen(argv, cwd=stage['cwd'], env={**os.environ, **stage['envOverrides']},
+                             stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+     write(audit / 'launch.json', {'at': now().isoformat(), 'pid': proc.pid, 'ppid': os.getpid(), 'argv': argv})
+-    print(json.dumps({'status': 'launched-equivalence-once', 'pid': proc.pid, 'at': now().isoformat()}), flush=True)
++    print(json.dumps({'status': 'launched-budget-once', 'pid': proc.pid, 'at': now().isoformat()}), flush=True)
+     deadline = time.monotonic() + 5
+     next_sample = time.monotonic()
+     browser_seen = False
+@@ -223,26 +229,26 @@
+     except Exception as error:
+         problems.append({'type': 'SourceChanged', 'message': str(error)})
+     binding = read(out / 'source-binding.json') if (out / 'source-binding.json').exists() else None
+-    report = read(out / 'browser-equivalence.json') if (out / 'browser-equivalence.json').exists() else None
++    report = read(out / 'report.json') if (out / 'report.json').exists() else None
+     if exit_code != 0 or not binding or binding['status'] != 'pass':
+         problems.append({'type': 'FrozenProbeNotPassed', 'exitCode': exit_code, 'bindingStatus': binding.get('status') if binding else None})
+-    if not report or report['status'] != 'pass' or len(report['results']) != 342:
+-        problems.append({'type': 'IncompleteEquivalence', 'status': report.get('status') if report else None})
+-    elif (sum(row['revision'] == 6 for row in report['results']) != 324
+-          or sum(row['revision'] == 1 for row in report['results']) != 18
+-          or not all(row['exactIdentity'] and row['actual'] == row['expected'] for row in report['results'])):
+-        problems.append({'type': 'EquivalenceIdentityMismatch'})
++    if (not report or report['status'] != 'passed-reference-samples' or len(report['cases']) != 108
++            or report['exclusiveWindow'] is not True or report['errors']
++            or any(not row['budgetPass'] or not row['fullAliveDuration'] or row['duration'] < 60000
++                   or row['grade'] != 'severe' or row['seed'] != 20261004 or len(row['positions']) != 12
++                   for row in report['cases'])):
++        problems.append({'type': 'IncompleteOrFailedBudget', 'status': report.get('status') if report else None})
+     receipt = {
+-        'status': 'pass-equivalence342' if not problems else 'failed-preserved-no-retry',
++        'status': 'pass-budget108' if not problems else 'failed-preserved-no-retry',
+         'startedAt': started.isoformat(), 'endedAt': ended.isoformat(), 'wallSeconds': (ended-started).total_seconds(),
+-        'operatorSource': ref(SCRIPT), 'operatorCommand': ref(PREP / 'equivalence-operator-command.json'),
++        'operatorSource': ref(SCRIPT), 'operatorCommand': ref(PREP / 'budget-operator-command.json'),
+         'rootReview': ref(REVIEW), 'source': plan['finalSource'], 'sourceFilesBeforeAndAfter': 1397,
+         'exitCode': exit_code, 'launchPid': proc.pid if proc else None, 'knownProcessTree': list(known.values()),
+         'ownedIdleAssertionPids': sorted(owners), 'powerSamples': samples, 'noSystemSleep': not sleeps,
+         'ownedProcessesClosed': not alive, 'ownedAssertionsReleased': not remaining,
+         'sourceBinding': ref(out / 'source-binding.json') if binding else None,
+-        'report': ref(out / 'browser-equivalence.json') if report else None,
+-        'actualIdentities': len(report['results']) if report else 0, 'problems': problems,
++        'report': ref(out / 'report.json') if report else None,
++        'actualCases': len(report['cases']) if report else 0, 'problems': problems,
+         'nextStage': 'Stop here; root reviews and dispatches the next stage separately.', 'automaticRetry': False,
+     }
+     write(audit / 'execution.json', receipt)

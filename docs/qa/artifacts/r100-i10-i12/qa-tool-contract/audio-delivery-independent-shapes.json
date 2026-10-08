@@ -1,0 +1,508 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-10-07T06:54:23.262117+00:00",
+  "reviewer": "identity_shapes",
+  "status": "bounded-existing-mix-delivery-ready-listening-pending",
+  "scope": "独立只读核验现有六配方真实混音交付及当前108作者库映射；未启动浏览器、未重新录音、未实际审听、未运行地图或修改游戏。",
+  "entry": "docs/qa/interactive/r100-material-listening.html",
+  "historicalFullEntry": "docs/qa/artifacts/r100-i03-i06/audio-mix/index.html",
+  "sourceScope": {
+    "currentCandidateSnapshot": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+    "port": 3120,
+    "isFinalEnabled108Source": false,
+    "worlds": 108,
+    "newWorlds": 56,
+    "gradeDefinitions": 324,
+    "newWorldFamilyCounts": {
+      "folded-slab": 9,
+      "fibre-knot": 9,
+      "broken-shell": 11,
+      "membrane-rim": 12,
+      "gel-flow": 7,
+      "granular-ridge": 8
+    },
+    "all324PressurePeriodsMatchCorrespondingRecordedFamilyGrade": true
+  },
+  "sourceCode": [
+    {
+      "path": "src/systems/r100-world/audio.ts",
+      "sha256": "cb12387b4de1b9a2f7fc1b04880f037488951c1cecdbfa001cc778425c26071f",
+      "recording3085Frozen3120AndCurrentExact": true
+    },
+    {
+      "path": "src/managers/audio-manager.ts",
+      "sha256": "0c1aa43edfdb6e8f5f8e0fc2021f8cb69102f4fb4de0437a584b8891f2f97840",
+      "recording3085Frozen3120AndCurrentExact": true
+    },
+    {
+      "path": "src/managers/audio-catalog.ts",
+      "sha256": "016c2994a24ffd206b7e24a9f1b2e9228ed28364f6781b0b4651908ce57c8c9e",
+      "recording3085Frozen3120AndCurrentExact": true
+    },
+    {
+      "path": "src/systems/r100-world/presentation-state.ts",
+      "sha256": "22ce24073f78b0286acc22d7bc4e08efcb8ef4a6012fa77aee8d8d1f363af7fa",
+      "recording3085Frozen3120AndCurrentExact": true
+    }
+  ],
+  "resourceContinuity": {
+    "sixRecipesReuseFiveMaterialKeys": [
+      "sfx-suspended-sea-gather",
+      "sfx-suspended-sea-contact",
+      "sfx-suspended-sea-shell-hit",
+      "sfx-suspended-sea-drain",
+      "sfx-suspended-sea-fall"
+    ],
+    "noNewMixRulesInComparedAudioOwners": true,
+    "publicFormatsInBothFrozenManifests": 98,
+    "byteExactFormats": 92,
+    "oggContainerOnlyDifferencesWithExistingExactPacketAndTimingProof": [
+      {
+        "path": "public/assets/audio/ambient/amb-rift-alien-atmosphere.ogg",
+        "recordingFrozenSha256": "11866efadfe08b90ad8ffb03182b6a2b5fb68ea4d33ea1d8a930a7db1cb37a7f",
+        "currentFrozenSha256": "b76e10943fc2610f1bd2bc50e861a6980486284ce0d11a0d522d938fcd8a1288",
+        "existingOggPayloadTimingEquivalenceReceipt": "docs/qa/artifacts/r100-i03-i06/audio-mix/container-equivalence.json"
+      },
+      {
+        "path": "public/assets/audio/ambient/amb-rift-proximity.ogg",
+        "recordingFrozenSha256": "aa22911ce40f928ea00a5bb6209252b2e44674b0f86d02d63c8378ac33728c84",
+        "currentFrozenSha256": "b5b7841cbc601c73b6c622fac34e486b13164eb3220bb62ad7f2d3d57767701e",
+        "existingOggPayloadTimingEquivalenceReceipt": "docs/qa/artifacts/r100-i03-i06/audio-mix/container-equivalence.json"
+      },
+      {
+        "path": "public/assets/audio/bgm/bgm-rift-base-drone.ogg",
+        "recordingFrozenSha256": "16f82b07f07d42eeb31ba9f7704b9f3c96a6ce601796b4af34166b5234b45793",
+        "currentFrozenSha256": "3f2c9a37ac93cbab87c35b39cfc2465d4676baae33b8e35e453537fb0fcf2b81",
+        "existingOggPayloadTimingEquivalenceReceipt": "docs/qa/artifacts/r100-i03-i06/audio-mix/container-equivalence.json"
+      },
+      {
+        "path": "public/assets/audio/bgm/bgm-rift-high-chaos.ogg",
+        "recordingFrozenSha256": "397a2d5c8b97e55bbfe550b5984ec34f3e3da48343422360b7c54c26e2e52e5b",
+        "currentFrozenSha256": "53d5b75e2ebfd7dd7133df940e62501d4f6e133c34b4271f928d19a8f583cb7e",
+        "existingOggPayloadTimingEquivalenceReceipt": "docs/qa/artifacts/r100-i03-i06/audio-mix/container-equivalence.json"
+      },
+      {
+        "path": "public/assets/audio/bgm/bgm-rift-threat.ogg",
+        "recordingFrozenSha256": "82e2a07dbe7fff1b91987f1dd02fc7cd5d21a1eac82f0d63b6367d026a4263b0",
+        "currentFrozenSha256": "dde846d555a5aaf8ff5dc754fc9de0b82dfe59c8a6515bd1be5cc56a04671e67",
+        "existingOggPayloadTimingEquivalenceReceipt": "docs/qa/artifacts/r100-i03-i06/audio-mix/container-equivalence.json"
+      },
+      {
+        "path": "public/assets/audio/sfx/enemy/sfx-rift-enemy-idle.ogg",
+        "recordingFrozenSha256": "94c6ac01dad7f4e3362fd311a106cb7bcc621eebc91c121d770bec4090f9b631",
+        "currentFrozenSha256": "a8bcbbaec2f606a8cff7593a6df9abbae750bf981c3faf61513045633d22bb7c",
+        "existingOggPayloadTimingEquivalenceReceipt": "docs/qa/artifacts/r100-i03-i06/audio-mix/container-equivalence.json"
+      }
+    ],
+    "newPublicAudioPaths": [],
+    "method": "Compared immutable manifest SHA values and existing container-equivalence receipt; did not re-decode or listen."
+  },
+  "clips": [
+    {
+      "family": "folded-slab",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-low.webm",
+      "sha256": "2136a514d0b3aedc6151f2fc73cdc9b29bb14b94c1af24f22967ab320a086ebd",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-low.json",
+      "metadataSha256": "a822e9b12890df189de6c569f82225739365b23a3b40abb23c5dc404b7127ef6",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 19,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "folded-slab",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-medium.webm",
+      "sha256": "4fa2f3ab57b0451ae583efa93db76e75bea56ba2e24484267c7953deee0a45e8",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-medium.json",
+      "metadataSha256": "15d1ab86747e8c0d5aef64e1071ff987d57006ab1010cc756f79e170f3c74cc1",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 16,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "folded-slab",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-severe.webm",
+      "sha256": "339e6086a8314e97335db9dcccc25cd363de485d3c75fbf5fb98121a9332cf2f",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/folded-slab-severe.json",
+      "metadataSha256": "54d2d00fb32fa6bce6001bf0ab52665877e1876ff42233139900baba60ece64a",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 14,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "fibre-knot",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-low.webm",
+      "sha256": "b2ce45c11675b3b6a0ed8a2edc05f522ede5e4970b64c67a7715400df592cb91",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-low.json",
+      "metadataSha256": "fa7c5ec2cfdb7753bc8231d7e070a5f82cee70eb02686829feeb0a68a398b945",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 22,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "fibre-knot",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-medium.webm",
+      "sha256": "7a678ca0410e6f5670db4d815884c5e1752b44150c3502db22da0be05e19bade",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-medium.json",
+      "metadataSha256": "c6fb03e80ec05e66b03fd3603f4f513681a84cffb3138fdcf3d6c62a83eb7cee",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 18,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "fibre-knot",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-severe.webm",
+      "sha256": "62d7d074c219dc413d1d845f0b37d56a3ac7f069e936e2c357cc00e72921b648",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/fibre-knot-severe.json",
+      "metadataSha256": "b39c83bf31fe78fd31c17d9a6394d43cd8ee747a95c513c1fbd7031cfdecb636",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 16,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "broken-shell",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-low.webm",
+      "sha256": "a65e0286026b232480c6d5e4b1fbcf2d1ac02661c2d4dba438074082d825738d",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-low.json",
+      "metadataSha256": "f39341e21b7202036a390eb0e031a9bc952b85eb0eda18e0d7e49348b86b273e",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 24,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "broken-shell",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-medium.webm",
+      "sha256": "7c9712ac7dc3f51afdf478e2043fbfeca7bd0158e341d8dc89214099dbd0087d",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-medium.json",
+      "metadataSha256": "a2b367031c7581a4ad2b22fd8840190b81aed9a506fc2ae4133d1568ca8b2556",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 20,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "broken-shell",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-severe.webm",
+      "sha256": "7815645d42ee0a238d199839b5a29a30c092bb3b60a9e066b9c2ca4a801809ac",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/broken-shell-severe.json",
+      "metadataSha256": "1ba93a26452d27cf69f792f7672e403a5218b225749d0252f7e2d219d78fe870",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 17,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "granular-ridge",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-low.webm",
+      "sha256": "36d5feb908f513b60deaed6a0bb6e4d6211a71d3aff41e7531804d37964e44aa",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-low.json",
+      "metadataSha256": "34ea516e0ab9776d6940e0dbf343d7059597e6519ab515268648bf2819d9ae7b",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 19,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "granular-ridge",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-medium.webm",
+      "sha256": "7155fba1cd1357cde6aef9e1f29586fadf8daeaa22a4a258f6a1b5cdce8ee72e",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-medium.json",
+      "metadataSha256": "738736fbaa64455b2bd53952276af561b5659cddb4e8868d8fe8cbdd4262a169",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 16,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "granular-ridge",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-severe.webm",
+      "sha256": "5547ea4686a70bef747a6e2815f85008427c1ac3d26b989f6b10cb976ae688b2",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/granular-ridge-severe.json",
+      "metadataSha256": "e56e9d943e0bbfb98377d8e93d423092d41f8dd455a9cd1e61c15b5aa2eb5c4d",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 14,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "membrane-rim",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-low.webm",
+      "sha256": "6936633a6219b7fb05fb6a533a1f157086b463134a6e9ddd6c27d74e745b2e75",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-low.json",
+      "metadataSha256": "47b0b326c00776c3ff6fc4bc723fd048dd3d084b8c5a2c6b4b51172b1bd6d4b5",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 24,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "membrane-rim",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-medium.webm",
+      "sha256": "27883a2839cd6fd76b54588a962505da762fcf72fe0f900ae0c1aa8f112340bf",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-medium.json",
+      "metadataSha256": "cb901b60eb039064157a48780d2e6d77ae1d21bf7385c897d2f48bc13f26fd93",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 20,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "membrane-rim",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-severe.webm",
+      "sha256": "bfcf05fbd1db6a6abfa8085e52b86fce7ba926a006602c8a8d677f35ea712b38",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/membrane-rim-severe.json",
+      "metadataSha256": "fa341d95b5590c49bcade53944f0368b56c5d4f877de4bfdacd85046720c43a1",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 17,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "gel-flow",
+      "grade": "low",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-low.webm",
+      "sha256": "4a5d9c9a983d87532f16c390fabb949d24a24c4164d0c653afc10591acc0ecdd",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-low.json",
+      "metadataSha256": "1027fa9d71c7727bc18a9fc11a61f72343533b37b450aa465b638171b9f0f927",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 22,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "gel-flow",
+      "grade": "medium",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-medium.webm",
+      "sha256": "dcfb836ad4176542b347712dc3fb42076ed4b27d92c00c995a27e57cdd2ee3ef",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-medium.json",
+      "metadataSha256": "a322d23c179ef79491073990858e658dc2cb3c0ceee2be2574b68a418ac410c9",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 18,
+      "materialEvents": 2,
+      "endedVoices": 0
+    },
+    {
+      "family": "gel-flow",
+      "grade": "severe",
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-severe.webm",
+      "sha256": "e79eee25a2f319c96f6744603996b88673139dd7eb295937cf806e1bd37ab204",
+      "metadataPath": "docs/qa/artifacts/r100-i03-i06/audio-mix/delivery/gel-flow-severe.json",
+      "metadataSha256": "17c8cc9c684f2bc1f9fddfa034442f82062ac903792086d7f5e703c6be0f1dd1",
+      "phaseSequence": [
+        "quiet",
+        "loading",
+        "stress",
+        "release",
+        "quiet"
+      ],
+      "pressurePeriodSeconds": 16,
+      "materialEvents": 2,
+      "endedVoices": 0
+    }
+  ],
+  "playbackEvidence": {
+    "path": "docs/qa/artifacts/r100-i10-i12/audio-listening-page-cancel-fixed/report.json",
+    "status": "pass-playback-not-listening",
+    "currentPageAndMetadataMatchPreviouslyBrowserVerifiedBytes": true,
+    "checks": [
+      "6 materials",
+      "actual WebM playback and volume 1",
+      "15 second stop",
+      "3 grade source switch",
+      "single active mix",
+      "grade switch pauses previous audio",
+      "cancelled play promise does not display playback failure",
+      "18 HTTP audio bytes match recorded SHA"
+    ],
+    "performedByThisReview": false
+  },
+  "findings": [],
+  "requiredHandoff": [
+    "I12已有可播放六材料×低中重真实混音入口，18份完整一轮均具平静→受压→松开→平静，无需另造声音或为入口存在而补录。",
+    "15秒仅试听；低污染部分受压/提示在15秒后，完整周期判断需点完整一轮。",
+    "最终108启用冻结后应确认上述音频所有者/声源与世界主材周期映射未变；本收据仅绑定3120候选源，不能预签未来源。",
+    "root可明确限定工程准入并将真人听感留R10/I14；此项仍需显式裁决，不能由本收据或工具自动改成听过/通过。"
+  ],
+  "boundaries": [
+    "受控近距离混音台，四个关键提示显式注入；不是自然游戏过程。",
+    "当前108按主材选6配方，混材不逐副材发声；新短纤/孔髓视觉组织没有新增专用音源。",
+    "新几何改变声源所在位置/接近路线，即使配方与周期相同也不能推断空间听感或物性适配已通过。",
+    "不证明108世界具有108套声音身份、疲劳/掩蔽/循环接缝听感、弱设备或长期体验。",
+    "历史原播放页面误报及其他失败记录不改；没有提高用户或世界资格。"
+  ],
+  "subjectiveListening": false,
+  "humanApproval": false,
+  "inputs": [
+    {
+      "path": "docs/qa/interactive/r100-material-listening.json",
+      "sha256": "1a96225b360d84b4d0b492d2580f9b73cc02a34a30699daacca3a1e7bebf74bb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/frozen-delivery/source-snapshot.json",
+      "sha256": "92404121c1307b3d089037e3dfba02c97792e337310db810ec51a2336e628d61"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/p34-and-b09-b10-refined-source/source-snapshot.json",
+      "sha256": "3221ae2e6d09628faa8a030ddd7782ad7f6f7847ec2ecad90a1a15ee6e87c09d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/container-equivalence.json",
+      "sha256": "531b54f62510f18b80707017278402ee67767bfc95be8b179d304e3c8f3ec7c6"
+    },
+    {
+      "path": "src/generated/r100-native-worlds.ts",
+      "sha256": "3d5bf2ef485269a043a431407c58fb5550f508a33333302d9791b2afe0646158"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/audio-listening-page-cancel-fixed/report.json",
+      "sha256": "74f3b34c858e787239d80eb3daed9204929069334815d1d3ff5af774369acb94"
+    },
+    {
+      "path": "docs/qa/interactive/r100-material-listening.html",
+      "sha256": "476dfc90d7dda63e87f61e2497b7a93a47cd9d1d051c515fdeed490e28debb58"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/qualification-plan.json",
+      "sha256": "d493aeb9d26b4758c90434c8c5a8cdfb74fb581800a2c37a50ae3b2eb91f0c25"
+    },
+    {
+      "path": "docs/art/rift-r100-i10-i12.md",
+      "sha256": "70968c75ab7f3b3953dfa696fefd21d62adb1ec677c37d8a6be037a28cc885d1"
+    },
+    {
+      "path": "tools/qa/check-r100-audio-mix.mjs",
+      "sha256": "87387e066b8a0b10202e3cae89160beb3af03b46b7c1c6fcfd5f9d05f6f1fc45"
+    },
+    {
+      "path": "tools/qa/check-r100-material-listening.mjs",
+      "sha256": "3dd10de47af2059d2ce9c8ea06e5577f467db0c53a069703ab6f743cc949ae33"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i03-i06/audio-mix/README.md",
+      "sha256": "a478f415d4a5bf50c1c29cd5913d906961c98cf8452071768535a56816fd5ab5"
+    }
+  ]
+}

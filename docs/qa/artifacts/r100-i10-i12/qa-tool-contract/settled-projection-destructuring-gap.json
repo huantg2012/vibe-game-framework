@@ -1,0 +1,18 @@
+{
+  "status": "confirmed-validation-gap",
+  "scope": "One in-memory AST-only mutation. No generated game, browser, source edit or actual side-effect invocation.",
+  "baseline": "pass",
+  "mutation": "Appended top-level array destructuring with an executable default binding; [] initializer remains allowed by old inert predicate.",
+  "mutatedModuleAccepted": true,
+  "error": null,
+  "sources": [
+    {
+      "path": "tools/qa/r100-settled-projection-continuity.mjs",
+      "sha256": "a360233a4ed2b86730dc28f9ce7841d6b8db8cc79669e984a35990a25e330615"
+    },
+    {
+      "path": "tools/qa/r100-organization-dispatch-continuity.mjs",
+      "sha256": "f2d7885d76cb47bf93ffd0409f5a44e6f2873222e61b0f45e305adc34659930f"
+    }
+  ]
+}

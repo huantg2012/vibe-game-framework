@@ -1,0 +1,374 @@
+{
+  "schemaVersion": 1,
+  "status": "bounded-fixed-process-and-frame-observation",
+  "reviewer": "i12_art",
+  "reviewerIsAuthor": false,
+  "at": "2026-10-07T13:02:18.915Z",
+  "features": [
+    "COH-F052",
+    "COH-F012"
+  ],
+  "world": "woven-quarters",
+  "source": {
+    "path": "docs/qa/artifacts/r100-i10-i12/late-low-surfaces-refined-source/source-snapshot.json",
+    "sha256": "1351b0cfb76e762ca7ef6933e78ff6efb268b5519b96b708c7724f18e941880c"
+  },
+  "admission": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/commands.json",
+    "sha256": "703b4cf4f20e6936a9c0b9c2386b64290a9731264cddfbf5c06210f3ae3d5f14"
+  },
+  "cases": [
+    {
+      "originalIndex": 7,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/007-woven-quarters-low-20261005/report.json",
+        "sha256": "c18f452491dbdcd16d56830acf6657c478b6bb65507881bc2cda51f8ff259336"
+      },
+      "grade": "low",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "6b6c8741",
+      "dependencyHash": "6ca51211",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 37181.83999999978,
+      "hp": 145,
+      "chaos": 30.495211747367904,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 588.3672322623006
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 21865.779999999846,
+          "hp": 145,
+          "chaos": 27.819683778999266
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 8,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/008-woven-quarters-low-3075192741/report.json",
+        "sha256": "4168b3030470d9252f6b65588cacd32cf295cedf448bff7b87930960329595af"
+      },
+      "grade": "low",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "2a870ad1",
+      "dependencyHash": "6ca51211",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 55714.40999999996,
+      "hp": 145,
+      "chaos": 47.8031093370824,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 619.728973019658
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "attempted": false,
+          "reason": "visible-opponent-too-close",
+          "elapsedMs": 21665.76999999983,
+          "hp": 145,
+          "chaos": 27.784744483321862
+        },
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 45048.16999999994,
+          "hp": 145,
+          "chaos": 45.93984793451959
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 9,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/009-woven-quarters-medium-20261005/report.json",
+        "sha256": "60eec369a255f88a7fbb236e2487f96b178b154e3a85baf81f4c750beb098141"
+      },
+      "grade": "medium",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "523db8c5",
+      "dependencyHash": "086d8c96",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 53864.49000000003,
+      "hp": 145,
+      "chaos": 40.46656591966958,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 608.0526293011156
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 39298.42999999979,
+          "hp": 145,
+          "chaos": 36.01366963902361
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 10,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/010-woven-quarters-medium-3075192741/report.json",
+        "sha256": "9100762bb11fd68e50f7a1a6a9b966011c7be1e8bf9e78d4bac535ec4d7b948c"
+      },
+      "grade": "medium",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "7f8755ba",
+      "dependencyHash": "086d8c96",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 47981.40999999996,
+      "hp": 145,
+      "chaos": 38.668087466969226,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 608.0526293011156
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 28682.179999999767,
+          "hp": 145,
+          "chaos": 32.76824430510337
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 11,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/011-woven-quarters-severe-20261005/report.json",
+        "sha256": "164f057ef61868f602f9576ce143ab8e7b92ac5d7a96d6662cd8fe9142ffc59b"
+      },
+      "grade": "severe",
+      "requestedSeed": 20261005,
+      "effectiveSeed": 20261005,
+      "signature": "c844db7b",
+      "dependencyHash": "e0c38652",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 41931.649999999834,
+      "hp": 145,
+      "chaos": 45.49801577844862,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-1",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 608.0526293011156
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-1",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 24799.01999999981,
+          "hp": 145,
+          "chaos": 35.55222628589542
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    },
+    {
+      "originalIndex": 12,
+      "report": {
+        "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/012-woven-quarters-severe-3075192741/report.json",
+        "sha256": "f006898e77e47823c1776e94bfeac1cc7b3ebf58217eb3d371e60b683c412f72"
+      },
+      "grade": "severe",
+      "requestedSeed": 3075192741,
+      "effectiveSeed": 3075192741,
+      "signature": "63fe457d",
+      "dependencyHash": "e0c38652",
+      "policyRevision": 15,
+      "status": "completed-real-input",
+      "outcome": "extract",
+      "elapsedMs": 56664.43000000014,
+      "hp": 145,
+      "chaos": 59.489012955255426,
+      "actualPickups": [
+        {
+          "id": "r100-kindling-contested-2",
+          "tier": "contested",
+          "kind": "kindling",
+          "distanceFromEntry": 608.0526293011156
+        }
+      ],
+      "searchDecisions": [
+        {
+          "id": "r100-kindling-contested-2",
+          "attempted": true,
+          "reason": "collected",
+          "elapsedMs": 40915.05999999993,
+          "hp": 145,
+          "chaos": 43.06070890264196
+        }
+      ],
+      "kindlingGained": 6,
+      "returnedItemCount": 0,
+      "sameRunSettlementVerified": true,
+      "errors": [],
+      "consoleErrors": []
+    }
+  ],
+  "counts": {
+    "originalProcesses": 6,
+    "nonEntrySearchAndExtract": 6,
+    "trueEmptyReturns": 0,
+    "deaths": 0
+  },
+  "personallyViewed": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/007-woven-quarters-low-20261005/low/1-far-exploration.png",
+      "sha256": "ae0c91f974334d9861a59a55e73099e18595e9f8799a52f11a38480793a22909",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "近灯照到铜色粗长束的多股纵向纹与明显厚侧，紫床在后、灰蓝压面在右下，二者局部可分；下侧压面与地床仍有长直切界，未照见四角全局。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/009-woven-quarters-medium-20261005/medium/1-far-exploration.png",
+      "sha256": "d251619db6bc7a5dfc355c0219beff61615aeb44466ad380e8cbb967ac5a44b7",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "紫床连接冷灰蓝压面，近面有短向纹理与密度变化，铜束在右下、黑缺地在上方分开；只覆盖一个局部交会与近处残骸，不等于两短裂全程可读。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/009-woven-quarters-medium-20261005/medium/1-search-2.png",
+      "sha256": "d645a4fb434e5c7b886b6cf3f2effe5f2f4eb707214fcedd5fac8c9a991df5bf",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "6薪柴搜后近脚紫灰面与黑绿宿主/敌人同框，局部材质可见；右上直折切线和下方规整多边形感保留，不因带回成功当作审美批准。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/011-woven-quarters-severe-20261005/severe/1-search-1.png",
+      "sha256": "237277dc19a202f4efd86f2ed483299f449ae739eab26640f8ed841cca3c2c72",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "145HP/35混乱、6薪柴时紫灰面有照亮纹理，淡蓝残骸与污染绿分开；本图压力较低，不是重档临界或峰后恢复观察。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/012-woven-quarters-severe-3075192741/severe/1-far-exploration.png",
+      "sha256": "6758d397c2e3b622466275d84fee036a5b22cbadb2ab7b6368d500db32f927e8",
+      "viewedBy": "i12_art",
+      "method": "view_image original normal-play PNG",
+      "dimensions": [
+        1440,
+        960
+      ],
+      "observation": "铜束厚侧与紫床/灰蓝压面同框，束端拆开而长侧仍较直；上缘真缺地有局部断边，未签完整四块毡与唯一厚翻边。"
+    }
+  ],
+  "findings": [
+    "六个原种子过程均带6薪柴同趟返回，全部145HP；低档第二种子先跳过近敌点后在另一争夺点完成拾取。",
+    "两个重档分别41.93秒/45.50混乱、56.66秒/59.49混乱返回，不把有限低伤压力冒充临界深部体验。",
+    "正常灯下铜色长束的厚侧/纵向纹与灰蓝压面、紫床局部分开；没有完整四块压毡、两裂地及唯一翻厚边的动态连贯观察。"
+  ],
+  "retainedWeaknesses": [
+    "部分压面与地床交界仍长直，局部有规整多边形轮廓感；短纤语义与整体质感的人审未由这五帧代签。",
+    "离散帧无法覆盖连续视觉疲劳、全路线遮挡、临界动态与听感。"
+  ],
+  "recommendedRootFrames": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/007-woven-quarters-low-20261005/low/1-far-exploration.png",
+      "sha256": "ae0c91f974334d9861a59a55e73099e18595e9f8799a52f11a38480793a22909",
+      "reason": "近灯照到铜色粗长束的多股纵向纹与明显厚侧，紫床在后、灰蓝压面在右下，二者局部可分；下侧压面与地床仍有长直切界，未照见四角全局。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/009-woven-quarters-medium-20261005/medium/1-search-2.png",
+      "sha256": "d645a4fb434e5c7b886b6cf3f2effe5f2f4eb707214fcedd5fac8c9a991df5bf",
+      "reason": "6薪柴搜后近脚紫灰面与黑绿宿主/敌人同框，局部材质可见；右上直折切线和下方规整多边形感保留，不因带回成功当作审美批准。"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/b14-current-qualified/play/012-woven-quarters-severe-3075192741/severe/1-far-exploration.png",
+      "sha256": "6758d397c2e3b622466275d84fee036a5b22cbadb2ab7b6368d500db32f927e8",
+      "reason": "铜束厚侧与紫床/灰蓝压面同框，束端拆开而长侧仍较直；上缘真缺地有局部断边，未签完整四块毡与唯一厚翻边。"
+    }
+  ],
+  "limits": [
+    "Original fixed fixtures and policy15, not natural48.",
+    "Five original normal PNGs personally viewed; no continuous video, hands-on play, audio, GPU/performance or human aesthetic approval.",
+    "Prior static short-fibre and world-art receipts keep their original scope; this is a process supplement."
+  ],
+  "pixelModelsScope": {
+    "path": "docs/qa/artifacts/r100-i10-i12/b13-current-qualified/independent-early-frame-review-art.json",
+    "sha256": "7ac6d4fbe817a614c5578ef858a2c1548bce1669dad91363d4b206d2db16c5ba"
+  }
+}

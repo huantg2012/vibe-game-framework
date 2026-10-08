@@ -1,0 +1,52 @@
+--- docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-natural48.py
++++ docs/qa/artifacts/r100-i10-i12/remaining-runtime-power-preparation/execute-natural48-v2.py
+@@ -13,7 +13,7 @@
+ 
+ BASE = pathlib.Path('docs/qa/artifacts/r100-i10-i12')
+ PREP = BASE / 'remaining-runtime-power-preparation'
+-SCRIPT = PREP / 'execute-natural48.py'
++SCRIPT = PREP / 'execute-natural48-v2.py'
+ REVIEW = PREP / 'root-review.json'
+ REVIEW_SHA = '5f410fb6451db5467a6d20667bec3a83715101d39f8a38afe0714c2297807463'
+ assert sys.argv[1:] == ['--root-dispatch-natural48']
+@@ -100,7 +100,7 @@
+         refs[item['path']] = item['sha256']
+ refs[str(REVIEW)] = REVIEW_SHA
+ refs[str(SCRIPT)] = sha(SCRIPT)
+-refs[str(PREP / 'natural48-operator-command.json')] = sha(PREP / 'natural48-operator-command.json')
++refs[str(PREP / 'natural48-v2-operator-command.json')] = sha(PREP / 'natural48-v2-operator-command.json')
+ for file, expected in refs.items():
+     assert sha(file) == expected, file
+ source = read(plan['finalSource']['path'])
+@@ -139,7 +139,7 @@
+     'status': 'root-dispatched-natural48-once', 'startedAt': started.isoformat(),
+     'rootDispatch': 'Root explicitly dispatched original policy15 natural48 and original offline review after galleryv4 Chrome closed; this records that message, not a fabricated signed protocol.',
+     'rootOperationalReview': ref(REVIEW), 'candidate': review['candidate'], 'operatorSource': ref(SCRIPT),
+-    'operatorCommand': ref(PREP / 'natural48-operator-command.json'), 'argv': argv,
++    'operatorCommand': ref(PREP / 'natural48-v2-operator-command.json'), 'argv': argv,
+     'envOverrides': stage['envOverrides'], 'source': plan['finalSource'],
+     'frozenRefs': [{'path': file, 'sha256': expected} for file, expected in refs.items()],
+     'sourceFilesBefore': 1397, 'operatorPid': os.getpid(), 'operatorPpid': os.getppid(),
+@@ -166,7 +166,12 @@
+         if time.monotonic() >= next_technical_check:
+             run_file = out / 'execution.json'
+             if run_file.exists():
+-                run_state = read(run_file)
++                try:
++                    run_state = read(run_file)
++                except json.JSONDecodeError:
++                    # The unchanged wrapper writes this progress file in place. A partial
++                    # read is not a technical run failure; retry only this read next second.
++                    run_state = {}
+                 failures = [row for row in run_state.get('branches', [])
+                             if row.get('status') == 'failed-script' or row.get('exitCode') not in [None, 0]]
+                 if run_state.get('status') == 'failed' or failures:
+@@ -274,7 +279,7 @@
+     receipt = {
+         'status': 'completed-natural48-summary-pending-offline-review' if not problems else 'failed-preserved-no-retry',
+         'startedAt': started.isoformat(), 'endedAt': ended.isoformat(), 'wallSeconds': (ended-started).total_seconds(),
+-        'operatorSource': ref(SCRIPT), 'operatorCommand': ref(PREP / 'natural48-operator-command.json'),
++        'operatorSource': ref(SCRIPT), 'operatorCommand': ref(PREP / 'natural48-v2-operator-command.json'),
+         'rootReview': ref(REVIEW), 'source': plan['finalSource'], 'sourceFilesBeforeAndAfter': 1397,
+         'exitCode': exit_code, 'launchPid': proc.pid if proc else None, 'knownProcessTree': list(known.values()),
+         'ownedIdleAssertionPids': sorted(owners), 'powerSamples': samples, 'noSystemSleep': not sleeps,

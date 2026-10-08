@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "status": "browser-checks-pass-pending-root-image-inspection",
+  "reviewer": "root",
+  "startedAt": "2026-10-08T02:48:52.721Z",
+  "html": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.html",
+    "sha256": "b68da40194dea28956b95b6361bd1b19cca2c7d21ea197242d347d569a53a534"
+  },
+  "data": {
+    "path": "docs/qa/interactive/r100-i10-i12-worlds.data.json",
+    "sha256": "7794f6b9267883e3b1061f115fd7369c199f6cf6f43f58317acbf8710ec49ba3"
+  },
+  "observations": [
+    {
+      "action": "initial",
+      "world": "cleft-tableland",
+      "grade": "medium",
+      "frame": "0",
+      "hash": "#world=cleft-tableland&grade=medium&frame=0",
+      "missing": false,
+      "image": {
+        "src": "../artifacts/r100-i10-i12/b02-refined-medium/cleft-tableland-medium/02-upper-neck-west.png",
+        "complete": true,
+        "width": 1136
+      },
+      "documentWidth": 1440,
+      "viewportWidth": 1440
+    },
+    {
+      "action": "neighbor-preserves-selected-grade",
+      "world": "bleached-court",
+      "grade": "severe",
+      "frame": "0",
+      "hash": "#world=bleached-court&grade=severe&frame=0",
+      "missing": false,
+      "image": {
+        "src": "../artifacts/r100-i07-i09/b02-refined-normal/bleached-court-severe-walk.png",
+        "complete": true,
+        "width": 1136
+      },
+      "documentWidth": 1440,
+      "viewportWidth": 1440
+    },
+    {
+      "action": "last-world-hash-reload",
+      "world": "last-shelf",
+      "grade": "severe",
+      "frame": "0",
+      "hash": "#world=last-shelf&grade=severe&frame=0",
+      "missing": false,
+      "image": {
+        "src": "../artifacts/r100-i10-i12/late-passed-grades/last-shelf-severe/04-material-approach-east.png",
+        "complete": true,
+        "width": 1136
+      },
+      "documentWidth": 1440,
+      "viewportWidth": 1440
+    },
+    {
+      "action": "world-and-neighbor-search",
+      "query": "cleft-tableland",
+      "filteredCount": 4
+    },
+    {
+      "action": "actual-catalog-image-bounds-after-height-fix",
+      "thumbnails": [
+        {
+          "world": "cleft-tableland",
+          "width": 325.5,
+          "height": 217,
+          "naturalWidth": 1136,
+          "naturalHeight": 758,
+          "declaredHeight": "758"
+        },
+        {
+          "world": "braided-seam",
+          "width": 325.5,
+          "height": 217,
+          "naturalWidth": 1136,
+          "naturalHeight": 758,
+          "declaredHeight": "758"
+        },
+        {
+          "world": "offset-pan",
+          "width": 325.5,
+          "height": 217,
+          "naturalWidth": 1136,
+          "naturalHeight": 758,
+          "declaredHeight": "758"
+        },
+        {
+          "world": "double-return",
+          "width": 325.5,
+          "height": 217,
+          "naturalWidth": 1136,
+          "naturalHeight": 758,
+          "declaredHeight": "758"
+        }
+      ]
+    },
+    {
+      "action": "missing-slot-selects-its-own-grade-and-focus",
+      "world": "ash-strata",
+      "grade": "low",
+      "frame": "",
+      "hash": "#world=ash-strata&grade=low&frame=0",
+      "missing": true,
+      "image": {
+        "src": null,
+        "complete": true,
+        "width": 0
+      },
+      "documentWidth": 1440,
+      "viewportWidth": 1440
+    },
+    {
+      "action": "missing-to-existing-image",
+      "world": "ash-strata",
+      "grade": "medium",
+      "frame": "0",
+      "hash": "#world=ash-strata&grade=medium&frame=0",
+      "missing": false,
+      "image": {
+        "src": "../artifacts/r100-i07-i09/legacy20-play-serial-v13/003-ash-strata-medium-20261005/medium/1-search-1.png",
+        "complete": true,
+        "width": 1440
+      },
+      "documentWidth": 1440,
+      "viewportWidth": 1440
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/01-default.png",
+      "sha256": "831e7d52d234d1004940547cce144943db6f8e8358480320f2803b46d1a153c7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/02-viewer.png",
+      "sha256": "a7bd98eecbfb0909c42704d9fae5f41c4ecfdd986d940b133224959b4fd11d4f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/03-last-world-severe.png",
+      "sha256": "8e9d9e58f2764369c845a0a9c3eb7d8b305ffd86921cfefcbf6a228c58a79a66"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/04-filter.png",
+      "sha256": "8c313100c059cf826c5e3ffbad9ad165e72fd1ef3aa4762b47ddecc4cad35439"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/gallery/root-browser-review-v4/05-explicit-historical-missing.png",
+      "sha256": "8eb817eada94c186420a3bfcdb3f261597fbd0d7f398730bde323faeb6d466e9"
+    }
+  ],
+  "errors": [],
+  "cancelledRequests": [],
+  "scope": "Offline 108-world gallery rendering and bounded navigation. No game execution or new world-art approval.",
+  "visualReview": "pending-root-image-inspection",
+  "browserClosed": true,
+  "finishedAt": "2026-10-08T02:48:54.467Z"
+}

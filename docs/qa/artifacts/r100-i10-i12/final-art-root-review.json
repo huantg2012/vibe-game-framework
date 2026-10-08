@@ -1,0 +1,58 @@
+{
+  "status": "bounded-internal-pass",
+  "reviewer": "root",
+  "at": "2026-10-07T15:01:19.495379+00:00",
+  "candidate": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-art-review.bound-candidate.json",
+    "sha256": "63a2b1cc8ac84fcee0aa405bb4d4472f3c799e8b6ec7d51c609e318eee8558bd"
+  },
+  "bindingInputs": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-art-binding-inputs.json",
+    "sha256": "e4cfcb659ac9143766db1ea760ed2c2f2f50cd283a58f79b5995eb898f90446c"
+  },
+  "bindingAudit": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-art-binding-audit.json",
+    "sha256": "5abaa2d92e8ca52e3748a0b40be5a9dc3bea4a75822e6fe039ca055fbe4170e6"
+  },
+  "finalSource": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-source/source-snapshot.json",
+    "sha256": "e4477ea30d618f8d3f76bab7379961ee5fb8cc668f580c84385626509bdbd1af"
+  },
+  "packages": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+    "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+  },
+  "scope": "Independent source/package disposition of the existing bounded author and root normal-view reviews. All original per-world scope and limitations are retained verbatim; no fresh visual observation is claimed by this metadata audit.",
+  "method": [
+    "Read the final candidate, the original candidate and binding audit.",
+    "Independently traversed every receipt route by exact source SHA, per-world coverage and edge adjacency; allowed only standard continuity and the explicitly reviewed baseline52 inheritance.",
+    "Checked every package manifest, exact final dependencies, unchanged observation scope/history and final evidence identities.",
+    "Re-read all consumed files before signing; no status from a pending candidate is treated as a prior pass."
+  ],
+  "results": {
+    "worlds": 108,
+    "activeArtBindings": 260,
+    "standardEdges": 31,
+    "explicitHistoricalInheritanceEdges": 1,
+    "playOnlyEdgesUsed": 0,
+    "packageDependencies": 307,
+    "frozenPackageDependencies": 306,
+    "manifestOnlyDependencies": [
+      "package-lock.json"
+    ],
+    "originalScopesUnchanged": true,
+    "supersededCleftReceiptsHistoricalOnly": 2,
+    "freshPngViews": 0,
+    "uniqueConsumedFiles": 874
+  },
+  "limitations": [
+    "This is a file, SHA, source-scope and package binding audit, not a fresh 108-world visual review. Original author/root observations and human-review limits remain unchanged.",
+    "Only plan.continuity, historicalBinding.continuity and the explicit root-approved old52 inheritance edge are used for art. boundedPlayContinuity is excluded.",
+    "Two superseded cleft-tableland receipts remain historical-only. They are not relabeled as final-source visual evidence.",
+    "Frozen-source verification covers all 1397 listed files. Of 307 package dependencies, 306 are listed and verified in both frozen source and working tree; package-lock.json is bound by package manifests and verified in the working tree only because it is absent from the frozen source manifest and copy.",
+    "This audit neither completes final runtime/production/performance gates nor converts null refs in the observed plan into passes. Fixed-process results, natural48 qualification and user aesthetic approval are separate claims.",
+    "No audio listening is claimed; listening acceptance remains I14. Existing process reviews retain their recorded original failures, local visual weaknesses and non-causal scope."
+  ],
+  "humanApproval": "pending; no original human approval is extended to the complete revision6 candidate",
+  "audioListening": "not-reviewed; R100-R10 remains an I14 release blocker"
+}

@@ -1,0 +1,7 @@
+{
+  "status": "independent-reader-schema-correction",
+  "createdAt": "2026-10-07T09:34:34.308345+00:00",
+  "scriptSha256": "ecfc1e69ce2b0c3406c25ee75526f5dd87b6092d656c7fe18b156f4ee58786d0",
+  "error": "Traceback (most recent call last):\n  File \"/Users/yilungao/coh/docs/qa/artifacts/r100-i10-i12/b11-current-qualified/independent-process-audit-shapes.py\", line 113, in <module>\n    assert j['entryState']['seed']==j['identity']['seed']==j['entrySave']['state']['inventory']['run']['dropPlan']['runSeed']\nAssertionError\n",
+  "cause": "新增审计把entryState.seed当标量；原schema是{seed,fragmentTypeId,recipeId}对象。按实际字段比较其seed与identity/dropPlan，并补recipeId一致。原24数据/资格无改动。"
+}

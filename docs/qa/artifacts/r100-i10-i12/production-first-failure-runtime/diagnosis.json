@@ -1,0 +1,128 @@
+{
+  "status": "failed-original-preserved-external-sleep-observed-awaiting-root-disposition",
+  "at": "2026-10-07T16:02:17.672849+00:00",
+  "originalReport": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/report.json",
+    "sha256": "cffeffdd4ec738243ab6017b9b0cf83011dae2e9b47f6ea9a2553b865ad91096"
+  },
+  "sourceBinding": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/source-binding.json",
+    "sha256": "3f22e21154d8255350804de66da1470c608b9dc495652e3d90340c1aaf8c0768"
+  },
+  "execution": {
+    "path": "docs/qa/artifacts/r100-i10-i12/final-runtime-command-preparation/production-execution.json",
+    "sha256": "7c3ac31e81d6830ce16c32ca9c9061dd6573d17876828edf96c2dfdd0a5c55ce"
+  },
+  "observer": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/worker-observations/observer-85087.jsonl",
+    "sha256": "336169a74595533e634f72d4c2dc3d3c851288a5e3185dd7249700879f6deae4"
+  },
+  "contextObservation": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/failed-context-observation.json",
+    "sha256": "69b446c414834ffbfbbfd2a5dfcdc75390bffa3d9b9cc3edb9e8d3a4e9899c79"
+  },
+  "systemSleepExcerpt": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/system-sleep-excerpt.txt",
+    "sha256": "4d2ece88d835893bb4e8078cb15b60d261defd864527aa766ad3c63db801b45b"
+  },
+  "failedSave": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/failed-case-saved.json",
+    "sha256": "6adce06b3872403c6e39e344524315139271c3c933277cfe4cffbeeebcc530bc"
+  },
+  "failedIdentity": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-first-failure-runtime/failed-case-identity.json",
+    "sha256": "6ca0812fc1b675030eb84a835cc914ef1e632b56b61997e54ca82db3dae60c5b"
+  },
+  "failureFrame": {
+    "path": "docs/qa/artifacts/r100-i10-i12/production-final108/silt-colonnade-medium-failure.png",
+    "sha256": "7e2826593dab98bdd8a820a3ea3392c6fcaf3c9f224d3292d96f5018e810d6d3",
+    "visuallyInspected": true,
+    "observation": "Scene and HUD rendered; HP100/100, chaos15, no result or pause overlay. This frame does not establish all ready predicate subconditions."
+  },
+  "attempted": 152,
+  "passed": 151,
+  "remainingNeverStarted": 172,
+  "case": {
+    "ordinal": 152,
+    "world": "silt-colonnade",
+    "grade": "medium",
+    "requestedSeed": 340,
+    "resolvedSeed": 1500724393,
+    "signature": "028dc1bf",
+    "package": {
+      "id": "r100-silt-colonnade",
+      "algorithm": "r100-native",
+      "version": 3,
+      "algorithmRevision": 6,
+      "materials": {
+        "granular-ridge": {
+          "definition": "dadfc46797b6df7d4868b89fb6ca6a759b880598b2ee698d97db40d33c6b8030",
+          "surface": "7261eb6dc1eecc662ba9f3b4c907752e3324de5319adc72a6306be737535222b",
+          "solid": "4217d2d52cb80e412cc704c494c27db37439e5ca5aba279353fd50da3eecee5d"
+        }
+      },
+      "dependencyHash": "0c93f504",
+      "grade": "medium"
+    },
+    "failure": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+    "caseErrors": [],
+    "savedElapsedMs": 0,
+    "savedPhase": "active",
+    "savedHp": 100,
+    "activeScenes": [
+      "RiftScene"
+    ],
+    "committedHistory": {
+      "version": 1,
+      "visits": [
+        {
+          "worldId": "silt-colonnade",
+          "grade": "medium"
+        }
+      ]
+    }
+  },
+  "readinessPredicate": {
+    "file": "tools/qa/check-r100-production-browser.mjs",
+    "line": 115,
+    "timeoutMs": 30000,
+    "required": [
+      "RiftScene active",
+      "player exists",
+      "nativeWorldPresentation exists",
+      "devRuntime exists",
+      "stagedEntry inactive",
+      "nativeEntryFence inactive"
+    ],
+    "limitation": "Original failure snapshot did not capture individual predicate values, frame fences, document.hidden or rAF/loop clock state."
+  },
+  "sourceAudit": {
+    "beforeRuntimeVerified": true,
+    "afterRuntimeVerified": true,
+    "servedSourceVerified": true
+  },
+  "sleepObservation": {
+    "sleepLocal": "2026-10-07T23:34:53+08:00",
+    "wakeLocal": "2026-10-07T23:55:09+08:00",
+    "reportedSleepSeconds": 1216,
+    "lastWorkerClosedUtc": "2026-10-07T15:34:55.257Z",
+    "contextClosedUtc": "2026-10-07T15:55:10.871Z",
+    "gapSeconds": 1215.614,
+    "interpretation": "The ready wait overlaps a recorded automatic Idle Sleep. Its wall-clock timeout was handled after wake; this is external interruption evidence, not proof of which readiness subcondition remained false or a replacement pass."
+  },
+  "browserObservation": {
+    "contextsCreated": 152,
+    "contextsClosed": 152,
+    "workersCreated": 606,
+    "workersClosed": 606,
+    "errorEvents": 0,
+    "failedContextPendingRequests": 29,
+    "incompleteCoverageExpected": 324
+  },
+  "suggestedDisposition": [
+    "Retain original failed case and151 passes unchanged.",
+    "If root authorizes, use a temporary process-scoped caffeinate -i assertion for real runtime commands; do not change permanent power settings, game clocks or deadlines.",
+    "Recheck exactly original world/grade/seed and compare complete generation identity to the extracted original; preserve both outcomes.",
+    "Resume only original never-started suffix under an explicit continuation protocol and exact coverage accounting. No equivalent or natural stage starts until production coverage is resolved."
+  ]
+}
