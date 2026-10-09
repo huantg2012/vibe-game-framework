@@ -1,0 +1,35 @@
+{
+  "createdAt": "2026-10-09T07:03:57.739090+00:00",
+  "executionReceipt": {
+    "path": "docs/qa/artifacts/r100-i14/continuous/final-execution-receipt.json",
+    "sha256": "47d8cff62c5174f59de1935a14439bd1caf16e709822f038df49b3a22fe67aa6"
+  },
+  "status": "owned-resources-closed-preexisting-cli-browser-retained",
+  "recordedOwnedServers": [
+    {
+      "pid": 14476,
+      "port": 3035,
+      "closed": true
+    },
+    {
+      "pid": 53926,
+      "port": 3037,
+      "closed": true,
+      "execSessionExitCode": 0
+    }
+  ],
+  "remainingBrowserOwnership": {
+    "browserPid": 87967,
+    "parentPid": 87964,
+    "parentCommand": "87964     1 Fri Oct  9 09:57:27 2026     /usr/local/bin/node /Users/yilungao/.npm-global/lib/node_modules/@playwright/cli/node_modules/playwright-core/lib/entry/cliDaemon.js default",
+    "classification": "Pre-existing global Playwright CLI default daemon, not an I14 imported-runner child. Started09:57:27 local before I14 frozen-source server03:40:42Z/11:40:42 local. No ownership authority inferred; left untouched.",
+    "processesListedInReceipt": 6,
+    "includesBrowserAndRenderers": true,
+    "terminated": false
+  },
+  "protectedServices": {
+    "3027": "No listener before/after; never targeted.",
+    "5174": "Original IPv6 *:5174 PID12890 remains identical; never targeted."
+  },
+  "scope": "All four continuous child processes exited normally. This is bounded owned-resource cleanup, not a claim that every browser on the machine has been closed."
+}

@@ -1,0 +1,1426 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T07:01:25.514Z",
+  "reviewer": "qa",
+  "disposition": "independent-four-bounded-pass-recommendations-after-complete48",
+  "tool": {
+    "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-release-gates-through48.mjs",
+    "sha256": "6056378f3bb581e5df44896218b320d6f7546faf77a0f7a80280c9414a076fea"
+  },
+  "release": {
+    "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+    "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+    "hash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+  },
+  "priorThreeGateRecommendation": {
+    "path": "docs/qa/artifacts/r100-i14/qa-release-gates-occlusion.json",
+    "sha256": "5ff3d45650e8f2ca8cb1189a298399bf072a4d502dde888004bf6bde445d34f0"
+  },
+  "recommendations": [
+    {
+      "id": "R100-E-I14-QA-COVERAGE-OCCLUSION",
+      "purpose": "release-gate",
+      "gateId": "R100-G-COVERAGE",
+      "kind": "automated",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "method": "Independent1398-source /108complete-payload /308dependency audit; Director-approved exact render delta and bounded new runtime validation explicitly bridge original qualification.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+          "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json",
+          "sha256": "f11b5b6a195f6d44aab1d523cfb7720d8bb7349d4be412cd6345943b5aeaddf8"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+          "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+          "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+          "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+          "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/index.json",
+          "sha256": "283022e27ed172a1f8d5ea7d26b929db73d48eec5eccc4e3aff26edbd05de281"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/actor-occlusion/package-continuity.json",
+          "sha256": "38433f4b825cb8e1206d7ffa81420378ecd746244c85226fae83539494b7a8c7"
+        }
+      ],
+      "scope": "108 worlds/324 grades carry their original bounded qualification through new dependency manifests. Only presentation query cache changed; all authored payloads exact,1396 original files unchanged,one changed+one added.",
+      "limits": [
+        "Inherited324 formal entry/cold restore and342identity checks are not new full-library executions.",
+        "Old performance74complete/1interrupted/33unstarted stays historical; current exact repair has only the preregistered four severe reference cases.",
+        "Six same-state actual PNG pairs had no visible partial occlusion; original-query tests cover edge semantics. No whole ART, human, weak-device or all-seed approval."
+      ],
+      "priorRecommendation": {
+        "path": "docs/qa/artifacts/r100-i14/qa-release-gates-occlusion.json",
+        "sha256": "5ff3d45650e8f2ca8cb1189a298399bf072a4d502dde888004bf6bde445d34f0"
+      }
+    },
+    {
+      "id": "R100-E-I14-QA-ECONOMY-OCCLUSION",
+      "purpose": "release-gate",
+      "gateId": "R100-G-ECONOMY",
+      "kind": "source",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "method": "Rebind the bounded closed I13 economic evidence after proving gameplay/CSV/economy/inventory are unchanged by the exact render-only delta.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+          "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+        },
+        {
+          "path": "docs/qa/rift-r100-i13.md",
+          "sha256": "ad768d15d034321406c1c39bf6c6de872fa724d2439a516479df2b7aa9defa57"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/root/closure-disposition.json",
+          "sha256": "dde7e13244140d8ab10cf7d124a072f4012a35c37fcc4b1ac59f150ebb78cb2a"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-preparation-budget.json",
+          "sha256": "54c3bda7b72a4c63a98bd65320c687a917cc8c07cdb8795e7bc1670c9bcc7294"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+          "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+          "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+          "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+        }
+      ],
+      "scope": "I13 bounded low/medium maintenance+actual growth, natural severe deep-contaminant return and subsequent ordinary affordable preparation; earned functional-effect chains with explicit ancestral replacements; B facility debt repaid from B receipts.",
+      "limits": [
+        "52 unique runs/208 financial saves/29638 existing assertions are not I14 new runs.",
+        "A alternatives cannot double-fund same boots; freeze uses ancestral stock and another Q4 severe admission fails.",
+        "Bdash0/fixed-recipe failure and full-line service margin-19 preserved.",
+        "No infinite supply, quality/deep-kindling premium, general grade profit ordering or required one-for-one item replenishment.",
+        "I14 first12/new36 are continuity regression, with no added profitability or exact-tool-refill requirement. This pass does not depend on pending trips being profitable."
+      ],
+      "priorRecommendation": {
+        "path": "docs/qa/artifacts/r100-i14/qa-release-gates-occlusion.json",
+        "sha256": "5ff3d45650e8f2ca8cb1189a298399bf072a4d502dde888004bf6bde445d34f0"
+      }
+    },
+    {
+      "id": "R100-E-I14-QA-RECOVERY-OCCLUSION",
+      "purpose": "release-gate",
+      "gateId": "R100-G-RECOVERY",
+      "kind": "automated",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "method": "Inherited original31/four contracts and currentChrome155 three-grade pause/trusted blur, plus independent new1398-source three-grade same-checkpoint formal cold restore. State/save/focus code unchanged; constructor allocation path newly exercised.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+          "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-first-cold-audit.json",
+          "sha256": "5fec2f7aca315a9d3f15a02db03304c3db2f943eedd5b91e33fb4c7d34691d2a"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-three-lifecycle.json",
+          "sha256": "e0a204a64fc723769c7265bfab9d655790bd2127c104793277d71648e57f924d"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-focus-native-audit.json",
+          "sha256": "40714a1131d3de60b49d0d8cfdc48988de44f97f3a5f8afcffd805eb7b424fb8"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/focus/native-v2/report.json",
+          "sha256": "a28e1f5ed177610b359b45b4b2df29997788298cc3209e317ba20fec35d6d3d0"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json",
+          "sha256": "0f6eee447bdc4faef6ed19598ca974035ec74bdbea1beeef65d7ee49118af198"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-cold-continuity.json",
+          "sha256": "d8df70bc0906b1f03d46bf99811981d29454f92de52b13a2b1a21b6532acb35d"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+          "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+          "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+          "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-render-entry-review.json",
+          "sha256": "6c6c3bd23109393b0d258b1b52ef19de1b8ebc2751ab6b8bf63fe39f341b54df"
+        }
+      ],
+      "scope": "The original saved low/medium/severe records cold restore on the new source with only sequence/checksum recommit and retained normal first-frame evolution. Identity/grade/pressure/reward/inventory remain exact. Earlier pause/trusted blur evidence transfers through byte-identical lifecycle logic; no claim these focus branches were rerun on1398.",
+      "limits": [
+        "First low strict byte assertion and first headed default-focus failure retained, both diagnostic-tool causes; no production change or replacement natural run.",
+        "Current first runtime frames advance16.66ms normally, with38/54/58 leaf changes explicitly retained; no exact-zero-time runtime claim.",
+        "Focus generated actual trusted blur only: document.hidden stayedfalse. Hidden-visibility and OS application focus were not newly observed.",
+        "Current Chrome155 only; no new Firefox/Safari/weak-hardware compatibility claim.",
+        "Historical31 recovery/four freeze/324 formal restore coverage is inherited through the approved exact render delta, not rerun in I14.",
+        "Does not sign perceptual audio continuity, visual quality, final user approval or completion of the48-sortie stability task.",
+        "New-source cold first-complete2695/2913/2739ms are three individual cases, not populationp95. Normal first-frame16.66–16.68ms and38/54/58 leaf deltas retained; website/base51–487ms tasks remain."
+      ],
+      "priorRecommendation": {
+        "path": "docs/qa/artifacts/r100-i14/qa-release-gates-occlusion.json",
+        "sha256": "5ff3d45650e8f2ca8cb1189a298399bf072a4d502dde888004bf6bde445d34f0"
+      }
+    },
+    {
+      "id": "R100-E-I14-QA-EXPEDITION-48",
+      "purpose": "release-gate",
+      "gateId": "R100-G-EXPEDITION",
+      "kind": "automated",
+      "status": "pass",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "method": "Independent whole-save adjacency, unique-run identity, actual grade/settlement, inventory conservation and explicit two-source bridge across four preregistered batches; retain the original I13 preparation and tool-effect evidence.",
+      "evidence": [
+        {
+          "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+          "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-48.json",
+          "sha256": "10fb79d8a50f3305150ef6855b7e199d15fd2ad090856eddca723234d5e37221"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-48-accounting.json",
+          "sha256": "5c1f1bfed70c79be1be85a71953e4646048b8c4b884c7ccddf98652fdd9eebc6"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-run-binding.json",
+          "sha256": "6d619a1bf6573f53a4338b6185959f9a54ae26329e9bc58d93201a81e357b460"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-release-gate-recovery.json",
+          "sha256": "664373086d515cc55bad66db072d270baaccb27aab86098811bdeafc39f40b0d"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/qa-render-entry-review.json",
+          "sha256": "6c6c3bd23109393b0d258b1b52ef19de1b8ebc2751ab6b8bf63fe39f341b54df"
+        },
+        {
+          "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+          "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+        }
+      ],
+      "scope": "48 new continuous sorties from one actually earned A23 terminal: low/medium/severe16 each, all six material families naturally sampled, formal preparation/entry/search/return-or-death/base settlement and next departure preserved. First12 ran on1397 source; remaining36 ran on the explicitly qualified1398 exact-render-delta source.",
+      "results": {
+        "uniqueSorties": 48,
+        "rawFinancialSaves": 192,
+        "conservationAssertions": 53604,
+        "byGrade": {
+          "low": 16,
+          "medium": 16,
+          "severe": 16
+        },
+        "byFamily": {
+          "broken-shell": 9,
+          "membrane-rim": 11,
+          "gel-flow": 7,
+          "fibre-knot": 7,
+          "granular-ridge": 5,
+          "folded-slab": 9
+        },
+        "outcomes": {
+          "extract": 47,
+          "death": 1,
+          "emptyExtracts": 0
+        },
+        "totals": {
+          "banked": 1154,
+          "repair": 641,
+          "growth": 38,
+          "deaths": 1,
+          "emptyReturns": 0
+        },
+        "terminal": {
+          "cash": 510,
+          "modules": [
+            {
+              "id": "CORE",
+              "type": "CORE",
+              "hp": 52,
+              "maxHp": 145
+            },
+            {
+              "id": "STORAGE",
+              "type": "STORAGE",
+              "hp": 101,
+              "maxHp": 145
+            },
+            {
+              "id": "PURIFIER",
+              "type": "PURIFIER",
+              "hp": 54,
+              "maxHp": 145
+            }
+          ],
+          "serviceDebt": 0,
+          "originalCapitalDebt": 1
+        }
+      },
+      "limits": [
+        "One earned player lineage, not48 independent players. Natural identities were not rerolled; gameplay deaths/losses/empty returns remain in the denominator.",
+        "The original first low strict-byte assertion and its same-run recovery count once. The v3 origin mismatch stopped before departure and adds zero natural runs. Diagnostic focus, render entry, performance and resource branches are excluded.",
+        "This is the original I14 bounded stability/grade-selection sample, not a new profitability, exact-item refill, unlimited supply or all-world/all-seed gate.",
+        "Only the first three natural sorties received the full pause/cold lifecycle insertion; later isolated new-source cold probes do not mean all48 were cold-restored.",
+        "I13 preparation/tool-action success and failures retain their original scope and ancestry; current mature ancestral inventory is not newly earned supply.",
+        "Automated route completion and accounting do not sign enjoyment, current overall ART, listening, fatigue, weaker hardware or user final acceptance."
+      ]
+    }
+  ],
+  "remaining": [
+    {
+      "gateId": "R100-G-ART",
+      "status": "pending",
+      "reason": "Current overall visual/continuous experience and human judgment are not replaced by bounded exact-render/static evidence."
+    },
+    {
+      "gateId": "R100-G-RELEASE",
+      "status": "pending",
+      "reason": "Actual weaker hardware, real listening/fatigue and RC-bound user final acceptance still required."
+    }
+  ],
+  "sourceAndEvidenceBindingsVerified": [
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/release-candidate.json",
+      "sha256": "fed6fb7896644ca74214ed6a8f265b2cebc40b49623393f8d68dabd5e1153be8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/packages/index.json",
+      "sha256": "283022e27ed172a1f8d5ea7d26b929db73d48eec5eccc4e3aff26edbd05de281"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+      "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-delta-recommendation.json",
+      "sha256": "f4052ed6f23698e0d79a1fed89a9eb46492501929882228401b2d1022f9082ca"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/package-continuity.json",
+      "sha256": "38433f4b825cb8e1206d7ffa81420378ecd746244c85226fae83539494b7a8c7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/code-verification.json",
+      "sha256": "46ed39effe164a0cfc240987c4db72c50974d84c56cfc28c90579478856cbd82"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/occlusion-visual/report.json",
+      "sha256": "7293d36bf004561c995a5a3d2e2a94df29cf094e6893f8fa0f5b323a3b649282"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/occlusion-visual/manifest.json",
+      "sha256": "643376a49afc528a6517520a65ee158d356e3091264e2148ce4903c317276619"
+    },
+    {
+      "path": "/Users/yilungao/coh/docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-batches.mjs",
+      "sha256": "2fb245641155d86e4f0b0807f6c7d2d2c17c82280d9c3752496649847d85ca01"
+    },
+    {
+      "path": "tools/qa/check-r100-i13-accounting.mjs",
+      "sha256": "4c8e910b3d2d009b3809224952063501bf5c437ea4df372d82e54229fb77eb20"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-48-accounting.json",
+      "sha256": "5c1f1bfed70c79be1be85a71953e4646048b8c4b884c7ccddf98652fdd9eebc6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/policy-freeze.json",
+      "sha256": "d911b4babefe449b312ea4cb08ef0dd1663cd0ecf9871052e0f4251a5df4e260"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/policy-freeze.json",
+      "sha256": "24bcb03e0717aaf59d16ff54ce8b0366593de09c36ce7cac9adc155a35bcd3cf"
+    },
+    {
+      "path": "tools/world-study/r100-i14-continuous-journey.mjs",
+      "sha256": "7ac2a052efd25158dfe6e1e53c9404efb88a13f44839b815539f16a8950dce6e"
+    },
+    {
+      "path": "tools/qa/r100-i14-lifecycle.mjs",
+      "sha256": "201857168f860e783634b34472ab893b765e1295381664b5bf5c0d0fa1c24e24"
+    },
+    {
+      "path": "tools/world-study/run-r100-i14-continuous.mjs",
+      "sha256": "07a84c18c7b22a16c97d45a18f5cbba06b5a64ffbe0fdb7b7c52977c9502948c"
+    },
+    {
+      "path": "tools/world-study/r100-i13-bounded-journey.mjs",
+      "sha256": "6855b51dd82d9ef9fcb308f0293c893f55dff2e6a6f7856db55167826dcbec10"
+    },
+    {
+      "path": "tools/world-study/r100-i13-retry-policy.mjs",
+      "sha256": "38e6bd457a2397bb00ca8a73e637b3c6bd471b36a98aeb53d91c996a8456ec33"
+    },
+    {
+      "path": "tools/world-study/r100-i13-functional-policy.mjs",
+      "sha256": "4faf37eb6e1d3adf3ee39f7db91357d4713fc7eb04ac3d34dd61281abca41fa9"
+    },
+    {
+      "path": "tools/world-study/r100-i13-continuation-encounters.mjs",
+      "sha256": "d9a422f9bbcfe6137aca4738d02b0b46f8e0f4ea01f59e37be280e82228ece8a"
+    },
+    {
+      "path": "tools/world-study/r100-i13-continuation-policy.mjs",
+      "sha256": "374d1f925b026899e3bc0b85a6f4c7e3b7a67829f60f0a0382ee2a605ccfd427"
+    },
+    {
+      "path": "tools/qa/r100-i09-tool-slots.mjs",
+      "sha256": "1e224d58e19e7308163e08e43a380455e7ad4f7aaf0697f6e734a56f4944943c"
+    },
+    {
+      "path": "tools/qa/i27-journey-driver.mjs",
+      "sha256": "082781a99b0da312cf7711b5ea95cf136a6cc353e200dce0d4ed6aaec3929914"
+    },
+    {
+      "path": "tools/world-study/r100-frozen-server.mjs",
+      "sha256": "75bc54d4dd2ad3a1eff93069a7121288e829d055e1903420cf6b99b11a502ae7"
+    },
+    {
+      "path": "tools/qa/check-r100-i14-runtime-budget.mjs",
+      "sha256": "b210221d13e1abad22743d330742bc1b9e7362aa33b118944ad6e01418cdbbb1"
+    },
+    {
+      "path": "tools/qa/check-r100-runtime-budget.mjs",
+      "sha256": "78d568151dee13888730d757e2e7cddb59032a2e00975e0ab91bfa61ac23f868"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "97189266199c56f2f04f5054f01620aa6b866f2e676450abbca415ed2f7cfe88"
+    },
+    {
+      "path": "tools/world-study/r100-i14-continuous-v2-journey.mjs",
+      "sha256": "67caacdce212cf6d65ba8ac88c3e43fef6fd99e2420621cbdf273d2521eac2e1"
+    },
+    {
+      "path": "tools/qa/r100-i14-lifecycle-v2.mjs",
+      "sha256": "8a2ecc10c2727a0c507a1987097da6265e9c724f70e721f92a2528493b324646"
+    },
+    {
+      "path": "tools/world-study/run-r100-i14-continuous-v2.mjs",
+      "sha256": "9da06fc1714cdca0972c94d3f0d0af4413b0974d04323abe8d54f09b71a0348d"
+    },
+    {
+      "path": "tools/world-study/run-r100-i14-continuous-v4.mjs",
+      "sha256": "04015702464cfdd62667eac9b2cf937f0472a137a8b6e88210e5d8d0449bacff"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/task-preregistration.md",
+      "sha256": "c42e4df0df1e416211fd6a7100e396c318f51bb7e9f2ade7db2d697e74823356"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/delta-freeze.json",
+      "sha256": "252443e1c9b8d172df250b4563608ef2ca0b5674140ccd9c060d35c61dce69dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+      "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/report.json",
+      "sha256": "beb757b8eb7ec85e0f0fc3d5d5be81c90093d8cec617bab58f160ddc016ea791"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/browser-storage.json",
+      "sha256": "a7270c01da624d2c2ca3e3aa6c9eed6360d7a4321e97b950af0babf4ab0e83f3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-browser-storage.json",
+      "sha256": "b74f66dba20f71f344aa3752ed663e0a630cdaf0d3c00d1a89e5901eac7dabbd"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/initial-origin-proof.json",
+      "sha256": "5b7d88e41892e5e6ab8e2eeca0e5cc030415588868c562b3c0a0f579ca0e1484"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/policy-freeze.json",
+      "sha256": "92fadc684b129b05e8668e2d39d4c0f0a5ec11164148bb309e616fbe9c180d2b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/report.json",
+      "sha256": "6d033ec04618e671ed63cecb27b1b999df9409837067932e1784358841189902"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/execution.json",
+      "sha256": "0f1db682d5d9d4af604cdfa2727469059a45ff8102a238e57161d28695950f39"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/i14/13-before.save.json",
+      "sha256": "2a0d582c6371e4e5c5d1315dd0d5c593dbf698e178cc11836544cc83277ab263"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/i14/browser-storage.json",
+      "sha256": "5b6722d995ee5ba1c8a3043a4496dfdca6acfd12a4043ba2a0aaf4b90bdcd88b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-continuous-through-12.json",
+      "sha256": "8f5cecfa469ddd071a36aa11cb7964fab8fbbb8c9877e67e92e35d3ccfc3ff20"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-actor-cache-code-review.json",
+      "sha256": "bbce9ddabfad7ab630f3c067b1a31763bb78e2048a31cd26faa7d02c32884f7c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-reference-runtime-after-cache.json",
+      "sha256": "7f520d81b9366dae8a2bfc597c13e416ca0df64063a05b486b072f3fccd3bcb5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-render-entry-review.json",
+      "sha256": "6c6c3bd23109393b0d258b1b52ef19de1b8ebc2751ab6b8bf63fe39f341b54df"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-reference-resources-after-cache.json",
+      "sha256": "d5552d35f19295e1a49e78ab861ea94335fa558f1fffaea804f7b3fa44321322"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-origin-mapping-v4.json",
+      "sha256": "1d536970780f4c21e94bf8962f8c7225c951311fea5708bdc59950a00a988904"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/a-target-recovery/a-same-run-recovery/i13/2-after-preparation.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/execution.json",
+      "sha256": "930c147bbc43551b240d383c0b0ccfd0562cef44a336997d1e1de2186010ba1c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/batch-input.json",
+      "sha256": "4c391b14ef91e4deca2770cbb298ac42ede8c4d072f3a80737f3610efddc5d36"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-before.save.json",
+      "sha256": "0976e6bc81587182da9604d640d86319f87c7e091dafc6027e75fecdd7f48090"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-entry.save.json",
+      "sha256": "89e8bc364658a2acbead23667dc83f0049efb6c937a481c681ea5848ffb2075a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-returned.save.json",
+      "sha256": "0fe553e5de9a802686617f140ce9ffdca864bb48253d327f926c67cda15fbb29"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/1-after-preparation.save.json",
+      "sha256": "9ecb6400c762ed41e886bed50b23e95e602042b3f417b99af6df025bea563087"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-before.save.json",
+      "sha256": "9ecb6400c762ed41e886bed50b23e95e602042b3f417b99af6df025bea563087"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-entry.save.json",
+      "sha256": "688fff48e23b1e3cd0135a98a6044747ee4609cfe3b2bcb8cd3a60bfad5c3f71"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-returned.save.json",
+      "sha256": "3e82fe5256879932fd9a32296af86714a124e05aec6dbece0d0f33838f3975f5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/2-after-preparation.save.json",
+      "sha256": "bf8dac454c442fce5986c02bb52acbda0555c8296abfb3ab40dddb9999fac303"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-before.save.json",
+      "sha256": "bf8dac454c442fce5986c02bb52acbda0555c8296abfb3ab40dddb9999fac303"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-entry.save.json",
+      "sha256": "e33bf0d898debc424693c47592be36dda8febb3e333ae9898c0133059845a374"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-returned.save.json",
+      "sha256": "9f3fdd95a26e9d60f3f77f2756f7fade0fc8089b200c3d1a39201f350e12f958"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/3-after-preparation.save.json",
+      "sha256": "10781c51031f2d6c627bdff173265d0d19688007e148761ee6451f1001a63333"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-before.save.json",
+      "sha256": "10781c51031f2d6c627bdff173265d0d19688007e148761ee6451f1001a63333"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-entry.save.json",
+      "sha256": "d6ce801c9db03ee2188a523986e670b2ec0ded4cd45b4ecd14732dc0261f744c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-returned.save.json",
+      "sha256": "5460d7957f707fb6eebe59bae5aae284aa7f703abcf3fa0ce2b30456bfac8f2e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/4-after-preparation.save.json",
+      "sha256": "d9a641f11c1e416d1db27eb68f22431c5e24b4ead1e07ac8f8b9150130162b13"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-before.save.json",
+      "sha256": "d9a641f11c1e416d1db27eb68f22431c5e24b4ead1e07ac8f8b9150130162b13"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-entry.save.json",
+      "sha256": "686868d1207182b1d4ec7c71f2ae86fa1ec87c9443a7ef129e7f4ffd8bb4526d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-returned.save.json",
+      "sha256": "4aca96488aa1dc2f3bec488585b564a5dd3202a6827619985abffb566da0e948"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/5-after-preparation.save.json",
+      "sha256": "14e98f7d9ec00af85bb2047caa9cf03e8a4305ca6f4fbda16a43fcca7cff8da6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-before.save.json",
+      "sha256": "14e98f7d9ec00af85bb2047caa9cf03e8a4305ca6f4fbda16a43fcca7cff8da6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-entry.save.json",
+      "sha256": "6fdf3b2ef29339754ace4b93b304874f55a7123f70668b18230d2f86e7d86596"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-returned.save.json",
+      "sha256": "7b874eb3ba78e4e178d55e5d07e3ffcf59b9fba7f93dc2c86bdfe17419910540"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/6-after-preparation.save.json",
+      "sha256": "0d81f9cf05e2cf5cbf1e2e48fc4b9ada65b1f41995e321d738795199512b8165"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-before.save.json",
+      "sha256": "0d81f9cf05e2cf5cbf1e2e48fc4b9ada65b1f41995e321d738795199512b8165"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-entry.save.json",
+      "sha256": "30e2877e041e4744e40069dc85b47fe2f93e76b724b454df7e4b6e21e3f9b2bb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-returned.save.json",
+      "sha256": "5b206181ad9176f89b589fae2b9f2f911732515f31a2b30e67a41f762509c3c3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/7-after-preparation.save.json",
+      "sha256": "b666e333ad9fd45502e6fae41303ac127fa07d4574b9512e4423b0009a907241"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-before.save.json",
+      "sha256": "b666e333ad9fd45502e6fae41303ac127fa07d4574b9512e4423b0009a907241"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-entry.save.json",
+      "sha256": "084628fff304c62d6acb167ef0890e39d7ff0a0df8a5a0f96bc75f27bc455a5b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-returned.save.json",
+      "sha256": "73843aca71c89b66e63d65a8ea12408c3022ecccd80e84bc49c9032a7b522b04"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/8-after-preparation.save.json",
+      "sha256": "81624825bc49bf251bb5f47b44756c9ba66fe6e6a88b9dc5ab131453b3d08785"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-before.save.json",
+      "sha256": "81624825bc49bf251bb5f47b44756c9ba66fe6e6a88b9dc5ab131453b3d08785"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-entry.save.json",
+      "sha256": "effa324ac8e331770da3ae2a07287dade4fd2a0bace1bb24e0ab843e3dd7959d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-returned.save.json",
+      "sha256": "9b1f33df0673eeb3031beaebd616bb0dff5654656d16b1082d4c753f9c41ce0e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/9-after-preparation.save.json",
+      "sha256": "f1f7606894bedb192a1c3ac6c06f18e8353b0cfe544aa4ef80108fe3de1b3dd1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-before.save.json",
+      "sha256": "f1f7606894bedb192a1c3ac6c06f18e8353b0cfe544aa4ef80108fe3de1b3dd1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-entry.save.json",
+      "sha256": "c205205b191c53ff5c5207bbe6634de2d3a9f71efc1d6bc750aee5227e2e0027"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-returned.save.json",
+      "sha256": "3b6f20176bc50fd81733553e2fa8aadab4d5d8674b1488ad424f3a386d9c4b2c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/10-after-preparation.save.json",
+      "sha256": "19adc465759fefe4a7119c09d6fa4ab6bba141c3a180e62685743f9b5ec197c1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-before.save.json",
+      "sha256": "19adc465759fefe4a7119c09d6fa4ab6bba141c3a180e62685743f9b5ec197c1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-entry.save.json",
+      "sha256": "5435224ea5c9482e0a50a8d18be87d1a2a29740c8918db4ee104807cffee5659"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-returned.save.json",
+      "sha256": "d29df9f8be2e1028f205a92dcf25db4e18c46980024b42812e418978bf8587b4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/11-after-preparation.save.json",
+      "sha256": "9f0b8c5fa3f4e7f703023c0a76938f46356156d6785232bd61017ff9131a0d1b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-before.save.json",
+      "sha256": "9f0b8c5fa3f4e7f703023c0a76938f46356156d6785232bd61017ff9131a0d1b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-entry.save.json",
+      "sha256": "c2cb939e66f15ca0bc9d4d0a2968e5cd60aa8ad2395151b1989c2ce6c6f072ca"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-returned.save.json",
+      "sha256": "4ea8ee7bbab03123f6905d4eb08e155ee3905ad249fcde49105e9b7b7e5c5bc5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/i14/12-after-preparation.save.json",
+      "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/report.json",
+      "sha256": "bc08c391412d52fb5121bd86edc1efcfc4dc9a2a7dce718166e02899f28825a2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/execution.json",
+      "sha256": "af84100cd044b01b9f4efeed90932a38187599d28bb3159a3e405de99a41a99d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/batch-input.json",
+      "sha256": "64274f7e0f83dcbfe0896c335563b10554ecc203f44ecff754238368d94ea0a8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-before.save.json",
+      "sha256": "c49c3438d240feaf7d1fc1edcaba6f151f6231ccfc3deb302599ac672ee69a94"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-entry.save.json",
+      "sha256": "23e3ad7089b237382610892f0437678b4a6bd3a063944517f5da1950dbaaad69"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-returned.save.json",
+      "sha256": "912e6dbc86c402c4fcf0af7f7c4059dc77e6047468b6f20093899e076df8f038"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/13-after-preparation.save.json",
+      "sha256": "e54804981666fde5d608a6599846dfd7381a46aaa56406b562ce809b6f56d86b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-before.save.json",
+      "sha256": "e54804981666fde5d608a6599846dfd7381a46aaa56406b562ce809b6f56d86b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-entry.save.json",
+      "sha256": "480843b80c9460d1739718cbbbae3abc819c2aadd32bb20bedaba2e6fdae6da6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-returned.save.json",
+      "sha256": "cab5ed7b50ceb57a651349e175b918030204d95cebcf23ca3c089d4654a0e611"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/14-after-preparation.save.json",
+      "sha256": "e828d52a8c77bdc3f18379c640644d05f4b65f2d8fd176d0754334b9a0faa055"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-before.save.json",
+      "sha256": "e828d52a8c77bdc3f18379c640644d05f4b65f2d8fd176d0754334b9a0faa055"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-entry.save.json",
+      "sha256": "a66f5d74a8dc4e9a6ae50431e10ae1982665cfea6378500ff3ec8d3674d0dbc4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-returned.save.json",
+      "sha256": "6e23d1e753933606fbe9824e00618fefd4cd2eacade71646cf97de0d35635158"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/15-after-preparation.save.json",
+      "sha256": "de2e87eadf1cca6f982f58f6ea347a8b76748b6646a8d6f93ae1dc3405f5ef3d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-before.save.json",
+      "sha256": "de2e87eadf1cca6f982f58f6ea347a8b76748b6646a8d6f93ae1dc3405f5ef3d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-entry.save.json",
+      "sha256": "c68d10660e4c6f99731a0bbbe5d7d7df166f79f33c2e03eb0f7c9a499222627e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-returned.save.json",
+      "sha256": "19fe648f9bbb95e6d67fe5846751397f86aeea264b9856c68c3d6e927a2a2ab6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/16-after-preparation.save.json",
+      "sha256": "136427e28df3fe20deeb85c7e5ce340ad12b58d02e3f3418257f4e54620ce9f0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-before.save.json",
+      "sha256": "136427e28df3fe20deeb85c7e5ce340ad12b58d02e3f3418257f4e54620ce9f0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-entry.save.json",
+      "sha256": "3aee32b4f2351f6ef6876ddf9a3ce76da621b3d5bda4b99e331bcc20c9de83c0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-returned.save.json",
+      "sha256": "e7ea6aec36b94489fdd2415e2dd547671ccf350c86ba039d64b74975c4487351"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/17-after-preparation.save.json",
+      "sha256": "7cff6fa3999312a74d2684a81ed80d14d0b6baef567c66a4a7a2089723528626"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-before.save.json",
+      "sha256": "7cff6fa3999312a74d2684a81ed80d14d0b6baef567c66a4a7a2089723528626"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-entry.save.json",
+      "sha256": "8d982adbe1f32fe13bd08c53a1bfc753909e3bcef40dabc0c3020e1fb44c34f4"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-returned.save.json",
+      "sha256": "1b81263e1c8d941b73430322f9024cd7d3ac1ea504b09d0069f6dac2fb8ea677"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/18-after-preparation.save.json",
+      "sha256": "105ae946a31d58d67b7e9a41a4d9445efc61515304a285ab90a3c033006e5e75"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-before.save.json",
+      "sha256": "105ae946a31d58d67b7e9a41a4d9445efc61515304a285ab90a3c033006e5e75"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-entry.save.json",
+      "sha256": "1a29ad01a3ab05a44971ac1a0ec96da67d6265ad9da71c385d5df04a0f6faba8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-returned.save.json",
+      "sha256": "ca6d1a09c128c43528181ef72d6a67d9a1fe3f10bbcfba8e9b0ed58b646abdc1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/19-after-preparation.save.json",
+      "sha256": "d0e353a52576c5ccf645282e5523d6f9072351e49f6b443e5b8772be9687c7dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-before.save.json",
+      "sha256": "d0e353a52576c5ccf645282e5523d6f9072351e49f6b443e5b8772be9687c7dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-entry.save.json",
+      "sha256": "8e95b1a8e681d48ee49c79293578bd6f80a44302d5aa2a247ddd8bf6b2f52720"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-returned.save.json",
+      "sha256": "79ee2907e429774f76cc2713aa2d2a9db05dd04beeb593d43b2656396e6a3a2f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/20-after-preparation.save.json",
+      "sha256": "dc90f2e915ce1e9f035c940850baf5bc7480e13f7ba97d9b122de8b063a2c734"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-before.save.json",
+      "sha256": "dc90f2e915ce1e9f035c940850baf5bc7480e13f7ba97d9b122de8b063a2c734"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-entry.save.json",
+      "sha256": "178d539b85ca188a0e13d8253b652755f7154c9e1823001954a8d9721342bd16"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-returned.save.json",
+      "sha256": "ffb13882cb182ca20e876c2e00ceafabee7a57f9d5bdd679d9058f5c314a7957"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/21-after-preparation.save.json",
+      "sha256": "0bb9a5e0bde98236c09f2561c0a355b62128a5e7e7f62540346c668d9095c8b6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-before.save.json",
+      "sha256": "0bb9a5e0bde98236c09f2561c0a355b62128a5e7e7f62540346c668d9095c8b6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-entry.save.json",
+      "sha256": "842a9051c3d96a5b51411db4ff11eb8aae33e259ccdf4ca380b6996dbec8cbe5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-returned.save.json",
+      "sha256": "b445aae0d91c78ba544c56977e3bddc27bad7c379d98c32ef7a55f9645d75f69"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/22-after-preparation.save.json",
+      "sha256": "8f8ca6f10b4106c8809a49f144dab8c9e6209f148f3e72bf6b809f825d63c644"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-before.save.json",
+      "sha256": "8f8ca6f10b4106c8809a49f144dab8c9e6209f148f3e72bf6b809f825d63c644"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-entry.save.json",
+      "sha256": "9e9e7db98584c967cc7971f69da3d93686d53599660595c52f417bb2ff8fd830"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-returned.save.json",
+      "sha256": "5e8f357340495c37bb0ddf94cf226917a4a657064e05c22c5b349acbbbce5474"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/23-after-preparation.save.json",
+      "sha256": "118e2bf838ebe43447ede17c3678125d922e5da107176b3be11ec3ddd731093e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-before.save.json",
+      "sha256": "118e2bf838ebe43447ede17c3678125d922e5da107176b3be11ec3ddd731093e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-entry.save.json",
+      "sha256": "766670284475db2373c0ce73108e9b3cf24302af66252e069c1e406293888a70"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-returned.save.json",
+      "sha256": "d7cfb69b828217c8be780263b9e9545da490dff151731041fdee6ef6979519a8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/24-after-preparation.save.json",
+      "sha256": "46c245087bad667eda67cb586c0c9db259940db6fe95f8d2fc8ec22c41f6a350"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/i14/browser-storage.json",
+      "sha256": "781b664688f627648bc4e34aab1674939c8d82c58ffffdaf6a58b8dd4c962c20"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/report.json",
+      "sha256": "9202023edbc5f5806455161610a2ee75a45182fd65aaa8f2b21f114aed5c4c74"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/execution.json",
+      "sha256": "dcd83cc05d0d0d9a94d6622498332bf06095a35333d9e086be6c6e49ea5c27bf"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/batch-input.json",
+      "sha256": "92fcdc1d86cf9c87b9cb0fbe938cdf5c9762577cae626482dce6b9cae3bfea78"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/input-origin-proof.json",
+      "sha256": "5c3bd837bd18bf2bd9d7297b1b484aac9b09a6ff9c0704d27deb7d554b127aba"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/input-browser-storage.json",
+      "sha256": "1e590c8796a2174f0cff3e2389082ec206e21cf8ed45e1fc89f04ce6cc0c3111"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/25-before.save.json",
+      "sha256": "46c245087bad667eda67cb586c0c9db259940db6fe95f8d2fc8ec22c41f6a350"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/25-entry.save.json",
+      "sha256": "fcac5d203893cb22c3145e95921d9c8d7508f2a501df1b2a603faa65647df449"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/25-returned.save.json",
+      "sha256": "e7d3531c1319091ca7a2206d8ebdd784e18af42c7929addb68e71ba415772651"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/25-after-preparation.save.json",
+      "sha256": "dd07ba3fcd5d6004cf7525772339c1e2e5819f6cd4fcd9729a1e19ca23b4191b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/26-before.save.json",
+      "sha256": "dd07ba3fcd5d6004cf7525772339c1e2e5819f6cd4fcd9729a1e19ca23b4191b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/26-entry.save.json",
+      "sha256": "05f0b8097dd95e3e7d78e934b3bb6e312acdf1d198db1ddbc4aea6d109ff412e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/26-returned.save.json",
+      "sha256": "d62a578d100fddc2249a3b2923a88e5fbae739db65d22c8d72b1d32f896f53bb"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/26-after-preparation.save.json",
+      "sha256": "eb516901725942ad85c592f4055fd33e2e0de3f620a666b00ce3bb166172f7fa"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/27-before.save.json",
+      "sha256": "eb516901725942ad85c592f4055fd33e2e0de3f620a666b00ce3bb166172f7fa"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/27-entry.save.json",
+      "sha256": "a33e8befb4b2d8c6b9ec5b741044eacce01dfff3013df5b6126342a6dc67ea4b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/27-returned.save.json",
+      "sha256": "a076ee2853948939e619883ad487b51588fa70c16bb4749e377b3f5c79e73232"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/27-after-preparation.save.json",
+      "sha256": "c93a725644588772f7d9c7deec19e46cc87c1f3459cc840dfb2ed3ce869a6446"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/28-before.save.json",
+      "sha256": "c93a725644588772f7d9c7deec19e46cc87c1f3459cc840dfb2ed3ce869a6446"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/28-entry.save.json",
+      "sha256": "669272bcf9efdf8a19ad0078a7a1ad75e6b8e65615ba26f8ab193e953734964e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/28-returned.save.json",
+      "sha256": "533a3b28adbc66454ad80315cce2e3f99573c2533e805c0dcef132eeb8272173"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/28-after-preparation.save.json",
+      "sha256": "e053b51b2f0f78e7b30fde0e79cb973b08a7b07e67382758bbc55bab102419d2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/29-before.save.json",
+      "sha256": "e053b51b2f0f78e7b30fde0e79cb973b08a7b07e67382758bbc55bab102419d2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/29-entry.save.json",
+      "sha256": "ecfdf0db532fb557b864b11bacd1ea30a7144a72eaf508bfe7d9843b15e62a74"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/29-returned.save.json",
+      "sha256": "d5b5ddb36e00c44b874ed5b0d191be06f43eb555f90d1373560bca1145f77bc2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/29-after-preparation.save.json",
+      "sha256": "874b4c7938113743e8ad330ac300c6e8320dcaa02e38edfc7b57d4dfb4193219"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/30-before.save.json",
+      "sha256": "874b4c7938113743e8ad330ac300c6e8320dcaa02e38edfc7b57d4dfb4193219"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/30-entry.save.json",
+      "sha256": "e717fc7d4c4208d9c9dc6ce9967c132d8c10ace093f530f04ecb02a67201ffb6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/30-returned.save.json",
+      "sha256": "b4a95d84f5da1f05f3bfd87daffb45d2ca56754dd1f0aeddd84bd2695548bec9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/30-after-preparation.save.json",
+      "sha256": "700b5f9976ccb49b0cf0e4f714ff28bb773668e450dcf50713e24b67234b550e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/31-before.save.json",
+      "sha256": "700b5f9976ccb49b0cf0e4f714ff28bb773668e450dcf50713e24b67234b550e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/31-entry.save.json",
+      "sha256": "fa371b27db6e82121418433a629306f09d38f10b7a2ddb5bb3b1126f8af50790"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/31-returned.save.json",
+      "sha256": "45f62f93ce5fef1b9f7c7c163249e51718a906a615d308dba7383e5b3f983a2e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/31-after-preparation.save.json",
+      "sha256": "3456291730d31d21c5c7c8d73dd3e26060751577f1f77c7b5490167aea2a9a1e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/32-before.save.json",
+      "sha256": "3456291730d31d21c5c7c8d73dd3e26060751577f1f77c7b5490167aea2a9a1e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/32-entry.save.json",
+      "sha256": "8d4b44378ec37bb86c301dd727a5faed722e61ba194f24106227c9aa084fab1d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/32-returned.save.json",
+      "sha256": "b5b54a520827e9845dda1303926061de6be45d7683618f1b57a8d52bb4e8ecd5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/32-after-preparation.save.json",
+      "sha256": "8c06a3ac14381633bb94e8d3e4ad55bcaad6286ad9ec674f60fb339681cc2619"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/33-before.save.json",
+      "sha256": "8c06a3ac14381633bb94e8d3e4ad55bcaad6286ad9ec674f60fb339681cc2619"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/33-entry.save.json",
+      "sha256": "5db6d57dc9cfc33f205bd8148c79eb00a470009bf30480d6bed37dac89229340"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/33-returned.save.json",
+      "sha256": "a2189934fb70e303c7012ea9e0040ba3199fdc63ca9e949ad5f25e593f7c7b29"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/33-after-preparation.save.json",
+      "sha256": "50d5cd7ee477df29baf986ce4350eab873427b08b73fec07c9fe886036d0955c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/34-before.save.json",
+      "sha256": "50d5cd7ee477df29baf986ce4350eab873427b08b73fec07c9fe886036d0955c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/34-entry.save.json",
+      "sha256": "e7bb780d6cfbe65fe50680a8c4924c344784e378f820f73f6e980254d13ebaae"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/34-returned.save.json",
+      "sha256": "c8436a6cb7babac9345af499b809d06699931951cbf7ee9fc44a2bf6d1fa5360"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/34-after-preparation.save.json",
+      "sha256": "86c7b95867ffdcdcc6cd6f88399660b99c3bb4e83f12ad213ed080997d469384"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/35-before.save.json",
+      "sha256": "86c7b95867ffdcdcc6cd6f88399660b99c3bb4e83f12ad213ed080997d469384"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/35-entry.save.json",
+      "sha256": "2dda40eff3afb02c95d3a9ee12e64d445dbc8df16579fcf453d139e0ff061a13"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/35-returned.save.json",
+      "sha256": "a27025a247f6a2bcad84d6022d105fb2df6963451e24b30a9658fe7027ab3bb5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/35-after-preparation.save.json",
+      "sha256": "e97d4c0e93819bcf7cd94307accef6cdef35551a49dc67b30f24e7a16085af51"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/36-before.save.json",
+      "sha256": "e97d4c0e93819bcf7cd94307accef6cdef35551a49dc67b30f24e7a16085af51"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/36-entry.save.json",
+      "sha256": "3f960cc7c5993786f6eb1cf11d24439af4f0da417185763fc0f0545be7632960"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/36-returned.save.json",
+      "sha256": "5ba524ea8b07af717fe002c949f6f89066ace1ccaa6b83d7d9ffa6e82d2e7416"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/36-after-preparation.save.json",
+      "sha256": "5349c08997a25b15d045bbcfca7a3a6f62cb9ed021a2cb4010a398242aa00467"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/i14/browser-storage.json",
+      "sha256": "2a9a7c1635ac47fdde65a90128f3cd502d85a145475c68e7ce8aab5b782daf9a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/report.json",
+      "sha256": "93c7a1e548739d685c85edd4d710830e21ee99ecd2e7b75b4c18182fd0dd5f29"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/execution.json",
+      "sha256": "28b9ffafdde9ea21712020cfcf91e1b557086426926dd0ec5d3ac5864990dbf2"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/batch-input.json",
+      "sha256": "202e8fe6af2882cab9351bdc8ac7ed23ad8eae0869736449853f3b72bf7a3e0a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/input-origin-proof.json",
+      "sha256": "59045895c8108f16ec12de795eb26fbc3d03ac2e22c0fb5f3ad16bd9fd00e89e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/input-browser-storage.json",
+      "sha256": "60d51c3225c2def65143cd79fd974b201f31cac7a932d246fc6da41484dd1210"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/37-before.save.json",
+      "sha256": "5349c08997a25b15d045bbcfca7a3a6f62cb9ed021a2cb4010a398242aa00467"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/37-entry.save.json",
+      "sha256": "4c6aaf0a15d3eba172a1dc0b38e42ccfc6f538cd03ba5256edabbeb082a41690"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/37-returned.save.json",
+      "sha256": "c4e74c5a235bc7c31d8f6c94a425466dcad02d47af777c9d1512558b003dd9b1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/37-after-preparation.save.json",
+      "sha256": "db64ba168fbfc0dce170d5edc678a7e9c700412e02d4ade3173d6ef2c577954f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/38-before.save.json",
+      "sha256": "db64ba168fbfc0dce170d5edc678a7e9c700412e02d4ade3173d6ef2c577954f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/38-entry.save.json",
+      "sha256": "d7de9133c7756486b67d5b5198898d66581f5afaade262657c3f21a65fa4a31b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/38-returned.save.json",
+      "sha256": "3a8f11bbf3ef63aead524d5af6208d99b562e4fc4bf7397ea236f62cce0531e5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/38-after-preparation.save.json",
+      "sha256": "520f4b513028b8807fc6ccea6207fe4b37dbd468f87444b5abe9aab62cf52236"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/39-before.save.json",
+      "sha256": "520f4b513028b8807fc6ccea6207fe4b37dbd468f87444b5abe9aab62cf52236"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/39-entry.save.json",
+      "sha256": "0f071b92ed40881550aa733bb00c2cbbb30e77ac7f03fa71a7bde42fb34721d5"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/39-returned.save.json",
+      "sha256": "b3af587142d4a929e5901977a37b8a28ded4b72093c391e8e173d3ff9120e872"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/39-after-preparation.save.json",
+      "sha256": "72f968a8e7926364bee4aca1651764f2e0f2a29b7a359c6211ee1051297b459e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/40-before.save.json",
+      "sha256": "72f968a8e7926364bee4aca1651764f2e0f2a29b7a359c6211ee1051297b459e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/40-entry.save.json",
+      "sha256": "e7e424829ed12f3a4176fb5f1fc74eca0bf8e43c745772fd12a79e2c69258a6a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/40-returned.save.json",
+      "sha256": "fe9d91e0c0b67aca758fa59948c81bf58e6b457e46143192d2638cdd8ab10337"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/40-after-preparation.save.json",
+      "sha256": "0b3abf9598c945d05d1fbc465b088017b92f58dfca3569680dd5e25de4c583dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/41-before.save.json",
+      "sha256": "0b3abf9598c945d05d1fbc465b088017b92f58dfca3569680dd5e25de4c583dc"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/41-entry.save.json",
+      "sha256": "bc20b03062fabfe216740bdd1ab5c9e005024f536cca63a6442de800a864b994"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/41-returned.save.json",
+      "sha256": "55c7b747f3aa59b985f476af9d335ef37da48759df451aac317c47ae54b796f7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/41-after-preparation.save.json",
+      "sha256": "06584291a9f144ba0f5d245e1cbfae80c895539ded945b0d3fa2cf92a987a10e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/42-before.save.json",
+      "sha256": "06584291a9f144ba0f5d245e1cbfae80c895539ded945b0d3fa2cf92a987a10e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/42-entry.save.json",
+      "sha256": "31e4dea91fa1dfb6fd7bf643e21d203e377101a9571e36239b42d338e444252f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/42-returned.save.json",
+      "sha256": "476f30749f321b99f6c89ff5a9066089d1a68a2023c56e6fffcbb928706ef6ae"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/42-after-preparation.save.json",
+      "sha256": "9592c3f1ed3ec37baa3051bfe86235a16f0cdde11000c7f65b8bb4ec7551b45b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/43-before.save.json",
+      "sha256": "9592c3f1ed3ec37baa3051bfe86235a16f0cdde11000c7f65b8bb4ec7551b45b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/43-entry.save.json",
+      "sha256": "93ca532b354db26ffc3337d8d5b6a43c337b4a92ca53c478b85b51c56f750dce"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/43-returned.save.json",
+      "sha256": "6f559a1bb53e2225f0b4fbf350ab0f6d544ba7b3775e35a54d48eda7f0a1de86"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/43-after-preparation.save.json",
+      "sha256": "77ca11b10058658039b50a91edc0037fe54560845ca996b415bffb2ff8ebb468"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/44-before.save.json",
+      "sha256": "77ca11b10058658039b50a91edc0037fe54560845ca996b415bffb2ff8ebb468"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/44-entry.save.json",
+      "sha256": "a622798efd76f1557eb5ca442277e5a8cd9669a39d821fd855e32d4d298020b1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/44-returned.save.json",
+      "sha256": "bec424a2e576b05dded421af5cd2e6e4300c7d2a4d27868eca0106ea8c5515a7"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/44-after-preparation.save.json",
+      "sha256": "7e24fbd7cfed62f02ba5872bca61b439f72aa3252d84bd8e695ad4d597302209"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/45-before.save.json",
+      "sha256": "7e24fbd7cfed62f02ba5872bca61b439f72aa3252d84bd8e695ad4d597302209"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/45-entry.save.json",
+      "sha256": "f478f9837bcaac452d9cd0ffb8273c94a7b427f054f8d305d79a6bce00fe2d5d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/45-returned.save.json",
+      "sha256": "5ee821e9d095f312fe20de8e39bc60ec57a8eafd37fa454f843ba65fd4727902"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/45-after-preparation.save.json",
+      "sha256": "21dc8cc0ab2b0c57522ac87e11c708b4d8721a511de7ebb32b3751af07ff059d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/46-before.save.json",
+      "sha256": "21dc8cc0ab2b0c57522ac87e11c708b4d8721a511de7ebb32b3751af07ff059d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/46-entry.save.json",
+      "sha256": "100da50c17dc0da809be9b70fe4c10eb7131a3f34401d8195aba939eb00d6a3f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/46-returned.save.json",
+      "sha256": "ee1b354122a4094490e8eb47172def82a2ffcd957ba6456f378126ecf9502ce1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/46-after-preparation.save.json",
+      "sha256": "b43779fa7c7c74f683f2ba0dd152a36ab4f2871f23a517bf917e94a528588394"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/47-before.save.json",
+      "sha256": "b43779fa7c7c74f683f2ba0dd152a36ab4f2871f23a517bf917e94a528588394"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/47-entry.save.json",
+      "sha256": "16df1cd9a296950cc995dc782586aeec16d16c1f82f56ab1f71d7e6ccefbbb3f"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/47-returned.save.json",
+      "sha256": "33e66ce736c91881507e7cdf88fd296d8aa0ba10565e1087989e58dc72045c3d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/47-after-preparation.save.json",
+      "sha256": "aaa481569adcbd119ff437002c6fa424e548169802ad56f8e57f7d1a10c93e44"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/48-before.save.json",
+      "sha256": "aaa481569adcbd119ff437002c6fa424e548169802ad56f8e57f7d1a10c93e44"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/48-entry.save.json",
+      "sha256": "62d871825358d8314d351a1157940b2403c8ed7fb3cf5cc537ab895e189c8fa3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/48-returned.save.json",
+      "sha256": "6aeb0b2005759e856b1e63be62cbb874a6e5ca811e19fe8eeac66452701af6f1"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/48-after-preparation.save.json",
+      "sha256": "767c27ff0e9acdde8b850d9c21a8972c8032c1ff7e40cb925aeb7530e3c49d23"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/i14/browser-storage.json",
+      "sha256": "95718817b7d90f4734355a01c7a375e77ea19098d048c74fe5e9458f60a6d0ae"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-packages/index.json",
+      "sha256": "4e49172dd3205533313bee33108beefd1dffd2972d8a5729dec9266f9d6faeab"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-source-inheritance.json",
+      "sha256": "a89afdaa3803dc6adfbef9392ff6120397eea64093accfcde7f01064ca7cd01e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/final-technical-review.json",
+      "sha256": "f11b5b6a195f6d44aab1d523cfb7720d8bb7349d4be412cd6345943b5aeaddf8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+      "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+    },
+    {
+      "path": "docs/qa/rift-r100-i13.md",
+      "sha256": "ad768d15d034321406c1c39bf6c6de872fa724d2439a516479df2b7aa9defa57"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/root/closure-disposition.json",
+      "sha256": "dde7e13244140d8ab10cf7d124a072f4012a35c37fcc4b1ac59f150ebb78cb2a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-preparation-budget.json",
+      "sha256": "54c3bda7b72a4c63a98bd65320c687a917cc8c07cdb8795e7bc1670c9bcc7294"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-first-cold-audit.json",
+      "sha256": "5fec2f7aca315a9d3f15a02db03304c3db2f943eedd5b91e33fb4c7d34691d2a"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-three-lifecycle.json",
+      "sha256": "e0a204a64fc723769c7265bfab9d655790bd2127c104793277d71648e57f924d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-focus-native-audit.json",
+      "sha256": "40714a1131d3de60b49d0d8cfdc48988de44f97f3a5f8afcffd805eb7b424fb8"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/focus/native-v2/report.json",
+      "sha256": "a28e1f5ed177610b359b45b4b2df29997788298cc3209e317ba20fec35d6d3d0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json",
+      "sha256": "0f6eee447bdc4faef6ed19598ca974035ec74bdbea1beeef65d7ee49118af198"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-a-target-cold-continuity.json",
+      "sha256": "d8df70bc0906b1f03d46bf99811981d29454f92de52b13a2b1a21b6532acb35d"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-48.json",
+      "sha256": "10fb79d8a50f3305150ef6855b7e199d15fd2ad090856eddca723234d5e37221"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i13-continuation/qa-final-run-binding.json",
+      "sha256": "6d619a1bf6573f53a4338b6185959f9a54ae26329e9bc58d93201a81e357b460"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-release-gate-recovery.json",
+      "sha256": "664373086d515cc55bad66db072d270baaccb27aab86098811bdeafc39f40b0d"
+    }
+  ],
+  "humanApproval": false,
+  "releaseApproval": false,
+  "ledgerModified": false
+}

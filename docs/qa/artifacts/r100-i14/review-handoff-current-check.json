@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T06:37:49.904739+00:00",
+  "status": "current-handoff-static-links-release-and-clean-archive-sha-checked",
+  "document": {
+    "path": "docs/qa/artifacts/r100-i14/review-handoff-current.md",
+    "bytes": 2710,
+    "sha256": "0604c91ed6cf9d0c4b89182453ddbbcf1fea6d78f2a219f3b72ae42458daa710"
+  },
+  "frozenInputs": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/release-candidate.json",
+      "bytes": 28359,
+      "sha256": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/handoff-clean.json",
+      "bytes": 4951,
+      "sha256": "02f9b92e4c1e7755e2080f6533eb14ede00f357806c82f37279e79c9042aa974"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/device-kit-rc/manifest.json",
+      "bytes": 188851,
+      "sha256": "854ff70f397c3f952652dc6da9704f86245b59effabec0abdbd379b317f21b57"
+    },
+    {
+      "path": "dist/r100-i14-device-kit-rc-clean-20261009.tar.gz",
+      "bytes": 161257471,
+      "sha256": "88809ab56da2a39cf3b12ffa61a0d9bf45883a03c083d6e8ece09cef7f17275e"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/review-handoff.md",
+      "bytes": 2703,
+      "sha256": "3714e4bd3ecece45dbfe5b259ecd74c3a2cdc114dec0fcb2a0aedb995654fb24"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/review-handoff-check.json",
+      "bytes": 3101,
+      "sha256": "83c623b4ebb3f4b49dbfc826b91981335e5e2f800db6fd9e59d11f37b3af69b4"
+    }
+  ],
+  "localLinks": [
+    {
+      "target": "release-candidate.json",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "../../rift-r100-i14.md",
+      "exists": true,
+      "mutable": true
+    },
+    {
+      "target": "../../../../dist/r100-i14-device-kit-rc-clean-20261009.tar.gz",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "root/device-kit-rc/README.md",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "root/device-kit-rc/handoff-clean.json",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "continuous/recovery-v2/batch-01/i14/1-natural-canvas.webm",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "continuous/recovery-v2/batch-01/i14/2-natural-canvas.webm",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "continuous/recovery-v2/batch-01/i14/3-natural-canvas.webm",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "root/actor-occlusion-disposition.json",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "../../interactive/r100-i14-review.html",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "art-natural-media-source.json",
+      "exists": true,
+      "mutable": false
+    },
+    {
+      "target": "occlusion-visual/README.md",
+      "exists": true,
+      "mutable": false
+    }
+  ],
+  "liveQa": {
+    "path": "docs/qa/rift-r100-i14.md",
+    "mutable": true,
+    "sha256Bound": false,
+    "use": "Link for latest technical/continuous regression; no progress count copied, no live report read as a frozen result."
+  },
+  "checks": {
+    "onlyFirstParagraphChangedFromPriorHandoff": true,
+    "priorHandoffAndReceiptUnchanged": true,
+    "currentReleaseAndCleanKitShaMatch": true,
+    "liveQaLinkExistsWithoutHashBinding": true,
+    "noCopiedContinuousProgressCount": true,
+    "i14StillUnclosed": true,
+    "oldThreeClipsPreOptimizationSourceAndRenderDeltaInheritanceRetained": true,
+    "threeHumanVerificationItemsRetained": true,
+    "previewDenialAndUnverifiedPlaybackRetained": true
+  },
+  "browserLaunched": false,
+  "playbackValidated": false,
+  "audioHeard": false,
+  "weakDeviceValidated": false,
+  "humanApproval": false
+}

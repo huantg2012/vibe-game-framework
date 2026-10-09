@@ -1,0 +1,426 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-09T07:03:04.813164+00:00",
+  "status": "48-unique-sorties-complete-independent-audit-pass-owned-services-closed",
+  "reviewer": "code",
+  "uniqueNaturalSorties": 48,
+  "plannedActualGradesEqual": true,
+  "byGrade": {
+    "low": 16,
+    "medium": 16,
+    "severe": 16
+  },
+  "byFamily": {
+    "broken-shell": 9,
+    "membrane-rim": 11,
+    "gel-flow": 7,
+    "fibre-knot": 7,
+    "granular-ridge": 5,
+    "folded-slab": 9
+  },
+  "outcomes": {
+    "extract": 47,
+    "death": 1,
+    "emptyExtracts": 0
+  },
+  "sourceBridge": {
+    "retainedOldSourceTrips": 12,
+    "qualifiedNewSourceTrips": 36,
+    "sourceCount": 1398,
+    "qualification": {
+      "path": "docs/qa/artifacts/r100-i14/root/actor-occlusion-disposition.json",
+      "sha256": "7d5e7353f40ebbc248b1ddf8b1f2afe09fc9f8a2a179ed4efa4e710e8e0eaecf"
+    },
+    "sourceManifest": {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+      "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+    }
+  },
+  "independentAudit": {
+    "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-48.json",
+    "sha256": "10fb79d8a50f3305150ef6855b7e199d15fd2ad090856eddca723234d5e37221"
+  },
+  "finalGateRecommendation": {
+    "path": "docs/qa/artifacts/r100-i14/qa-release-gates-through48.json",
+    "sha256": "c2d6bd32645e2618e6771b66b604d854a3d746dee016fa2f917a28ef6414280b"
+  },
+  "batches": [
+    {
+      "batch": 1,
+      "execution": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/execution.json",
+        "sha256": "930c147bbc43551b240d383c0b0ccfd0562cef44a336997d1e1de2186010ba1c"
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/recovery-v2/batch-01/report.json",
+        "sha256": "beb757b8eb7ec85e0f0fc3d5d5be81c90093d8cec617bab58f160ddc016ea791"
+      },
+      "startedAt": "2026-10-09T03:45:33.700Z",
+      "finishedAt": "2026-10-09T04:26:46.774Z",
+      "wallSeconds": 2473.074,
+      "uniqueSorties": 12,
+      "actualGrades": [
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe"
+      ],
+      "outcomes": [
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract"
+      ],
+      "childPid": 17970,
+      "childProcessAfter": {
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "exitCode": 0
+    },
+    {
+      "batch": 2,
+      "execution": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/execution.json",
+        "sha256": "af84100cd044b01b9f4efeed90932a38187599d28bb3159a3e405de99a41a99d"
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-02/report.json",
+        "sha256": "bc08c391412d52fb5121bd86edc1efcfc4dc9a2a7dce718166e02899f28825a2"
+      },
+      "startedAt": "2026-10-09T05:10:10.321Z",
+      "finishedAt": "2026-10-09T05:46:05.758Z",
+      "wallSeconds": 2155.437,
+      "uniqueSorties": 12,
+      "actualGrades": [
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe"
+      ],
+      "outcomes": [
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "death",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract"
+      ],
+      "childPid": 68556,
+      "childProcessAfter": {
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "exitCode": 0
+    },
+    {
+      "batch": 3,
+      "execution": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/execution.json",
+        "sha256": "dcd83cc05d0d0d9a94d6622498332bf06095a35333d9e086be6c6e49ea5c27bf"
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-03/report.json",
+        "sha256": "9202023edbc5f5806455161610a2ee75a45182fd65aaa8f2b21f114aed5c4c74"
+      },
+      "startedAt": "2026-10-09T05:46:44.246Z",
+      "finishedAt": "2026-10-09T06:23:29.832Z",
+      "wallSeconds": 2205.586,
+      "uniqueSorties": 12,
+      "actualGrades": [
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe"
+      ],
+      "outcomes": [
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract"
+      ],
+      "childPid": 95629,
+      "childProcessAfter": {
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "exitCode": 0
+    },
+    {
+      "batch": 4,
+      "execution": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/execution.json",
+        "sha256": "28b9ffafdde9ea21712020cfcf91e1b557086426926dd0ec5d3ac5864990dbf2"
+      },
+      "report": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v4/batch-04/report.json",
+        "sha256": "93c7a1e548739d685c85edd4d710830e21ee99ecd2e7b75b4c18182fd0dd5f29"
+      },
+      "startedAt": "2026-10-09T06:24:32.762Z",
+      "finishedAt": "2026-10-09T07:00:39.022Z",
+      "wallSeconds": 2166.26,
+      "uniqueSorties": 12,
+      "actualGrades": [
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe",
+        "low",
+        "medium",
+        "severe"
+      ],
+      "outcomes": [
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract",
+        "extract"
+      ],
+      "childPid": 62667,
+      "childProcessAfter": {
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "exitCode": 0
+    }
+  ],
+  "totals": {
+    "banked": 1154,
+    "repair": 641,
+    "growth": 38,
+    "deaths": 1,
+    "emptyReturns": 0
+  },
+  "terminal": {
+    "cash": 510,
+    "modules": [
+      {
+        "id": "CORE",
+        "type": "CORE",
+        "hp": 52,
+        "maxHp": 145
+      },
+      {
+        "id": "STORAGE",
+        "type": "STORAGE",
+        "hp": 101,
+        "maxHp": 145
+      },
+      {
+        "id": "PURIFIER",
+        "type": "PURIFIER",
+        "hp": 54,
+        "maxHp": 145
+      }
+    ],
+    "serviceDebt": 0,
+    "originalCapitalDebt": 1
+  },
+  "preservedTechnicalInterruptions": [
+    {
+      "scope": "first-low-before-movement-byte-guard",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/batch-01/report.json",
+        "sha256": "f012b04527e32207d7f40c83eb85cdd4bf5057fbc4f22a963a9ad7365fe90e4d"
+      },
+      "actualUniqueDepartures": 1,
+      "sameRunRecoveryRetained": true
+    },
+    {
+      "scope": "v3-origin-carrier-mismatch-before-departure",
+      "report": {
+        "path": "docs/qa/artifacts/r100-i14/continuous/actor-cache-v3/batch-02/report.json",
+        "sha256": "6d033ec04618e671ed63cecb27b1b999df9409837067932e1784358841189902"
+      },
+      "actualUniqueDepartures": 0,
+      "failedBaseNeverUsed": true
+    }
+  ],
+  "checks": {
+    "productionBuildAndTypeCheck": {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/code-verification.json",
+      "sha256": "46ed39effe164a0cfc240987c4db72c50974d84c56cfc28c90579478856cbd82"
+    },
+    "exactActorMaskOracle": {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/equivalence/report.json",
+      "sha256": "f77ace350c3ff9133e7f8d4e146995598b065a2bbcc39d6055a8a5ab3b881be0"
+    },
+    "newSourceFourPerformance": {
+      "path": "docs/qa/artifacts/r100-i14/actor-occlusion/runtime-reference/report.json",
+      "sha256": "06979c1d44d6ce276c22a5d9f7bae7fa6de3709cf660cc7a80e304aab5455fcd"
+    },
+    "oldSourceFirstFailurePreserved": {
+      "path": "docs/qa/artifacts/r100-i14/runtime-reference/report.json",
+      "sha256": "642bcb002895d276db52d3c0d92b40e010d7bc13560f802d2c240fd0ef153515"
+    },
+    "lint": "No repository lint script; node syntax checks are not called lint."
+  },
+  "cleanup": {
+    "ownedFrozenServers": [
+      {
+        "sourceManifest": {
+          "path": "docs/qa/artifacts/r100-i14/frozen-source/source-snapshot.json",
+          "sha256": "d285c82f0962f0783944736a3744c9a721a19e0fa7b99744c4ba2e6e62d1dbc4"
+        },
+        "pid": 14476,
+        "port": 3035,
+        "before": {
+          "exitCode": 0,
+          "stdout": "14476 88685 node tools/world-study/r100-frozen-server.mjs",
+          "stderr": ""
+        },
+        "listenerBefore": {
+          "exitCode": 0,
+          "stdout": "p14476\ncnode\nf16\nn127.0.0.1:3035",
+          "stderr": ""
+        },
+        "requestedSignal": "SIGTERM",
+        "after": {
+          "exitCode": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "listenerAfter": {
+          "exitCode": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "temporarySnapshotRetained": true
+      },
+      {
+        "sourceManifest": {
+          "path": "docs/qa/artifacts/r100-i14/actor-occlusion/frozen-source/source-snapshot.json",
+          "sha256": "ee44533405b47de83d52ccb6df2f968dfe36261018d97d695bdbb7381e2470ca"
+        },
+        "pid": 53926,
+        "port": 3037,
+        "before": {
+          "exitCode": 0,
+          "stdout": "53926 88685 node tools/world-study/r100-frozen-server.mjs",
+          "stderr": ""
+        },
+        "listenerBefore": {
+          "exitCode": 0,
+          "stdout": "p53926\ncnode\nf16\nn127.0.0.1:3037",
+          "stderr": ""
+        },
+        "requestedSignal": "SIGTERM",
+        "after": {
+          "exitCode": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "listenerAfter": {
+          "exitCode": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "temporarySnapshotRetained": true
+      }
+    ],
+    "protectedPortsBefore": {
+      "3027": {
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "5174": {
+        "exitCode": 0,
+        "stdout": "p12890\ncnode\nf16\nn*:5174",
+        "stderr": ""
+      }
+    },
+    "protectedPortsAfter": {
+      "3027": {
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "5174": {
+        "exitCode": 0,
+        "stdout": "p12890\ncnode\nf16\nn*:5174",
+        "stderr": ""
+      }
+    },
+    "protectedPortsUnchanged": true,
+    "ownedJourneyChildrenExited": true,
+    "remainingPlaywrightChromeProcesses": [
+      "14705 87967 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.39/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-dPvxwa --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --disable-blink-features=AutomationControlled --lang=zh-CN --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=12 --launch-time-ticks=2414394257514 --shared-files --field-trial-handle=1718379636,r,2696239471464400839,5677068524272317285,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5103639660253180054,8106489593779238488,4 --trace-process-track-uuid=3190708997556373682 --seatbelt-client=98",
+      "54588 87967 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.39/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-dPvxwa --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --disable-blink-features=AutomationControlled --lang=zh-CN --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=15 --launch-time-ticks=2418197254733 --shared-files --field-trial-handle=1718379636,r,2696239471464400839,5677068524272317285,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5103639660253180054,8106489593779238488,4 --trace-process-track-uuid=3190709000367499229 --seatbelt-client=98",
+      "54589 87967 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.39/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-dPvxwa --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --disable-blink-features=AutomationControlled --lang=zh-CN --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=16 --launch-time-ticks=2418197266561 --shared-files --field-trial-handle=1718379636,r,2696239471464400839,5677068524272317285,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5103639660253180054,8106489593779238488,4 --trace-process-track-uuid=3190709001304541078 --seatbelt-client=98",
+      "87967 87964 /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --disable-blink-features=AutomationControlled --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-dPvxwa --remote-debugging-pipe --no-startup-window",
+      "88077 87967 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.39/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --top-chrome-webui --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-dPvxwa --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --disable-blink-features=AutomationControlled --lang=zh-CN --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=2408187102713 --shared-files --field-trial-handle=1718379636,r,2696239471464400839,5677068524272317285,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5103639660253180054,8106489593779238488,4 --trace-process-track-uuid=3190708991934122588 --seatbelt-client=33",
+      "88082 87967 /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/155.0.8059.39/Helpers/Google Chrome Helper (Renderer).app/Contents/MacOS/Google Chrome Helper (Renderer) --type=renderer --metrics-client-id=ff67f5de-eaa8-47b6-8080-dfd7fb33808b --noerrdialogs --user-data-dir=/var/folders/h7/8bj85y3s2_j07mj1td8x3c740000gn/T/playwright_chromiumdev_profile-dPvxwa --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --disable-blink-features=AutomationControlled --lang=zh-CN --num-raster-threads=4 --enable-zero-copy --enable-gpu-memory-buffer-compositor-resources --enable-main-frame-before-activation --renderer-client-id=7 --launch-time-ticks=2408187184054 --shared-files --field-trial-handle=1718379636,r,2696239471464400839,5677068524272317285,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=1935764596,r,5103639660253180054,8106489593779238488,4 --trace-process-track-uuid=3190708992871164437 --seatbelt-client=36"
+    ],
+    "browserScope": "Completed journey child finally closes context/browser; all four child processes have exited. No unrelated browser/process was terminated.",
+    "snapshotsAndOriginalEvidenceRetained": true
+  },
+  "limits": [
+    "48 are one earned continuous lineage, not independent players and not all48 on new source.",
+    "The actual death and all losses remain. Original two technical interruptions were not rerolled; the predeparture carrier failure adds zero sorties.",
+    "Final51/100/51 service debt is zero; original102 storage capital debt remains1. No extra run or free repair was added to remove it.",
+    "The original reference-performance failures remain alongside the exact-render-delta retest; human listening, fatigue, actual weaker hardware and final release approval are not supplied by this receipt."
+  ]
+}

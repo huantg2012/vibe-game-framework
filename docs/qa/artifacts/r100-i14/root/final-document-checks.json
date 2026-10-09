@@ -1,0 +1,103 @@
+{
+  "createdAt": "2026-10-09T07:07:13.225907+00:00",
+  "status": "scoped-documents-and-progress-consistent-with-known-game-state-baseline-warnings",
+  "progress": {
+    "exitCode": 0,
+    "counts": {
+      "closedIterations": 13,
+      "totalIterations": 14,
+      "worlds": 108,
+      "gradeCases": 324,
+      "passedReleaseGates": 4
+    },
+    "versionStatus": "active",
+    "humanAcceptance": null
+  },
+  "gameState": {
+    "checkExitCode": 2,
+    "renderIndexExitCode": 0,
+    "structuralErrorsReported": 0,
+    "unownedSourcesReported": 0,
+    "staleFingerprintEntries": 683,
+    "warnings": [
+      "warnings: 领域尚未核对: 语言、设置与可达性",
+      "warnings: 历史证据适用性：51 条关联实现已变化，141 条无法按版本比较；基线不改变此判断。"
+    ],
+    "baselineReset": false,
+    "note": "Historical unaligned fingerprints plus newly registered/modified sources remain visible. No blanket baseline acknowledges unrelated changes or renews historical runtime/human evidence. Current1398 production bytes and48-run scope have separate explicit QA bindings."
+  },
+  "files": [
+    {
+      "path": "docs/progress/rift-r100.json",
+      "sha256": "64a63f8e093bf1f3ec804b41dfaaef4f9e1914eef6dc56aea7e7027edd0a6372"
+    },
+    {
+      "path": "docs/progress/current-iteration.md",
+      "sha256": "c47d71f84daba8a7d4edfb65e9efc20eb3a81b60b1c355452e67f6ac1e8ef261"
+    },
+    {
+      "path": "docs/progress/roadmap.md",
+      "sha256": "d397d2f40891fa44715615db8b63fd8612076cd505d2f5918be38c39ad4e7be4"
+    },
+    {
+      "path": "docs/tasks/rift-r100.md",
+      "sha256": "d1030c15d00ed1fbb4ebdd633990ba9fdb1f5d815b421b3b24239d10444ea9e8"
+    },
+    {
+      "path": "docs/game-state/INDEX.md",
+      "sha256": "ea8d5dde56805458bc0de4c9db02347075e59513d4cbbdfcd0254bde7bdc0f5b"
+    },
+    {
+      "path": "docs/reading/rift-r100.html",
+      "sha256": "df96bf7d4a84886712e95a8a36f6e719da2c794fe6cbec1314dbcf24790b91f2"
+    },
+    {
+      "path": "docs/qa/rift-r100-i14.md",
+      "sha256": "505c0b501d045543f625084811dc5d6a1654dc8fe8b4fc6ef5f5c81bec9a8ff9"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/qa-release-evidence-matrix.json",
+      "sha256": "c5bd7441ff51e177220611a1d27abd2eb5dc925334488ad17b9dcff058d669a0"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/review-handoff-current.md",
+      "sha256": "0604c91ed6cf9d0c4b89182453ddbbcf1fea6d78f2a219f3b72ae42458daa710"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/release-gates-through48.json",
+      "sha256": "f6dcd831a04e8a7f80a3813645816ecf37fa63f51e87b35fa46ca7b46d109299"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/final-execution-receipt.json",
+      "sha256": "47d8cff62c5174f59de1935a14439bd1caf16e709822f038df49b3a22fe67aa6"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/continuous/cleanup-process-ownership.json",
+      "sha256": "13260054fea5d455c921c7f0f228a71303b33d644fe4c75bd1161f3f7fcc7e13"
+    }
+  ],
+  "logs": [
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/progress-check-through48.log",
+      "sha256": "12c36de88b98701a690ea6cc220f0c44563c70d6388f2eaa963facc6289c1a60"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/progress-render-through48.log",
+      "sha256": "3bc1753bf145e3a623c34978019a974fee7e59551ad808da685ad68c4c0cd65c"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/game-state-check-through48.log",
+      "sha256": "e64ce2b2143b27e5ca4a04ceed85b8f1b5301e550041eef6cbbdaa4e08888b1b"
+    },
+    {
+      "path": "docs/qa/artifacts/r100-i14/root/game-state-render-through48.log",
+      "sha256": "e9aa073b2c772ef363314aa70915c1babeb80d1075f61bb306f570331174addd"
+    }
+  ],
+  "diffCheckExitCode": 0,
+  "implementationCommit": "ee46b5e98bac5ce0667be85a6dbaf8e0bc6c48c2",
+  "unrelatedClaudeChangeExcluded": true,
+  "finalAcceptance": null,
+  "releaseApproval": false,
+  "previewLimit": "Automatic review rejected local file:// HTML preview; no alternate route attempted and actual page playback remains unverified."
+}

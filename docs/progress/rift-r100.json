@@ -44,10 +44,10 @@
   },
   "resume": {
     "iteration": "R100-I14",
-    "batch": "I14第三批：前24趟已独核，续行后24",
-    "nextAction": "完成后24实际连续出击并逐批独核；48齐后才签EXPEDITION。真实弱设备、实际视听和用户终验分别待验。",
-    "lastCompleted": "前24唯一run/96原档/22182守恒断言独核通过：23撤离+1真实死亡；旧12+优化源12桥连续。新RC三发布门、参考机性能/入口/资源及清洁复测包通过，后24继续。",
-    "headline": "I14进行中 · 13/14轮已结 · 108世界/324等级",
+    "batch": "I14本机回归完成：真实较弱设备与视听/终验待审",
+    "nextAction": "在另一台较弱真实设备执行当前clean包；完成实际听感/连续视觉体验复核，再取得绑定当前RC的用户最终认可。",
+    "lastCompleted": "48新增唯一run/192原档/53604守恒断言独核通过：47撤离+1真实死亡，三档各16/六材料自然覆盖；原12+优化源36连续，资本债1保留。覆盖/有限经济/恢复/出征四门已采纳，本机性能/资源/入口与clean包已验。",
+    "headline": "I14待实机与人审 · 13/14轮已结 · 108世界/324等级",
     "updatedDate": "2026-10-09",
     "evidenceRevision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009"
   },
@@ -9386,7 +9386,7 @@
         "R100-I13"
       ],
       "state": "active",
-      "stage": "technical-review",
+      "stage": "visual-review",
       "goal": "让108世界正式运行，并证明这批内容达到可交付的独立游戏质量。",
       "technical": "正式池整合、旧新存档/版本回归、冷暖启动与最差性能、连续出击释放/恢复、错误诊断和发布清单。 正式三级入口与承诺、压力暂停/失焦/恢复、旧age局不追认新级；全部发布门逐项关联证据。",
       "visual": "最终正常视野全库审核；完整搜撤、死亡与回归中的视听一致；完成用户审阅反馈、最弱包整改及复验。",
@@ -9427,9 +9427,12 @@
         {
           "id": "continuous-48-and-material-coverage",
           "label": "48趟连续稳定性/选择抽样，覆盖三档和六材料",
-          "status": "pending",
+          "status": "pass",
           "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
-          "evidenceIds": []
+          "evidenceIds": [
+            "R100-E-I14-CONTINUOUS-48",
+            "R100-E-I14-QA-EXPEDITION-48"
+          ]
         },
         {
           "id": "current-browser-performance",
@@ -9488,7 +9491,11 @@
         "R100-E-I14-QA-RECOVERY-OCCLUSION",
         "R100-E-I14-CURRENT-DEVICE-KIT",
         "R100-E-I14-REVIEW-HANDOFF",
-        "R100-E-I14-CONTINUOUS-24"
+        "R100-E-I14-CONTINUOUS-24",
+        "R100-E-I14-CONTINUOUS-36",
+        "R100-E-I14-REVIEW-HANDOFF-CURRENT",
+        "R100-E-I14-CONTINUOUS-48",
+        "R100-E-I14-QA-EXPEDITION-48"
       ],
       "targetGradeCases": 324
     }
@@ -67693,6 +67700,45 @@
       "documentSha256": "77549abe5da170df268985b3c1406ad2527f0818bd9aea5e0ca1a6b1aa226b57",
       "scope": "前24新增唯一run（原源12+优化源12）及96四阶段原档独核通过，22,182守恒断言；三档各8/六材料覆盖，23撤离+第18重度真实死亡，落袋612/维修332/成长38，现金35→277。",
       "limitations": "仅24/48；EXPEDITION尚未通过。死亡、遗失及原工具失败保留，不充当盈利目标或无限供给证明；后24从实际末态继续。"
+    },
+    {
+      "id": "R100-E-I14-CONTINUOUS-36",
+      "kind": "runtime",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-36.json",
+      "documentSha256": "233f4b093db95d552f69f442bd2907437024610e5e0455b6fc8c5c126da5f18d",
+      "scope": "前36新增唯一run（原源12+优化源24）及144四阶段原档独核通过，36,690守恒断言；三档各12/六材料覆盖，35撤离+第18重度真实死亡，落袋866/维修491/成长38，现金35→372。",
+      "limitations": "仅36/48；EXPEDITION尚未通过。死亡、遗失及原工具失败保留；最后12在through36 QA明确通过后从实际末态继续。"
+    },
+    {
+      "id": "R100-E-I14-REVIEW-HANDOFF-CURRENT",
+      "kind": "source",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "path": "docs/qa/artifacts/r100-i14/review-handoff-current-check.json",
+      "documentSha256": "18e462ced1302d5771d08d1f37592d615f43e4e5a19b110bf3dd6e6441362fd7",
+      "scope": "当前供审交接单绑定RC与clean设备包，12本地链接核对；实时QA只链接路径，不冻结动态报告SHA或重复过时计数。",
+      "limitations": "文件/链接检查不代表页面播放、实际审听、视觉疲劳、真实弱设备或用户最终认可；原交接单及拒绝记录保留。"
+    },
+    {
+      "id": "R100-E-I14-CONTINUOUS-48",
+      "kind": "runtime",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-48.json",
+      "documentSha256": "10fb79d8a50f3305150ef6855b7e199d15fd2ad090856eddca723234d5e37221",
+      "scope": "48新增唯一run（原源12+优化源36）及192四阶段原档独核通过，53,604守恒断言；三档各16、六材料自然覆盖，47撤离+原第18重度真实死亡1次、0空返。落袋1154/维修641/成长38，现金35→510，末模块52/101/54。",
+      "limitations": "同一真实积累谱系，不是48名独立玩家；service债0、原102储藏资本债1保留。原失败/死亡/工具损失均保留，不证明无限供给或全世界/全种子盈利；真实弱设备、实际视听及用户终验仍待。"
+    },
+    {
+      "id": "R100-E-I14-QA-EXPEDITION-48",
+      "purpose": "release-gate",
+      "gateId": "R100-G-EXPEDITION",
+      "kind": "automated",
+      "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
+      "releaseManifestHash": "bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3",
+      "path": "docs/qa/artifacts/r100-i14/root/release-gates-through48.json",
+      "documentSha256": "f6dcd831a04e8a7f80a3813645816ecf37fa63f51e87b35fa46ca7b46d109299",
+      "scope": "48 new continuous sorties from one actually earned A23 terminal: low/medium/severe16 each, all six material families naturally sampled, formal preparation/entry/search/return-or-death/base settlement and next departure preserved. First12 ran on1397 source; remaining36 ran on the explicitly qualified1398 exact-render-delta source.",
+      "limitations": "One earned player lineage, not48 independent players. Natural identities were not rerolled; gameplay deaths/losses/empty returns remain in the denominator. The original first low strict-byte assertion and its same-run recovery count once. The v3 origin mismatch stopped before departure and adds zero natural runs. Diagnostic focus, render entry, performance and resource branches are excluded. This is the original I14 bounded stability/grade-selection sample, not a new profitability, exact-item refill, unlimited supply or all-world/all-seed gate. Only the first three natural sorties received the full pause/cold lifecycle insertion; later isolated new-source cold probes do not mean all48 were cold-restored. I13 preparation/tool-action success and failures retain their original scope and ancestry; current mature ancestral inventory is not newly earned supply. Automated route completion and accounting do not sign enjoyment, current overall ART, listening, fatigue, weaker hardware or user final acceptance."
     }
   ],
   "risks": [
@@ -67782,12 +67828,14 @@
       "sourceIssueId": "R100-P04",
       "evidenceIds": [
         "R100-E-COMPLETION-AUDIO-ENGINEERING",
-        "R100-E-I14-REVIEW-HANDOFF"
+        "R100-E-I14-REVIEW-HANDOFF",
+        "R100-E-I14-REVIEW-HANDOFF-CURRENT"
       ],
-      "reviewPath": "docs/qa/artifacts/r100-i14/review-handoff.md",
+      "reviewPath": "docs/qa/artifacts/r100-i14/review-handoff-current.md",
       "disposition": "2026-10-07 root按sound-disposition.json批准现有源/配方有限复用；真实听感未签，I14发布门保留，最终依赖变化使复用失效。 2026-10-09 I14已启动，本项为最终发布阻断；来源核对和技术准备可独立继续。 当前新RC的源音频/素材未改，复核入口与真实自然片段已交付；仍未实际审听，不因文件/技术通过关闭。",
       "historicalReviewPaths": [
-        "docs/qa/artifacts/r100-i03-i06/audio-mix/README.md"
+        "docs/qa/artifacts/r100-i03-i06/audio-mix/README.md",
+        "docs/qa/artifacts/r100-i14/review-handoff.md"
       ]
     }
   ],
@@ -68819,6 +68867,11 @@
       "date": "2026-10-09",
       "kind": "i14-exact-render-cache-fix",
       "summary": "P48因原四例三例超预算登记，定位角色遮挡查询并以精确高度缓存修复；4性能/6正式入口冷续/有界资源回收通过，108完整配方未变并显式继承至新RC；覆盖/有限经济/恢复三门新绑，连续48保持原12+新36，同步保留人审和弱设备待验。"
+    },
+    {
+      "date": "2026-10-09",
+      "kind": "i14-continuous48-and-human-review",
+      "summary": "I14新增48连续出击全部独核通过：192原档、53604守恒断言、47撤离/1死亡，旧12+优化源36。落袋1154/维修641/成长38、现金35→510；储藏原资本债1保留，不新增经营门。Director采纳EXPEDITION，六发布门4通过/ART及RELEASE待验。当前clean实机包与视听交接已备；真实弱设备/实际视听/用户终验未签，I14仍active、13/14轮。"
     }
   ],
   "qualityPlan": {
@@ -68908,10 +68961,12 @@
     },
     {
       "id": "R100-G-EXPEDITION",
-      "status": "pending",
+      "status": "pass",
       "revision": "r100-native-v3-revision-6-i14-occlusion-rc-20261009",
-      "evidenceIds": [],
-      "note": "前24已独核，后24接实际损失/存档继续；旧12+新36来源分账，48齐后才签本门。"
+      "evidenceIds": [
+        "R100-E-I14-QA-EXPEDITION-48"
+      ],
+      "note": "独立48唯一run/192原档/53604账务断言通过，Director按原12+新36来源桥接采纳；原死亡/损失与储藏资本债1保留，不扩大为无限供给或人审通过。"
     },
     {
       "id": "R100-G-COVERAGE",

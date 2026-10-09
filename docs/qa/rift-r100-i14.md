@@ -1,19 +1,21 @@
 ## QA Report: R100 I14 发布门独立核查
 
-日期：2026-10-09。当前为 **独立验收进行中，参考机性能整改已完成限定复验**：原四例3失败／1通过保留，精确角色遮罩查询缓存修复后四例均过原预算，六例入口／冷续、资源回落与有限实际绘制配对也已独审。Director已采纳显式桥接1398新源；COVERAGE／ECONOMY／RECOVERY 已形成新RC绑定的有限通过建议，旧建议保持原件。新增连续48趟已完成并独审首24（旧源12＋新源12），剩余24须沿真实末态继续；设备工具v3关页／端口回退已复验。ART／EXPEDITION／RELEASE 未签。用户已授权推进 I14；本报告不代填 `releaseGateResults` 或 `finalAcceptance`。
+日期：2026-10-09。当前为 **本轮可自主QA已完成，四项发布门有界通过，I14仍active**。新增48趟全部独审：192份原始存档、53,604条核账断言，三档各16、六材料齐，47撤离＋1真实死亡；旧源12趟与批准渲染修复后的新源36趟明确分开。COVERAGE／ECONOMY／RECOVERY／EXPEDITION的[最终独立建议](artifacts/r100-i14/qa-release-gates-through48.json)已由[Director采纳](artifacts/r100-i14/root/release-gates-through48.json)。当前RC的四例性能、六例入口／冷续、资源回落及清洁设备包完成限定复验。**ART／RELEASE、真实弱设备、实际视听／疲劳和用户当前RC终验未过；13／14轮不改为全部结案。** 原失败与游戏遗失均保留，本报告不代填人审或`finalAcceptance`。
 
 依据：[总任务](../tasks/rift-r100.md)、[I01 原预算](../tasks/rift-r100-i01.md#冻结的测量与资格预算-v1)、[唯一台账](../progress/rift-r100.json)的 I14 与六项 `qualityPlan.releaseGates`；本轮范围归[已预登记Task](../tasks/rift-r100-i14.md)。Feature IDs：COH-F052、F011–F013、F003–F005、F008、F023、F041、F044、F045。历史候选为修订6 [内部 RC](artifacts/r100-i10-i12/release-candidate.json)；当前[新RC](artifacts/r100-i14/release-candidate.json)为`r100-native-v3-revision-6-i14-occlusion-rc-20261009`，SHA `bbea9d40ab270586e6361b56b764050670b92101270c051715d3a1e1521690d3`，由[Director精确delta裁决](artifacts/r100-i14/root/actor-occlusion-disposition.json)桥接，不因源码或构建通过变成发布通过。
 
-本次 QA 已完成：阅读合同、原 QA 与抽查裁决，整理证据适用范围及新增检查提案；保存[六门证据矩阵](artifacts/r100-i14/qa-release-evidence-matrix.json)，并[独立核实A23真实主链源](artifacts/r100-i14/qa-continuous-source-preflight.json)：原storage当前key、终态文件与报告整状态相同，cycle65、35薪、三模块51／103／51、上限145，原服务／102资本债均0。[独立来源核验](artifacts/r100-i14/qa-source-inheritance.json)已复算1397源、108包manifest、307唯一依赖（含lockfile）和1620引用文件，均与原RC吻合；据此提出[两门独立建议](artifacts/r100-i14/qa-release-gate-recommendations.json)，不把旧执行冒称本轮重跑。Code执行自然主链；QA在预登记窗口独立执行三历史检查点的真实blur及新源六例入口／冷续，诊断均不计48，其余原始记录只读独审。独立 `CLAUDE.md` 修改排除。
+本次QA按[六门矩阵](artifacts/r100-i14/qa-release-evidence-matrix.json)逐项核源、原件、预算与范围。[A23源档](artifacts/r100-i14/qa-continuous-source-preflight.json)为真实cycle65、35薪、51／103／51模块、上限145；[最终48审计](artifacts/r100-i14/qa-continuous-delta-v4-through-48.json)核所有逐邻prepared→before、四存档、同run、实际消费／遗失及批末storage。现金最终510，模块52／101／54；原服务债0，原102储藏资本债1照实保留，未因I14新增稳定性任务而补跑偿债。来源从[原1397／307核验](artifacts/r100-i14/qa-source-inheritance.json)经[精确delta独审](artifacts/r100-i14/qa-actor-cache-delta-recommendation.json)桥接到1398源／308依赖／108完整包，不把继承证据冒称全部重跑。Code执行自然主链；QA亲自执行隔离真实blur和新源六例入口／冷续，其余运行原件只读独审；这些诊断不计48。独立`CLAUDE.md`修改排除。
 
 ### 六项发布门
 
-1. **R100-G-ART：可继承有限成品／独立图审，待当前 RC 绑定。** I01/I02 人审与旧20世界修订4认可保持各自历史范围；修订6的 [260条最终美术引用](artifacts/r100-i10-i12/final-art-review.json)及正常图册可继承独立内部审核。图册有270档直接帧、54历史档明确空缺，不伪补全。新几何、源码或资产变化需按影响复审；不能从当前108内部资格推成108个当前版本用户认可。I14 的正常运动、最弱项与整体视觉疲劳仍须实际观察及用户意见。
-2. **R100-G-EXPEDITION：可继承当前真实出行，待当前 RC 绑定。** I12原固定过程与自然48、[I13 最终52唯一出击](artifacts/r100-i13-continuation/qa-final-run-binding.json)有选级、消耗、失败／降低、搜取与归返证据。自然 A22 的 deep 污染物经同run冷续真正带回；原中断、99.99ms自动保存差与 A17/A20 deep0 不删除。它们不证明重度深薪、高品质或所有策略胜率。最小新检查针对当前浏览器的正常入口／暂停／冷续，不为补成功率重复经营。
-3. **R100-G-COVERAGE：新RC已显式绑定有限内部 pass 建议。** [最终包清单](artifacts/r100-i10-i12/final-packages/index.json)、1397冻结源码、307包依赖、324正式进入／冷续、342身份等价与原资格分别绑定。307项中 `package-lock.json` 不在1397源码内，须单列核验。只核来源完整性不能冒称重跑全部世界；若改变共同能力、CSV或依赖，相关继承资格需要失效判断。
-4. **R100-G-ECONOMY：新RC已显式绑定有限内部 pass 建议。** [I13 QA](rift-r100-i13.md)与[结案裁决](artifacts/r100-i13-continuation/root/closure-disposition.json)支持 A23 的原服务／资本恢复与实际成长68、自然重度深处带回及普通可付再备、B14本支偿债。两功能方向为下一趟二选一，同一短靴不能双算；定身有祖先替补且再重Q4不足，B短冲0、全链同服务−19与固定配方失败保留。工具／武器／供奉等待不折成虚构薪柴。不得以此签无限供给、普遍档位利润排序或原物逐件回满；无新生产经济改动时不重开找货采样。
-5. **R100-G-RECOVERY：新RC已显式绑定有限内部 pass 建议。** I12 [兼容性独审](artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json)的31恢复／4冻结合同、324正式冷续及 I13 [完整包恢复核对](artifacts/r100-i13-continuation/qa-a-target-cold-continuity.json)各守原环境。Code 初查当前 Chrome155，旧性能／运行源为 Chrome154；本轮应在冻结的有限集合核真实同run、冻结等级／压力／回报、暂停／失焦不进时、正常退出后只结算一次。旧v1/v2与revision1–5不可用当前CSV重算；跨引擎未测不默认为通过。
-6. **R100-G-RELEASE：仍缺真实弱设备、实际审听／疲劳与用户当前 RC 终验。** 本机仍为 M4 Pro，不满足“至少另一档较弱硬件”。软件节流、模拟器或另开浏览器不是第二台实机。声音 [18份真实混音工程绑定](artifacts/r100-i10-i12/final-audio-root-disposition.json)可继承，但其四提示近距注入不是正常游戏提示掩蔽／空间听感的证据。必须提供可玩的当前候选与原始材料、记录实际人耳反馈；版本最终认可须为真实用户 `final-acceptance`，不能挪用“推进I14”或旧美术认可。
+以下四项通过均绑定当前RC `bbea9d40…`，有完整`purpose: release-gate`／gateId／revision／manifest hash及范围；[最终建议](artifacts/r100-i14/qa-release-gates-through48.json)SHA为`c2d6bd32645e2618e6771b66b604d854a3d746dee016fa2f917a28ef6414280b`。发布批准与人审批准仍为false。
+
+1. **R100-G-ART：pending。** I01／I02和旧20世界修订4的人审守原范围；修订6[260条独立美术引用](artifacts/r100-i10-i12/final-art-review.json)、270档直接帧及54历史空缺如实继承。新源6对同状态绘制精确相等只支持渲染查询等价，实际partial遮挡未观察到；材料、静帧和机器资格不能替当前正常连续视野、最弱项与整体疲劳的人认。
+2. **R100-G-EXPEDITION：有界pass。** 新48连续出击／192原档完整通过，低中重各16且自然覆盖六族；47撤离与1死亡保留，死亡遗失后继续真实经营。首低技术中断与同run冷续只计一次，origin载体错误在出发前被截住计0。与[I13真实准备／能力窗口](artifacts/r100-i13-continuation/qa-final-run-binding.json)共同支持准备—搜取—撤离／失败—归返闭环；不是48独立玩家、全世界全种子成功率或真人好玩判断。
+3. **R100-G-COVERAGE：有界pass。** 当前1398源／308依赖与108完整作者payload独核，精确渲染delta显式桥接原324正式进入／冷续、342身份等价及108／324内部资格。旧307依赖中的lockfile单独核验；原74完整／1中断／33未测性能范围保留。新四例性能通过不冒充整库性能重跑。
+4. **R100-G-ECONOMY：有界pass。** [I13结案](artifacts/r100-i13-continuation/root/closure-disposition.json)支持A23原服务／资本恢复与实际成长68、自然重度深处带回及普通可付再备、B14本支偿债。两方向不能双算同一短靴；祖先定身替补、再重Q4不足、B短冲0／固定配方失败及全链同服务−19均保留。I14不新增盈利、逐件回满或无限供给门；其末储藏101相对原资本102仍欠1薪，不冒称资本全恢复。
+5. **R100-G-RECOVERY：有界pass。** 原[31恢复／4冻结合同](artifacts/r100-i10-i12/closeout-independent-review/final-compatibility-review.json)及324冷续按显式来源桥接。当前Chrome155三档真实暂停／正常菜单冷续、可信blur全域稳定已验，新1398源又做三历史检查点冷续；序号／checksum尾提交与约16.67ms正常首帧叶差完整保留。没有新测hidden、OS应用切换或其他引擎／弱设备；不同范围不互代。
+6. **R100-G-RELEASE：pending。** [当前清洁设备包](artifacts/r100-i14/root/device-kit-rc/handoff-clean.json)已逐成员核对并继承相同bytes的参考机新装／正式Menu／CLI退出实际验证，但M4 Pro不是另一档较弱实机。仍需真实弱设备结果、实际人的听感／连续视觉及疲劳反馈、当前RC的用户`final-acceptance`；历史受控混音、源码、构建或“推进I14”授权均不能替签。
 
 ### 抽查授权与原48趟合同
 
@@ -21,9 +23,9 @@
 
 I01末段另有“I14再做至少48趟连续稳定性／选择复核，覆盖三档及所有材料家族”。**2026-10-09 Director明确保留本轮新增48趟**，这是相对全库324格的连续抽样；分小批执行，旧I12自然48／I13真52只作继承证据，不计为I14新增。不得把48日志等同真人长期疲劳，也不添加经济盈利、指定工具回满或追稀缺材料的通过条件。
 
-### 新增检查合同（已获批，执行中）
+### 执行合同与仍待取得的真实反馈
 
-- **来源与发布绑定先行。** Code 给出当前提交／工作树、1397源双侧比对、307依赖及 lockfile、RC与顶层引用SHA；QA核引用和适用性。若准备发布新manifest，另建候选并桥接旧内部RC，不覆盖不可变旧清单。最终每项门的证据必须有 `purpose: release-gate`、正确 `gateId`、相同RC `revision`／`releaseManifestHash`；人审同样绑定确切RC。
+- **来源与发布绑定先行。** 起始1397源／307依赖（含lockfile）已核；P48仅一改一增后另冻1398源／308依赖及当前RC，原清单不覆盖，完整来源桥接已由QA独核。最终每项门的证据必须有 `purpose: release-gate`、正确 `gateId`、相同RC `revision`／`releaseManifestHash`；人审同样绑定确切RC。
 - **新增48连续出击。** 已锁A23唯一主链、四批各12、`[low,medium,severe] × 16`；沿B14有界路线和公开消声5秒／短冲48像素单件≥2筛选后FIFO，缺项空槽，取消I13降档及服务早停。完整政策归Task，不混入A定身选靶。不得重置现金／库存、覆盖失败或把降档写成原计划已执行；没有新盈利或回满门。自然世界只统计实际分布，若48内缺材料，有限固定代表诊断另列分母，不随机续跑追齐。每批完整保存起点／入场／归返／经营末态、同run身份、错误与实际消费；新增48与旧I12／I13分开。
 - **当前浏览器正式入口／恢复三格。** 低／中／重各一，开跑前写世界、seed、实际赚取源档、输入与暂停／失焦／冷续窗口；可合并采集帧时，但不把技术诊断叫自然出击。使用真实场景／菜单和隔离存储，保留首次错误，不换世界补赢；每个承诺按完整存档字段核对。
 - **参考机尾部四个重档。** `hollow-wreckage`、`buried-lamellae`（旧3ms边界）、`felt-wedges`（原中断）、`white-scarfield`（旧未测且复杂结构），每项正常移动／压力覆盖≥60秒。此集合已经入Task／冻结配置，与自然入口样本分开。只签新 Chrome 环境的这四例，不改旧74／1／33统计，不估计全库p99。
@@ -33,7 +35,13 @@ I01末段另有“I14再做至少48趟连续稳定性／选择复核，覆盖三
 
 ### 依赖与当前未验证
 
-Code负责来源／候选／设备收据及有限技术执行，Design负责样本合同与视听问题，Director负责最终RC、台账、人审交接；QA独立审原始失败、来源、恢复及门槛，不改生产或公共索引。Task已由Design预登记，QA已交叉确认与六门矩阵一致；来源连续性与执行器冻结已完成独核；三档暂停／冷续和真实blur已独立核过；当前依赖为剩余36趟完整连续收据、真实弱设备、听者反馈和当前RC用户终验。后几项不能由来源核验或工具退出0代签。
+48连续、当前参考机四例性能整改／六例入口冷续／资源回落、明确来源桥接、当前RC清洁交付包及可审视听材料均已完成本轮可自主范围，不再有待运行自然趟数。余项需要实际事实：至少另一档较弱硬件的同源运行；真实听者记录播放设备／实际时长／反馈；正常连续视觉与疲劳的实际体验；当前RC的用户终验。无已锁最低机型或“听满N分钟”自动通过线，不新增此类门槛。
+
+当前[清洁包独审](artifacts/r100-i14/qa-device-current-rc-clean-review.json)核1520个常规tar成员（1519清单项＋manifest），无额外文件；原安装／CLI证据按精确同bytes继承。首包AppleDouble成员、旧关页退出、焦点模拟、尾提交断言、origin载体、原性能超标和游戏死亡记录保留。网站／净化点的51—487ms长任务、实际partial遮挡未观察、hidden／OS切换／跨引擎未测、未实际播放视听材料等范围继续披露。不能用Rift限定窗口通过或交付包可安装抵销这些空白。
+
+Director负责台账、当前入口和人审交接；QA至此只给四项有界技术／机制门结论，不把I14关闭、R100发布或人的认可写成已发生。
+
+以下阶段小节保留当时进度与旧版本结果；当前状态以上述六门及末尾48结论为准。
 
 ### 新执行的原失败与工具独审
 
@@ -70,13 +78,13 @@ Code负责来源／候选／设备收据及有限技术执行，Design负责样�
 
 [首12完整独审](artifacts/r100-i14/qa-continuous-through-12.json)随后通过：48份原档逐SHA／全状态复比、9989资产守恒断言、逐趟与终storage连续性、1397生产源全部一致；原服务51／100／51和102储藏资本债均0。QA脚本第一次误将fixture缺省空字符串视为null，属于审计schema偏差，[失败与旧脚本](artifacts/r100-i14/qa-continuous-schema-first-failure.json)保留，只修审计映射，不改生产或原报告。尚余36趟，不将首批覆盖六族或正现金写成48完成、经济普遍盈利或视听验收。
 
-### 当前Chrome155四例性能：3失败／1通过
+### Chrome155首轮四例性能：历史3失败／1通过
 
 [原执行](artifacts/r100-i14/runtime-reference/execution.json)退出1，四例均按预登记顺序完成，浏览器已关闭。[独立预算核对](artifacts/r100-i14/qa-reference-runtime.json)保留失败：hollow-wreckage 的CPU／材料提交p95为15.8／4.2ms，buried-lamellae为9.6／4.0ms，felt-wedges为14.1／4.3ms，white-scarfield为9.1／2.3ms；原门分别为12／3ms。因此前三例失败，不能用帧间隔通过抵销。
 
 四例实际存活61.28—61.46秒，帧间隔p95为17.7—18.7ms、p99为18.5—24.9ms，>50ms占比最高0.0273%，均过原帧时线。实际渲染器为M4 Pro Metal，Chrome155，电池60%→58%；这些环境记录不证明超标由浏览器或供电单一原因导致。独审重算的是已保留汇总值的预算判定；原逐帧数组未落盘，不能声称重新计算了百分位分布。原旧性能74／1／33保留其环境，这四例也不覆盖剩余全部世界。该次超标随后触发下述P48有因整改；原失败不改，RELEASE仍未通过。
 
-### 当前参考机资源回落：有限通过
+### 修复前参考机资源回落：有限通过
 
 [独立资源核对](artifacts/r100-i14/qa-reference-resources.json)确认6材料预热、10同图与6混合重建、12次双GC取样全部按冻结执行。相对预热基线的used heap加正向backing增长最大1.249876976MiB，低于原10MiB；WebGL2／Texture／Buffer／Program／Framebuffer／Renderbuffer active计数一致，QA另外确认Shader active始终62。总created计数增长是累计创建次数，不误读成泄漏。
 
@@ -121,3 +129,17 @@ Code负责来源／候选／设备收据及有限技术执行，Design负责样�
 23趟撤离、1趟死亡。第18趟`fibre-silt-severe`实际死亡，已搜deep污染物未带回，带出武器与工具实际遗失，落袋0并支付20维修；结算与下一趟延续通过，不以死亡补抽。累计实际落袋612、维修332、成长38，现金35→277，末三模块54／102／53；固定原服务51／100／51和原资本51／102／51欠额均0。资产守恒与此政策结果不新增经济盈利门。
 
 该审计SHA为`77549abe5da170df268985b3c1406ad2527f0818bd9aea5e0ca1a6b1aa226b57`。原首低冷续断言失败与v3载体origin错误（0出发）均保留且未重复计数。当前只是24／48进度，EXPEDITION仍pending，第三批按既定政策继续。
+
+### 第三批封存后的36趟独立复核
+
+[三批两源审计](artifacts/r100-i14/qa-continuous-delta-v4-through-36.json)与[完整资产账](artifacts/r100-i14/qa-continuous-delta-v4-through-36-accounting.json)通过：36个唯一run、144份原始存档、36,690条核账断言；三档各12、六材料均有自然样本。第25趟从第24趟真实prepared与storage整包继续，原12／新24的源身份分开；全部逐邻、逐物、逐笔与1398当前源码复核通过。
+
+第三批12趟均撤离；累计35撤离＋原第18趟1死亡，未补抽或抹去遗失。累计实际落袋866、维修491、成长38，现金35→372，末52／102／54，原服务与102储藏资本欠额均0。本段审计SHA`233f4b093db95d552f69f442bd2907437024610e5e0455b6fc8c5c126da5f18d`。已向Code明确返回PASS，第四批才可继续；本结论仍不是48完成或EXPEDITION通过。
+
+### 全部48趟独立结案与当前RC四门建议
+
+[最终两源连续审计](artifacts/r100-i14/qa-continuous-delta-v4-through-48.json)SHA`10fb79d8a50f3305150ef6855b7e199d15fd2ad090856eddca723234d5e37221`与[完整资产账](artifacts/r100-i14/qa-continuous-delta-v4-through-48-accounting.json)均通过：48唯一run、192原始存档、53,604守恒断言，四批逐邻整包衔接／当前storage／实际run身份及1398源全部一致。三档各16；材料broken-shell9、membrane-rim11、gel-flow7、fibre-knot7、granular-ridge5、folded-slab9，均正常随机取得，无定向补样。首12在1397源、后36在批准的1398渲染缓存源，只有一条真实赚取主链，不是48独立玩家或48全在新源重跑。
+
+最终47撤离＋1真实死亡、0空返。第18趟死亡及其带出物／深处收获遗失完整保留；首低严格字节断言中断与冷续同run计一次，v3 origin错误0出发，六入口／focus／固定性能／资源诊断均不进自然分母。累计落袋1154、维修641、成长38，现金核式35＋1154−641−38＝510；末模块52／101／54（上限145），原服务51／100／51债0，原资本51／102／51债1。没有为消除这个资本差额追加游戏，也没有把正现金解释成全工具长期成本补齐。
+
+[最终四门建议](artifacts/r100-i14/qa-release-gates-through48.json)独立复核完整48原件、所有引用、当前源及旧三门建议后才生成；[Director接纳](artifacts/r100-i14/root/release-gates-through48.json)是新增收据，旧来源桥接及阶段失败原件均未改。COVERAGE／ECONOMY／RECOVERY／EXPEDITION有界通过；ART／RELEASE及真实弱设备、实际审听／视觉疲劳、用户终验保持待验，I14仍active／13轮已结。

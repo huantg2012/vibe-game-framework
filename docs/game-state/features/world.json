@@ -1149,7 +1149,7 @@
     "id": "COH-F052",
     "title": "完整裂隙世界条件空间设计",
     "domain": "world",
-    "summary": "I01/I02人审、I03–I13内部结案，13/14轮；108世界/324等级通过显式渲染等价桥接至I14新RC。P48遮挡查询缓存优化后4性能/6入口冷续/资源复验通过，覆盖/有限经济/恢复三发布门已新绑；连续前24已独核（23撤离+1死亡、96原档），后24从实际末态续行；总链旧12+新36分账。真实弱设备、实际视听及用户终验分别待验，R100仍active。",
+    "summary": "I01/I02人审、I03–I13内部结案，13/14轮；108世界/324等级通过显式渲染等价桥接至I14新RC。遮挡缓存修复后4性能/6入口冷续/资源复验通过；新增48连续趟独核47撤离+1死亡、192原档/53604断言、三档各16/六材料齐，原源12+优化源36。四发布门通过；原储藏资本债1保留。真实弱设备、实际视听及用户终验分别待验，R100仍active。",
     "delivery": "production",
     "work": "active",
     "entryPoints": [
@@ -1158,7 +1158,7 @@
       "docs/reading/rift-r100.html：唯一迭代/资格台账；原I01/I02及修订4用户认可保留",
       "docs/qa/interactive/r100-i07-i09-worlds.html：新增32世界、三档实图和近邻对照；完整限定验证见E161",
       "docs/qa/interactive/r100-i10-i12-worlds.html：108世界原帧/近邻与来源离线索引，54历史缺直接帧档位明确标出",
-      "docs/qa/artifacts/r100-i14/review-handoff.md：当前RC试玩包、三档历史自然素材与三项实际复核要求"
+      "docs/qa/artifacts/r100-i14/review-handoff-current.md：当前RC试玩包、三档历史自然素材与三项实际复核要求"
     ],
     "sources": [
       {
@@ -2417,6 +2417,39 @@
       {
         "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-24.json",
         "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-36.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/review-handoff-current.md",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/review-handoff-current-check.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-48.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-continuous-delta-v4-through-48-accounting.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/qa-release-gates-through48.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/release-gates-through48.json",
+        "role": "doc"
+      },
+      {
+        "path": "docs/qa/artifacts/r100-i14/root/accept-through48.mjs",
+        "role": "test",
+        "note": "Director按最终48独立证据接纳四门，拒绝未齐样本、来源漂移或代签人审。"
       }
     ],
     "dependsOn": [
@@ -2501,7 +2534,8 @@
       "COH-E188",
       "COH-E189",
       "COH-E190",
-      "COH-E192"
+      "COH-E192",
+      "COH-E191"
     ],
     "unknowns": [
       "最终94例离线资格、恢复/生产专项和正式浏览器一趟搜撤已执行；它们只支持现有有界条件链，不替代长期搜撤体验、重玩新奇性、所有连续参数/种子、动态组合或人审。I28不相关长期采样与四B边界保持。",
